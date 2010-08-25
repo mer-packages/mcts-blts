@@ -1,0 +1,1526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="ConnMan" >
+<set name="Property" >
+<pre_steps>
+<step expected_result="0">/opt/mcts-connman-tests/Property/startup </step>
+</pre_steps>
+
+<case name="CM_PM_State" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if State property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if State&nbsp;property is in&nbsp;&nbsp;['online', 'offline', 'connected']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_State.py</step>
+
+</case>
+
+<case name="CM_PM_ActiveProfile" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if ActiveProfile property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if ActiveProfile property is '/profile/default'</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_ActiveProfile.py</step>
+
+</case>
+
+<case name="CM_PM_AvailableTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if AvailableTechnologies property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if AvailableTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_AvailableTechnologies.py</step>
+
+</case>
+
+<case name="CM_PM_ConnectedTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if State property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if ConnectedTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_ConnectedTechnologies.py</step>
+
+</case>
+
+<case name="CM_PM_DefaultTechnology" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if DefaultTechnology property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if DefaultTechnology property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_DefaultTechnology.py</step>
+
+</case>
+
+<case name="CM_PM_EnabledTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if EnabledTechnologies property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if EnabledTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_EnabledTechnologies.py</step>
+
+</case>
+
+<case name="CM_PM_OfflineMode" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if OfflineMode property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if OfflineMode property is in&nbsp;&nbsp;[True, False]</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_OfflineMode.py</step>
+
+</case>
+
+<case name="CM_PM_Profiles" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Profiles property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if Profiles property is '/profile/default'</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_Profiles.py</step>
+
+</case>
+
+<case name="CM_PM_Technologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Technologies property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if Technologies property is in&nbsp;['/org/moblin/connman/technology/ethernet', '/org/moblin/connman/technology/wifi', '/org/moblin/connman/technology/bluetooth', '/org/moblin/connman/technology/3g']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_Technologies.py</step>
+
+</case>
+
+<case name="CM_PS_State" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if State in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if State is in ['ready', 'idle', &quot;failure&quot;, &quot;association&quot;, &quot;configuration&quot;, &quot;login&quot;, &quot;online&quot;]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_State.py</step>
+
+</case>
+
+<case name="CM_PS_AutoConnect" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if AutoConnect in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if AutoConnect is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_AutoConnect.py</step>
+
+</case>
+
+<case name="CM_PS_Domains" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Domains in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Domains is not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Domains.py</step>
+
+</case>
+
+<case name="CM_PS_Error" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Error in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Error is&nbsp;not in properties since Guest connect always success&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Error.py</step>
+
+</case>
+
+<case name="CM_PS_Favorite" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Favorite in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Favorite is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Favorite.py</step>
+
+</case>
+
+<case name="CM_PS_Immutable" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Immutable in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Immutable is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Immutable.py</step>
+
+</case>
+
+<case name="CM_PS_Mode" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Mode in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Mode is &quot;managed&quot;</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Mode.py</step>
+
+</case>
+
+<case name="CM_PS_Name" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Name in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Name is&nbsp; &quot;Guest&quot;&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Name.py</step>
+
+</case>
+
+<case name="CM_PS_Nameservers" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Nameservers in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Nameservers is&nbsp;not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Nameservers.py</step>
+
+</case>
+
+<case name="CM_PS_Passphrase" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Passphrase in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Passphrase is&nbsp;empty for Guest network&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Passphrase.py</step>
+
+</case>
+
+<case name="CM_PS_PassphraseRequired" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if PassphraseRequired in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if PassphraseRequired is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_PassphraseRequired.py</step>
+
+</case>
+
+<case name="CM_PS_Security" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Security in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Security is in ['none', 'wep', 'psk', 'ieee8021x', 'wpa', 'rsn']</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Security.py</step>
+
+</case>
+
+<case name="CM_PS_Strength" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Strength in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Strength is&nbsp;0-100&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Strength.py</step>
+
+</case>
+
+<case name="CM_PS_Type" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Type in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Type is in&nbsp;&quot;wifi&quot;&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Type.py</step>
+
+</case>
+</set>
+<set name="Ethernet" >
+<pre_steps>
+<step expected_result="0">/opt/mcts-connman-tests/Ethernet/startup </step>
+</pre_steps>
+
+<case name="CM_Eth_DeviceIsExist" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ethernet device exists</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the technology list from connman</p>
+<p>2. Get the ethernet technology</p>
+<p>3. Get the device from ethernet technology</p>
+<p>4. Check if the device is null</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There is ethernet device</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_DeviceIsExist.py</step>
+
+</case>
+
+<case name="CM_Eth_HasDHCP" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ethernet device by default is dhcp enabled</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get ethernet device</p>
+<p>2. Get the IPv4 property of the device</p>
+<p>3. Check method of IPv4 is dhcp</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The method is dhcp</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_HasDHCP.py</step>
+
+</case>
+
+<case name="CM_Eth_BigBroadcastPing" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if we can ping local ethernet nework through broadcast</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get local network IP address</p>
+<p>2. Broadcast ping with size = 1400</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping will receive response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_BigBroadcastPing.py</step>
+
+</case>
+
+<case name="CM_Eth_HasIP" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ethernet device has IP address by default</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the technology list from connman</p>
+<p>2. Get the ethernet technology</p>
+<p>3. Get the device from ethernet technology</p>
+<p>4. Get the IPv4 property and check the IP address</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The IP address is valid</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_HasIP.py</step>
+
+</case>
+
+<case name="CM_Eth_Connect" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if there is an ethernet network by default</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get ethernet device</p>
+<p>2. Ping local network</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping will receive response, meaning there is local network.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_Connect.py</step>
+
+</case>
+
+<case name="CM_Eth_Disconnect" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if we can disconnet ethernet device from local network</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Make sure there is local network by default</p>
+<p>2. Powered off the ethernet device</p>
+<p>3. Check if we can ping local network</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping cannot receive any response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_Disconnect.py</step>
+
+</case>
+
+<case name="CM_Eth_IfconfigDown" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if connman works with ifconfig down</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the state of the ethernet device</p>
+<p>2. The state is 'available'</p>
+<p>3. Run ifconfig &lt;eth&gt; down</p>
+<p>4. Get the device state, check if the state is down</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state is down</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IfconfigDown.py</step>
+
+</case>
+
+<case name="CM_Eth_IfconfigUp" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if connman works with ifconfig up</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Run ifconfig &lt;eth&gt; down</p>
+<p>2. Check the device is down</p>
+<p>3. Run ifconfig &lt;eth&gt; up</p>
+<p>2. Check the state is up</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>the device state is up</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IfconfigUp.py</step>
+
+</case>
+
+<case name="CM_Eth_IsPoweredOn" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ethernet device is on by default</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the Powered status of ethernet device</p>
+<p>2. Check the Powered&nbsp;status is On</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The Powered status is on</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IsPoweredOn.py</step>
+
+</case>
+
+<case name="CM_Eth_IsReady" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ethernet device is ready to connect</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get device</p>
+<p>2. Check the device status</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The status is ready/online/login</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IsReady.py</step>
+
+</case>
+
+<case name="CM_Eth_IsReEnableWorks" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ethernet device still works after powered off and powered on</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the device</p>
+<p>2. Check if the network available</p>
+<p>3. Powered off the device</p>
+<p>4. Powered on the device</p>
+<p>5. Check if the network available</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can ping local network</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IsReEnableWorks.py</step>
+
+</case>
+
+<case name="CM_Eth_PoweredOff" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Powered off works for ethernet device</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the device</p>
+<p>2. Set powered property to off</p>
+<p>3. Check powered property value is off</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The value is off</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_PoweredOff.py</step>
+
+</case>
+
+<case name="CM_Eth_PoweredOn" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Powered on works for ethernet</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get device</p>
+<p>2. Set powered to on</p>
+<p>3. Check the powered property</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The value is on</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_PoweredOn.py</step>
+
+</case>
+
+<case name="CM_Eth_SmallBroadcastPing" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can broadcast with small packet for ethernet</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the ethernet device</p>
+<p>2. Broadcast ping with small packet</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Receives ping response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Eth_SmallBroadcastPing.py</step>
+
+</case>
+</set>
+<set name="WiFi" >
+<pre_steps>
+<step expected_result="0">/opt/mcts-connman-tests/WiFi/startup </step>
+</pre_steps>
+
+<case name="CM_WG_DeviceIsExist" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device exists</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the technology list from connman</p>
+<p>2. Get the WiFi technology</p>
+<p>3. Get the device from WiFi technology</p>
+<p>4. Check if the device is null</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There is WiFi device</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_DeviceIsExist.py</step>
+
+</case>
+
+<case name="CM_WG_HasDHCP" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device by default is dhcp enabled</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi&nbsp; nework</p>
+<p>2. Get the IPv4 property of the device</p>
+<p>3. Check method of IPv4 is dhcp</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The method is dhcp</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_HasDHCP.py</step>
+
+</case>
+
+<case name="CM_WG_BigBroadcastPing" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if we can ping Guest WiFi nework through broadcast</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi nework</p>
+<p>2. Get Guest WiFi IP address</p>
+<p>3. Broadcast ping with size = 1400</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping will receive response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_BigBroadcastPing.py</step>
+
+</case>
+
+<case name="CM_WG_HasIP" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device has IP address by default</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi network</p>
+<p>2. Get the device</p>
+<p>3. Get the IPv4 property and check the IP address</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The IP address is valid</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_HasIP.py</step>
+
+</case>
+
+<case name="CM_WG_Connect" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Can connect to Guest WiFi network</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi network</p>
+<p>2. Ping Guest WiFi network</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping will receive response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_Connect.py</step>
+
+</case>
+
+<case name="CM_WG_Disconnect" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if we can disconnet Guest WiFi network</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Make sure there is Guest WiFi network</p>
+<p>2. Powered off the device</p>
+<p>3. Check if we can ping Guest WiFi network</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping cannot receive any response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_Disconnect.py</step>
+
+</case>
+
+<case name="CM_WG_IfconfigDown" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if connman works with ifconfig down</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the state of the WiFi device</p>
+<p>2. The state is 'available'</p>
+<p>3. Run ifconfig &lt;eth&gt; down</p>
+<p>4. Get the device state, check if the state is down</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state is down</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IfconfigDown.py</step>
+
+</case>
+
+<case name="CM_WG_IfconfigUp" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if connman works with ifconfig up</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Run ifconfig &lt;wlan&gt; down</p>
+<p>2. Check the device is down</p>
+<p>3. Run ifconfig &lt;wlan&gt; up</p>
+<p>2. Check the state is up</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>the device state is up</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IfconfigUp.py</step>
+
+</case>
+
+<case name="CM_WG_IsPoweredOn" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device is on by default</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the Powered status of WiFi device</p>
+<p>2. Check the Powered&nbsp;status is On</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The Powered status is on</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsPoweredOn.py</step>
+
+</case>
+
+<case name="CM_WG_IsReady" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device is ready to connect</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get device</p>
+<p>2. Check the device status</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The status is ready/online/login</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsReady.py</step>
+
+</case>
+
+<case name="CM_WG_IsReEnableWorks" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device still works after powered off and powered on</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the device</p>
+<p>2. Check if the network available</p>
+<p>3. Powered off the device</p>
+<p>4. Powered on the device</p>
+<p>5. Check if the network available</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can ping local network</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsReEnableWorks.py</step>
+
+</case>
+
+<case name="CM_WG_PoweredOff" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Powered off works for WiFi device</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the device</p>
+<p>2. Set powered property to off</p>
+<p>3. Check powered property value is off</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The value is off</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_PoweredOff.py</step>
+
+</case>
+
+<case name="CM_WG_PoweredOn" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Powered on works for WiFi device</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get device</p>
+<p>2. Set powered to on</p>
+<p>3. Check the powered property</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The value is on</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_PoweredOn.py</step>
+
+</case>
+
+<case name="CM_WG_SmallBroadcastPing" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can broadcast with small packet for WiFi device</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the WiFi device</p>
+<p>2. Broadcast ping with small packet</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Receives ping response.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_SmallBroadcastPing.py</step>
+
+</case>
+
+<post_steps>
+<step expected_result="0">/opt/mcts-connman-tests/WiFi/cleanup </step>
+</post_steps>
+</set>
+<set name="Signal" >
+
+<case name="CM_SC_Networks" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Networks property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Networks.py</step>
+
+</case>
+
+<case name="CM_SM_ConnectedTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when ConnectedTechnologies property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_ConnectedTechnologies.py</step>
+
+</case>
+
+<case name="CM_SM_DefaultTechnology" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when DefaultTechnology property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_DefaultTechnology.py</step>
+
+</case>
+
+<case name="CM_SM_EnabledTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when EnabledTechnologies property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_EnabledTechnologies.py</step>
+
+</case>
+
+<case name="CM_SM_Profiles" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Profiles property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Create a profile</p>
+<p>2.2 sleep 2 seconds, and remove the profile</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_Profiles.py</step>
+
+</case>
+
+<case name="CM_SM_Services" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Services property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_Services.py</step>
+
+</case>
+
+<case name="CM_SM_State" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when State property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set offline mode</p>
+<p>2.2 sleep 5 seconds, and set to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_State.py</step>
+
+</case>
+
+<case name="CM_SM_Strength" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Strength property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Invoke Manager.RequestScan('wifi')</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SM_Strength.py</step>
+
+</case>
+
+<case name="CM_SS_AutoConnect" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when AutoConnect property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set Service.AutoConnect to off</p>
+<p>2.2 Set Service.AutoConnect to on</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SS_AutoConnect.py</step>
+
+</case>
+
+<case name="CM_SS_Favorite" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Favorite property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Connect to Guest WiFi network service</p>
+<p>2.2 Remove the serivce</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SS_Favorite.py</step>
+
+</case>
+
+<case name="CM_SS_IPv4" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when IPv4 property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off/on WiFi device</p>
+<p>2.2 Connect to Guest WiFi network</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SS_IPv4.py</step>
+
+</case>
+
+<case name="CM_SS_Passphrase" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Passphrase property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set Passphrase of service property</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SS_Passphrase.py</step>
+
+</case>
+
+<case name="CM_SC_Powered" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Powered property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Networks.py</step>
+
+</case>
+
+<case name="CM_SC_Scanning" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Scanning property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Invoke Manager.RequestScan('wifi')</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Scanning.py</step>
+
+</case>
+
+<case name="CM_SC_ConnectedTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when ConnectedTechnologies property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set connman to offline mode</p>
+<p>2.2 sleep 5 seconds, and set connman to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_ConnectedTechnologies.py</step>
+
+</case>
+
+<case name="CM_SC_Services" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Services property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Services.py</step>
+
+</case>
+
+<case name="CM_SC_State" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when State property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_State.py</step>
+
+</case>
+
+<case name="CM_SC_Connected" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Connected property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set connman to offline mode</p>
+<p>2.2 sleep 5 seconds, and set connman to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Connected.py</step>
+
+</case>
+
+<case name="CM_SC_OfflineMode" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when OfflineMode property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set connman to offline mode</p>
+<p>2.2 sleep 5 seconds, and set connman to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_OfflineMode.py</step>
+
+</case>
+
+<case name="CM_SC_DefaultTechnology" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when DefaultTechnology property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set connman to offline mode</p>
+<p>2.2 sleep 5 seconds, and set connman to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_DefaultTechnology.py</step>
+
+</case>
+
+<case name="CM_SC_Favorite" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when Favorite property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set connman to offline mode</p>
+<p>2.2 sleep 5 seconds, and set connman to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Favorite.py</step>
+
+</case>
+
+<case name="CM_SC_IPv4" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when IPv4property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Set connman to offline mode</p>
+<p>2.2 sleep 5 seconds, and set connman to online mode</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_IPv4.py</step>
+
+</case>
+
+<case name="CM_SC_EnabledTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if signal is triggered when EnabledTechnologies property changed</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set property_changed call back</p>
+<p>2. Using following way to make the property changed</p>
+<p>2.1 Powered off the device</p>
+<p>2.2 sleep 5 seconds, and Powered on the device</p>
+<p>3. Check if the property_changed called.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The callback function is called.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_EnabledTechnologies.py</step>
+
+</case>
+</set>
+<set name="Profile" >
+
+<case name="CM_Prof_Add" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>CreateProfile</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get&nbsp;manager from&nbsp;connman</p>
+<p>2. Invoke manager.CreateProfile('TestProfile')</p>
+<p>3. Check if the profile is created</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The profile is created</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Prof_Add.py</step>
+
+</case>
+
+<case name="CM_Prof_RemoveNoExist" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Remove No exist Profile will lead an error</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get&nbsp;manager from&nbsp;connman</p>
+<p>2. Invoke manager.RemoveProfile('TestProfile')</p>
+<p>3. Check if the profile is removed</p>
+<p>&nbsp;4. Invoke manager.RemoveProfile('TestProfile') again</p>
+<p>5. Check if there is an error</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The error NotFound is triggered</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Prof_RemoveNoExist.py</step>
+
+</case>
+
+<case name="CM_Prof_Remove" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>RemoveProfile</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get&nbsp;manager from&nbsp;connman</p>
+<p>2. Invoke manager.RemoveProfile('TestProfile')</p>
+<p>3. Check if the profile is removed</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The profile is removed</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Prof_Remove.py</step>
+
+</case>
+
+<case name="CM_Prof_AddExist" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Createfile return error when creating an exist profile</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get&nbsp;manager from&nbsp;connman</p>
+<p>2. Invoke manager.CreateProfile('TestProfile')</p>
+<p>3. Check if the profile is created</p>
+<p>4. Invoke manager.CreateProfile('TestProfile'), Check if there is an error</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The error should be AlreadyExists</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Prof_AddExist.py</step>
+
+</case>
+
+<case name="CM_Prof_List" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check profile list.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get&nbsp;manager from&nbsp;connman</p>
+<p>2. Get the profile list</p>
+<p>3. Check if the profile 'TestProfile&quot; exist</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The profile exists</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Prof_List.py</step>
+
+</case>
+
+<case name="CM_Prof_ActiveProfile" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>CreateProfile</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get&nbsp;manager from&nbsp;connman</p>
+<p>2. Invoke manager.CreateProfile('TestProfile')</p>
+<p>3. Check if the profile is created</p>
+<p>4. Set the profile as active profile by manager.SetProperty('ActiveProfile', path)</p>
+<p>5. Check it's the active profile</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The active&nbsp;profile is changed</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Prof_ActiveProfile.py</step>
+
+</case>
+</set>
+<set name="Flight" >
+
+<case name="CM_Flt_Offline" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Offline works</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if all devices are powered off</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>all devices are powered off</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_Offline.py</step>
+
+</case>
+
+<case name="CM_Flt_Service" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if service is empty in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if service is empty</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There is no service in default offline mode</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_Service.py</step>
+
+</case>
+
+<case name="CM_Flt_EthNoPing" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Ethernet cannot ping</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Ethernet cannot ping</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There is no service in default offline mode</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthNoPing.py</step>
+
+</case>
+
+<case name="CM_Flt_EthIsPoweredOff" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Ethernet device&nbsp;is powered off&nbsp;in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check ethetnet device status</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ethernet device&nbsp;is powered off&nbsp;in offline mode</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthIsPoweredOff.py</step>
+
+</case>
+
+<case name="CM_Flt_WiFiNoPing" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi cannot ping in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if WiFi cannot ping in offline mode</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>WiFi cannot ping in offline mode</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiNoPing.py</step>
+
+</case>
+
+<case name="CM_Flt_WiFiIsPoweredOff" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device is Powered off in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if WiFi device is Powered off in offline mode</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>WiFi device is Powered off in offline mode</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiIsPoweredOff.py</step>
+
+</case>
+
+<case name="CM_Flt_EthPoweredOn" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Ethernet device can be powered on in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if Ethernet device can be powered on</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ethernet device can be powered on in default offline mode</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthPoweredOn.py</step>
+
+</case>
+
+<case name="CM_Flt_EthPoweredOff" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Ethernet can be powered off again in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode, and powered on ethernet device</p>
+<p>2. Check if Ethernet can be powered off again</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ethernet can be powered off again</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthPoweredOff.py</step>
+
+</case>
+
+<case name="CM_Flt_WiFiPoweredOn" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device can be powered on in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if WiFi device can be powered on</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>WiFi device can be powered on</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOn.py</step>
+
+</case>
+
+<case name="CM_Flt_WiFiPoweredOff" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device can be powered off again in offline mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Offline mode</p>
+<p>2. Check if WiFi device can be powered off again</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>WiFi device can be powered off again</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOff.py</step>
+
+</case>
+
+<case name="CM_Flt_Online" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can set to online mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Powered on for all devices in offline mode</p>
+<p>2. Set to Online mode</p>
+<p>3. Check Manager is in Online mode and all devices are powered on</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Manager is in Online mode and all devices are powered on</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_Online.py</step>
+
+</case>
+
+<case name="CM_Flt_WiFiOnline" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi works after online again</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Online mode</p>
+<p>2. Check if WiFi works after online again</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>WiFi works after online again</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiOnline.py</step>
+
+</case>
+
+<case name="CM_Flt_EthOnline" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Ehternet works after online again</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set to Online mode</p>
+<p>2. Check if Ehternet works after online again</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ehternet works after online again</p>]]></description>
+
+<step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthOnline.py</step>
+
+</case>
+</set>
+</suite>
+</testdefinition>

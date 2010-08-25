@@ -1,0 +1,88 @@
+-----------------------
+ Introduction
+-----------------------
+1. Geoclue (http://www.freedesktop.org/wiki/Software/GeoClue) 
+Geoclue is a modular geoinformation service built on top of the D-Bus messaging system. The goal of the Geoclue project is to make creating location-aware applications as simple as possible. 
+Geoclue defines a set of geoinformation APIs, but it also includes some providers that implement those APIs. Here is a list of services provided through Geoclue with the currently included implementations:
+
+* Position
+    gpsd, gypsy, hostip, plazes, gsmloc 
+* Address
+    hostip, plazes, manual, localnet 
+* Velocity
+    gpsd, gypsy 
+* Geocode
+    nominatim, geonames, yahoo 
+* ReverseGeocode
+    nominatim, geonames 
+
+2. Geoclue Test Suites
+Geoclue test suites are developed with focusing on API level testing. Each API is tested with a dedicated test suite. More complex usage scenarios can be covered by the geoclue package built-in tool: geoclue-test-gui.  
+
+-----------------------
+Build and Run
+-----------------------
+Step1 and Step2 are only required if you start with source package 
+If you already have the mcts-geoclue-test-1.0.0 package installed in system, plesase move forward with Step3. 
+
+Step1: 
++ Build in meego system, you need install build system and rpmbuild
+cd /path/to/<mcts-geoclue-tests-source>
+$ ./pack.sh 
+
+This will generate mcts-geoclue-test-1.0.0-1.i386.rpm
+
+Step2:
++ Install pacakge
+$ rpm -ivh mcts-geoclue-test-1.0.0-1.i386.rpm --nodeps
+
+Step3:
++ Test environment setup
+Refer the section Test environment setup
+
+Step4:
++ Run
+$ cd /opt/mcts-geoclue-tests
+$ testkit-lite -f /usr/share/mcts-geoclue-tests/tests.xml
+
+
+-----------------------
+Common Install
+-----------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+
+-----------------------
+Test Environment Setup
+-----------------------
+1. Check accessibility of GLib test framework. In terminal, run 
+$ gtester --help
+Help information should be printed on screen
+
+2. Check geoclue provider DBUS services. In terminial, run 
+$ find /usr/share/dbus-1/services | grep org.freedesktop.Geoclue.Providers
+Below services should be printed on screen:
+-------------------------------------------
+org.freedesktop.Geoclue.Master.service
+org.freedesktop.Geoclue.Providers.Example.service
+org.freedesktop.Geoclue.Providers.Geonames.service
+org.freedesktop.Geoclue.Providers.Hostip.service
+org.freedesktop.Geoclue.Providers.Localnet.service
+org.freedesktop.Geoclue.Providers.Manual.service
+org.freedesktop.Geoclue.Providers.Plazes.service
+org.freedesktop.Geoclue.Providers.Test.service
+org.freedesktop.Geoclue.Providers.Yahoo.service
+
+
+-----------------------
+Known Issues
+-----------------------
+Note: you can report the defects of this test suite to qin.mu@intel.com
+
+-----------------------
+TODO
+-----------------------
+1. Develop more test cases, e.g. negative test cases, to achieve thorough test coverage of available features.
+2. Develop new test cases for new features in next releases.  

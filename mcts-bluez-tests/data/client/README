@@ -1,0 +1,24 @@
+Bluez auto test system client side configuration guide
+
+1. Set the server's BT mac address in bluetooth_env.sh
+
+2. Set the root password in bluetooth_env.sh
+
+3. Files brief info
+auto_accept_agent
+# A pairing agent
+
+bluetooth_env
+# test environmnet file
+
+ftp-client
+# ftp client tool
+
+su_normal_do.sh
+# execute something in normal user
+
+sudo_l2ping.sh
+# execute l2ping in root user
+
+sudo_rm.sh
+# execute rm file in root user

@@ -1,0 +1,96 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono Supplementary Service Call Barring setting test
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#	Denis,Kenzior <denkenz@gmail.com>
+#	Li,Zhigang  <zhigang.li@intel.com>
+#
+
+import gobject
+import sys
+import dbus
+import dbus.mainloop.glib
+
+def property_changed(name, value):
+	print "CallBarring property: '%s' changed to '%s'" % (name, str(value))
+	if canexit:
+		mainloop.quit()
+
+def print_useage(s):
+	print "Posssible property is VoiceIncoming, VoiceOutgoing"
+	print "VoiceIncoming value will be always, whenroaming, disabled"
+	print "VoiceOutgoing value will be all, international, internationalnothome, disabled"
+	print "Useage: %s <property> <newvalue> <password>" % (s)
+	print "Useage: %s disableall <password>" % (s)
+
+if __name__ == "__main__":
+	if len(sys.argv) != 3 and len(sys.argv) != 4:
+		print_useage(sys.argv[0])
+		sys.exit(1)
+
+	if (sys.argv[1] == 'disableall'):
+		pin = sys.argv[2]
+	else:
+		if (len(sys.argv) != 4):
+			print_useage(sys.argv[0])
+		property = sys.argv[1]
+		newvalue = sys.argv[2]
+		pin = sys.argv[3]
+
+	canexit = False
+
+	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+	bus = dbus.SystemBus()
+
+	manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+			'org.ofono.Manager')
+
+	modems = manager.GetProperties()['Modems']
+
+	cb = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+			'org.ofono.CallBarring')
+
+	cb.connect_to_signal("PropertyChanged", property_changed)
+
+	properties = cb.GetProperties()
+
+	print "Barring settings for Incoming Voice calls: %s" %\
+		(properties['VoiceIncoming'])
+	print "Barring settings for Outgoing Calls: %s" %\
+		(properties['VoiceOutgoing'])
+
+	if (sys.argv[1] == 'disableall'):
+		print "Disabling all barrings"
+		try:
+			cb.DisableAll(pin)
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to Disable All barrings: ", e
+			sys.exit(1)
+	else:
+		try:
+			cb.SetProperty(property, newvalue, pin)
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to set property: ", e
+			sys.exit(1)
+
+	canexit = True
+
+	mainloop = gobject.MainLoop()
+	mainloop.run()

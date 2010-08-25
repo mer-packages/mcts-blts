@@ -1,0 +1,162 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono simple voice call test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+
+import sys
+import dbus
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+					'org.ofono.Manager')
+
+modems = manager.GetProperties()['Modems']
+
+vcmanager = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+					'org.ofono.VoiceCallManager')
+
+if len(sys.argv) < 2:
+	print """Usage: %s <command>
+
+	dial <number>
+	hide-callid <number>
+	hold | retrieve
+	hangup
+	answer
+	deflect <number>
+	senddtmf <number>
+	transfer(ECT)
+	hangupall
+	""" % sys.argv[0]
+	sys.exit(1)
+
+if sys.argv[1] == "dial":
+	if len(sys.argv) < 3:
+		print "Need input the phone number!"
+		sys.exit(1)
+
+	print "Dialing...."
+	obj = vcmanager.Dial(sys.argv[2], "disabled")
+
+	call = dbus.Interface(bus.get_object('org.ofono', obj),
+					    'org.ofono.VoiceCall')
+	properties = call.GetProperties()
+
+	print "State: %s, Number: %s" %\
+	 (properties['State'], properties['LineIdentification'])
+	sys.exit (0)
+
+if sys.argv[1] == "hide-callid":
+	if len(sys.argv) < 3:
+		print "Need input the phone number!"
+		sys.exit(1)
+	print "Dialing...."
+	try:
+		obj = vcmanager.Dial(sys.argv[2], "enabled")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to dial the call %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "hold" or sys.argv[1] == "retrieve":
+	try:
+		vcmanager.SwapCalls()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to hold the call %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "answer":
+	p = 0
+	if len(sys.argv) > 2:
+		p = int(sys.argv[2])
+
+	calls = vcmanager.GetProperties()['Calls']
+
+	call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
+					       'org.ofono.VoiceCall')
+	properties = call.GetProperties()
+	if properties['State'] == 'incoming' and sys.argv[1] == "answer" :
+		try:
+			call.Answer()
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to answer the call %s" % e
+			sys.exit(1)
+
+if sys.argv[1] == "deflect":
+	calls = vcmanager.GetProperties()['Calls']
+
+	call = dbus.Interface(bus.get_object('org.ofono', calls[0]),
+					'org.ofono.VoiceCall')
+
+	try:
+		call.Deflect(sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to deflect the call %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "hangup":
+	calls = vcmanager.GetProperties()['Calls']
+	p = 0
+	if len(sys.argv) > 2:
+		p = int(sys.argv[2])
+
+	call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
+					       'org.ofono.VoiceCall')
+	try:
+		call.Hangup()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to hold the call %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "senddtmf":
+	if len(sys.argv) < 3:
+		print "Need input the dtmf!"
+		sys.exit(1)
+	try:
+		vcmanager.SendTones(sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send dtmf %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "hangupall":
+	try:
+		vcmanager.HangupAll()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to hangup all calls %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "transfer":
+	try:
+		vcmanager.Transfer()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to transfer the calls %s" % e
+		sys.exit(1)
+
+print "Unknown command"
+sys.exit(1)
+
+

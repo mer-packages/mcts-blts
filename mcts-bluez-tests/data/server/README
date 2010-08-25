@@ -1,0 +1,20 @@
+Bluez auto test system server side configuration guide
+
+The only thing you need to do is to start script server_startup.sh in session user.
+$ ./server_startup.sh
+
+
+During the server startup, above script will copy the directory server into
+server_tmp and set obexd root directory to this temporary dirctory.
+
+server/server directory contains the test data prepared for auto test system,
+this includes some pre-created files, sub-directory and one info file contains
+the brief information regarding to file count of a given directory, file md5 string.
+
+auto_accept_agent is one customized BT pairing agent which will accept
+all pairing request automatically, this is one important file which make
+the Bluetooth full automatic test possible.
+
+If you want to stop the server, you can just press Ctrl + C key. After server
+aborted, the temporary directory server_tmp will be removed automatically.
+

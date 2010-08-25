@@ -1,0 +1,74 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESC: oFono receive message test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+#
+
+import gobject
+import sys
+import dbus
+import dbus.mainloop.glib
+
+def cb_receive_EmergencyBroadcast(content, infor):
+	print "Emergency broadcast content is:'%s',Emergency type is: '%s' " %\
+	 				(content,infor['EmergencyType'])
+	if infor['EmergencyAlert']:
+		print " Need alarm tone!"
+	if infor['Popup']:
+		print " Need pop up menu!"
+
+def cb_receive_IncomingBroadcast(content, infor):
+	print "Cell boradcast content is: '%s' " % (content)
+
+def receive_immediate_message(number, content):
+	print "A class0 message: '%s', sender is '%s', sent time is '%s'" %\
+		(number, content['Sender'], content['LocalSentTime'])
+
+def receive_incoming_message(content, infor):
+	print "short message is: '%s', sender is: '%s', senttime is '%s'" %\
+	 (content, infor['Sender'], infor['SentTime'])
+
+def property_changed(name, value):
+	print "sms property: '%s' changed to '%s'" % (name, str(value))
+
+if __name__ == "__main__":
+
+	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+	bus = dbus.SystemBus()
+
+	manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+							'org.ofono.Manager')
+
+	modems = manager.GetProperties()['Modems']
+
+	sms = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.SmsManager')
+
+	cb = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CellBroadcast')
+
+	sms.connect_to_signal("IncomingMessage", receive_incoming_message)
+	sms.connect_to_signal("ImmediateMessage", receive_immediate_message)
+	sms.connect_to_signal("PropertyChanged", property_changed)
+	cb.connect_to_signal("IncomingBroadcast", cb_receive_IncomingBroadcast)
+	cb.connect_to_signal("EmergencyBroadcast", cb_receive_EmergencyBroadcast)
+
+	mainloop = gobject.MainLoop()
+	mainloop.run()

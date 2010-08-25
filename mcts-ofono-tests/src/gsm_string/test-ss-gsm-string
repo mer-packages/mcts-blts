@@ -1,0 +1,290 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono Gsm string test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+#
+
+
+import sys
+import dbus
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+					'org.ofono.Manager')
+
+modems = manager.GetProperties()['Modems']
+
+ss = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+					'org.ofono.SupplementaryServices')
+if len(sys.argv) < 2:
+	print """Usage: %s <command>
+
+	ss-cw-active
+	ss-cw-interrogate
+	ss-cw-deactive
+	ss-cf-register	<number>
+	ss-cf-active	<number>
+	ss-cf-interrogate
+	ss-cf-deactive
+	ss-cf-erasure
+	ss-cf-conditional-interrogate
+	ss-cfu-all-active	<number>
+	ss-cfu-interrogate
+	ss-cfb-voice-active	<number>
+	ss-cfb-voice-interrogate
+	ss-cfb-voice-deactive
+	ss-cfnry-data-active	<number>
+	ss-cfnry-data-interrogate
+	ss-cfnry-data-deactive
+	ss-cfnrc-fax-active	<number>
+	ss-cfnrc-fax-deactive
+	ss-cfnrc-fax-interrogate
+	ss-ld-interrogate	<service code>
+	ss-clir-active
+	ss-clir-deactive
+	ss-change-password <old pwd> <new pwd>
+	ss-ussd
+	""" % sys.argv[0]
+	sys.exit(1)
+
+if sys.argv[1] == "ss-cw-active":
+	try:
+		print ss.Initiate("**43#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cw-interrogate":
+	try:
+		print ss.Initiate("*#43#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cw-deactive":
+	try:
+		print ss.Initiate("#43#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cf-register":
+	if len(sys.argv[2]) < 0:
+		print "you have to input forward number"
+		sys.exit(1)
+	try:
+		print ss.Initiate("**002*" + sys.argv[2] + "*11*20#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cf-active":
+	if len(sys.argv[2]) < 0:
+		print "you have to input forward number"
+		sys.exit(1)
+	try:
+		print ss.Initiate("*002*"+sys.argv[2]+"#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cf-interrogate":
+	try:
+		print ss.Initiate("*#002#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cf-conditional-interrogate":
+	try:
+		print ss.Initiate("*#004#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cf-erasure":
+	try:
+		print ss.Initiate("##002**#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cf-deactive":
+	try:
+		print ss.Initiate("#002#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfu-all-active":
+	if len(sys.argv) < 3:
+		print "you have to input forward number"
+		sys.exit(1)
+	try:
+		print ss.Initiate("**21*" + sys.argv[2] + "*11#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfu-interrogate":
+	try:
+		print ss.Initiate("*#21#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfb-voice-active":
+	if len(sys.argv) < 3:
+		print "you have to input forward number"
+		sys.exit(1)
+	try:
+		print ss.Initiate("*67*" + sys.argv[2] + "*11#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfb-voice-interrogate":
+	try:
+		print ss.Initiate("*#67#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfb-voice-deactive":
+	try:
+		print ss.Initiate("#67**11#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfnry-data-active":
+	if len(sys.argv) < 3:
+		print "you have to input forward number"
+		sys.exit(1)
+	try:
+		print ss.Initiate("**61*"+sys.argv[2]+"*20*30#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfnry-data-deactive":
+	try:
+		print ss.Initiate("#61**20#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfnry-data-interrogate":
+	try:
+		print ss.Initiate("*#61**20#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfnrc-fax-active":
+	if len(sys.argv) < 3:
+		print "you have to input forward number"
+		sys.exit(1)
+	try:
+		print ss.Initiate("**62*"+sys.argv[2]+"*13#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfnrc-fax-deactive":
+	try:
+		print ss.Initiate("#62**13#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cfnrc-fax-interrogate":
+	try:
+		print ss.Initiate("*#62**13#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-clir-active":
+	try:
+		print ss.Initiate("*31#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-ld-interrogate":
+	if len(sys.argv) < 3:
+		print "you have to input service code"
+		print" Which 76 is COLP, 77 is COLR, 31 is CLIR, 30 is CLIP"
+		sys.exit(1)
+	try:
+ 		print ss.Initiate("*#" + sys.argv[2] + "#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-clir-deactive":
+	try:
+		print ss.Initiate("#31#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-change-password":
+	try:
+		print ss.Initiate("*03**" + sys.argv[2] + "*" + sys.argv[3] + "*" + sys.argv[3] + "#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-ussd":
+	try:
+		print ss.Initiate("*225#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+print "unknown command"
+sys.exit(1)

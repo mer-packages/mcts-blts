@@ -1,0 +1,71 @@
+-----------------------
+ Introduction
+-----------------------
+This suite is to test Bluez stack.
+# Usage for each file (under mcts-bluez-tests folder):
+sub-folder     usage
+src            source file of the cases
+data/client    shared scripts and data on the client side for testing
+data/server    entire folder should be copied to server machine.
+               Run data/server/server_startup.sh on the server to set up
+               a daemon to communicate with Client.
+
+# Needed package/command
+gcc make  --- common packages for make 
+expect    --- for automatic password input when executing 'sudo' command.
+pygobject --- python binding for gobject used by pairing script
+              data/client/auto_accept_agent
+rpm-build --- for packaging
+md5sum    --- to check the file consistence after FTP transfering.
+On Server, we also need some daemon running: bluetoothd and obexd (for server_startup.sh)
+
+-----------------------
+Build and Run
+-----------------------
+(Suppose you only get the source code and testkit-lite has been setup on your test machine
+ if you have got mcts-bluez-tests RPM, you can directly go to step.4 on testing machine
+ if you have not installed the testkit, you can follow the README of framework)
+Steps:
+1. We need to use two machine, one is server and another is your testing machine as client. 
+   Setup Server environment by three steps as "Test Environment" describe (Please see next section)
+   Then, rest steps are on testing machine
+2. cd mcts-bluez-tests
+3. sh pack.sh    --- It will make and generate the mcts-bluez-tests RPM
+4. rpm -ivh mcts-bluez-tests-1.0.0-1.i386.rpm    --- install RPM to your testing machine 
+5. cd /usr/share/mcts-bluez-tests/
+6. testkit-lite -f tests.xml
+
+
+-----------------------
+Common Install
+-----------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+
+-----------------------
+Test Environment
+-----------------------
+1. Setup Server daemon
+  copy mct-bluez-tests/data/server folder to server machine, run ./server_startup.sh in its folder.
+
+2. Do confirm your client machine has no old pairing with the server machine, or it will 
+  affect most of the cases.
+
+3. Config the environment file on client, the file is data/client/bluetooth_env:
+DATA_DIR     --- the place for all cases where RPM install. E.g. /opt/mcts-bluez-tests/
+SERV_BD_ADDR --- Server bluetooth MAC address, e.g. "00:0A:94:03:ED:81"
+ROOT_PASS    --- Client root password for sudo, e.g. "123456"
+
+4. Do run those cases in 'root' user please.
+
+-----------------------
+Known Issues
+-----------------------
+Note: you can report the defects of this test suite to jingke.zhang@intel.com
+
+-----------------------
+TODO
+-----------------------
+We will enable more auto cases in the future. thanks!

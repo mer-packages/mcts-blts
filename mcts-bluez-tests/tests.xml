@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="Bluetooth" >
+<set name="BT_AUTO_CASE" >
+
+<case name="bt_daemon_started_check" manual="false" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if bluetoothd has been started</p>
+<p>Run Instructions:</p>
+<p>Use 'ps -ef' to get the bluetoothd pid.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. If the pid of bluetoothd is got, case PASS</p>
+<p>2. If there is no such process named 'bluetoothd', case FAIL.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-bluez-tests/bt_daemon_started_check.sh</step>
+
+</case>
+
+<case name="bt_ftp_folder_and_remove_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check FTP (File Transfer Profile) folder manipulation inculdes create and remove</p>
+<p>Run Instructions:</p>
+<p>1. Get local hci0 MAC address.</p>
+<p>2. Pair with server machine.</p>
+<p>3. On client side, use ftp-client command to create a folder on Server</p>
+<p>4. From client side, list all the folders on server, and check if there is the folder created right away.</p>
+<p>5. On client side, use ftp-client command to delete the created folder from Server.</p>
+<p>6.  From client side, list all the folders on server, and check if the target folder has been deleted.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Client should be able to create folder on Server by FTP profile.</p>
+<p>2. Client should be able to delete the folder from Server by FTP profile.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_folder_add_remove_check.sh</step>
+
+</case>
+
+<case name="bt_ftp_folder_nav_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check FTP folder navigation from FTP client.</p>
+<p>Run Instructions:</p>
+<p>1. Client does pairing with Server successfully.</p>
+<p>2. By ftp-client script, client creates a sub_folder under one folder on Server.</p>
+<p>3. Browse the folder structure on Server, to get the sub folder.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Client could get the sub folder on Server.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_folder_nav_check.sh</step>
+
+</case>
+
+<case name="bt_ftp_get_check" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check to use FTP profile to get file.</p>
+<p>Run Instructions:</p>
+<p>1. Place one file on Server (write down its md5sum in one config file on Client) before testing.</p>
+<p>2. Client does bluetooth pairing with Server.</p>
+<p>3. Client gets the file name and use ftp-client script to get the file from Server by FTP profile.</p>
+<p>4. Check the md5sum of the got file, to see if the md5sum is same with the file on Server (Confirm they are the same one).</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. By FTP profile, Client should be able to get file from Server.</p>
+<p>2. The file got from Server should have same md5sum with the target file on Server.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_get_check.sh</step>
+
+</case>
+
+<case name="bt_ftp_put_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check to use FTP profile to put file to Server.</p>
+<p>Run Instructions:</p>
+<p>1. Prepare one file (whose md5sum is in one config file  on Client) before testing.</p>
+<p>2. Client does bluetooth pairing with Server.</p>
+<p>3. Client gets the file name from config and use ftp-client script to put it to the Server by FTP profile.</p>
+<p>4. Also use FTP profile to get the file from Server, then check if the md5sum of the file is same with original one in Client.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. By FTP profile, Client should be able to put file to Server.</p>
+<p>2. The file put to Server should be same (md5sum) with original one..</p>]]></description>
+
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_put_check.sh</step>
+
+</case>
+
+<case name="bt_l2cap_ping_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check l2cap socket communication using l2ping.</p>
+<p>Run Instructions:</p>
+<p>1. Get the Bluetooth MAC address of the server machine.</p>
+<p>2. On client, l2ping &lt;Server BT MAC&gt;, and check if it can get reply from the Server.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Client should be able to get reply by l2ping.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-bluez-tests/bt_l2cap_ping_check.sh</step>
+
+</case>
+</set>
+</suite>
+</testdefinition>

@@ -1,0 +1,140 @@
+
+---------------------
+Introduction
+---------------------
+mcts-connman-tests contains both manual and auto tests for ConnMan. 
+tests.xml describes both auto and manual tests. 
+
+ConnMan is an open source project that provides a daemon for managing 
+internet connections within embedded devices running the Linux operating 
+system
+
+mcts-connman-tests automatic test scripts are in the following source code
+structure:
+mcts-connman-tests
+  data
+    apset.tgz: The script that used to set Cisco WiFi AP
+  pack.sh: The script that used to build package
+  tests.xml: ConnMan test cases definition, including both auto and manaul
+  README: This file
+  src
+    3G: 3G test scripts                   
+    BT: Bluetooth test scripts
+    common: Common functions that used in test cases
+    Ethernet: Ethernet test scripts              
+    WiFi: WiFi test scripts                  
+    Signal: Test ConnMan signal functionality       
+    Profile: Test ConnMan profile object    
+    Flight: Test ConnMan in flight on/off mode.
+    Property: Test property value in API
+Following are structure after installation:
+/opt/mcts-connman-tests
+  CM_*.py: All automatic test cases
+  common: Common functions that used in test cases
+  README: This file 
+  <sub-dir>: Helper scripts that used in sub test suites like WiFi
+/usr/share/mcts-connman-tests
+  tests.xml: ConnMan test case definitions
+
+
+---------------------
+Build and Run
+---------------------
++ Build in meego system, you need install build system and rpmbuild
+cd mcts-connman
+./pack.sh
+
+This will generate mcts-connman-tests-0.1-1.i386.rpm
+
++ Install
+rpm -ivh mcts-connman-tests-0.1-1.i386.rpm --nodeps
+
++ Test environment setup
+Refer the section Test environment setup
+
++ Run
+Setup a open hidden WiFi AP with essid "Guest"
+Connect to a ethernet network so that "ping -b" local network has response
+cd /opt/mcts-connman-tests
+su - 
+export PYTHONPATH=$PYTHONPATH:/opt/mcts-connman-tests/common
+testkit-lite -f /usr/share/mcts-connman-tests/tests.xml
+
+
+---------------------
+Common Install
+---------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+
+---------------------
+Testing environment
+---------------------
+The network.jpg in the same directory shows ConnMan test environment:
++ Test machine: This is the device/machine that we test for MeeGo.
++ 3G network: China Unicom 3G network
++ Bluetooth network: Anycom EDR access point to provide bluetooth PANU
++ Ethernet: Local ethernet
++ WiFi Guest: Intel has a Guest network that can be used by visitor to access Internet. We use this network to test basic WiFi features by default.
++ WiFi Local: We setup a local WiFi network that needs specific configure and use it to test most WiFi features.
+
+
+----------------------
+Test Environment setup
+----------------------
+1. Setup test environment without WiFi Local.
+   When the test script is installed in the test machine, we need configure
+   before run test script. This is one-time configuration. We needn't
+   configure again if we want to upgrade ConnMan package and retest.
+   3G network: Go to Carrick, select 3G network, input 3gwap in the poped
+	dialog. You might need input other value based on your 3G network
+   Bluetooth network: In bluetooth panel, pair a PANU server. Carrick should
+        view the PANU and can connect to the PANU
+   Ethernet: This is company network that can access Internet by proxy
+   WiFi Guest: Setup a open hidden WiFi AP with essid "Guest", this is enough
+   	for test cases in WiFi/Guest
+   default.xml defines all test cases used in this configuration. You can
+   run with "testkit-lite -f /usr/share/mcts-connman-tests/default.xml"
+   
+
+2. Setup test environment for full testing
+   If we need test all WiFi features, we need to setup WiFi local:
+   + The test machine has a ethernet connect to a PC that used to set
+     AP parameters. The pc has 2 ethernet ports, one connect to test
+     machine and the other connects to a Cisco AP
+   + Setup the PC so that test machine can ssh to the PC without password
+	- In test machine, running "ssh-keygen" to generate ssh key
+	- scp id_rsa.pub to PC
+	- cat id_rsa.pub >> ~/.ssh/authorized_keys
+	- In test mcahine, edit /etc/ssh/ssh_config and add a line:
+	  StrictHostKeyChecking no
+	- Now you can ssh from test machine to PC without any password
+	  and without any prompt
+   + scp /opt/mcts-connman-tests/data/apset.tgz to PC
+   + In /usr/local/bin, untar apset.tgz
+   + Broswer to the cisco AP, reset AP with factory default (except the 
+     IP address).
+   + In test machine, edit /opt/mcts-connman-tests/common/common.py
+     Replace cm-srv.sh.intel.com with the PC hostname
+   You need to setup WiFi local only when you want to run test scripts in 
+   WiFi (but not in WiFi/Guest)
+   full.xml define all test cases
+
+
+---------------------
+Known issues
+---------------------
+1. apset script for setup Cisco AP has issue that might mess up AP, you need
+   to click "reset to factory default (except the IP address)" in AP webpage
+   and then you can continue run testing.
+2. Some test cases might fail in batch running, meanwhile pass when running
+   independently. We're still debuging these cases.
+
+Note: you can report the defects of this test suite to jeff.zheng@intel.com
+
+---------------------
+To Do
+---------------------
+We will develop more test cases

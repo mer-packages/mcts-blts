@@ -1,0 +1,33 @@
+---------------------
+Introduction
+---------------------
+mcts-pulseaudio-tests is a test suite for pulseaudio.
+Pulseaudio is an open source audio server under Linux.
+
+The auto test cases cover the basic sink & source query, 
+sink & source load/unload, setup default sink & source,
+playback sample file etc.
+
+data/ Contains the sample audio file used during testing
+src/  Test cases are all within directory
+
+-----------------------
+Installation
+-----------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+----------------------
+Test Environment setup
+----------------------
+# Note that, pulseaudio daemon is expected to be running in default session user
+# So the test cases need to be run in this user to call dbus service. The test
+# case will call pa services via su -u <session user> -l <pa call binary/script>.
+# If test cases run in root session, there is no problem since su to a normal
+# user from root don't require user to input a password. But this assumption 
+# will fail if the test case exected from another normal user. Here is a preparation
+# for this case before start the test case execution:
+# Add bellow line to /etc/sudoers
+# <user name>    ALL=(ALL)	NOPASSWD: ALL
+

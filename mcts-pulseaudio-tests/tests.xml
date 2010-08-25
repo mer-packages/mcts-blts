@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="Audio Manager" >
+<set name="mcts-pulseaudio-tests" >
+
+<case name="PA_daemon_status_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Check pulseaudio daemon status</p>
+<p>Run Instructions:<br />
+1. Check pulseaudio package installed or not (check file &quot;/usr/bin/pulseaudio&quot; existing)<br />
+2. Check if pulseaudio is running (pulseaudio --check)</p>
+<p>Pass/Fail Criteria:<br />
+1. Pulseaudio installed<br />
+2. Pulseaudio process is running</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_daemon_status_001.sh</step>
+
+</case>
+
+<case name="PA_statistics_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+PulseAudio Statistics &amp; all current loaded modules, available sinks, sources, streams and clients</p>
+<p>Run Instructions:<br />
+(runtime package &quot;pulseaudio-utils&quot; needed)<br />
+1. &quot;pactl stat&quot; to display PA statistics<br />
+2. &quot;pactl list&quot; to display all current loaded modules, available sinks, sources, streams and clients</p>
+<p>Pass/Fail Criteria:<br />
+1. PA statistics displayed<br />
+2. information displayed, for all current loaded modules, available sinks, sources, streams and clients</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_statistics_001.sh</step>
+
+</case>
+
+<case name="PA_default_setting_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Check default settings</p>
+<p><br />
+Run Instructions:<br />
+1. show pulseaudio default configuration (pulseaudio --dump-conf)<br />
+2. show list of available modules (pulseaudio --dump-modules)</p>
+<p><br />
+Pass/Fail Criteria:<br />
+1. default configuration displayed<br />
+2. module list displayed<br />
+3. available resample methods listed</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_default_setting_001.sh</step>
+
+</case>
+
+<case name="PA_module_load_unload_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+load module, unload module</p>
+<p>Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+1. load module &quot;module-null-sink&quot; (./pa_query_control -cm load module-null-sink sink_name=pa_test_sink)<br />
+2. display modules list(./pa_query_control -qm)<br />
+3. unload module (./pa_query_control -cm unload &lt;index&gt;)</p>
+<p>Pass/Fail Criteria:<br />
+1. the module is loaded sucessfully<br />
+2. module list displayed, and module &quot;module-null-sink&quot; loaded<br />
+3. the module is unloaded successfully</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_module_load_unload_001.sh</step>
+
+</case>
+
+<case name="PA_sample_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+load sample, play sample, unload sample</p>
+<p>Run Instructions:<br />
+(runtime package &quot;pulseaudio-utils&quot; needed)<br />
+1. load smaple file in cache (pactl upload-sample data/s16_44khz_stereo.wav test _sample)<br />
+2. play sample (pactl play-sample test_sample)<br />
+3. unload sample from cache (pactl remove-sample test_sample)</p>
+<p>Pass/Fail Criteria:<br />
+1. sample file loaded<br />
+2. can play sample<br />
+3. sample unloaded</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_sample_001.sh</step>
+
+</case>
+
+<case name="PA_loaded_sink_query_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+query loaded sinks</p>
+<p>Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+list loaded sinks (./pa_query_control -qs)</p>
+<p>Pass/Fail Criteria:<br />
+can list loaded sinks</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_loaded_sink_query_001.sh</step>
+
+</case>
+
+<case name="PA_loaded_source_query_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+query loaded sources</p>
+<p>Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+list loaded sources (./pa_query_control -qo)</p>
+<p>Pass/Fail Criteria:<br />
+can list loaded sources</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_loaded_source_query_001.sh</step>
+
+</case>
+
+<case name="PA_loaded_client_query_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+query loaded clients</p>
+<p>Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+list PA clients (./pa_query_control -qc)</p>
+<p>Pass/Fail Criteria:<br />
+can list clients</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_loaded_client_query_001.sh</step>
+
+</case>
+
+<case name="PA_sink_input_query_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+query sink inputs</p>
+<p><br />
+Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+list sink inputs (./pa_query_control -qI)</p>
+<p>Pass/Fail Criteria:<br />
+can list all sink inputs</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_sink_input_query_001.sh</step>
+
+</case>
+
+<case name="PA_mem_statistics_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+query memory block statistics</p>
+<p><br />
+Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+display PA memory block statistics (./pa_query_control -qu)</p>
+<p>Pass/Fail Criteria:<br />
+can list memory block statistics</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_mem_statistics_001.sh</step>
+
+</case>
+
+<case name="PA_server_info_query_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+query server information</p>
+<p><br />
+Run Instructions:<br />
+(runtime package &quot;pulseaudio-utils&quot; needed, building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+display PA server information(./pa_query_control -qi)</p>
+<p>Pass/Fail Criteria:<br />
+can list PA server information</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_server_info_query_001.sh</step>
+
+</case>
+
+<case name="PA_set_default_sink_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Set default sink</p>
+<p><br />
+Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+1. load module for sink &quot;./pa_query_control -cm load module-null-sink sink_name=pa_test_sink&quot;<br />
+2. set as default sink &quot;./pa_query_control -cd sink pa_test_sink&quot;<br />
+3. unload module &quot;./pa_query_control -cm unload &lt;module index&gt;&quot;</p>
+<p>Pass/Fail Criteria:<br />
+1.module loaded sucessfully<br />
+2. set default sink sucessfully<br />
+3. module unloaded sucessfully</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_set_default_sink_001.sh</step>
+
+</case>
+
+<case name="PA_set_default_source_001" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Set default source</p>
+<p><br />
+Run Instructions:<br />
+(building package &quot;pulseaudio-libs-devel&quot; needed)<br />
+1. load module for sink &quot;./pa_query_control -cm load module-pipe-source source_name=pa_test_source&quot;<br />
+2. set as default sink &quot;./pa_query_control -cd source pa_test_source&quot;<br />
+3. unload module &quot;./pa_query_control -cm unload &lt;module index&gt;&quot;</p>
+<p><br />
+Pass/Fail Criteria:<br />
+1.module loaded sucessfully<br />
+2. set default source sucessfully<br />
+3. module unloaded sucessfully</p>]]></description>
+
+<step expected_result="0">/opt/mcts-pulseaudio-tests/uexec  /opt/mcts-pulseaudio-tests/PA_set_default_source_001.sh</step>
+
+</case>
+</set>
+</suite>
+</testdefinition>

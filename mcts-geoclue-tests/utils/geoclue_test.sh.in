@@ -1,0 +1,248 @@
+#!/bin/bash
+#
+# Copyright (C) 2010 Intel Corporation.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# It is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this software; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+# 02111-1307 USA.
+#
+# Authors:
+#       Mu, Qin <qin.mu@intel.com>
+
+#Set default value for variable
+DIR=`pwd`
+test_binary_dir=@test_bin_dir@
+geoclue_class=
+test_api=
+test_path=/geoclue
+test_binary=test_geoclue_position
+report_name=
+gtester_command="gtester --verbose -k"
+test_command=""
+
+#help prompt###
+print_help()
+{
+  echo "Usage: $0 -c -m"
+  echo "Options:"
+  echo "-c: select geoclue class"
+  echo "-m: select API of selected class"
+  echo "-l list all test cases"
+  exit 1
+}
+#print error message
+print_error()
+{
+echo "Sorry, no test case for $test_api is available now"
+	print_help
+	exit 1
+}
+
+#print test info
+print_test_settings()
+{
+echo "======= test setting ========"
+echo "geoclue class=>	$geoclue_class"
+echo "test API=>	$test_api"
+echo "test path=>	$test_path"
+echo "test binary=>	$test_binary"
+echo "test command=>	$test_command"
+echo "============================="
+}
+
+#list all test cases of test_geoclue_position test suite
+list_test_apis() 
+{
+	echo "test_geoclue_positon_new"
+	echo "test_geoclue_positon_get_position"
+	echo "test_geoclue_positon_get_position_async"
+}
+
+get_geoclue_position_test_path()
+{
+#echo "enter get_geoclue_position_test_path"	
+test_binary=test_geoclue_position
+case $test_api in
+    new)  test_path=$test_path/new;;	  
+    get_position) test_path=$test_path/get_position;;
+    get_position_async) test_binary=test_geoclue_position_async
+			test_path=$test_path/get_position_async;;
+    *) print_error;;
+  esac
+}
+
+get_geoclue_address_test_path()
+{	
+test_binary=test_geoclue_address
+case $test_api in
+    new)  test_path=$test_path/new;;
+    get_address) test_path=$test_path/get_address;;
+    get_address_async) test_binary=test_geoclue_address_async
+			test_path=$test_path/get_address_async;;
+    *) print_error;;
+  esac
+}
+
+get_geoclue_address_details_test_path()
+{	
+test_binary=test_geoclue_address_details
+case $test_api in
+    new)  test_path=$test_path/new;;
+    copy) test_path=$test_path/copy;;
+    get_accuracy_level) test_path=$test_path/get_accuracy_level;;
+    *) print_error;;
+  esac
+}
+
+get_geoclue_accuracy_test_path()
+{	
+test_binary=test_geoclue_accuracy
+case $test_api in
+    new)  test_path=$test_path/new;;
+    get_details) test_path=$test_path/get_details;;
+    set_details) test_path=$test_path/set_details;;
+    copy) test_path=$test_path/copy;;	
+    *) print_error;;
+  esac
+}
+
+get_geoclue_geocode_test_path()
+{	
+test_binary=test_geoclue_geocode
+case $test_api in
+    new)  test_path=$test_path/new;;
+    address_to_position) test_path=$test_path/address_to_position;;
+    address_to_position_async) test_binary=test_geoclue_geocode_async
+			test_path=$test_path/address_to_position_async;;
+    *) print_error;;
+  esac
+}
+
+get_geocode_provider_test_path()
+{
+test_binary=test_geoclue_provider
+case $test_api in
+    get_status)  test_path=$test_path/get_status;;
+    get_provider_info) test_path=$test_path/get_provider_info;;
+    get_provider_info) test_path=$test_path/get_provider_info;;
+    set_options) test_path=$test_path/set_options;;
+    get_service) test_path=$test_path/get_service;;
+    get_path) test_path=$test_path/get_path;;
+    get_interface) test_path=$test_path/get_interface;;
+    *) print_error;;
+  esac
+}
+
+get_geoclue_master_test_path()
+{
+test_binary=test_geoclue_master
+case $test_api in
+    get_default)  test_path=$test_path/get_default;;
+    create_client) test_path=$test_path/create_client;;
+    *) print_error;;
+  esac
+}
+
+get_geoclue_master_client_test_path()
+{
+test_binary=test_geoclue_master_client
+case $test_api in
+    create_address)  test_path=$test_path/create_address
+			test_binary=${test_binary}_address;;
+    create_address_async) test_path=$test_path/create_address_async
+			  test_binary=${test_binary}_address_async;;
+    create_position) test_path=$test_path/create_position
+                          test_binary=${test_binary}_position;;
+
+    create_position_async) test_path=$test_path/create_position_async
+                          test_binary=${test_binary}_position_async;;
+
+    get_address_provider) test_path=$test_path/get_address_provider;;
+
+    get_position_provider) test_path=$test_path/get_position_provider;;
+
+    *) print_error;;
+  esac
+}
+
+
+
+# get test suite binary
+get_test_path() 
+{
+#echo "enter get_test_path"
+test_path=$test_path/$geoclue_class
+case "$geoclue_class" in
+    geoclue_position) get_geoclue_position_test_path;;
+    geoclue_address)  get_geoclue_address_test_path;;
+    geoclue_address_details) get_geoclue_address_details_test_path;;
+    geoclue_accuracy) get_geoclue_accuracy_test_path;;
+    geoclue_geocode)  get_geoclue_geocode_test_path;;
+    geoclue_provider) get_geoclue_provider_test_path;;
+    geoclue_master)   get_geoclue_master_test_path;;
+    geoclue_master_client)   get_geoclue_master_client_test_path;;
+   *) echo "Please select geoclue object to be tested"
+	exit 1;;
+  esac
+
+}
+
+get_test_command()
+{
+#echo "enter get_test_command"
+test -z report_name || report_name=$HOME/test_${geoclue_class}_${test_api}_report.html
+test_command="$gtester_command -o $report_name -p=$test_path $test_binary_dir/$test_binary"
+}
+
+check_test_result()
+{
+if [ -f $report_name ] ; then 
+	cat $report_name | grep "error" >/dev/null
+	if [ $? -eq 0 ]; then
+		exit 1
+	else
+		exit 0
+	fi
+else 
+	echo "Can't find reprot $report_name!"
+	exit 1
+fi	
+}
+
+
+##################### Start main procedure ###############################
+#parse test options
+while getopts c:m:o:l opt
+do
+  case "$opt" in
+    l) list_test_apis;;
+    c) geoclue_class=$OPTARG;;
+    m) test_api=$OPTARG;;
+    o) report_name=$OPTARG;;
+    *) print_help;;
+  esac
+done
+
+# get test path based on input geoclue class and method
+get_test_path
+# get test command to run test cases
+get_test_command
+#print test settings
+print_test_settings
+#Start main procedure
+$test_command
+#check test result
+check_test_result
+
+

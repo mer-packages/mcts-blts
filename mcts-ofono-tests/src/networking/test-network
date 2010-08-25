@@ -1,0 +1,130 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono network test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+
+
+import sys
+import dbus
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+						'org.ofono.Manager')
+modems = manager.GetProperties()['Modems']
+net = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+			'org.ofono.NetworkRegistration')
+
+properties = net.GetProperties()
+
+if len(sys.argv) < 2:
+	print """Usage: %s <command>
+	operatorinfo
+	register [path]
+	networkinfo
+	unregister
+	scan
+	""" % sys.argv[0]
+	sys.exit(1)
+
+if sys.argv[1] == "operatorinfo":
+	for path in properties['Operators']:
+		op = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.NetworkOperator')
+		try:
+			prop = op.GetProperties()
+			for key in prop.keys():
+				print "  %s = %s" % (key, prop[key])
+ 		except dbus.DBusException, e:
+			print "Unable to get operators infor: ", e
+			sys.exit(1)
+		if prop.has_key('AdditionalInformation'):
+			print "Sim addtional information: '%s'" %\
+			 (prop['AdditionalInformation'])
+	sys.exit(0)
+
+if sys.argv[1] == "register":
+	if len(sys.argv) != 3:
+		try:
+			net.Register()
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to register the network: ", e
+			sys.exit(1)
+ 	else:
+		try:
+			op = dbus.Interface(bus.get_object('org.ofono', sys.argv[2]),
+					'org.ofono.NetworkOperator')
+			op.Register()
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to register the operator: ", e
+			sys.exit(1)
+
+if sys.argv[1] == "networkinfo":
+	try:
+		properties = net.GetProperties()
+	except dbus.DBusException, e:
+		print "Unable to get the network property: ", e
+		sys.exit(1)
+
+	for key in properties.keys():
+			print "  %s = %s" % (key, properties[key])
+
+	print "all operators list:"
+	if properties.has_key('Operators'):
+		l = properties['Operators']
+		var = int(len(l))
+		for p in range(var):
+	       		op = dbus.Interface(bus.get_object('org.ofono', properties['Operators'][p]),
+								'org.ofono.NetworkOperator')
+			prop = op.GetProperties()
+			if prop['Status'] == "available":
+				print "Avaliable Operator list: '%s' " %\
+				 properties['Operators'][p]
+			elif prop['Status'] == "current":
+				print "Current Operator list: '%s' " %\
+				 properties['Operators'][p]
+			elif prop['Status'] == "forbidden":
+				print "Forbiden Operator list: '%s' " %\
+				 properties['Operators'][p]
+			else:
+				print"error"
+				sys.exit(1)
+
+	sys.exit(0)
+if sys.argv[1] == 'unregister':
+	try:
+		net.Deregister()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to deregister: ", e
+		sys.exit(1)
+
+if sys.argv[1] == 'scan':
+	try:
+		print net.ProposeScan()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to deregister: ", e
+		sys.exit(1)
+
+print "Unknown command:"
+sys.exit(1)
+

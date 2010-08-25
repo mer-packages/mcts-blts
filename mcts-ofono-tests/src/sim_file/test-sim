@@ -1,0 +1,113 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono sim file system test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+
+import sys
+import dbus
+
+def print_useage(s):
+	print "Useage: %s properties " % (s)
+	print "Useage: %s set <number>" % (s)
+	print "Useage: %s changepin <oldpin,newpin>" % (s)
+	print "Useage: %s resetpin <puk,newpin>" % (s)
+	print "Useage: %s enterpin <pin>" % (s)
+	print "Useage: %s lockpin <pin>" % (s)
+	print "Useage: %s unlockpin <pin>" % (s)
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+						'org.ofono.Manager')
+modems = manager.GetProperties()['Modems']
+
+sim = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+			'org.ofono.SimManager')
+
+if len(sys.argv) < 2:
+	print_useage(sys.argv[0])
+	sys.exit(1)
+
+if sys.argv[1] == 'properties':
+	try:
+		properties = sim.GetProperties()
+	except dbus.DBusException, e:
+		print "Unable to get the sim property %s" % e
+		sys.exit(1)
+
+	for key in properties.keys():
+			print "  %s = %s" % (key, properties[key])
+
+	if properties.has_key('ServiceNumbers'):
+		for p in properties['ServiceNumbers']:
+			print "sdn name is %s and sdn number: %s" %\
+			 (p, properties['ServiceNumbers'][p])
+	sys.exit(0)
+
+if sys.argv[1] == 'resetpin':
+	try:
+		sim.ResetPin("puk",sys.argv[2],sys.argv[3])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to reset the pincode %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == 'changepin':
+	try:
+		sim.ChangePin("pin",sys.argv[2],sys.argv[3])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to change the pincode %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == 'lockpin':
+	try:
+		sim.LockPin("pin",sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to lock the pincode %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == 'enterpin':
+	try:
+		sim.EnterPin("pin",sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to enter the pincode %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == 'unlockpin':
+	try:
+		sim.UnlockPin("pin",sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to unlock the pincode %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == 'set':
+	print " set msisdn number"
+	try:
+		sim.SetProperty("SubscriberNumbers", [sys.argv[2]])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to set the msisdn %s" % e
+		sys.exit(1)
+
+print "Unkonown command:"
+sys.exit(1)
+

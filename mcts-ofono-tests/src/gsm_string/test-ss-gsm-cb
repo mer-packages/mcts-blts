@@ -1,0 +1,209 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: Telephony gsm string call barring test
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+#
+
+
+import sys
+import dbus
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+					'org.ofono.Manager')
+
+modems = manager.GetProperties()['Modems']
+
+cb = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+					'org.ofono.CallBarring')
+
+ss = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+					'org.ofono.SupplementaryServices')
+
+if len(sys.argv) < 2:
+	print """Usage: %s <command>
+
+	ss-cb-all-interrogate
+	ss-cb-all-deactive
+	ss-cb-alloutgoing-interrogate
+	ss-cb-alloutgoing-deactive
+	ss-cb-allincoming-interrogate
+	ss-cb-allincoming-deactive
+	ss-cb-baoc-active
+	ss-cb-baoc-interrogate
+	ss-cb-baoc-deactive
+	ss-cb-baoc-erase
+	ss-cb-baoic-deactive	
+	ss-cb-baoic-interrogate
+	ss-cb-baic-deactive
+	ss-cb-baic-interrogate
+	ss-cb-baicro-deactive
+	ss-cb-baicro-interrogate
+	ss-cb-baoiceh-interrogate
+	ss-cb-baoiceh-deactive
+	""" % sys.argv[0]
+	sys.exit(1)
+
+if sys.argv[1] == "ss-cb-all-interrogate":
+	try:
+		print ss.Initiate("*#330*3579*10#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-all-deactive":
+	try:
+		print ss.Initiate("#330*3579*11#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-alloutgoing-interrogate":
+	try:
+		print ss.Initiate("*#333*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-alloutgoing-deactive":
+	try:
+		print ss.Initiate("#333*3579*11#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-allincoming-interrogate":
+	try:
+		print ss.Initiate("*#353*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-allincoming-deactive":
+	try:
+		print ss.Initiate("#353*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoc-active":
+	try:
+		print ss.Initiate("*33*3579*11#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoc-interrogate":
+	try:
+		print ss.Initiate("*#33*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoc-deactive":
+	try:
+		print ss.Initiate("#33*3579*13#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoc-erase":
+	try:
+		print ss.Initiate("##33*3579#")
+		sys.exit(0)
+ 	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoic-interrogate":
+	try:
+		print ss.Initiate("*#331*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoic-deactive":
+	try:
+		print ss.Initiate("#331*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baic-deactive":
+	try:
+		print ss.Initiate("#35*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baic-interrogate":
+	try:
+		print ss.Initiate("*#35#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baicro-interrogate":
+	try:
+		print ss.Initiate("*#351#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baicro-deactive":
+	try:
+		print ss.Initiate("#351*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoiceh-interrogate":
+	try:
+		print ss.Initiate("*#332#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "ss-cb-baoiceh-deactive":
+	try:
+		print ss.Initiate("#332*3579#")
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send gsm string: ", e
+		sys.exit(1)
+
+print "unknown command"
+sys.exit(1)

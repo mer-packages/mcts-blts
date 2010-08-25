@@ -1,0 +1,205 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono monitor dbus signal test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+#
+
+
+import gobject
+import sys
+import dbus
+import dbus.mainloop.glib
+
+def print_properties(control):
+
+	properties = control.GetProperties()
+
+	for p in properties:
+		print "%s Properties changed is: %s" % (p, properties[p])
+
+def cf_property_changed(property, value):
+	print "Call forward property %s changed to %s" % (property, value)
+	print_properties(cf)
+
+def cw_property_changed(property, value):
+	print "Call waitting property %s changed to %s" % (property, value)
+	print_properties(cw)
+
+def cs_property_changed(property, value):
+	print "Call Setting property %s changed to %s" % (property, value)
+	print_properties(cs)
+
+def cm_property_changed(property, value):
+	print "Call meter property %s changed to %s" % (property, value)
+	print_properties(cm)
+
+def ss_property_changed(property, value):
+	print "Supplementary service property %s changed to %s" % (property, value)
+	print_properties(ss)
+
+def cb_property_changed(property, value):
+	print "CallBarring property: '%s' changed to '%s'" % (property, str(value))
+	print_properties(cb)
+
+def voicecalls_property_changed(property, value):
+	if len(value) == 0:
+		print "No calls in systems"
+	print " %s =  %s" % (property, value)
+	for p in value:
+		call = dbus.Interface(bus.get_object('org.ofono', p),
+						   'org.ofono.VoiceCall')
+		properties = call.GetProperties()
+		print "Call %s, Status: %s, LineId: %s" %\
+		 (p, properties['State'], properties['LineIdentification'])
+
+def voicecall_property_changed(property, value):
+	print "Voicecall property: '%s' changed to '%s'" % (property, value)
+
+def voicecall_disconnectreason(value):
+	print "Voicecall disconnect reason is: '%s'" % (value)
+
+def operator_property_changed(name, value, path=None):
+	print "Operator on path: '%s', property '%s' changed to '%s'" %\
+		(path, name, value)
+
+def network_property_changed(name, value):
+	print "Network Registration property '%s' changed to '%s'" %\
+		(name, value)
+
+def sim_property_changed(name, value):
+	print "SIM  property '%s' changed to '%s'" %\
+		(name, value)
+
+def modem_property_changed(name, value):
+	if (value):
+		print "modem  property is '%s'" %\
+			(name)
+def message_property_changed(name, value):
+	print "Voice mail property: '%s' changed to '%s'" % (name, str(value))
+
+def volume_property_changed(name, value):
+	print "Volume property is: '%s' changed to '%d'" % (name, value)
+
+def sms_property_changed(name, value):
+	print "SMS center address is: '%s' changed to '%s'" % (name, str(value))
+
+def cm_NearMaximumWarning():
+	print "Warning!!!!, you need charge your card"
+
+def ss_request_received(name):
+	print "Network request ussd response: '%s'" % (name)
+
+def ss_notification_received(name):
+	print "Network ussd notification: '%s'" % (name)
+
+if __name__ == "__main__":
+	global cf, cm, cw, ss, cs, cb
+
+	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+	bus = dbus.SystemBus()
+
+	manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+							'org.ofono.Manager')
+
+	modems = manager.GetProperties()['Modems']
+
+	modem = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+							'org.ofono.Modem')
+	properties = modem.GetProperties()
+
+	sms = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.SmsManager')
+
+	volume = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CallVolume')
+
+	vcmanager = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.VoiceCallManager')
+
+	cf = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CallForwarding')
+
+	cm = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CallMeter')
+
+	cw = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CallWaiting')
+
+	ss = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.SupplementaryServices')
+
+	cs = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CallSettings')
+
+	cb = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.CallBarring')
+
+	sim = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+						'org.ofono.SimManager')
+
+ 	modem.connect_to_signal("PropertyChange", modem_property_changed)
+
+	vcmanager.connect_to_signal("PropertyChanged", voicecalls_property_changed)
+
+	bus.add_signal_receiver(voicecall_property_changed,
+			dbus_interface = "org.ofono.VoiceCall",
+					signal_name = "PropertyChanged")
+
+	bus.add_signal_receiver(voicecall_disconnectreason,
+			dbus_interface = "org.ofono.VoiceCall",
+					signal_name = "DisconnectReason")
+
+	bus.add_signal_receiver(network_property_changed,
+			dbus_interface = "org.ofono.NetworkRegistration",
+					signal_name = "PropertyChanged")
+
+	netreg = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+					'org.ofono.NetworkRegistration')
+
+	message = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+				'org.ofono.MessageWaiting')
+
+	cf.connect_to_signal("PropertyChanged", cf_property_changed)
+
+	cw.connect_to_signal("PropertyChanged", cw_property_changed)
+
+	cs.connect_to_signal("PropertyChanged", cs_property_changed)
+
+	ss.connect_to_signal("PropertyChanged", ss_property_changed)
+
+	ss.connect_to_signal("NotificationReceived", ss_notification_received)
+	ss.connect_to_signal("RequestReceived", ss_request_received)
+
+	cb.connect_to_signal("PropertyChanged", cb_property_changed)
+
+	sim.connect_to_signal("PropertyChanged",sim_property_changed )
+
+	message.connect_to_signal("PropertyChanged",message_property_changed)
+
+	volume.connect_to_signal("PropertyChanged", volume_property_changed)
+
+	sms.connect_to_signal("PropertyChanged",sms_property_changed )
+
+	cm.connect_to_signal("PropertyChanged",cm_property_changed )
+
+	cm.connect_to_signal("NearMaximumWarning",cm_NearMaximumWarning )
+
+	mainloop = gobject.MainLoop()
+	mainloop.run()

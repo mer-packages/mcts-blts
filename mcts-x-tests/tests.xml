@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="Graphics">
+<description></description>
+<set name="X" >
+
+<case name="X_process_start" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Check X is started up.</p>
+<p><br />
+Run Instructions:<br />
+ps aux | grep X</p>
+<p>Pass/Fail Criteria:<br />
+Get the running Xorg process info</p>]]></description>
+
+<step expected_result="0">/opt/mcts-x-tests/X_process_start.sh</step>
+
+</case>
+
+<case name="X_randr_edid" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Read EDID data through randr extension.</p>
+<p><br />
+Run Instructions:<br />
+xrandr --prop</p>
+<p><br />
+Pass/Fail Criteria:<br />
+Get the EDID data</p>]]></description>
+
+<step expected_result="0">/opt/mcts-x-tests/X_randr_edid.sh</step>
+
+</case>
+
+<case name="X_randr_enable" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+check if RandR extension is enabled in X.</p>
+<p><br />
+Run Instructions:<br />
+Open /tmp/Xorg.0.log, or /var/log/Xorg.0.log, then Check if Randr is enbled.</p>
+<p>Pass/Fail Criteria:<br />
+Get the string &quot;RandR 1.2 enabled &quot; in Xorg.0.log.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-x-tests/X_randr_enable.sh</step>
+
+</case>
+
+<case name="X_dpms_enable" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Check if DPMS extension&nbsp; is enabled in X.</p>
+<p><br />
+Run Instructions:</p>
+<p>cat Xorg.0.log | grep DPMS</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Get the string &quot;DPMS enabled&quot; from Xorg.0.log.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-x-tests/X_dpms_enable.sh</step>
+
+</case>
+
+<case name="X_x11perf_rgb10text" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Test libX11 with rgb 10x10 text render.</p>
+<p><br />
+Run Instructions:<br />
+x11perf  -rgb10text</p>
+<p>Pass/Fail Criteria:<br />
+Rendered correctly, X should not be crashed or hang.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-x-tests/X_x11perf_rgb10text.sh</step>
+
+</case>
+
+<case name="X_x11perf_aa10text" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Test libX11 with aa 10x10 text render</p>
+<p><br />
+Run Instructions:<br />
+x11perf -aa10text</p>
+<p><br />
+Pass/Fail Criteria:<br />
+Rendered correctly, X shouldn't be crashed or hang.</p>]]></description>
+
+<step expected_result="0">/opt/mcts-x-tests/X_x11perf_aa10text.sh</step>
+
+</case>
+</set>
+</suite>
+</testdefinition>

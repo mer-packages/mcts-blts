@@ -1,0 +1,62 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono sms test script
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+
+import sys
+import dbus
+
+def print_useage(s):
+	print "Useage: %s <sc>  <value>" % (s)
+	print "Useage: %s <send> <number> <content>" % (s)
+
+if len(sys.argv) < 3:
+	print_useage(sys.argv[0])
+	sys.exit(1);
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+		'org.ofono.Manager')
+
+modems = manager.GetProperties()['Modems']
+sms = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+			'org.ofono.SmsManager')
+
+if (sys.argv[1] == 'sc'):
+	print "set service center address"
+	address = sys.argv[2]
+	try:
+		sms.SetProperty("ServiceCenterAddress", address)
+		print sms.GetProperties()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to set sms center address: ", e
+		sys.exit(1)
+
+if (sys.argv[1] == 'send'):
+	try:
+		sms.SendMessage(sys.argv[2], sys.argv[3])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send a sms: ", e
+		sys.exit(1)
+
+print "Unkonown command:"
+sys.exit(1)
