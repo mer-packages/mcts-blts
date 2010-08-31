@@ -1,0 +1,26 @@
+Download:
+	see http://cgit.freedesktop.org/xorg/app/rendercheck/
+
+Current Tag HEAD
+commit 0d88ba2ebc5d31e7bb03a0628fd4027f1937c39b
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Sat Mar 27 10:33:54 2010 -0400
+
+    config: remove files unnecessarily listed in EXTRA_DIST
+
+    Automake always distribute those files
+
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+Pre-install:
+	xorg-x11-util-macros package is reqired
+	
+build:
+        run "pack.sh", then rpm install the mcts-reandercheck-tests packages
+run:
+        testkit-lite -f tests.xml
+note:
+        Because Piglit is used for Xrender API test, So It's OK to be run without WM.
+        Just "xinit" then run the cases is fine.
+
+

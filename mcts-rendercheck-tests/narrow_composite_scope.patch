@@ -1,0 +1,89 @@
+--- rendercheck/tests.c	2010-05-06 12:05:05.000000000 +0800
++++ rendercheck/tests.c	2010-08-16 05:52:30.000000000 +0800
+@@ -36,17 +36,18 @@
+  * not premultiplied, but will be in main().
+  */
+ color4d colors[] = {
++	{1.0, 0, 0, 1.0},	//edit by zk
++	{0.5, 0, 0, .5},
+ 	{1.0, 1.0, 1.0, 1.0},
+-	{1.0, 0, 0, 1.0},
+ 	{0, 1.0, 0, 1.0},
+ 	{0, 0, 1.0, 1.0},
+-	{0.5, 0, 0, .5},
+ };
+ 
+ /* Convenience pointers to 1x1 repeating colors */
+ picture_info *argb32white, *argb32red, *argb32green, *argb32blue;
+ 
+ int num_colors = sizeof(colors) / sizeof(colors[0]);
++int num_composite_colors = 2;	//add by zk
+ 
+ struct op_info ops[] = {
+ 	{PictOpClear, "Clear"},
+@@ -538,7 +539,6 @@
+ 
+ 	if (enabled_tests & TEST_COMPOSITE) {
+ 		Bool ok, group_ok = TRUE;
+-
+ 		for (i = 0; i < num_ops; i++) {
+ 		    if (ops[i].disabled)
+ 			continue;
+@@ -553,15 +553,15 @@
+ 			printf("Beginning %s composite mask test on %s\n",
+ 			    ops[i].name, pi->name);
+ 
+-			for (src = 0; src < num_tests; src++) {
+-			    for (mask = 0; mask < num_tests; mask++) {
+-				for (dst = 0; dst < num_tests; dst++) {
++			for (src = 0; src < (num_tests / num_colors * num_composite_colors); src++) {
++			    for (mask = 0; mask < (num_tests / num_colors * num_composite_colors); mask++) {
++				for (dst = 0; dst < (num_tests / num_colors * num_composite_colors); dst++) {
+ 					ok = composite_test(dpy, win, pi, i,
+ 					    &pictures_10x10[src],
+ 					    &pictures_10x10[mask],
+ 					    &pictures_1x1[dst], FALSE, TRUE);
+ 					RECORD_RESULTS();
+-					ok = composite_test(dpy, win, pi, i,
++/*					ok = composite_test(dpy, win, pi, i,
+ 					    &pictures_1x1[src],
+ 					    &pictures_10x10[mask],
+ 					    &pictures_1x1[dst], FALSE, TRUE);
+@@ -576,7 +576,7 @@
+ 					    &pictures_1x1[mask],
+ 					    &pictures_1x1[dst], FALSE, TRUE);
+ 					RECORD_RESULTS();
+-				}
++*/				}
+ 			    }
+ 			}
+ 		    }
+@@ -602,15 +602,15 @@
+ 			printf("Beginning %s composite CA mask test on %s\n",
+ 			    ops[i].name, pi->name);
+ 
+-			for (src = 0; src < num_tests; src++) {
+-			    for (mask = 0; mask < num_tests; mask++) {
+-				for (dst = 0; dst < num_tests; dst++) {
++			for (src = 0; src < (num_tests / num_colors * num_composite_colors); src++) {
++			    for (mask = 0; mask < (num_tests / num_colors * num_composite_colors); mask++) {
++				for (dst = 0; dst < (num_tests / num_colors * num_composite_colors); dst++) {
+ 					ok = composite_test(dpy, win, pi, i,
+ 					    &pictures_10x10[src],
+ 					    &pictures_10x10[mask],
+ 					    &pictures_1x1[dst], TRUE, TRUE);
+ 					RECORD_RESULTS();
+-					ok = composite_test(dpy, win, pi, i,
++/*					ok = composite_test(dpy, win, pi, i,
+ 					    &pictures_1x1[src],
+ 					    &pictures_10x10[mask],
+ 					    &pictures_1x1[dst], TRUE, TRUE);
+@@ -625,7 +625,7 @@
+ 					    &pictures_1x1[mask],
+ 					    &pictures_1x1[dst], TRUE, TRUE);
+ 					RECORD_RESULTS();
+-				}
++*/				}
+ 			    }
+ 			}
+ 		    }

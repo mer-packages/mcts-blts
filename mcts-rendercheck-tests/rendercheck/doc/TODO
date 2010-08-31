@@ -1,0 +1,8 @@
+- Check bilinear filtering
+- Check repeating transformed sources
+- Check coordinates for more different transformations
+- Get a useful number being produced for error values, and correct eval_diff's
+  limit.
+- Check source/mask pixels falling outside the drawable.
+- Check trapezoids!
+- get_pixel equivalent that doesn't involve round-trips per call.

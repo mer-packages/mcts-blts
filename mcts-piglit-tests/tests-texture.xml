@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="piglit" >
+<description></description>
+<set name="texture" >
+
+
+<case name="piglit_tex_gen-compressed-teximage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />gen-compressed-teximage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/gen-compressed-teximage -auto</step>
+</case>
+
+<case name="piglit_tex_gen-texsubimage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />gen-texsubimage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/gen-texsubimage -auto</step>
+</case>
+
+<case name="piglit_tex_gen-teximage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />gen-teximage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/gen-teximage -auto</step>
+</case>
+
+<case name="piglit_tex_gen-nonzero-unit" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />gen-nonzero-unit<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/gen-nonzero-unit -auto</step>
+</case>
+
+<case name="piglit_tex_levelclamp" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />levelclamp<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/levelclamp -auto</step>
+</case>
+
+<case name="piglit_tex_lodclamp-between-max" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />lodclamp-between-max<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/lodclamp-between-max -auto</step>
+</case>
+
+<case name="piglit_tex_lodclamp-between" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />lodclamp-between<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/lodclamp-between -auto</step>
+</case>
+
+<case name="piglit_tex_lodclamp" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />lodclamp<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/lodclamp -auto</step>
+</case>
+
+<case name="piglit_tex_rg-draw-pixels" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />rg-draw-pixels<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/rg-draw-pixels -auto</step>
+</case>
+
+<case name="piglit_tex_s3tc-teximage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br /><br>s3tc-teximage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/s3tc-teximage -auto</step>
+</case>
+
+<case name="piglit_tex_s3tc-texsubimage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />s3tc-texsubimage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/s3tc-texsubimage -auto</step>
+</case>
+
+<case name="piglit_tex_streaming-texture-leak" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br /><br>&nbsp;streaming-texture-leak<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/streaming-texture-leak -auto</step>
+</case>
+
+<case name="piglit_tex_tex3d" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />tex3d<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/tex3d -auto</step>
+</case>
+
+<case name="piglit_tex_texredefine" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />texredefine<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/texredefine -auto</step>
+</case>
+
+<case name="piglit_tex_tex-swizzle" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />tex-swizzle<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/tex-swizzle -auto</step>
+</case>
+
+<case name="piglit_tex_copytexsubimage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />copytexsubimage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/copytexsubimage -auto</step>
+</case>
+
+<case name="piglit_tex_getteximage-simple" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />getteximage-simple<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/getteximage-simple -auto</step>
+</case>
+
+<case name="piglit_tex_lodbias" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />lodbias<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/lodbias -auto</step>
+</case>
+
+<case name="piglit_tex_texrect-many" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />texrect-many<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/texrect-many -auto</step>
+</case>
+
+<case name="piglit_tex_texdepth" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />texdepth<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/texdepth -auto</step>
+</case>
+
+<case name="piglit_tex_tfp" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />tfp<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/tfp -auto</step>
+</case>
+
+<case name="piglit_tex_cubemap" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />cubemap<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/cubemap -auto</step>
+</case>
+
+<case name="piglit_tex_depth-level-clamp" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depth-level-clamp<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depth-level-clamp -auto</step>
+</case>
+
+<case name="piglit_tex_depth-tex-modes-glsl" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depth-tex-modes-glsl<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depth-tex-modes-glsl -auto</step>
+</case>
+
+<case name="piglit_tex_depth-tex-compare" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br /><br>depth-tex-compare<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depth-tex-compare -auto</step>
+</case>
+
+<case name="piglit_tex_depth-tex-modes" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depth-tex-modes<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depth-tex-modes -auto</step>
+</case>
+
+<case name="piglit_tex_array-texture" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br /><br>array-texture<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/array-texture -auto</step>
+</case>
+
+<case name="piglit_tex_mipmap-setup" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>run mipmap-setup</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+
+</case>
+</set>
+</suite>
+</testdefinition>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="piglit" >
+<description></description>
+<set name="gerenal" >
+
+<case name="piglit_general_dlist-fdo3129-01" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+TBA(To Be Added)<br />
+<br />
+Run Instructions:<br />
+dlist-fdo3129-01<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/dlist-fdo3129-01 -auto</step>
+</case>
+
+<case name="piglit_general_draw-elements-vs-inputs" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />draw-elements-vs-inputs<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/draw-elements-vs-inputs -auto</step>
+</case>
+
+<case name="piglit_general_varray-disabled" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />varray-disabled<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/varray-disabled -auto</step>
+</case>
+
+<case name="piglit_general_scissor-stencil-clear" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />scissor-stencil-clear<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-stencil-clear -auto</step>
+</case>
+
+<case name="piglit_general_scissor-bitmap" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />scissor-bitmap<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-bitmap -auto</step>
+</case>
+
+<case name="piglit_general_draw-elements-base-vertex" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />draw-elements-base-vertex<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/draw-elements-base-vertex -auto</step>
+</case>
+
+<case name="piglit_general_dlist-fdo3129-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />dlist-fdo3129-02<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/dlist-fdo3129-02 -auto</step>
+</case>
+
+<case name="piglit_general_object_purgeable-api-pbo" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />object_purgeable-api-pbo<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/object_purgeable-api-pbo -auto</step>
+</case>
+
+<case name="piglit_general_object_purgeable-api-vbo" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />object_purgeable-api-vbo<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/object_purgeable-api-vbo -auto</step>
+</case>
+
+<case name="piglit_general_occlusion_query" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />occlusion_query<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/occlusion_query -auto</step>
+</case>
+
+<case name="piglit_general_oes-read-format" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />oes-read-format<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/oes-read-format -auto</step>
+</case>
+
+<case name="piglit_general_pbo-drawpixels" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />pbo-drawpixels<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/pbo-drawpixels -auto</step>
+</case>
+
+<case name="piglit_general_pbo-read-argb8888" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />pbo-read-argb8888<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/pbo-read-argb8888 -auto</step>
+</case>
+
+<case name="piglit_general_pbo-readpixels-small" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />pbo-readpixels-small<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/pbo-readpixels-small -auto</step>
+</case>
+
+<case name="piglit_general_pbo-teximage-tiling-2" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />pbo-teximage-tiling-2<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/pbo-teximage-tiling-2 -auto</step>
+</case>
+
+<case name="piglit_general_user-clip" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />user-clip<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/user-clip -auto</step>
+</case>
+
+<case name="piglit_general_point-line-no-cull" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />point-line-no-cull<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/point-line-no-cull -auto</step>
+</case>
+
+<case name="piglit_general_provoking-vertex" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />provoking-vertex<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/provoking-vertex -auto</step>
+</case>
+
+<case name="piglit_general_scissor-clear" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />scissor-clear<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-clear -auto</step>
+</case>
+
+<case name="piglit_general_scissor-copypixels" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />scissor-copypixels<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-copypixels -auto</step>
+</case>
+
+<case name="piglit_general_scissor-offscreen" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br> <br>The example shows how to use signals and slots to implement the functionality of a calculator widget, and how to use QGridLayout to place child widgets in a grid<br>&nbsp;<br />Run Instructions:<br />yum install qtdemos<br>run qtdemos<br>&nbsp;<br />Pass/Fail Criteria:<br />http://doc.qt.nokiaom/4.6/widgets-calculator.html]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-offscreen -auto</step>
+</case>
+
+<case name="piglit_general_bgra-sec-color-pointer" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />bgra-sec-color-pointer<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/bgra-sec-color-pointer -auto</step>
+</case>
+
+<case name="piglit_general_stencil-drawpixels" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />stencil-drawpixels<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/stencil-drawpixels -auto</step>
+</case>
+
+<case name="piglit_general_dlist-clear" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />dlist-clear<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/dlist-clear -auto</step>
+</case>
+
+<case name="piglit_general_linestipple" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />linestipple<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/linestipple -auto</step>
+</case>
+
+<case name="piglit_general_object_purgeable-api-texture" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />object_purgeable-api-texture<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/object_purgeable-api-texture -auto</step>
+</case>
+
+<case name="piglit_general_pbo-teximage" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />pbo-teximage<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/pbo-teximage -auto</step>
+</case>
+
+<case name="piglit_general_pbo-teximage-tiling" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />pbo-teximage-tiling<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/pbo-teximage-tiling -auto</step>
+</case>
+
+<case name="piglit_general_read-front" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />read-front<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/read-front -auto</step>
+</case>
+
+<case name="piglit_general_scissor-depth-clear" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />scissor-depth-clear<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-depth-clear -auto</step>
+</case>
+
+<case name="piglit_general_bgra-vert-attrib-pointer" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />bgra-vert-attrib-pointer<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/bgra-vert-attrib-pointer -auto</step>
+</case>
+
+<case name="piglit_general_depthrange-clear" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depthrange-clear<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depthrange-clear -auto</step>
+</case>
+
+<case name="piglit_general_clear-varray-2.0" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />clear-varray-2.0<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/clear-varray-2.0 -auto</step>
+</case>
+
+<case name="piglit_general_depth_clamp" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depth_clamp<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depth_clamp -auto</step>
+</case>
+
+<case name="piglit_general_depth-clamp-range" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depth-clamp-range<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depth-clamp-range -auto</step>
+</case>
+
+<case name="piglit_general_depthfunc" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />depthfunc<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/depthfunc -auto</step>
+</case>
+
+<case name="piglit_general_scissor-many" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />scissor-many<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/scissor-many -auto</step>
+</case>
+
+<case name="piglit_general_texgen" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />texgen<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/texgen -auto</step>
+</case>
+
+<case name="piglit_general_sync_api" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />sync_api<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/sync_api -auto</step>
+</case>
+
+<case name="piglit_general_texunits" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />texunits<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/texunits -auto</step>
+</case>
+
+<case name="piglit_general_vbo-map-remap" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />vbo-map-remap<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/vbo-map-remap -auto</step>
+</case>
+
+<case name="piglit_general_vbo-subdata-sync" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />vbo-subdata-sync<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/vbo-subdata-sync -auto</step>
+</case>
+
+<case name="piglit_general_windowoverlap" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />windowoverlap<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/windowoverlap -auto</step>
+</case>
+
+<case name="piglit_general_draw-elements" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />draw-elements<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/draw-elements -auto</step>
+</case>
+
+<case name="piglit_general_draw-vertices" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />draw-vertices<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/draw-vertices -auto</step>
+</case>
+
+<case name="piglit_general_draw-vertices-half-float" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>TBA(To Be Added)<br><br />Run Instructions:<br />draw-vertices-half-float<br>&nbsp;<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/draw-vertices-half-float -auto</step>
+</case>
+</set>
+</suite>
+</testdefinition>

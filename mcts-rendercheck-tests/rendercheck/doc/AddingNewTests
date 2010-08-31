@@ -1,0 +1,9 @@
+- Add your test to rendercheck.h TEST_*
+- Add command line option to main.c case 't'.
+- Add command line option to main.c usage()
+- Add your test loop to the bottom of begin_test().  Looping on ops and dests is
+  highly recommended.
+- Write your test in t_testname.c and add to Makefile.am, with prototype in
+  rendercheck.h
+- Add a note about your test to README
+- Be sure to include your MIT license boilerplate on the new file.

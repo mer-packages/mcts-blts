@@ -1,0 +1,1891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="piglit" >
+<description></description>
+<set name="glslparsertest" >
+
+<case name="piglit_glslparsertest_dvec4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dvec4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension2.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension2.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_constFunc.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/constFunc.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_constructor1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/constructor1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_constructor2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/constructor2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_constructor3.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/constructor3.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_continue.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/continue.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType10.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType12.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType12.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType13.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType13.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_void-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/void-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType11.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType11.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType19.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType19.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_xreal-lighting-db-omni.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+<br />
+Pass/Fail Criteria:<br />
+pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/xreal-lighting-db-omni.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_xreal-lighting-db-omni.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/xreal-lighting-db-omni.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension3.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension3.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function2.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function2.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType8.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType8.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dowhile.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dowhile.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function5.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function5.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function6.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function5.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function7.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function7.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function8.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function8.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_function9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_glsl2_xreal-lighting-dbs-omni.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/xreal-lighting-dbs-omni.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_xreal-lighting-d-omni.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/xreal-lighting-d-omni.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_dvec3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dvec3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-01.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-02.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_function10.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/function10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dvec2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dvec2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType9.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension6.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension6.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension7.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension7.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_fragmentOnly.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/fragmentOnly.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension8.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension8.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension9.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension9.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType6.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType6.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-07.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-bumper.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-bumper.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-bumper.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-bumper.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_float2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/float2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_float3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/float3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_float4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/float4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_fragmentOnly1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/fragmentOnly1.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType7.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType7.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-03.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_fragmentOnly2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/fragmentOnly2.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_fragmentOnly3.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/fragmentOnly3.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_extension5.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/extension5.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_fragmentOnly4.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/fragmentOnly4.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType5.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType5.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_dataType4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/dataType4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_conditional3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/conditional3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-04.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-03.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-01.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_condition-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/condition-05.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_condition-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/condition-04.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-04.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_condition-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/condition-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_condition-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/condition-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-09.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-09.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-08.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-08.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-06.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-07.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_comment-continuation.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/comment-continuation.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-11.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-11.vert fail 1.30</step>
+</case>
+
+<case name="to--delete--piglit_glslparsertest_glsl2_draw_buffers-03.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+<br />
+Pass/Fail Criteria:<br />
+pass</p>]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-14.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-14.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-13.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-13.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-12.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-12.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-11.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-11.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-10.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-10.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-09.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-09.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-08.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-08.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-07.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-06.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-15.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-15.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_array-16.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/array-16.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-10.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-10.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-09.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-09.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-08.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-08.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-07.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-06.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_condition-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/condition-03.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-04.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-03.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_attribute-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/attribute-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-text-download-yuy2-uyvy.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-text-download-yuy2-uyvy.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectModule.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectModule.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectConstFolding1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectConstFolding1.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectComma.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_CorrectBuiltInOveride.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectBuiltInOveride.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_ConstantConversions.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/ConstantConversions.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser8.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser8.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser7.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser7.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser6.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser6.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser5.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser5.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_CGStandardLibrary.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CGStandardLibrary.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectConstFolding2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectConstFolding2.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectConstruct.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectConstruct.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectExtension10.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectExtension10.V110.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectMatComma.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectMatComma.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectMatComma2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectMatComma2.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectFunction.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectFunction.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_draw_buffers-01.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-01.frag pass 1.10</step>
+</case>
+
+<case name="to--delete--piglit_glslparsertest_glsl2_draw_buffers-04.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+<br />
+Pass/Fail Criteria:<br />
+pass</p>]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_glsl2_precision-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/precision-02.vert pass 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectFunction1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectFunction1.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectFuncOverload.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectFuncOverload.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectFuncOverload.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectFuncOverload.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectFull.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectFull.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectFull.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectFull.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectExtension4.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectExtension4.V110.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectExtension1.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectExtension1.V110.frag pass</step>
+</case>
+
+<case name="to--delete--piglit_glslparsertest_glsl2_draw_buffers-02.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+<br />
+Pass/Fail Criteria:<br />
+pass</p>]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_CGDataTypes.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CGDataTypes.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser1.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_if1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/if1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_identifier3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/identifier3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_identifier2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/identifier2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_hvec4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/hvec4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_identifier1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/identifier1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-cube-v.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-cube-v.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-convolution.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-convolution.frag pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_hvec3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/hvec3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_hvec2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/hvec2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_if2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/if2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-03.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_xreal-lighting-dbs-omni.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/xreal-lighting-dbs-omni.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_normal.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/normal.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_parser10.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/parser10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-06.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_matrix.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/matrix.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_main3.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/main3.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_main2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/main2.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-04.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_main1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/main1.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_increment4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/increment4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_increment6.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+<br />
+Pass/Fail Criteria:<br />
+pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/increment6.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_increment2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/increment2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_increment3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/increment3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_increment1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/increment1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_xreal-lighting-d-omni.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/xreal-lighting-d-omni.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_conditional2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/conditional2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array8.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array8.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array7.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array7.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array6.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array6.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array5.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_array4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-bulge.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-bulge.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_tex_rect-02.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/tex_rect-02.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_array11.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array11.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array10.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_array9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/array9.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_attribute1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/attribute1.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_conditional1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/conditional1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_comment.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/comment.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_comma3.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/comma3.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_comma2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/comma2.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_comma2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/comma2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_comma1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/comma1.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_break.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/break.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-04.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_attribute.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/attribute.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_attribute.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/attribute.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_tex_rect-01.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/tex_rect-01.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_attribute2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/attribute2.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_TextureRectangleSamplers.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/TextureRectangleSamplers.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_TernaryOp.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/TernaryOp.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_ParseTest4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/ParseTest4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectScalarVectorExpressions.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectScalarVectorExpressions.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectReservedWords.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectReservedWords.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectPreprocess9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectPreprocess9.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectPreprocess8.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectPreprocess8.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectPreprocess5.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectPreprocess5.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectPreprocess11.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectPreprocess11.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_draw_buffers-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-05.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectParseTest.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectParseTest.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectParseTest1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectParseTest1.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectParse2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectParse2.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectParse2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectParse2.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectSwizzle1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectSwizzle1.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectSwizzle1.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectSwizzle1.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_ParseTest3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/ParseTest3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_MainParameters.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/MainParameters.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_IncludeDirective.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/IncludeDirective.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_FunctionParam.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/FunctionParam.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectVersion.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectVersion.V110.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectVersion1.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectVersion1.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectUnsizedArray.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectUnsizedArray.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectSwizzle3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectSwizzle3.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectSwizzle2.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectSwizzle2.vert pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectSwizzle2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectSwizzle2.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_CorrectParse1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>tba<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/CorrectParse1.frag pass</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-fisheye.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-fisheye.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-text-upload-ayuv.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-text-upload-ayuv.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_loop-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/loop-01.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_precision-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/precision-03.vert fail 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_struct-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/struct-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_struct-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/struct-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_struct-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/struct-03.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_struct-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/struct-04.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-difference.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-difference.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-glass.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-glass.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-greedyh.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-greedyh.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-hconv9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-hconv9.frag pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-interpolate.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-interpolate.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-luma-threshold.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-luma-threshold.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-luma-to-curve.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-luma-to-curve.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-mirror.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-mirror.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-mosaic-f.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-mosaic-f.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-mosaic-v.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-mosaic-v.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-multiply.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-multiply.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-rgb-to-curve.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-rgb-to-curve.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-sin.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-sin.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-sobel.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-sobel.frag pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-square.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-square.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-squeeze.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-squeeze.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-sum.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-sum.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-text-download-i420-yv12.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-text-download-i420-yv12.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-text-upload-i420-yv12.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-text-upload-i420-yv12.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-text-upload-yuy2-uyvy.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-text-upload-yuy2-uyvy.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-texture-interp.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-texture-interp.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-tunnel.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-tunnel.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-twirl.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-twirl.frag pass 1.10</step>
+</case>
+
+<case name="to--delete--piglit_glslparsertest_glsl2_gst-gl-vconv9.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Run Instructions:<br />
+<br />
+Pass/Fail Criteria:<br />
+pass</p>]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_glsl2_if-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/if-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_if-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/if-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_if-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/if-03.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_if-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/if-04.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_loop-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/loop-02.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_loop-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/loop-03.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_loop-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/loop-04.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_loop-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/loop-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-03.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-07.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-08.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+
+</case>
+
+<case name="piglit_glslparsertest_glsl2_precision-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/precision-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-07.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-06.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-03.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-05.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-06.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-07.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-07.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-08.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-08.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-09.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-09.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-10.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-10.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-11.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-11.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-12.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-12.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_norsetto-bumptbn_sh_fp.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/norsetto-bumptbn_sh_fp.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_norsetto-bumptbn_sh_fp.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/norsetto-bumptbn_sh_fp.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-01.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-02.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_parameters-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/parameters-04.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_struct-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/struct-05.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_swiz-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/swiz-01.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_swiz-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/swiz-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_precision-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/precision-04.vert pass 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_precision-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/precision-05.vert fail 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_precision-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/precision-06.vert pass 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-01.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-01.vert fail 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-02.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-03.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-03.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-04.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-04.vert pass 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-05.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-05.vert pass 1.30</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-06.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-06.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_parser9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct10.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_swizzle1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/swizzle1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_version2.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/version2.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_vertexOnly1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/vertexOnly1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_vertexOnly2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">vertexOnly2.frag</step>
+</case>
+
+<case name="piglit_glslparsertest_vertexOnly.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/vertexOnly.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_vertex.vert" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/vertex.vert fail</step>
+</case>
+
+<case name="piglit_glslparsertest_while1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/while1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess0.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess0.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess10.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess10.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess6.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess6.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_preprocess7.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/preprocess7.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_scoping1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/scoping1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_scoping2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/scoping2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct11.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct11.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct4.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct4.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct5.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct5.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct6.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct6.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct7.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct7.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct8.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct8.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_struct9.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/struct9.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_swizzle2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/swizzle2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_swizzle3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/swizzle3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_typecast.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/typecast.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_uniform1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/uniform1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_uniform.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/uniform.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_varying1.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/varying1.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_varying2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/varying2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_varying3.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/varying3.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_varying.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/varying.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_vector.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/vector.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_version3.V110.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br /><br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/version3.V110.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_while2.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><p>pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/while2.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_while.frag" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br />Run Instructions:<br /><br />Pass/Fail Criteria:<br /><p>pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/shaders/while.frag fail</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_constructor-10.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-10.vert fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/constructor-10.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_draw_buffers-06.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-06.vert pass 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-06.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_draw_buffers-07.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-07.vert fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-07.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_draw_buffers-08.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-08.frag pass 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-08.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_draw_buffers-09.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-09.frag fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/draw_buffers-09.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_function-08.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-08.frag fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/function-08.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl-pp-elif-no-expression-2.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/glsl-pp-elif-no-expression-2.frag fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/glsl-pp-elif-no-expression-2.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_gst-gl-vconv9.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-vconv9.frag pass 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/gst-gl-vconv9.frag pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-01.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-01.vert pass 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-01.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-02.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-02.vert pass 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-02.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-03.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-03.vert fail 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-03.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-04.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-04.vert fail 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-04.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-05.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-05.vert fail 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-05.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-06.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-06.vert fail 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-06.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-07.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-07.vert fail 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-07.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_invariant-08.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-08.vert fail 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/invariant-08.vert fail 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_matrix-02.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-02.vert fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/matrix-02.vert fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_qualifier-08.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-08.vert pass 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/qualifier-08.vert pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_return-conversion-2.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/return-conversion-2.frag fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/return-conversion-2.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_return-conversion.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/return-conversion.frag fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/return-conversion.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_return-qualifier.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/return-qualifier.frag fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/return-qualifier.frag fail 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_tex_rect-03.frag" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/tex_rect-03.frag pass 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/tex_rect-03.frag pass 1.10</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_uniform-01.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/uniform-01.vert pass 1.20</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/uniform-01.vert pass 1.20</step>
+</case>
+
+<case name="piglit_glslparsertest_glsl2_uniform-02.vert" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run Instructions:</p>
+<p>/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/uniform-02.vert fail 1.10</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/glslparsertest /opt/mcts-piglit-tests/tests/glslparsertest/glsl2/uniform-02.vert fail 1.10</step>
+</case>
+</set>
+</suite>
+</testdefinition>

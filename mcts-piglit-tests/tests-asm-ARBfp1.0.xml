@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="piglit" >
+<description></description>
+<set name="asmparsertest-ARBfp1.0" >
+
+<case name="piglit_asmparsertest_sincos-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case sincos-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/sincos-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-07" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-07<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-07.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_txd-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case txd-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/txd-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-59" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-59<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-59.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-31" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-31<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-31.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-08" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-08<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-08.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-86" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-86<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-86.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_shadow-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case shadow-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/shadow-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_sincos-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case sincos-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/sincos-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-13" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-13<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-13.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-79" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-79<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-79.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_sincos-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case sincos-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/sincos-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_precision_hint-05" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case precision_hint-05<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/precision_hint-05.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-28" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-28<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-28.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBvp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBvp1.0/result-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-04<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-19" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-19<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-19.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-68" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-68<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-68.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-23" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-23<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-23.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-15" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-15<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-15.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_sincos-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case sincos-04<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/sincos-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_txd-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case txd-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/txd-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-06" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-06<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-06.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-64" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-64<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-64.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-66" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-66<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-66.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-61" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-61<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-61.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-63" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-63<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-63.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-52" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-52<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-52.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-53" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-53<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-53.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-55" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier55<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-55.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-50" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-50<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-50.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-54" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-54<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-54.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-56" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-56<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-56.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-57" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-57<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-57.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-58" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-58<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-58.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-60" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-60<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-60.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-70" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-70<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-70.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-72" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-72<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-72.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-75" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-75<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-75.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-74" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-74<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-74.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-76" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-76<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-76.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-77" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-77<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-77.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-78" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-78<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-78.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-73" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-73<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-73.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-71" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-71<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-71.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-32" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-32<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-32.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-84" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-84<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-84.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-82" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-82<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-82.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-21" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-21<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-21.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-26" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-26<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-26.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-25" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-25<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-25.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-88" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier88<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-88.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-16" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-16<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-16.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-80" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-80<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-80.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_shadow-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case shadow-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/shadow-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-04<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-06" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-06<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-06.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-07" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-07<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-07.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-08" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-08<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-08.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-09" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-09<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-09.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-10" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-10<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-10.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-05" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-05<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-05.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_result-11" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case result-11<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/result-11.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-20" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-20<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-20.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_cos-05" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case cos-05<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/cos-05.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_condition_code-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case condition_code-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/condition_code-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_option-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case option-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBvp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBvp1.0/option-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-69" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-69<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-69.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-67" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-67<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-67.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-24" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-24<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-24.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-34" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-34<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-34.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-05" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-05<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-05.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-06" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-06<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-06.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-51" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-51<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-51.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-02<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-03<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_abs-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case abs-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBvp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBvp1.0/abs-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_cos-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case cos-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/cos-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_precision_hint-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case precision_hint-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/precision_hint-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_abs-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case abs-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBvp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBvp1.0/abs-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_ddx-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case ddx-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/ddx-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_fog-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case fog-04<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/fog-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_ddy-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case ddy-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/ddy-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_ddy-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case ddy-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/ddy-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_depth_range-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case depth_range-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/depth_range-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_fog-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case fog-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/fog-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_fog-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case fog-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/fog-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_fog-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case fog-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/fog-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-17" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-17<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-17.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_cos-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case cos-04<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/cos-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_precision_hint-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case precision_hint-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/precision_hint-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_abs-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />pxstore-draw<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/abs-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-65" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-65<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-65.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-62" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+run piglit case size_specifier-62<br />
+Pass/Fail Criteria:<br />
+<br />
+pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-62.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_cos-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case cos-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/cos-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-85" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-85<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-85.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-12" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-12<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-12.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-11" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-11<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-11.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-05" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-05<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-05.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_precision_hint-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case precision_hint-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/precision_hint-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-07" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-07<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-07.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_shadow-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case shadow-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/shadow-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-14" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-14<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-14.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_reserved_words-01" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case reserved_words-01<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/reserved_words-01.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-22" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+to be added<br />
+Run Instructions:<br />
+run piglit case size_specifier-22<br />
+Pass/Fail Criteria:<br />
+<br />
+pass</p>]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-22.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-18" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-18<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-18.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-09" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-09<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-09.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-10" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-10<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-10.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_precision_hint-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case precision_hint-04<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/precision_hint-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_cos-03" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case cos-03<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/cos-03.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_ddx-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case ddx-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/ddx-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-37" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-37<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-37.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-33" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-33<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-33.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-38" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-38<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-38.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-36" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-36<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-36.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-83" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-83<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-83.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-35" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-35<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-35.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-87" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier87<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-87.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-39" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-39<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-39.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-45" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-45<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-45.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_txd-02" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case txd-02<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/txd-02.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-81" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-81<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-81.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-29" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-29<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-29.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-30" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-30<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-30.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_swz-04" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case swz-04<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/swz-04.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-44" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier44<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-44.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-42" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-42<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-42.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-47" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-47<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-47.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-43" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-43<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-43.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-48" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-48<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-48.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-41" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-41<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-41.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-49" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-49<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-49.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-27" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-27<br />Pass/Fail Criteria:<br /><br>pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-27.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-46" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-46<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-46.txt</step>
+</case>
+
+<case name="piglit_asmparsertest_size_specifier-40" manual="false" timeout="90">
+	<description><![CDATA[Purpose:<br /><br>to be added<br />Run Instructions:<br />run piglit case size_specifier-40<br />Pass/Fail Criteria:<br />pass]]></description>
+<step expected_result="0">/opt/mcts-piglit-tests/bin/asmparsertest -auto ARBfp1.0 /opt/mcts-piglit-tests/tests/asmparsertest/shaders/ARBfp1.0/size_specifier-40.txt</step>
+</case>
+</set>
+</suite>
+</testdefinition>

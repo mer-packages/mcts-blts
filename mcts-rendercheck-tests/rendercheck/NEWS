@@ -1,0 +1,27 @@
+2006-11-27:
+	Version 1.2 released
+	Adds test for bug #7366
+	Tests against more picture formats.
+	Allows testing against a subset of the operators and formats.
+
+2006-05-22:
+	Version 1.1 released.
+	Adds tests for triangles, gradients, and repeating sources.
+	Fixes a major memory leak.
+	Allow run-time selection of the set of tests to be run.
+	Add a manpage.
+
+2004-10-24:
+	Version 1.0.3 released.
+	Allows building on systems without xrender.pc.
+
+2004-09-19:
+	Version 1.0.2 released.
+	Adds a transformed coordinates test.
+
+2004-05-17:
+	Version 1.0.1 released.
+	Makes the fill test useful and adds a destination coordinates test.
+
+2004-05-10:
+	Initial version 1.0 imported.
