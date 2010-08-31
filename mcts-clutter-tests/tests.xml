@@ -1,0 +1,1631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="Graphics" >
+<description></description>
+<set name="clutter" >
+
+<case name="test-actor-clone" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 11">
+<meta name="Originator" content="Microsoft Word 11">
+<link href="file:///C:\DOCUME~1\kzheng2\LOCALS~1\Temp\msohtml1\01\clip_filelist.xml" rel="File-List" />            </meta>
+</meta>
+</meta>
+</meta>
+</p>
+<!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Normal</w:View>
+<w:Zoom>0</w:Zoom>
+<w:PunctuationKerning />
+<w:DrawingGridVerticalSpacing>7.8 pt</w:DrawingGridVerticalSpacing>
+<w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+<w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+<w:ValidateAgainstSchemas />
+<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+<w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+<w:Compatibility>
+<w:SpaceForUL />
+<w:BalanceSingleByteDoubleByteWidth />
+<w:DoNotLeaveBackslashAlone />
+<w:ULTrailSpace />
+<w:DoNotExpandShiftReturn />
+<w:AdjustLineHeightInTable />
+<w:BreakWrappedTables />
+<w:SnapToGridInCell />
+<w:WrapTextWithPunct />
+<w:UseAsianBreakRules />
+<w:DontGrowAutofit />
+<w:UseFELayout />
+</w:Compatibility>
+<w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+</w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+</w:LatentStyles>
+</xml><![endif]-->
+<p><style type="text/css">
+
+
+
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:ËÎÌå;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@ËÎÌå";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:???????????????????????????????;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:ËÎÌå;
+	mso-font-kerning:1.0pt;}
+span.EmailStyle15
+	{mso-style-type:personal;
+	mso-style-noshow:yes;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:ËÎÌå;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:windowtext;}
+span.bzdefaulthidden
+	{mso-style-name:bz_default_hidden;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+--></style></p>
+<p><!--[if gte mso 10]>
+<style>
+/* Style Definitions */
+table.MsoNormalTable
+{mso-style-name:"Table Normal";
+mso-tstyle-rowband-size:0;
+mso-tstyle-colband-size:0;
+mso-style-noshow:yes;
+mso-style-parent:"";
+mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+mso-para-margin:0cm;
+mso-para-margin-bottom:.0001pt;
+mso-pagination:widow-orphan;
+font-size:10.0pt;
+font-family:"Times New Roman";
+mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:#0400;
+mso-fareast-language:#0400;
+mso-bidi-language:#0400;}
+</style>
+<![endif]-->1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p>2, ./test-interactive test-actor-clone</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Normal</w:View>
+<w:Zoom>0</w:Zoom>
+<w:PunctuationKerning />
+<w:DrawingGridVerticalSpacing>7.8 pt</w:DrawingGridVerticalSpacing>
+<w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+<w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+<w:ValidateAgainstSchemas />
+<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+<w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+<w:Compatibility>
+<w:SpaceForUL />
+<w:BalanceSingleByteDoubleByteWidth />
+<w:DoNotLeaveBackslashAlone />
+<w:ULTrailSpace />
+<w:DoNotExpandShiftReturn />
+<w:AdjustLineHeightInTable />
+<w:BreakWrappedTables />
+<w:SnapToGridInCell />
+<w:WrapTextWithPunct />
+<w:UseAsianBreakRules />
+<w:DontGrowAutofit />
+<w:UseFELayout />
+</w:Compatibility>
+<w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+</w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+</w:LatentStyles>
+</xml><![endif]-->
+<p><style type="text/css">
+
+
+
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:ËÎÌå;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@ËÎÌå";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:???????????????????????????????;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:ËÎÌå;
+	mso-font-kerning:1.0pt;}
+span.EmailStyle15
+	{mso-style-type:personal;
+	mso-style-noshow:yes;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:ËÎÌå;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:windowtext;}
+span.bzdefaulthidden
+	{mso-style-name:bz_default_hidden;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+--></style></p>
+<!--[if gte mso 10]>
+<style>
+/* Style Definitions */
+table.MsoNormalTable
+{mso-style-name:"Table Normal";
+mso-tstyle-rowband-size:0;
+mso-tstyle-colband-size:0;
+mso-style-noshow:yes;
+mso-style-parent:"";
+mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+mso-para-margin:0cm;
+mso-para-margin-bottom:.0001pt;
+mso-pagination:widow-orphan;
+font-size:10.0pt;
+font-family:"Times New Roman";
+mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:#0400;
+mso-fareast-language:#0400;
+mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<p>1,the
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 11">
+<meta name="Originator" content="Microsoft Word 11">     <span class="bzdefaulthidden"><span lang="EN-US" style="font-size: 10.5pt; font-family: &quot;Times New Roman&quot;;">test-actors should be lanched well</span></span>        </meta>
+</meta>
+</meta>
+</meta>
+</p>
+<p><span class="bzdefaulthidden"><span lang="EN-US" style="font-size: 10.5pt; font-family: &quot;Times New Roman&quot;;">2,every actors moved smoothly</span></span>, no garbage</p>
+<p><span class="bzdefaulthidden"><span lang="EN-US" style="font-size: 10.5pt; font-family: &quot;Times New Roman&quot;;">3,click event should be responsed timely</span></span></p>
+<p><span class="bzdefaulthidden"><span lang="EN-US" style="font-size: 10.5pt; font-family: &quot;Times New Roman&quot;;">4,click the hand, it should be disappeared<br />
+</span></span></p>]]></description>
+
+</case>
+
+<case name="test-clutter-cairo-flowers" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-clutter-cairo-flowers</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,the demo should be lanched well.</p>
+<p>2, vector gfx flower render correctly in the fullscreen mode</p>
+<p>3,flowers moves smoothly without garbage</p>]]></description>
+
+</case>
+
+<case name="test-threads" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="Word.Document" name="ProgId">
+<meta content="Microsoft Word 11" name="Generator">
+<meta content="Microsoft Word 11" name="Originator">
+<link rel="File-List" href="file:///C:\DOCUME~1\kzheng2\LOCALS~1\Temp\msohtml1\01\clip_filelist.xml" />        </meta>
+</meta>
+</meta>
+</meta>
+</p>
+<!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Normal</w:View>
+<w:Zoom>0</w:Zoom>
+<w:PunctuationKerning />
+<w:DrawingGridVerticalSpacing>7.8 pt</w:DrawingGridVerticalSpacing>
+<w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+<w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+<w:ValidateAgainstSchemas />
+<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+<w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+<w:Compatibility>
+<w:SpaceForUL />
+<w:BalanceSingleByteDoubleByteWidth />
+<w:DoNotLeaveBackslashAlone />
+<w:ULTrailSpace />
+<w:DoNotExpandShiftReturn />
+<w:AdjustLineHeightInTable />
+<w:BreakWrappedTables />
+<w:SnapToGridInCell />
+<w:WrapTextWithPunct />
+<w:UseAsianBreakRules />
+<w:DontGrowAutofit />
+<w:UseFELayout />
+</w:Compatibility>
+<w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+</w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+</w:LatentStyles>
+</xml><![endif]-->
+<p><style type="text/css">
+
+
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:ËÎÌå;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@ËÎÌå";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:???????????????????????????????;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:ËÎÌå;
+	mso-font-kerning:1.0pt;}
+span.bzdefaulthidden
+	{mso-style-name:bz_default_hidden;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+--></style></p>
+<!--[if gte mso 10]>
+<style>
+/* Style Definitions */
+table.MsoNormalTable
+{mso-style-name:"Table Normal";
+mso-tstyle-rowband-size:0;
+mso-tstyle-colband-size:0;
+mso-style-noshow:yes;
+mso-style-parent:"";
+mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+mso-para-margin:0cm;
+mso-para-margin-bottom:.0001pt;
+mso-pagination:widow-orphan;
+font-size:10.0pt;
+font-family:"Times New Roman";
+mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:#0400;
+mso-fareast-language:#0400;
+mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-threads</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, the demo is lanched well, threads work well.</p>
+<p>2, the window could response to keycode 's' and 'q' smoothly</p>
+<p>3, no window garbage</p>]]></description>
+
+</case>
+
+<case name="test-stage-read-pixels" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Simsun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span class="Apple-style-span" style="font-family: Arial; font-size: 13px; text-align: left;">TBA(To Be Added)</span></span></p>
+<p><br />
+Run Instructions:</p>
+<p><span class="Apple-style-span" style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Simsun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span class="Apple-style-span" style="font-family: 'Trebuchet MS'; font-size: 12px; text-align: left;">
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./<span style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Simsun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;" class="Apple-style-span"><span style="font-family: Arial; font-size: 13px; text-align: left;" class="Apple-style-span">test-interactive </span></span><span class="bzdefaulthidden"><span lang="EN-US" style="font-size: 10.5pt; font-family: &quot;Times New Roman&quot;;">test-stage-read-pixels</span></span></p>
+</span></span></p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,the demo lanched well;</p>
+<p>2,move the red-point on the stage, the pixel of red-point should be read correctly, you can check it by right-bottom area</p>
+<p>3, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-layout" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p><span style="border-collapse: separate; color: rgb(0, 0, 0); font-family: Simsun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;" class="Apple-style-span"><span style="font-family: 'Trebuchet MS'; font-size: 12px; text-align: left;" class="Apple-style-span">
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-layout</p>
+</span></span></p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,the demo was lanched well;</p>
+<p>2,Do the operations following instructions show on the stage, it works correctly</p>
+<p>3, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-animation" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">       </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">       </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10pt;">2, ./test-interactive test-animation</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,The demo can be launched well;</p>
+<p>2,We can see a squre box rotation animation&nbsp;after click the box.</p>]]></description>
+
+</case>
+
+<case name="test-behave" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">       </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">       </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test_interactive test_behave</p>
+<p>&nbsp;Pass/Fail Criteria:</p>
+<p>1,The clutter demo test_behave can be launched well</p>
+<p>2,We can see a hand picture moving around&nbsp;in the window accompany with the fade in fade out effect.</p>]]></description>
+
+</case>
+
+<case name="test-binding-pool" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-binding-pool</p>
+<p>&nbsp;Pass/Fail Criteria:</p>
+<p>1,the clutter demo test-binding-pool can be launched well.</p>
+<p>2, there are 3 small rectanges filled with differenct colors: red, green, blue</p>
+<p>3, click on the rectangle, the window will be closed</p>]]></description>
+
+</case>
+
+<case name="test-cogl-offscreen" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-cogl-offscreen</p>
+<p>&nbsp;Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-cogl-offscreen can be launched well;</p>
+<p>2,We can see 36 hands picture painted on the window.</p>]]></description>
+
+</case>
+
+<case name="test-cogl-primitives" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-cogl-primitives</p>
+<p>&nbsp;Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-cogl-primitives can be launched well;</p>
+<p>2,we can see a primmitives slides playing in the window;</p>
+<p>3, No garbage on the window</p>]]></description>
+
+</case>
+
+<case name="test-cogl-tex-convert" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;"><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-cogl-tex-convert</p>
+<p>&nbsp;Pass/Fail Criteria:</p>
+<p>1.The clutter demo test-cogl-tex-convert can be launched well;</p>
+<p>2.we can see four hands picture painted on the window.</p>
+<p>3.No garbage on the window</p>]]></description>
+
+</case>
+
+<case name="test-cogl-tex-foreign" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-cogl-tex-foreign</p>
+<p>Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-cogl-tex-foreign can be launched well;</p>
+<p>2,A rectangle with gradient color is painted on the central of the window;</p>
+<p>3, No garbage on the window</p>]]></description>
+
+</case>
+
+<case name="test-cogl-tex-getset" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-cogl-tex-getset</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-cogl-tex-getset can be launched well;</p>
+<p>2, A picture of a hand is painted on the central of the windwo;</p>
+<p>3, No garbage on the window</p>]]></description>
+
+</case>
+
+<case name="test-cogl-tex-polygon" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-cogl-tex-polygon</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-cogl-tex-polygon can be launched well;</p>
+<p>2, Two hands picture draw on the window and do rotate align with Y axis;</p>
+<p>3, If enable the Linear filtering, the antialiasing will be taking effects</p>
+<p>4, Bottom fonts display correctly</p>
+<p>5, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-cogl-tex-tile" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;<br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-cogl-tex-tile</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1, The clutter demo test-cogl-tex-tile can be launched well;</p>
+<p>2, A tiled hands flood&nbsp;play in the window;</p>
+<p>3, No garbage on the window</p>]]></description>
+
+</case>
+
+<case name="test-depth" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;<br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-depth</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-depth can be launched well;</p>
+<p>2, Some objects' animation play in the window including a text box &quot;green&quot;, a text &quot;clutter&quot;, a hands picture,&nbsp; a color region and cube.</p>
+<p>3, No garbage in the window,</p>
+<p>4, Fonts show correctly</p>]]></description>
+
+</case>
+
+<case name="test-textures" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-textures</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-textures can be launched well;</p>
+<p>2, The texture should be shown correctly without garbage</p>
+<p>&nbsp;</p>]]></description>
+
+</case>
+
+<case name="test-events" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11"> </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11"> </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-events</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-events can be launched well</p>
+<p>2, There exist 5 rectangles in the window</p>
+<p>3, Click the blue rectangle will make the window to fullscreen, and click it again will get normal</p>]]></description>
+
+</case>
+
+<case name="test-fullscreen" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11"> </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11"> </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-0.9.2/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-fullscreen</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-fullscreen can be launched well;</p>
+<p>2,A full screen window will be showed and then be closed automatically.</p>]]></description>
+
+</case>
+
+<case name="test-multistage" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-multistage</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-multistage can be launched well;</p>
+<p>2,It will popup multiple-window to holds the different stages.</p>
+<p>3, Fonts on the main window should be correct</p>
+<p>4, No window garbage</p>]]></description>
+
+</case>
+
+<case name="test-offscreen" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run clutter demo test-offscreen</p>
+<p><br />
+Run Instructions:</p>
+<p>./test-interactive test-offscreen</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Print a text &quot;SUCCESS: Able to setup offscreen rendering&quot;</p>]]></description>
+
+</case>
+
+<case name="test-shader" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p>&nbsp;<br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-shader</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1. The demo should be launched well</p>
+<p>2, A picture of hand will be shown in the middle of the window</p>
+<p>3, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-random-text" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-random-text</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1,The clutter demo test-random-test can be launched well;</p>
+<p>2,It will play the random text&nbsp;flood&nbsp;in the window;&nbsp;</p>]]></description>
+
+</case>
+
+<case name="test-text" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">    </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2,./test-interactive test-text</p>
+<p>&nbsp;<br />
+Pass/Fail Criteria:</p>
+<p>1,the clutter demo test-text can launched well;</p>
+<p>2,you can input some text to the window;</p>]]></description>
+
+</case>
+
+<case name="test-actors" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: SimSun; font-size: 10pt;">2, ./test-interactive test-actors</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in;"><span lang="ZH-CN" style="font-family: SimSun; font-size: 10pt;">1,the </span><span lang="EN-US" style="font-family: &quot;Times New Roman&quot;; font-size: 10.5pt;">test-actors should be lanched well</span></p>
+<p style="margin: 0in;"><span lang="EN-US" style="font-family: &quot;Times New Roman&quot;; font-size: 10.5pt;">2,every actors moved smoothly</span><span lang="ZH-CN" style="font-family: SimSun; font-size: 10pt;">, no garbage</span></p>
+<p lang="EN-US" style="margin: 0in; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt;">3,click event should be responsed timely</p>
+<p lang="EN-US" style="margin: 0in; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt;">4,click the hand, it should be disappear</p>]]></description>
+
+</case>
+
+<case name="test-clip" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">     </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">     </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-clip</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">     </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial;"><span lang="ZH-CN" style="font-size: 10pt;">1,the </span><span lang="EN-US" style="font-size: 10.5pt;">application should be launched well</span></p>
+<p style="margin: 0in; font-family: Arial;"><span lang="EN-US" style="font-size: 10.5pt;">2,No garbage on the window</span></p>
+<p style="margin: 0in; font-family: Arial;"><span lang="EN-US" style="font-size: 10.5pt;">3,Using the mouse to clip on the window, the other areas will be cleaned</span></p>]]></description>
+
+</case>
+
+<case name="test-cogl-multitexture" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-cogl-multitexture</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in;"><span lang="ZH-CN" style="font-family: Arial; font-size: 10pt;">1,the application </span><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">should be launched well</span></p>
+<p style="margin: 0in;"><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">2,the texture of handle image could be rotation smoothly without garbage</span></p>]]></description>
+
+</case>
+
+<case name="test-cogl-vertex-buffer" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-cogl-vertex-buffer</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in;"><span lang="ZH-CN" style="font-family: Arial; font-size: 10pt;">1,the demo </span><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">should be launched well</span></p>
+<p style="margin: 0in; font-family: Arial;"><span lang="EN-US" style="font-size: 10.5pt;">2, Senaro moves smoothly</span><span lang="ZH-CN" style="font-size: 10pt;">, no garbage</span></p>]]></description>
+
+</case>
+
+<case name="test-easing" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-easing</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;"><span lang="ZH-CN" style="font-family: Arial; font-size: 10pt;">1,the</span><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;"><span style=""> application </span>should be launched well</span></p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;"><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">2, The fonts should display correctly</span></p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;"><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">3, A smalll recatangle will move to the cursor when mouse clicing</span></p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;"><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">4, No garbage on the window</span></p>]]></description>
+
+</case>
+
+<case name="test-grab" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-grab</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in;"><span lang="ZH-CN" style="font-family: Arial; font-size: 10pt;">1,the</span><span lang="EN-US" style="font-family: SimSun; font-size: 10.5pt;"> demo </span><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">should be launched well</span></p>
+<p style="margin: 0in;">&nbsp;</p>
+<p style="margin: 0in;"><span lang="ZH-CN" style="font-family: Arial; font-size: 10pt;">2.</span>5 rectanges with different colors are shown in the window</p>
+<p style="margin: 0in;"><span lang="ZH-CN" style="font-family: Arial; font-size: 10pt;">3,the </span><span lang="EN-US" style="font-family: SimSun; font-size: 10.5pt;">application </span><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;"><span style="">&nbsp;</span>should be launched well</span></p>
+<p style="margin: 0in;"><span lang="EN-US" style="font-family: Arial; font-size: 10.5pt;">4,Click on the blue rectangle, it will be disappeared</span></p>
+<p>&nbsp;</p>
+<p style="margin: 0in;">&nbsp;</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>]]></description>
+
+</case>
+
+<case name="test-paint-wrapper" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-paint-wrapper</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">should be launched well   </meta>
+</meta>
+</meta>
+</p>
+<p>2, Serveral pictures rotates in the window</p>
+<p>3, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-perspective" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">     </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">Seems it's not existed from clutter-1.0.0 any more. Disable the testing for this case</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="OneNote.File">
+<meta name="Generator" content="Microsoft OneNote 11">     </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-perspective</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo could be launched well</p>
+<p>2, Full screen window filled with gray color</p>]]></description>
+
+</case>
+
+<case name="test-pixmap" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-pixmap</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, 3 picutures moves in the window smoothly</p>
+<p>3, Fonts are shown correctly</p>
+<p>4, Pixmaps (the moving pictures) are shown correctly</p>]]></description>
+
+</case>
+
+<case name="test-project" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-project</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, the demo should be launched well</p>
+<p>2, A white transformed rectangle and 4 small blue ractangles are shown on the window.</p>
+<p>3, Drag the blut ractangle will cause the white ractangle moving</p>]]></description>
+
+</case>
+
+<case name="test-rotate" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-rotate</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, The picuture of a hand rotate smoothly with some fonts</p>
+<p>3, fonts are shown well</p>]]></description>
+
+</case>
+
+<case name="test-scale" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-scale</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, A gray rectangle is shown in the middle of the window</p>
+<p>3, A white rectangle moves from different direction and scales</p>
+<p>4, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-score" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-actor-score</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Some information is shown in the console:</p>
+<p>Score started<br />
+&nbsp;Started timeline: `Timeline 1'<br />
+&nbsp;Completed timeline: `Timeline 1'<br />
+&nbsp;Started timeline: `Timeline 2'<br />
+&nbsp; Started timeline: `Timeline 3'<br />
+&nbsp;&nbsp; Started timeline: `Timeline 5'<br />
+&nbsp;&nbsp; Completed timeline: `Timeline 3'<br />
+&nbsp;&nbsp; Started timeline: `Timeline 4'<br />
+&nbsp;&nbsp; Completed timeline: `Timeline 2'<br />
+&nbsp; Completed timeline: `Timeline 5'<br />
+&nbsp;Completed timeline: `Timeline 4'<br />
+Score completed</p>]]></description>
+
+</case>
+
+<case name="test-script" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-script</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, There exist 3 rectangles in the window</p>
+<p>3, Click on the red rectangle, it will move with a picture</p>
+<p>4,Click on the blue rectangle, it will disappear</p>
+<p>5, click on the green rectangle, the window will be closed</p>]]></description>
+
+</case>
+
+<case name="test-text-field" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-text-field</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, Fonts are shown correctly in the window</p>
+<p>3, Texts can be inputted to the text field</p>
+<p>4, No garbage in the window</p>]]></description>
+
+</case>
+
+<case name="test-texture-async" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-texture-async</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, the demo should be launched well</p>
+<p>2, No garbage in the window</p>
+<p>3, The pictures should move smoothly</p>
+<p>&nbsp;</p>]]></description>
+
+</case>
+
+<case name="test-texture-quality" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-texture-quality</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, No garbage in the window</p>
+<p>3, A picture can be move in and move out smoothly</p>]]></description>
+
+</case>
+
+<case name="test-unproject" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-unproject</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1,The demo should be launched well</p>
+<p>2, The window will response to mouse click events</p>
+<p>3, No window garbage</p>]]></description>
+
+</case>
+
+<case name="test-viewport" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">TBA(To Be Added)</p>
+<p><br />
+Run Instructions:</p>
+<p>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="OneNote.File" name="ProgId">
+<meta content="Microsoft OneNote 11" name="Generator">  </meta>
+</meta>
+</meta>
+</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">1, cd 'dir'/clutter-xxx/tests/interactive</p>
+<p style="margin: 0in; font-family: Arial; font-size: 10pt;">2, ./test-interactive test-viewport</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1, The demo should be launched well</p>
+<p>2, No garbage in the window</p>
+<p>3, The picture rotates smoothly in the window</p>]]></description>
+
+</case>
+</set>
+</suite>
+</testdefinition>
