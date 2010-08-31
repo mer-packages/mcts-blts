@@ -74,7 +74,7 @@ Testing environment
 ---------------------
 The network.jpg in the same directory shows ConnMan test environment:
 + Test machine: This is the device/machine that we test for MeeGo.
-+ 3G network: China Unicom 3G network
++ 3G network: A 3G network
 + Bluetooth network: Anycom EDR access point to provide bluetooth PANU
 + Ethernet: Local ethernet
 + WiFi Guest: Intel has a Guest network that can be used by visitor to access Internet. We use this network to test basic WiFi features by default.
