@@ -1,0 +1,328 @@
+Overview
+========
+
+This package contains several ALSA core functionality tests for generic
+Linux-y mobile platforms.
+
+Software Requirements
+=====================
+
+Building the package requires
+  * linux >= 2.6.28
+  * GNU libc >= 2.1
+  * libbltscommon-dev >= 0.2.6
+  * kernel-headers or linux-libc-dev, depending on which one provides asound.h
+  * dbus >= 1.2 (and development files)
+  * glib >= 2.12 (and development files)
+  * dbus-glib >= 0.78 (and development files)
+
+Running the tests in the package requires
+  * linux >= 2.6.28
+  * GNU libc >= 2.1
+  * libbltscommon >= 0.2.6
+  * dbus >= 1.2
+  * glib >= 2.12
+  * dbus-glib >= 0.78
+
+Hardware requirements
+=====================
+
+Running the tests requires
+  * One DUT
+
+Bluetooth connection automation requires a device supporting the A2DP profile.
+
+Building the package
+====================
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+To build debian package
+
+ $ dpkg-buildpackage -rfakeroot
+
+Test cases
+==========
+
+Short list:
+1: ALSA presence check
+2: Open and close PCM devices
+3: Open and close timer
+4: Open and close controls
+5: Open and close hwdeps
+6: Enumerate control elements
+7: Power management
+8: Enumerate devices with control interface
+9: Add and remove control element
++ PCM playback and record cases generated from configuration
+
+The test cases are:
+   * ALSA presence check: checks needed /dev/snd* entries and modules
+   * Open and close PCM devices: opens and queries basic information
+     from all available PCM devices
+   * Open and close timer: opens and queries basic information from ALSA timer
+   * Open and close controls: opens and queries basic information from
+     control devices
+	* Open and close hwdeps: opens and queries basic information from
+     hw dependency -devices
+   * Enumerate control elements: queries information of all control elements
+     and their current settings from all control devices
+   * Power management: sets and queries power state from all devices
+   * Enumerate devices with control interface: Queries information about all pcm, hw dep
+     and rawmidi devices from control device
+   * Add and remove control element: Creates, replaces and removes user control element.
+     Tests also element lock/unlock.
+
+PCM playback and record cases are generated from a configuration file. Control
+settings can be specified for each test set. Possible parameters for these cases
+are:
+   * PCM playback: (sub)device, sample rate, channel count, access mode, sample
+     format, IO synchronisation
+   * PCM recording: (sub)device, sample rate, channel count, access mode, sample
+     format
+
+
+Running the tests
+=================
+
+Run as root:
+
+ $ blts_alsa_core_test
+
+This will execute tests using default configuration file, which is;
+/usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf
+Configuration file is platform dependant, see section "Configuration"
+
+The test results are printed to terminal and also to
+/var/log/tests/blts_alsa_core.txt.
+
+Other possible execution parameters for blts_alsa_core_test:
+   * -l: Used log file, default blts_alsa_core.txt
+   * -e: Execute single or multiple selected tests, for example -e 1,4,5.
+   * -en: Execute test by name, for example -en "My test X"
+   * -s: Show list of all tests
+   * -?: This message
+   * -nc: Do not output log to terminal
+   * -v: Verbose logging
+   * -p: Enables profiling of ioctl calls
+   * -c: Used configuration file
+
+Configuration file
+==================
+
+Configuration file defines ALSA mixer (control) settings and used playback
+and recording parameters. These settings depend on platform. Example file
+is included and is based on a Intel HDA desktop PC.
+
+Simple configuration file example;
+#----------
+[defaults]
+	[control]
+		card 0
+		set "Master Playback Volume" max
+		set "PCM Playback Volume" max
+		set "Master Playback Switch" off
+		set "Headphone Playback Switch" off
+		set "Front Playback Switch" off
+		set "Capture Switch" off
+		set "IEC958 Playback Switch" off
+		set "IEC958 Default PCM Playback Switch" off
+	[end_control]
+[end_defaults]
+
+[testset]
+	description "front headphone"
+	[control]
+		card 0
+		set "Master Playback Volume" max
+		set "PCM Playback Volume" max
+		set "Master Playback Switch" on
+		set "Headphone Playback Switch" on
+		set "Front Playback Switch" on
+	[end_control]
+
+	[playback]
+		card 0
+		device 0
+		rates 44100 96000 192000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED NONINTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		freq 1000
+	[end_playback]
+[end_testset]
+
+[testset]
+	description "digital"
+	[control]
+		card 0
+		set "Master Playback Volume" max
+		set "PCM Playback Volume" max
+		set "Master Playback Switch" on
+		set "IEC958 Playback Source" PCM
+		set "IEC958 Playback Switch" on
+	[end_control]
+
+	[playback]
+		card 0
+		device 1
+		rates 44100 96000 192000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		freq 1000
+	[end_playback]
+[end_testset]
+
+[testset]
+	description "front mic with max volume"
+	[control]
+		card 0
+		set "Input Source" "Front Mic"
+		set "Capture Switch" on
+		set "Capture Volume" max
+		set "Front Mic Boost" min
+	[end_control]
+
+	[recording]
+		card 0
+		device 0
+		rates 44100 96000 192000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED
+		hw_resampling 1
+		duration 5
+	[end_recording]
+[end_testset]
+#----------
+
+The above configuration file produces following test cases;
+
+PCM playback front headphone (0:0 44100 2 INTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 44100 2 MMAP_INTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 44100 2 NONINTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 96000 2 INTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 96000 2 MMAP_INTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 96000 2 NONINTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 192000 2 INTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 192000 2 MMAP_INTERLEAVED S16_LE SYNC)
+PCM playback front headphone (0:0 192000 2 NONINTERLEAVED S16_LE SYNC)
+PCM playback digital (0:1 44100 2 INTERLEAVED S16_LE SYNC)
+PCM playback digital (0:1 44100 2 MMAP_INTERLEAVED S16_LE SYNC)
+PCM playback digital (0:1 96000 2 INTERLEAVED S16_LE SYNC)
+PCM playback digital (0:1 96000 2 MMAP_INTERLEAVED S16_LE SYNC)
+PCM playback digital (0:1 192000 2 INTERLEAVED S16_LE SYNC)
+PCM playback digital (0:1 192000 2 MMAP_INTERLEAVED S16_LE SYNC)
+PCM recording front mic with max volume (0:0 44100 2 INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 44100 2 MMAP_INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 48000 2 INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 48000 2 MMAP_INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 96000 2 INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 96000 2 MMAP_INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 192000 2 INTERLEAVED S16_LE)
+PCM recording front mic with max volume (0:0 192000 2 MMAP_INTERLEAVED S16_LE)
+
+Configuration file format
+=========================
+
+[defaults] section:
+
+Defines default control element settings. These settings are applied before and
+after each test case. Defaults -section can contain only [control] section(s).
+
+[testset] section:
+
+Defines a set of settings for playback and/or recording tests. A configuration
+file can contain multiple testset sections, and settings within one section do
+not interfere with other testset sections. If testset section contains multiple
+playback/recording sections, the tests from each recording/playback section are
+executed in parallel.
+
+Possible variables:
+   * description "<short description>": Description for the testset.
+
+[control] section:
+
+Defines mixer (control) settings. The settings are applied in the given order
+before playback or recording. Currently the settings are not restored to
+original state after playback or recording finishes.
+
+Possible variables:
+   * card X: Defines used soundcard. X can be from 0...available soundcards.
+   * set "<control name>"|X max|min|on|off|Y: Sets given control element to
+     given value. Control element can be defined by control element's name or
+     id.
+
+[playback]/[recording] section:
+
+Defines PCM parameters for playback and recording.
+
+Possible variables:
+   * card X: Used soundcard. X can be from 0...available soundcards.
+   * device X: Used PCM device. X can be from 0...available pcm devices.
+   * rates X Y Z... : Used samplerates as samples per second.
+   * formats X Y Z... : Used sample formats. Currently supported are:
+      * S8: Signed 8-bit.
+      * S16_LE: Signed 16-bit little endian.
+      * S24_LE: Signed 24-bit little endian.
+      * S32_LE: Signed 32-bit little endian.
+   * channels X Y Z... : Used channel counts.
+   * access X Y Z... : Used access methods.  Currently supported are:
+      * INTERLEAVED: Samples from all channels are interleaved into single buffer.
+      * MMAP_INTERLEAVED: Same as above, but the buffer is memory mapped.
+      * NONINTERLEAVED: Samples from all channels are in separate buffers.
+        Currently for playback only.
+   * hw_resampling X: Use hardware resampling.
+   * async X Y Z... : Use synchronous or asynchronous IO method (playback only).
+     Currently supported values are:
+      * SYNC: Regular (synchronous) IO.
+      * ASYNC_SIGNAL: Asynchronous IO, where the kernel tells the test when
+        the audio hardware is prepared to receive more data.
+      * ASYNC_TIMER: Asyncronous IO, where a constant stream of IO is done to
+        the hardware, regulated by periodic timer signals.
+   * duration X: Duration in seconds.
+   * freq: Sine wave frequency (playback only).
+   * link X Y : Synchronize IO on this device with card X device Y. Only for
+         async = SYNC.
+
+Some of the variables allow multiple values, and the test cases are created as a
+combination of all values.
+
+[bluetooth] section:
+
+Defines Bluetooth audio settings. If a Bluetooth A2DP device is defined here,
+it will be connected for the duration of the test. Pairing a device is not
+supported as yet, and should be done before testing.
+
+Note that just connecting to a device is usually not enough for sound output.
+In most cases platform-specific mixer settings are needed.
+
+Possible variables:
+   * connect "nn:nn:nn:nn:nn:nn" : MAC of Bluetooth device supporting A2DP to
+     connect to.
+   * pin "nnnn" : PIN for the device. (Pairing not implemented yet.)
+
+[tuner] section:
+
+Defines v4l2 tuner settings.
+
+Possible variables:
+   * device "" : Used tuner device, for example "/dev/radio0"
+   * freq X : Used frequency in kHz.
+   * scan_select X : Scan for channels and select channel X. This works only
+     with devices capable of hardware frequency seek (VIDIOC_S_HW_FREQ_SEEK).
+
