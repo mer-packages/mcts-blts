@@ -1,0 +1,110 @@
+BLTS USB peripheral-side passthrough gadget driver
+==================================================
+
+The gadget driver allows configuring arbitrary endpoint configurations from user
+space and writing/reading data to/from endpoints via character devices.
+
+Usage
+=====
+
+See test_gadgetdrv.c. Short version;
+   * Load the module. This does not register the module as a gadget driver.
+
+   * Give endpoint configuration with GADGETDRV_IOCSCONF (see
+     gadgetdrv_common.h) to module by using any one of the device nodes.
+
+   * Use GADGETDRV_IOCSTART to register the gadget driver.
+
+   * Read and/or write to endpoints. Each endpoint has a separate device node.
+
+   * When done, call GADGETDRV_IOCSTOP to unregister the gadget driver. Now you
+     can use GADGETDRV_IOCSCONF to give different endpoint configuration, and
+     start the gadget again with GADGETDRV_IOCSTART.
+
+Build
+=====
+
+  * Use the included Makefile (you'll need a kernel module build environment;
+    set KERNELDIR to point to your tree if the Makefile doesn't find it)
+
+Required kernel configuration:
+  * CONFIG_RING_BUFFER=y/m
+  * CONFIG_USB_GADGET=y
+  * CONFIG_USB_GADGET_DUALSPEED=y (recommended)
+  * CONFIG_USB_OTG=y (with OTG capable devices)
+  * And none of the gadgets should be compiled into kernel.
+  * ...TBD
+
+Configuration
+=============
+
+Configuration/interface:
+   * int max_power : Maximum power consumption of the USB device from the bus
+     in mA. (NOTE: this value is not in 2mA units as in USB specification)
+
+   * enum usbdrv_device_speed speed : Highest speed the driver/device handles.
+     USBDRV_SPEED_LOW, USBDRV_SPEED_FULL or USBDRV_SPEED_HIGH (USB 2.0).
+     USB 3.0 super speed is not supported yet.
+
+   * enum usbdrv_device_speed used_speed : Used speed. For dual speed devices
+     operating at high speed this means;
+     * USBDRV_SPEED_UNKNOWN: Support any speed.
+     * USBDRV_SPEED_FULL: Full speed only.
+     * USBDRV_SPEED_HIGH: High speed only.
+
+Endpoints:
+   struct gadgetdrv_endpoint_config endpoints : array for 16 endpoint
+   configurations, each one contains;
+
+   * enum usbdrv_endpoint_type type : One of usbdrv_endpoint_types; bulk,
+     isochronous, int or control. USBDRV_EP_TYPE_NONE indicates that the
+     endpoint is not used.
+
+   * enum usbdrv_endpoint_direction_flags direction : USBDRV_EP_IN or
+     USBDRV_EP_OUT. Ignored with control endpoints as they are always
+     bidirectional.
+
+   * unsigned max_packet_size : Maximum packet size this endpoint is capable of
+     sending or receiving. For isochronous endpoints, this value is used to
+     reserve the bus time in the schedule, required for the per-(micro)frame
+     data payloads.
+
+   * unsigned interval : Interval for polling endpoint for data transfers.
+     Expressed in frames or microframes depending on the device operating speed
+     (i.e., either 1 millisecond or 125 μs units).
+     For full-/high-speed isochronous endpoints, this value must be in the range
+     from 1 to 16.
+     For full-/low-speed interrupt endpoints, the value of this field may be
+     from 1 to 255.
+     For high-speed bulk/control OUT endpoints, the field must specify the
+     maximum NAK rate of the endpoint. A value of 0 indicates the
+     endpoint never NAKs. Other values indicate at most 1 NAK each bInterval
+     number of microframes. This value must be in the range from 0 to 255.
+
+   * unsigned transfer_size :  Size of usb transfer buffer. A reasonable value
+     is between max_packet_size and 65536.
+
+Currently the driver does not support multiple configurations or interfaces at
+the same time. Only one configuration and interface is used.
+
+Special error codes
+===================
+
+read/write:
+   * -ECONNABORTED: Hardware forced ep reset.
+   * -ECONNRESET: Connection reset, request dequeued.
+   * -ESHUTDOWN: Disconnected from host.
+   * -EOVERFLOW: Buffer overrun.
+   * -EREMOTEIO: Short read.
+   * -ENOTCONN: Endpoint does not exist (not configured).
+
+GADGETDRV_IOCSCONF:
+   * -EPERM: Cannot set configuration while gadget driver is registered. Call
+     GADGETDRV_IOCSTOP first.
+
+GADGETDRV_IOCSTART:
+   * -EPERM: Gadget driver already started.
+
+GADGETDRV_IOCSTOP:
+   * -EPERM: Gadget driver already stopped.
+

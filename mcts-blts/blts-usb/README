@@ -1,0 +1,131 @@
+Overview
+
+This package contains test runner and kernel modules for usb testing.
+Use of included test modules for host and gadget side is required.
+
+Requirements
+
+Running the tests in the package requires
+  * linux >= 2.6.15
+  * GNU libc >= 2.3
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use the Debian packaging tools for the build; these
+will run Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ dpkg-buildpackage
+
+( you may need some combination of '-rfakeroot', '-uc', '-us', etc, depending
+  on your system configuration )
+
+Alternatively, the packaging can be skipped by just running with Autotools:
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+Running the tests
+
+Required hardware
+
+* Supported USB cable
+* Device with USB host capability (e.g. PC)
+* Device with USB peripheral capability (e.g. Nokia N810/N900) 
+
+How to setup test enviroment
+
+1. Make sure usb cable is disconnected between devices
+2. Set up host side (e.g. PC)
+3. Set up gadget side (peripheral device)
+4. Connect cable
+5. Execute tests 
+
+Executing tests
+
+NOTE: Before executing test cases it must be determined if used devices are
+capable of acting as peripheral or host. This depends on USB controller chips
+of devices and necessary information should be available from device vendors.
+Furthermore, current gadget driver implementation is built over MUSB driver
+implementation available in Linux kernel. Possible different implementations
+by device vendors may cause incompatibility with this test driver. 
+
+$ blts_usb_testrunner -C [config file] -e [test number]
+
+Configuration files
+
+This test asset uses two configuration files: One for generic test execution
+options and one for endpoint configuration. Endpoint configuration file is
+linked to base configuration files thus only base file path is given as
+parameter. Configuration files must be used, as they contain endpoint
+configuration for driver.
+
+Currently following example base configuration files are included in the package:
+
+    * blts-usb-testrunner-bulk.cnf
+    * blts-usb-testrunner-int.cnf
+    * blts-usb-testrunner-isoc.cnf 
+
+The base files are linked to endpoint configuration files and following examples
+are provided with test package:
+
+    * ep-configuration-bulk.cfg
+    * ep-configuration-int.cfg
+    * ep-configuration-isoc.cfg 
+
+NOTE: Supported endpoint configurations differ from device to device and they
+should be modified according to test execution requirements. These configuration
+files are provided as examples and should not be used as such during proper test
+execution. 
+
+Common test execution guidelines
+
+NOTE:
+* Default config files are installed to /usr/share/blts-usb-tests/.
+* Drivers must be initialized before running other test cases.
+* All USB cables MUST be disconnected when executing initializations!
+
+NOTE: All other gadget drivers MUST be unloaded before test execution in
+used DUT!
+
+You can use command lsmod to determine which modules are loaded in memory:
+
+$ lsmod
+
+See if some gadget driver is found. For example g_file_storage is a mass
+storage module, but this depends on used HW and SW. The module can be unloaded
+with following command:
+
+$ modprobe -r g_file_storage
+
+Test cases
+
+Setup and initialization:
+
+* This test is run on host device.
+# This test is run on peripheral device. 
+
+ * USB - Setup host driver
+     Setup host driver for test execution.
+     Extra command line parameters:
+           -h <name> : Use <name> as host driver (default: blts_usb_host)
+
+ # USB - Setup peripheral driver
+     Setup peripheral driver for test execution.
+     Extra command line parameters:
+           -p <name> : Use <name> as peripheral driver (default: blts_gadget)
+
+Data transfer:
+
+ * USB - Read test
+     Read data from available endpoints.
+     Extra command line parameters:
+           -h <name> : Use <name> as host driver (default: blts_usb_host)
+
+ * USB - Write test
+     Write data to available endpoints.
+     Extra command line parameters:
+           -h <name> : Use <name> as host driver (default: blts_usb_host)
