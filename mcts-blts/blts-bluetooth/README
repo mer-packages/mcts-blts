@@ -1,0 +1,200 @@
+Overview
+
+This package contains functional tests for Bluez bluetooth stack functionality
+for Linux mobile platforms.
+
+
+Requirements
+
+Running the tests in the package requires
+  * linux >= 2.6.15
+  * GNU libc >= 2.3
+  * Bluez (libbluetooth and kernel modules) >= 4.12
+  * Bluez hcidump tool (>= 1.4)
+
+Optionally, a min test framework module will be built if it is present.
+
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use the Debian packaging tools for the build; these
+will run Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ dpkg-buildpackage
+
+( you may need some combination of '-rfakeroot', '-uc', '-us', etc, depending
+  on your system configuration )
+
+Alternatively, the packagin can be skipped by just running with Autotools:
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+
+Running the tests
+
+blts_bluetooth_test <logfile> <test> <test-params>
+	This runs a bluetooth functional test.
+	Parameters: <logfile>     - file for output and result logging
+                    <test>        - test name
+		    <test-params> - parameters for test (if any)
+
+Note that the test case name should be given in quotes since they contain spaces.
+
+Tests:
+
+Core-Bluetooth scan
+  Parameters: ( no parameters )
+   * Perform inquiry with first available Bluetooth adapter, resolving names for
+     any found remote devices.
+
+Core-Bluetooth drivers and userspace check
+  Parameters: ( no parameters )
+   * Verify that Bluez-related components are available and correctly installed
+     on the system.
+
+Core-Bluetooth receive L2CAP connection
+  Parameters: ( no parameters )
+   * Start test server for use with L2CAP tests. The server stops after one
+     client connection has been served.
+
+Core-Bluetooth connect with L2CAP
+  Parameters: <server-mac>
+   * Connect with L2CAP to test server running on device <server-mac>, then
+     disconnect.
+
+Core-Bluetooth ping-pong transfer with L2CAP
+  Parameters: <server-mac>
+   * Connect with L2CAP to test server running on device <server-mac>, transmit
+     a short message and verify the returned reply, then disconnect.
+
+Core-Bluetooth receive RFCOMM connection
+  Parameters: ( no parameters )
+   * Start test server for use with RFCOMM tests. The server stops after one
+     client connection has been served.
+
+Core-Bluetooth connect with RFCOMM
+  Parameters: <server-mac>
+   * Connect with RFCOMM to test server running on device <server-mac>, then
+     disconnect.
+
+Core-Bluetooth ping-pong transfer with RFCOMM
+  Parameters: <server-mac>
+   * Connect with RFCOMM to test server running on device <server-mac>, transmit
+     a short message and verify the returned reply, then disconnect.
+
+Core-Bluetooth connect with HCI
+  Parameters: <remote-mac>
+   * Connect just the link to device <remote-mac>, wait a while, the disconnect.
+     (Note: you may need to be root for this).
+
+Core-Bluetooth transfer ACL data with HCI
+  Parameters: <remote-mac>
+   * Connect to device <remote-mac>, and send ACL data packet. The counterpart to
+     this test (other DUT) is hci-receive-acl-data
+     (Note: you may need to be root for this).
+
+Core-Bluetooth receive ACL data with HCI
+  Parameters: ( no parameters )
+   * Start receiving ACL data packets from hci device until ACL test data packet
+     arrives. The counterpart to this test (other DUT) is hci-transfer-acl-data
+     (Note: you may need to be root for this).
+
+Core-Bluetooth change name with HCI
+  Parameters: ( no parameters )
+   * Change local name and wait until other Bluetooth device is verified name change
+     The counterpart to this test (other DUT) is hci-verify-name
+     (Note: you may need to be root for this).
+
+Core-Bluetooth verify name with remote HCI
+  Parameters: <remote-mac>
+   * Connect to device <remote-mac>, and verify name of the device. The counterpart to
+     this test (other DUT) is hci-change-name
+     (Note: you may need to be root for this).
+
+Core-Bluetooth change class with HCI
+  Parameters: ( no parameters )
+   * Change class of device and wait until other Bluetooth device is verified class change
+     The counterpart to this test (other DUT) is hci-verify-class
+     (Note: you may need to be root for this).
+
+Core-Bluetooth verify class with remote HCI
+  Parameters: <remote-mac>
+   * Connect to device <remote-mac>, and verify class of the device. The counterpart to
+     this test (other DUT) is hci-change-class
+     (Note: you may need to be root for this).
+
+Core-Bluetooth reset connection with HCI
+  Parameters: <remote-mac>
+   * Connect, reset connection and connect again to <remote-mac>, wait a while and disconnect.
+     (Note: you may need to be root for this).
+
+Core-Bluetooth audit incoming HCI connection
+  Parameters: ( no parameters )
+   * Wait for incoming connection and trace HCI events and commands. Sequence
+     is audited for test pass/fail. Test requires tester to establish some level
+     of Bluetooth connection to the device; for example, starting pairing with a
+     mobile handset and cancelling out is enough. Running any connect test from
+     the counterpart also works.
+
+Core-Bluetooth Read HCI controller information local
+  Parameters: ( no parameters )
+   * Read information about local device, create L2CAP socket and wait for information
+     packet from remote device. Verify that locally collected information matches with
+     received data. The counterpart to this test (other DUT) is hci-ctrl-info-remote
+     (Note: you may need to be root for this).
+
+Core-Bluetooth Read HCI controller information remote
+  Parameters: <remote-mac>
+   * Collect information about remote device (other DUT), connect to device <remote-mac>,
+     and send collected information package with L2CAP connection to remote side.
+     The counterpart to this test (other DUT) is hci-ctrl-info-local
+     (Note: you may need to be root for this).
+
+Core-Bluetooth Read connected link information local
+  Parameters: ( no parameters )
+   * Create L2CAP sockets with multiple channels, read information about connected links, and
+     wait for link information packet from remote device. Verify that locally collected link
+     information matches with received data. The counterpart to this test (other DUT) is
+     hci-link-info-remote (Note: you may need to be root for this).
+
+Core-Bluetooth Read connected link information remote
+  Parameters: <remote-mac>
+   * Connect to device <remote-mac> using multiple channels (other DUT), collect information
+     about connected links, and send collected link information package with L2CAP connection
+     to remote side. The counterpart to this test (other DUT) is hci-link-info-local
+     (Note: you may need to be root for this).
+
+Core-Bluetooth authentication with pairing as master
+  Parameters: <remote-mac>
+   * Perform pairing with another bluetooth device. The device under test initiates
+     the pairing.
+   * Running this test requires stopping bluetoothd on the test device (as root,
+     try "invoke-rc.d bluetooth stop" or "initctl stop bluetoothd", depending
+     on distribution).
+   * Set the <remote-mac> to the Bluetooth MAC of the other device.
+   * Only one device needs to run the test software; the other can be any
+     Bluetooth device (that can use the given PIN). In this case, the tester
+     needs to enter the PIN manually within the timeout period on the other
+     device. The PIN used is "1234". The timeout is 10 seconds for each test
+     step. If both ends run the test (one as master, one as slave), this is
+     taken care of automatically.
+
+Core-Bluetooth authentication with pairing as slave
+  Parameters: (none)
+   * Perform pairing with another bluetooth device. The device under test waits
+     for incoming pairing request.
+   * Running this test requires stopping bluetoothd on the test device (as root,
+     try "invoke-rc.d bluetooth stop" or "initctl stop bluetoothd", depending
+     on distribution).
+   * Only one device needs to run the test software; the other can be any
+     Bluetooth device (that can use the given PIN). In this case, the tester
+     needs to enter the PIN manually within the timeout period on the other
+     device. The PIN used is "1234". The timeout is 10 seconds for each test
+     step. If both ends run the test (one as master, one as slave), this is
+     taken care of automatically.
+
