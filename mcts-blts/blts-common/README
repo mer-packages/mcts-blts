@@ -1,0 +1,112 @@
+blts-common is a general library for BLTS project internal usage
+It includes common functions like
+ * logging
+ * timing
+ * checking for required components for a test (kernel modules, libraries,
+   binaries,...)
+
+
+Instructions how to take blts-common library in use with your own test modules:
+
+- modifications to configure.ac file:
+
+# Checks for libraries.
+AC_CHECK_LIB([bltscommon], [log_open],,[AC_MSG_ERROR([cannot find libbltscommon])])
+
+# Library configs
+BLTS_COMMON_CFLAGS=`pkg-config --cflags bltscommon`
+BLTS_COMMON_LIBS=`pkg-config --libs bltscommon`
+
+AC_SUBST(BLTS_COMMON_CFLAGS)
+AC_SUBST(BLTS_COMMON_LIBS)
+
+(or just PKG_CHECK_MODULES([BLTSCOMMON],[bltscommon]) - see pkgconfig docs)
+
+- modifications to debian/control file for debian package dependencies:
+
+Source: blts-xyz
+Build-Depends: debhelper (>= 5) blts-common-dev (>= 0.1.0)
+
+Package: blts-xyz
+Depends: ${shlibs:Depends}, blts-common (>= 0.1.0)
+
+
+
+Using the dependency checker
+
+ * #include <blts_dep_check.h>
+
+ * depcheck(rulesfile,loglevel); -> 0 = ok, <0 = nok
+   where
+     rulesfile == name of file containing rules to be checked (see later)
+     loglevel == (0->quiet, 1->log failures, 2->log all) (>0 assumes log open)
+
+ * rules file format:
+    - 1 line per file
+    - rules:
+<strictness> <type> <name>
+
+    - <strictness> == one of (required|optional)
+    - <type> == one of (kmod|bin|lib|file)
+    - <name> == depends on type:
+        * kmod : kernel module; say eg. "g_ether" instead of full path. Checks
+	  correct installation.
+	* bin : executable binary. Give just the base name (no path). Checks
+	  path.
+	* lib : shared library. Give just "libfoo.so" . Checks lib paths,
+	  ldconfig cache.
+	* file : any file. Give full path. Checks read access.
+    - # on first column == comment
+    - examples (ALSA stuff):
+required kmod snd_pcm
+optional bin aplay
+required lib libasound.so
+optional file /usr/share/alsa-base/alsa.default
+
+Using logging functions
+
+ * #include <blts_log.h>
+ * int log_open(const char *filename, int log_to_console);
+   - Use before any logging is done
+   where
+      filename == desired log name. It will be automatically placed in /var/log/tests
+      log_to_console == (0-> no, 1->yes)
+
+ * int log_close();
+   - use when program exits
+
+ * int log_print(const char *format, ...);
+   - basic printing, will print just the text you want
+
+ * void log_set_timestamp(int set_timestamp);
+   - wheter to write timestamp in beginning of log lines
+   where
+      set_timestamp == if you need timestamp on log lines (0->no, 1-> yes)
+
+ * void log_set_level(int level);
+   where
+      level == which messages will be logged (0-> off, 1->fatal messages, 2->error, 3->warn, 4->debug, 5->trace)
+   and these messages you can write with macros
+    BLTS_TRACE(message)
+	BLTS_DEBUG(message)
+	BLTS_WARNING(message)
+	BLTS_ERROR(message)
+	BLTS_FATAL(message)
+  also
+  FUNC_ENTER() - trace level message, shows when entered to certain function
+  FUNC_LEAVE() - trace level message, shows when about to exit from funtion
+
+ * int log_print_level(int level, const char *format, ...);
+   - can be used through macros above or by itself
+   where
+      level == debuglevel (0-5)
+      format == message
+      
+CLI frontend
+
+ * See src/blts-cli-example
+
+Parameter variation
+
+ * See README.ParameterVariation
+

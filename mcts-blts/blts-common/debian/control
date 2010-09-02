@@ -1,0 +1,27 @@
+Source: blts-common
+Section: devel
+Priority: extra
+Maintainer: Jussi Saavalainen <jussi.saavalainen@digia.com>
+Build-Depends: debhelper (>= 5), flex | lex, bison | yacc
+Standards-Version: 3.8.0
+
+Package: libbltscommon-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends}, libbltscommon1 (= ${binary:Version}), ${misc:Depends}
+Description: Common BLTS functions dev package
+ This package contains blts-common library development files
+
+Package: libbltscommon1
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Common BLTS functions
+ Common functions used in BLTS project test assets gathered in one library
+
+Package: libbltscommon-doc
+Section: doc
+Architecture: any
+Depends: ${misc:Depends}
+Description: Common BLTS functions dev package
+ This package contains API documentation for the blts-common library
+ development files
