@@ -3,7 +3,7 @@ blts-common (0.3.7) unstable; urgency=low
   [ Mikko Ojala ]
   * Fixed possible mem allocation bug.
 
--- Kari Laakso <kari.laakso@digia.com>  Tue, 31 Aug 2010 15:44:21 +0300
+ -- Kari Laakso <kari.laakso@digia.com>  Tue, 31 Aug 2010 15:44:21 +0300
 
 blts-common (0.3.6) unstable; urgency=low
 
