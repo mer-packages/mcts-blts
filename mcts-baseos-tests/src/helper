@@ -1,0 +1,131 @@
+#!/bin/sh
+#DESCR: Check Netbook(Eeepc901) SD/MMC Card reader 
+# Copyright (C) 2007, Intel Corporation.
+# 
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.  
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Wang,Jing  <jing.j.wang@intel.com>
+#
+find_sd_device () {
+	local found="NO"    
+	if [ -e /dev/mmcblk0 ]; then
+		echo "mmcblk0"
+		return 0
+	fi
+	for i in sde sdd sdc sdb; do    
+		if [ ! -e /dev/$i ]; then    
+			continue    
+		fi    
+		model=`cat /sys/block/$i/device/model`    
+		if [ "$model" = "Flash Reader    " ]; then    
+			found="YES"    
+			break    
+		fi    
+	done    
+    
+	[ $found = "NO" ] && return 1    
+	echo "$i" 
+  	return 0
+}
+
+get_sd_par () {
+	device=$1
+	num=$2
+	if [ "$device" = "mmcblk0" ]; then
+        	par=${device}p$num
+	else
+        	par=${device}$num
+	fi
+        echo $par
+        return 0
+}
+
+clean_partition () {
+        device=$1
+        for i in 4 3 2 1; do
+                umount /dev/${device}$i
+                parted /dev/${device} rm $i
+        done
+}
+
+get_usb_storage_device () {
+        local found="NO"
+        for i in sde sdd sdc sdb; do
+                if [ ! -e /dev/$i ]; then
+                        continue
+                fi
+                model=`cat /sys/block/$i/device/model`
+                if [ "$model" = "Cruzer Micro    " ]; then
+                        found="YES"
+                        break
+                fi
+        done
+
+        [ $found = "NO" ] && return 1
+        echo "$i" 
+        return 0
+}
+
+get_wlan_interface()
+{
+        try_to_find_usb=$1
+        found=1
+        devices=(`find /sys/devices/ -name wlan*`)
+        for i in ${devices[@]}; do
+                echo $i | grep usb > /dev/null
+                if [ $? -eq $try_to_find_usb ]; then
+                        length=${#i}
+                        length=$(( length - 5 ))
+                        echo ${i:length}
+                        found=0
+                fi
+        done
+        return $found
+}
+
+get_network_interface()
+{
+        try_to_find_usb=$1
+        found=1
+        devices=(`find /sys/devices/ -name eth*`)
+        for i in ${devices[@]}; do
+                echo $i | grep usb > /dev/null
+                if [ $? -eq $try_to_find_usb ]; then
+                        length=${#i}
+                        length=$(( length - 4 ))
+                        echo ${i:length}
+                        found=0
+                fi
+        done
+}
+
+get_internal_wlan_interface()
+{
+        get_wlan_interface 1
+        return $?
+}
+
+get_internal_network_interface()
+{
+        get_network_interface 1
+        return $?
+}
+
+get_usb_network_interface()
+{
+        get_network_interface 0
+        return $?
+}
+

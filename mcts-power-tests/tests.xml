@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="Power">
+<description></description>
+<set name="netbook" >
+	<case name="chk_cpufreq_ondemand">
+		<description> Check ondemand cpufreq governor</description>
+		<step>/opt/mcts-power-tests/chk_cpufreq_ondemand </step>
+	</case>
+        <case name="pm_tickless_sce_idle">
+                <description> Test cpu tickless feature works when system is idle </description>
+                <step>/opt/mcts-power-tests/pm_tickless_sce_idle.sh</step>
+        </case>
+        <case name="pm_tickless_sce_busy">
+                <description> Test cpu tickless feature works when system is busy </description>
+                <step>/opt/mcts-power-tests/pm_tickless_sce_busy.sh</step>
+        </case>
+        <case name="pm_tickless_enabled">
+                <description> Test cpu tickless feature is enabled </description>
+                <step>/opt/mcts-power-tests/pm_tickless_enabled.sh</step>
+        </case>
+        <case name="pm_acpi_acadapter_001">
+                <description> Test proc ACPI adpater feature </description>
+                <step>/opt/mcts-power-tests/pm_acpi_acadapter_001.sh</step>
+        </case>
+        <case name="pm_acpi_battery_001">
+                <description> Test proc ACPI battery feature </description>
+                <step>/opt/mcts-power-tests/pm_acpi_battery_001.sh</step>
+        </case>
+        <case name="pm_acpi_button_001">
+                <description> Test proc ACPI LID button feature </description>
+                <step>/opt/mcts-power-tests/pm_acpi_button_001.sh</step>
+        </case>
+        <case name="pm_acpi_fan_001">
+                <description> Test proc ACPI fan feature </description>
+                <step>/opt/mcts-power-tests/pm_acpi_fan_001.sh</step>
+        </case>
+        <case name="pm_acpi_thermal_001">
+                <description> Test proc ACPI thermal feature </description>
+                <step>/opt/mcts-power-tests/pm_acpi_thermal_001.sh</step>
+        </case>
+        <case name="pm_acpi_video_001">
+                <description> Test proc ACPI video feature </description>
+                <step>/opt/mcts-power-tests/pm_acpi_video_001.sh</step>
+        </case>
+        <case name="pm_audio_001">
+                <description> Test intel high definition audio codec power management feature </description>
+                <step>/opt/mcts-power-tests/pm_audio_001.sh</step>
+        </case>
+        <case name="pm_gfx_dpms_001">
+                <description> Test Graphic DPMS feature </description>
+                <step>/opt/mcts-power-tests/pm_gfx_dpms_001.sh</step>
+        </case>
+        <case name="pm_gfx_dpms_002">
+                <description> Test if graphics DPMS feature works </description>
+                <step>/opt/mcts-power-tests/pm_gfx_dpms_002.sh</step>
+        </case>
+        <case name="pm_gfx_port_002">
+                <description> Test if unused port should be disconnected </description>
+                <step>/opt/mcts-power-tests/pm_gfx_port_002.sh</step>
+        </case>
+        <case name="ipm_qos_cpudma_001">
+                <description> Test cpu qos feature by cpuidle latency </description>
+                <step>/opt/mcts-power-tests/pm_qos_cpudma_001.sh</step>
+        </case>
+        <case name="pm_qos_cpudma_002">
+                <description> Test cpu qos feature by cpuidle latency +/- 1 </description>
+                <step>/opt/mcts-power-tests/pm_qos_cpudma_002.sh</step>
+        </case>
+        <case name="pm_qos_cpudma_003">
+                <description> Test cpu qos feature by 0 </description>
+                <step>/opt/mcts-power-tests/pm_qos_cpudma_003.sh</step>
+        </case>
+        <case name="pm_qos_cpudma_004">
+                <description> Test cpu qos feature by -1 </description>
+                <step>/opt/mcts-power-tests/pm_qos_cpudma_004.sh</step>
+        </case>
+        <case name="pm_qos_cpudma_005">
+                <description> Test cpu qos feature by -2 </description>
+                <step>/opt/mcts-power-tests/pm_qos_cpudma_005.sh</step>
+        </case>
+        <case name="pm_nbusb_autoenable_001">
+                <description> Test if usb internal device auto suspend feature is enabled </description>
+                <step>/opt/mcts-power-tests/pm_nbusb_autoenable_001.sh</step>
+        </case>
+        <case name="pm_nbusb_autoenable_002">
+                <description> Test if usb internal hub auto suspend feature is enabled </description>
+                <step>/opt/mcts-power-tests/pm_nbusb_autoenable_002.sh</step>
+        </case>
+        <case name="pm_nbusb_autosusp_001">
+                <description> Test if usb internal device auto suspend feature works when device is idle </description>
+                <step>/opt/mcts-power-tests/pm_nbusb_autosusp_001.sh</step>
+        </case>
+        <case name="pm_nbusb_autosusp_002">
+                <description> Test if usb internal device auto suspend feature doesn't work when the device is busy </description>
+                <step>/opt/mcts-power-tests/pm_nbusb_autosusp_002.sh</step>
+        </case>
+</set>
+</suite>
+</testdefinition>

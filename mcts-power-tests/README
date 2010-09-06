@@ -1,0 +1,24 @@
+Introduction
+============
+    Do basic power management testing including ACPI, Tickless etc.
+
+Build and Run
+=============
+    Build the tests:
+ 	cd mcts-3dgfx-tests
+	./pack.sh    -- create a rpm package: power-tests-xx.rpm
+	rpm -ivh power-tests-xx.rpm		--install the test package
+	or make / make install
+	The cases would be installed in /opt/power-tests/
+    Run the tests
+	You can run the scripts directly or from web UI.
+    Test Environment
+	Hardware requirements: handset and netbook
+	Software requirements: X process must be working, and you have to set DISPLAY env variant when you test from a remote end. For example: export DISPLAY=:0.0
+
+Common Install
+==============
+    ./autogen
+    ./configure prefix=/usr
+    make && make install
+
