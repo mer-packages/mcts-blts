@@ -1,159 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
 <description></description>
-<suite name="baseos">
+<suite name="baseos-nb">
 <description></description>
 <set name="netbook" >
 	<case name="chk_usb_EHCI">
 		<description>Check usb EHCI</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_hc_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_hc_001.sh</step>
 	</case>
 	
 	<case name="chk_usb_UHCI">
 		<description>Check usb UHCI</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_hc_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_hc_002.sh</step>
 	</case>
 
 	<case name="chk_usb_keyboard">
 		<description>Check if usb keyboard can be recognized</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_hid_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_hid_001.sh</step>
 	</case>
 
 	<case name="chk_usb_mouse">
 		<description>Check if usb mouse can be recognized</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_hid_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_hid_002.sh</step>
 	</case>
 
 	<case name="chk_root_hub">
 		<description>Check ehci root hub</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_hub_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_hub_001.sh</step>
 	</case>
 	
 	<case name="chk_external_hub">
 		<description>Check if external hub can be recognized</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_hub_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_hub_002.sh</step>
 	</case>
 	
 	<case name="chk_usb_ethernet">
 		<description>Check if external usb ethernet converter can be recognized and get ip</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_network_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_network_001.sh</step>
 	</case>
 	
 	<case name="chk_usb_storage_dev">
 		<description>Check if usb storage device is created</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_001.sh</step>
 	</case>
 	<case name="show_fdisk_info_usb">
 		<description>Show disk info of usb storage device</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_002.sh</step>
 	</case>
 	<case name="create_partition_usb" timeout="60">
 		<description>create partitions on usb storage</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_003.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_003.sh</step>
 	</case>
 	<case name="create_delete_partition_usb" timeout="120">
 		<description>create and delete partitions on usb storage</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_004.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_004.sh</step>
 	</case>
 	<case name="mount_ext3_usb" timeout="120">
 		<description>mount ext3 fs from usb storage</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_005.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_005.sh</step>
 	</case>
 	<case name="copy_data_ext3_usb" timeout="180">
 		<description>copy files to ext3 based usb storage</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_006.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_006.sh</step>
 	</case>
 	<case name="mount_vfat_usb" timeout="120">
 		<description>mount vfat fs from usb storage</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_007.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_007.sh</step>
 	</case>
 	<case name="copy_data_vfat_usb" timeout="180">
 		<description>copy files to vfat based usb storage</description>
-		<step>/opt/mcts-baseos-tests/drv_usb_storage_008.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_usb_storage_008.sh</step>
 	</case>
 	<case name="chk_kernel_config">
 		<description>Check kernel config options</description>
-		<step>/opt/mcts-baseos-tests/kernel_checkcfg_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/kernel_checkcfg_001.sh</step>
 	</case>
 	<case name="chk_cpu_type">
 		<description>Check if cpu is Atom</description>
-		<step>/opt/mcts-baseos-tests/system_cpu_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/system_cpu_001.sh</step>
 	</case>
 	<case name="chk_sdmmc_dev">
 		<description>Check if sdmmc device is created</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_001.sh</step>
 	</case>
 	<case name="show_fdisk_info_sdmmc">
 		<description>Show disk info of sdmmc device</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_002.sh</step>
 	</case>
 	<case name="create_partition_sdmmc" timeout="60">
 		<description>create partitions on sdmmc</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_003.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_003.sh</step>
 	</case>
 	<case name="create_delete_partition_sdmmc" timeout="60">
 		<description>create and delete partitions on sdmmc</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_004.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_004.sh</step>
 	</case>
 	<case name="mount_ext3_sdmmc" timeout="120">
 		<description>mount ext3 fs from sdmmc</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_005.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_005.sh</step>
 	</case>
 	<case name="copy_data_ext3_sdmmc" timeout="180">
 		<description>copy files to ext3 based sdmmc</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_006.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_006.sh</step>
 	</case>
 	<case name="mount_vfat_sdmmc" timeout="120">
 		<description>mount vfat fs from sdmmc</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_007.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_007.sh</step>
 	</case>
 	<case name="copy_data_vfat_sdmmc" timeout="180">
 		<description>copy files to vfat based sdmmc</description>
-		<step>/opt/mcts-baseos-tests/drv_sdmmc_008.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_sdmmc_008.sh</step>
 	</case>
 	<case name="hwclock_to_sysdate">
 		<description> Sync hwclock time to sys datetime</description>
-		<step>/opt/mcts-baseos-tests/drv_rtc_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_rtc_001.sh</step>
 	</case>
 	<case name="sysdate_to_hwclock">
 		<description> Sync sys datetime to hwclock</description>
-		<step>/opt/mcts-baseos-tests/drv_rtc_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_rtc_002.sh</step>
 	</case>
 	<case name="bt_scan">
 		<description>Scan surrounding BT devices</description>
-		<step>/opt/mcts-baseos-tests/connectivity_bluetooth_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/connectivity_bluetooth_001.sh</step>
 	</case>
 	<case name="ethernet_get_ip">
 		<description>Check if ethernet nic can get ip address</description>
-		<step>/opt/mcts-baseos-tests/connectivity_ethernet_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/connectivity_ethernet_001.sh</step>
 	</case>
 	<case name="check_wlan_dev">
 		<description>Check if wlan device is recognized by driver</description>
-		<step>/opt/mcts-baseos-tests/connectivity_wlan_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/connectivity_wlan_001.sh</step>
 	</case>
 	<case name="chk_video_dev">
 		<description>Check if /dev/video0 device is created</description>
-		<step>/opt/mcts-baseos-tests/drv_camera_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_camera_001.sh</step>
 	</case>
 	<case name="chk_audio_devid">
 		<description>Check audio device id</description>
-		<step>/opt/mcts-baseos-tests/drv_audio_001.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_audio_001.sh</step>
 	</case>
 	<case name="chk_audio_devinfo">
 		<description>Check audio device info in /proc/asound</description>
-		<step>/opt/mcts-baseos-tests/drv_audio_002.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_audio_002.sh</step>
 	</case>
 	<case name="playback_wav" timeout="60">
 		<description>Playback wav file using audio device</description>
-		<step>/opt/mcts-baseos-tests/drv_audio_003.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_audio_003.sh</step>
 	</case>
 	<case name="record_play_wav" timeout="120">
 		<description>Record by mic then playback</description>
-		<step>/opt/mcts-baseos-tests/drv_audio_004.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_audio_004.sh</step>
 	</case>
 	<case name="amixer_control_vol">
 		<description>Adjust volume by amixer</description>
-		<step>/opt/mcts-baseos-tests/drv_audio_005.sh</step>
+		<step>/opt/mcts-baseos-nb-tests/drv_audio_005.sh</step>
 	</case>
 </set>
 </suite>

@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 0 
 
-Summary: Template meego core test suite
-Name: mcts-3dgfx-tests
+Summary: meego base os test suite
+Name: mcts-baseos-nb-tests
 Version: 1.0.0
-Release: 2
+Release: 1
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz

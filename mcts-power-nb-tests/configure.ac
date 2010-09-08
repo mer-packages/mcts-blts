@@ -1,4 +1,4 @@
-AC_INIT([mcts-power-tests], [1.0.0], [jing.j.wang@intel.com])
+AC_INIT([mcts-power-nb-tests], [1.0.0], [jing.j.wang@intel.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs.

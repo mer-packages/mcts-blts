@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
-AC_INIT([mcts-baseos-tests], [1.0.0], [jing.j.wang@intel.com])
+AC_INIT([mcts-baseos-nb-tests], [1.0.0], [jing.j.wang@intel.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs.

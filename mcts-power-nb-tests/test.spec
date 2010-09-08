@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 0 
 
 Summary:  meego power test suite
-Name: mcts-power-tests
+Name: mcts-power-nb-tests
 Version: 1.0.0
 Release: 1
 License: GPLv2
