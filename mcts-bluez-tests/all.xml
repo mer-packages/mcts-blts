@@ -1,0 +1,1155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="Bluetooth" >
+<set name="bt_auto_case" >
+
+<case name="bt_daemon_started_check" manual="false" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if bluetoothd has been started</p>
+<p>Run Instructions:</p>
+<p>Use 'ps -ef' to get the bluetoothd pid.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. If the pid of bluetoothd is got, case PASS</p>
+<p>2. If there is no such process named 'bluetoothd', case FAIL.</p>]]></description>
+<step expected_result="0">/opt/mcts-bluez-tests/bt_daemon_started_check.sh</step>
+</case>
+
+<case name="bt_ftp_folder_and_remove_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check FTP (File Transfer Profile) folder manipulation inculdes create and remove</p>
+<p>Run Instructions:</p>
+<p>1. Get local hci0 MAC address.</p>
+<p>2. Pair with server machine.</p>
+<p>3. On client side, use ftp-client command to create a folder on Server</p>
+<p>4. From client side, list all the folders on server, and check if there is the folder created right away.</p>
+<p>5. On client side, use ftp-client command to delete the created folder from Server.</p>
+<p>6.  From client side, list all the folders on server, and check if the target folder has been deleted.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Client should be able to create folder on Server by FTP profile.</p>
+<p>2. Client should be able to delete the folder from Server by FTP profile.</p>]]></description>
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_folder_add_remove_check.sh</step>
+</case>
+
+<case name="bt_ftp_folder_nav_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check FTP folder navigation from FTP client.</p>
+<p>Run Instructions:</p>
+<p>1. Client does pairing with Server successfully.</p>
+<p>2. By ftp-client script, client creates a sub_folder under one folder on Server.</p>
+<p>3. Browse the folder structure on Server, to get the sub folder.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Client could get the sub folder on Server.</p>]]></description>
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_folder_nav_check.sh</step>
+</case>
+
+<case name="bt_ftp_get_check" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check to use FTP profile to get file.</p>
+<p>Run Instructions:</p>
+<p>1. Place one file on Server (write down its md5sum in one config file on Client) before testing.</p>
+<p>2. Client does bluetooth pairing with Server.</p>
+<p>3. Client gets the file name and use ftp-client script to get the file from Server by FTP profile.</p>
+<p>4. Check the md5sum of the got file, to see if the md5sum is same with the file on Server (Confirm they are the same one).</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. By FTP profile, Client should be able to get file from Server.</p>
+<p>2. The file got from Server should have same md5sum with the target file on Server.</p>]]></description>
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_get_check.sh</step>
+</case>
+
+<case name="bt_ftp_put_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check to use FTP profile to put file to Server.</p>
+<p>Run Instructions:</p>
+<p>1. Prepare one file (whose md5sum is in one config file  on Client) before testing.</p>
+<p>2. Client does bluetooth pairing with Server.</p>
+<p>3. Client gets the file name from config and use ftp-client script to put it to the Server by FTP profile.</p>
+<p>4. Also use FTP profile to get the file from Server, then check if the md5sum of the file is same with original one in Client.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. By FTP profile, Client should be able to put file to Server.</p>
+<p>2. The file put to Server should be same (md5sum) with original one..</p>]]></description>
+<step expected_result="0">/opt/mcts-bluez-tests/bt_ftp_put_check.sh</step>
+</case>
+
+<case name="bt_l2cap_ping_check" manual="false" timeout="100">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check l2cap socket communication using l2ping.</p>
+<p>Run Instructions:</p>
+<p>1. Get the Bluetooth MAC address of the server machine.</p>
+<p>2. On client, l2ping &lt;Server BT MAC&gt;, and check if it can get reply from the Server.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Client should be able to get reply by l2ping.</p>]]></description>
+<step expected_result="0">/opt/mcts-bluez-tests/bt_l2cap_ping_check.sh</step>
+</case>
+</set>
+<set name="bt_profile" >
+
+<case name="bt_prof_goep" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test GOEP profile and you need tow BT device for file tranfer.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Start bluetoothd deamon and obexd deamon on both side<br />
+&nbsp;&nbsp;&nbsp; bluetoothd -n -d<br />
+&nbsp;&nbsp;&nbsp; obexd -n -d -ao -root=&lt;your folder to receive file&gt;<br />
+2. Do the device pairing on both side<br />
+&nbsp;&nbsp; The script simple-agent is within the bluez source package<br />
+&nbsp;&nbsp;&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp;&nbsp;&nbsp; ./simple-agent hci0 &lt;mac address you want to connect&gt;<br />
+3. Use the obexd send-files to transfer file you want<br />
+&nbsp;&nbsp;&nbsp; cd obexd-&lt;version&gt;/test<br />
+&nbsp;&nbsp;&nbsp; The script send-files is within obexd source package<br />
+&nbsp;&nbsp;&nbsp; ./send-files &lt;The mac address you want to send&gt; &lt;file you want to transfer&gt;<br />
+&nbsp;&nbsp;&nbsp; #note, you need to specify the full path name for the file you want to transfer</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>you can send and receive the file in both side also there is no different for the transfered file.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_gap" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test GAP profile,you need run the install 003 case first</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+(you can use script communication_bt_profile_001.sh &nbsp; to run this testcase)<br />
+1,hcitool scan or hciconfig -a<br />
+2, l2ping [bdaddr]<br />
+: You can get the bdaddr from command 1 result and it's MAC address of device<br />
+3,pkill l2ping</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normal you will get ping&nbsp;receiving information.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_spp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test SPP profile and you need tow BT dangle plug in PC if you want to run it by auto</p>
+<p><br />
+Run Instructions:</p>
+<p>(you can use script communication_bt_profile_003.sh &nbsp; to run this testcase)<br />
+1, hcitool scan or hciconfig -a<br />
+2,sdptool add SP &amp;&amp; hciconfig hci1 pscan<br />
+3,rfcomm listen 0 1 &amp;<br />
+4,rfcomm -i hci1 connect 1 [bdaddr] 1 &amp;<br />
+5, hcitool con<br />
+6, pkill rfcomm<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There should be no any error information to display and you will get the connection result.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_dun_dte" manual="true" timeout="600">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test DUN profile. MeeGo machine should be able to connect to GPRS (2G network) through phone (as modem)</p>
+<p>Run Instructions:</p>
+<p>1. Confirm the PPP driver has been enabled. Make sure the kernel config option are selected (if not, please recompile kernel):<br />
+&nbsp;&nbsp; Device Drivers ---&gt; Network device support ---&gt; PPP<br />
+&nbsp;&nbsp; <br />
+2. Edit the /etc/bluetooth/rfcomm.conf<br />
+&nbsp;&nbsp; rfcomm0 {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bind yes;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; device &lt;your PHONE mac address&gt;;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; channel 1 <br />
+# to get the DUN service bonding on which channel number, you could execute commands:<br />
+# sdptool browse &lt;your phone mac address&gt;;<br />
+# and then check the Dial-up Networking section;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; comment &quot;Example Bluetooth device&quot;;<br />
+&nbsp;&nbsp;&nbsp; }</p>
+<p>3. reboot your computer. I tried to restart the bluetootd service, but seems it only works  after rebooting.<br />
+4. do the bt paring, entry bluez source test directory<br />
+&nbsp;&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp;&nbsp; ./simple-agent hci0 &lt;your phone mac address&gt;<br />
+5. If device node /dev/rfcomm0 isn't created, you could make it by yourself:<br />
+&nbsp;&nbsp; mknod -m 666 /dev/rfcomm0 c 216 0</p>
+<p>&nbsp;&nbsp; rfcomm bind /dev/rfcomm0 &lt;PHONE (DUN GW) mac address&gt; &lt;channel number&gt;</p>
+<p>6. Launch gnome-ppp gui to make a connection &lt;China moblin gprs service&gt;:<br />
+&nbsp;&nbsp; 1) Fill username and password with 1234/1234 and check the Remember password checkbox. It's a gnome-ppp bug, actually china moblin gprs connection didn't require username and password<br />
+&nbsp;&nbsp; 2) Fill Phone number textbox with *99***1#&nbsp; (*99***1# is the service number, * is NOT wild char)<br />
+&nbsp;&nbsp; 3) Click Setup button<br />
+&nbsp;&nbsp; 4) Fill Device textbox with /dev/rfcomm0 and click Close button<br />
+&nbsp;&nbsp; 5) Click connect button<br />
+&nbsp;&nbsp; 6) un-plug the network wire<br />
+&nbsp;&nbsp; 7) If every thing is ok, you could see network device node ppp0 in the ifconfig command's output<br />
+&nbsp;&nbsp; 8) execute route add default gw &lt;your ppp0 ip address&gt;<br />
+&nbsp;&nbsp; 9) now you can use the firefox to launch a web page, such as wap.sina.com</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. You should access internet normally through DUN GW (not by Ethernet).</p>
+<p>2. The BT network connection should be on by more than 5 minutes (should be stable).</p>]]></description>
+
+</case>
+
+<case name="bt_prof_sdp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test SDP profile</p>
+<p><br />
+Run Instructions:</p>
+<p>(you can use script communication_bt_profile_002.sh &nbsp; to run this testcase)<br />
+1, hcitool scan or hciconfig -a<br />
+2,sdptool browser [bdaddr]<br />
+:You can get the bdaddr from command 1 result and it's MAC address of device<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normal no error to display and you can have all serverice information of target device.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_pbap_pce" manual="true" timeout="600">
+	<description><![CDATA[<p>Purpose:</p>
+<p>By PBAP (PCE) profile, MeeGo (as PBAP client) could get the phonebook from the phone (support PBAP PSE).</p>
+<p>Run Instructions:</p>
+<p>1. Do the device pairing: simple-agent script is within bluez source<br />
+&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp; ./simple-agent hci0 &lt;your phone mac address&gt;<br />
+2. Access server phone phonebook by application or test script. (script is in attachment)<br />
+&nbsp;&nbsp;&nbsp;&nbsp; moblin2-test/tests/communication/bt/ivi/manual/bt_pbap_getphonebook.py &lt;phone MAC&gt;<br />
+3. List all records in phone phonebook<br />
+4. Check the order of records</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. You should see all phonebook records of server in your client side</p>]]></description>
+
+</case>
+
+<case name="bt_prof_sync" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test SYNC prfile</p>
+<p><br />
+Run Instructions:</p>
+<p>1, Select a phonebook server(MID or othe mobile phone)<br />
+2, Use the UI to synchronize the phonebook to local(IVI or MID device)<br />
+or use the bt_sync_getphonephonebook script<br />
+3, You can check the phonebook content in local device if application support it</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>You should get all phonebook records of server in your client side</p>]]></description>
+
+</case>
+
+<case name="bt_prof_did" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test DID profile</p>
+<p><br />
+Run Instructions:</p>
+<p>(you can use script communication_bt_profile_004.sh to run this testcase)<br />
+1, hciconfig -a or hcitool scan&nbsp;<br />
+&nbsp;&nbsp;&nbsp; To find the target baddr<br />
+2, sdptool records --xml [target baddr]&nbsp;<br />
+3, search the 0x1200 in step2 result<br />
+4, Check if there are following information<br />
+0x200 - SpecificationID<br />
+0x201 - VendorID<br />
+0x202 - ProductID<br />
+0x203 - Version<br />
+0x204 - PrimaryRecord<br />
+0x205 - VendorIDSource<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>you have to get all the informaton by these command if you get the data all are 0 it should be fail for this case</p>]]></description>
+
+</case>
+
+<case name="bt_prof_pan" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>By PAN profile, user could get&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>1, Select a netbook as user<br />
+2, Select a MID as NAP<br />
+3, Use the test-network script to make a coonect between netbook and MID <br />
+4, test-network [address] NAP<br />
+# You can refer the PAN setting BKM.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>yon can ping each other successful</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hid_keyboard" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test HID profile and you should make BT keyboard or mouse and dangle ready before you start this test</p>
+<p><br />
+Run Instructions:</p>
+<p>1, hictool scan<br />
+&nbsp;&nbsp;&nbsp; you will find the mouse or keyboard baddress.<br />
+2, hidd -- connect [bdaddr]<br />
+&nbsp;&nbsp; this bdaddr is keyboard or mouse bdaddr</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>the mouse or keyboard can work smoothly</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hsp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test HSP profile,</p>
+<p><br />
+Run Instructions:<br />
+--- Using paplay to HSP. <br />
+1. Kill precesses bluetoothd and pulseaudio and restart them in the debug mode:<br />
+$ kill -KILL &quot;pid of bluetoothd&quot; <br />
+$ kill -KILL &quot;pid of pulseaudio&quot; <br />
+2. Start the bluetoothd in the debug mode within root user session: <br />
+$ bluetoothd -n -d <br />
+3. Start the pulseaudio within session user <br />
+Start the pulseaudio: <br />
+$ pulseaudio -nCF /etc/pulse/default.pa <br />
+#The attached default.pa is the pulseaudio configuration file used for testing. <br />
+If you want to get more debug message then start the pulseaudio: <br />
+$ pulseaudio -nCF /etc/pulse/default.pa -vvvv <br />
+4. Do the pairing with your headset <br />
+$ ./simple-agent hci0 &quot;headset mac address&quot; <br />
+# Please be aware of the bluetooth icon in the gnome panel, sometime the heaset will raise the connection request to MID. You must grant this request or input the pin code if it requires you to do that <br />
+5. In pulseaudio console, list the available audio sinks. If bluez_sink not been listed, then you should connect it manually: <br />
+$ test-hsp.py connect &quot;headset mac address&quot; <br />
+# the script will call org.bluez.AudioSink.Connect() interface <br />
+6. Use paplay to play the audio file <br />
+paplay --device=bluez_sink.XX_XX_XX_XX_XX_XX /usr/share/sound/alsa/Front_Center.wav <br />
+<br />
+--- Using aplay to test HSP on MID platform <br />
+Step1: Boot the CDK to the GUI. <br />
+Step2: Config the ~/.asoundrc as bellow: <br />
+pcm.bluetoothraw { <br />
+type bluetooth <br />
+device &quot;xx:xx:xx:xx:xx:xx&quot; <br />
+profile &quot;voice&quot; <br />
+} <br />
+pcm.bluetooth { <br />
+type plug <br />
+slave { <br />
+pcm bluetoothraw <br />
+} <br />
+} <br />
+Step3: Put headset in pairing mode. <br />
+Use the simple-agent script to pair with the headset. (If it says bonding already exists, Go to Bluetooth applet properties and delete the device and run simple-agent again). Command to use the script is &iexcl;&deg;python simple-agent hci0 <mac address="">&iexcl;&plusmn; <br />
+Step4: Run bellow commands: <br />
+hcitool cmd 0x3f 0x1d 0x00 <br />
+hcitool cmd 0x03 0x26 0x60 0x00 <br />
+Step5: Run the aplay from &iexcl;&deg;Moblin&iexcl;&plusmn; user mode using the command  <br />
+aplay &uml;CDplug:Bluetooth <audio path="" file=""> <br />
+(Make sure the file is sampled by 8Khz mono PCM) <br />
+on ubuntu8.10, you can find bellow file which fit the requirements: <br />
+/usr/share/sounds/ekiga/busytone.wav <br />
+$ file busytone.wav   busytone.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit,mono 8000 Hz <br />
+<br />
+Pass/Fail Criteria:<br />
+<p>you can listen the sound by your bt headset.</p>
+</audio></mac></p>]]></description>
+
+</case>
+
+<case name="bt_prof_a2dp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test&nbsp;A2DP profile, you need have mplayer software in your pc and your headset should support A2dp.</p>
+<p><br />
+Run Instructions:</p>
+<p>You should use media application to play the media file<br />
+1, hcitool scan<br />
+&nbsp;&nbsp;&nbsp; You will get bluetooth headset baddr.<br />
+2. Do the device pairing<br />
+&nbsp;&nbsp; simple-agent is within bluez source.<br />
+&nbsp;&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp;&nbsp; ./simple-agent hci0 &lt;Your headset mac&nbsp;&nbsp; address&gt;<br />
+&nbsp;&nbsp; Input the PIN code if requiured. Many bluetooth device use the PIN code 0000 by default.<br />
+3. create .asoundrc file in your home directory with following content<br />
+&nbsp;&nbsp; pcm.bluetooth{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type bluetooth<br />
+&nbsp;&nbsp;&nbsp;&nbsp; device [ your headset baddr]<br />
+&nbsp;&nbsp;&nbsp;&nbsp; profile &quot;a2dp&quot;<br />
+&nbsp;&nbsp;&nbsp; }<br />
+4. aplay --device=bluetooth file.wav</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>you can listen the mp3 file by bluetooth headset.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_avrcp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test AVRCP profile, you need have mplayer software in your pc and your headset should support A2dp.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Add a line to /etc/bluetooth/audio.conf General section<br />
+&nbsp;&nbsp; Enable=Control<br />
+2. add uinput to /etc/modules or <br />
+&nbsp;&nbsp; modprobe uinput<br />
+3.&nbsp;hcitool scan<br />
+&nbsp;&nbsp;&nbsp; You will get bluetooth headset baddr.<br />
+4.&nbsp;Do the device pairing<br />
+&nbsp;&nbsp; simple-agent is within bluez source.<br />
+&nbsp;&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp;&nbsp; ./simple-agent hci0 &lt;Your headset mac&nbsp;&nbsp; address&gt;<br />
+&nbsp;&nbsp; Input the PIN code if requiured. Many bluetooth device use the PIN code 0000 by default.<br />
+5.&nbsp;To confirm the key press on the headset has sent to bluez stack, you can start bluetoothd in the debug mode:<br />
+The avrcp control data is sent independently, we can test it even just to take a look the debug message of bluethood.<br />
+&nbsp;&nbsp; bluetoothd -n -d<br />
+6. start xev and move the focus to xev window <br />
+$ xev <br />
+7.&nbsp;press the previous or next key on the headset</p>
+<p><br />
+Pass/Fail Criteria:<br />
+The keycode press/release event should be detected by xev.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case it to test HFP profile.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Enable HFP<br />
+&nbsp;&nbsp; edit the /etc/bluetooth/audio.conf<br />
+&nbsp;&nbsp; Added one line in the [General] section:<br />
+&nbsp;&nbsp; Enable=Gateway<br />
+&nbsp;&nbsp; Modifiy HFP=true within [Headset] section.<br />
+2. restart bluetoothd daemon<br />
+&nbsp;&nbsp; /usr/sbin/bluetoothd restart<br />
+&nbsp;&nbsp; To better track the HFP whether being enabled, you could start bluetoothd in the debug mode:<br />
+&nbsp;&nbsp; ps aux | grep bluetoothd<br />
+&nbsp;&nbsp; kill -KILL &lt;bluetoothd process id&gt;<br />
+&nbsp;&nbsp; /usr/sbin/bluetoothd -n -d<br />
+&nbsp;&nbsp; If the HFP enabled, you could see a string printed in the console:<br />
+&nbsp;&nbsp; Found Handsfree AG record<br />
+3. make a bt pairing<br />
+&nbsp;&nbsp; entry the bluez source test directory<br />
+&nbsp;&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp;&nbsp; ./simple-agent hci0 &lt;your phone mac adress&gt;<br />
+4. Create a connect to your bt phone:<br />
+&nbsp;&nbsp; Change the directory to STF moblin2-test/tests/communication/bt/ivi/manual/<br />
+&nbsp;&nbsp; ./test-telephony connect &lt;your phone mac address&gt;<br />
+5. Dial a phone number you appreciate:<br />
+&nbsp;&nbsp; Change the directory to STF moblin2-test/tests/communication/bt/ivi/manual/<br />
+&nbsp;&nbsp; ./test-telephony outgoing &lt;your phone mac address&gt; &lt;the phone number you want to dial&gt;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>If every thing is ok, you could be able to dial the phone number via BT moblin phone.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_opp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test OPP profile. You should have another pc or mobile phone to receive the file</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Start bluetoothd deamon and obexd deamon on both side<br />
+&nbsp;&nbsp;&nbsp; bluetoothd -n -d<br />
+&nbsp;&nbsp;&nbsp; obexd -n -d -ao -root=&lt;your folder to receive file&gt;<br />
+2. Do the device pairing on both side<br />
+&nbsp;&nbsp;&nbsp; cd bluez-&lt;version&gt;/test<br />
+&nbsp;&nbsp;&nbsp; ./simple-agent hci0 &lt;mac address you want to connect&gt;<br />
+3. Use the bluetooth-sendto to transfer file you want. (note: in order to use&nbsp;bluetooth-sendto, you might need to yum install bluez-gnome or bluetooth-gnome)<br />
+&nbsp;&nbsp;&nbsp; bluetooth-sendto --device=&lt;The mac address you want send to&gt; &lt;file to transfer&gt;<br />
+4. After transfer done, you could check the file on the server side. The directory used to save recieved file is given by -root option</p>
+<p>5. You can also use phone to send a picture by bluetooth to your MeeGo machine.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>1. You can send and receive the file and the file no any change</p>
+<p>2. The picture sent from phone should be put into your local folder (after obexd --root=&lt;folder&gt;).</p>]]></description>
+
+</case>
+
+<case name="bt_prof_ftp_sent" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test FTP profile. You need tow bt device for file transfer</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Start bluetoothd deamon both on the server and client side<br />
+/usr/sbin/bluetoothd start<br />
+2. Start obexd deamon on the server side<br />
+obexd --nodaemon --opp --ftp<br />
+3. Do the paring in the both side:<br />
+&nbsp;&nbsp; 1) Machine A<br />
+&nbsp;&nbsp; cd bluez-&lt;version&gt;/test/<br />
+&nbsp;&nbsp;&nbsp;#simple-agent script is within bluez source package<br />
+&nbsp;&nbsp; ./simple-agent hci0 &lt;Dongle mac address of Machine B&gt;<br />
+&nbsp;&nbsp; 2) Machine B<br />
+&nbsp;&nbsp; cd bluez-&lt;version&gt;/test/<br />
+&nbsp;&nbsp; ./simple-agent hci0 &lt;Dongle mac address of Machine A&gt;<br />
+4. Transfer file from Machine B to Machine A <br />
+&nbsp;&nbsp; # run test case within moblin2-test/tests/communication/bt/nb/manual<br />
+&nbsp;&nbsp; # you get it via bellow command<br />
+&nbsp;&nbsp; # git clone ssh://&lt;your account&gt;@otc-qa.sh.intel.com/home/git/moblin2-test<br />
+&nbsp;&nbsp; 1.) cd moblin2-test/tests/communication/bt/nb/manual/<br />
+&nbsp;&nbsp; 2.) copy the data directory to /tmp/<br />
+&nbsp;&nbsp; 3.) run the bt_ftp_putfile.py &lt;Dongle mac address of Machine A&gt;<br />
+&nbsp;&nbsp; 4.) You can see a file test_ftp within Machine A's /tmp directory if file transferring suceed.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>you can ftp peer in both side.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_un_to_p_t@un" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit role. <br />
+1. Initial a call from HFP unit; <br />
+2. accept the call from phone and say some thing in phone side; <br />
+3. terminate the call at HFP unit side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect <mac address="" of="" your="" bt="" phone=""> #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call   bt_hfp_audio_routing.py <wav file="" simulating="" caller=""> <wav file="" used="" to="" record="" responser="" s="" voice=""> <mac address="" of="" bt="" phone=""> 1 <br />
+4. Start a call from HFP unit: test-telephony outgoing <mac address="" of="" your="" bt="" phone="">
+<phone number="" you="" want="" to="" dial=""> <br />
+5. Answer the call at the phone side and say something; <br />
+6. Terminate a call from HFP unit: test-telephony terminate <mac address="" of="" your="" bt="" phone=""> or press the BT phone terminate key <br />
+<br />
+Pass/Fail Criteria:<br />
+1. the call can be terminated normally <br />
+2. you can hear the audio at phone side and your voice should be recorded into a file <br />
+</mac></phone>
+</mac></mac></wav></wav></mac></p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_un_to_p_t@p" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+1. Initial a call from HFP Unit; <br />
+2. accept the call from phone and say some thing in phone side; <br />
+3. terminate the call at phone side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call bt_hfp_audio_routing.py 1 <br />
+4. Start a call from HFP unit: test-telephony outgoing <br />
+5. Answer the call at the phone side and say something; <br />
+6. Terminate a call at phone side; <br />
+<br />
+Pass/Fail Criteria:<br />
+1. the call can be terminated normally <br />
+2. you can hear the audio at phone side and your voice should be recorded into a file</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_un_to_p_r@un" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit.1. Initial a call from HFP unit side; <br />
+2. Reject the call at HFP unit side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call bt_hfp_audio_routing.py 1 <br />
+4. Start a call from HFP unit: test-telephony outgoing <bt phone="" mac="" address="">
+<phone number=""> <br />
+5. Reject the call at HFP unit side; <br />
+<br />
+Pass/Fail Criteria:<br />
+The call can be rejected</phone>
+</bt></p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_un_to_p_r@p" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+HFP unit test.1. Initial a call from HFP unit side; <br />
+2. Reject the call at moblie phone side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call bt_hfp_audio_routing.py 1 <br />
+4. Start a call from HFP unit: test-telephony outgoing <bt phone="" mac="" address="">
+<phone number=""> <br />
+5. Reject the call at phone side; <br />
+<br />
+Pass/Fail Criteria:<br />
+The call can be rejected</phone>
+</bt></p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_p_to_un_r@un" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit <br />
+1. Initial a call from phone side; <br />
+2. Reject the call at HFP unit side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and disable auto reply the incoming call bt_hfp_audio_routing.py <br />
+4. Call your HFP unit from a Phone; <br />
+5. Reject the call at HFP unit side; <br />
+<br />
+Pass/Fail Criteria:<br />
+The call can be rejected</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_p_to_un_r@p" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit1. Initial a call from phone side; <br />
+2. Reject the call at the phone side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and disable auto reply the incoming call bt_hfp_audio_routing.py <br />
+4. Call your HFP unit from a Phone; <br />
+5. Reject the call at Phone side; <br />
+<br />
+Pass/Fail Criteria:<br />
+The call can be rejected</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_p_to_un_t@un" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit.1. Initial a call from phone side; <br />
+2. accept the call at HFP unit side and say something in the phone side; <br />
+3. terminate the call at HFP unit side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call bt_hfp_audio_routing.py 1 <br />
+4. Start a call from Phone side <br />
+5. Say something in the phone after the HFP unit replied; <br />
+6. Terminate a call at HFP unit side; <br />
+<br />
+Pass/Fail Criteria:<br />
+1. the call can be terminated normally <br />
+2. you can hear the audio at phone side and your voice should be recorded into a file;</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_p_to_un_t@p" manual="true" timeout="100">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit <br />
+1. Initial a call from phone side; <br />
+2. accept the call at HFP unit side and say something in the phone side; <br />
+3. terminate the call at phone side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call bt_hfp_audio_routing.py 1 <br />
+4. Start a call from Phone side <br />
+5. Say something in the phone after the HFP unit replied; <br />
+6. Terminate a call at phone side; <br />
+<br />
+Pass/Fail Criteria:<br />
+1. the call can be terminated normally <br />
+2. you can hear the audio at phone and your voice should be recorded into a file</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hfp_p_to_un&amp;dtmf_t@un" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+Test HFP unit1. Initial a call from phone side; <br />
+2. accept the call at HFP unit side and say something in the phone side; <br />
+3. send some DTMF code in the phone side; <br />
+4. terminate the call at HFP unit side; <br />
+<br />
+Run Instructions:<br />
+1. Pairing with BT phone: simple-agent hci0 &lt; mac address of your BT phone&gt; #the simple-agent can be found in the bluez source test directory <br />
+2. Connect to BT phone: test-telephony connect #the test-telephony can be found in the STF bt test directory <br />
+3. Start deamon and auto reply the incoming call bt_hfp_audio_routing.py 1 <br />
+4. Start a call from Phone side <br />
+5. Say something in the phone after the HFP unit replied; <br />
+6. Send the DTMF code in the phone side; <br />
+7. Terminate a call at HFP unit side; <br />
+<br />
+Pass/Fail Criteria:<br />
+1. the call can be terminated normally <br />
+2. you can hear the audio at phone side and your voice should be recorded into a file</p>]]></description>
+
+</case>
+
+<case name="bt_prof_hid_mouse" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Use HID profile to connect Bluetooth mouse.</p>
+<p>Run Instructions:</p>
+<p>1. Power on the bluetooth mouse and make it in pairing status.</p>
+<p>2. Move the mouse close to machine and run command 'hidd --search' in one terminal.</p>
+<p>3. Check the output. After it tells connection is done, move mouse to see the pointer action.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. The mouse will be connected automatically.</p>
+<p>2. When mouse is working, the pointer should move smoothly.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_ftp_browse" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Use FTP profile to browse the folder content on the paired machine.</p>
+<p>Run Instructions:</p>
+<p>1. Get one netbook device with Bluetooth enabled.</p>
+<p>2. Pair with the netbook machine from GUI.</p>
+<p>3. In bluetooth applet, click the &quot;browse&quot; button of the netbook in the paired device list.</p>
+<p>4. Check if it can mount the netbook to a local folder and user can see all the content in the netbook file system.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. User should see the content of what the netbook shares.</p>]]></description>
+
+</case>
+
+<case name="bt_prof_ftp_get" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Use FTP profile to get one file from another netbook machine.</p>
+<p>Run Instructions:</p>
+<p>1. Get one netbook started with Bluetooth enabled.</p>
+<p>2. Pair with the netbook machine.</p>
+<p>3. Browse the shared content on the netbook, copy one file and one folder to local.</p>
+<p>4. Check if the file/folder could be copied to local place.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. User should be able to get file/folder from the paired netbook via FTP profile.</p>]]></description>
+
+</case>
+</set>
+<set name="bt_others" >
+
+<case name="bt_install_bluez_daemon" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is to test bluetooth damone run or not by default.If not start it. The bluez dangle should be pulg in test machine before start this case<br />
+Run Instructions:<br />
+<br />
+(you can use script communication_bt_install_003.sh&nbsp; to run this testcase)<br />
+1, ps -C bluetoothd<br />
+if you can find the bluetoothd running <br />
+hictool dev<br />
+To display local device<br />
+else bluetoothd<br />
+To start bluetoothd<br />
+hciconfig hci1 pscan<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+it should display the right device information in the first step, and then no any error behavior in all step.</p>]]></description>
+
+</case>
+
+<case name="bt_perf_ftp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is a performance case to test transfer speed by FTP<br />
+Run Instructions:<br />
+<br />
+1, Run the shell bt_PERF_001<br />
+2, Check the result<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+Normally the speed should be bigger than 100kbps</p>]]></description>
+
+</case>
+
+<case name="bt_perf_gap" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is a performance case to test GAP profile<br />
+Run Instructions:<br />
+1, Put two device aournd your device<br />
+2, hcitool scan<br />
+3, Check the time of scan result<br />
+4, Or you run the shell bt_perf_002 then to check the result<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+Normally the time should be in 5 sencond</p>]]></description>
+
+</case>
+
+<case name="bt_install_bluez_driver" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is to test bluetooth driver run or not. The bluez dangle should be pulg in test machine before start this case<br />
+Run Instructions:<br />
+<br />
+(you can use script communication_bt_install_004.sh&nbsp; to run this testcase)<br />
+1, hciconfig -a<br />
+To display all device information<br />
+2, hciconfig hci0 down<br />
+hciconfig -a<br />
+To check if you can see the hci0 information.<br />
+3, hciconfig hci0 up<br />
+hciconfig -a<br />
+To check hci0 information should display normal.<br />
+4, hciconfig hci0 piscan<br />
+5, hciconfig hci1 piscan<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+it should display the right device information in the first step, and there should have different result between 2,3 step also no any error behavior in all step.whatever if wifi enable or not the result should be same as above.</p>]]></description>
+
+</case>
+
+<case name="bt_install_bluez_packages" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>&nbsp;This test case&nbsp;test the installation status of&nbsp;bluez and obex package.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. ps -ef | grep bluez</p>
+<p>2. ps -ef | grep obexd</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Check if bluetooth package is installed: Successful</p>]]></description>
+
+</case>
+
+<case name="bt_install_bluez_mac" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This case is to test whether bluetooth mac address can be found.&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Run hciconfig and check the information of hci0.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Check bluetooth device information: Successful.</p>]]></description>
+
+</case>
+
+<case name="bt_neg_a2dp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is a negtive case to test A2DP if can exit with abnomal operation</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Build up A2DP connection<br />
+You can use A2DP test case in BT_PROP suit<br />
+2, Remove the playing file and to see the result<br />
+3, Play a mp3 or wav file again<br />
+&nbsp;<br />
+4, Check the result of playing<br />
+5, Exit in both side pc and headset<br />
+6, check the result in both side<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normally the slave and master device can exit also the playing works</p>]]></description>
+
+</case>
+
+<case name="bt_neg_avrcp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is a negtive case to test AVRCP if can exit with abnomal operation</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Build up AVRCP connection<br />
+You can use AVRCP test case in BT_PROP suit<br />
+2, Remove the playing file and to see the result<br />
+3, Play a mp3 or wav file again<br />
+&nbsp;<br />
+4, Check the result of playing<br />
+5, Exit in both side pc and headset<br />
+6, check the result in both side<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normally the slave and master device can exit also the playing works</p>]]></description>
+
+</case>
+
+<case name="bt_neg_ftp_abnormal_action" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is a negtive case to test FTP if can exit with abnomal operation</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Build up FTP connection<br />
+You can use FTP test case in BT_PROP suit<br />
+2, disconnect the slave side device<br />
+3, Check the master and slave device if could work normal<br />
+4, Make the FTP connect again<br />
+5, disconnect the master side device<br />
+6, Check the result in both side<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normally the slave and master device can exit and work normal</p>]]></description>
+
+</case>
+
+<case name="bt_neg_hid" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test HID profile without action in long time</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, setup HID connection with BT mouse,you can use bt_prof_HID to setup a connection<br />
+2, Don't take any action in one hour<br />
+3, To check the behavior of BT mouse after one hour<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The mouse should work again</p>]]></description>
+
+</case>
+
+<case name="bt_neg_opp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test OPP profile transfer with a exsit file</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Transfer a file which already exsit in your target device,you can use bt_prof_opp to setup this transfer<br />
+2, Check the file in your target device<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The file must be updated</p>]]></description>
+
+</case>
+
+<case name="bt_neg_dun" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is a negtive case to test DUN if can exit with abnomal operation</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Build up DUN connection<br />
+You can use DUN test case in BT_PROP suit<br />
+2, disconnect the slave side device<br />
+3, Check the master and slave device if could work normal<br />
+4, Make the DUN connect again<br />
+5, disconnect the master side device<br />
+6, Check the result in both side<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normally the slave and master device can exit and work normal</p>]]></description>
+
+</case>
+
+<case name="bt_neg_pbap_contact_noexist" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test error handle for PBAP prfile</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Select a phonebook server(MID or othe mobile phone) <br />
+2, Get a not exsit contact in phone phonebook<br />
+or use the bt_pbap_getphonephonebook script as a reference<br />
+4, Check the error report</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>You should get a error which not found or something like that</p>]]></description>
+
+</case>
+
+<case name="bt_neg_hsp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is a negtive case to test HSP if can exit with abnomal operation</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Build up HSP connection<br />
+You can use HSP test case in BT_PROP suit<br />
+2, Power off the headset<br />
+3, Replay a sound again and to check the master and slave device if could work normal<br />
+4, Make the HSP connect again<br />
+5, disconnect the master side device<br />
+6, Check the result in both side<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Normally the slave and master device can exit and work normal</p>]]></description>
+
+</case>
+
+<case name="bt_neg_pbap_phone_incall" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test error handle for PBAP prfile</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Select a phonebook server(MID or othe mobile phone) <br />
+2, Get phone phonebook when the server in call status<br />
+or use the bt_pbap_getphonephonebook script as a reference<br />
+3, Check the error report</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>You should get a error which the service not avaliable or something like that</p>]]></description>
+
+</case>
+
+<case name="bt_neg_ftp_file_exists" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test FTP profile transfer with a exsit file</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Transfer a file which already exsit in your target device,you can use bt_prof_ftp to setup this transfer<br />
+3, Check the file in your target device<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The file must be updated</p>]]></description>
+
+</case>
+
+<case name="bt_neg_pbap_contact_phoneempty" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test PBAP prfile</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Select a phonebook server(MID or othe mobile phone) <br />
+2, Search a contact which the phone number is empty(IVI or MID device)<br />
+or use the bt_pbap_getphonephonebook script as a reference<br />
+4, Check the phonebook content in local</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>You should see all contacts which the number is empty</p>]]></description>
+
+</case>
+
+<case name="bt_neg_pbap_phone_nocontact" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test PBAP prfile</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Select a phonebook server(MID or othe mobile phone) which no record in phonebook<br />
+2, Use the UI to get the phonebook to local(IVI or MID device)<br />
+or use the bt_pbap_getphonephonebook script as a reference<br />
+3, Check the phonebook content in local</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>No error report and no contact can be saw in client side</p>]]></description>
+
+</case>
+
+<case name="bt_neg_sync" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+This case is to test SYNC prfile</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1, Select a phonebook server(MID or othe mobile phone) which no record in phonebook<br />
+2, Use the UI to synchronize the phonebook to local(IVI or MID device)<br />
+or use the bt_sync_getphonephonebook script<br />
+3, You can check the phonebook content in local device if application support it</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>No error report</p>]]></description>
+
+</case>
+
+<case name="bt_l2ping" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check l2ping command to see if it is able to ping other BT MAC.</p>
+<p>Run Instructions:</p>
+<p>1. Prepare a bluetooth device (any kind) and get its BT MAC-address.</p>
+<p>2. By root account, run command 'l2ping &lt;MAC address&gt;'.</p>
+<p>3. Check the response.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. As root, l2ping &lt;MAC&gt; is able to get successful response, whose pattern is &quot;44 bytes from &lt;MAC&gt;...&quot;.</p>]]></description>
+
+</case>
+
+<case name="bt_pairing_phone" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Pair mobile phone via bluetooth.</p>
+<p>Run Instructions:</p>
+<p>1. Power on the phone with bluetooth opened.</p>
+<p>2. If the machine has bluetooth pairing GUI, just search device and click &quot;pair&quot; button. You may input PIN code in phone as bluetooth GUI tells.</p>
+<p>3. If there is no bluetooth pairing GUI, get the simple-agent tool from bluez source code (under test folder).</p>
+<p>4. Do &quot;simple-agent hci0 &lt;phone MAC&gt;&quot; and input a PIN code for pairing. Then input PIN code in phone to finish the pairing process.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. Phone is able to be paired with the machine,</p>]]></description>
+
+</case>
+
+<case name="bt_pairing_netbook" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Pair the machine with a netbook device</p>
+<p>Run Instructions:</p>
+<p>1. Get a netbook device opened with bluetooth visible (if not, you can do 'hciconfig hci0 piscan').</p>
+<p>2. Run 'hcitool scan' to search the bluetooth MAC of the netbook.</p>
+<p>3. If there is a pairing GUI, use the GUI to pair with the netbook. Input the PIN code on both sides.</p>
+<p>4. If there is not any GUI, get the simple-agent tool from bluez source code (under test folder).</p>
+<p>5. Run command &quot;simple-agent hci0 &lt;netbook MAC&gt;&quot; and input the PIN code on both sides.</p>
+<p>Pass/Fail Criteria:</p>]]></description>
+
+</case>
+</set>
+<set name="bt_stress" >
+
+<case name="bt_stress_ftp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is a stress case to test FTP if can transfer a big file<br />
+Run Instructions:<br />
+<br />
+1, Build up FTP connection<br />
+You can use FTP test case in BT_PROP suit<br />
+2, Transfer several big file &gt;3M to client or server<br />
+3, Check the result of translation<br />
+Or you run the shell script bt_stress_001 to check the result<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+Normally the translation of file should be ok</p>]]></description>
+
+</case>
+
+<case name="bt_stress_gap" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is a stress case to test GAP if can scan more bt device<br />
+Run Instructions:<br />
+<br />
+1, Put more bluetooth device around your device<br />
+<br />
+2, hcitool scan<br />
+3, check the result of scan if all device are found<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+Normally you can find all the device which is discoverable mode</p>]]></description>
+
+</case>
+
+<case name="bt_stress_spp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is a stress case to test SPP if can connect more bt device<br />
+Run Instructions:<br />
+<br />
+1, Put more bluetooth device around your device: Headset, mice, keboard,mobile phone<br />
+<br />
+2, l2ping other device <br />
+3, check the result of connection<br />
+4, make connect with all your device <br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+Normally you can connect all device</p>]]></description>
+
+</case>
+
+<case name="bt_stress_hfp" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+This case is to test HFP profile with many time call<br />
+Run Instructions:<br />
+<br />
+1, Initiate a call by using last number by headset<br />
+2, Accept this call in remote device<br />
+3, Repeate it 3 times and to check the result<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+All call should be setup normally</p>]]></description>
+
+</case>
+</set>
+</suite>
+</testdefinition>

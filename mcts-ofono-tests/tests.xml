@@ -4,7 +4,7 @@
 <suite name="oFono" >
 <set name="aoc" >
 
-<case name="OFONO_GET_AOC_CM" manual="false" timeout="90">
+<case name="ofono_get_aoc_cm" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 AOC check call meter<br />
 Run Instructions:<br />
@@ -13,12 +13,10 @@ Run Instructions:<br />
 2, check the output of script<br />
 Pass/Fail Criteria:<br />
 there is Call Meter value</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_get_aoc_cm.sh</step>
-
 </case>
 
-<case name="OFONO_GET_AOC_PROPERTY" manual="false" timeout="90">
+<case name="ofono_get_aoc_property" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 AOC check ACM<br />
 Run Instructions:<br />
@@ -27,12 +25,10 @@ Run Instructions:<br />
 2, check the output of script<br />
 Pass/Fail Criteria:<br />
 there is the value information of ACM,PPU, Currency&nbsp;etc</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_get_aoc_properties.sh</step>
-
 </case>
 
-<case name="OFONO_AOC_RESET" manual="false" timeout="90">
+<case name="ofono_aoc_reset" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 AOC Reset<br />
 Run Instructions:<br />
@@ -41,12 +37,10 @@ or ./test-advice-of-charge reset 31337<br />
 2, Check the script report<br />
 Pass/Fail Criteria:<br />
 No error report</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_aoc_reset.sh</step>
-
 </case>
 
-<case name="OFONO_AOC_SET_ACMM" manual="false" timeout="90">
+<case name="ofono_aoc_set_acmm" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 AOC set AccumulatedCallMeterMaximum<br />
 Run Instructions:<br />
@@ -56,12 +50,10 @@ or ./test-advice-of-charge set AccumulatedCallMeterMaximum [value] 31337<br />
 test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 the value is changed to first one</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_aoc_acmm.sh</step>
-
 </case>
 
-<case name="OFONO_AOC_SET_CURRENCY" manual="false" timeout="90">
+<case name="ofono_aoc_set_currency" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 AOC set Currency<br />
 Run Instructions:<br />
@@ -71,12 +63,10 @@ or ./test-advice-of-charge set Currency [TUK] 31337<br />
 test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 the value is changed to TUK</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_aoc_currency.sh</step>
-
 </case>
 
-<case name="OFONO_AOC_SET_PPU" manual="false" timeout="90">
+<case name="ofono_aoc_set_ppu" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 AOC set PPU<br />
 Run Instructions:<br />
@@ -86,14 +76,12 @@ or ./test-advice-of-charge PricePerUnit [value] 31337<br />
 test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 the value is changed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_aoc_ppu.sh</step>
-
 </case>
 </set>
 <set name="Gsm-string" >
 
-<case name="OFONO_GSM_CB_BAICRO" manual="false" timeout="90">
+<case name="ofono_gsm_cb_baicro" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Interrogate BAICRO incoming call<br />
 Run Instructions:<br />
@@ -102,12 +90,10 @@ Run Instructions:<br />
 ./test-ss-gsm-cb ss-cb-baicro-interrogate<br />
 Pass/Fail Criteria:<br />
 all incoming call barring when roaming status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_baicro.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CB_BAOICEH" manual="false" timeout="90">
+<case name="ofono_gsm_cb_baoiceh" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Interrogate BAOICEH outgoing call<br />
 Run Instructions:<br />
@@ -117,12 +103,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 alloutgoing international call barring status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_baoiceh.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CB_BAOIC" manual="false" timeout="90">
+<case name="ofono_gsm_cb_baoic" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Interrogate BAOIC outgoing call<br />
 Run Instructions:<br />
@@ -131,12 +115,10 @@ Run Instructions:<br />
 ./test-ss-gsm-cb ss-cb-baoic-interrrogate<br />
 Pass/Fail Criteria:<br />
 all outgoing international call barring status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_baoic.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CB_BAOC" manual="false" timeout="90">
+<case name="ofono_gsm_cb_baoc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 interrogate BAOC outgoing call<br />
 Run Instructions:<br />
@@ -146,12 +128,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 all outgoing call barring status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_baoc.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CB_ALL_INC" manual="false" timeout="90">
+<case name="ofono_gsm_cb_all_inc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 interrogate all CB incoming<br />
 Run Instructions:<br />
@@ -161,12 +141,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 all incoming barring status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_all_inc.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CB_ALL_OUT" manual="false" timeout="90">
+<case name="ofono_gsm_cb_all_out" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 interrogate all CB outgoing<br />
 Run Instructions:<br />
@@ -176,12 +154,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 all outgoing barring status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_all_out.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CB_ALL" manual="false" timeout="90">
+<case name="ofono_gsm_cb_all" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Interrogate all CB<br />
 Run Instructions:<br />
@@ -191,12 +167,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 call barring status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cb_all.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CF_NRC" manual="false" timeout="90">
+<case name="ofono_gsm_cf_nrc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 CFNRc interrogate<br />
 Run Instructions:<br />
@@ -204,12 +178,10 @@ Run Instructions:<br />
 ./test-ss-gsm-string ss-cfnrc-fax-interrogate<br />
 Pass/Fail Criteria:<br />
 the CFNRc status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cf_nrc.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CF_NRY" manual="false" timeout="90">
+<case name="ofono_gsm_cf_nry" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 CFNRy interrogate<br />
 Run Instructions:<br />
@@ -218,12 +190,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 the CFNRy data status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cf_nry.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CF_BUSY" manual="false" timeout="90">
+<case name="ofono_gsm_cf_busy" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 CFB interrogate<br />
 Run Instructions:<br />
@@ -232,12 +202,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 the CFB status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cf_busy.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CF_UCON" manual="false" timeout="90">
+<case name="ofono_gsm_cf_ucon" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 CFU interrogate<br />
 Run Instructions:<br />
@@ -245,12 +213,10 @@ Run Instructions:<br />
 ./test-ss-gsm-string ss-cfu-all-interrogate<br />
 Pass/Fail Criteria:<br />
 the CFU status should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cf_uncon.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CF_ALL" manual="false" timeout="90">
+<case name="ofono_gsm_cf_all" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 cf interrogate<br />
 Run Instructions:<br />
@@ -259,12 +225,10 @@ or ./test-ss-gsm-string ss-cf-interrogate<br />
 Pass/Fail Criteria:<br />
 <br />
 the status of cf should be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cf_all.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CW_INT" manual="false" timeout="90">
+<case name="ofono_gsm_cw_int" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 cw interrogate<br />
 Run Instructions:<br />
@@ -273,12 +237,10 @@ or ./test-ss-gsm-string ss-cw-interrogate<br />
 Pass/Fail Criteria:<br />
 <br />
 the cw interrogate will be displayed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_cw_int.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CLIR_INT" manual="false" timeout="90">
+<case name="ofono_gsm_clir_int" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 clir interrogate<br />
 Run Instructions:<br />
@@ -286,12 +248,10 @@ Run Instructions:<br />
 or ./test-ss-gsm-string ss-ld-interrogate 31<br />
 Pass/Fail Criteria:<br />
 the clir interrogate status should be displayed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_clir_int.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_COLP_INT" manual="false" timeout="90">
+<case name="ofono_gsm_colp_int" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 colp interrogate<br />
 Run Instructions:<br />
@@ -300,12 +260,10 @@ Run Instructions:<br />
 or ./test-ss-gsm-string ss-ld-interrogate 76<br />
 Pass/Fail Criteria:<br />
 the status of colp should be displayed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_colp_int.sh</step>
-
 </case>
 
-<case name="OFONO_GSM_CLIP_INT" manual="false" timeout="90">
+<case name="ofono_gsm_clip_int" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 clip interrogate<br />
 Run Instructions:<br />
@@ -313,9 +271,7 @@ Run Instructions:<br />
 or ./test-ss-gsm-string ss-ld-interrogate 30<br />
 Pass/Fail Criteria:<br />
 the clip interrogate status should be displayed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_gsm_clip_int.sh</step>
-
 </case>
 </set>
 <set name="hfp" >
@@ -324,7 +280,7 @@ the clip interrogate status should be displayed correctly</p>]]></description>
 </set>
 <set name="call-volume" >
 
-<case name="CALL_VOLUME_GET_SPEAKER" manual="false" timeout="90">
+<case name="call_volume_get_speaker" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Get speaker volume value<br />
@@ -334,12 +290,10 @@ Run Instructions:<br />
 &nbsp;&nbsp; ./test-volume properties<br />
 Pass/Fail Criteria:<br />
 value of volume for speaker will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_volume_get_speaker.sh</step>
-
 </case>
 
-<case name="CALL_VOLUME_GET_MUTE" manual="false" timeout="90">
+<case name="call_volume_get_mute" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Get mute/unmute value<br />
@@ -350,12 +304,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 mute/unmute value will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_volume_get_mute.sh</step>
-
 </case>
 
-<case name="CALL_VOLUME_SET_SPEAKER" manual="false" timeout="90">
+<case name="call_volume_set_speaker" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Set Speakerphone volume value<br />
@@ -365,12 +317,10 @@ Run Instructions:<br />
 &nbsp;&nbsp; ./test-volume set Speakerphone 60<br />
 Pass/Fail Criteria:<br />
 the value of volume for speakerphone can be set correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_volume_set_speaker.sh</step>
-
 </case>
 
-<case name="CALL_VOLUME_SET_MUTE" manual="false" timeout="90">
+<case name="call_volume_set_mute" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Set mute on<br />
@@ -381,12 +331,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 mute is in ON after step1</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_volume_set_mute.sh</step>
-
 </case>
 
-<case name="CALL_VOLUME_GET_MICROPHONE" manual="false" timeout="90">
+<case name="call_volume_get_mic" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Get microphone volume value<br />
@@ -396,17 +344,15 @@ Run Instructions:<br />
 &nbsp;&nbsp; ./test-volume properties<br />
 Pass/Fail Criteria:<br />
 value of volume for microphone will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_volume_get_microphone.sh</step>
-
 </case>
 </set>
 <set name="voicemail" >
 
-<case name="OFONO_VOICEMAIL_WAIT_IND" manual="false" timeout="90">
+<case name="ofono_voicemail_wait_ind" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
-Read voicemail waiting indication<br />:
+Read voicemail waiting indication<br />
 Run Instructions:<br />
 <br />
 1, Get voice mail number information<br />
@@ -414,12 +360,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 voicemail waiting indication information will be showed correctly: true or false</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_voicemail_wait_ind.sh</step>
-
 </case>
 
-<case name="OFONO_VOICEMAIL_MSG_COUNT" manual="false" timeout="90">
+<case name="ofono_voicemail_msg_count" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Read voicemail message count number<br />
@@ -430,12 +374,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 voicemail message count number will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_voicemail_msg_count.sh</step>
-
 </case>
 
-<case name="OFONO_VOICEMAIL_SET_NUMBER" manual="false" timeout="90">
+<case name="ofono_voicemail_set_number" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 set voicemail number<br />
@@ -448,12 +390,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 voicemail number can be set correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_voicemail_set_number.sh</step>
-
 </case>
 
-<case name="OFONO_VOICEMAIL_NUMBER" manual="false" timeout="90">
+<case name="ofono_voicemail_number" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Read voicemail number<br />
@@ -464,30 +404,26 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 voice mail number information will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_voicemail_number.sh</step>
-
 </case>
 </set>
 <set name="sms_history" >
 </set>
 <set name="Sim_file" >
 
-<case name="OFONO_SIM_GET_LAG" manual="false" timeout="90">
+<case name="ofono_sim_get_lag" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get language list<br />
 Run Instructions:<br />
-1, switch on modem<br />
+1, plug-in USIM, switch on modem<br />
 2, get supported language list <br />
 ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 there was Preferredlanguages list: eg: en, de, it..</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_lag.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_GET_CARD_ID" manual="false" timeout="90">
+<case name="ofono_sim_get_card_id" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get card ID<br />
 Run Instructions:<br />
@@ -496,12 +432,10 @@ Run Instructions:<br />
 ./test-sim properties<br />
 Pass/Fail Criteria:<br />
 there is CardIdentifier information, eg: CardIdentifier=89492220744451242066</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_card_id.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_GET_MCC" manual="false" timeout="90">
+<case name="ofono_sim_get_mcc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get MCC code<br />
 Run Instructions:<br />
@@ -510,12 +444,10 @@ Run Instructions:<br />
 ./test-sim properties<br />
 Pass/Fail Criteria:<br />
 There is MCC information, eg: MCC=460</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_mcc.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_GET_PIN_STATUS" manual="false" timeout="90">
+<case name="ofono_sim_get_pin_status" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get Pin code status<br />
 Run Instructions:<br />
@@ -524,12 +456,10 @@ Run Instructions:<br />
 ./test-sim properties<br />
 Pass/Fail Criteria:<br />
 There is pin code status information, eg: PinRequired = none</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_pin_status.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_GET_MNC" manual="false" timeout="90">
+<case name="ofono_sim_get_mnc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get MNC code<br />
 Run Instructions:<br />
@@ -538,12 +468,10 @@ Run Instructions:<br />
 ./test-sim properties<br />
 Pass/Fail Criteria:<br />
 There is MNC information, eg: MNC=01</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_mnc.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_EXIST" manual="false" timeout="90">
+<case name="ofono_sim_exist" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get sim exist information<br />
 Run Instructions:<br />
@@ -552,12 +480,10 @@ Run Instructions:<br />
 ./test-sim properties<br />
 Pass/Fail Criteria:<br />
 There is the information, eg: present=1</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_exist.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_GET_UPDATE_MSISDN" manual="false" timeout="90">
+<case name="ofono_sim_get_upd_msisdn" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 get updated msisdn number<br />
 Run Instructions:<br />
@@ -571,12 +497,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 SubscriberNumbers number updated can be read correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_update_msisdn.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_CHANGE_PIN" manual="false" timeout="90">
+<case name="ofono_sim_change_pin" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 sim lock: changing pin code<br />
 Run Instructions:<br />
@@ -584,42 +508,36 @@ Run Instructions:<br />
 ./test-sim changepin 2468 1234 .<br />
 Pass/Fail Criteria:<br />
 pin code can be changed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_change_pin.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_ENTER_PIN" manual="false" timeout="90">
+<case name="ofono_sim_enter_pin" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Input pin code<br />
 Run Instructions:<br />
-1. change the pin code configuration first (modify the pin value= SIM PIN of moblin.xml)<br />
+1. change the pin code configuration first (modify the pin value= SIM PIN of default.xml)<br />
 2, enter pin code<br />
 ./test-sim enterpin 2468<br />
 3 check the phonesim log<br />
 .<br />
 Pass/Fail Criteria:<br />
 user can input pin code</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_enter_pin.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_RESET_PIN" manual="false" timeout="90">
+<case name="ofono_sim_reset_pin" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 reset pin<br />
 Run Instructions:<br />
-1. change the pin code configuration first (modify the pinname value= SIM PUK of moblin.xml)<br />
+1. change the pin code configuration first (modify the pinname value= SIM PUK of default.xml)<br />
 2, enter pin code<br />
 ./test-sim resetpin 13243546 2468 .<br />
 Pass/Fail Criteria:<br />
 user can reset pin</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_reset_pin.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_LOCK_PIN" manual="false" timeout="90">
+<case name="ofono_sim_lock_pin" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 enable pin<br />
 Run Instructions:<br />
@@ -627,12 +545,10 @@ Run Instructions:<br />
 ./test-sim lockpin pin(1234)<br />
 Pass/Fail Criteria:<br />
 user can lock pin code</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_lock_pin.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_UNLOCK_PIN" manual="false" timeout="90">
+<case name="ofono_sim_unlock_pin" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 disable pin code<br />
 Run Instructions:<br />
@@ -640,12 +556,10 @@ Run Instructions:<br />
 ./test-sim unlockpin pin(1234)<br />
 Pass/Fail Criteria:<br />
 user can unlock pin code</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_unlock_pin.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_SET_MSISDN" manual="false" timeout="90">
+<case name="ofono_sim_set_msisdn" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set msisdn number<br />
 Run Instructions:<br />
@@ -653,12 +567,10 @@ Run Instructions:<br />
 ./test-sim set [number]<br />
 Pass/Fail Criteria:<br />
 1. msisdn number can be set correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_set_msisdn.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_READ_MSISDN" manual="false" timeout="90">
+<case name="ofono_sim_read_msisdn" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get msisdn number<br />
 Run Instructions:<br />
@@ -667,12 +579,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 SubscriberNumbers information can be read correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_read_msisdn.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_READ_IMSI" manual="false" timeout="90">
+<case name="ofono_sim_read_imsi" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 get imsi number<br />
 Run Instructions:<br />
@@ -681,12 +591,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 SubscriberIdentity information can be read correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_read_imsi.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_GET_SDN" manual="false" timeout="90">
+<case name="ofono_sim_get_sdn" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Get SDN number of sim file<br />
 Run Instructions:<br />
@@ -694,12 +602,10 @@ Run Instructions:<br />
 ./test-sim properties<br />
 Pass/Fail Criteria:<br />
 Will see all sdn information: e.g. name is Polic and number is 997</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_get_sdn.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_READ_UCS2" manual="false" timeout="90">
+<case name="ofono_sim_read_ucs2" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 get UCS2 record of sim card phonebook<br />
 Run Instructions:<br />
@@ -709,12 +615,10 @@ Run Instructions:<br />
 ./test-phonebook<br />
 Pass/Fail Criteria:<br />
 this record can be read and showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_read_ucs2.sh</step>
-
 </case>
 
-<case name="OFONO_SIM_READ_PB" manual="false" timeout="90">
+<case name="ofono_sim_read_pb" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Read sim card phonebook<br />
 Run Instructions:<br />
@@ -723,104 +627,90 @@ Run Instructions:<br />
 ./test-phonebook<br />
 Pass/Fail Criteria:<br />
 All record can be read and with Vcard3.0 format</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sim_read_pb.sh</step>
-
 </case>
 </set>
 <set name="Networking" >
 
-<case name="OFONO_NET_SCAN" manual="false" timeout="90">
+<case name="ofono_net_scan" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Scan network<br />
 Run Instructions:<br />
 <br />
 1, power on modem <br />
-2, scan available ./test-network scan<br />
+2, scan available [root@xx]# ./test-network scan<br />
 Pass/Fail Criteria:<br />
 all available network will be showed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_scan.sh</step>
-
 </case>
 
-<case name="OFONO_NET_MODE" manual="false" timeout="90">
+<case name="ofono_net_mode" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Check the mode of network<br />
 Run Instructions:<br />
 <br />
 1,power on modem<br />
 2, check the mode of network<br />
-./test-network networkinfo<br />
+[root@xx]# ./test-network networkinfo<br />
 Pass/Fail Criteria:<br />
 the mode information of network will be showed, e.g. auto, off, manual</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_mode.sh</step>
-
 </case>
 
-<case name="OFONO_NET_STATUS" manual="false" timeout="90">
+<case name="ofono_net_status" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Check the status of network<br />
 Run Instructions:<br />
 <br />
 1, power on modem<br />
 2, check the status of network<br />
-./test-network networinfo<br />
+[root@xx]# ./test-network networinfo<br />
 Pass/Fail Criteria:<br />
 network status information will be showed, e.g. &quot;registered&quot;</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_status.sh</step>
-
 </case>
 
-<case name="OFONO_NET_OP_STATUS" manual="false" timeout="90">
+<case name="ofono_net_op_status" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Check the status of operator<br />
 Run Instructions:<br />
 <br />
 1, power on modem <br />
 2, check the status information of operator<br />
-./test-network operatorinfo<br />
+[root@xx]# ./test-network operatorinfo<br />
 Pass/Fail Criteria:<br />
 status information of operator will be showed, e.g. current, available, forbidden</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_op_status.sh</step>
-
 </case>
 
-<case name="OFONO_NET_REGISTER" manual="false" timeout="90">
+<case name="ofono_net_register" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Register the default network<br />
 Run Instructions:<br />
 1, power on modem <br />
 2, registered to default network<br />
-./test-network register<br />
+[root@xx]# ./test-network register<br />
 Pass/Fail Criteria:<br />
 it will register the modem to default network</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_register.sh</step>
-
 </case>
 
-<case name="OFONO_NET_REG_CHOSEN_OP" manual="false" timeout="90">
+<case name="ofono_net_reg_chosen_op" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Register device to chosen operator's network<br />
 Run Instructions:<br />
 <br />
 1, select avaliable network<br />
-./test-network networkinfo<br />
+[root@xx]# ./test-network networkinfo<br />
 2, select one avaliable operator<br />
 3, register to the chosen operator<br />
-./test-network register [operator path]<br />
+[root@xx]# ./test-network register [operator path]<br />
 Pass/Fail Criteria:<br />
 modem will register to the chosen operator</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_reg_chosen_op.sh</step>
-
 </case>
 
-<case name="OFONO_NET_MCC_MNC" manual="false" timeout="90">
+<case name="ofono_net_mcc_mnc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check MCC and MNC<br />
@@ -828,15 +718,13 @@ Run Instructions:<br />
 <br />
 1, power on modem<br />
 2, check the MCC,MNC information<br />
-./test-network operatorinfo<br />
+[root@xx]# ./test-network operatorinfo<br />
 Pass/Fail Criteria:<br />
 3 digital MCC code and 2 MNC code information will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_mcc_mnc.sh</step>
-
 </case>
 
-<case name="OFONO_NET_OP_NAME" manual="false" timeout="90">
+<case name="ofono_net_op_name" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check the name of operator<br />
@@ -844,15 +732,13 @@ Run Instructions:<br />
 <br />
 1,power on modem<br />
 2, check the name of operator<br />
-./test-network operatorinfo<br />
+[root@xx]# ./test-network operatorinfo<br />
 Pass/Fail Criteria:<br />
 name of operator will be showed if it supported, e.g. T-Moblin etc.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_op_name.sh</step>
-
 </case>
 
-<case name="OFONO_NET_OP_TECH" manual="false" timeout="90">
+<case name="ofono_net_op_tech" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check Operator technology information<br />
@@ -860,211 +746,191 @@ Run Instructions:<br />
 <br />
 1, power on modem <br />
 2, check the technology information of network<br />
-./test-network operatorinfo<br />
+[root@xx]# ./test-network operatorinfo<br />
 Pass/Fail Criteria:<br />
 technology information of network will be showed, e.g. GSM, UMTS etc.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_net_op_tech.sh</step>
-
 </case>
 </set>
 <set name="Simple_Call" >
 
-<case name="OFONO_CALL_SEND_DTMF" manual="false" timeout="90">
+<case name="ofono_call_send_dtmf" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 send dtmf during a call<br />
 Run Instructions:<br />
 <br />
-1, setup an incoming call at remote side and accept it ./test-simple-call answer<br />
+1, setup an incoming call at remote side and accept it <br />
+[root@xx]# ./test-simple-call answer<br />
 2, send a dtmf during this ongoing call<br />
-./test-simple-call senddtmf [0-9])<br />
+[root@xx]# ./test-simple-call senddtmf [0-9])<br />
 3, check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 <br />
 Pass/Fail Criteria:<br />
 1. user can setup an incoming call<br />
 2. user can send dtmf during the call<br />
 3. this call is in active status<br />
 note: in real network, the dtmf tone can be heard at remote side</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_send_dtmf.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_HUNGUP_HOLD" manual="false" timeout="90">
+<case name="ofono_call_hungup_hold" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 hangup the held call<br />
 Run Instructions:<br />
 1, setup an outgoing call<br />
-./test-simplecall dial [number]<br />
+[root@xx]# ./test-simplecall dial [number]<br />
 2, hold this call<br />
-./test-simplecall hold<br />
-3, hangup this call ./test-simple-voicecall hangup<br />
+[root@xx]# ./test-simplecall hold<br />
+3, hangup this call [root@xx]# ./test-simple-voicecall hangup<br />
 Pass/Fail Criteria:<br />
 1, user can terminate he held call.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_hungup_hold.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_HUNGUP_INCOMING_MO" manual="false" timeout="90">
+<case name="ofono_call_hungup_in" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 hangup an incoming call by remote side<br />
 Run Instructions:<br />
 <br />
 1, setup an incoming call at remote party and accept it <br />
-./test-simple-call dial 199<br />
+[root@xx]# ./test-simple-call dial 199<br />
 2, hangup this call by phonesim automatically<br />
 3,check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 Pass/Fail Criteria:<br />
 1. user can setup an incoming call<br />
 2. user can hang up the call<br />
 3, in phonesim, this call will be terminated automatically</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_hungup_inc_mo.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_SEND_MULTI_DTMF" manual="false" timeout="90">
+<case name="ofono_call_send_multi_dtmf" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 send multi dtmf during a call<br />
 Run Instructions:<br />
 <br />
-1, setup an incoming call at remote side and accept it ./test-simple-call answer <br />
+1, setup an incoming call at remote side and accept it<br />
+ [root@xx]# ./test-simple-call answer <br />
 2, send a dtmf during this ongoing call<br />
-./test-simple-call senddtmf [0-9,*,#,A,B,C,D])<br />
+[root@xx]# ./test-simple-call senddtmf [0-9,*,#,A,B,C,D]<br />
 3. repeat step2 for 3 times<br />
 4,check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 <br />
 Pass/Fail Criteria:<br />
 1. user can setup an incoming call<br />
 2. user can send multi dtmf during the call<br />
 3. this call is in active status<br />
 note: in real network, the dtmf tone can be heard at remote side</p>]]></description>
-
-<step expected_result="0">/opt/mcts-ofono-tests/ofono_call_send_multi_dtmf.sh</step>
-
+<step expected_result="0">/opt/mcts-ofono-tests/ofono_call_send_multi-dtmf.sh</step>
 </case>
 
-<case name="OFONO_CALL_SOS" manual="false" timeout="90">
+<case name="ofono_call_sos" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 dial sos call with sim card<br />
 Run Instructions:<br />
 pre-condition: sim card is in target device<br />
 1, setup sos call<br />
-./test-simple-call dial 112 (or other number 911 etc.)<br />
+[root@xx]# ./test-simple-call dial 112 (or other number 911 etc.)<br />
 2, check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 3. terminate the sos call<br />
 Pass/Fail Criteria:<br />
 1, the sos call can be setup successfully<br />
 2. user can terminate the sos call</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_sos.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_HUNGUP" manual="false" timeout="90">
+<case name="ofono_call_hungup" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 hang up an outgoing call<br />
 Run Instructions:<br />
 <br />
 1, setup an outgoing call and accept it <br />
-./test-simple-call dial [number]<br />
+[root@xx]# ./test-simple-call dial [number]<br />
 2, hangup this ongoing call<br />
-./test-simple-voicecall hangupall<br />
+[root@xx]# ./test-simple-voicecall hangupall<br />
 3,check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 <br />
 Pass/Fail Criteria:<br />
 1. user can setup an outgoing call<br />
 2. user can hangup the call<br />
 3. no call is in active status</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_hungup.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_RETRIEVE" manual="false" timeout="90">
+<case name="ofono_call_retrieve" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 retrieve an ongoing call<br />
 Run Instructions:<br />
 <br />
 1, setup an outgoing call and accept it <br />
-./test-simple-call dial [number]<br />
+[root@xx]# ./test-simple-call dial [number]<br />
 2, hold this outgoing call<br />
-./test-simple-call hold<br />
+[root@xx]# ./test-simple-call hold<br />
 3, retrieve this call<br />
-./test-simple-call hold<br />
+[root@xx]# ./test-simple-call retrieve<br />
 4, check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 Pass/Fail Criteria:<br />
 1. user can setup an outgoing call <br />
 2. user can hold the call<br />
 3. user can retrive the call<br />
 4. The ongoing call is in active status after step3</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_retrieve.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_HOLD" manual="false" timeout="90">
+<case name="ofono_call_hold" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 hold an ongoing call<br />
 Run Instructions:<br />
 <br />
 1, setup an outgoing call and accept it <br />
-./test-simple-call dial [number]<br />
+[root@xx]# ./test-simple-call dial [number]<br />
 2, Hold this call<br />
-./test-simple-call hold)<br />
+[root@xx]# ./test-simple-call hold<br />
 3, check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 Pass/Fail Criteria:<br />
 1. user can setup an outgoing call <br />
 2. user can hold the call<br />
 3. the ongoing call is in held status after step2</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_hold.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_REJECT_INCOMING" manual="false" timeout="90">
+<case name="ofono_call_reject_in" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 reject an incoming call<br />
 Run Instructions:<br />
 <br />
 1, setup an incoming call at remote side<br />
 2, reject this incoming call<br />
-./test-simple-call hangup)<br />
+[root@xx]# ./test-simple-call hangup<br />
 Pass/Fail Criteria:<br />
 1,The incoming can be terminated</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_reject_inc.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_ACCEPT_INCOMING" manual="false" timeout="90">
+<case name="ofono_call_accept_in" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 accept an incoming call<br />
 Run Instructions:<br />
 <br />
 1, setup an incoming call at remote side<br />
-./test-simple-voicecall dial 199<br />
+[root@xx]# ./test-simple-voicecall dial 199<br />
 2, accept this incoming call<br />
-./test-simple-call answer<br />
+[root@xx]# ./test-simple-call answer<br />
 3, check this call status<br />
-./test-multi-voicecall properties<br />
+[root@xx]# ./test-multi-voicecall properties<br />
 Pass/Fail Criteria:<br />
 1. user can setup an incoming call <br />
 2. this incoming call is in active status after step2</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_accept_inc.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_OUTGOING" manual="false" timeout="90">
+<case name="ofono_call_outgoing" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 make an outgoing call<br />
 Run Instructions:<br />
@@ -1074,24 +940,20 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can setup outgoing call successfully<br />
 note: in real network, user can listen the ring tone at peer side. While with phonesim, user will see AT command e.g. AT+CLCC,</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_outgoing.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_HIDE_CALLID" manual="false" timeout="90">
+<case name="ofono_call_hide_callid" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose: enable hide call id to dial a call</p>
 <p>Run Instructions:</p>
-<p>./test-simple-voicecall hide-callid [number]</p>
+<p>[root@xx]# ./test-simple-voicecall hide-callid [number]</p>
 <p>Pass/Fail Criteria: user can make this outgoing call successfully</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_hide_callid.sh</step>
-
 </case>
 </set>
 <set name="Multi_call" >
 
-<case name="OFONO_PRIVATE_CHAT_4" manual="false" timeout="90">
+<case name="ofono_private_chat_4" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 private chat(4 parties)<br />
 Run Instructions:<br />
@@ -1110,12 +972,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 Only the second call is in active status<br />
 others are in held status</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_private_chat_4.sh</step>
-
 </case>
 
-<case name="OFONO_ADD_ONE_PARTY" manual="false" timeout="90">
+<case name="ofono_add_one_party" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 add one party into a multiparty call<br />
 Run Instructions:<br />
@@ -1133,12 +993,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can make multiparty call<br />
 2. all calls are in active status after step5</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_add_one_party.sh</step>
-
 </case>
 
-<case name="OFONO_HUNGUP_ONE_PARTY" manual="false" timeout="90">
+<case name="ofono_hungup_one_party" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 hangup one party in multiparty call<br />
 Run Instructions:<br />
@@ -1156,12 +1014,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can hangup one party in multiparty call<br />
 2. one call is in held status and another is in active status after step5</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_hungup_one_party.sh</step>
-
 </case>
 
-<case name="OFONO_HUNGUP_MULTI_PARTY" manual="false" timeout="90">
+<case name="ofono_hungup_multi_party" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 hangup multiparty call<br />
 Run Instructions:<br />
@@ -1179,12 +1035,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can hangup multiparty call<br />
 2. only the third outgoing call is in active status after step5</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_hungup_multiparty.sh</step>
-
 </case>
 
-<case name="OFONO_PRIVATE_CHAT_3" manual="false" timeout="90">
+<case name="ofono_private_chat_3" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 private chat(3 parties)<br />
 Run Instructions:<br />
@@ -1200,12 +1054,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can make multiparty call<br />
 2. the first call is in held status and the second one is in active status</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_private_chat_3.sh</step>
-
 </case>
 
-<case name="OFONO_CREATE_MULTIPARTY" manual="false" timeout="90">
+<case name="ofono_create_multiparty" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 multiparty call<br />
 Run Instructions:<br />
@@ -1218,12 +1070,10 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 1. user can make multiparty call and all calls are in active status</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_create_multiparty.sh</step>
-
 </case>
 
-<case name="OFONO_EXPLICIT_CALL_TRANSFER" manual="false" timeout="90">
+<case name="ofono_explicit_call_transfer" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 transfer two calls<br />
 Run Instructions:<br />
@@ -1238,12 +1088,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can transfer the two outgoing calls<br />
 note: it need network support and with simulator we only can see the two call were released.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_ect.sh</step>
-
 </case>
 
-<case name="OFONO_SWAP_CALLS" manual="false" timeout="90">
+<case name="ofono_swap_calls" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 swap two calls<br />
 Run Instructions:<br />
@@ -1259,12 +1107,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can swap the two outgoing calls<br />
 2. status of these two outgoing calls is showed correctly during swapping</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_swap_calls.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_DEFLECT" manual="false" timeout="90">
+<case name="ofono_call_deflect" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 call deflect<br />
 Run Instructions:<br />
@@ -1275,12 +1121,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. user can deflect the call to another number<br />
 note: the feature needs network support. with simulator we only can see this call was released.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_call_deflect.sh</step>
-
 </case>
 
-<case name="OFONO_HOLD_AND_ANSWER" manual="false" timeout="90">
+<case name="ofono_hold_and_answer" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 2 call:<br />
 hold first outgoing call and accept incoming<br />
@@ -1296,12 +1140,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. the outgoing call can be hold and the incoming call can be accepted successfylly after step3<br />
 2. the active call can be released after step4</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_hold_and_answer.sh</step>
-
 </case>
 
-<case name="OFONO_RELEASE_AND_ACCEPT" manual="false" timeout="90">
+<case name="ofono_release_and_accept" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 2call: release first outgoing call and accept incoming call<br />
 Run Instructions:<br />
@@ -1313,12 +1155,10 @@ Run Instructions:<br />
 ./test-multi-voicecall releaseandanswer<br />
 Pass/Fail Criteria:<br />
 only the incoming call is in active status after step3</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_release_and_answer.sh</step>
-
 </case>
 
-<case name="OFONO_CALL_GET_EMERGENCYLIST" manual="false" timeout="90">
+<case name="ofono_call_get_emergencylist" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 get emergency call number of modem<br />
 Run Instructions:<br />
@@ -1328,443 +1168,387 @@ Run Instructions:<br />
 <br />
 Pass/Fail Criteria:<br />
 sos number will be showed, e.g. 112, 911 etc.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_emergency_list.sh</step>
-
 </case>
 </set>
 <set name="Modem" >
 
-<case name="OFONO_MODEM_GET_MODEL" manual="false" timeout="90">
+<case name="ofono_modem_get_properties" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check model information of Modem<br />
 Run Instructions:<br />
 <br />
-1, plugin modem or start the simulator<br />
+1, plugin modem or start the simulator(phonesim)<br />
 2, run the test-modem script<br />
-/test-modem properties<br />
+[root@xx]# ./test-modem properties<br />
 3, check the output of test script<br />
 Pass/Fail Criteria:<br />
 <br />
 there should be the model information of modem</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_model.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_SERIAL" manual="false" timeout="90">
+<case name="ofono_modem_serial" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 check modem serial information<br />
 Run Instructions:<br />
 <br />
 1, plugin modem or start the simulator<br />
 2, run the test-modem script<br />
-/test-modem properties<br />
+[root@xx]# ./test-modem properties<br />
 3, check the output of test script<br />
 Pass/Fail Criteria:<br />
 <br />
 modem serial information will be showed correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_serial.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_POWER" manual="false" timeout="90">
+<case name="ofono_modem_power" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Check power status information of Modem<br />
 Run Instructions:<br />
 <br />
 1, power on modem<br />
-./test-modem poweron<br />
+[root@xx]# ./test-modem poweron<br />
 2, check power status<br />
-/test-modem properties<br />
+[root@xx]# ./test-modem properties<br />
 <br />
 Pass/Fail Criteria:<br />
 there is power status: true or false</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_power.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_POWERON" manual="false" timeout="90">
+<case name="ofono_modem_poweron" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 power on modem<br />
 Run Instructions:<br />
 <br />
 1, power on modem<br />
-./test-modem poweron<br />
+[root@xx]# ./test-modem poweron<br />
 <br />
 Pass/Fail Criteria:<br />
 power on can work correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_poweron.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_POWEROFF" manual="false" timeout="90">
+<case name="ofono_modem_poweroff" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 power off modem<br />
 Run Instructions:<br />
 <br />
 1, power on modem<br />
-./test-modem poweron<br />
+[root@xx]# ./test-modem poweron<br />
 2, power off modem<br />
-./test-modem poweroff<br />
+[root@xx]# ./test-modem poweroff<br />
 3,poweron modem again<br />
-./test-modem poweron<br />
+[root@xx]# ./test-modem poweron<br />
 Pass/Fail Criteria:<br />
 poweron/off can work correctly</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_poweroff.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_GET_MANUFACTURE" manual="false" timeout="90">
+<case name="ofono_modem_get_manuf" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check manufacture information of modem<br />
 Run Instructions:<br />
 <br />
-1, plug in the modem or start the simulator<br />
+1, plug in the modem or start the simulator(phonesim)<br />
 2, run the test-modem script<br />
-./test-modem properties<br />
+[root@xx]# ././test-modem properties<br />
 3, check the output of script<br />
 Pass/Fail Criteria:<br />
 <br />
 there will be manufacture information of modem in your output</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_manufacture.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_INTERFACE" manual="false" timeout="90">
+<case name="ofono_modem_interface" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check interface information of Modem<br />
 Run Instructions:<br />
 <br />
-1, plugin modem or start the simulator<br />
+1, plugin modem or start the simulator(phonesim)<br />
 2, run the test-modem script<br />
-/test-modem properties<br />
+[root@xx]# ./test-modem properties<br />
 3, check the output of test script<br />
 Pass/Fail Criteria:<br />
 <br />
 there is the interface information of modem</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_interface.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_REVISION" manual="false" timeout="90">
+<case name="ofono_modem_revision" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check revision information of Modem<br />
 Run Instructions:<br />
 <br />
-1, plugin modem or start the simulator<br />
+1, plugin modem or start the simulator(phonesim)<br />
 2, run the test-modem script<br />
-/test-modem properties<br />
+[root@xx]# ./test-modem properties<br />
 3, check the output of test script<br />
 Pass/Fail Criteria:<br />
 <br />
 there should be the revision information of modem</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_revision.sh</step>
-
 </case>
 
-<case name="OFONO_MODEM_ONLINE" manual="false" timeout="90">
+<case name="ofono_modem_online" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose: Get online status</p>
 <p>Run Instructions:</p>
-<p>1, plugin modem or start the simulator<br />
+<p>1, plugin modem or start the simulator(phonesim)<br />
 2, run the test-modem script<br />
-/test-modem properties<br />
+[root@xx]# ./test-modem properties<br />
 3, check the output of test script<br />
 Pass/Fail Criteria:<br />
 <br />
 modem&nbsp;online status&nbsp;will be showed correctly</p>
 <p>Pass/Fail Criteria:</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_modem_online.sh</step>
-
 </case>
 </set>
 <set name="SS-setting" >
 
-<case name="OFONO_SET_CF_TIMEOUT" manual="false" timeout="90">
+<case name="ofono_set_cf_timeout" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CF Voice call timeout<br />
 Run Instructions:<br />
 1, Set timeout value of voice call by UI<br />
-or ./test-ss-setting timeout 30<br />
+or[root@xx]# ./test-ss-setting timeout 30<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The value is set</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cf_timeout.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CW_DISABLE" manual="false" timeout="90">
+<case name="ofono_set_cw_disable" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 CW VoiceCallWaiting disabled<br />
 Run Instructions:<br />
 1, Set call waiting for voice call CB value <br />
-./test-ss-setting VoiceCallWaiting disabled<br />
+[root@xx]# ./test-ss-setting VoiceCallWaiting disabled<br />
 2, Check whether the value is set<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 VoiceCallWaiting is disabled successfully</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cw_disable.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CS_DIS_CALLID" manual="false" timeout="90">
+<case name="ofono_set_cs_dis_callid" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 set HideCallerId disabled<br />
 Run Instructions:<br />
 1, enable HideCallerId<br />
-./test-ss-setting HideCallerId disabled<br />
+[root@xx]# ./test-ss-setting HideCallerId disabled<br />
 2, Check whether the value is disabled<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 HideCallerId is disabled successfully</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cs_dis_callid.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CF_NOT_REACH" manual="false" timeout="90">
+<case name="ofono_set_cf_not_reach" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CF voice not reachable<br />
 Run Instructions:<br />
 1, Set voice not reachable call forward by UI<br />
-or ./test-ss-setting VoiceNotReachable [number]<br />
+or [root@xx]# ./test-ss-setting VoiceNotReachable [number]<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The number is set</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cf_not_reach.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CF_UNCON" manual="false" timeout="90">
+<case name="ofono_set_cf_uncon" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CF voice unconditional<br />
 Run Instructions:<br />
 1, Set voice unconditional call forward by UI<br />
-or ./test-ss-setting VoiceUnconditional [number]<br />
+or [root@xx]# ./test-ss-setting VoiceUnconditional [number]<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The number is set</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cf_uncon.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CF_NOREPLY" manual="false" timeout="90">
+<case name="ofono_set_cf_noreply" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CF voice no reply<br />
 Run Instructions:<br />
 1, Set voice no reply call forward by UI<br />
-or ./test-ss-setting VoiceNoReply [number]<br />
+or [root@xx]# ./test-ss-setting VoiceNoReply [number]<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The number is set</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cf_noreply.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CF_BUSY" manual="false" timeout="90">
+<case name="ofono_set_cf_busy" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CF voice busy<br />
 Run Instructions:<br />
 1, Set voice busy call forward by UI<br />
-or ./test-ss-setting VoiceBusy [number]<br />
+or [root@xx]# ./test-ss-setting VoiceBusy [number]<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The number is set</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cf_busy.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CALLID_ENALBE" manual="false" timeout="90">
+<case name="ofono_set_callid_enalbe" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CS caller ID<br />
 Run Instructions:<br />
 1, Set caller ID by UI<br />
-or ./test-ss-setting HideCallerId enabled/disabled<br />
+or [root@xx]# ./test-ss-setting HideCallerId enabled/disabled<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The hidecallerid are enabled/disabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_enable_callid.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CW_ENABLE" manual="false" timeout="90">
+<case name="ofono_set_cw_enable" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CW voice call<br />
 Run Instructions:<br />
 1, Set call waiting for voice call CB value by UI<br />
-or ./test-ss-setting VoiceCallWaiting enabled/disabled<br />
+or [root@xx]# ./test-ss-setting VoiceCallWaiting enabled/disabled<br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 The voice call waiting value are enabled/disabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cw_enable.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_DIS_INC" manual="false" timeout="90">
+<case name="ofono_set_cb_dis_inc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceIncoming disable<br />
 Run Instructions:<br />
 1, Set VoiceIncoming CB value by UI<br />
-or ./test-call-barring VoiceIncoming disable 3579 <br />
+or [root@xx]# ./test-call-barring VoiceIncoming disable 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All Voice incoming call value are disabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_dis_inc.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_IN_ROMAING" manual="false" timeout="90">
+<case name="ofono_set_cb_in_romaing" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceIncoming when romaing<br />
 Run Instructions:<br />
 1, Set VoiceIncoming CB value by UI<br />
-or ./test-call-barring VoiceIncoming whenromaing 3579 <br />
+or [root@xx]# ./test-call-barring VoiceIncoming whenromaing 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All when roaming Voice incoming call value are enabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_in_roaming.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_INCOMING" manual="false" timeout="90">
+<case name="ofono_set_cb_incoming" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceIncoming<br />
 Run Instructions:<br />
 1, Set VoiceIncoming CB value by UI<br />
-or ./test-call-barring VoiceIncoming always 3579 <br />
+or [root@xx]# ./test-call-barring VoiceIncoming always 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All Voice incoming call value are enabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_incoming.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_OUT_NH" manual="false" timeout="90">
+<case name="ofono_set_cb_out_nh" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceOutgoing internationalnothome<br />
 Run Instructions:<br />
 1, Set VoiceOutgoing CB value by UI<br />
-or ./test-call-barring VoiceOutgoing internationalnothome 3579 <br />
+or [root@xx]# ./test-call-barring VoiceOutgoing internationalnothome 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All Voice international no home outgoing call value are enabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_out_nh.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_DIS_OUT" manual="false" timeout="90">
+<case name="ofono_set_cb_dis_out" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceOutgoing disabled<br />
 Run Instructions:<br />
 1, Set VoiceOutgoing CB value by UI<br />
-or ./test-call-barring VoiceOutgoing disable 3579 <br />
+or [root@xx]# ./test-call-barring VoiceOutgoing disable 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All Voice outgoing call value are disabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_dis_out.sh</step>
-
 </case>
 
-<case name="OFONO_SET_OUT_IN" manual="false" timeout="90">
+<case name="ofono_set_out_in" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceOutgoing international<br />
 Run Instructions:<br />
 1, Set VoiceOutgoing CB value by UI<br />
-or ./test-call-barring VoiceOutgoing international 3579 <br />
+or [root@xx]# ./test-call-barring VoiceOutgoing international 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All Voice international outgoing call value are enabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_out_in.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_OUT" manual="false" timeout="90">
+<case name="ofono_set_cb_out" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB VoiceOutgoing all<br />
 Run Instructions:<br />
 1, Set VoiceOutgoing CB value by UI<br />
-or ./test-call-barring VoiceOutgoing all 3579 <br />
+or [root@xx]# ./test-call-barring VoiceOutgoing all 3579 <br />
 2, Check the value is changed<br />
-test-monitor-telephony<br />
+[root@xx]# ./test-monitor-telephony<br />
 Pass/Fail Criteria:<br />
 All Voice outgoing call value are enabled</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_out.sh</step>
-
 </case>
 
-<case name="OFONO_SET_CB_DISALL" manual="false" timeout="90">
+<case name="ofono_set_cb_disall" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 Set CB disable all<br />
 Run Instructions:<br />
 1, Set disableall CB value by UI<br />
-or ./test-call-barring disableall 3579<br />
+or [root@xx]# ./test-call-barring disableall 3579<br />
 2, Check the output of script<br />
 Pass/Fail Criteria:<br />
 No error report</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_set_cb_disall.sh</step>
-
 </case>
 </set>
 <set name="Stress" >
 </set>
 <set name="sms" >
 
-<case name="OFONO_SMS_SET_SC" manual="false" timeout="90">
+<case name="ofono_sms_set_sc" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 set service center number<br />
 Run Instructions:<br />
 (real network)<br />
 1, set service center number<br />
-./test-sms sc [ number ]<br />
+[root@xx]# ./test-sms sc [ number ]<br />
 Pass/Fail Criteria:<br />
 The service center number can be set successfully</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sms_set_sc.sh</step>
-
 </case>
 
-<case name="OFONO_SMS_SEND_UCS2" manual="false" timeout="90">
+<case name="ofono_sms_send_ucs2" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 send UCS2 message<br />
 Run Instructions:<br />
@@ -1774,12 +1558,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. the message can be sent without any error<br />
 2. the message can be received at remote side</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sms_send_ucs2.sh</step>
-
 </case>
 
-<case name="OFONO_SMS_SEND_LONG" manual="false" timeout="90">
+<case name="ofono_sms_send_long" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 send long message<br />
 Run Instructions:<br />
@@ -1789,12 +1571,10 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. the message can be sent without any error<br />
 2. the message can be received at remote side</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sms_send_long.sh</step>
-
 </case>
 
-<case name="OFONO_SMS_SEND" manual="false" timeout="90">
+<case name="ofono_sms_send" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 send sms<br />
 Run Instructions:<br />
@@ -1804,9 +1584,7 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 1. the message can be sent without any error<br />
 2. the message can be received at remote side</p>]]></description>
-
 <step expected_result="0">/opt/mcts-ofono-tests/ofono_sms_send.sh</step>
-
 </case>
 </set>
 <set name="call_history" >
