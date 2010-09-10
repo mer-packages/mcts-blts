@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="gUPnP" >
+<set name="Installation" >
+
+<case name="gUPnP_package_installation" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check gUPnP package is installed</p>
+<p>Run Instructions:</p>
+<p>1) Run command: &quot;rpm -qa|grep upnp&quot;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) gupnp, gupnp-av should be installed by default;</p>]]></description>
+
+</case>
+</set>
+<set name="UPnP_Device_Discovery" >
+
+<case name="UPnP_router_discovery" manual="true" timeout="60">
+	<description><![CDATA[<p>Purpose:</p>
+<p>gUPnP should detect and discovery Router UPnP service</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Connect MeeGo device with a router with UPnP service;</p>
+<p>3) Run command: &quot;gupnp-universal-cp&quot;, and &quot;GUPnP Universal Control Point&quot; applciation will be launched;</p>
+<p>4) Check UPnP Network in the right of application;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) Router's UPnP service can be found in UPnP Network;</p>]]></description>
+
+</case>
+
+<case name="UPnP_media_server_discovery" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>gUPnP should detect and discovery UPnP media server</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Connect MeeGo device with a UPnP media server, such as BUFFALO media server;</p>
+<p>3) Run command: &quot;gupnp-universal-cp&quot;, and &quot;GUPnP Universal Control Point&quot;  applciation will be launched;</p>
+<p>4) Check UPnP Network in the right of application;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) UPnP media server can be found in UPnP Network;</p>]]></description>
+
+</case>
+
+<case name="UPnP_media_server_browse" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>gUPnP should discovery and browse media content from UPnP media server by UPnP protocal</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Connect MeeGo device with a UPnP media server, such as BUFFALO media  server;</p>
+<p>3) Run command: &quot;gupnp-av-cp&quot;, and &quot;GUPnP AV Control Point&quot;  applciation will be launched;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) UPnP media server can be shown in GUPnP AV Control Point;</p>
+<p>2) Media content in UPnP media server can be browsed and viewed in GUPnP AV Control Point;</p>]]></description>
+
+</case>
+
+<case name="UPnP_multiple_devices_discovery" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>gUPnP should detect and discovery multiple UPnP devices same time</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Connect MeeGo device with an UPnP Router and an UPnP media server, such as BUFFALO media  server;</p>
+<p>3) Run command: &quot;gupnp-universal-cp&quot;, and &quot;GUPnP Universal Control Point&quot;  applciation will be launched;</p>
+<p>4) Check UPnP Network in the right of application;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) Both UPnP router and UPnP media server can be shown in GUPnP Universal Control Point;</p>]]></description>
+
+</case>
+</set>
+<set name="UPnP_Protocal_Compability" >
+
+<case name="UPnP_Device_Architecture_Forward_Compatibility" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that a UPnP control point can correctly interoperate with a device implementing a later version of the UPnP Device Architecture.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.1.2 DDC UPnP Device Architecture: Forward Compatibility</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.1.2 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Device_Architecture_Device_and_Service_Forward_Compatibility" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that an UPnP control point can correctly interoperate with a device implementing a later version of an UPnP device type or service type.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.1.3 DDC UPnP Device Architecture: Device and Service Forward Compatibility</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.1.3 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_SSDP_Default_Port_Receive_Discovery_on_Port_1900" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test verifies that UPnP control points receive and process multicast discovery messages on port 1900.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.3.1 DDC UPnP SSDP Default Port: Receive Discovery on Port 1900</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.3.1 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_SSDP_Default_Port_CPs_Assume_Port_1900" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that CPs will assume port 1900 when it is not explicitly specified as part of the HOST header in any SSDP message</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.3.3 DDC UPnP SSDP Default Port: CPs Assume Port 1900.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.3.3 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_SSDP_Default_Port_Explicitly_Specify_Port_1900_and_M-SEARCH_source_port" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test 7.2.3.4 verifies that a UPnP control point sends M-SEARCH messages using a source port greater than 1024 and not 1900.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.3.4 DDC UPnP SSDP Default Port: Explicitly Specify Port 1900 and M-SEARCH source port.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.3.4 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_HTTP_Support_and_General_Rules_Content-Type_Header" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that CPs always use the Content-Type header tag in all TCP based HTTP Transactions that contain XML body</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.5.9 DDC UPnP HTTP Support and General Rules: Content-Type Header</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.5.9 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_HTTP_Support_and_General_Rules_Linear_White_Space_for_DLNA_BNF_(CP)" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test verifies that Control Points follow the BNF in regards to LWS when defined specifically in the DLNA Guideline.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.5.10 DDC UPnP HTTP Support and General Rules: Linear White Space for DLNA BNF (CP)</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.5.10 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_HTTP/1.1_Transaction_Rules_HTTP/1.1_Requirements" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>7.2.7.3 HTTP clients of UPnP endpoints (devices and control points) must not report support for HTTP/1.1 unless they also support Chunked Transfer Coding and correctly parse a 100 (Continue Response).</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.7.3 DDC UPnP HTTP/1.1 Transaction Rules: HTTP/1.1 Requirements.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.7.3 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Persistent_Connections_Close_Persistent_Connections_in_60_Seconds" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Verifies that the HTTP clients of UPnP Control points close a persistent connection in 60 seconds if there are no unanswered requests.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.8.7 DDC UPnP Persistent Connections: Close Persistent Connections in 60 Seconds</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.8.7 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Device_Description_Rules_Match_On_Multiple_DLNADOC_Tags" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>If a UPnP Control Point claims to discover a particular type of device class it must be able to do so even if the device contains multiple DLNADOC tags.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.10.4 DDC UPnP Device Description Rules: Match On Multiple DLNADOC Tags</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.10.4 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Device_Description_Rules_Unexpected_DLNADOC_Element_Value" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>A CP should ignore the element value of the X_DLNADOC tag. This includes both the dlna-version and the dlna-dev-class.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.10.6 DDC UPnP Device Description Rules: Unexpected DLNADOC Element Value</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.10.6 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Embedded_Device_Support_CP_Support_for_depth_and_count_of_devices" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This test will verify that UPnP control points support device hierarchies that have up to a total of 6 DLNA devices with a maximum depth of 4.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.11.2 DDC UPnP Embedded Device Support: CP Support for depth and count of devices</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.11.2 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Embedded_Device_Support_CP_interaction_with_non-standard_UPnP_root_device" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This test will verify that Control Points successfully interact with an embedded device, whose root is a non-standard UPnP device type.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.11.6 DDC UPnP Embedded Device Support: CP interaction with non-standard UPnP root device</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.11.6 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Error_Codes_Tolerate_Unknown_Error_Conditions" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that a UPnP Control Point must be able to tolerate unknown method error codes for UPnP actions.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.16.2 DDC UPnP Error Codes: Tolerate Unknown Error Conditions</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.16.2 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Error_Codes_Unknown_HTTP_Status_Code" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that a UPnP CP understands the class of a status code, even if the specific code is not understood. In this case it should treat the status code as a x00 status.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.16.3 DDC UPnP Error Codes: Unknown HTTP Status Code.</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.16.3 should pass;</p>]]></description>
+
+</case>
+
+<case name="URI_Rules_CP_Interop_with_relative_URLs" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that a UPnP CP works with both Absolute URIs and Relative URIs and with or without the BaseURL element.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.24.8 DDC URI Rules: CP Interop with relative URLs</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.24.8 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_Device_Description_Usage_Refreshing_Documents_After_Device_Discovery" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>This test will verify that when a DLNA UPnP Control Point removes a UPnP device from its list of active devices, it also invalidates its local representation of the device.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.25.2 DDC UPnP Device Description Usage: Refreshing Documents After Device Discovery</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.25.2 should pass;</p>]]></description>
+
+</case>
+
+<case name="UPnP_UTF-8_Support_Tolerance_for_UTF-8" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that a UPnP CP uses UTF-8 encoding of all XML fragments. <br />
+&nbsp;NOTE: The UTF-8 symbols appear at the end of the simulator name and may be garbled. This is OK.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.29.1 DDC UPnP UTF-8 Support: Tolerance for UTF-8</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.29.1 should pass;</p>]]></description>
+
+</case>
+
+<case name="CP_Versioning_USER-AGENT_Header" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Verifies that CPs use the USER-AGENT Header in all SOAP action requests.</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.32.1,2 DDC CP Versioning: USER-AGENT Header</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.32.1,2 should pass;</p>]]></description>
+
+</case>
+
+<case name="Maximum_HTTP_Header_Size_4KB_Max_HTTP_Header" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>To verify that CPs can accept HTTP requests of header size up to and including 4KB (4096KB).</p>
+<p>Run Instructions:</p>
+<p>1) Install gUPnP-ui, gupnp-tools packages;</p>
+<p>2) Build a DLNA CTT test environment;</p>
+<p>3) Run DLNA CTT test case: 7.2.34.1 DDC Maximum HTTP Header Size: 4KB Max HTTP Header</p>
+<p>Pass/Fail Criteria:</p>
+<p>1) DLNA CTT test case 7.2.34.1 should pass;</p>]]></description>
+
+</case>
+</set>
+</suite>
+</testdefinition>
