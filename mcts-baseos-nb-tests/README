@@ -1,3 +1,59 @@
-##########################################
-How to install and run test package
-##########################################
+-----------------------
+Introduction
+-----------------------
+mcts-baseos-nb-tests is used to validate basic kernel and device drivers for netbook. 
+
+-----------------------
+Build and Run
+-----------------------
+1. Build
+cd mcts-baseos-nb-tests
+./pack.sh
+This will generate rpm package mcts-baseos-nb-tests-1.0.0-1.i386.rpm.
+
+2. Install
+rpm -ivh mcts-baseos-nb-tests-1.0.0-1.i386.rpm
+
+3. Test environment setup
+Refer "Test environment" section
+
+4. Run
+testrunner-lite -f /usr/share/mcts-baseos-nb-tests/tests.xml -o results.xml
+
+---------------------
+Common Install
+---------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+-----------------------
+Test Environment Setup
+-----------------------
+This package is designed to do fully automated tests for various device 
+drivers in your netbook, so it is recommended to setup those devices 
+at first, or some tests would fail for lack of device. Here is a installation
+ guide to setup devices for your reference.
+
+1. Connect ethernet cable.
+2. Insert one bluetooth dangle if you don't have internal bluetooth in your netbook.
+3. Insert one sd card(skip this if you don't have card reader).
+4. Insert one usb hub
+5. Insert usb keyboard, usb mouse to the hub
+6. Insert usb ethernet to usb hub
+
+In step 5,6, you can also insert those usb devices into other netbook usb ports, 
+just ensure those usb devices are there.
+
+-----------------------
+Known Issues
+-----------------------
+1. Some usb/sd card cases(create/delete_partition_* etc.) would fail occasionally, 
+a simple work around is to delete all partitions and then unplug/plug them manually, 
+it could work.
+
+
+-----------------------
+TODO
+-----------------------
+1. more cases are under development, they will be included in the futrue.

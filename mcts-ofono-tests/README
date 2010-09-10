@@ -21,7 +21,7 @@ rpm -ivh mcts-ofono-tests-1.0.0-1.i386.rpm
 Refer "Test environment" section
 
 4. Run
-testkit-lite -f /usr/share/mcts-ofono-tests/tests.xml
+testrunner-lite -f /usr/share/mcts-ofono-tests/tests.xml -o results.xml
 
 ---------------------
 Common Install

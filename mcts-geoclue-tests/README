@@ -43,7 +43,7 @@ Refer the section Test environment setup
 Step4:
 + Run
 $ cd /opt/mcts-geoclue-tests
-$ testkit-lite -f /usr/share/mcts-geoclue-tests/tests.xml
+$ testrunner-lite -f /usr/share/mcts-geoclue-tests/tests.xml -o results.xml
 
 
 -----------------------

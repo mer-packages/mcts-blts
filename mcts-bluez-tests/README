@@ -22,9 +22,9 @@ On Server, we also need some daemon running: bluetoothd and obexd (for server_st
 -----------------------
 Build and Run
 -----------------------
-(Suppose you only get the source code and testkit-lite has been setup on your test machine
+(Suppose you only get the source code and testrunner-lite has been setup on your test machine
  if you have got mcts-bluez-tests RPM, you can directly go to step.4 on testing machine
- if you have not installed the testkit, you can follow the README of framework)
+ if you have not installed the testrunner, you can follow the README of framework)
 Steps:
 1. We need to use two machine, one is server and another is your testing machine as client. 
    Setup Server environment by three steps as "Test Environment" describe (Please see next section)
@@ -33,7 +33,7 @@ Steps:
 3. sh pack.sh    --- It will make and generate the mcts-bluez-tests RPM
 4. rpm -ivh mcts-bluez-tests-1.0.0-1.i386.rpm    --- install RPM to your testing machine 
 5. cd /usr/share/mcts-bluez-tests/
-6. testkit-lite -f tests.xml
+6. testrunner-lite -f tests.xml -o results.xml
 
 
 -----------------------

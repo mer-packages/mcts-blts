@@ -62,12 +62,15 @@ clean_partition () {
 
 get_usb_storage_device () {
         local found="NO"
+        # choose one of usb storage devices (stick, disk etc.)
+        local usb_storage=$(cd /proc/scsi/usb-storage && cat `ls -t | head -n 1` | grep Product | awk -F: '{print $2}' | sed -e 's/ //g')
+
         for i in sde sdd sdc sdb; do
                 if [ ! -e /dev/$i ]; then
                         continue
                 fi
-                model=`cat /sys/block/$i/device/model`
-                if [ "$model" = "Cruzer Micro    " ]; then
+                model=`cat /sys/block/$i/device/model | sed -e 's/ //g'`
+                if [ "$model" = "$usb_storage" ]; then
                         found="YES"
                         break
                 fi

@@ -2,8 +2,8 @@ How to run:
 ==============
 Recommend to execute tests on Web UI via Testkit manager:
     Install testkit-manager, using webUI to select and start up your tests.
-You also could run tests on command line via testkit-lite:
-    Install testkit-lite, run "testkit-lite -M -f /usr/share/mnts-clutter-tests/tests.xml". About more function, check "man testkit-lite".
+You also could run tests on command line via testrunner-lite:
+    Install testrunner-lite, run "testrunner-lite -m -f /usr/share/mnts-clutter-tests/tests.xml -o results.xml". About more function, check "man testrunner-lite".
 
 Common Install
 ==============

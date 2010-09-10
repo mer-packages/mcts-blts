@@ -58,7 +58,7 @@ Connect to a ethernet network so that "ping -b" local network has response
 cd /opt/mcts-connman-tests
 su - 
 export PYTHONPATH=$PYTHONPATH:/opt/mcts-connman-tests/common
-testkit-lite -f /usr/share/mcts-connman-tests/tests.xml
+testrunner-lite -f /usr/share/mcts-connman-tests/tests.xml -o results.xml
 
 
 ---------------------
@@ -96,7 +96,7 @@ Test Environment setup
    WiFi Guest: Setup a open hidden WiFi AP with essid "Guest", this is enough
    	for test cases in WiFi/Guest
    default.xml defines all test cases used in this configuration. You can
-   run with "testkit-lite -f /usr/share/mcts-connman-tests/default.xml"
+   run with "testrunner-lite -f /usr/share/mcts-connman-tests/default.xml"
    
 
 2. Setup test environment for full testing

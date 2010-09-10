@@ -18,7 +18,7 @@ Pre-install:
 build:
         run "pack.sh", then rpm install the mcts-reandercheck-tests packages
 run:
-        testkit-lite -f tests.xml
+        testrunner-lite -f tests.xml -o results.xml
 note:
         Because Piglit is used for Xrender API test, So It's OK to be run without WM.
         Just "xinit" then run the cases is fine.
