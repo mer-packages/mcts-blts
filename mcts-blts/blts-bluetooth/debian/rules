@@ -131,6 +131,8 @@ binary-common:
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
+	[ ! -f whole-tree-mode ] || (for c in $(CURDIR)/debian/*/DEBIAN/control; do [ ! -f $$c ] || ([ `grep -cE '^Source:' $$c` != "0" ] || sed -i 's/\(^Version:.*\)/Source: cst-blts-tests\n\1/' $$c) ; done)
+	[ ! -f whole-tree-mode ] || (for c in $(CURDIR)/debian/*/DEBIAN/control; do [ ! -f $$c ] || (sed -i 's/^Source: .*/Source: cst-blts-tests/' $$c ); done)
 	dh_md5sums
 	dh_builddeb
 # Build architecture independant packages using the common target.
