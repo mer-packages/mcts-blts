@@ -43,6 +43,14 @@ AC_SUBST(BLTS_COMMON_VERSION)
 
 VERSION=$BLTS_COMMON_VERSION
 
+# Configuration dir
+# For some reason sysconfdir contains $prefix even if it's set to /usr
+if test "$prefix" = "/usr" || "$prefix" = "/usr/"; then
+        configdir="/etc/blts"
+else
+        configdir="${sysconfdir}/blts"
+fi
+AC_SUBST(configdir)
 
 AC_PROG_CC
 AC_PROG_LIBTOOL

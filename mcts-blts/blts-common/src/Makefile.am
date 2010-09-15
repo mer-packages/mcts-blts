@@ -14,7 +14,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -I.
+AM_CFLAGS = \
+	-O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -I. \
+	-DBLTS_CONFIG_DIR=\"$(configdir)\"
 AM_YFLAGS = -d 
 
 # only export essential c-interfaces
