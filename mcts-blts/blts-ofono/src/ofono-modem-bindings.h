@@ -1482,4 +1482,47 @@ org_ofono_CallBarring_change_password_async (DBusGProxy *proxy, const char * IN_
 }
 #endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_CallBarring */
 
+#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_Manager
+#define DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_Manager
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+gboolean
+org_ofono_Manager_get_modems (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
+
+{
+  return dbus_g_proxy_call (proxy, "GetModems", error, G_TYPE_INVALID, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), OUT_arg0, G_TYPE_INVALID);
+}
+
+typedef void (*org_ofono_Manager_get_modems_reply) (DBusGProxy *proxy, GPtrArray *OUT_arg0, GError *error, gpointer userdata);
+
+static void
+org_ofono_Manager_get_modems_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+{
+  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
+  GError *error = NULL;
+  GPtrArray* OUT_arg0;
+  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), &OUT_arg0, G_TYPE_INVALID);
+  (*(org_ofono_Manager_get_modems_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  return;
+}
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+DBusGProxyCall*
+org_ofono_Manager_get_modems_async (DBusGProxy *proxy, org_ofono_Manager_get_modems_reply callback, gpointer userdata)
+
+{
+  DBusGAsyncData *stuff;
+  stuff = g_slice_new (DBusGAsyncData);
+  stuff->cb = G_CALLBACK (callback);
+  stuff->userdata = userdata;
+  return dbus_g_proxy_begin_call (proxy, "GetModems", org_ofono_Manager_get_modems_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+}
+#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_Manager */
+
 G_END_DECLS

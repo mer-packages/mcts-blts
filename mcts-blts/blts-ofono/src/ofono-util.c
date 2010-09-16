@@ -59,7 +59,7 @@ void get_modem_list(char* data, gpointer user_data)
 
 /* helper function to solve modem GPtrArray */
 
-void find_modem(char *key, GValue* value, gpointer user_data)
+/*void find_modem(char *key, GValue* value, gpointer user_data)
 {
 	my_ofono_data* data = (my_ofono_data*)user_data;
 	LOG("[ %s ]\n", key);
@@ -67,7 +67,33 @@ void find_modem(char *key, GValue* value, gpointer user_data)
 	if(!strcmp("Modems", key))
 		if(g_value_fits_pointer (value))
 			g_ptr_array_foreach(g_value_peek_pointer (value), (GFunc)get_modem_list, data);
+}*/
+
+void find_modem(gpointer modem_data,  gpointer user_data)
+{
+	my_ofono_data* mydata = (my_ofono_data*)user_data;
+	GValue *tmp_data;
+
+	if (!modem_data)
+		return;
+
+	tmp_data = g_value_array_get_nth ((GValueArray *)modem_data, 0);
+	char * modem = (char *)g_value_peek_pointer(tmp_data);
+	BLTS_WARNING("\tModem %s found\n", (char*) modem);
+	if(mydata->number_modems < MAX_MODEMS)
+	{
+		mydata->modem[mydata->number_modems] = malloc(sizeof(char)*strlen(modem)+1);
+		if(mydata->modem[mydata->number_modems] == NULL)
+		{
+			LOG("Warning: not enough memory to allocate space for modem data\n");
+			return;
+		}
+		strcpy(mydata->modem[mydata->number_modems], modem);
+		mydata->number_modems++;
+	}
+
 }
+
 
 #define G_ENABLE_DEBUG
 static void dbus_marshaller_init()
@@ -90,7 +116,8 @@ int my_ofono_get_modem(my_ofono_data* data)
 	GError *error = NULL;
 	DBusGProxy *proxy=NULL;
 	error = NULL;
-	GHashTable* list=NULL;
+	//GHashTable* list=NULL;
+	GPtrArray *modems = NULL;
 	int i;
 
 	// initialize values
@@ -124,8 +151,8 @@ int my_ofono_get_modem(my_ofono_data* data)
 
 	dbus_marshaller_init();
 
-	// get modems
-	if (!dbus_g_proxy_call (proxy, "GetProperties", &error, G_TYPE_INVALID,
+	// get modems 0.26 and before
+/*	if (!dbus_g_proxy_call (proxy, "GetProperties", &error, G_TYPE_INVALID,
 			dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
 			&list, G_TYPE_INVALID))
 
@@ -136,8 +163,21 @@ int my_ofono_get_modem(my_ofono_data* data)
 	}
 
 	g_hash_table_foreach(list, (GHFunc)find_modem, data );
-	//g_hash_table_foreach(list, (GHFunc)hash_table_foreach, NULL);
-	g_hash_table_destroy(list);
+	g_hash_table_foreach(list, (GHFunc)hash_table_foreach, NULL);
+	g_hash_table_destroy(list);*/
+
+	// get mdoems 0.28 and later
+	if(!org_ofono_Manager_get_modems(proxy, &modems, &error))
+	{
+		g_object_unref (proxy);
+		display_dbus_glib_error(error);
+		g_error_free (error);
+		return -1;
+	}
+
+
+	g_ptr_array_foreach(modems, find_modem, data);
+	g_ptr_array_free(modems, TRUE);
 	g_object_unref (proxy);
 	if(data->number_modems==0)
 	{

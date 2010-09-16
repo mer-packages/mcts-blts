@@ -1,6 +1,11 @@
-blts-ofono-tests (0.1.10) unstable; urgency=low
+blts-ofono-tests (0.1.11) unstable; urgency=low
+  
+  * oFono 0.28 support 
+  
+ -- Mikko Ojala <mikko.ojala@digia.com>  Thu, 16 Sep 2010 15:02:23 +0300
 
-  [ Mikko Ojala ]
+blts-ofono-tests (0.1.10) unstable; urgency=low
+  
   * Multiparty call test
   * Private chat call test
   
