@@ -1,0 +1,159 @@
+Overview
+========
+
+This package contains several XVideo functionality tests for generic
+Linux-y mobile platforms.
+
+Software Requirements
+=====================
+
+Building the package requires
+  * linux >= 2.6.28
+  * GNU libc >= 2.1
+  * libbltscommon-dev >= 0.3.4
+  * libbltspixelformat-dev >= 0.1.0
+  * libxv-dev >= 2:1.0.4
+
+Running the tests in the package requires
+  * linux >= 2.6.28
+  * GNU libc >= 2.1
+  * libbltscommon >= 0.3.4
+  * libbltspixelformat >= 0.1.0
+  * libxv1
+
+Hardware requirements
+=====================
+
+Running the tests requires
+  * One DUT
+
+Building the package
+====================
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+To build debian package
+
+ $ dpkg-buildpackage -rfakeroot
+
+Test cases
+==========
+   * XVideo - Presence check: Simple XVideo extension presence check
+   * XVideo - Enumerate adapters: List all information from all XVideo adapters
+   * XVideo - XvPutImage benchmark: Tests XvPutImage performance and
+     functionality. Uses various resolutions, pixel formats and port attributes
+     depending on configuration file.
+   * XVideo - XvShmPutImage benchmark: Tests XvShmPutImage performance and
+     functionality. Uses various resolutions, pixel formats and port attributes
+     depending on configuration file.
+   * XVideo - PutImage with QueryBestSize: Functional test for QueryBestImage.
+     Queries best size with different input and output resolutions and tries to
+     display images with the returned size.
+   * XVideo - Notify events: Functional test for XvPortNotify/XvVideoNotify.
+     Requests events and tries to trigger events from a different process.
+
+Running the tests
+=================
+
+Run as root (example for N900):
+
+ $ blts_xvideo_test -C /usr/lib/tests/blts-xvideo-tests/blts-xvideo-n900.cnf
+
+The test results are printed to terminal and also to
+/var/log/tests/blts_xvideo.txt.
+
+Other possible execution parameters for blts_xvideo_test:
+   * -l: Used log file, default blts_xvideo_core.txt
+   * -e: Execute single or multiple selected tests, for example -e 1,4,5.
+   * -en: Execute test by name, for example -en "My test X"
+   * -s: Show list of all tests
+   * -C: Used parameter configuration file
+   * -?: This message
+   * -nc: Do not output log to terminal
+
+Configuration file
+==================
+
+Configuration file contains used parameters for benchmarks;
+
+######################
+# General parameters #
+######################
+
+# defines generated video material resolution
+[parameter]
+	name input_resolution
+	const "800x600" "1600x1200"
+[end_parameter]
+
+# if output resolution is 0x0, resolution will be root window's size
+[parameter]
+	name output_resolution
+	const "0x0" "1600x1200"
+[end_parameter]
+
+# duration of tests
+[parameter]
+	name duration
+	const 5
+[end_parameter]
+
+# used X screen(s)
+[parameter]
+	name screen
+	const 0
+[end_parameter]
+
+# used XVideo adaptor(s)
+[parameter]
+	name adaptor
+	const 0
+[end_parameter]
+
+# Possible choices for test images:
+# random: three frames of random pixels
+# vh_lines: two frames, horizontal and vertical lines
+# checkerboard: two frames, b/w checkerboard
+# moving_arrow: white arrow moving from left to right and pointing up
+# fps_check: two frames, blocks change between black and white
+# colorgradient: red, green and blue gradients
+# graygradient: full screen grayscale, from black (left) to right
+# colorgradient_scroll: red, green and blue gradients, moves from left to right
+# graygradient_scroll: full screen grayscale, moves from left to right
+[parameter]
+	name test_images
+	const "colorgradient_scroll"
+[end_parameter]
+
+# used pixel formats (fourcc)
+[parameter]
+	name format
+	const "YUY2" "YV12" "I420" "UYVY"
+[end_parameter]
+
+# used port attributes for XVideo adaptor
+[parameter]
+	name port_attributes
+	const "XV_VSYNC 0 XV_BRIGHTNESS 0 XV_CONTRAST 0"
+[end_parameter]
+
+# These are for QueryBestSize and Notify events -tests
+
+[parameter]
+	name fute_format
+	const "YUY2"
+[end_parameter]
+
+[parameter]
+	name fute_port_attributes
+	const "XV_VSYNC 0"
+[end_parameter]
+
+

@@ -1,0 +1,9 @@
+blts-xvideo-tests (0.0.5) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Initial upload for Meego (changelog summarized)
+  * 'PutImage with QueryBestSize' -test
+  * 'Notify events' -test. Requests events and tries to trigger events
+    from a different process.
+
+ -- Kari Laakso <kari.laakso@digia.com>  Wed, 08 Sep 2010 10:45:33 +0300
