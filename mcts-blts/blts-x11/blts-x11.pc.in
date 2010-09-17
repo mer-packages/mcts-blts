@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: blts-x11-tests
+Description: X11 functional tests
+Version: @VERSION@
+Libs: -L${libdir} -lrt
+
