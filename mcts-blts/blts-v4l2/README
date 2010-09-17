@@ -1,0 +1,121 @@
+Overview
+
+This package contains functional tests for V4L2 camera devices
+
+Requirements
+
+Running the tests in the package requires
+  * linux >= 2.6.15
+  * GNU libc >= 2.3
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use the Debian packaging tools for the build; these
+will run Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ dpkg-buildpackage
+
+( you may need some combination of '-rfakeroot', '-uc', '-us', etc, depending
+  on your system configuration )
+
+Alternatively, the packaging can be skipped by just running with Autotools:
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+Installation
+
+Login as root and install the package (dpkg -i [package name])
+
+Running the tests
+
+Run all tests:
+blts-v4l2
+
+Show cases:
+blts-v4l2 -s
+
+Use config file:
+blts-v4l2 -C <config file>
+
+Example config file blts-v4l2-n900.cnf for N900 is included in the package.
+
+Run single case like nro 1:
+blts-v4l2 -e 1
+
+Run a single case with its name (note quotes when there are spaces in the name):
+blts-v4l2 -en "Test case name"
+
+Test cases
+
+* Core-Camera-Open device
+	Try to open a V4L2 device
+
+* Core-Camera-Read device
+	Open V4L2 device to requested width and height
+
+* Core-Camera-Check device controls
+ 	Enumerate through V4L2 device controls
+
+* Core-Camera-Check device capabilites
+	Check and print V4L2 device capabilities
+
+* Core-Camera-Check device formats
+	Enumerate and print V4L2 device formats
+
+* Core-Camera-Measure device stepping down resolution
+	Step down resolutions and calculate FPS using V4L2 device
+
+* Core-Camera-Stream from device to screen
+	Stream frames from V4L2 device to screen using XVideo
+
+* Core-Camera-Measure device FPS with defined resolution
+	Use a given resolution and calculate FPS using V4L2 device
+
+* Core-Camera-Take picture as JPEG with device
+	Take one frame from V4L2 device and create a JPG file
+
+* Core-Camera-Device enumeration
+	Enumerate V4L2 input and output devices and print supported standards
+
+* Core-Camera-Stream from device and crop corners
+	Stream frames from V4L2 device to screen using XVideo and use cropping
+
+* Core-Camera-Read from device using poll
+	Read/stream frames from device as with measure device FPS case, but use
+	poll() instead of select() to find out when the device is ready.
+
+* Core-Camera-Test standard control settings
+	Enumerate all standard controls, and test each available control with
+	min/max values and any configured values.
+
+* Core-Camera-Test extended control settings
+	Enumerate all extended controls, and test each available control with
+	min/max values and any configured values.
+
+* Core-Camera-Stream from device and vary frame rate
+	Stream frames from V4L2 device to screen using default frame rate and
+	calculate FPS, change frame rate and repeat streaming to compare FPS values.
+
+* Core-Camera-Check debug capability
+	Requests the driver to dump current state to kernel log. This API
+	call is specified so that driver doesn't have to support this.
+
+* Core-Camera-Select input and stream
+	Tries different inputs and streams from those to the screen.
+	If no input available with device this test will force test
+	VIDIOC_S_INPUT
+
+* Core-Camera-Select output and stream
+	Tries different outputs of device.
+	If no output available with device this test will force test
+	VIDIOC_S_OUTPUT
+
+* Core-Camera-Test input device standards
+	Loops through V4L2 input devices and tries to get current video standard, 
+	then enumerates and sets supported standards one by one.  
+	

@@ -1,0 +1,227 @@
+#V4L2 MIN interface cheatsheet
+# [] - needed value
+# () - Optional parameter
+# | - or
+#Init - Needed before anything
+#OpenDevice [dev] - Open camera device
+#Start [x] [y] - Start camera in given format, camera will adjust itself to nearest possible
+#ReadFrames [number] (Stream) - How many frames are read from device and should they be streamed to screenbuffer
+#SnapShot [filename] - Take snapshot with device
+#Stop - Stop camera device
+#CloseDevice - Close camera device
+#Close - Close module
+
+[Test]
+title Core-Camera-Open device main camera
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Read device main camera
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Start 5000 5000
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Measure device main camera stepping down
+createx libmin-v4l2 blts
+blts Init
+print Testing 2592x1968
+blts OpenDevice /dev/video0
+blts Start 2592 1968
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+print Testing 2592x1458
+blts OpenDevice /dev/video0
+blts Start 2592 1458
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+print Testing 1280x960
+blts OpenDevice /dev/video0
+blts Start 1280 960
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+print Testing 640x480
+blts OpenDevice /dev/video0
+blts Start 640 480
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Stream from main camera maximum resolution
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Start 5000 5000
+blts ReadFrames 200 Stream
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Take picture with maximum resolution with main camera
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Start 5000 5000
+blts SnapShot ./main_camera_maximum.jpg
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Measure device main camera 848x480
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Start 848 480
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+##################
+
+[Test]
+title Core-Camera-Check controls
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Controls
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Check capabilites
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Capabilities
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Check formats
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video0
+blts Formats
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+##################
+
+
+[Test]
+title Core-Camera-Open device front camera
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video1
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+[Test]
+title Core-Camera-Read device front camera
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video1
+blts Start 5000 5000
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+
+[Test]
+title Core-Camera-Measure device front camera stepping down
+createx libmin-v4l2 blts
+print Testing 720x486
+blts Init
+blts OpenDevice /dev/video1
+blts Start 720 486
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+print Testinting 640x480
+blts OpenDevice /dev/video1
+blts Start 640 480
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+print Testing 352x288
+blts OpenDevice /dev/video1
+blts Start 352 288
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+print Testing 176x144
+blts OpenDevice /dev/video1
+blts Start 176 144
+blts ReadFrames 200
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+
+[Test]
+title Core-Camera-Measure device front camera 320x240
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video1
+blts Start 320 240
+blts ReadFrames 1000
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]
+
+
+[Test]
+title Core-Camera-V4L2 Snapshot front camera maximum resolution
+createx libmin-v4l2 blts
+blts Init
+blts OpenDevice /dev/video1
+blts Start 5000 5000
+blts SnapShot ./front_camera_maximum.jpg
+blts Stop
+blts CloseDevice
+blts Close
+delete blts
+[Endtest]

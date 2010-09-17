@@ -1,0 +1,17 @@
+blts-v4l2-tests (0.3.4) unstable; urgency=low
+
+  [ Mikko Ojala, Aki Nyman, Jussi Saavalainen & Pasi Matilainen ]
+  * Initial upload for Meego (changelog summarized)
+  * Driver debug print test
+  * Input and output select and tests
+  * Support for device native JPEG compression
+  * FPS measurement test using poll() instead of select().
+  * Standard and Extended capture control tests.
+  * Streaming test with frame rate selection.
+  * Experimental device priority change test.
+  * Experimental capture quality change test.
+  * Cropping and enumeration test cases.
+  * Enhanced still imaging, snapshot, streaming test cases.
+  * Max resolution, FPS calculations, extended controls enumeration
+
+ -- Kari Laakso <kari.laakso@digia.com>  Wed, 08 Sep 2010 13:14:25 +0300

@@ -1,0 +1,165 @@
+# Parameter configuration for blts-v4l2
+
+# Valid video devices for HW.
+[parameter]
+	name video_device
+	const "/dev/video0"
+[end_parameter]
+
+
+# IO method. Normal read()/write(), streaming with MMAP, streaming with
+# user pointer
+[parameter]
+	name io_method
+	const "readwrite" "MMAP"
+[end_parameter]
+
+[parameter]
+	name io_method_stream
+	const "MMAP" "userptr"
+[end_parameter]
+
+
+# Input resolutions
+[parameter]
+	name camera_resolution_video0
+	const "1024x768"
+[end_parameter]
+
+[parameter]
+	name camera_resolution_all
+	const "1024x768" "848x480" "640x480" "320x240"
+[end_parameter]
+
+[parameter]
+	name camera_resolution_stream_all
+	const "4016x3016" "2400x1812" "848x480" "640x480" "320x240"
+[end_parameter]
+
+[parameter]
+	name camera_resolution_controltest
+	const "1024x768"
+[end_parameter]
+
+
+# Pixel formats (fourcc, as kernel v4l2 entries)
+[parameter]
+	name camera_pixel_format
+	const "YUYV" "UYVY" "RGBP" "RGBR" "RGBO" "RGBQ"
+[end_parameter]
+
+# Frame rates
+[parameter]
+	name frame_rate
+	const 25.0 5.0
+[end_parameter]
+
+# Image save/verification settings for control tests
+[globals]
+	image_save_path "./ctltest-images"
+#	image_verify_tool "./verifytool.py"
+[end_globals]
+
+# Control setting verification values for control tests
+[globals]
+	dev0_Brightness_min 0
+	dev0_Brightness_max 255
+	dev0_Contrast_min 0
+	dev0_Contrast_max 255
+	dev0_Saturation_min 0
+	dev0_Saturation_max 255
+	dev0_Hue_min "-128"
+	dev0_Hue_max 127
+	dev0_Volume_min 0
+	dev0_Volume_max 65535
+[end_globals]
+
+# Additional test values for control tests
+[globals]
+	dev0_Brightness_testvalues "64 128 192"
+	dev0_Contrast_testvalues "64 128 192"
+	dev0_Saturation_testvalues "64 128 192"
+	dev0_Hue_testvalues "-64 0 64"
+[end_globals]
+
+# Tests
+
+[test]
+	name "Core-Camera-Open device"
+	params video_device
+[end_test]
+
+[test]
+	name "Core-Camera-Read device"
+	params video_device
+[end_test]
+
+[test]
+	name "Core-Camera-Check device controls"
+	params video_device
+[end_test]
+
+[test]
+	name "Core-Camera-Check device capabilites"
+	params video_device
+[end_test]
+
+[test]
+	name "Core-Camera-Check device formats"
+	params video_device
+[end_test]
+
+[test]
+	name "Core-Camera-Measure device stepping down resolution"
+	params video_device camera_pixel_format io_method
+[end_test]
+
+[test]
+	name "Core-Camera-Stream from device to screen"
+	params video_device camera_pixel_format io_method_stream camera_resolution_stream_all
+[end_test]
+
+[test]
+	name "Core-Camera-Measure device FPS with defined resolution"
+	params video_device camera_pixel_format io_method camera_resolution_all
+[end_test]
+
+[test]
+	name "Core-Camera-Take picture as JPEG with device"
+	params video_device camera_pixel_format io_method camera_resolution_all
+[end_test]
+
+[test]
+	name "Core-Camera-Device enumeration"
+	params video_device
+[end_test]
+
+[test]
+	name "Core-Camera-Stream from device and crop corners"
+	params video_device camera_pixel_format io_method_stream camera_resolution_stream_all
+[end_test]
+
+[test]
+	name "Core-Camera-Read from device using poll"
+	params video_device camera_pixel_format io_method camera_resolution_all
+[end_test]
+
+[test]
+	name "Core-Camera-Test standard control settings"
+	params video_device camera_pixel_format io_method camera_resolution_controltest
+[end_test]
+
+[test]
+	name "Core-Camera-Test extended control settings"
+	params video_device camera_pixel_format io_method camera_resolution_controltest
+[end_test]
+
+[test]
+	name "Core-Camera-Stream from device and vary frame rate"
+	params video_device camera_pixel_format io_method_stream camera_resolution_stream_all frame_rate
+[end_test]
+
+[test]
+	name "Core-Camera-Test input device standards"
+	params video_device
+[end_test]
