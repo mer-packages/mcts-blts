@@ -18,13 +18,15 @@
 -->
 <testdefinition version="1.0">
   <suite name="blts-ofono-tests" domain="Cellular">
-    <set name="ofono-tests" feature="Cellular Modem Interfaces">
+  <description>oFono Tests</description>	
+	<set name="ofono-tests" feature="Cellular Modem Interfaces">
       <!-- Add shell commands to execute before this set here -->
       <!--
       <pre_steps>
         <step>echo Hello world</step>
       </pre_steps>
       -->
+      <description>Cellular</description>
       <case name="oFono%20-%20Information%20Query">
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Information%20Query.log -en "oFono - Information Query"</step>
       </case>
@@ -92,7 +94,7 @@
       </case>
 
 
-        <case name="oFono%20-%20Set%20microphone%20volume">
+      <case name="oFono%20-%20Set%20microphone%20volume">
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20microphone%20volume.log -en "oFono - Set microphone volume" -v 10 -r 123456</step>
       </case>
       <case name="oFono%20-%20Set%20speaker%20volume">
@@ -102,7 +104,7 @@
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20muted.log -en "oFono - Set muted" -r 123456</step>
       </case>
 
-        <case name="oFono%20-%20Call%20meters%20read">
+      <case name="oFono%20-%20Call%20meters%20read">
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20meters%20read.log -en "oFono - Call meters read" -r 123456</step>
       </case>
         <case name="oFono%20-%20Call%20meters%20set">
@@ -115,7 +117,7 @@
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20meters%20near%20max%20warning.log -en "oFono - Call meters near max warning" -r 123456 -o 1234</step>
       </case>
 
-        <case name="oFono%20-%20Check%20barring%20properties">
+    <case name="oFono%20-%20Check%20barring%20properties">
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Check%20barring%20properties.log -en "oFono - Check barring properties" </step>
     </case>
         <case name="oFono%20-%20Disable%20barrings">
@@ -138,18 +140,16 @@
     </case>
         <case name="oFono%20-%20SMSC%20number%20test">
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20%20-SMSC%20number%20test.log -en "oFono - SMSC number test" </step>
-    </case>
-    </case>
-        <case name="oFono%20-%20Multiparty%20call%20test">
+    </case>    
+    <case name="oFono%20-%20Multiparty%20call%20test">
         <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Multiparty%20call%20test.log -en "oFono - Multiparty call test" </step>
-    </case>
-    </case>
-        <case name=""oFono%20-%20Private%20call%20test">
+    </case>    
+    <case name="oFono%20-%20Private%20call%20test">
         <step>/usr/bin/blts-ofono -l /var/log/tests/"oFono%20-%20Private%20call%20test.log -en ""oFono - Private call test" </step>
     </case>    
 	<case name="oFono%20%20 List modems">
 		<step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20List%20all%20properties.log -en "oFono - List all properties"</step>
-	</case>/var/log/tests/oFono%20-%20List%20all%20properties.log
+	</case>
 
       <!-- Add shell commands to execute after this set here -->
       <!--
