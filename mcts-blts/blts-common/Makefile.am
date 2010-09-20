@@ -15,13 +15,11 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 SUBDIRS = src
-dist_doc_DATA = README
-docdir = doc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = bltscommon.pc
-EXTRA_DIST = $(pkgconfig_DATA)
 
-
-
-
+EXTRA_DIST = \
+	autogen.sh \
+	README.ParameterVariation \
+	$(pkgconfig_DATA)

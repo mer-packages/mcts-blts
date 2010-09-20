@@ -51,4 +51,3 @@ lib_LTLIBRARIES= \
 libbltscommon_la_LIBADD = -lrt -ldl
 libbltscommon_la_SOURCES= $(parser_sources) $(h_sources) $(local_h_sources) $(c_sources)
 libbltscommon_la_LDFLAGS= -version-info $(BLTS_COMMON_LIBRARY_VERSION) 
-

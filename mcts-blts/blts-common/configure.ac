@@ -19,32 +19,16 @@ AC_PREREQ(2.61)
 AC_INIT([blts-common],[0.3.7],[jussi.saavalainen@digia.com])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([src/blts_log.c])
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 
-BLTS_COMMON_LIBRARY_NAME=bltscommon
-
-#release versioning
-BLTS_COMMON_MAJOR_VERSION=0
-BLTS_COMMON_MINOR_VERSION=3
-BLTS_COMMON_MICRO_VERSION=5
-
 BLTS_COMMON_LIBRARY_VERSION=1:0:0
-
 AC_SUBST(BLTS_COMMON_LIBRARY_VERSION)
-
-PACKAGE=$BLTS_COMMON_LIBRARY_NAME
-AC_SUBST(BLTS_COMMON_LIBRARY_NAME)
-
-BLTS_COMMON_VERSION=$BLTS_COMMON_MAJOR_VERSION.$BLTS_COMMON_MINOR_VERSION.$BLTS_COMMON_MICRO_VERSION
-BLTS_COMMON_RELEASE=$BLTS_COMMON_MAJOR_VERSION.$BLTS_COMMON_MINOR_VERSION
-AC_SUBST(BLTS_COMMON_RELEASE)
-AC_SUBST(BLTS_COMMON_VERSION)
-
-VERSION=$BLTS_COMMON_VERSION
 
 # Configuration dir
 # For some reason sysconfdir contains $prefix even if it's set to /usr
+# On the other hand, this is kind of evil, --sysconfdir= configure option
+# is ignored if --prefix=/usr
 if test "$prefix" = "/usr" || "$prefix" = "/usr/"; then
         configdir="/etc/blts"
 else
