@@ -28,127 +28,127 @@
       -->
       <description>Cellular</description>
       <case name="oFono%20-%20Information%20Query">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Information%20Query.log -en "oFono - Information Query"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Information%20Query.log -en "oFono - Information Query"</step>
       </case>
       <case name="oFono%20-%20Create%20voicecall">
         <!-- Add exact shell commands to run this case here -->
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Create%20voicecall.log -en "oFono - Create voicecall" -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Create%20voicecall.log -en "oFono - Create voicecall" -r 123456</step>
       </case>
       <case name="oFono%20-%20Create%20voicecall%20with%20hidden%20caller%20ID">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Create%20voicecall%20with%20hidden%20caller%20ID.log -en "oFono - Create voicecall with hidden caller ID" -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Create%20voicecall%20with%20hidden%20caller%20ID.log -en "oFono - Create voicecall with hidden caller ID" -r 123456</step>
       </case>
       <case name="oFono%20-%20Call%20and%20send%20DTMF">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20and%20send%20DTMF.log -en "oFono - Call and send DTMF" -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Call%20and%20send%20DTMF.log -en "oFono - Call and send DTMF" -r 123456</step>
       </case>
 
       <case name="oFono%20-%20Answer%20to%20voicecall%20and%20hangup">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%hangup.log -en "oFono - Answer to voicecall and hangup"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%hangup.log -en "oFono - Answer to voicecall and hangup"</step>
       </case>
 
       <case name="oFono%20-%20Answer%20to%20voicecall%20and%20hangup%20all">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%20hangup%20all.log -en "oFono - Answer to voicecall and hangup all"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%20hangup%20all.log -en "oFono - Answer to voicecall and hangup all"</step>
       </case>
       <case name="oFono%20-%20Answer%20to%20voicecall%20and%20deflect">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%20deflect.log -en "oFono - Answer to voicecall and deflect"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%20deflect.log -en "oFono - Answer to voicecall and deflect"</step>
       </case>
       <case name="oFono%20-%20Answer%20to%20voicecall%20and%20remote%20hangup">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%20remote%20hangup.log -en "oFono - Answer to voicecall and remote hangup"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Answer%20to%20voicecall%20and%20remote%20hangup.log -en "oFono - Answer to voicecall and remote hangup"</step>
       </case>
       <case name="oFono%20-%20Cancel%20voicecall">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Cancel%20voicecall.log -en "oFono - Cancel voicecall"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Cancel%20voicecall.log -en "oFono - Cancel voicecall"</step>
       </case>
       <case name="oFono%20-%20Transfer">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Transfer.log -en "oFono - Transfer"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Transfer.log -en "oFono - Transfer"</step>
       </case>
       <case name="oFono%20-%20Swap">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Swap.log -en "oFono - Swap"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Swap.log -en "oFono - Swap"</step>
       </case>
           <case name="oFono%20-%20Release%20and%20answer">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Release%20and%20answer.log -en "oFono - Release and answer"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Release%20and%20answer.log -en "oFono - Release and answer"</step>
       </case>
           <case name="oFono%20-%20Hold%20and%20answer">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Hold%20and%20answer.log -en "oFono - Hold and answer"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Hold%20and%20answer.log -en "oFono - Hold and answer"</step>
       </case>
       <case name="oFono%20-%20Disable%20forwardings">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Disable%20forwardings.log -en "oFono - Disable forwardings"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Disable%20forwardings.log -en "oFono - Disable forwardings"</step>
       </case>
       <case name="oFono%20-%20Unconditional%20forwarding">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Unconditional%20forwarding.log -en "oFono - Unconditional forwarding"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Unconditional%20forwarding.log -en "oFono - Unconditional forwarding"</step>
       </case>
       <case name="oFono%20-%20Forward%20if%20busy">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Forward%20if%20busy.log -en "oFono - Forward if busy"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Forward%20if%20busy.log -en "oFono - Forward if busy"</step>
       </case>
       <case name="oFono%20-%20Forward%20if%20no%20reply">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Forward%20if%20no%20reply.log -en "oFono - Forward if no reply"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Forward%20if%20no%20reply.log -en "oFono - Forward if no reply"</step>
       </case>
       <case name="oFono%20-%20Forward%20if%20not%20reachable">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Forward%20if%20not%20reachable.log -en "oFono - Forward if not reachable"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Forward%20if%20not%20reachable.log -en "oFono - Forward if not reachable"</step>
       </case>
 
 
       <case name="oFono%20-%20Send%20SMS">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Send%20SMS.log -en "oFono - Send SMS" -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Send%20SMS.log -en "oFono - Send SMS" -r 123456</step>
       </case>
       <case name="oFono%20-%20Receive%20SMS">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Receive%20SMS.log -en "oFono - Receive SMS"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Receive%20SMS.log -en "oFono - Receive SMS"</step>
       </case>
 
 
       <case name="oFono%20-%20Set%20microphone%20volume">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20microphone%20volume.log -en "oFono - Set microphone volume" -v 10 -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Set%20microphone%20volume.log -en "oFono - Set microphone volume" -v 10 -r 123456</step>
       </case>
       <case name="oFono%20-%20Set%20speaker%20volume">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20speaker%20volume.log -en "oFono - Set speaker volume" -v 10 -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Set%20speaker%20volume.log -en "oFono - Set speaker volume" -v 10 -r 123456</step>
       </case>
             <case name="oFono%20-%20Set%20muted">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20muted.log -en "oFono - Set muted" -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Set%20muted.log -en "oFono - Set muted" -r 123456</step>
       </case>
 
       <case name="oFono%20-%20Call%20meters%20read">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20meters%20read.log -en "oFono - Call meters read" -r 123456</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Call%20meters%20read.log -en "oFono - Call meters read" -r 123456</step>
       </case>
         <case name="oFono%20-%20Call%20meters%20set">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20meters%20set.log -en "oFono - Call meters set" -r 123456 -a 1000 -p 1.50 -c GBP -o 1234</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Call%20meters%20set.log -en "oFono - Call meters set" -r 123456 -a 1000 -p 1.50 -c GBP -o 1234</step>
       </case>
         <case name="oFono%20-%20Call%20meters%20reset">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20meters%20reset.log -en "oFono - Call meters reset" -r 123456 -o 1234</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Call%20meters%20reset.log -en "oFono - Call meters reset" -r 123456 -o 1234</step>
       </case>
         <case name="oFono%20-%20Call%20meters%20near%20max%20warning">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20meters%20near%20max%20warning.log -en "oFono - Call meters near max warning" -r 123456 -o 1234</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Call%20meters%20near%20max%20warning.log -en "oFono - Call meters near max warning" -r 123456 -o 1234</step>
       </case>
 
     <case name="oFono%20-%20Check%20barring%20properties">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Check%20barring%20properties.log -en "oFono - Check barring properties" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Check%20barring%20properties.log -en "oFono - Check barring properties" </step>
     </case>
         <case name="oFono%20-%20Disable%20barrings">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Disable%20barrings.log -en "oFono - Disable barrings" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Disable%20barrings.log -en "oFono - Disable barrings" </step>
     </case>
         <case name="oFono%20-%20Change%20password%20for%20barrings">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Change%20password%20for%20barrings.log -en "oFono - Change password for barrings" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Change%20password%20for%20barrings.log -en "oFono - Change password for barrings" </step>
     </case>
         <case name="oFono%20-%20Call%20barrings%20test">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Call%20barrings%20test.log -en "oFono - Call barrings test" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Call%20barrings%20test.log -en "oFono - Call barrings test" </step>
     </case>
         <case name="oFono%20-%20Disable%20incoming%20barrings">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Disable%20incoming%20barrings.log -en "oFono - Disable incoming barrings" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Disable%20incoming%20barrings.log -en "oFono - Disable incoming barrings" </step>
     </case>
         <case name="oFono%20-%20Disable%20outgoing%20barrings">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Disable%20outgoing%20barrings.log -en "oFono - Disable outgoing barrings" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Disable%20outgoing%20barrings.log -en "oFono - Disable outgoing barrings" </step>
     </case>
         <case name="oFono%20-%20Propose%20scan">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Propose%20scan.log -en "oFono - Propose scan" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Propose%20scan.log -en "oFono - Propose scan" </step>
     </case>
         <case name="oFono%20-%20SMSC%20number%20test">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20%20-SMSC%20number%20test.log -en "oFono - SMSC number test" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20%20-SMSC%20number%20test.log -en "oFono - SMSC number test" </step>
     </case>    
     <case name="oFono%20-%20Multiparty%20call%20test">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Multiparty%20call%20test.log -en "oFono - Multiparty call test" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Multiparty%20call%20test.log -en "oFono - Multiparty call test" </step>
     </case>    
     <case name="oFono%20-%20Private%20call%20test">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/"oFono%20-%20Private%20call%20test.log -en ""oFono - Private call test" </step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/"oFono%20-%20Private%20call%20test.log -en ""oFono - Private call test" </step>
     </case>    
 	<case name="oFono%20%20 List modems">
-		<step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20List%20all%20properties.log -en "oFono - List all properties"</step>
+		<step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20List%20all%20properties.log -en "oFono - List all properties"</step>
 	</case>
 
       <!-- Add shell commands to execute after this set here -->
@@ -206,19 +206,19 @@
 
     <set name="ofono-netreg" manual="true">
       <case name="oFono%20-%20Enable%20modems">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Enable%20modems.log -en "oFono - Enable modems"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Enable%20modems.log -en "oFono - Enable modems"</step>
       </case>
       <case name="oFono%20-%20Set%20modems%20online">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20modems%20online.log -en "oFono - Set modems online"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Set%20modems%20online.log -en "oFono - Set modems online"</step>
       </case>
       <case name="oFono%20-%20Set%20modems%20offline">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Set%20modems%20offline.log -en "oFono - Set modems offline"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Set%20modems%20offline.log -en "oFono - Set modems offline"</step>
       </case>
       <case name="oFono%20-%20Register%20to%20network">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Register%20to%20network.log -en "oFono - Register to network"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Register%20to%20network.log -en "oFono - Register to network"</step>
       </case>
       <case name="oFono%20-%20De-register%20from%20network">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20De-register%20from%20network.log -en "oFono - De-register from network"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20De-register%20from%20network.log -en "oFono - De-register from network"</step>
       </case>
       <get>
         <!-- Add files to retrieve (logs etc) after running set here.
@@ -232,19 +232,19 @@
     </set>
     <set name="ofono-pinhandling" manual="true">
       <case name="oFono%20-%20Change%20PIN">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Change%20PIN.log -en "oFono - Change PIN"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Change%20PIN.log -en "oFono - Change PIN"</step>
       </case>
       <case name="oFono%20-%20Enter%20PIN">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Enter%20PIN.log -en "oFono - Enter PIN"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Enter%20PIN.log -en "oFono - Enter PIN"</step>
       </case>
       <case name="oFono%20-%20Reset%20PIN">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Reset%20PIN.log -en "oFono - Reset PIN"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Reset%20PIN.log -en "oFono - Reset PIN"</step>
       </case>
       <case name="oFono%20-%20Lock%20PIN">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Lock%20PIN.log -en "oFono - Lock PIN"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Lock%20PIN.log -en "oFono - Lock PIN"</step>
       </case>
       <case name="oFono%20-%20Unlock%20PIN">
-        <step>/usr/bin/blts-ofono -l /var/log/tests/oFono%20-%20Unlock%20PIN.log -en "oFono - Unlock PIN"</step>
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono%20-%20Unlock%20PIN.log -en "oFono - Unlock PIN"</step>
       </case>
       <get>
         <!-- Add files to retrieve (logs etc) after running set here.
