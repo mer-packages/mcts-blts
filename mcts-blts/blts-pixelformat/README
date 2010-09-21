@@ -1,0 +1,88 @@
+Overview
+
+This package provides a pixel format conversion API for the BLTS project.
+
+
+Requirements
+
+Building the package requires
+  * GNU libc >= 2.4
+  * BLTS common library
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+
+Using the pixel format conversion API
+
+#include <blts-pixelformat.h>
+#include <linux/videodev2.h> (for pixel format identifiers)
+
+int convert_buffer(int width, int height, const unsigned char* srcbuffer,
+		__u32 srcformat, unsigned char** dstbuffer, __u32 dstformat);
+
+Converts the image data in srcbuffer from the source pixel format to the
+destination pixel format. After a successful conversion, dstbuffer contains
+a pointer to the converted image buffer. The buffer is allocated dynamically
+in the conversion function, and must be freed by the caller.
+
+The conversion code is based on the libswscale library of the FFMPEG project,
+with modifications to remove unnecessary code. Support for additional V4L2
+pixel formats has also been added.
+
+The pixel formats are specified with V4L2 pixel format identifiers. The supported formats are:
+
+V4L2_PIX_FMT_RGB332
+V4L2_PIX_FMT_RGB444
+V4L2_PIX_FMT_RGB555
+V4L2_PIX_FMT_RGB565
+V4L2_PIX_FMT_RGB555X
+V4L2_PIX_FMT_RGB565X
+V4L2_PIX_FMT_RGB24
+V4L2_PIX_FMT_BGR24
+V4L2_PIX_FMT_BGR32
+V4L2_PIX_FMT_RGB32
+V4L2_PIX_FMT_GREY
+V4L2_PIX_FMT_Y16
+V4L2_PIX_FMT_YUYV
+V4L2_PIX_FMT_UYVY
+V4L2_PIX_FMT_Y41P
+V4L2_PIX_FMT_YVU420
+V4L2_PIX_FMT_YVU410
+V4L2_PIX_FMT_YUV422P
+V4L2_PIX_FMT_YUV411P
+V4L2_PIX_FMT_NV12
+V4L2_PIX_FMT_SBGGR8
+V4L2_PIX_FMT_SBGGR16
+V4L2_PIX_FMT_SGRBG10
+V4L2_PIX_FMT_YUV444
+V4L2_PIX_FMT_YUV555
+V4L2_PIX_FMT_YUV565
+V4L2_PIX_FMT_YUV32
+
+For some pixel formats, only limited conversion support is available:
+
+* V4L2_PIX_FMT_SBGGR8, V4L2_PIX_FMT_SBGGR16, V4L2_PIX_FMT_SGRBG10 (Bayer formats)
+  * Can be converted only to V4L2_PIX_FMT_RGB24
+  * Cannot be used as target formats
+* V4L2_PIX_FMT_RGB555X, V4L2_PIX_FMT_RGB565X (big-endian 15- & 16-bit RGB)
+  * Can be converted to different YUV formats and to V4L2_PIX_FMT_RGB24
+  * Cannot be used as target formats
+
+Return value
+
+After a successful conversion, dstbuffer contains a pointer to the converted
+image, and the function returns the size of the converted image in bytes.
+
+If the conversion fails, an error code is returned:
+	-1	The source or destination format is not supported
+	-2	Internal conversion error
+
