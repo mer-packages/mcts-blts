@@ -1,0 +1,6 @@
+#!/bin/sh
+
+insmod hostdrv.ko
+./test_hostdrv
+rmmod hostdrv.ko
+

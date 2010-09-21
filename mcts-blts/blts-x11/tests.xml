@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tests.xml - Test case descriptions for automation tools.
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<testdefinition version="1.0">
+  <suite name="blts-x11-tests" domain="Graphics">
+    <set name="functional-tests" feature="X11">
+      <case name="X11-X11%20presence%20check">
+		<step>/usr/bin/blts_x11_test -l /var/log/tests/X11-X11_presence_check.log -e 1</step>
+      </case>
+      <case name="X11-Create%20simple%20window">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-Create_simple_window.log -e 2</step>
+      </case>
+      <case name="X11-Enumerate%20X%20extensions">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-Enumerate_X_extensions.log -e 3</step>
+      </case>
+      <case name="X11-XVideo%20init">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XVideo_init.log -e 4</step>
+      </case>
+      <case name="X11-XTest%20move%20cursor">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XTest_move_cursor.log -e 5</step>
+      </case>
+      <case name="X11-XComposite%20get%20window%20contents">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XComposite_get_window_contents.log -e 6</step>
+      </case>
+      <case name="X11-XRecord%20capture%20mouse%20movement">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XRecord_capture_mouse_movement.log -e 7</step>
+      </case>
+      <case name="X11-XRender%20draw%20rectangle">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XRender_draw_rectangle.log -e 8</step>
+      </case>
+<!--  <case name="X11-XRandR%20rotate%20screen">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XRandR_rotate_screen.log -e 9</step>
+      </case> -->
+      <case name="X11-XDamage%20monitor%20region">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XDamage_monitor_region.log -e 10</step>
+      </case>
+      <case name="X11-XInput%20enumerate%20devices">
+        <step>/usr/bin/blts_x11_test -l /var/log/tests/X11-XInput_enumerate_devices.log -e 11</step>
+      </case>	  
+      <get>
+		<file>/var/log/tests/X11-X11_presence_check.log</file>
+		<file>/var/log/tests/X11-Create_simple_window.log</file>
+		<file>/var/log/tests/X11-Enumerate_X_extensions.log</file>
+		<file>/var/log/tests/X11-XVideo_init.log</file>
+		<file>/var/log/tests/X11-XTest_move_cursor.log</file>
+		<file>/var/log/tests/X11-XComposite_get_window_contents.log</file>
+		<file>/var/log/tests/X11-XRecord_capture_mouse_movement.log</file>
+		<file>/var/log/tests/X11-XRender_draw_rectangle.log</file>
+<!--	<file>/var/log/tests/X11-XRandR_rotate_screen.log</file> -->
+		<file>/var/log/tests/X11-XDamage_monitor_region.log</file>
+		<file>/var/log/tests/X11-XInput_enumerate_devices.log</file>
+      </get>	  
+    </set>
+    <set name="performance-tests" feature="X11">
+      <case name="X11-XRender%20benchmark%20PictOpClear">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpClear.log -e 1</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpSrc">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpSrc.log -e 2</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDst">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDst.log -e 3</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpOver">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpOver.log -e 4</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpOverReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpOverReverse.log -e 5</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpIn">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpIn.log -e 6</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpInReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpInReverse.log -e 7</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpOut">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpOut.log -e 8</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpOutReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpOutReverse.log -e 9</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpAtop">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpAtop.log -e 10</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpAtopReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpAtopReverse.log -e 11</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpXor">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpXor.log -e 12</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpAdd">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpAdd.log -e 13</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpSaturate">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpSaturate.log -e 14</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointClear">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointClear.log -e 15</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointSrc">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointSrc.log -e 16</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointDst">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointDst.log -e 17</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointOver">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointOver.log -e 18</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointOverReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointOverReverse.log -e 19</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointIn">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointIn.log -e 20</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointInReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointInReverse.log -e 21</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointOut">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointOut.log -e 22</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointOutReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointOutReverse.log -e 23</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointAtop">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointAtop.log -e 24</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointAtopReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointAtopReverse.log -e 25</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpDisjointXor">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpDisjointXor.log -e 26</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointClear">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointClear.log -e 27</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointSrc">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointSrc.log -e 28</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointDst">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointDst.log -e 29</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointOver">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointOver.log -e 30</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointOverReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointOverReverse.log -e 31</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointIn">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointIn.log -e 32</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointInReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointInReverse.log -e 33</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointOut">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointOut.log -e 34</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointOutReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointOutReverse.log -e 35</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointAtop">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointAtop.log -e 36</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointAtopReverse">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointAtopReverse.log -e 37</step>
+      </case>
+      <case name="X11-XRender%20benchmark%20PictOpConjointXor">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XRender_benchmark_PictOpConjointXor.log -e 38</step>
+      </case>	  
+	  <get>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpClear.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpSrc.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDst.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpOver.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpOverReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpIn.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpInReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpOut.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpOutReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpAtop.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpAtopReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpXor.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpAdd.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpSaturate.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointClear.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointSrc.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointDst.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointOver.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointOverReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointIn.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointInReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointOut.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointOutReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointAtop.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointAtopReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpDisjointXor.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointClear.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointSrc.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointDst.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointOver.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointOverReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointIn.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointInReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointOut.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointOutReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointAtop.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointAtopReverse.log</file>
+		<file>/var/log/tests/X11-XRender_benchmark_PictOpConjointXor.log</file>
+      </get>		  	  
+    </set>
+  </suite>
+</testdefinition>
+
+

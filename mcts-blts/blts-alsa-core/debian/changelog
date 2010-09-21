@@ -1,0 +1,18 @@
+blts-alsa-core-tests (0.0.6) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Initial upload for Meego (changelog summarized)
+  * Mixer setting for vibra.
+  * Bluetooth Audio connection automation.
+  * PCM device linking.
+  * V4L2 tuner support for FM radio test cases.
+  * Support for default control element settings.
+  * Simultaneous recording from mic and playback to earpiece
+  * Support for full duplex playback/recording
+  * Enumerate devices with control interface: Queries information
+    about all pcm, hw dep and rawmidi devices from control device
+  * Open ALSA-related devices; Control enumeration; PCM playback/record:
+    interleaved/noninterleaved, MMAP, sync/async (signal/timer); Power state.
+  * Parameter variation from configuration for most cases.
+
+ -- Kari Laakso <kari.laakso@digia.com>  Thu, 02 Sep 2010 15:35:12 +0300

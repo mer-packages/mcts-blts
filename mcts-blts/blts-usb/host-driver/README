@@ -1,0 +1,52 @@
+BLTS USB host-side passthrough driver
+
+This is a driver for host-side USB testing. The purpose is to pass the
+raw endpoints to userspace as separate devices, and handle only the actual
+USB bits in kernel.
+
+Build
+
+  * Use the included Makefile (you'll need a kernel module build environment;
+    set KERNELDIR to point to your tree if the Makefile doesn't find it)
+
+Usage
+
+  * Load the module; parameters:
+      log_transfer_success (0/1)
+          - Print result of every transfer request in log. This is extremely
+	    noisy on any non-trivial test, so the default is 0 (off).
+
+  * The module acquires a major device number dynamically, and then picks
+    minors 0-N_HOSTDRV_DEVICES (see common.h) to represent endpoints.
+    You can find the major in /proc/devices after loading the module; you'll
+    likely want to re-create the device nodes each time to be safe.
+
+  * Open one of the devices and (once USB is connected) read the configuration
+    with the IOCGCONF ioctl. Now, set up your IO according to the endpoint
+    configuration. You may also want to increase the buffering from the
+    default to at least around 2-8kB / endpoint, depending on host hardware
+    (IOCSCONF).
+
+
+See the code in test_hostdrv.c for some trivial examples.
+
+
+Unusual error returns from the driver:
+
+open()
+  EBADF  - The device has disconnected or its configuration has changed, but
+           one of the character devices remains open from before the state
+	   change. Resets when all character device descriptors are closed.
+
+read(), write()
+  EBADF  - see open().
+
+  ENOENT - USB connection exists but this endpoint is not available.
+
+  ENODEV - USB is disconnected.
+
+The transfer code uses EIO for actual USB transfer errors.
+
+ioctl()
+  EBADF  - see open().
+

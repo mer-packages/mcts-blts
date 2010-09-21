@@ -1,0 +1,8 @@
+blts-x11-tests (0.0.12) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Initial upload for Meego (changelog summarized)
+  * Benchmarks for XRender (blts_xrender_bench)
+  * X11 test cases.
+
+ -- Kari Laakso <kari.laakso@digia.com>  Wed, 08 Sep 2010 15:32:01 +0300

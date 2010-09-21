@@ -1,0 +1,61 @@
+#!/bin/sh
+# postinst -- postinst for V4L2 test
+#
+# Copyright (c) 2009-2010 Nokia Corporation.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 2.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+set -e
+
+CONF_DIR=/usr/lib/tests/blts-v4l2-tests
+MODULE_NAME=libmin-v4l2.so
+MIN_SCRIPT=blts-v4l2.min
+SMOKE_SCRIPT=blts-v4l2-SMOKE.min
+
+MIN_CONF=min.conf
+LIB_DIR=/usr/lib
+
+MIN_CONF_DIR=/etc/min.d
+MIN_LIB_DIR=/usr/lib/min
+
+if [ ! -d $MIN_CONF_DIR ]
+then
+	mkdir $MIN_CONF_DIR
+fi
+
+if [ ! -L $MIN_CONF_DIR/$MIN_CONF ]
+then
+	ln -s $CONF_DIR/$MIN_CONF $MIN_CONF_DIR/blts-v4l2.min.conf
+fi
+
+if [ -d $MIN_LIB_DIR ]; then
+
+    if [ ! -L $MIN_LIB_DIR/$MIN_SCRIPT ]
+    then
+	ln -s $CONF_DIR/$MIN_SCRIPT $MIN_LIB_DIR
+    fi
+
+    if [ ! -L $MIN_LIB_DIR/$SMOKE_SCRIPT ]
+    then
+	ln -s $CONF_DIR/$SMOKE_SCRIPT $MIN_LIB_DIR
+    fi
+
+
+    if [ ! -L $MIN_LIB_DIR/$MODULE_NAME ]
+    then
+	ln -s $LIB_DIR/$MODULE_NAME $MIN_LIB_DIR
+    fi
+fi
+
+#DEBHELPER#
+

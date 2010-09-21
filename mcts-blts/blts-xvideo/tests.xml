@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tests.xml - Test case descriptions for automation tools.
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<testdefinition version="1.0">
+  <suite name="blts-xvideo-tests" domain="Graphics">
+    <set name="functional-tests" feature="X11">
+      <case name="X11-XVideo%20Presence%20check">
+		<step>/usr/bin/blts_xvideo_test -l /var/log/tests/X11-XVideo_presence_check.log -e 1</step>
+      </case>
+      <case name="X11-XVideo%20Enumerate%20adapters">
+		<step>/usr/bin/blts_xvideo_test -l /var/log/tests/X11-XVideo_enumerate_adapters.log -e 2</step>
+      </case>
+      <case name="X11-XVideo%20PutImage%20with%20QueryBestSize">
+		<step>/usr/bin/blts_xvideo_test -l /var/log/tests/X11-XVideo_PutImage_with_QueryBestSize.log -e 5</step>
+      </case>
+      <case name="X11-XVideo%20Notify%20events">
+		<step>/usr/bin/blts_xvideo_test -l /var/log/tests/X11-XVideo_Notify_events.log -e 6</step>
+      </case>
+      <get>
+		<file>/var/log/tests/X11-XVideo_presence_check.log</file>
+		<file>/var/log/tests/X11-XVideo_enumerate_adapters.log</file>
+		<file>/var/log/tests/X11-XVideo_PutImage_with_QueryBestSize.log</file>
+		<file>/var/log/tests/X11-XVideo_Notify_events.log</file>
+      </get>
+    </set>
+    <set name="performance-tests" feature="X11">
+      <case name="X11-XvPutImage%20benchmark">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XVideo_XvPutImage_benchmark.log -e 3</step>
+      </case>
+      <case name="X11-XvShmPutImage%20benchmark">
+        <step>/usr/bin/blts_xrender_bench -l /var/log/tests/X11-XVideo_XvShmPutImage_benchmark.log -e 4</step>
+      </case>
+	  <get>
+		<file>/var/log/tests/X11-XVideo_XvPutImage_benchmark.log</file>
+		<file>/var/log/tests/X11-XVideo_XvShmPutImage_benchmark.log</file>
+      </get>
+    </set>
+  </suite>
+</testdefinition>
+

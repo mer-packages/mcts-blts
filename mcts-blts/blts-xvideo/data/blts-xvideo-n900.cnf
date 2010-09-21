@@ -1,0 +1,97 @@
+# XVideo test case configuration for parameters
+
+######################
+# General parameters #
+######################
+
+[parameter]
+	name input_resolution
+	const "800x480" "1280x720"
+[end_parameter]
+
+# if output resolution is 0x0, resolution will be root window's size
+[parameter]
+	name output_resolution
+	const "0x0"
+[end_parameter]
+
+[parameter]
+	name duration
+	const 10
+[end_parameter]
+
+[parameter]
+	name screen
+	const 0
+[end_parameter]
+
+[parameter]
+	name adaptor
+	const 0
+[end_parameter]
+
+# Possible choices for test images:
+# random: three frames of random pixels
+# vh_lines: two frames, horizontal and vertical lines
+# checkerboard: two frames, b/w checkerboard
+# moving_arrow: white arrow moving from left to right and pointing up
+# fps_check: two frames, blocks change between black and white
+# colorgradient: red, green and blue gradients
+# graygradient: full screen grayscale, from black (left) to right
+# colorgradient_scroll: red, green and blue gradients, moves from left to right
+# graygradient_scroll: full screen grayscale, moves from left to right
+[parameter]
+	name test_images
+	const "checkerboard"
+[end_parameter]
+
+[parameter]
+	name format
+	const "YUY2" "YV12" "UYVY" "I420"
+[end_parameter]
+
+[parameter]
+	name port_attributes
+	const "XV_OMAP_VSYNC 0"
+[end_parameter]
+
+# These are for QueryBestSize and Notify events -tests
+
+[parameter]
+	name fute_format
+	const "YUY2"
+[end_parameter]
+
+[parameter]
+	name fute_port_attributes
+	const "XV_OMAP_VSYNC 0"
+[end_parameter]
+
+##############
+# Benchmarks #
+##############
+
+[test]
+	name "XVideo - XvPutImage benchmark"
+	params input_resolution output_resolution duration screen adaptor test_images format port_attributes
+[end_test]
+
+[test]
+	name "XVideo - XvShmPutImage benchmark"
+	params input_resolution output_resolution duration screen adaptor test_images format port_attributes
+[end_test]
+
+##############
+# FuTes      #
+##############
+
+[test]
+	name "XVideo - PutImage with QueryBestSize"
+	params input_resolution screen adaptor test_images fute_format fute_port_attributes
+[end_test]
+
+[test]
+	name "XVideo - Notify events"
+	params screen adaptor fute_format fute_port_attributes
+[end_test]
+
