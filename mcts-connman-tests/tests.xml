@@ -7,6 +7,80 @@
 <step expected_result="0">/opt/mcts-connman-tests/BT/startup </step>
 </pre_steps>
 
+
+<case name="CM_BT_CheckProp_Powered" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+check the &quot;powered&quot; property and interface status are right<br />
+Run Instructions:<br />
+1. boot system<br />
+2. insert bluetooth dungle<br />
+3. &quot;list-devices&quot; to check the &quot;Powered&quot; property<br />
+4. &quot;hciconfig hci0&quot; to check the bt interface status<br />
+Pass/Fail Criteria:<br />
+Powered == 1 and hci0 is &quot;UP&quot;</p>]]></description>
+
+</case>
+
+<case name="CM_BT_Connect_PAN" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+can connect bluetooth&nbsp; PANU network<br />
+Run Instructions:<br />
+<br />
+pre-condition: The PANU service is ready in ConnMan<br />
+1. Connect the PANU service&nbsp; through test-connman connect &lt;service&gt;<br />
+2.Ping the PANU network AP<br />
+Pass/Fail Criteria:<br />
+<br />
+Can ping the PANU AP</p>]]></description>
+
+</case>
+
+<case name="CM_BT_List_PAN" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+can list bluetooth&nbsp; PAN devices<br />
+Run Instructions:<br />
+<br />
+pre-condition: There is bluetooth device with PAN service enabled<br />
+1. boot system with bluetooth device enabled<br />
+2. Pair with the BT PANU server&nbsp;<br />
+3. list all the networks and check if the BT PANU network is in it (test-connman services).<br />
+Pass/Fail Criteria:<br />
+<br />
+The BT PANU network should be created and listed by ConnMan</p>]]></description>
+
+</case>
+
+<case name="CM_BT_Connect_Invalidnetwork" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>BT should not crash when connect an invalid BT PANU server</p>
+<p><br />
+Run Instructions:</p>
+<p>1.&nbsp;Pair to a BT PANU server</p>
+<p>2. Make sure BT network is list in the service list (test-connman services)</p>
+<p>3.Power off the BT PANU server</p>
+<p>4. Reconnect the BT PANU server (test-connman connect &lt;BT service&gt;)</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>BT should fail to connect to an incalid BT network and ConnMan should not crash.</p>]]></description>
+
+</case>
+
+<case name="CM_BT_Check_State" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check ConnMan can synchronise the connect state with the real connection state</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to a BT network, the state of BT network should be &quot;online&quot; (test-connman connect &lt;BT service&gt;)</p>
+<p>2. Power off the Connected BT server</p>
+<p>3. wait for serveral&nbsp;minutes&nbsp;and check the state of BT network. (list-services)</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>ConnMan should not be &quot;online&quot; when the connection fails.</p>]]></description>
+
+</case>
+
 <case name="CM_BT_DeviceIsExist" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device exists</p>
@@ -19,9 +93,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is BT device</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_DeviceIsExist.py</step>
-
 </case>
 
 <case name="CM_BT_HasDHCP" manual="false" timeout="90">
@@ -35,9 +107,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The method is dhcp</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_HasDHCP.py</step>
-
 </case>
 
 <case name="CM_BT_BigPing" manual="false" timeout="90">
@@ -50,9 +120,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping will receive response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_BigPing.py</step>
-
 </case>
 
 <case name="CM_BT_HasIP" manual="false" timeout="90">
@@ -67,9 +135,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The IP address is valid</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_HasIP.py</step>
-
 </case>
 
 <case name="CM_BT_Connect" manual="false" timeout="90">
@@ -82,9 +148,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping will receive response, meaning there is local network.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_Connect.py</step>
-
 </case>
 
 <case name="CM_BT_Disconnect" manual="false" timeout="180">
@@ -99,9 +163,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping cannot receive any response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_Disconnect.py</step>
-
 </case>
 
 <case name="CM_BT_IfconfigDown" manual="false" timeout="90">
@@ -117,9 +179,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The state is down</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_IfconfigDown.py</step>
-
 </case>
 
 <case name="CM_BT_IfconfigUp" manual="false" timeout="90">
@@ -134,9 +194,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the device state is up</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_IfconfigUp.py</step>
-
 </case>
 
 <case name="CM_BT_IsPoweredOn" manual="false" timeout="90">
@@ -149,9 +207,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The Powered status is on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_IsPoweredOn.py</step>
-
 </case>
 
 <case name="CM_BT_IsReady" manual="false" timeout="90">
@@ -164,9 +220,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The status is ready/online/login</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_IsReady.py</step>
-
 </case>
 
 <case name="CM_BT_IsReEnableWorks" manual="false" timeout="90">
@@ -182,9 +236,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can ping local network</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_IsReEnableWorks.py</step>
-
 </case>
 
 <case name="CM_BT_PoweredOff" manual="false" timeout="90">
@@ -198,9 +250,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The value is off</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_PoweredOff.py</step>
-
 </case>
 
 <case name="CM_BT_PoweredOn" manual="false" timeout="90">
@@ -214,9 +264,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The value is on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_PoweredOn.py</step>
-
 </case>
 
 <case name="CM_BT_SmallPing" manual="false" timeout="90">
@@ -229,9 +277,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_SmallPing.py</step>
-
 </case>
 <post_steps>
 <step expected_result="0">/opt/mcts-connman-tests/BT/cleanup </step>
@@ -241,6 +287,7 @@ Pass/Fail Criteria:</p>
 <pre_steps>
 <step expected_result="0">/opt/mcts-connman-tests/3G/startup </step>
 </pre_steps>
+
 
 <case name="CM_3G_DeviceIsExist" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
@@ -254,8 +301,21 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is 3G device</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_DeviceIsExist.py</step>
+</case>
+
+<case name="CM_3G_Coexist" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+3G connection can coexist with other network like WiFi and Ethernet<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. list-devices<br />
+3. check there are ethernet, wifi and 3G devices<br />
+Pass/Fail Criteria:<br />
+<br />
+find &quot;3G&quot;, &quot;ethernet&quot; and &quot;WiFi&quot; are available in network applet</p>]]></description>
 
 </case>
 
@@ -270,8 +330,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The method is dhcp</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_HasDHCP.py</step>
+</case>
+
+<case name="CM_3G_Coexist_Priority" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+When 3G and WiFi coexist, the first connected network will enjoy higher priority.<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run test-manager to check 3G device is enabled.<br />
+3. Connect to 3G network that in service list (test-connman connect &lt;3g service&gt;)<br />
+4.&nbsp;Connect to WiFi&nbsp;that in service list. (test-connman connect &lt;wifi service&gt;)<br />
+Pass/Fail Criteria:<br />
+<br />
+find both 3G and WiFi are connected, but the gateway is 3G because the first connection enjoy the higher priority</p>]]></description>
 
 </case>
 
@@ -285,8 +359,23 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping will receive response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_BigPing.py</step>
+</case>
+
+<case name="CM_3G_DeviceControl" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+3G device ON/OFF button can enable/disable 3G device<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run Test-manager to&nbsp;make sure the 3G device is enabled<br />
+3. Switch 3G&nbsp;device state&nbsp;On/OFF via test-connman (test-connman dev wwan0 powered on/off)<br />
+4. reboot system check the state 3G device can be kept.<br />
+Pass/Fail Criteria:<br />
+<br />
+can swtich freely between &quot;ON&quot; and &quot;OFF&quot; status for 3G device<br />
+The button state can be remembered after reboot</p>]]></description>
 
 </case>
 
@@ -302,8 +391,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The IP address is valid</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_HasIP.py</step>
+</case>
+
+<case name="CM_3G_DeviceControl_Offline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+3G control should be OFF when offline-mode is ON<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run test-manager, make sure 3G device is enabled. (test-connman dev wwan0)<br />
+3.&nbsp;Set&nbsp;Offline-mode to &quot;ON&quot;. (test-connman offlinemode on)</p>
+<p>4. Check 3G device state. (test-connman dev wwan0)<br />
+Pass/Fail Criteria:<br />
+<br />
+find 3G device is &quot;OFF&quot; when offline-mode is &quot;ON&quot;</p>]]></description>
 
 </case>
 
@@ -317,8 +420,21 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping will receive response, meaning there is local network.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_Connect.py</step>
+</case>
+
+<case name="CM_3G_Item_Connect" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+User can connect to 3G network by clicking &quot;Connect&quot; button<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run Test-manager to make sure 3G device is enabled</p>
+<p>3. Connect to&nbsp;3G network in service list through test-connman connect<br />
+Pass/Fail Criteria:<br />
+<br />
+If it's first time to connect to 3G network, a dialogue will pop-up for APN(Access Point Name) name, after user input correct APN name, can get 3G network connected successfully</p>]]></description>
 
 </case>
 
@@ -334,9 +450,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping cannot receive any response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_Disconnect.py</step>
-
 </case>
 
 <case name="CM_3G_IfconfigDown" manual="false" timeout="90">
@@ -352,8 +466,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The state is down</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_IfconfigDown.py</step>
+</case>
+
+<case name="CM_3G_Item_Configuring" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+When 3G is being connected with Dell Wireless 5530 Card, the button should show &quot;Cancel&quot; and status is &quot;Configuring...&quot; <br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. list-devices will show 3G device<br />
+3. test-connman connect &lt;service&gt; to connect to 3G service<br />
+4. list-service shows the state of the connection to 3G service</p>
+<p>Pass/Fail Criteria:<br />
+<br />
+During 3G network is connecting, there is &quot;configuraton&quot; state</p>]]></description>
 
 </case>
 
@@ -369,8 +497,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the device state is up</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_IfconfigUp.py</step>
+</case>
+
+<case name="CM_3G_Item_Disconnect" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+When 3G network is connected, user can disconnect it by clicking &quot;Disconnect&quot; button<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run test-manager to confirm that 3G device is enabled.<br />
+3.&nbsp;Connect to&nbsp;3G network in service list by test-connman, make sure the 3G network is connected successfully.</p>
+<p>4. Disconnect 3G, list service to ckeck the State is &quot;idle&quot;.<br />
+Pass/Fail Criteria:<br />
+<br />
+After 3G connected, disconnect 3G connection successfully</p>]]></description>
 
 </case>
 
@@ -384,8 +526,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The Powered status is on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_IsPoweredOn.py</step>
+</case>
+
+<case name="CM_3G_Service_Surf" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+User can log on Websites with 3G network<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run test-manager, make sure 3G device is enabled.</p>
+<p>3. Connect to 3G network by test-connman, make sure the 3G network is connected successfully.<br />
+4. launch moblin browser in application launcher, and try to surfing on web<br />
+Pass/Fail Criteria:<br />
+<br />
+After 3G connected, user can surfing web freely.</p>]]></description>
 
 </case>
 
@@ -399,8 +555,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The status is ready/online/login</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_IsReady.py</step>
+</case>
+
+<case name="CM_3G_Service_Download" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Download big file with 3G<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run test-manager, make sure 3G device is enabled.<br />
+3.&nbsp;Connect to&nbsp;3G network in service list by test-connman, make sure the 3G network is connected successfully.<br />
+4. launch moblin browser in application launcher, and try to surfing on web and download a big file bigger then 256M<br />
+Pass/Fail Criteria:<br />
+<br />
+After 3G connected, user can download big file stable</p>]]></description>
 
 </case>
 
@@ -417,9 +587,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can ping local network</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_IsReEnableWorks.py</step>
-
 </case>
 
 <case name="CM_3G_PoweredOff" manual="false" timeout="90">
@@ -433,9 +601,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The value is off</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_PoweredOff.py</step>
-
 </case>
 
 <case name="CM_3G_PoweredOn" manual="false" timeout="90">
@@ -449,8 +615,23 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The value is on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_PoweredOn.py</step>
+</case>
+
+<case name="CM_3G_Service_Roaming" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+3G roaming work<br />
+Run Instructions:<br />
+<br />
+1. launch netbook device with 3G modem embedded or plugged in<br />
+2. Run test-manager, maker sure 3G device is enabled.</p>
+<p>3.&nbsp;Connect to&nbsp;3G network in service list by test-connman, make sure the 3G network is connected successfully.<br />
+4. launch moblin browser in application launcher, and try to surfing on web</p>
+<p>5. Try to moving acrose the areas of several kilemeters<br />
+Pass/Fail Criteria:<br />
+<br />
+After 3G connected, user can use network stable</p>]]></description>
 
 </case>
 
@@ -464,422 +645,403 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_3G_SmallPing.py</step>
+</case>
+
+<case name="CM_3G_Reconnect" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Reconect to an avialable 3G network then it still can surf internet</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to an available 3G&nbsp;service by test-connman&nbsp;and make sure that it can surf internet</p>
+<p>2. Disconnect the service then reconnect it by test-connman</p>
+<p>3.ifconfig to check if there is ip for this 3G service was allocated ip address</p>
+<p>4. check if it can surf internet after reconnect 3G services</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>there should be IP allocated for service after reconnected it and also can surf internet though this services.</p>]]></description>
 
 </case>
 <post_steps>
 <step expected_result="0">/opt/mcts-connman-tests/3G/cleanup </step>
 </post_steps>
 </set>
-<set name="Property" >
+<set name="WiFi" >
 <pre_steps>
-<step expected_result="0">/opt/mcts-connman-tests/Property/startup </step>
+<step expected_result="0">/opt/mcts-connman-tests/WiFi/startup </step>
 </pre_steps>
 
-<case name="CM_PM_State" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if State property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if State&nbsp;property is in&nbsp;&nbsp;['online', 'offline', 'connected']</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
 
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_State.py</step>
-
-</case>
-
-<case name="CM_PM_ActiveProfile" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if ActiveProfile property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if ActiveProfile property is '/profile/default'</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_ActiveProfile.py</step>
+<case name="CM_WF_Refresh_Disable" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Disabled WiFI device by setting &quot;Powered&quot; off<br />
+Run Instructions:<br />
+1. boot system<br />
+2. Disable WiFI device (disable-device)<br />
+3. Check if WiFi device is disabled (list-devices)</p>
+<p>Pass/Fail Criteria:<br />
+Powered == 0</p>]]></description>
 
 </case>
 
-<case name="CM_PM_AvailableTechnologies" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if AvailableTechnologies property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if AvailableTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_AvailableTechnologies.py</step>
+<case name="CM_WF_Refresh_Enable" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Enable&nbsp;WiFI device by setting &quot;Powered&quot; on<br />
+Run Instructions:<br />
+1. boot system<br />
+2. Enable WiFI device (enable-device)<br />
+3. Check if WiFi device is enabled (list-devices)<br />
+Pass/Fail Criteria:<br />
+Powered == 1</p>]]></description>
 
 </case>
 
-<case name="CM_PM_ConnectedTechnologies" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if State property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if ConnectedTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_ConnectedTechnologies.py</step>
-
-</case>
-
-<case name="CM_PM_DefaultTechnology" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if DefaultTechnology property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if DefaultTechnology property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_DefaultTechnology.py</step>
+<case name="CM_WF_CoExists_Wired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if wired and WIFI can coexists when connect wired network fist<br />
+Run Instructions:<br />
+1. Connect a wired network first&nbsp;<br />
+2. Connect a WIFI network then&nbsp;(test-connman connect)<br />
+3. Check default gateway&nbsp;<br />
+4. Ping the 2 DHCP server of the wired and WIFI networks.<br />
+Pass/Fail Criteria:<br />
+<br />
+Default gateway should be of the wired network and can ping both the DHCP servers.</p>]]></description>
 
 </case>
 
-<case name="CM_PM_EnabledTechnologies" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if EnabledTechnologies property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if EnabledTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_EnabledTechnologies.py</step>
-
-</case>
-
-<case name="CM_PM_OfflineMode" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if OfflineMode property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if OfflineMode property is in&nbsp;&nbsp;[True, False]</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_OfflineMode.py</step>
+<case name="CM_WF_CoExists_WIFI" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if wired and WIFI can coexists when connect WIFI network fist<br />
+Run Instructions:<br />
+1. Connect a WIFI network first&nbsp;(test-connman connect)<br />
+2. Connect a wired network then&nbsp;<br />
+3. Check default gateway&nbsp;<br />
+4. Ping the 2 DHCP server of the wired and WIFI networks.<br />
+Pass/Fail Criteria:<br />
+<br />
+Default gateway should be of the WIFI network and can ping both the DHCP servers.</p>]]></description>
 
 </case>
 
-<case name="CM_PM_Profiles" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Profiles property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if Profiles property is '/profile/default'</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_Profiles.py</step>
-
-</case>
-
-<case name="CM_PM_Technologies" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Technologies property in Manager interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Manager interface</p>
-<p>2. Check if Technologies property is in&nbsp;['/org/moblin/connman/technology/ethernet', '/org/moblin/connman/technology/wifi', '/org/moblin/connman/technology/bluetooth', '/org/moblin/connman/technology/3g']</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PM_Technologies.py</step>
+<case name="CM_WF_CoExists_BT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if BT PANU and WIFI can coexists when connect BT PANU network fist<br />
+Run Instructions:<br />
+1. Connect a BT PANU network first&nbsp;(test-connman connect)<br />
+2. Connect a WIFI network then&nbsp;<br />
+3. Check default gateway&nbsp;(route)<br />
+4. Ping the 2 DHCP server of the BT PANU and WIFI networks.<br />
+Pass/Fail Criteria:<br />
+<br />
+Default gateway should be of the BT PANU network and can ping both the DHCP servers.</p>]]></description>
 
 </case>
 
-<case name="CM_PS_State" manual="false" timeout="90">
+<case name="CM_WF_CoExists_3G" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if State in Service interface is valid.</p>
+<p><br />
+check if 3G network and WIFI can coexists when connect 3G network fist</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if State is in ['ready', 'idle', &quot;failure&quot;, &quot;association&quot;, &quot;configuration&quot;, &quot;login&quot;, &quot;online&quot;]</p>
+<p>1. Connect a 3G network first&nbsp;(test-connman connect)<br />
+2. Connect a WIFI network then&nbsp;<br />
+3. Check default gateway&nbsp;(route)<br />
+4. Ping the wifi dhcp, and surf web</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+Default gateway should be of the 3G network and can ping wifi DHCP and surf web.</p>]]></description>
+
+</case>
+
+<case name="CM_WF_Roaming_Broadcast" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if WIFI connection roaming work well<br />
+Run Instructions:<br />
+1. Prepare 2 APs and set them as the same SSID and broadcast&nbsp;<br />
+2. Power on and connect AP1.&nbsp;(test-connman connect)<br />
+3. Power on AP2 and shutdown AP1.&nbsp;<br />
+4. Check if the connection is breaked<br />
+Pass/Fail Criteria:<br />
+<br />
+The WIFI connection shouldn't be breaked.</p>]]></description>
+
+</case>
+
+<case name="CM_WF_Roaming_Hidden" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if WIFI connection roaming work well<br />
+Run Instructions:<br />
+1. Prepare 2 APs and set them as the same SSID and hidden&nbsp;<br />
+2. Power on and connect AP1.&nbsp;(test-connman connect)<br />
+3. Power on AP2 and shutdown AP1.&nbsp;<br />
+4. Check if the connection is breaked<br />
+Pass/Fail Criteria:<br />
+<br />
+The WIFI connection shouldn't be breaked.</p>]]></description>
+
+</case>
+
+<case name="CM_WF_Refresh" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if WIFI network list can refresh automatically<br />
+Run Instructions:<br />
+1. Prepare a WIFI AP, setting it as SSID broadcast.&nbsp;<br />
+2. Make sure ConnMan is launched, and list all networks, make sure the WIFI AP can be scaned.&nbsp;(list-services)<br />
+3. Shutdown the WIFI AP, then wait no longer 6 minutes, list all networks again, check if the WIFI AP still exists<br />
+Pass/Fail Criteria:<br />
+<br />
+The WIFI AP can be removed from the ConnMan network list automatically.</p>]]></description>
+
+</case>
+
+<case name="CM_WG_DeviceIsExist" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device exists</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get the technology list from connman</p>
+<p>2. Get the WiFi technology</p>
+<p>3. Get the device from WiFi technology</p>
+<p>4. Check if the device is null</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There is WiFi device</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_DeviceIsExist.py</step>
+</case>
+
+<case name="CM_WG_HasDHCP" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device by default is dhcp enabled</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi&nbsp; nework</p>
+<p>2. Get the IPv4 property of the device</p>
+<p>3. Check method of IPv4 is dhcp</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The method is dhcp</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_HasDHCP.py</step>
+</case>
+
+<case name="CM_WG_BigBroadcastPing" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if we can ping Guest WiFi nework through broadcast</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi nework</p>
+<p>2. Get Guest WiFi IP address</p>
+<p>3. Broadcast ping with size = 1400</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping will receive response.</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_BigBroadcastPing.py</step>
+</case>
+
+<case name="CM_WG_HasIP" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if WiFi device has IP address by default</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi network</p>
+<p>2. Get the device</p>
+<p>3. Get the IPv4 property and check the IP address</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The IP address is valid</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_HasIP.py</step>
+</case>
+
+<case name="CM_WG_Connect" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if Can connect to Guest WiFi network</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to Guest WiFi network</p>
+<p>2. Ping Guest WiFi network</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ping will receive response.</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_Connect.py</step>
+</case>
+
+<case name="CM_WG_Disconnect" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if we can disconnet Guest WiFi network</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Make sure there is Guest WiFi network</p>
+<p>2. Powered off the device</p>
+<p>3. Check if we can ping Guest WiFi network</p>
 <p>&nbsp;</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_State.py</step>
-
+Pass/Fail Criteria:</p>
+<p>Ping cannot receive any response.</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_Disconnect.py</step>
 </case>
 
-<case name="CM_PS_APN" manual="false" timeout="90">
+<case name="CM_WG_IfconfigDown" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if APN property in Service interface is valid.</p>
+<p>Check if connman works with ifconfig down</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if APN is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_APN.py</step>
-
-</case>
-
-<case name="CM_PS_MCC" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if MCC property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if MCC is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_MCC.py</step>
-
-</case>
-
-<case name="CM_PS_MNC" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if MNC property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if MNC is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_MNC.py</step>
-
-</case>
-
-<case name="CM_PS_Roaming" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Roaming property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if Roaming is&nbsp;in [True, False]&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Roaming.py</step>
-
-</case>
-
-<case name="CM_PS_SetupRequired" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if SetupRequired property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if SetupRequired is&nbsp;in [True, False]</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_SetupRequired.py</step>
-
-</case>
-
-<case name="CM_PS_AutoConnect" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if AutoConnect in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if AutoConnect is in [True, False]</p>
+<p>1. Get the state of the WiFi device</p>
+<p>2. The state is 'available'</p>
+<p>3. Run ifconfig &lt;eth&gt; down</p>
+<p>4. Get the device state, check if the state is down</p>
 <p>&nbsp;</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_AutoConnect.py</step>
-
+Pass/Fail Criteria:</p>
+<p>The state is down</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IfconfigDown.py</step>
 </case>
 
-<case name="CM_PS_Domains" manual="false" timeout="90">
+<case name="CM_WG_IfconfigUp" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Domains in Service interface is valid.</p>
+<p>Check if connman works with ifconfig up</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Domains is not empty&nbsp;</p>
+<p>1. Run ifconfig &lt;wlan&gt; down</p>
+<p>2. Check the device is down</p>
+<p>3. Run ifconfig &lt;wlan&gt; up</p>
+<p>2. Check the state is up</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Domains.py</step>
-
+Pass/Fail Criteria:</p>
+<p>the device state is up</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IfconfigUp.py</step>
 </case>
 
-<case name="CM_PS_Error" manual="false" timeout="90">
+<case name="CM_WG_IsPoweredOn" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Error in Service interface is valid.</p>
+<p>Check if WiFi device is on by default</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Error is&nbsp;not in properties since Guest connect always success&nbsp;</p>
+<p>1. Get the Powered status of WiFi device</p>
+<p>2. Check the Powered&nbsp;status is On</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Error.py</step>
-
+Pass/Fail Criteria:</p>
+<p>The Powered status is on</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsPoweredOn.py</step>
 </case>
 
-<case name="CM_PS_Favorite" manual="false" timeout="90">
+<case name="CM_WG_IsReady" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Favorite in Service interface is valid.</p>
+<p>Check if WiFi device is ready to connect</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Favorite is in [True, False]</p>
-<p>&nbsp;</p>
+<p>1. Get device</p>
+<p>2. Check the device status</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Favorite.py</step>
-
+Pass/Fail Criteria:</p>
+<p>The status is ready/online/login</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsReady.py</step>
 </case>
 
-<case name="CM_PS_Immutable" manual="false" timeout="90">
+<case name="CM_WG_IsReEnableWorks" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Immutable in Service interface is valid.</p>
+<p>Check if WiFi device still works after powered off and powered on</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Immutable is in [True, False]</p>
-<p>&nbsp;</p>
+<p>1. Get the device</p>
+<p>2. Check if the network available</p>
+<p>3. Powered off the device</p>
+<p>4. Powered on the device</p>
+<p>5. Check if the network available</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Immutable.py</step>
-
+Pass/Fail Criteria:</p>
+<p>Can ping local network</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsReEnableWorks.py</step>
 </case>
 
-<case name="CM_PS_Mode" manual="false" timeout="90">
+<case name="CM_WG_PoweredOff" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Mode in Service interface is valid.</p>
+<p>Check if Powered off works for WiFi device</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Mode is &quot;managed&quot;</p>
-<p>&nbsp;</p>
+<p>1. Get the device</p>
+<p>2. Set powered property to off</p>
+<p>3. Check powered property value is off</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Mode.py</step>
-
+Pass/Fail Criteria:</p>
+<p>The value is off</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_PoweredOff.py</step>
 </case>
 
-<case name="CM_PS_Name" manual="false" timeout="90">
+<case name="CM_WG_PoweredOn" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Name in Service interface is valid.</p>
+<p>Check if Powered on works for WiFi device</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Name is&nbsp; &quot;Guest&quot;&nbsp;</p>
+<p>1. Get device</p>
+<p>2. Set powered to on</p>
+<p>3. Check the powered property</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Name.py</step>
-
+Pass/Fail Criteria:</p>
+<p>The value is on</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_PoweredOn.py</step>
 </case>
 
-<case name="CM_PS_Nameservers" manual="false" timeout="90">
+<case name="CM_WG_SmallBroadcastPing" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Nameservers in Service interface is valid.</p>
+<p>Check if can broadcast with small packet for WiFi device</p>
 <p><br />
 Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Nameservers is&nbsp;not empty&nbsp;</p>
+<p>1. Get the WiFi device</p>
+<p>2. Broadcast ping with small packet</p>
 <p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Nameservers.py</step>
-
+Pass/Fail Criteria:</p>
+<p>Receives ping response.</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WG_SmallBroadcastPing.py</step>
 </case>
-
-<case name="CM_PS_Passphrase" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Passphrase in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Passphrase is&nbsp;empty for Guest network&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Passphrase.py</step>
-
-</case>
-
-<case name="CM_PS_PassphraseRequired" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if PassphraseRequired in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if PassphraseRequired is in [True, False]</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_PassphraseRequired.py</step>
-
-</case>
-
-<case name="CM_PS_Security" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Security in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Security is in ['none', 'wep', 'psk', 'ieee8021x', 'wpa', 'rsn']</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Security.py</step>
-
-</case>
-
-<case name="CM_PS_Strength" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Strength in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Strength is&nbsp;0-100&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Strength.py</step>
-
-</case>
-
-<case name="CM_PS_Type" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Type in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get Guest service</p>
-<p>2. Check if Type is in&nbsp;&quot;wifi&quot;&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Type.py</step>
-
-</case>
+<post_steps>
+<step expected_result="0">/opt/mcts-connman-tests/WiFi/cleanup </step>
+</post_steps>
 </set>
 <set name="Ethernet" >
 <pre_steps>
 <step expected_result="0">/opt/mcts-connman-tests/Ethernet/startup </step>
 </pre_steps>
+
+
+<case name="CM_Eth_Conn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check ethernet connection<br />
+Run Instructions:<br />
+Pre-condition:<br />
+User enable ethernet connection.<br />
+Steps:<br />
+1. Enable ethernet cable before booting.<br />
+2. Boot machine and check the ethernet connection.&nbsp;<br />
+3. ifconfig to check if can get IP address from DHCP server and can ping other valide IP address<br />
+Pass/Fail Criteria:<br />
+<br />
+1. After system booting, the ethernet should be connected automatically. 2. Can get valide IP address and can ping other IP successfully.</p>]]></description>
+
+</case>
+
+<case name="CM_Eth_Hotplug" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+Plug on/off ethernet cable to the port, check the connection<br />
+Run Instructions:<br />
+Precondition:<br />
+1. Wired is On.<br />
+Steps:<br />
+1. After the system boots up, plug in the ethernet cable. Check the ethernet connection<br />
+2. Plug off the ethernet cable, check the ethernet connection.&nbsp;<br />
+3. ping other valide IP<br />
+Pass/Fail Criteria:<br />
+1. When we plug in the ethernet cable, it can be automatically connected and can ping other valide IP successfully. <br />
+2. When we plug off the ethernet cable, the ethernet connection can be disconnected.</p>]]></description>
+
+</case>
 
 <case name="CM_Eth_DeviceIsExist" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
@@ -893,9 +1055,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is ethernet device</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_DeviceIsExist.py</step>
-
 </case>
 
 <case name="CM_Eth_HasDHCP" manual="false" timeout="90">
@@ -909,9 +1069,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The method is dhcp</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_HasDHCP.py</step>
-
 </case>
 
 <case name="CM_Eth_BigBroadcastPing" manual="false" timeout="90">
@@ -924,9 +1082,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping will receive response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_BigBroadcastPing.py</step>
-
 </case>
 
 <case name="CM_Eth_HasIP" manual="false" timeout="90">
@@ -941,9 +1097,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The IP address is valid</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_HasIP.py</step>
-
 </case>
 
 <case name="CM_Eth_Connect" manual="false" timeout="90">
@@ -956,9 +1110,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping will receive response, meaning there is local network.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_Connect.py</step>
-
 </case>
 
 <case name="CM_Eth_Disconnect" manual="false" timeout="180">
@@ -973,9 +1125,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ping cannot receive any response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_Disconnect.py</step>
-
 </case>
 
 <case name="CM_Eth_IfconfigDown" manual="false" timeout="90">
@@ -991,9 +1141,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The state is down</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IfconfigDown.py</step>
-
 </case>
 
 <case name="CM_Eth_IfconfigUp" manual="false" timeout="90">
@@ -1008,9 +1156,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the device state is up</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IfconfigUp.py</step>
-
 </case>
 
 <case name="CM_Eth_IsPoweredOn" manual="false" timeout="90">
@@ -1023,9 +1169,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The Powered status is on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IsPoweredOn.py</step>
-
 </case>
 
 <case name="CM_Eth_IsReady" manual="false" timeout="90">
@@ -1038,9 +1182,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The status is ready/online/login</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IsReady.py</step>
-
 </case>
 
 <case name="CM_Eth_IsReEnableWorks" manual="false" timeout="90">
@@ -1056,9 +1198,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can ping local network</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_IsReEnableWorks.py</step>
-
 </case>
 
 <case name="CM_Eth_PoweredOff" manual="false" timeout="90">
@@ -1072,9 +1212,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The value is off</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_PoweredOff.py</step>
-
 </case>
 
 <case name="CM_Eth_PoweredOn" manual="false" timeout="90">
@@ -1088,9 +1226,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The value is on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_PoweredOn.py</step>
-
 </case>
 
 <case name="CM_Eth_SmallBroadcastPing" manual="false" timeout="90">
@@ -1103,15 +1239,2647 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_SmallBroadcastPing.py</step>
+</case>
+</set>
+<set name="DHCP" >
+
+<case name="CM_DHCP_Wried" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if&nbsp; ethernet device&nbsp;&nbsp;is dhcp enabled</p>
+<p>Run Instructions:</p>
+<p>Pre-condition:<br />
+User enable ethernet connection.</p>
+<p>Steps:<br />
+1. Enable ethernet cable before booting.<br />
+2. Boot machine and check the ethernet connection. 3. ifconfig to check if can get IP address from DHCP server and can ping other valide IP address<br />
+Pass/Fail Criteria:<br />
+<br />
+1. After system booting, the ethernet should be connected automatically. 2. Can get valide IP address and can ping other IP successfully.</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if 3G device by default is dhcp enabled</p>
+<p>Run Instructions:</p>
+<p>1. Get 3G device</p>
+<p>2. Connect 3G service</p>
+<p>3. ifconfig 3G connection method is dhcp.&nbsp;can ping local network</p>
+<p>Pass/Fail Criteria:</p>
+<p>Ping will receive response</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_BT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if BT device is dhcp enabled</p>
+<p>pre-condition: The PANU service is ready in ConnMan<br />
+1. Connect the PANU service</p>
+<p>2. Check IP method is dhcp, Ping the PANU network AP<br />
+Pass/Fail Criteria:<br />
+<br />
+Can get validate ip and can ping the PANU AP</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_WIFI_NoSecuBroadcast" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if wifi connection without security is dhcp enabled<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP without security<br />
+2. connect wifi service</p>
+<p>3. &quot;ifconfig wlan0&quot;, check there should be&nbsp;dhcp IP method.<br />
+4. send ping packets to AP, check if can receive ping reply from AP.<br />
+Pass/Fail Criteria:<br />
+<br />
+Should&nbsp;get validated&nbsp;IP and can ping to AP</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_WIFI_OpenWEP128" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if wifi&nbsp; connection with WEP 128bit (open authentication) is dhcp enabled<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WEP 128bit (open authentication)<br />
+2. connect wifi service<br />
+3. call network.Connect()<br />
+4. &quot;ifconfig wlan0&quot;, check there should be&nbsp;dhcp IP method.<br />
+6. send ping packets to AP, check if can receive ping reply from AP.<br />
+Pass/Fail Criteria:<br />
+<br />
+Should&nbsp;get validated&nbsp;IP and can ping to AP</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_WIFI_SharedWEP64" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+check if wifi connection with WEP 64bit (shared authentication) is dhcp enabled</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WEP 64bit (shared mode)<br />
+2. connect wifi service</p>
+<p>3. &quot;ifconfig wlan0&quot;, check there should be&nbsp;dhcp IP method.<br />
+5. send ping packets to AP, check if can receive ping reply from AP.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Should get validated IP and can ping to AP</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_WIFI_WPAPSKTKIP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if wifi&nbsp; connection with WPA-PSK TKIP is dhcp enabled<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WPA-PSK TKIP<br />
+2. connect wifi service<br />
+5. &quot;ifconfig wlan0&quot;, check there should be dhcp&nbsp;IP method.<br />
+6. send ping packets to AP, check if can receive ping reply from AP.<br />
+Pass/Fail Criteria:<br />
+Should&nbsp;get&nbsp;validated&nbsp;IP&nbsp;and can ping to AP</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_WIFI_WPA2Hide" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if wifi connection with WPA2 hidden is dhcp enabled<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WPA2, disable SSID broadcast<br />
+2. connect wifi service<br />
+3. &quot;ifconfig wlan0&quot;, check there should be&nbsp;dhcp IP method.<br />
+4. send ping packets to AP, check if can receive ping reply from AP<br />
+Pass/Fail Criteria:<br />
+<br />
+there should be&nbsp;validate IP and can ping to AP</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_Coexit" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can get ip when ethernet, 3G, BT and wifi coexit</p>
+<p>Run Instructions:</p>
+<p>1. Connect to 3G, BT, wifi and ethernet services</p>
+<p>2. &quot;ifconfig&quot;, check there should be dhcp&nbsp; IP address of each service<br />
+3. send ping packets to each dhcp server, check if can receive reply packets.<br />
+Pass/Fail Criteria:</p>
+<p>Should get validated ip for each service and can ping&nbsp;each dhcp server</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_Optional_list" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can get correct optional list form dhcp server</p>
+<p>Run Instructions:</p>
+<p>1. connect ethernent network</p>
+<p>2.&nbsp;ifconfig to&nbsp;confirm&nbsp;connection information is correct</p>
+<p>Pass/Fail Criteria:</p>
+<p>get all the dhcp connection in optinal list with&nbsp;correct information.&nbsp;</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_Hostname" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if revising hostname is effective</p>
+<p>Run Instructions:</p>
+<p>1. connect ethernent network</p>
+<p>2.&nbsp;revise hostname in file /etc/sysconfig/network and reboot system</p>
+<p>3. Ping&nbsp; the machine via hostname from other machine in same subnet</p>
+<p>Pass/Fail Criteria:</p>
+<p>Other machine which is in same&nbsp;subnet can ping through it via new hostname</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_IP_Conflict" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can get new ip when ip address is conflict</p>
+<p>Run Instructions:</p>
+<p>1 connect with network</p>
+<p>2 &quot;ifconfig&quot; and get the ip</p>
+<p>3.configure another machine with the same ip in same subnet</p>
+<p>4. check if can get new ip and&nbsp;can ping through other ip&nbsp;address&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>&nbsp;</p>]]></description>
+
+</case>
+
+<case name="CM_DHCP_Suspend" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if can get&nbsp;dhcp ip&nbsp;from Suspend state</p>
+<p>Run Instructions:</p>
+<p>1.connect with network</p>
+<p>2.suspend test machine to memory by &quot;echo -n mem &gt; /sys/power/state&quot;</p>
+<p>3.resume test machine by press the power&nbsp;buttom&nbsp;<br />
+4. check if can get dhcp&nbsp;ip after resume</p>
+<p>Pass/Fail Criteria:</p>
+<p>Should get validated ip after resume and can ping through other ip address</p>]]></description>
 
 </case>
 </set>
-<set name="WiFi" >
+<set name="IPv6" >
+
+<case name="CM_IPv6_set_address" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>Pass/Fail Criteria:</p>
+<p>The command return with 0</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_set_address_addr" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success to set addr</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. ifconfig</p>
+<p>Pass/Fail Criteria:</p>
+<p>The inet6 addr is ::3</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_set_address_prefix" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success to set prefix</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. ifconfig</p>
+<p>Pass/Fail Criteria:</p>
+<p>The inet6 addr prefix length is 64</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_set_address_gateway" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success to set gateway</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. ifconfig</p>
+<p>Pass/Fail Criteria:</p>
+<p>The inet6 gateway addr is ::4</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_ping6_addr" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 ::3</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_ping6_local" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 localhost6.localdomain6</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_ping6_gateway" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 gateway success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 ::4</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_route" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. route -n -A inet6</p>
+<p>Pass/Fail Criteria:</p>
+<p>::0 next hop is ::4</p>
+<p>::4 use interface of the device</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_scp" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if scp success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3.&nbsp; scp &lt;file&gt; ::5:/tmp</p>
+<p>Pass/Fail Criteria:</p>
+<p>the file is successfully copied to ::5</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_ssh" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if scp success</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3. ssh ::5</p>
+<p>Pass/Fail Criteria:</p>
+<p>can successfully ssh to ::5</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_ssh_server" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ssh through ipv6 from remote</p>
+<p>Run Instructions:</p>
+<p>1. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3.&nbsp; in ::5, ssh ::3</p>
+<p>Pass/Fail Criteria:</p>
+<p>Successfully ssh to test machine.</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_eth_set_address" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>Pass/Fail Criteria:</p>
+<p>The command return with 0</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_eth_ping6_addr" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 ::3</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_eth_ssh" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ssh to other machine for wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all networks except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3. ssh ::5</p>
+<p>Pass/Fail Criteria:</p>
+<p>can successfully ssh to ::5</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_WF_set_address" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>Pass/Fail Criteria:</p>
+<p>The command return with 0</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_3G_set_address" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>Pass/Fail Criteria:</p>
+<p>The command return with 0</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_BT_set_address" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if set_address for IPv6 success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>Pass/Fail Criteria:</p>
+<p>The command return with 0</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_WF_ping6_addr" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 ::3</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_3G_ping6_addr" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 ::3</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_BT_ping6_addr" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ping6 addr success in wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all network except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. ping6 ::3</p>
+<p>Pass/Fail Criteria:</p>
+<p>There are response successfully</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_WF_ssh" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ssh to other machine for wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all networks except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3. ssh ::5</p>
+<p>Pass/Fail Criteria:</p>
+<p>can successfully ssh to ::5</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_3G_ssh" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ssh to other machine for wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all networks except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3. ssh ::5</p>
+<p>Pass/Fail Criteria:</p>
+<p>can successfully ssh to ::5</p>]]></description>
+
+</case>
+
+<case name="CM_IPv6_BT_ssh" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ssh to other machine for wired network</p>
+<p>Run Instructions:</p>
+<p>1. Disable all networks except wired network</p>
+<p>2. set_address ::3 64 ::4 ipv6</p>
+<p>2. setup another machine with address ::5 in the same local network</p>
+<p>3. ssh ::5</p>
+<p>Pass/Fail Criteria:</p>
+<p>can successfully ssh to ::5</p>]]></description>
+
+</case>
+</set>
+<set name="State" >
+
+<case name="CM_State_ETHENET_online" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Ethernet should be &quot;online&quot; when connect to a PPPOE network which can surf internet.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Make sure ConnMan are not connect to all networks.</p>
+<p>2. connect to an ADSL network and make sure that&nbsp; can surf internel from this connections</p>
+<p>3. run &quot;list-services&quot; to show that Ethernet state or check the connect state in ConnMan UI.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Ethernet services should be &quot;online&quot;</p>]]></description>
+
+</case>
+
+<case name="CM_State_3G_Unavailable" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>connect to an unavailable 3G network the service should be &quot;ready&quot;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Prepare an unavialable 3G service(eg. out of charged SIM card)</p>
+<p>2.connect to this 3G network with test-connman connect</p>
+<p>3 run list-services check the state of this service</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>the state should be &quot;ready&quot; since it can not wget webpage though this service.</p>]]></description>
+
+</case>
+
+<case name="CM_State_3G_Available" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Connect to an avialable 3G network that can surf internet, the state should be &quot;online&quot;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Prepare an avialable 3G network through&nbsp;which can surf internet</p>
+<p>2.connect to this 3G network with &quot;test-connman connect&quot;&nbsp;then</p>
+<p>3 run list-services check the state of this service</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The service should be &quot;online&quot;.</p>]]></description>
+
+</case>
+
+<case name="CM_State_WIFI_IsolateAP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>WIFI service should be &quot;ready&quot; when connect to an isolate AP</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Prepare an isolate AP and make sure that ConnMan does not connect to any networks</p>
+<p>2. Connect to this isolate WIFI AP (test-connman connect)</p>
+<p>3. After it successfully connected to this isolate WIFI AP, check the state of this wifi service by runing &quot;list-services&quot; or in ConnMan UI.</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state of this WIFI services should be &quot;ready&quot; by runing &quot;list-services&quot; or &quot;connected&quot; in ConnMan UI.</p>]]></description>
+
+</case>
+
+<case name="CM_State_WIFI_AvialableAP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>WIFI service should be &quot;online&quot; when connect to an WIFI AP that can surf internet.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Prepare an wifi AP that can be connected and can surf internet by this AP</p>
+<p>2. Only connect to this WIFI AP and make sure that it can surf internet by this service</p>
+<p>3. Check the connection state for this AP service</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state should be &quot;online&quot; for this connected WIFI AP.</p>]]></description>
+
+</case>
+
+<case name="CM_State_Accountneeded_network" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>WIFI states should be &quot;login&quot; when connected to an wifi network that need account to surf internet</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to a network by test-connman which need an account to surf internet.(eg. Guest in our environment)</p>
+<p>2. Make sure that it can not surf internet when without input the need account</p>
+<p>3. check the state of this wifi service by running &quot;list-services&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>the state should be &quot;login&quot; after connect to the wifi network but without the need account to surf internet.</p>]]></description>
+
+</case>
+
+<case name="CM_State_PROXY_Ready" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Connect to a network that behind proxy, state should be &quot;ready&quot; when proxy was not&nbsp;set</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network that behind proxy by test-connman(eg. Intel's internal network).</p>
+<p>2. make sure that the proxy was not set.</p>
+<p>3. check that it can not surf external webpage and check the states (test-connman dev )</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The service of the state should be &quot;ready&quot; .</p>]]></description>
+
+</case>
+
+<case name="CM_State_PROXY_Online" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>connect to a network that behind proxy, the state shold be &quot;online&quot; when the proxy was set</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network that behind proxy.</p>
+<p>2. set the proxy and then&nbsp;restart connmand</p>
+<p>3. make sure proxy works (it can surf external webpage via this network), then check the state of this service(list-services)</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state should be &quot;online&quot;.</p>]]></description>
+
+</case>
+
+<case name="CM_State_NOPROXY_READY" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>connect to a network which is not behind proxy but with proxy set, the state should be &quot;ready&quot;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network that is not&nbsp;behind proxy(eg. ADSL network) but proxy was set.</p>
+<p>2. make sure that it can not wget an webpage</p>
+<p>3. check the state of this service&nbsp;(list-service)</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state should be &quot;ready&quot; since it can not wget external webpage.</p>]]></description>
+
+</case>
+
+<case name="CM_State_BT_Isolate_PANU" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>connect to an&nbsp;isolate BT PANU, the state should be &quot;ready&quot;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a isolate BT PANU server (test-connman connect)</p>
+<p>2. run list-services check the state of this BT servcie</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>The state should be &quot;ready&quot; when connect to an isolate service.</p>]]></description>
+
+</case>
+
+<case name="CM_State_ETHENET_idle" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>test the connection state for ethernet.</p>
+<p><br />
+Run Instructions:</p>
+<ol>
+    <li>plug the&nbsp;cable</li>
+    <li>Disconnect the Ethernet service. (test-connman disconnect)</li>
+    <li>run list_services check the ethnet connection</li>
+</ol>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>it should be &quot;idle&quot; by running list_services, and not connected in the carrcik.</p>]]></description>
+
+</case>
+</set>
+<set name="Property" >
+<pre_steps>
+<step expected_result="0">/opt/mcts-connman-tests/Property/startup </step>
+</pre_steps>
+
+
+<case name="CM_PM_State" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if State property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if State&nbsp;property is in&nbsp;&nbsp;['online', 'offline', 'connected']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_State.py</step>
+</case>
+
+<case name="CM_PM_ActiveProfile" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if ActiveProfile property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if ActiveProfile property is '/profile/default'</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_ActiveProfile.py</step>
+</case>
+
+<case name="CM_PM_AvailableTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if AvailableTechnologies property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if AvailableTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_AvailableTechnologies.py</step>
+</case>
+
+<case name="CM_PM_ConnectedTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if State property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if ConnectedTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_ConnectedTechnologies.py</step>
+</case>
+
+<case name="CM_PM_DefaultTechnology" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if DefaultTechnology property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if DefaultTechnology property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_DefaultTechnology.py</step>
+</case>
+
+<case name="CM_PM_EnabledTechnologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if EnabledTechnologies property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if EnabledTechnologies property is in&nbsp;&nbsp;['ethernet', 'wifi', 'bluetooth', 'gprs']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_EnabledTechnologies.py</step>
+</case>
+
+<case name="CM_PM_OfflineMode" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if OfflineMode property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if OfflineMode property is in&nbsp;&nbsp;[True, False]</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_OfflineMode.py</step>
+</case>
+
+<case name="CM_PM_Profiles" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Profiles property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if Profiles property is '/profile/default'</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_Profiles.py</step>
+</case>
+
+<case name="CM_PM_Technologies" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Technologies property in Manager interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Manager interface</p>
+<p>2. Check if Technologies property is in&nbsp;['/org/moblin/connman/technology/ethernet', '/org/moblin/connman/technology/wifi', '/org/moblin/connman/technology/bluetooth', '/org/moblin/connman/technology/3g']</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PM_Technologies.py</step>
+</case>
+
+<case name="CM_PS_State" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if State in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if State is in ['ready', 'idle', &quot;failure&quot;, &quot;association&quot;, &quot;configuration&quot;, &quot;login&quot;, &quot;online&quot;]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_State.py</step>
+</case>
+
+<case name="CM_PS_APN" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if APN property in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get 3G service</p>
+<p>2. Check if APN is&nbsp;not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_APN.py</step>
+</case>
+
+<case name="CM_PS_MCC" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if MCC property in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get 3G service</p>
+<p>2. Check if MCC is&nbsp;not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_MCC.py</step>
+</case>
+
+<case name="CM_PS_MNC" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if MNC property in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get 3G service</p>
+<p>2. Check if MNC is&nbsp;not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_MNC.py</step>
+</case>
+
+<case name="CM_PS_Roaming" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Roaming property in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get 3G service</p>
+<p>2. Check if Roaming is&nbsp;in [True, False]&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Roaming.py</step>
+</case>
+
+<case name="CM_PS_SetupRequired" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if SetupRequired property in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get 3G service</p>
+<p>2. Check if SetupRequired is&nbsp;in [True, False]</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_SetupRequired.py</step>
+</case>
+
+<case name="CM_PS_AutoConnect" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if AutoConnect in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if AutoConnect is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_AutoConnect.py</step>
+</case>
+
+<case name="CM_PS_Domains" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Domains in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Domains is not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Domains.py</step>
+</case>
+
+<case name="CM_PS_Error" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Error in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Error is&nbsp;not in properties since Guest connect always success&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Error.py</step>
+</case>
+
+<case name="CM_PS_Favorite" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Favorite in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Favorite is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Favorite.py</step>
+</case>
+
+<case name="CM_PS_Immutable" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Immutable in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Immutable is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Immutable.py</step>
+</case>
+
+<case name="CM_PS_Mode" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Mode in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Mode is &quot;managed&quot;</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Mode.py</step>
+</case>
+
+<case name="CM_PS_Name" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Name in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Name is&nbsp; &quot;Guest&quot;&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Name.py</step>
+</case>
+
+<case name="CM_PS_Nameservers" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Nameservers in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Nameservers is&nbsp;not empty&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Nameservers.py</step>
+</case>
+
+<case name="CM_PS_Passphrase" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Passphrase in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Passphrase is&nbsp;empty for Guest network&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Passphrase.py</step>
+</case>
+
+<case name="CM_PS_PassphraseRequired" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if PassphraseRequired in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if PassphraseRequired is in [True, False]</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_PassphraseRequired.py</step>
+</case>
+
+<case name="CM_PS_Security" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Security in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Security is in ['none', 'wep', 'psk', 'ieee8021x', 'wpa', 'rsn']</p>
+<p>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Security.py</step>
+</case>
+
+<case name="CM_PS_Strength" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Strength in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Strength is&nbsp;0-100&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Strength.py</step>
+</case>
+
+<case name="CM_PS_Type" manual="false" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test if Type in Service interface is valid.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Get Guest service</p>
+<p>2. Check if Type is in&nbsp;&quot;wifi&quot;&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_PS_Type.py</step>
+</case>
+</set>
+<set name="Switch" >
+
+<case name="CM_Switch_EthToWiFi" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from ethernet to wifi when ethernet is disconnected&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to both ethernet and wifi (test-connman connect)<br />
+2. boot system<br />
+3. connect ethernet and wifi has at least one network is remembered (list-services shows at least one device status is ready/online)<br />
+4. disconnect ethernet cable<br />
+5. &quot;list-service&quot; to check if wifi network&nbsp;is ready/online&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can list wifi connection</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_WiFiToEth" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from wifi to ethernet when wifi is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to wifi (test-connman connect)<br />
+2. Connect to ethernet(test-connman connect)<br />
+3. route to check if default gateway is wifi device<br />
+4. disable wifi device<br />
+6.&nbsp;route to check if default gateway is ethernet device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+ethernet should be connected</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_WiFiToBT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from wifi to ethernet when wifi is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to wifi (test-connman connect)<br />
+2. Connect to BT(test-connman connect)<br />
+3. route to check if default gateway is wifi device<br />
+4. disable wifi device<br />
+6.&nbsp;route to check if default gateway is BT device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+BT interface is default</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_WiFiTo3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from wifi to 3G when wifi is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to wifi (test-connman connect)<br />
+2. Connect to 3G(test-connman connect)<br />
+3. route to check if default gateway is wifi device<br />
+4. disable wifi device<br />
+6.&nbsp;route to check if default gateway is 3G device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>3G interface is default</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_EthToBT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from ethernet to BT when ethernet is disconnected&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to both ethernet and BT (test-connman connect)<br />
+2. boot system<br />
+3. connect ethernet and wifi has at least one network is remembered (list-services shows at least one device status is ready/online)<br />
+4. disconnect ethernet cable<br />
+5. &quot;list-service&quot; to check if BT network&nbsp;is ready/online, route shows the BT is default interface</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>can list BT connection. route shows the BT is default interface</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_EthTo3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from ethernet to 3Gwhen ethernet is disconnected&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Connect to both ethernet and 3G(test-connman connect)<br />
+2. boot system<br />
+3. connect ethernet and wifi has at least one network is remembered (list-services shows at least one device status is ready/online)<br />
+4. disconnect ethernet cable<br />
+5. &quot;list-service&quot; to check if 3Gnetwork&nbsp;is ready/online. route shows the 3Gis default interface</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>can list 3G connection. route shows the 3G is default interface</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_BTToEth" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from BT to ethernet when BT is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to BT (test-connman connect)<br />
+2. Connect to ethernet(test-connman connect)<br />
+3. route to check if default gateway is BT device<br />
+4. disable BT device<br />
+6.&nbsp;route to check if default gateway is ethernet device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Default gateway is through Ethernet interface</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_3GToEth" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from 3G to ethernet when 3G is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to 3G(test-connman connect)<br />
+2. Connect to ethernet(test-connman connect)<br />
+3. route to check if default gateway is 3Gdevice<br />
+4. disable 3G device<br />
+6.&nbsp;route to check if default gateway is ethernet device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>ethernet should be connected and default gateway is through ethernet device</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_BTToWiFi" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from BT to WiFi when BT is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to BT (test-connman connect)<br />
+2. Connect to WiFi(test-connman connect)<br />
+3. route to check if default gateway is BT device<br />
+4. disable BT device<br />
+6.&nbsp;route to check if default gateway is WiFi device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Default gateway is through WiFi interface</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_BTTo3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from BT to 3G when BT is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to BT (test-connman connect)<br />
+2. Connect to 3G(test-connman connect)<br />
+3. route to check if default gateway is BT device<br />
+4. disable BT device<br />
+6.&nbsp;route to check if default gateway is 3G device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Default gateway is through 3G interface</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_3GToWiFi" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from 3G to WiFi when 3G is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to 3G(test-connman connect)<br />
+2. Connect to WiFi(test-connman connect)<br />
+3. route to check if default gateway is 3Gdevice<br />
+4. disable 3G device<br />
+6.&nbsp;route to check if default gateway is WiFi device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>WiFi should be connected and default gateway is through WiFi device</p>]]></description>
+
+</case>
+
+<case name="CM_Switch_3GToBT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can switch from 3G to BTwhen 3G is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. Connect to 3G(test-connman connect)<br />
+2. Connect to BT(test-connman connect)<br />
+3. route to check if default gateway is 3Gdevice<br />
+4. disable 3G device<br />
+6.&nbsp;route to check if default gateway is BT device&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>BT should be connected and default gateway is through BT device</p>]]></description>
+
+</case>
+</set>
+<set name="Info" >
+
+<case name="CM_INFO_ManagerStateEthOnline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the connman's state is &quot;online&quot; when there is ethernet connection<br />
+&nbsp;</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Plugin a ethernet cable</p>
+<p>2. Use command ifconfig make sure the ethernet interface have got IP address</p>
+<p>4. Use script test-manager to check the &quot;State&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+the status should be &quot;online&quot;</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_ManagerStateEthOffline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check state of manager is offline when ethernet is disconnected</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. ethernet cable is unpluged<br />
+2. make sure wifi and bt are all disconnected<br />
+3. call&nbsp;test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+the &quot;State&quot; property of manager is &quot;offline&quot; and ethernet can't ping with othere IP address</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_ManagerStateWiFiOnline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check state of manager is online when wifi is connected</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. wifi device is enabled with wpa_spplicant is run in background<br />
+2. make sure connman can get IP for wifi and can ping with other wifi IP address by &quot;connect-service [ssid]&quot;<br />
+3. make sure ethernet and bluetooth are disconnected <br />
+4. call test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+the state of manager is &quot;online&quot;</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_ManagerStateWiFiOffline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check state of manager is offline when wifi is disconnected after connected</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. wifi device is enabled with wpa_spplicant is run in background<br />
+2. make sure connman can get IP for wifi and can ping with other wifi IP address by &quot;connect-service [ssid]&quot;<br />
+3. make sure ethernet and bt are disconnected<br />
+4. call test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;<br />
+5. disable wifi device by calling &quot;test-manager dev&nbsp;wlan0 powered off&quot;<br />
+6. call test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+the &quot;State&quot; property of manager is &quot;offline&quot; and wifi can't ping with other IP address</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_ManagerStateBTOnline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check state of manager is online when bt is connected</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. bluetooth device is enabled with bluetoothd is run in background<br />
+2. make sure bluetooth can set IP and can ping with other bluetooth IP address in PAN mode<br />
+3. make sure ethernet and wifi are disconnected<br />
+4. run test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+the state of manager is &quot;online&quot;</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_ManagerStateBTOffline" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check state of manager is offline when bt is disconnected after connected</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. bluetooth device is enabled with bluetoothd is run in background<br />
+2. make sure bluetooth can set IP and can ping with other bluetooth IP address in PAN mode<br />
+3. make sure ethernet and wifi are disconnected<br />
+4.&nbsp; test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;<br />
+5. disable bluetooth device by calling &quot;test-connman dev pan0 powered off&quot;<br />
+6. test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+the state of manger is &quot;offline&quot; and bluetooth can't ping with other peers</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_ProfileDefault" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the profile is default</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. test-profile to check the &quot;Profile&quot; property of manager is &quot;default&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can get profile property to be default</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_EthDevInfo" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check if the ethernet device information are correct</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. ethernet is enabled<br />
+2. list-devices to show the properties of ethernet<br />
+3. check all the properties listed</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+Name = Ethernet, Type = ethernet, Powered = 1</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_WiFiDevInfo" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the wifi device information are correct</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. wifi device is plugged and wpa_supplicant is running in background<br />
+2.&nbsp;list-devices to show the properties of wifi<br />
+3. check all the properties listed</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can list all the properties of wifi device, including Name, Type, Policy, Priority, Powered, Scanning and Networks</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_BTDevInfo" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the Bluetooht device information are correct</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. bluetooth is enabled<br />
+2. list-devices to show the properties of bluetooth<br />
+3. check all the properties listed</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can list all the bluetooth properties, including Name, Type, Policy, Priority, Powered, Scanning and Networks</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_EthConnInfo" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the ethernet connection information are correct</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. ethernet cable is plugged and make sure can get IP address <br />
+2.&nbsp;list-devices to show the connection status of ethernet</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Type, Strength, Default, IPv4.Method and IPv4.Address are correct</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_WiFiConnInfo" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the wifi connection properties are correct</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched and wifi device is ready<br />
+1. call connect-service to connect an AP<br />
+4. call&nbsp;test-manager to show the connection status of the wifi network</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+Type = wifi</p>
+<p>Default = 1</p>
+<p>IPv4.Address, IPv4.Gateway are correct according with the testing enviroment</p>
+<p>&nbsp;</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_BtConnInfo" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the bluetooth connection information are correct</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. bluetooth device is plugged and make sure bluetoothd is running in background&nbsp; and have paired in PANU<br />
+2. list-service to get all the bluetooth service around<br />
+3. test-connman connect&nbsp;to select one Peer to connect as PAN<br />
+4. &quot;list-networks&quot; to show the connection status of bluetooth network</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Type, Strength, Default, IPv4.Method and IPv4.Address are correct</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_NoConnList" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check there is no connection listed when no network connected</p>
+<p><br />
+Run Instructions:</p>
+<p>pre-condition: connmand is launched<br />
+1. make sure ethernet, bluetooth and wifi are all disconnected or unplugged.<br />
+2. call list-services to show the state</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>All&nbsp;state&nbsp;is idle</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_SetIPBT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>set IP address for bluetooth</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+pre-condition: connmand is launched<br />
+1. make sure bluetooth is plugged.<br />
+2. call &quot;set-address pan0 [IP ADDR]&quot; to set static IP address<br />
+3. call &quot;get-services&quot; to check the IP address</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can set static IP address to bluetooth</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_TurnOn_FlightMode" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can change the FlightMode of connman from off to on</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+Pre-condition: connmand is running background<br />
+1. get &quot;FlightMode&quot; of connman manager it should be &quot;off&quot; by test-connman<br />
+2. call test-connman to enable offline mode<br />
+3. call&nbsp;test-connman to check the &quot;FlightMode&quot; property to be &quot;on&quot;<br />
+4. check&nbsp;bluetooth and wifi devices by calling list-devices to check all of the &quot;Powered&quot; information of these devices should be &quot;0&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+1. the &quot;FlightMode&quot; of manager is &quot;on&quot;<br />
+2. the &quot;Powered&quot; information of&nbsp;bluetooth and wifi should be &quot;0&quot;<br />
+&nbsp;</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_Exit_FlightMode" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>can set connman&nbsp;exit from&nbsp;flight mode</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+Pre-condition: connmand is running background<br />
+1. call&nbsp;test-connman to set in flightmode<br />
+2. make sure bluetooth and wifi are powered off by calling list-devices<br />
+3. call&nbsp;test-connman to exit from flightmode<br />
+4. make sure the &quot;FlightMode&quot; of connman manger is &quot;off&quot;<br />
+by calling test-connman<br />
+5. make sure the bluetooth and wifi device are all powered on by calling list-devices</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+1. connman manager's Property &quot;FlightMode&quot; is &quot;off&quot;<br />
+2. devices' property &quot;Powered&quot; are all &quot;on&quot;<br />
+3. make sure bluetooth and wifi all can scanning by calling &quot;hcitool scan&quot; and &quot;iwlist wlan0 scanning&quot;<br />
+&nbsp;</p>]]></description>
+
+</case>
+
+<case name="CM_INFO_MultiConnection" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>when set manager policy to &quot;multiple&quot;, can connect with several kind of networks at one time.</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. &quot;connMan_set_policy &lt;multiple&gt;&quot;<br />
+3. make sure ethernet is enabled, and wifi has available APs to be connected<br />
+4. &quot;ifconfig -a&quot; to check if eth0 and wlan0 are both connected and get IP address. Or &quot;list-devices&quot; to show all the connection status<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+both eth0 and wlan0 has connected.</p>]]></description>
+
+</case>
+</set>
+<set name="Launch" >
+
+<case name="CM_Launch_boot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+After system booted, the connmand daemon should be launched<br />
+Run Instructions:<br />
+1. boot system<br />
+2. &quot;ps aux|grep connmand&quot;<br />
+3. check if there is a thread named connmand in background<br />
+Pass/Fail Criteria:<br />
+There should be one thread named connmand in background</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_BT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>After system booted, the bluetoothd daemon should be launched<br />
+Run Instructions:<br />
+1. boot system<br />
+2. &quot;ps aux|grep bluetoothd&quot;<br />
+3. check if there is a thread named bluetoothd in background&nbsp;<br />
+Pass/Fail Criteria:<br />
+There should be one thread named bluetoothd in background</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_WpaSupplicant" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+After system booted, the wpa_supplicant daemon should be launched<br />
+Run Instructions:<br />
+1. boot system<br />
+2. &quot;ps aux|grep wpa_supplicant&quot;<br />
+3. check if there is a thread named wpa_supplicant in background<br />
+Pass/Fail Criteria:<br />
+There should be one thread named wpa_supplicant in background</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_reboot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+reboot system, find the connmand can always be launched</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2.&nbsp;&quot;ps aux|grep connmand&quot;<br />
+3. find the connmand can be launched<br />
+4. &quot;reboot&quot;<br />
+5. &quot;ps aux|grep connmand&quot;<br />
+6. check if the connmand can be launched in background&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+connmand should be launched in background automatically after system reboot</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_OneConnmand" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+there should be no more than one connmand in background</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. &quot;ps aux|grep connmand&quot;<br />
+3. the connmand should be in background<br />
+4. command &quot;su -&quot;<br />
+5. command &quot;connmand&quot;<br />
+6. check if the second connmand can be generated</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+should have error prompt &quot;Can't register with system bus&quot;, means no more than 1 connmand can run at the same time.</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_profile" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run connmand with no d<br />
+<br />
+Run Instructions:</p>
+<p><br />
+1. kill -9 connmand<br />
+2. rm -f /var/lib/connmand/default.profile<br />
+3. reboot<br />
+4. check if the connmand works fine</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+connmand works fine</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_with_profile" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run connmand with no d<br />
+<br />
+Run Instructions:</p>
+<p><br />
+1. connmand<br />
+2. check if there is /var/lib/connmand/default.profile<br />
+3. reboot<br />
+4. check if the connmand works fine</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+connmand works fine</p>]]></description>
+
+</case>
+
+<case name="CM_Launch_cpu" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Run connmand with no d<br />
+<br />
+Run Instructions:</p>
+<p><br />
+1. unplug ethernet, and plug in ethernet<br />
+2. unplug/plugin WiFi/BT/3G if have<br />
+3. check if cpu utility is abnormal (like 100%) through top</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+cpu utility for connmand is &lt; 20%</p>]]></description>
+
+</case>
+</set>
+<set name="Advance" >
+
+<case name="CM_Advance_StaticIP_reboot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check the configuration is persistance after reboot<br />
+Run Instructions:<br />
+<br />
+1. Connect a WIFI AP<br />
+2. Set static IP on the WIFI network (set-address)<br />
+3. Reboot system<br />
+4. Connect the WIFI network again and check the IP address<br />
+Pass/Fail Criteria:<br />
+<br />
+The static IP is persistance</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_StaticIP_Wired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if can set static IP on a wired interface<br />
+Run Instructions:<br />
+<br />
+1. Connect ethernet wired network to a router, which allow static IP<br />
+2. Set static IP on the wired network interface (set-address)<br />
+3. Reconnect the network and ping the AP<br />
+Pass/Fail Criteria:<br />
+<br />
+1. Can pin router<br />
+2. Can login the web of the router to config the router.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_StaticIP_WIFI" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check setting static IP on WIFI connection<br />
+Run Instructions:<br />
+1. Connect the AP with WIFI<br />
+2. Set static IP on the WIFI connection (set-address)<br />
+3. Reconnect the network and ping AP to check if the connection work<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+Can ping AP successfully</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_Hostname" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if hostname command can work to regist new name to DHCP<br />
+Run Instructions:<br />
+<br />
+1. Connect to a DHCP network<br />
+2. execute hostname &lt;newname&gt; in the MeeGo system<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+Can ping the MeeGo system with the new hostname</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_StaticIP_BT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if can set static IP on Bluetooth PANU network<br />
+Run Instructions:<br />
+<br />
+1. Connect BT PANU network to a BT AP<br />
+2. Set static IP on the BT network interface (set-address)<br />
+3. Reconnect the network and ping the AP<br />
+<br />
+Pass/Fail Criteria:<br />
+Can ping AP successfully</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_ProfileName" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if can name a profile<br />
+Run Instructions:<br />
+<br />
+1. test-profile create test test1<br />
+2. test-profile name test test<br />
+3. test-profile list<br />
+Pass/Fail Criteria:<br />
+<br />
+The name is set to &quot;test&quot;</p>]]></description>
+
+</case>
+
+<case name="CM_profile_delete" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if can delete a profile<br />
+Run Instructions:<br />
+<br />
+1. test-profile create test test<br />
+2. test-profile list will show the profile &quot;test&quot;<br />
+3. test-profile remove test<br />
+4. test-profile list<br />
+Pass/Fail Criteria:<br />
+<br />
+The profile&nbsp;is removed.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_ProfileCreate" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if can create a new profile<br />
+Run Instructions:<br />
+<br />
+1. make sure connman is launched<br />
+2. test-profile create test test<br />
+3. test-profile list<br />
+Pass/Fail Criteria:<br />
+<br />
+The new profile &quot;test&quot;&nbsp;is created</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_DNS_Set" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>can set DNS for a service</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network</p>
+<p>2.&nbsp; Using set-nameserver to set the name server for an service</p>
+<p>3. list-services check that the DNS has been set</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>list-services can see that the &quot;Nameserver&quot; &nbsp;has been set for that service.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_DNS_Negative" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>set a wrong DNS server for a service will make it fail to surf internet via Domain name</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network make sure that can surf internet via domian name</p>
+<p>2. change the DNS by running set-namewerver with a wrong DNS</p>
+<p>3. then check if it can surf internet by domian name</p>
+<p>4. checkk if it can surf internet by ipaddress</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>with a wrong DNS, it can not surf internet via Domain name, but still can surf with ipaddress</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_DNS_Positive" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>set the correct DNS for a network, then&nbsp;it can surf internet via domian name</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network</p>
+<p>2. change the DNS for this network by running &quot;set-nameserver&quot; with a correct DNS</p>
+<p>3. surf internet via Domian name</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>it can surf internet via Domain name while set a correct DNS.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_http_proxy" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Can surf Internet after setting correct http_proxy</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a company network that needs proxy to Internet</p>
+<p>2.&nbsp; export http_proxy=&lt;proxy&gt;</p>
+<p>3. wget <a href="http://www.intel.com">www.intel.com</a></p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>wget can get <a href="http://www.intel.com">www.intel.com</a>&nbsp;content</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_web_proxy" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Can surf Internet after setting correct proxy&nbsp;in web browser<br />
+Run Instructions:</p>
+<p>1. connect to a company network that needs proxy to Internet</p>
+<p>2.&nbsp; Set proxy in web browser</p>
+<p>3.&nbsp;surf &nbsp;<a href="http://www.intel.com/"><font color="#005599">www.intel.com</font></a>&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>surf <a href="http://www.intel.com/"><font color="#005599">www.intel.com</font></a>&nbsp;success</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_eth_wpad" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check can get proxy in ethernet <br />
+Run Instructions:<br />
+<br />
+1. Only connect to wired network<br />
+2. get-proxy-autoconfig<br />
+3. check the Proxy properties<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+There are two properties:</p>
+<p>Proxy.Method: can be direct, aut-config</p>
+<p>URL: the automatic proxy configuration URL.</p>
+<p>Tester need to decide the correct values.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_WF_wpad" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check can get proxy in WiFi network<br />
+Run Instructions:<br />
+<br />
+1. Only connect to WiFi network<br />
+2. get-proxy-autoconfig<br />
+3. check the Proxy properties<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+There are two properties:</p>
+<p>Proxy.Method: can be direct, aut-config</p>
+<p>URL: the automatic proxy configuration URL.</p>
+<p>Tester need to decide the correct values.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_BT_wpad" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check can get proxy in bluetooth network<br />
+Run Instructions:<br />
+<br />
+1. Only connect to bluetooth network<br />
+2. get-proxy-autoconfig<br />
+3. check the Proxy properties<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+There are two properties:</p>
+<p>Proxy.Method: can be direct, aut-config</p>
+<p>URL: the automatic proxy configuration URL.</p>
+<p>Tester need to decide the correct values.</p>]]></description>
+
+</case>
+
+<case name="CM_Advance_3G_wpad" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check can get proxy in 3G network<br />
+Run Instructions:<br />
+<br />
+1. Only connect to 3G network<br />
+2. get-proxy-autoconfig<br />
+3. check the Proxy properties<br />
+&nbsp;<br />
+Pass/Fail Criteria:<br />
+<br />
+There are two properties:</p>
+<p>Proxy.Method: can be direct, aut-config</p>
+<p>URL: the automatic proxy configuration URL.</p>
+<p>Tester need to decide the correct values.</p>]]></description>
+
+</case>
+</set>
+<set name="AutoConn" >
+
+<case name="CM_AutoConn_FavoriteSetting" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can remove favorite for autoconnection<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+connman is connected with a WIFI network<br />
+1. Delete the favorite of the WIFI network&nbsp;(test-connman remove)<br />
+2. Reboot the system to check if the WIFI network can be autoconnected still.<br />
+Pass/Fail Criteria:<br />
+<br />
+The WIFI network will not be autoconnected</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_Reboot3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect 3G after system reboot<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+3G device is enabled.<br />
+connman is connected with a 3G network.<br />
+1. Reboot the system<br />
+2. check if connman auto reconnect with the network.<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the previous connected network after system reboot</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_RebootWIFI" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect WIFI after system reboot<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+connman is connected with a WIFI network.<br />
+1. Reboot the system<br />
+2. check if connman auto reconnect with the network.<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the previous connected network after system reboot</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_RebootWired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect wired network after system reboot<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wired device is enabled.<br />
+connman is connected with a wired network.<br />
+1. Reboot the system<br />
+2. check if connman auto reconnect with the network.<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the previous connected network after system reboot</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_SuspendMem3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect 3G network after suspend to memory and resume<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+3G device is enabled.<br />
+connman is connected with a 3G network.<br />
+1. suspend test machine to memory by &quot;echo -n mem &gt; /sys/power/state&quot;<br />
+2. resume test machine by press the power&nbsp;buttom&nbsp;<br />
+3. check if connman auto reconnect with the network.<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the previous connected network after it resume from memory.</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_SuspendMemWIFI" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect wifi network after suspend to memory and resume<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+connman is connected with WiFi a network.<br />
+1. suspend test machine to memory by &quot;echo -n mem &gt; /sys/power/state&quot;<br />
+2. resume test machine by press the power&nbsp;buttom&nbsp;<br />
+3. check if connman auto reconnect with the network.<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the previous connected network after it resume from memory.</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_SuspendMemWired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect after suspend to memory and resume<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wired device is enabled.<br />
+connman is connected with a wired network.<br />
+1. suspend test machine to memory by &quot;echo -n mem &gt; /sys/power/state&quot;<br />
+2. resume test machine by press the power&nbsp;buttom&nbsp;<br />
+3. check if connman auto reconnect with the network.<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the previous connected network after it resume from memory.</p>]]></description>
+
+</case>
+
+<case name="CM_Autoconn_RememWPAPSKTKIP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can connect to the &quot;Remembered&quot; network with WPA-PSK-TKIP automatically.<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WPA-PSK-TKIP<br />
+2. connect with this AP (connect-service)<br />
+3. restart connamn daemon (or reboot machine)<br />
+4. check if connman can connect to the this AP automatically<br />
+Pass/Fail Criteria:<br />
+<br />
+Can connect automatically</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_RememWEP64" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can connect to the &quot;Remembered&quot; network with 64bitt WEP automatically.<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with 64bit WEP<br />
+2. connect with this AP (connect-service)<br />
+3. restart connamn daemon (or reboot machine)<br />
+4. check if connman can connect to the this AP automatically<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should connect to the AP automatically, and get an available IP address</p>]]></description>
+
+</case>
+
+<case name="CM_AutoConn_LostConn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can auto re-connect after it lost connection<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+connman is connected with a network.<br />
+1. move the test machine away from AP <br />
+2. when the test machine is out of range, it lose connection with AP<br />
+3. move the test machine back to AP within its signal range. <br />
+4. check if connman auto reconnect with the AP.<br />
+connman should reconnect with the network<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should reconnect with the network</p>]]></description>
+
+</case>
+
+<case name="CM_Autoconn_HIDDEN_Rem WEP128" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check if connman can connect to the &quot;Remembered&quot; network with hidden WEP128bit automatically.</p>
+<p><br />
+Run Instructions:</p>
+<p>Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with hidden WEP128bit<br />
+2. connect with this AP (connect-service)<br />
+3. restart connamn daemon (or reboot machine)<br />
+4. check if connman can connect to the this AP automatically</p>
+<p><br />
+Pass/Fail Criteria:<br />
+<br />
+connman should connect to the AP automatically, and get an available IP address</p>]]></description>
+
+</case>
+
+<case name="CM_Autoconn_HIDDEN_Rem NoSecu" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check if connman can connect to the &quot;Remembered&quot; network with hidden Nosecurity automatically.</p>
+<p><br />
+Run Instructions:</p>
+<p>Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with hidden and without security<br />
+2. connect with this AP (connect-service)<br />
+3. restart connamn daemon (or reboot machine)<br />
+4. check if connman can connect to the this AP automatically</p>
+<p>Pass/Fail Criteria:<br />
+<br />
+connman should connect to the AP automatically, and get an available IP address</p>]]></description>
+
+</case>
+
+<case name="CM_Autoconn_HIDDEN_Rem WPAPSKAES" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+check if connman can connect to the &quot;Remembered&quot; network with WPAPSKAES automatically.</p>
+<p><br />
+Run Instructions:</p>
+<p>Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with hidden WPAPSKAES<br />
+2. connect with this AP (connect-service)<br />
+3. restart connamn daemon (or reboot machine)<br />
+4. check if connman can connect to the this AP automatically</p>
+<p><br />
+Pass/Fail Criteria:<br />
+<br />
+connman should connect to the AP automatically, and get an available IP address</p>]]></description>
+
+</case>
+</set>
+<set name="Device" >
+
+<case name="CM_Device_WIFI" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can disabe and enable wifi device<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable wifi device<br />
+2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable wifi device<br />
+4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should set the &quot;Powered&quot; of WIFI device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_WIFI_Reboot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can remember the WIFI device setting<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable wifi device<br />
+2. reboot system and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable wifi device<br />
+4. reboot and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should set the &quot;Powered&quot; of WIFI device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_WIFI_Conn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can break the connection when disable the wifi device<br />
+Run Instructions:<br />
+<br />
+1. Connect a WIFI network and then call disable_device to disable wifi device<br />
+2. List all WIFI networks in connman to check<br />
+Pass/Fail Criteria:<br />
+<br />
+There should be no any WIFI network can be listed and the connection is breaked</p>]]></description>
+
+</case>
+
+<case name="CM_Device_BT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can disabe and enable BT device<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable BT device<br />
+2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable BT device<br />
+4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should set the &quot;Powered&quot; of BT device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_BT_Reboot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can remember the BT device setting<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable BT device<br />
+2. Reboot and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable BT device<br />
+4. Reboot system and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should remember the setting of the &quot;Powered&quot; of BT device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_BT_Conn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can break the connection when disable the BT device<br />
+Run Instructions:<br />
+<br />
+1. Connect a BT PANU network and then call disable_device to disable BT device<br />
+2. List all networks in connman to check<br />
+Pass/Fail Criteria:<br />
+<br />
+There should be no any BT PANU network can be listed and the connection is breaked</p>]]></description>
+
+</case>
+
+<case name="CM_Device_3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can disabe and enable 3G device<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable 3G device<br />
+2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable 3G device<br />
+4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should set the &quot;Powered&quot; of 3G device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_3G_Reboot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can remember the setting of 3G device<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable 3G device<br />
+2. Reboot the system and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable 3G device<br />
+4. Reboot the system and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should remember the setting of 3g device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_3G_Conn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can break the connection when disable the 3G device<br />
+Run Instructions:<br />
+<br />
+1. Connect a 3G network and then call disable_device to disable 3G device<br />
+2. List all networks in connman to check<br />
+Pass/Fail Criteria:<br />
+<br />
+There should be no any 3G network can be listed and the connection is breaked</p>]]></description>
+
+</case>
+
+<case name="CM_Device_Wired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can disabe and enable Wired device<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable wired device<br />
+2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable wired device<br />
+4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should set the &quot;Powered&quot; of wired device correcly</p>]]></description>
+
+</case>
+
+<case name="CM_Device_Wired_Conn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can break the connection when disable the wired device<br />
+Run Instructions:<br />
+<br />
+1. Connect a wired network and then call disable_device to disable wired device<br />
+2. List all networks in connman to check<br />
+Pass/Fail Criteria:<br />
+<br />
+There should be no any wired network can be listed and the connection is breaked</p>]]></description>
+
+</case>
+
+<case name="CM_Device_Wired_Reboot" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman can remember the setting of wired device<br />
+Run Instructions:<br />
+<br />
+1. call disable_device to disable wired device<br />
+2. Reboot system and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
+3. call enable_device to enable wired device<br />
+4. Reboot system and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+<br />
+Pass/Fail Criteria:<br />
+<br />
+connman should remember the setting of of wired device correcly</p>]]></description>
+
+</case>
+</set>
+<set name="NetworkSel" >
+
+<case name="CM_NetworkSel_BroadcastNoSec" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast no security networks work well<br />
+Run Instructions:<br />
+1. Prepare&nbsp;2 WIFI Aps, and set them as broadcast and no security.<br />
+2. Connect the AP1&nbsp;(test-connman connect)<br />
+3. Connect AP2 directly and check if the connection works<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_BroadcastWEP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, and set them as broadcast and WEP security. 2. Connect the AP1 3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_BroadcastWPA" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WPA security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, and set them as broadcast and WPA security. 2. Connect the AP1 3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_HideNoSec" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI hide no security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, and set them as hide and no security. 2. Connect the AP1 3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_HideWEP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI hide WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, and set them as hide and WEP security. 2. Connect the AP1 3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_HideWPA" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI hide WPA security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, and set them as hide and WPA security.&nbsp;<br />
+2. Connect the AP1&nbsp;<br />
+3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_NoneToWPA" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, one is broadcase none and the other WPA.&nbsp;<br />
+2. Connect the AP1&nbsp;<br />
+3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_HiddenWPAToNone" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, one is hidden WPA&nbsp;and the other broadcast none.&nbsp;<br />
+2. Connect the AP1&nbsp;<br />
+3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_NoneToHiddenWEP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, one is broadcase none and the other Hidden WEP.&nbsp;<br />
+2. Connect the AP1&nbsp;<br />
+3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_WEPToNone" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, one is broadcase WEP and the other broadcast none.&nbsp;<br />
+2. Connect the AP1&nbsp;<br />
+3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+
+<case name="CM_NetworkSel_HiddenWPAToWEP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Check if switching between WIFI broadcast WEP security networks work well<br />
+Run Instructions:<br />
+1. Prepare 2 WIFI Aps, one is Hidden WPA and the other broadcast WEP.&nbsp;<br />
+2. Connect the AP1&nbsp;<br />
+3. Connect AP2 directly and check if the connection work<br />
+Pass/Fail Criteria:<br />
+<br />
+ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+
+</case>
+</set>
+<set name="VPN" >
+
+<case name="CM_VPN_WEP" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Can connect VPN with WEP WIFI<br />
+Run Instructions:<br />
+<br />
+Steps: 1. Connect a WEP WIFI AP 2. Loggin VPN with the right authorization 3. Access VPN network<br />
+Pass/Fail Criteria:<br />
+Can connect VPN server and access the VPN network</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_WPA" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Can connect VPN with WPA WIFI<br />
+Run Instructions:<br />
+<br />
+Steps:&nbsp;<br />
+1. Connect a WPA WIFI AP&nbsp;<br />
+2. Loggin VPN with the right authorization&nbsp;<br />
+3. Access VPN network<br />
+Pass/Fail Criteria:<br />
+Can connect VPN server and access the VPN network</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_WPA2" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Can connect VPN with WPA2 WIFI<br />
+Run Instructions:<br />
+<br />
+Steps:&nbsp;<br />
+1. Connect a WPA2 WIFI AP&nbsp;<br />
+2. Loggin VPN with the right authorization&nbsp;<br />
+3. Access VPN network<br />
+Pass/Fail Criteria:<br />
+Can connect VPN server and access the VPN network</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Can connect VPN with 3g connection<br />
+Run Instructions:<br />
+<br />
+Steps:&nbsp;<br />
+1. Connect 3g network&nbsp;<br />
+2. Loggin VPN with the right authorization&nbsp;<br />
+3. Access VPN network<br />
+Pass/Fail Criteria:<br />
+Can connect VPN server and access the VPN network</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_Hidden" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Can connect VPN with hidden WIFI<br />
+Run Instructions:<br />
+<br />
+Steps:&nbsp;<br />
+1. Connect a hidden WIFI AP&nbsp;<br />
+2. Loggin VPN with the right authorization&nbsp;<br />
+3. Access VPN network<br />
+Pass/Fail Criteria:<br />
+Can connect VPN server and access the VPN network</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_Wired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Can connect VPN with wired connection<br />
+Run Instructions:<br />
+<br />
+Steps:&nbsp;<br />
+1. Connect a wired network&nbsp;<br />
+2. Loggin VPN with the right authorization&nbsp;<br />
+3. Access VPN network<br />
+Pass/Fail Criteria:<br />
+Can connect VPN server and access the VPN network</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_Disconnect" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>VPN can be diconnected</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a VPN network and make sure VPN ip&nbsp;was&nbsp;allocated and &nbsp;it can get into the VPN network</p>
+<p>2. run disconnect-vpn to disconnect the VPN network</p>
+<p>3. check ifconfig to see if VPN was disconnected</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>VPN service should be diconnected.</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_Reconnect" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>VPN service can be disconnect and reconnect again.</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Prepare an connected VPN services make sure that it can access the VPN network</p>
+<p>2. Disconnect this VPN&nbsp;service and check that it can not access the VPN network</p>
+<p>3. Reconnect this VPN service and check that if it can access the VPN network again</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>it should can access the VPN network after reconnect this VPN services.</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_Autodisconnect" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>VPN should disconnect automatically when disconnect the network that it based on</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a network&nbsp; which VPN can be based on.(eg ADSL network)</p>
+<p>2.connect to VPN network and make sure it can access VPN network</p>
+<p>3. disconnect the network which VPN based on (eg. the connected ADSL network)</p>
+<p>4.ifconfig check that VPN&nbsp;service&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>the VPN service should disconnected automatically when disconnect the network&nbsp;which VPN base on.</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_list_service" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>list-service will show VPN</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a VPN network and make sure VPN ip&nbsp;was&nbsp;allocated and &nbsp;it can get into the VPN network</p>
+<p>2. list-service</p>
+<p>3. check if the VPN is in the list and match content in ifconfig</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>VPN service should be in the list.</p>]]></description>
+
+</case>
+
+<case name="CM_VPN_Disconnect_service" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>VPN can be diconnected</p>
+<p><br />
+Run Instructions:</p>
+<p>1. connect to a VPN network and make sure VPN ip&nbsp;was&nbsp;allocated and &nbsp;it can get into the VPN network</p>
+<p>2. Disconnect with &quot;test-connman disconnect &lt;service&gt;&quot;</p>
+<p>3. check ifconfig to see if VPN was disconnected</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>VPN service should be diconnected.</p>]]></description>
+
+</case>
+</set>
+<set name="WiFiFeature" >
 <pre_steps>
 <step expected_result="0">/opt/mcts-connman-tests/WiFi/startup </step>
 </pre_steps>
+
 
 <case name="CM_WF_Channel1" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
@@ -1123,9 +3891,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel1.py</step>
-
 </case>
 
 <case name="CM_WF_Channel8" manual="false" timeout="180">
@@ -1138,9 +3904,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel8.py</step>
-
 </case>
 
 <case name="CM_WF_Channel11" manual="false" timeout="180">
@@ -1153,9 +3917,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel11.py</step>
-
 </case>
 
 <case name="CM_WF_Channel10" manual="false" timeout="180">
@@ -1168,9 +3930,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel10.py</step>
-
 </case>
 
 <case name="CM_WF_Channel9" manual="false" timeout="180">
@@ -1183,9 +3943,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel9.py</step>
-
 </case>
 
 <case name="CM_WF_Channel7" manual="false" timeout="180">
@@ -1211,9 +3969,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel6.py</step>
-
 </case>
 
 <case name="CM_WF_Channel5" manual="false" timeout="180">
@@ -1226,9 +3982,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel5.py</step>
-
 </case>
 
 <case name="CM_WF_Channel4" manual="false" timeout="180">
@@ -1241,9 +3995,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel4.py</step>
-
 </case>
 
 <case name="CM_WF_Channel3" manual="false" timeout="180">
@@ -1256,9 +4008,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel3.py</step>
-
 </case>
 
 <case name="CM_WF_Channel2" manual="false" timeout="180">
@@ -1271,9 +4021,22 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel2.py</step>
+</case>
 
+<case name="CM_WA_AutoDelete" manual="false" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if an AP can be auto deleted after the AP is power off</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Powered on an AP</p>
+<p>2. The AP is in WiFi service list</p>
+<p>3. Power off the AP</p>
+<p>4. There is no such AP in WiFi service list.</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>There is no such AP in WiFi service list.</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WA_AutoDelete.py</step>
 </case>
 
 <case name="CM_WA_AutoConnectFromSuspend" manual="false" timeout="180">
@@ -1288,9 +4051,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can connect automatically.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_AutoConnectFromSuspend.py</step>
-
 </case>
 
 <case name="CM_WA_ForgotPassword" manual="false" timeout="180">
@@ -1304,8 +4065,24 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Error property is set.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_ForgotPassword.py</step>
+</case>
+
+<case name="CM_WF_Connect_WPAPSKTKIPHide" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check wifi BSS connection with SSID hidden AP with WPA-PSK-TKIP<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WPA-PSK-TKIP, disable SSID broadcast<br />
+2. run test script &quot;connect-service &lt;ssid&gt; [passphrase]&quot;<br />
+3. &quot;ifconfig wlan0&quot;, check there should be an IP address<br />
+4. send ping packets to AP, check if can receive ping reply from AP<br />
+Pass/Fail Criteria:<br />
+<br />
+there should be available IP got by connman and can ping with other IP address</p>]]></description>
 
 </case>
 
@@ -1319,8 +4096,24 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the security of the&nbsp;service is WEP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_DetectSecurityWEP.py</step>
+</case>
+
+<case name="CM_WF_Connect_WPA2" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check wifi cnnection with WPA hidden<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WPA2-PSK, enable SSID broadcast<br />
+2. run test script &quot;connect-service &lt;ssid&gt; [passphrase]&quot;<br />
+3. &quot;ifconfig wlan0&quot;, check there should be an IP address<br />
+4. send ping packets to AP, check if can receive ping reply from AP<br />
+Pass/Fail Criteria:<br />
+<br />
+there should be available IP got by connman and can ping with other IP address</p>]]></description>
 
 </case>
 
@@ -1336,9 +4129,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>ConnMan should remember the password and can connect to the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_RememberPasswd.py</step>
-
 </case>
 
 <case name="CM_WA_DetectSecurityNone" manual="false" timeout="180">
@@ -1351,8 +4142,23 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the security of the&nbsp;service is WEP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_DetectSecurityNone.py</step>
+</case>
+
+<case name="CM_WF_Connect_WPAEnterprise" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check wifi connection with WPA Enterprise<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+1. WPA enterpise AP works<br />
+2. Set the connman config file according with the corresponding connMan document. <br />
+3. iwlist scan the WPA enterprise essid<br />
+4. use test-connman to connect the WPA enterprise network<br />
+Pass/Fail Criteria:<br />
+<br />
+there should be available IP got by connman and can ping with other IP address</p>]]></description>
 
 </case>
 
@@ -1366,9 +4172,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the security of the&nbsp;service is WEP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_DetectSecurityWPA.py</step>
-
 </case>
 
 <case name="CM_WA_DetectSecurityRSN" manual="false" timeout="180">
@@ -1381,9 +4185,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the security of the&nbsp;service is WEP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_DetectSecurityRSN.py</step>
-
 </case>
 
 <case name="CM_WN_WEP40Wrong" manual="false" timeout="180">
@@ -1396,9 +4198,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40Wrong.py</step>
-
 </case>
 
 <case name="CM_WN_WEP40Long" manual="false" timeout="180">
@@ -1411,9 +4211,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40Long.py</step>
-
 </case>
 
 <case name="CM_WN_WEP40Short" manual="false" timeout="180">
@@ -1426,9 +4224,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40Short.py</step>
-
 </case>
 
 <case name="CM_WN_WEP40ascii" manual="false" timeout="180">
@@ -1441,9 +4237,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40ascii.py</step>
-
 </case>
 
 <case name="CM_WN_WEP128Wrong" manual="false" timeout="180">
@@ -1456,9 +4250,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP128Wrong.py</step>
-
 </case>
 
 <case name="CM_WN_WEP128Long" manual="false" timeout="180">
@@ -1471,9 +4263,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP128Long.py</step>
-
 </case>
 
 <case name="CM_WN_WEP128Short" manual="false" timeout="180">
@@ -1486,9 +4276,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP128Short.py</step>
-
 </case>
 
 <case name="CM_WN_WEP128ascii" manual="false" timeout="180">
@@ -1501,239 +4289,44 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>the connection fail</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP128ascii.py</step>
+</case>
+
+<case name="CM_WF_Connect_SharedWEP128Hide" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check wifi BSS connection with SSID hidden AP with 128bit WEP (shared authentication)<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with 128bit WEP, disable SSID broadcast (shared authentication)<br />
+2. run test script &quot;connect-service &lt;ssid&gt; [passphrase]&quot;<br />
+3. &quot;ifconfig wlan0&quot;, check there should be an IP address<br />
+4. send ping packets to AP, check if can receive ping reply from AP<br />
+Pass/Fail Criteria:<br />
+<br />
+there should be available IP got by connman and can ping with other IP address</p>]]></description>
 
 </case>
 
-<case name="CM_WG_DeviceIsExist" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if WiFi device exists</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the technology list from connman</p>
-<p>2. Get the WiFi technology</p>
-<p>3. Get the device from WiFi technology</p>
-<p>4. Check if the device is null</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>There is WiFi device</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_DeviceIsExist.py</step>
-
-</case>
-
-<case name="CM_WG_HasDHCP" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if WiFi device by default is dhcp enabled</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Connect to Guest WiFi&nbsp; nework</p>
-<p>2. Get the IPv4 property of the device</p>
-<p>3. Check method of IPv4 is dhcp</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The method is dhcp</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_HasDHCP.py</step>
+<case name="CM_WF_Connect_OpenWEP64" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check wifi BSS connection with WEP 64bit (open authentication)<br />
+Run Instructions:<br />
+<br />
+Pre-condition: the connman daemon is runnig<br />
+wifi device is enabled.<br />
+1. configure AP with WEP 64bit (open authentication)<br />
+2. run test script &quot;connect-service &lt;ssid&gt; [passphrase]&quot;<br />
+3. &quot;ifconfig wlan0&quot;, check there should be an IP address<br />
+4. send ping packets to AP, check if can receive ping reply from AP<br />
+Pass/Fail Criteria:</p>]]></description>
 
 </case>
 
-<case name="CM_WG_BigBroadcastPing" manual="false" timeout="180">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if we can ping Guest WiFi nework through broadcast</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Connect to Guest WiFi nework</p>
-<p>2. Get Guest WiFi IP address</p>
-<p>3. Broadcast ping with size = 1400</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>Ping will receive response.</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_BigBroadcastPing.py</step>
-
-</case>
-
-<case name="CM_WG_HasIP" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if WiFi device has IP address by default</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Connect to Guest WiFi network</p>
-<p>2. Get the device</p>
-<p>3. Get the IPv4 property and check the IP address</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The IP address is valid</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_HasIP.py</step>
-
-</case>
-
-<case name="CM_WG_Connect" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if Can connect to Guest WiFi network</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Connect to Guest WiFi network</p>
-<p>2. Ping Guest WiFi network</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>Ping will receive response.</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_Connect.py</step>
-
-</case>
-
-<case name="CM_WG_Disconnect" manual="false" timeout="180">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if we can disconnet Guest WiFi network</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Make sure there is Guest WiFi network</p>
-<p>2. Powered off the device</p>
-<p>3. Check if we can ping Guest WiFi network</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>Ping cannot receive any response.</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_Disconnect.py</step>
-
-</case>
-
-<case name="CM_WG_IfconfigDown" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the WiFi device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;eth&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IfconfigDown.py</step>
-
-</case>
-
-<case name="CM_WG_IfconfigUp" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;wlan&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;wlan&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IfconfigUp.py</step>
-
-</case>
-
-<case name="CM_WG_IsPoweredOn" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if WiFi device is on by default</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the Powered status of WiFi device</p>
-<p>2. Check the Powered&nbsp;status is On</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The Powered status is on</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsPoweredOn.py</step>
-
-</case>
-
-<case name="CM_WG_IsReady" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if WiFi device is ready to connect</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get device</p>
-<p>2. Check the device status</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The status is ready/online/login</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsReady.py</step>
-
-</case>
-
-<case name="CM_WG_IsReEnableWorks" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if WiFi device still works after powered off and powered on</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the device</p>
-<p>2. Check if the network available</p>
-<p>3. Powered off the device</p>
-<p>4. Powered on the device</p>
-<p>5. Check if the network available</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>Can ping local network</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_IsReEnableWorks.py</step>
-
-</case>
-
-<case name="CM_WG_PoweredOff" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if Powered off works for WiFi device</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the device</p>
-<p>2. Set powered property to off</p>
-<p>3. Check powered property value is off</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The value is off</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_PoweredOff.py</step>
-
-</case>
-
-<case name="CM_WG_PoweredOn" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if Powered on works for WiFi device</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get device</p>
-<p>2. Set powered to on</p>
-<p>3. Check the powered property</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The value is on</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_PoweredOn.py</step>
-
-</case>
-
-<case name="CM_WG_SmallBroadcastPing" manual="false" timeout="180">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if can broadcast with small packet for WiFi device</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the WiFi device</p>
-<p>2. Broadcast ping with small packet</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>Receives ping response.</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_WG_SmallBroadcastPing.py</step>
-
-</case>
-
-<case name="CM_WS_Open" manual="false" timeout="180">
+<case name="CM_WS_Open" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi for Open mode</p>
 <p><br />
@@ -1743,9 +4336,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_Open.py</step>
-
 </case>
 
 <case name="CM_WS_PSK2" manual="false" timeout="180">
@@ -1758,9 +4349,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_PSK2.py</step>
-
 </case>
 
 <case name="CM_WS_PSK1" manual="false" timeout="180">
@@ -1773,9 +4362,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_PSK1.py</step>
-
 </case>
 
 <case name="CM_WS_RSN" manual="false" timeout="180">
@@ -1788,9 +4375,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_RSN.py</step>
-
 </case>
 
 <case name="CM_WS_WPA" manual="false" timeout="180">
@@ -1803,9 +4388,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_WPA.py</step>
-
 </case>
 
 <case name="CM_WS_WEP128" manual="false" timeout="180">
@@ -1818,9 +4401,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_WEP128.py</step>
-
 </case>
 
 <case name="CM_WS_WEP40" manual="false" timeout="180">
@@ -1833,9 +4414,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_WEP40.py</step>
-
 </case>
 
 <case name="CM_WS_Hidden" manual="false" timeout="180">
@@ -1848,9 +4427,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_Hidden.py</step>
-
 </case>
 
 <case name="CM_WS_Broadcast" manual="false" timeout="180">
@@ -1863,9 +4440,20 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_Broadcast.py</step>
+</case>
 
+<case name="CM_WS_Shared" manual="true" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test WiFi for Shared mode</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set AP in Shared mode</p>
+<p>2. Connect to the AP</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can get IP and ping the AP</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WS_Shared.py</step>
 </case>
 
 <case name="CM_WS_OpenBroadcastWEP40" manual="false" timeout="180">
@@ -1878,9 +4466,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenBroadcastWEP40.py</step>
-
 </case>
 
 <case name="CM_WS_OpenHiddenWEP40" manual="false" timeout="180">
@@ -1893,9 +4479,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenHiddenWEP40.py</step>
-
 </case>
 
 <case name="CM_WS_OpenBroadcastRSN" manual="false" timeout="180">
@@ -1908,9 +4492,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenBroadcastRSN.py</step>
-
 </case>
 
 <case name="CM_WS_OpenBroadcastTKIP" manual="false" timeout="180">
@@ -1923,9 +4505,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenBroadcastTKIP.py</step>
-
 </case>
 
 <case name="CM_WS_OpenBroadcastWEP128" manual="false" timeout="180">
@@ -1938,9 +4518,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenBroadcastWEP128.py</step>
-
 </case>
 
 <case name="CM_WS_OpenHiddenTKIP" manual="false" timeout="180">
@@ -1953,9 +4531,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenHiddenTKIP.py</step>
-
 </case>
 
 <case name="CM_WS_OpenHiddenRSN" manual="false" timeout="180">
@@ -1968,9 +4544,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenHiddenRSN.py</step>
-
 </case>
 
 <case name="CM_WS_OpenHiddenWEP128" manual="false" timeout="180">
@@ -1983,9 +4557,59 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_OpenHiddenWEP128.py</step>
+</case>
 
+<case name="CM_WS_SharedHiddenWEP128" manual="true" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test WiFi for Shared mode, Disable Broadcast SSID, WEP128</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set AP in PSK Shared mode, Disable Broadcast SSID, WEP128</p>
+<p>2. Connect to the AP</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can get IP and ping the AP</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WS_SharedHiddenWEP128.py</step>
+</case>
+
+<case name="CM_WS_SharedBroadcastWEP128" manual="true" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test WiFi for Shared mode, Broadcast SSID, WEP128</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set AP in PSK Shared mode, Broadcast SSID, WEP128</p>
+<p>2. Connect to the AP</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can get IP and ping the AP</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WS_SharedBroadcastWEP128.py</step>
+</case>
+
+<case name="CM_WS_SharedHiddenWEP40" manual="true" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test WiFi for Shared mode, Disable Broadcast SSID, WEP40</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set AP in PSK Shared mode, Disable Broadcast SSID, WEP40</p>
+<p>2. Connect to the AP</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can get IP and ping the AP</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WS_SharedHiddenWEP40.py</step>
+</case>
+
+<case name="CM_WS_SharedBroadcastWEP40" manual="true" timeout="180">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Test WiFi for Shared mode, Broadcast SSID, WEP40</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Set AP in PSK Shared mode, Broadcast SSID, WEP40</p>
+<p>2. Connect to the AP</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>Can get IP and ping the AP</p>]]></description>
+<step expected_result="0">/opt/mcts-connman-tests/CM_WS_SharedBroadcastWEP40.py</step>
 </case>
 
 <case name="CM_WS_WEP40ascii" manual="false" timeout="180">
@@ -1998,9 +4622,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_WEP40ascii.py</step>
-
 </case>
 
 <case name="CM_WS_WEP128ascii" manual="false" timeout="180">
@@ -2013,15 +4635,239 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Can get IP and ping the AP</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_WEP128ascii.py</step>
-
 </case>
 <post_steps>
 <step expected_result="0">/opt/mcts-connman-tests/WiFi/cleanup </step>
 </post_steps>
 </set>
 <set name="Signal" >
+
+<case name="CM_Signal_RmvEthCable" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p>can catch property changed signal when remove ethernet cable</p>
+<p><br />
+Run Instructions:</p>
+<p>1. boot system<br />
+2. launch &quot;connMan_monitor&quot;<br />
+3. remove ethernet cable</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p>can print information about ethernet device has been removed</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_DisableWiFiDev" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch property changed signal when disable wifi device</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. launch &quot;connMan_monitor&quot;<br />
+3. &quot;connMan_disable_device wlan0&quot;<br />
+&nbsp;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can catch signal about wifi device has been disabled</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_RmvBT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch property changed signal when remove bluetooth dungle or disable bluetooth device</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. launch &quot;connMan_monitor&quot;<br />
+3. remove bluetooth dungle</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can print information about bluetooth device has been removed</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_MoveBT" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch property changed signal when move bluetooth device from near to far in PAN mode</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. set up bluetooth PAN connection with other bt devices<br />
+3. launch &quot;connMan_monitor&quot;<br />
+3. move bt device from near to far</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can print information about signal of bluetooth device has been changed</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_MoveWiFi" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch property changed signal when move wifi device from near to far away the AP</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. connect to an AP by &quot;test-connman connect&quot;<br />
+3. launch &quot;connMan_monitor&quot;<br />
+4. move wifi device near to far away from the AP</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can print information about signal of wifidevice has been changed</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_Move3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch property changed signal when move 3G device near to far away from the base station</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. connect to 3G network (test-connman connect)<br />
+3. launch &quot;connMan_monitor&quot;<br />
+4. move 3g device near to far away from the base station</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can print information about signal of 3gdevice has been changed</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_State" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+signal of changing State can be catched</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. launch &quot;connMan_monitor&quot;<br />
+3. &quot;test-connman connect &lt;service&gt;&quot;<br />
+4. &quot;test-connman disconnect &lt;service&gt;&quot;<br />
+<br />
+Pass/Fail Criteria:</p>
+<p><br />
+catch the signal that the policy of ethernet has been changed to manual</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_Error" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch signal of Error changed&nbsp;when failed to connect wifi</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. launch &quot;connMan_monitor&quot;<br />
+3. &quot;connect-service &lt;essid&gt; &lt;wrong passphrase&gt;&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can catch the singal of Error</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_List_Networks" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can list wifi scanning property changed signal when list wifi networks</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. &quot;connMan_monitor&quot;&nbsp;<br />
+3. &quot;test-connman scan&quot;<br />
+<br />
+Pass/Fail Criteria:</p>
+<p><br />
+can catch the signal the wifi is scanning...</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_Set_PassphraseRequired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch the signal PassphraseRequired changed</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. launch &quot;connMan_monitor&quot;<br />
+3. &quot;test-connman passphrase &lt;service&gt; &lt;passphrase&gt;&quot;<br />
+<br />
+Pass/Fail Criteria:</p>
+<p><br />
+catch the signal that the PassphraseRequired is changed</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_Change_Passphrase" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch the signal when change the&nbsp;favorite of manually created&nbsp;wifi network</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. connect to an AP (test-connman connect &lt;service&gt;)<br />
+3. launch &quot;connMan_monitor&quot;<br />
+4. &quot;test-connman remove &lt;service&gt;&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can catch the signal that the passphrase is set</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_Set_Flightmode" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch the signal when change the flightmode from 0 to 1</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. make sure ethernet and wifi are all enabled<br />
+3. launch &quot;connMan_monitor&quot;<br />
+4. &quot;test-connman offlinemode on&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can catch the signal that flightmode has been changed from 0 to 1.</p>]]></description>
+
+</case>
+
+<case name="CM_Signal_StaticIPEth" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:</p>
+<p><br />
+can catch the signal when set an ethernet to static IP address</p>
+<p><br />
+Run Instructions:</p>
+<p><br />
+1. boot system<br />
+2. make sure ethernet is enabled by &quot;connMan_list_devices&quot;<br />
+3. launch &quot;connMan_monitor&quot;<br />
+4. &quot;set-address &lt;address&gt; &lt;netmask&gt; &lt;gateway&gt;&quot;</p>
+<p><br />
+Pass/Fail Criteria:</p>
+<p><br />
+can catch the signal that the IP address of ethernet has been changed</p>]]></description>
+
+</case>
 
 <case name="CM_SC_Networks" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
@@ -2036,9 +4882,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_Networks.py</step>
-
 </case>
 
 <case name="CM_SM_ConnectedTechnologies" manual="false" timeout="90">
@@ -2054,9 +4898,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_ConnectedTechnologies.py</step>
-
 </case>
 
 <case name="CM_SM_DefaultTechnology" manual="false" timeout="90">
@@ -2072,9 +4914,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_DefaultTechnology.py</step>
-
 </case>
 
 <case name="CM_SM_EnabledTechnologies" manual="false" timeout="90">
@@ -2090,9 +4930,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_EnabledTechnologies.py</step>
-
 </case>
 
 <case name="CM_SM_Profiles" manual="false" timeout="90">
@@ -2108,9 +4946,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_Profiles.py</step>
-
 </case>
 
 <case name="CM_SM_Services" manual="false" timeout="90">
@@ -2126,9 +4962,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_Services.py</step>
-
 </case>
 
 <case name="CM_SM_State" manual="false" timeout="90">
@@ -2144,9 +4978,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_State.py</step>
-
 </case>
 
 <case name="CM_SM_Strength" manual="false" timeout="90">
@@ -2161,9 +4993,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SM_Strength.py</step>
-
 </case>
 
 <case name="CM_SS_AutoConnect" manual="false" timeout="90">
@@ -2179,9 +5009,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SS_AutoConnect.py</step>
-
 </case>
 
 <case name="CM_SS_Favorite" manual="false" timeout="90">
@@ -2197,9 +5025,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SS_Favorite.py</step>
-
 </case>
 
 <case name="CM_SS_IPv4" manual="false" timeout="90">
@@ -2215,9 +5041,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SS_IPv4.py</step>
-
 </case>
 
 <case name="CM_SS_Passphrase" manual="false" timeout="90">
@@ -2232,9 +5056,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SS_Passphrase.py</step>
-
 </case>
 
 <case name="CM_SC_Powered" manual="false" timeout="90">
@@ -2250,9 +5072,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
-<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Networks.py</step>
-
+<step expected_result="0">/opt/mcts-connman-tests/CM_SC_Powered.py</step>
 </case>
 
 <case name="CM_SC_Scanning" manual="false" timeout="90">
@@ -2267,9 +5087,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_Scanning.py</step>
-
 </case>
 
 <case name="CM_SC_ConnectedTechnologies" manual="false" timeout="90">
@@ -2285,9 +5103,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_ConnectedTechnologies.py</step>
-
 </case>
 
 <case name="CM_SC_Services" manual="false" timeout="90">
@@ -2303,9 +5119,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_Services.py</step>
-
 </case>
 
 <case name="CM_SC_State" manual="false" timeout="90">
@@ -2321,9 +5135,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_State.py</step>
-
 </case>
 
 <case name="CM_SC_Connected" manual="false" timeout="90">
@@ -2339,9 +5151,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_Connected.py</step>
-
 </case>
 
 <case name="CM_SC_OfflineMode" manual="false" timeout="90">
@@ -2357,9 +5167,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_OfflineMode.py</step>
-
 </case>
 
 <case name="CM_SC_DefaultTechnology" manual="false" timeout="90">
@@ -2375,9 +5183,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_DefaultTechnology.py</step>
-
 </case>
 
 <case name="CM_SC_Favorite" manual="false" timeout="90">
@@ -2393,9 +5199,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_Favorite.py</step>
-
 </case>
 
 <case name="CM_SC_IPv4" manual="false" timeout="90">
@@ -2411,9 +5215,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_IPv4.py</step>
-
 </case>
 
 <case name="CM_SC_EnabledTechnologies" manual="false" timeout="90">
@@ -2429,9 +5231,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_SC_EnabledTechnologies.py</step>
-
 </case>
 </set>
 <set name="Profile" >
@@ -2448,9 +5248,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The profile is created</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Prof_Add.py</step>
-
 </case>
 
 <case name="CM_Prof_RemoveNoExist" manual="false" timeout="90">
@@ -2466,9 +5264,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The error NotFound is triggered</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Prof_RemoveNoExist.py</step>
-
 </case>
 
 <case name="CM_Prof_Remove" manual="false" timeout="90">
@@ -2483,9 +5279,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The profile is removed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Prof_Remove.py</step>
-
 </case>
 
 <case name="CM_Prof_AddExist" manual="false" timeout="90">
@@ -2500,9 +5294,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The error should be AlreadyExists</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Prof_AddExist.py</step>
-
 </case>
 
 <case name="CM_Prof_List" manual="false" timeout="90">
@@ -2517,9 +5309,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The profile exists</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Prof_List.py</step>
-
 </case>
 
 <case name="CM_Prof_ActiveProfile" manual="false" timeout="90">
@@ -2536,12 +5326,56 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>The active&nbsp;profile is changed</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Prof_ActiveProfile.py</step>
-
 </case>
 </set>
 <set name="Flight" >
+
+<case name="CM_Flt_Persistance" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+Offline setting should be persistance<br />
+Run Instructions:<br />
+<br />
+1. Set offline mode on, make sure all the devices are disabled.&nbsp;(test-connman offlinemode)<br />
+2. reboot the system and check if the offine mode setting is remembered.&nbsp;<br />
+3. Set offline mode off, make sure all the devices are resumed.&nbsp;<br />
+4. Reboot the system and check if the offline mode setting is kept as off.<br />
+Pass/Fail Criteria:<br />
+<br />
+Offline mode setting should be persistance</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_Conn3G" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman offline mode on can break 3G cnnection<br />
+Run Instructions:<br />
+1. Connect a 3G network&nbsp;(test-connman connect)<br />
+2. Set offlinemode on&nbsp;(test-connman offlinemode)<br />
+3. List all the connection to check the connection is broken.&nbsp; (list-services)<br />
+4. Set offlinemode off, check if the connection can be resumed<br />
+Pass/Fail Criteria:<br />
+<br />
+offlinemode on can break 3G connection and offlinemode off can resume the connection automatically</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_ConnWired" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman offline mode on can break wired cnnection<br />
+Run Instructions:<br />
+1. Connect a wired network&nbsp;<br />
+2.Set offlinemode on&nbsp;(test-connman offline 1)<br />
+3. List all the connection to check the connection is broken.&nbsp;(list-services)<br />
+4. Set offlinemode off, check if the connection can be resumed<br />
+Pass/Fail Criteria:<br />
+<br />
+offlinemode on can break wired connection and offlinemode off can resume the connection automatically</p>]]></description>
+
+</case>
 
 <case name="CM_Flt_Offline" manual="false" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
@@ -2553,9 +5387,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>all devices are powered off</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_Offline.py</step>
-
 </case>
 
 <case name="CM_Flt_Service" manual="false" timeout="90">
@@ -2568,8 +5400,35 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is no service in default offline mode</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_Service.py</step>
+</case>
+
+<case name="CM_Flt_set" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman offline mode works<br />
+Run Instructions:<br />
+1. Set offlinemode on (test-connman offline)<br />
+2. call list-device to check if &quot;Powered&quot; of all the devices are set to &quot;0&quot;<br />
+3. Set offlinemode off to check if &quot;Powered&quot; of all the devices are resumed<br />
+Pass/Fail Criteria:<br />
+<br />
+offlinemode on can disable all the devices and offlinemode off can resume the power status of all the devices</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_ConnWIFI" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman offline mode on can break the wifi connection<br />
+Run Instructions:<br />
+1. Connect a WIFI network&nbsp;(test-connman connect)<br />
+2.Set offlinemode on (test-connman offlinemode)<br />
+3. List all the connection to check the connection is broken.&nbsp;<br />
+4. Set offlinemode off, check if the connection can be resumed<br />
+Pass/Fail Criteria:<br />
+<br />
+offlinemode on can break WIFI connection and offlinemode off can resume the connection automatically</p>]]></description>
 
 </case>
 
@@ -2583,9 +5442,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is no service in default offline mode</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthNoPing.py</step>
-
 </case>
 
 <case name="CM_Flt_EthIsPoweredOff" manual="false" timeout="90">
@@ -2598,9 +5455,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ethernet device&nbsp;is powered off&nbsp;in offline mode</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthIsPoweredOff.py</step>
-
 </case>
 
 <case name="CM_Flt_WiFiNoPing" manual="false" timeout="90">
@@ -2613,9 +5468,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi cannot ping in offline mode</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiNoPing.py</step>
-
 </case>
 
 <case name="CM_Flt_WiFiIsPoweredOff" manual="false" timeout="90">
@@ -2628,9 +5481,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi device is Powered off in offline mode</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiIsPoweredOff.py</step>
-
 </case>
 
 <case name="CM_Flt_EthPoweredOn" manual="false" timeout="90">
@@ -2643,9 +5494,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ethernet device can be powered on in default offline mode</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthPoweredOn.py</step>
-
 </case>
 
 <case name="CM_Flt_EthPoweredOff" manual="false" timeout="90">
@@ -2658,9 +5507,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ethernet can be powered off again</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthPoweredOff.py</step>
-
 </case>
 
 <case name="CM_Flt_WiFiPoweredOn" manual="false" timeout="90">
@@ -2673,9 +5520,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi device can be powered on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOn.py</step>
-
 </case>
 
 <case name="CM_Flt_WiFiPoweredOff" manual="false" timeout="90">
@@ -2688,9 +5533,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi device can be powered off again</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOff.py</step>
-
 </case>
 
 <case name="CM_Flt_Online" manual="false" timeout="90">
@@ -2704,9 +5547,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Manager is in Online mode and all devices are powered on</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_Online.py</step>
-
 </case>
 
 <case name="CM_Flt_WiFiOnline" manual="false" timeout="90">
@@ -2719,9 +5560,7 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi works after online again</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_WiFiOnline.py</step>
-
 </case>
 
 <case name="CM_Flt_EthOnline" manual="false" timeout="90">
@@ -2734,8 +5573,246 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ehternet works after online again</p>]]></description>
-
 <step expected_result="0">/opt/mcts-connman-tests/CM_Flt_EthOnline.py</step>
+</case>
+
+<case name="CM_Flt_set_eth_device" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Set offlinemode on (test-connman offlinemode)<br />
+2. device is off (list-devices)<br />
+3. enable-device eth0<br />
+4. test-connman offlinemode<br />
+Pass/Fail Criteria:<br />
+<br />
+step 4 return 0</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_eth_autoconn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman will auto connect to a service whenever the offline mode is off<br />
+Run Instructions:<br />
+1. Keep only eth connected, disable all other devices<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. eth will automatically connected<br />
+Pass/Fail Criteria:<br />
+<br />
+eth will automatically connected</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_eth_remember_off" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:</p>
+<p>1. disable-device eth0<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. test-connman dev eth0<br />
+Pass/Fail Criteria:<br />
+<br />
+the device is off</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_WF_rfkill" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Click rfkill hot key (FN-F2 in many platforms)<br />
+2. device is off<br />
+3. Click rfkill again<br />
+4. device is on<br />
+Pass/Fail Criteria:<br />
+<br />
+2/4 switchs</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_WF_unset_rfkill" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Click rfkill so that the wlan0 is no in device list<br />
+2. test-connman offlinemode on<br />
+3. Click rfkill<br />
+4. test-connman offlinemode<br />
+Pass/Fail Criteria:<br />
+<br />
+step 4 return 0</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_BT_rfkill" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Click rfkill hot key (FN-F2 in many platforms)<br />
+2. device is off<br />
+3. Click rfkill again<br />
+4. device is on<br />
+Pass/Fail Criteria:<br />
+<br />
+2/4 switchs</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_BT_unset_rfkill" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Click rfkill so that the bnep0 is no in device list<br />
+2. test-connman offlinemode on<br />
+3. Click rfkill<br />
+4. test-connman offlinemode<br />
+Pass/Fail Criteria:<br />
+<br />
+step 4 return 0</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_set_BT_device" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Set offlinemode on<br />
+2. device is off<br />
+3. enable-device bnep0<br />
+4. test-connman offlinemode<br />
+Pass/Fail Criteria:<br />
+<br />
+step 4 return 0</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_BT_autoconn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman will auto connect to a service whenever the offline mode is off<br />
+Run Instructions:<br />
+1. Keep only eth connected, disable all other devices<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. eth will automatically connected<br />
+Pass/Fail Criteria:<br />
+<br />
+eth will automatically connected</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_BT_remember_off" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:</p>
+<p>1. disable-device bnep0<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. test-connman dev bnep0<br />
+Pass/Fail Criteria:<br />
+<br />
+the device is off</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_set_WF_device" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Set offlinemode on<br />
+2. device is off<br />
+3. enable-device wlan0<br />
+4. test-connman offlinemode<br />
+Pass/Fail Criteria:<br />
+<br />
+step 4 return 0</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_WF_autoconn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman will auto connect to a service whenever the offline mode is off<br />
+Run Instructions:<br />
+1. Keep only eth connected, disable all other devices<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. wlan0 will automatically connected<br />
+Pass/Fail Criteria:<br />
+<br />
+eth will automatically connected</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_WF_remember_off" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:</p>
+<p>1. disable-device wlan0<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. test-connman dev wlan0<br />
+Pass/Fail Criteria:<br />
+<br />
+the device is off</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_set_3G_device" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:<br />
+1. Set offlinemode on<br />
+2. device is off<br />
+3. enable-device wwan0<br />
+4. test-connman offlinemode<br />
+Pass/Fail Criteria:<br />
+<br />
+step 4 return 0</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_3G_autoconn" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if connman will auto connect to a service whenever the offline mode is off<br />
+Run Instructions:<br />
+1. Keep only eth connected, disable all other devices<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. eth will automatically connected<br />
+Pass/Fail Criteria:<br />
+<br />
+eth will automatically connected</p>]]></description>
+
+</case>
+
+<case name="CM_Flt_3G_remember_off" manual="true" timeout="90">
+	<description><![CDATA[<p>Purpose:<br />
+<br />
+check if power on device will make offline mode off<br />
+Run Instructions:</p>
+<p>1. disable-device wlan0<br />
+2. test-connman offlinemode on<br />
+3.  test-connman offlinemode off<br />
+4. test-connman dev wlan0<br />
+Pass/Fail Criteria:<br />
+<br />
+the device is off</p>]]></description>
 
 </case>
 </set>

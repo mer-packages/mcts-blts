@@ -33,7 +33,7 @@ Steps:
 3. sh pack.sh    --- It will make and generate the mcts-bluez-tests RPM
 4. rpm -ivh mcts-bluez-tests-1.0.0-1.i386.rpm    --- install RPM to your testing machine 
 5. cd /usr/share/mcts-bluez-tests/
-6. testrunner-lite -f tests.xml -o results.xml
+6. testrunner-lite -a -f tests.xml -o results.xml
 
 
 -----------------------
