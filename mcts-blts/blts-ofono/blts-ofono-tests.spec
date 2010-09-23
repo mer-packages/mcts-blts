@@ -7,7 +7,7 @@ Group: Development/Testing
 URL: https://cwiki.nokia.com/BaseLayerTestSuite/
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-#BuildRequires: libbltscommon-dev
+BuildRequires: libbltscommon-devel
 Requires: blts-ofono-tests-config
 
 %package config
@@ -38,7 +38,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
-/usr/share/%{name}/tests.xml
 
 %files config
 /etc/blts/blts-ofono-tests.cnf
+/usr/share/blts-ofono-tests/tests.xml
