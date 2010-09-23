@@ -7,14 +7,14 @@ Group: Development/Testing
 Source0: blts-common-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
-%package -n libbltscommon-dev
+%package -n libbltscommon-devel
 Summary: Common BLTS functions dev package
 Group: Development/Libraries
 
 %description
 Common functions used in BLTS project test assets gathered in one library
 
-%description -n libbltscommon-dev
+%description -n libbltscommon-devel
 This package contains libbltscommon1 development files
 
 %prep
@@ -42,7 +42,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README README.ParameterVariation COPYING
 /usr/lib/*.so.*
 
-%files -n libbltscommon-dev
+%files -n libbltscommon-devel
 %doc README README.ParameterVariation COPYING
 /usr/lib/*.so
 /usr/include/*.h
