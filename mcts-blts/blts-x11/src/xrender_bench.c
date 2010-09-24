@@ -480,7 +480,7 @@ static void show_help()
 {
 	const char* usage_msg =
 	{
-		"USAGE: blts_xrender_bench [-a] [-l logfile] "
+		"USAGE: blts-xrender-bench [-a] [-l logfile] "
 		"[-e test_num1,test_num2...] [-s] [-w window_width] [-h window_height]"
 		"[-i num_iters] [-c]\n"
 		"-l: Used logfile (default: ./xrender_bench.txt)\n"

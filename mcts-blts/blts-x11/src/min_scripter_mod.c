@@ -554,7 +554,7 @@ int test_xrenderbench(MinItemParser *args)
 	char* logfile = NULL;
 	int execution_time = 30;
 	int test_result = 0;
-	int exit_stat = 0; 
+	int exit_stat = 0;
 	int test_num = 1;
 	char cmd[PATH_MAX];
 
@@ -565,8 +565,8 @@ int test_xrenderbench(MinItemParser *args)
 	if(mip_get_next_int(args, &test_num) < 0) goto parse_error;
 
 	log_open(logfile, 0);
-	
-	sprintf(cmd, "blts_xrender_bench -c -l %s -e %d",  logfile, test_num);
+
+	sprintf(cmd, "blts-xrender-bench -c -l %s -e %d",  logfile, test_num);
 
 	save_and_clear_sigchld();
 	exit_stat = system(cmd);

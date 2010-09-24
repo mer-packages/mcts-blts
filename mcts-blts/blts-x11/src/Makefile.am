@@ -60,7 +60,7 @@ libbltsx11_la_LDFLAGS = $(AM_LDFLAGS) -shared -module
 endif
 
 bin_PROGRAMS =	blts-x11-tests \
-				blts_xrender_bench
+				blts-xrender-bench
 
 blts_x11_tests_SOURCES = $(h_sources) $(c_sources) blts_x11_test.c
 blts_x11_tests_CFLAGS = $(AM_CFLAGS) $(PACKAGE_CFLAGS)
