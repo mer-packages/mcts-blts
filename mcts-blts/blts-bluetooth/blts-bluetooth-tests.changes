@@ -1,0 +1,12 @@
+* Tue 31 Aug 2010 Kari Laakso <kari.laakso@digia.com> - 0.2.6
+- Initial upload for Meego (changelog summarized)
+- Pairing test.
+- Connection information exchange test.
+- HCI Change/Verify Name and HCI Change/Verify Class tests.
+- HCI Reset Connection test.
+- Incoming connection sequence audit.
+- HCI Transfer/Receive ACL data packet tests.
+- Driver and Bluez userspace check.
+- RFComm connect and ping-pong tests.
+- HCI link-only connect test.
+- L2CAP connect and ping-pong tests.
