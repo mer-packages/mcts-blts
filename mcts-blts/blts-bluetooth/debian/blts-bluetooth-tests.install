@@ -1,0 +1,3 @@
+usr/bin/*
+usr/share/blts-bluetooth-tests/tests.xml
+usr/lib/tests/blts-bluetooth-tests/*
