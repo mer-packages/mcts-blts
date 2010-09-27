@@ -742,30 +742,30 @@ org_ofono_VoiceCallManager_send_tones_async (DBusGProxy *proxy, const char * IN_
 }
 #endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_VoiceCallManager */
 
-#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_SmsManager
-#define DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_SmsManager
+#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_MessageManager
+#define DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_MessageManager
 
 static
 #ifdef G_HAVE_INLINE
 inline
 #endif
 gboolean
-org_ofono_SmsManager_get_properties (DBusGProxy *proxy, GHashTable** OUT_arg0, GError **error)
+org_ofono_MessageManager_get_properties (DBusGProxy *proxy, GHashTable** OUT_arg0, GError **error)
 
 {
   return dbus_g_proxy_call (proxy, "GetProperties", error, G_TYPE_INVALID, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), OUT_arg0, G_TYPE_INVALID);
 }
 
-typedef void (*org_ofono_SmsManager_get_properties_reply) (DBusGProxy *proxy, GHashTable *OUT_arg0, GError *error, gpointer userdata);
+typedef void (*org_ofono_MessageManager_get_properties_reply) (DBusGProxy *proxy, GHashTable *OUT_arg0, GError *error, gpointer userdata);
 
 static void
-org_ofono_SmsManager_get_properties_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+org_ofono_MessageManager_get_properties_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
 {
   DBusGAsyncData *data = (DBusGAsyncData*) user_data;
   GError *error = NULL;
   GHashTable* OUT_arg0;
   dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), &OUT_arg0, G_TYPE_INVALID);
-  (*(org_ofono_SmsManager_get_properties_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  (*(org_ofono_MessageManager_get_properties_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
   return;
 }
 
@@ -774,35 +774,35 @@ static
 inline
 #endif
 DBusGProxyCall*
-org_ofono_SmsManager_get_properties_async (DBusGProxy *proxy, org_ofono_SmsManager_get_properties_reply callback, gpointer userdata)
+org_ofono_MessageManager_get_properties_async (DBusGProxy *proxy, org_ofono_MessageManager_get_properties_reply callback, gpointer userdata)
 
 {
   DBusGAsyncData *stuff;
   stuff = g_slice_new (DBusGAsyncData);
   stuff->cb = G_CALLBACK (callback);
   stuff->userdata = userdata;
-  return dbus_g_proxy_begin_call (proxy, "GetProperties", org_ofono_SmsManager_get_properties_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+  return dbus_g_proxy_begin_call (proxy, "GetProperties", org_ofono_MessageManager_get_properties_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
 }
 static
 #ifdef G_HAVE_INLINE
 inline
 #endif
 gboolean
-org_ofono_SmsManager_set_property (DBusGProxy *proxy, const char * IN_arg0, const GValue* IN_arg1, GError **error)
+org_ofono_MessageManager_set_property (DBusGProxy *proxy, const char * IN_arg0, const GValue* IN_arg1, GError **error)
 
 {
   return dbus_g_proxy_call (proxy, "SetProperty", error, G_TYPE_STRING, IN_arg0, G_TYPE_VALUE, IN_arg1, G_TYPE_INVALID, G_TYPE_INVALID);
 }
 
-typedef void (*org_ofono_SmsManager_set_property_reply) (DBusGProxy *proxy, GError *error, gpointer userdata);
+typedef void (*org_ofono_MessageManager_set_property_reply) (DBusGProxy *proxy, GError *error, gpointer userdata);
 
 static void
-org_ofono_SmsManager_set_property_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+org_ofono_MessageManager_set_property_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
 {
   DBusGAsyncData *data = (DBusGAsyncData*) user_data;
   GError *error = NULL;
   dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID);
-  (*(org_ofono_SmsManager_set_property_reply)data->cb) (proxy, error, data->userdata);
+  (*(org_ofono_MessageManager_set_property_reply)data->cb) (proxy, error, data->userdata);
   return;
 }
 
@@ -811,35 +811,36 @@ static
 inline
 #endif
 DBusGProxyCall*
-org_ofono_SmsManager_set_property_async (DBusGProxy *proxy, const char * IN_arg0, const GValue* IN_arg1, org_ofono_SmsManager_set_property_reply callback, gpointer userdata)
+org_ofono_MessageManager_set_property_async (DBusGProxy *proxy, const char * IN_arg0, const GValue* IN_arg1, org_ofono_MessageManager_set_property_reply callback, gpointer userdata)
 
 {
   DBusGAsyncData *stuff;
   stuff = g_slice_new (DBusGAsyncData);
   stuff->cb = G_CALLBACK (callback);
   stuff->userdata = userdata;
-  return dbus_g_proxy_begin_call (proxy, "SetProperty", org_ofono_SmsManager_set_property_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_STRING, IN_arg0, G_TYPE_VALUE, IN_arg1, G_TYPE_INVALID);
+  return dbus_g_proxy_begin_call (proxy, "SetProperty", org_ofono_MessageManager_set_property_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_STRING, IN_arg0, G_TYPE_VALUE, IN_arg1, G_TYPE_INVALID);
 }
 static
 #ifdef G_HAVE_INLINE
 inline
 #endif
 gboolean
-org_ofono_SmsManager_send_message (DBusGProxy *proxy, const char * IN_arg0, const char * IN_arg1, GError **error)
+org_ofono_MessageManager_send_message (DBusGProxy *proxy, const char * IN_arg0, const char * IN_arg1, char** OUT_arg2, GError **error)
 
 {
-  return dbus_g_proxy_call (proxy, "SendMessage", error, G_TYPE_STRING, IN_arg0, G_TYPE_STRING, IN_arg1, G_TYPE_INVALID, G_TYPE_INVALID);
+  return dbus_g_proxy_call (proxy, "SendMessage", error, G_TYPE_STRING, IN_arg0, G_TYPE_STRING, IN_arg1, G_TYPE_INVALID, DBUS_TYPE_G_OBJECT_PATH, OUT_arg2, G_TYPE_INVALID);
 }
 
-typedef void (*org_ofono_SmsManager_send_message_reply) (DBusGProxy *proxy, GError *error, gpointer userdata);
+typedef void (*org_ofono_MessageManager_send_message_reply) (DBusGProxy *proxy, char *OUT_arg2, GError *error, gpointer userdata);
 
 static void
-org_ofono_SmsManager_send_message_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+org_ofono_MessageManager_send_message_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
 {
   DBusGAsyncData *data = (DBusGAsyncData*) user_data;
   GError *error = NULL;
-  dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID);
-  (*(org_ofono_SmsManager_send_message_reply)data->cb) (proxy, error, data->userdata);
+  char* OUT_arg2;
+  dbus_g_proxy_end_call (proxy, call, &error, DBUS_TYPE_G_OBJECT_PATH, &OUT_arg2, G_TYPE_INVALID);
+  (*(org_ofono_MessageManager_send_message_reply)data->cb) (proxy, OUT_arg2, error, data->userdata);
   return;
 }
 
@@ -848,16 +849,54 @@ static
 inline
 #endif
 DBusGProxyCall*
-org_ofono_SmsManager_send_message_async (DBusGProxy *proxy, const char * IN_arg0, const char * IN_arg1, org_ofono_SmsManager_send_message_reply callback, gpointer userdata)
+org_ofono_MessageManager_send_message_async (DBusGProxy *proxy, const char * IN_arg0, const char * IN_arg1, org_ofono_MessageManager_send_message_reply callback, gpointer userdata)
 
 {
   DBusGAsyncData *stuff;
   stuff = g_slice_new (DBusGAsyncData);
   stuff->cb = G_CALLBACK (callback);
   stuff->userdata = userdata;
-  return dbus_g_proxy_begin_call (proxy, "SendMessage", org_ofono_SmsManager_send_message_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_STRING, IN_arg0, G_TYPE_STRING, IN_arg1, G_TYPE_INVALID);
+  return dbus_g_proxy_begin_call (proxy, "SendMessage", org_ofono_MessageManager_send_message_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_STRING, IN_arg0, G_TYPE_STRING, IN_arg1, G_TYPE_INVALID);
 }
-#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_SmsManager */
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+gboolean
+org_ofono_MessageManager_get_messages (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
+
+{
+  return dbus_g_proxy_call (proxy, "GetMessages", error, G_TYPE_INVALID, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), OUT_arg0, G_TYPE_INVALID);
+}
+
+typedef void (*org_ofono_MessageManager_get_messages_reply) (DBusGProxy *proxy, GPtrArray *OUT_arg0, GError *error, gpointer userdata);
+
+static void
+org_ofono_MessageManager_get_messages_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+{
+  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
+  GError *error = NULL;
+  GPtrArray* OUT_arg0;
+  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), &OUT_arg0, G_TYPE_INVALID);
+  (*(org_ofono_MessageManager_get_messages_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  return;
+}
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+DBusGProxyCall*
+org_ofono_MessageManager_get_messages_async (DBusGProxy *proxy, org_ofono_MessageManager_get_messages_reply callback, gpointer userdata)
+
+{
+  DBusGAsyncData *stuff;
+  stuff = g_slice_new (DBusGAsyncData);
+  stuff->cb = G_CALLBACK (callback);
+  stuff->userdata = userdata;
+  return dbus_g_proxy_begin_call (proxy, "GetMessages", org_ofono_MessageManager_get_messages_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+}
+#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_MessageManager */
 
 #ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_Phonebook
 #define DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_Phonebook
