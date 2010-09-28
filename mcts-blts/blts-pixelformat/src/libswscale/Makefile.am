@@ -31,6 +31,8 @@ c_sources = \
 library_includedir=$(includedir)
 library_include_HEADERS = $(h_sources)
 
+noinst_HEADERS = rgb2rgb_template.c swscale_template.c
+
 noinst_LTLIBRARIES= \
 	libswscale.la
 

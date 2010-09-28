@@ -26,7 +26,8 @@ local_h_sources = \
 	mathematics.h \
 	mem.h \
 	rational.h \
-	timer.h
+	timer.h \
+	intfloat_readwrite.h
 
 c_sources = \
 	intfloat_readwrite.c \
