@@ -27,7 +27,7 @@
 #include "compositor_runner.h"
 #include "ogles2_conf_file.h"
 
-const char* config_filename = "/usr/lib/tests/blts-opengles2-benchmark/blts-opengles2-perf.cnf";
+const char* config_filename = "/usr/lib/tests/blts-opengles2-tests/blts-opengles2-perf.cnf";
 
 static void blts_gles2_help(const char* help_msg_base)
 {
@@ -209,29 +209,29 @@ static int exec_test(void* user_ptr, int test_num)
 	}
 
 	if(params->use_compositor) stop_compositor();
-	
+
 	return ret;
 }
 
 static blts_cli_testcase blts_gles2_cases[] =
 {
 	{ "OpenGL-Enumerate GL extensions", exec_test, 20000 },
-	{ "OpenGL-Enumerate EGL extensions", exec_test, 20000 }, 
-	{ "OpenGL-Enumerate EGL configs", exec_test, 20000 }, 
-	{ "OpenGL-Simple triangle", exec_test, 20000 }, 
+	{ "OpenGL-Enumerate EGL extensions", exec_test, 20000 },
+	{ "OpenGL-Enumerate EGL configs", exec_test, 20000 },
+	{ "OpenGL-Simple triangle", exec_test, 20000 },
 	{ "OpenGL-Simple blit", exec_test, 20000 },
-	{ "OpenGL-Blit with blend", exec_test, 20000 }, 
-	{ "OpenGL-Blit with blend and widgets", exec_test, 20000 }, 
-	{ "OpenGL-Blit with blend and widgets with shadows", exec_test, 20000 }, 
-	{ "OpenGL-Blit with blend and widgets with shadows + particles", exec_test, 20000 }, 
-	{ "OpenGL-Blit with blend and widgets with shadows + particles + rotate", exec_test, 20000 }, 
+	{ "OpenGL-Blit with blend", exec_test, 20000 },
+	{ "OpenGL-Blit with blend and widgets", exec_test, 20000 },
+	{ "OpenGL-Blit with blend and widgets with shadows", exec_test, 20000 },
+	{ "OpenGL-Blit with blend and widgets with shadows + particles", exec_test, 20000 },
+	{ "OpenGL-Blit with blend and widgets with shadows + particles + rotate", exec_test, 20000 },
 	{ "OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom", exec_test, 20000 },
-	{ "OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom and blur all", exec_test, 20000 }, 
+	{ "OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom and blur all", exec_test, 20000 },
 	{ "OpenGL-Blit with blend and animated widgets with shadows", exec_test, 20000 },
-	{ "OpenGL-Polygons-per-second", exec_test, 20000 }, 
-	{ "OpenGL-Fillrate test", exec_test, 20000 }, 
-	{ "OpenGL-Texels-per-second", exec_test, 20000 }, 
-	{ "OpenGL-Fragment shader performance", exec_test, 20000 }, 
+	{ "OpenGL-Polygons-per-second", exec_test, 20000 },
+	{ "OpenGL-Fillrate test", exec_test, 20000 },
+	{ "OpenGL-Texels-per-second", exec_test, 20000 },
+	{ "OpenGL-Fragment shader performance", exec_test, 20000 },
 	{ "OpenGL-Vertex shader performance", exec_test, 20000 },
 	{ "OpenGL-Convolution filter", exec_test, 20000 },
 	BLTS_CLI_END_OF_LIST

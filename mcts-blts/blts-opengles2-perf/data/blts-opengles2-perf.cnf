@@ -75,7 +75,7 @@ convolution_mat_divisor: 3
 
 # --- Common for all tests
 
-# Command to start up compositor (use blts_minimal_compositor -? to find out
+# Command to start up compositor (use blts-minimal-compositor -? to find out
 # possible arguments)
-compositor_cmd: "blts_minimal_compositor"
+compositor_cmd: "blts-minimal-compositor"
 

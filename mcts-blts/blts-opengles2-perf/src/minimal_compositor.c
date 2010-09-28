@@ -703,7 +703,7 @@ static void usage_msg()
 {
 	const char* usage_msg =
 	{
-		"USAGE: blts_minimal_compositor [-l logfile] [-e] [-notfp] [-d depth]\n"
+		"USAGE: blts-minimal-compositor [-l logfile] [-e] [-notfp] [-d depth]\n"
 		"-l: Used logfile (default: ./blts_mcm.txt)\n"
 		"-e: Enable logging\n"
 		"-notfp: Do not use eglBindTexImage\n"

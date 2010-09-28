@@ -16,7 +16,7 @@
 
 AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -fPIC
 
-requiredlibs = -lm -lrt -lEGL -lGLESv2 -lX11 
+requiredlibs = -lm -lrt -lEGL -lGLESv2 -lX11
 
 if WANT_MIN
 min_libs = -lminutils -lmintmapi -lminevent
@@ -25,7 +25,11 @@ min_libs =
 endif
 
 h_sources = \
-	ogles2_helper.h
+	ogles2_helper.h \
+	test_common.h \
+	test_blitter.h \
+	ogles2_conf_file.h \
+	compositor_runner.h
 
 c_sources = \
 	ogles2_helper.c \
@@ -59,12 +63,13 @@ libbltsopengles2perf_la_LDFLAGS = $(AM_LDFLAGS) -shared -module
 
 endif
 
-bin_PROGRAMS =	blts_gles2_perf_test \
-				blts_minimal_compositor
+bin_PROGRAMS = \
+	blts-opengles2-tests \
+	blts-minimal-compositor
 
-blts_gles2_perf_test_SOURCES = $(h_sources) $(c_sources) ogles2_perf_test.c
-blts_gles2_perf_test_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS)
-blts_gles2_perf_test_LDADD = $(requiredlibs) $(BLTS_COMMON_LIBS)
+blts_opengles2_tests_SOURCES = $(h_sources) $(c_sources) ogles2_perf_test.c
+blts_opengles2_tests_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS)
+blts_opengles2_tests_LDADD = $(requiredlibs) $(BLTS_COMMON_LIBS)
 
 blts_minimal_compositor_SOURCES = ogles2_helper.c minimal_compositor.c
 blts_minimal_compositor_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS)

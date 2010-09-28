@@ -39,7 +39,7 @@ char *module_time = __TIME__;
 TTestModuleType module_type     = ETestClass;
 unsigned int    module_version  = 200924;
 
-const char* config_filename = "/usr/lib/tests/blts-opengles2-benchmark/blts-opengles2-perf.cnf";
+const char* config_filename = "/usr/lib/tests/blts-opengles2-tests/blts-opengles2-perf.cnf";
 
 /* Required definitions, for Min scripter interface. From Min template. */
 /* snip >>>-------------------------------------------------------------*/

@@ -1,0 +1,6 @@
+* Thu, 09 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.10
+- Initial upload for Meego (changelog summarized)
+- Generic, configurable, convolution filter test.
+- Minimal composite manager (blts_minimal_compositor)
+- Graphics benchmarks.
+
