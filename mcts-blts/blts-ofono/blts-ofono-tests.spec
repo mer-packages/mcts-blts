@@ -4,7 +4,7 @@ Version: 0.1.11
 Release: 1
 License: GPLv2
 Group: Development/Testing
-URL: https://cwiki.nokia.com/BaseLayerTestSuite/
+URL: http://wiki.meego.com/Quality/TestSuite/oFono_Modem_API_Test_Plan
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
