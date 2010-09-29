@@ -1,3 +1,12 @@
+blts-usb-tests (0.0.12) unstable; urgency=low
+
+  [ Mika Niinistö, Jussi Saavalainen ]
+  * Separate platform configuration packaging
+  * Add RPM packaging
+  * Binary name changed to "blts-usb-tests"
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 29 Sep 2010 17:00:52 +0300
+
 blts-usb-tests (0.0.11) unstable; urgency=low
 
   [ Mikko Ojala. Kimmo Myllyvirta, Kari Laakso & Jussi Saavalainen ]

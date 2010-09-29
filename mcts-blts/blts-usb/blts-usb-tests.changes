@@ -1,3 +1,8 @@
+* Wed 29 Sep 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.12
+- Separate platform configuration packaging
+- Add RPM packaging
+- Binary name changed to "blts-usb-tests"
+
 * Thu 02 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.11
 - Initial upload for Meego (changelog summarized)
 - Support Linux 2.6.35+
