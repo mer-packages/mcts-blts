@@ -39,34 +39,30 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-AC_CHECK_LIB([bltscommon], [log_open],,[AC_MSG_ERROR([cannot find libbltscommon])])
 
 # Library configs
-BLTS_COMMON_CFLAGS=`pkg-config --cflags bltscommon`
-BLTS_COMMON_LIBS=`pkg-config --libs bltscommon`
+PKG_CHECK_MODULES([BLTS_COMMON], [bltscommon])
 
 AC_SUBST(BLTS_COMMON_CFLAGS)
 AC_SUBST(BLTS_COMMON_LIBS)
 
-dnl GLIB dependencies.
-GLIB_CFLAGS=`pkg-config --cflags glib-2.0`
-GTHREAD_CFLAGS=`pkg-config --cflags gthread-2.0`
+configdir=`pkg-config bltscommon --variable=configdir`
+AC_SUBST(configdir)
 
-GLIB_LIBS=`pkg-config --libs glib-2.0`
-GTHREAD_LIBS=`pkg-config --libs gthread-2.0`
+# GLIB dependencies.
+PKG_CHECK_MODULES([GLIB], [glib-2.0])
+PKG_CHECK_MODULES([GTHREAD], [gthread-2.0])
 
-DBUS_CFLAGS=`pkg-config --cflags dbus-glib-1`
-DBUS_LIBS=`pkg-config --libs dbus-glib-1`
+# DBUS
+PKG_CHECK_MODULES([DBUS], [dbus-glib-1])
 
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GTHREAD_CFLAGS)
 AC_SUBST(GTHREAD_LIBS)
 
-
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
-
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -75,9 +71,8 @@ AC_HEADER_STDC
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([     \
-	Makefile      \
-	src/Makefile  \
-	])
+AC_CONFIG_FILES([
+	Makefile
+	src/Makefile
+])
 AC_OUTPUT
-

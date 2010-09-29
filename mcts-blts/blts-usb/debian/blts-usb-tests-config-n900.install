@@ -1,0 +1,7 @@
+etc/blts/blts-usb-testrunner-bulk.cnf
+etc/blts/blts-usb-testrunner-isoc.cnf
+etc/blts/blts-usb-testrunner-int.cnf
+etc/blts/ep-configuration-bulk.cfg
+etc/blts/ep-configuration-isoc.cfg
+etc/blts/ep-configuration-int.cfg
+usr/share/blts-usb-tests/tests.xml
