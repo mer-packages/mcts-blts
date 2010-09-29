@@ -1,0 +1,7 @@
+* Thu 02 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.11
+- Initial upload for Meego (changelog summarized)
+- Support Linux 2.6.35+
+- Support for read/write simultaneously for multiple endpoints.
+- Vendor ID set as Nokia to prevent conflicts with random usb modules.
+- Support for bulk, interrupt and isochronous endpoints.
+- Configurable driver setup via test runner.
