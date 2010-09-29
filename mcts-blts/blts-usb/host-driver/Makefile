@@ -65,4 +65,6 @@ TAGS: hostdrv.c
 tags: hostdrv.c
 	ctags hostdrv.c
 
-.phony: all clean distclean install
+distdir:
+
+.phony: all clean distclean install distdir

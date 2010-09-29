@@ -14,10 +14,24 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = src host-driver peripheral-driver
+SUBDIRS = common driver-common host-driver peripheral-driver src
 pkgdata_DATA = tests.xml
 
 EXTRA_DIST = \
-	$(pkgdata_DATA) \
 	autogen.sh \
-	blts-usb-tests.changes
+	blts-usb-tests.changes \
+	$(pkgdata_DATA) \
+	host-driver/Makefile \
+	host-driver/hostdrv.c \
+	host-driver/test_hostdrv.c \
+	peripheral-driver/Makefile \
+	peripheral-driver/composite.c \
+	peripheral-driver/composite.h \
+	peripheral-driver/epautoconf.c \
+	peripheral-driver/ep_config.c \
+	peripheral-driver/ep_config.h \
+	peripheral-driver/gadget_chips.h \
+	peripheral-driver/gadgetdrv.c \
+	peripheral-driver/gadgetdrv.h \
+	peripheral-driver/test_gadgetdrv.c \
+	peripheral-driver/usbstring.c

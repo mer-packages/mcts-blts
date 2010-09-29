@@ -74,5 +74,7 @@ AC_HEADER_STDC
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	driver-common/Makefile
+	common/Makefile
 ])
 AC_OUTPUT

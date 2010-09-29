@@ -49,6 +49,8 @@ install: blts_gadget.ko
 
 distclean: clean
 
+distdir:
+
 clean:
 	$(MAKE) -C $(KERNELDIR) M=`pwd` clean
 	$(RM) Module.markers modules.order

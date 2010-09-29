@@ -23,9 +23,11 @@ requiredlibs = -lm -lrt
 h_sources = \
 	usb-util.h \
 	usb-general.h \
-	hostdrv_common.h \
 	transfer-cases.h \
-	peripheral-control.h
+	peripheral-control.h \
+	../common/gadgetdrv_common.h \
+	../common/hostdrv_common.h \
+	../common/usbdrv_common.h
 
 c_sources = \
 	blts-usb-testrunner.c \
@@ -54,3 +56,5 @@ blts_usb_testrunner_LDADD = \
 
 EXTRA_DIST = \
 	$(config_DATA)
+
+
