@@ -53,7 +53,7 @@ Furthermore, current gadget driver implementation is built over MUSB driver
 implementation available in Linux kernel. Possible different implementations
 by device vendors may cause incompatibility with this test driver. 
 
-$ blts_usb_testrunner -C [config file] -e [test number]
+$ blts-usb-tests -C [config file] -e [test number]
 
 Configuration files
 

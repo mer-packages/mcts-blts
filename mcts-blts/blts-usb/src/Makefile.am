@@ -44,13 +44,13 @@ config_DATA = \
 	ep-configuration-isoc.cfg \
 	ep-configuration-int.cfg
 
-bin_PROGRAMS = blts_usb_testrunner
+bin_PROGRAMS = blts-usb-tests
 
-blts_usb_testrunner_SOURCES = $(h_sources) $(c_sources)
-blts_usb_testrunner_CFLAGS = \
+blts_usb_tests_SOURCES = $(h_sources) $(c_sources)
+blts_usb_tests_CFLAGS = \
 	$(AM_CFLAGS) $(BLTS_COMMON_CFLAGS) $(GLIB_CFLAGS) \
 	$(DBUS_CFLAGS) $(GTHREAD_CFLAGS)
-blts_usb_testrunner_LDADD = \
+blts_usb_tests_LDADD = \
 	$(requiredlibs) $(BLTS_COMMON_LIBS) $(GLIB_LIBS) \
 	$(DBUS_LIBS) $(GTHREAD_LIBS)
 
