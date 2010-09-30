@@ -1,3 +1,11 @@
+blts-bluetooth-tests (0.2.7) unstable; urgency=low
+
+  [ Mika Niinistö ]
+  * Add RPM packaging
+  * Binary name changed to "blts-bluetooth-tests"
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 30 Sep 2010 13:56:44 +0300
+
 blts-bluetooth-tests (0.2.6) unstable; urgency=low
 
   [ Jussi Saavalainen & Aki Nyman ]
