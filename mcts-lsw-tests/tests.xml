@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+<description></description>
+<suite name="LibsocialWeb" >
+<set name="LibsocialWeb_Core" >
+
+<case name="Core_GetServices_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the servicelist get from GetServices is the same as output from DBus-send</p>
+<p>Run Instructions:</p>
+<p>1. get services list by command &quot;dbus-send --session --type=method_call  --print-reply --dest=com.meego.libsocialweb  /org/moblin/libsocialweb/Service  org.freedesktop.DBus.Introspectable.Introspect&quot;</p>
+<p>2. for each services. check if it is could be retrieved by GetServices.</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>Should get the same services list from step 1 and 2</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t getServices_01</step>
+</case>
+
+<case name="Core_GetServices_002" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the GetServices get the same services as configured.</p>
+<p>Run Instructions:</p>
+<p>1. retrieve the services list by GetService method</p>
+<p>2. check the services configuration under /usr/share/libsocialweb/keys</p>
+<p>Pass/Fail Criteria:</p>
+<p>All configured services should be retrieved frome services list.</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t getServices_02</step>
+</case>
+
+<case name="Core_IsOnline_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose: Check whether the method &quot;IsOnline&quot; work correctly when the Netbook is online or offline</p>
+<p>Run Instructions:</p>
+<p>1\ Get the current status via invoking the method &quot;IsOnline&quot; from DBus interface when the NetBook is online</p>
+<p>2\ Use the command &quot;ifconfig eth0 down/up&quot; to make the Netbook&nbsp; offline/online</p>
+<p>3\ Chek whether the method &quot;IsOnline&quot; can return the correct status</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>The method should return the correct status</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t OnlineChanged</step>
+</case>
+
+<case name="Core_OnlineChanged_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if &quot;OnlineChanged&quot; signal works fine with network status change.</p>
+<p>Run Instructions:</p>
+<p>1. monitor the &quot;onlineChanged&quot; DBus signal by script or DBus-monitor tool</p>
+<p>2. plugin cable, use ifconfig eth0 up/down to change the network status</p>
+<p>Pass/Fail Criteria:</p>
+<p>1. The onlineChanged signal should be emited when network status is changed.</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t OnlineChanged</step>
+</case>
+</set>
+<set name="LibsocialWeb_lastfm" >
+
+<case name="Lastfm_ItemView_Start_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the Start method in offline mode</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot;</p>
+<p>3\ Invoke the &quot;Start&quot; method to check whether all cache item will be added into the &quot;ItemView&quot;</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>All cache item are added into the &quot;ItemView&quot;</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
+</case>
+
+<case name="Lastfm_ItemView_Start_002" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the Start method from offline to online</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot;, (/opt/mcts-lsw/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>3\ In the moniter script, Invoke the &quot;Start&quot; method to check whether all cache item will be added into the &quot;ItemView&quot;</p>
+<p>4\ several minutes later, make the device online</p>
+<p>5\ Check whether the last updated items are available on DBus&nbsp; signal(it there is new updated items on the server)</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>1\ All cached items should be show on 'Myzone'</p>
+<p>2\ last item can be shown after the device is online</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_Start_003" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the Start method in online mode</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot;</p>
+<p>3\ Invoke the &quot;Start&quot; method to check whether all cache item and last items will be added into the &quot;ItemView&quot;</p>
+<p>4\ Check whether the items of&nbsp; the &quot;itemview&quot; are same with the friend list of the &quot;last.fm&quot; website</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>The items of&nbsp; the &quot;itemview&quot; should be same with the friend list of the &quot;last.fm&quot; website</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
+</case>
+
+<case name="Lastfm_ItemView_Refresh_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the Refresh method in online mode</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot;(/opt/mcts-lsw-tests/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>3\ Invoke the &quot;Start&quot; method to start this &quot;ItemView&quot;</p>
+<p>4\ Use &quot;d-feet&quot; to invoke the method &quot;Refresh&quot;</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>The items of this &quot;ItemView&quot; should be same with the friend list of &quot;Last.fm&quot; website</p>
+<p>The process of &quot;libsocialweb-core&quot; shouldn't be crashed</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_Stop_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the Stop method in online mode</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot;(/opt/mcts-lsw-tests/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>3\ Invoke the &quot;Start&quot; method to check whether all cache item and last items will be added into the &quot;ItemView&quot;</p>
+<p>4\ from d-feet, Invoke the &quot;Stop&quot; method to stop updating&nbsp; the itemview.</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>After invoking the &quot;Stop&quot; method, no item-related signal should be emitted (including &quot;ItemsAdded&quot;, &quot;ItemsChanged&quot;, and &quot;ItemsRemoved&quot;)</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_Close_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the Stop method in online mode</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot;(/opt/mcts-lsw-tests/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>3\ in monitor script, Invoke the &quot;Start&quot; method to check whether all cache item and last items will be added into the &quot;ItemView&quot;</p>
+<p>4\ from d-feet, Invoke the &quot;Close&quot; method to close&nbsp; the itemview.</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>After invoking the method &quot;Close&quot;, an exception is expected if we try to invoke the other method on this itemview,</p>
+<p>Even if the exception/error is thrown, the process &quot;libsocialweb-core&quot; should still work</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_ItemAdded_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the ItemAdd signal.</p>
+<p>Run Instructions:</p>
+<p>1. monitor the signals from libsocialweb-core by script (/opt/mcts-lsw-test/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>2. add a new friend(have songs' listening record in lastfm) from lastfm server</p>
+<p>Pass/Fail Criteria:</p>
+<p>the ItemAdd signal should be sent out within 5 minutes</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_ItemAdded_002" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>check the 'ItemAdded' signal</p>
+<p>Run Instructions:</p>
+<p>1. monitor the signals from libsocialweb-core by script (/opt/mcts-lsw-test/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>2. Listening a new song with a friend account from lastfm server</p>
+<p>Pass/Fail Criteria:</p>
+<p>the ItemAdd signal should be sent out within 5 minutes</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_ItemRemoved_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the ItemRemoved signal.</p>
+<p>Run Instructions:</p>
+<p>1\ monitor the 'ItemRemoved' signals with a script (/opt/mcts-lsw-test/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>2\ Remove a friend from the freonds list on 'Lastfm' service</p>
+<p>Pass/Fail Criteria:</p>
+<p>The 'ItemRemoved' signal should be emitted within 5 minutes</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_ItemChanged_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the ItemChanged signal.</p>
+<p>Run Instructions:</p>
+<p>1. monitor the signals from libsocialweb-core by script (/opt/mcts-lsw-test/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>2. Listening the last track song with the associated friend account from lastfm server</p>
+<p>Pass/Fail Criteria:</p>
+<p>the ItemChanged signal should be sent out within 5 minutes</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_Misuse_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check whether the process &quot;libsocialweb-core&quot; still work if the method of &quot;ItemView&quot; are invoked incorrectly</p>
+<p>&nbsp;</p>
+<p>Run Instructions:</p>
+<p>1\ Invoke the &quot;Query&quot; interface to open a &quot;ItemView&quot;</p>
+<p>2\ Use a script to monitor the &quot;Item&quot; related signals on the &quot;ItemView&quot; (/opt/mcts-lsw-test/dbus_api/dbus_lastfm_itemview.py)</p>
+<p>3\ Invoke the &quot;Start&quot; method to start this &quot;ItemView&quot;</p>
+<p>4\ Use the tool &quot;d-feet&quot; to invoke the method &quot;Stop&quot;, then try to invoke the &quot;Refresh&quot; and &quot;Start&quot; method</p>
+<p>5\ Use the tool &quot;d-feet&quot; to invoke the method &quot;Close&quot; to close this view, then try to invoke other methods</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>The process &quot;libsocialweb-core&quot; shouldn't be crashed after such incorrectly invoking</p>]]></description>
+
+</case>
+
+<case name="Lastfm_ItemView_ViewData_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the friends' latest track Data from ItemView is the same as data get from lastfm http API.</p>
+<p>Run Instructions:</p>
+<p>1. monitor the item-related signals on DBus</p>
+<p>2. Check the items which are managed on DBus with the friends list on &quot;Last.fm&quot; web-site</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>The 'DBus' items should be same with the friends list on 'last.fm' web-site</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
+</case>
+
+<case name="Lastfm_ItemView_ViewData_002" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the friends' latest track Data from cache&nbsp; is the same as data from lastfm http api.</p>
+<p>Run Instructions:</p>
+<p>1\ get the latest track Data from monitor the ItemView related signals.</p>
+<p>2\ Compare the latest track with the corresponding item in the cache file '/home/user/.cache/libsocialweb/cache/lastfm-feed-XXXXXXXXXXXXXXXXXXXX'</p>
+<p>Pass/Fail Criteria:</p>
+<p>The latest track is totally same with the cached item.</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t CacheData</step>
+</case>
+
+<case name="Lastfm_Query_OpenView_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the open one View with &quot;feed&quot; query parameter</p>
+<p>Run Instructions:</p>
+<p>1\ Use 'd-feet' to invoke the method 'OpenView' with the parameters (&quot;feed&quot;, {})</p>
+<p>Pass/Fail Criteria:</p>
+<p>A new ItemView is created and visible on the DBus tree. and the name of the new 'ItemView' is returned by the method 'OpenView'</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
+</case>
+
+<case name="Lastfm_Query_OpenView_002" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the open mulitple Views at the same time</p>
+<p>Run Instructions:</p>
+<p>Use 'd-feet' to invoke the method 'OpenView' with the parameters (&quot;feed&quot;, {}) several times</p>
+<p>Pass/Fail Criteria:</p>
+<p>Several new ItemViews should be created and visible on the DBus tree. and the name of them are returned by the method 'OpenView'</p>]]></description>
+
+</case>
+
+<case name="Lastfm_Banishable_HideItem_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check the hideItem method</p>
+<p>Run Instructions:</p>
+<p>1\ Use a script to monitor the item-related signals</p>
+<p>2\ Invoke the method 'HideItem' with a item UUID. The UUID of 'last.fm' item is consisted of the URL of the associated song and the name of the user.</p>
+<p>&nbsp;&nbsp;&nbsp; For instance, &quot;http://www.last.fm/music/Robert+Pattinson/_/Never+Think tinaknows&quot;</p>
+<p>Pass/Fail Criteria:</p>
+<p>A 'ItemRemoved' signal should be emitted with the corresponding UUID.</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t HideItem</step>
+</case>
+
+<case name="Lastfm_Banishable_ItemHidden_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if ItemHidden signal emit when hide an item from itemview</p>
+<p>Run Instructions:</p>
+<p>1\ Use a script to monitor the signal 'ItemHidden'</p>
+<p>2\ Invoke the method 'HideItem' just as what we did for case 'HideItem_001'</p>
+<p>Pass/Fail Criteria:</p>
+<p>A signal 'ItemHidden' should be emitted with the corresponding banished item UUID</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemHidden</step>
+</case>
+
+<case name="Lastfm_Service_UserChanged_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if the UserChanged signal is emit when change the account of lastfm</p>
+<p>Run Instructions:</p>
+<p>1\ Use a script to monitor the &quot;UserChanged&quot; signal on the &quot;last.fm&quot; service</p>
+<p>2\ Use the tool &quot;Settings&quot; to change the user's account</p>
+<p>&nbsp;</p>
+<p>Pass/Fail Criteria:</p>
+<p>The &quot;UserChanged&quot; signal should be emitted</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t UserChanged</step>
+</case>
+
+<case name="Lastfm_Service_CapabilitiesChanged_001" manual="false" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if CapabilitiesChanged signal emit when user account changed of lastfm</p>
+<p>Run Instructions:</p>
+<p>1\ Use a script to monitor the signal &quot;CapabilitiesChanged&quot;</p>
+<p>2\ Change the user account on the panel &quot;setting&quot;</p>
+<p>Pass/Fail Criteria:</p>
+<p>After the user account is changed, the signal &quot;CapabilitiesChanged&quot; should be emitted</p>]]></description>
+<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t CapabilitiesChanged</step>
+</case>
+
+<case name="Lastfm_Service_GetDynamicCapabilities_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if the GetDynamicCapabilities return the correct capabilities of lastfm service</p>
+<p>Run Instructions:</p>
+<p>Invoke the method 'GetDynamicCapabilities' via &quot;d-feet&quot;</p>
+<p>Pass/Fail Criteria:</p>
+<p>For now, the below DBus array should be returned</p>
+<p>dbus.Array([dbus.String(u'is-configured'), dbus.String(u'credentials-valid')], s<br />
+ignature=dbus.Signature('s'))</p>]]></description>
+
+</case>
+
+<case name="Lastfm_Service_GetStaticCapabilities_001" manual="true" timeout="900">
+	<description><![CDATA[<p>Purpose:</p>
+<p>Check if the GetStaticCapabilities return the correct static capabilities of lastfm service</p>
+<p>Run Instructions:</p>
+<p>Invoke the method &quot;GetStaticCapabilities&quot; via d-feet</p>
+<p>Pass/Fail Criteria:</p>
+<p>In the current release, below DBus array should be returned</p>
+<p>dbus.Array([dbus.String(u'can-verify-credentials'), dbus.String(u'has-query-ifac<br />
+e'), dbus.String(u'has-banishable-iface')], signature=dbus.Signature('s'))</p>]]></description>
+
+</case>
+</set>
+</suite>
+</testdefinition>
