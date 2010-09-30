@@ -29,6 +29,8 @@ import dbus
 import dbus.mainloop.glib
 
 
+from threading import Thread
+
 def f(
     name,
     value,
@@ -73,4 +75,10 @@ class SignalBase:
             self.my_ret = True
             self.mainloop.quit()
 
+class Trigger(Thread):
+   def __init__ (self,func):
+      Thread.__init__(self)
+      self.func = func
+   def run(self):
+      self.func()
 

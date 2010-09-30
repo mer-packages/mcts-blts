@@ -35,5 +35,22 @@ import SignalConnman
 import common
 import offline
 
-offline.offline('IPv4')
+def func():
+    dev = common.WiFiGuestDevice()
+    svc = dev.GetService()
+    svc.svc.SetProperty("IPv4.Configuration",
+                         { "Method": "manual", "Address": "192.168.1.111"})
+    time.sleep(1)
+    svc.svc.SetProperty("IPv4.Configuration",
+                         { "Method": "dhcp"})
+    dev = common.WiFiGuestDevice()
 
+sig = SignalConnman.sig
+sig.property_name = 'IPv4'
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
+sig.mainloop.run()
+common.EXIT(sig.my_ret)

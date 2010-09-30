@@ -35,19 +35,22 @@ import SignalBase
 import SignalService
 import common
 
+def func():
+    dev = common.WiFiGuestDevice()
+    time.sleep(2)
+    service = dev.GetService()
+    service.SetProperty('AutoConnect', True)
+    time.sleep(2)
+    service.SetProperty('AutoConnect', False)
+
+
 sig = SignalService.sig
 sig.property_name = 'AutoConnect'
-dev = common.WiFiGuestDevice()
 
-# dev.Disable()
-# time.sleep(2)
-# dev.Enable()
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
 
-time.sleep(2)
-service = dev.GetService()
-service.SetProperty('AutoConnect', True)
-time.sleep(2)
-service.SetProperty('AutoConnect', False)
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 

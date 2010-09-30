@@ -58,8 +58,14 @@ for path in properties['Services']:
     except dbus.DBusException, error:
         pass
     time.sleep(5)
-    properties = svc.GetProperties()
-    if 'Error' not in properties.keys():
-        print 'Error property is not in service'
-        EXIT(False)
-EXIT(True)
+    count=1
+    while count < 5:
+        try:
+            properties = svc.GetProperties()
+            if properties['State'] == 'failure':
+                EXIT(True)
+        except dbus.DBusException, error:
+            pass
+        time.sleep(5)
+        count = count + 1
+EXIT(False)

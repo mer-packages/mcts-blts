@@ -35,11 +35,10 @@ print 'Setting AP to wpa psk'
 if manager.Apset('sharedsecret', 'psk1', 1, 0, 1) == False:
     print 'Cannot access WiFi'
     EXIT(False)
-manager.RequestScan('')
-del manager
-time.sleep(2)
-manager = Manager()
 manager.RequestScan('wifi')
+time.sleep(10)
+manager.RequestScan('wifi')
+time.sleep(10)
 svc = manager.GetServiceByName('shz13-otc-cisco-cm')
 if svc == None:
     print 'There is no AP named shz13-otc-cisco-cm'

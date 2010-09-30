@@ -50,6 +50,21 @@ def EXIT(ret):
         print 'Test Case FAIL'
     exit(ret != True)
 
+def EXIT1(ret, op):
+    if ret == True:
+        op()
+        print 'Test Case PASS'
+    else:
+        op()
+        print 'Test Case FAIL'
+    exit(ret != True)
+
+def ASSERT(ret, msg, op):
+    if ret == False:
+        op()
+        print msg
+        print 'Test Case FAIL'
+        exit(ret != True)
 
 ###################################################
 # ........Class Manager
@@ -252,6 +267,20 @@ class Manager:
             return self.ConnectAP(passphrase, security, open, hidden,
                                   channel)
         return False
+    def TurnAP(self, state):
+        apset_cmd = 'ssh ' + cm_apset_server + ' ' + cm_apset_server_path 
+        if state == 'on':
+            apset_cmd = apset_cmd + ' activate'
+        else:
+            apset_cmd = apset_cmd + ' shutdown'
+
+        ret = commands.getstatusoutput(apset_cmd)
+        time.sleep(5)
+        if ret[0] != 0:
+            print 'Command %s return fail' % apset_cmd
+            return False
+        print 'apset done'
+        return True
 
     # Apset: Setting AP with relative params
     # Parameter values are same as ConnectWiFi
@@ -788,7 +817,7 @@ class WiFiDevice(Device):
                     print 'The service is already in state %s' \
                         % properties['State']
                     return True
-        service = manager.ConnectService(ssid)
+        device_path = manager.ConnectService(ssid)
         time.sleep(10)
         service = Device.GetService(self)
         properties = service.GetProperties()

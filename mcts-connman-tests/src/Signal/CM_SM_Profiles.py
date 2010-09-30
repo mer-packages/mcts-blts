@@ -35,26 +35,23 @@ import SignalBase
 import SignalManager
 import common
 
+def func():
+    dev = common.WiFiDevice()
+    manager = dev.manager.manager
+    properties = manager.GetProperties()
+    default = properties['ActiveProfile']
+    print 'default profile is %s' % default
+    profile = manager.CreateProfile('Test1')
+    print 'created profile %s' % profile
+    manager.RemoveProfile(profile)
+
+
 sig = SignalManager.sig
 sig.property_name = 'Profiles'
 
-dev = common.WiFiDevice()
-manager = dev.manager.manager
-properties = manager.GetProperties()
-default = properties['ActiveProfile']
-print 'default profile is %s' % default
-profile = manager.CreateProfile('Test1')
-print 'created profile %s' % profile
-
-# manager.SetProperty('ActiveProfile',profile)
-# time.sleep(2)
-# manager.SetProperty('ActiveProfile',default)
-
-manager.RemoveProfile(profile)
-
-# dev.Disable()
-# time.sleep(2)
-# dev.Enable()
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
 
 sig.mainloop.run()
 common.EXIT(sig.my_ret)

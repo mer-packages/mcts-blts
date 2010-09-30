@@ -34,14 +34,20 @@ import SignalBase
 import SignalConnman
 import common
 
+def func():
+    dev = common.WiFiDevice()
+    properties = dev.GetProperties()
+    value = properties['ScanInterval']
+    dev.device.SetProperty('ScanInterval', dbus.UInt16(value + 50))
+    time.sleep(3)
+    dev.device.SetProperty('ScanInterval', dbus.UInt16(value))
+
 sig = SignalConnman.sig
 sig.property_name = 'ScanInterval'
-dev = common.WiFiDevice()
-properties = dev.GetProperties()
-value = properties['ScanInterval']
-dev.device.SetProperty('ScanInterval', dbus.UInt16(value + 50))
-time.sleep(3)
-dev.device.SetProperty('ScanInterval', dbus.UInt16(value))
-time.sleep(3)
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
 sig.mainloop.run()
 common.EXIT(sig.my_ret)

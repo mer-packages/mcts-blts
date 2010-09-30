@@ -35,12 +35,23 @@ import SignalBase
 import SignalService
 import common
 
+def func():
+    dev = common.WiFiGuestDevice()
+    svc = dev.GetService()
+    svc.svc.SetProperty("IPv4.Configuration",
+                         { "Method": "manual", "Address": "192.168.1.111"})
+    time.sleep(1)
+    svc.svc.SetProperty("IPv4.Configuration",
+                         { "Method": "dhcp"})
+    dev = common.WiFiGuestDevice()
+
 sig = SignalService.sig
 sig.property_name = 'IPv4'
-dev = common.WiFiDevice()
-dev.Disable()
-time.sleep(2)
-dev = common.WiFiGuestDevice()
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 

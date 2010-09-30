@@ -34,18 +34,21 @@ import SignalBase
 import SignalConnman
 import common
 
+def func():
+    time.sleep(2)
+    manager = common.manager
+    manager.Offline()
+    time.sleep(5)
+    manager.Online()
 
 def offline(Name):
     sig = SignalConnman.sig
     sig.property_name = Name
 
-#    dev = common.WiFiDevice()
+    trigger=SignalBase.Trigger(func)
+    trigger.start()
+    trigger.join()
 
-    manager = common.manager
-    manager.Offline()
-    time.sleep(5)
-    manager.Online()
-    time.sleep(10)
     sig.mainloop.run()
     common.EXIT(sig.my_ret)
 

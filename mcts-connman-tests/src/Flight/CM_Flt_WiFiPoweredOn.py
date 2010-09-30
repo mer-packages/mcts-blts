@@ -28,7 +28,10 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
+manager.Online()
+time.sleep(3)
 dev = WiFiDevice()
+ASSERT(dev.IsExist(), "No device found", manager.Online)
 dev.PoweredOn()
-time.sleep(10)
+time.sleep(3)
 EXIT(dev.IsPoweredOn())

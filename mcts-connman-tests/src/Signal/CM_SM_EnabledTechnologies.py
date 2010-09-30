@@ -35,12 +35,19 @@ import SignalBase
 import SignalManager
 import common
 
+def func():
+    dev = common.WiFiDevice()
+    dev.Disable()
+    time.sleep(2)
+    dev.Enable()
+
 sig = SignalManager.sig
 sig.property_name = 'EnabledTechnologies'
-dev = common.WiFiDevice()
-dev.Disable()
-time.sleep(2)
-dev.Enable()
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 

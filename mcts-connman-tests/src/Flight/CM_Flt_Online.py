@@ -29,20 +29,10 @@ sys.path.append(dir)
 import time
 from common import *
 
-print 'Online all device...'
-dev = WiFiDevice()
-dev.PoweredOn()
-time.sleep(10)
-dev = EthDevice()
-dev.PoweredOn()
-time.sleep(10)
 print 'Set to Online mode...'
 manager.Online()
-time.sleep(5)
+time.sleep(3)
 state = manager.GetState()
-if state == 'online':
-    print 'Manager state changed to online'
-    EXIT(True)
-
+ret = state == 'online'
 print 'Manager state is %s' % state
-EXIT(False)
+EXIT(ret)

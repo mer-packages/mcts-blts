@@ -39,5 +39,7 @@ value_list = ['/org/moblin/connman/technology/ethernet',
               '/org/moblin/connman/technology/wifi',
               '/org/moblin/connman/technology/bluetooth',
               '/org/moblin/connman/technology/3g',
+              '/org/moblin/connman/technology/wimax',
+              '/org/moblin/connman/technology/gps',
               '/org/moblin/connman/technology/cellular']
 EXIT(InListManagerM('Technologies', value_list))

@@ -31,10 +31,9 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
-manager.RequestScan('')
-del manager
-time.sleep(2)
-manager = Manager()
+dev = WiFiGuestDevice()
+manager.RequestScan('wifi')
+time.sleep(20)
 svc = manager.GetServiceByName('Guest')
 if svc == None:
     print 'There is no AP named Guest'

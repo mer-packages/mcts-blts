@@ -29,16 +29,13 @@ sys.path.append(dir)
 import time
 from common import *
 
-# Assume ConnMan is in offline mode
-
-manager.Online()
-time.sleep(3)
 manager.Offline()
 time.sleep(3)
 props = manager.GetProperties()
 service = props['Services']
 if not service:
     print 'There is no service in an new offline mode'
-    EXIT(True)
-print 'Service is not empty in offline mode, do you powered on a device?'
-EXIT(False)
+else:
+    print 'Service is not empty in offline mode, do you powered on a device?'
+manager.Online()
+EXIT(not service)

@@ -75,6 +75,9 @@ org.freedesktop.Geoclue.Providers.Plazes.service
 org.freedesktop.Geoclue.Providers.Test.service
 org.freedesktop.Geoclue.Providers.Yahoo.service
 
+3. Export DISPLAY variable
+$ export DISPLAY=:0.0
+
 
 -----------------------
 Known Issues

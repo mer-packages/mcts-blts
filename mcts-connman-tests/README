@@ -58,7 +58,8 @@ Connect to a ethernet network so that "ping -b" local network has response
 cd /opt/mcts-connman-tests
 su - 
 export PYTHONPATH=$PYTHONPATH:/opt/mcts-connman-tests/common
-testrunner-lite -f /usr/share/mcts-connman-tests/tests.xml -o results.xml
+testrunner-lite -a -f /usr/share/mcts-connman-tests/tests.xml -o results.xml
+Please refer to the section Test Envrionment setup for what to test
 
 
 ---------------------
@@ -95,8 +96,8 @@ Test Environment setup
    Ethernet: This is company network that can access Internet by proxy
    WiFi Guest: Setup a open hidden WiFi AP with essid "Guest", this is enough
    	for test cases in WiFi/Guest
-   default.xml defines all test cases used in this configuration. You can
-   run with "testrunner-lite -f /usr/share/mcts-connman-tests/default.xml"
+   run with:
+   testrunner-lite -a -l '-testset=WiFiFeture' -f /usr/share/mcts-connman-tests/tests.xml -o results.xml
    
 
 2. Setup test environment for full testing
@@ -120,7 +121,9 @@ Test Environment setup
      Replace cm-srv.sh.intel.com with the PC hostname
    You need to setup WiFi local only when you want to run test scripts in 
    WiFi (but not in WiFi/Guest)
-   full.xml define all test cases
+   run with:
+   testrunner-lite -a -f /usr/share/mcts-connman-tests/tests.xml -o results.xml
+   
 
 
 ---------------------

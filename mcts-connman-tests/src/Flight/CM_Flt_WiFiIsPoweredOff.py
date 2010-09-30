@@ -28,18 +28,15 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
-# Assume we're in offline mode
-
-manager.Online()
-time.sleep(3)
 manager.Offline()
 time.sleep(3)
 
 dev = WiFiDevice()
-if dev.IsPoweredOff():
+ASSERT(dev.IsExist(), "No device found", manager.Online)
+ret = dev.IsPoweredOff()
+if ret:
     print 'Default powered is off in offline mode'
-    EXIT(True)
 else:
     print 'Powered is on in offline mode'
-    EXIT(False)
-
+manager.Online
+EXIT(ret)

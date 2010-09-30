@@ -34,25 +34,34 @@ import SignalBase
 import SignalConnman
 import common
 
-
-def Dis_enable(name):
-    sig = SignalConnman.sig
-    sig.property_name = name
+def func1():
+    time.sleep(2)
     dev = common.WiFiDevice()
     dev.Disable()
     time.sleep(5)
     dev.Enable()
     time.sleep(5)
+
+def Dis_enable(name):
+    sig = SignalConnman.sig
+    sig.property_name = name
+    trigger=SignalBase.Trigger(func1)
+    trigger.start()
+    trigger.join()
     sig.mainloop.run()
     common.EXIT(sig.my_ret)
 
+def func2():
+    time.sleep(2)
+    dev = common.WiFiDevice()
+    dev.device.SetProperty(set_name, dbus.UInt16(value))
 
 def Check_By_Set_Prop(name, set_name, value):
     sig = SignalConnman.sig
     sig.property_name = name
-    dev = common.WiFiDevice()
-    dev.device.SetProperty(set_name, dbus.UInt16(value))
-    time.sleep(5)
+    trigger=SignalBase.Trigger(func2)
+    trigger.start()
+    trigger.join()
     sig.mainloop.run()
     common.EXIT(sig.my_ret)
 

@@ -35,11 +35,19 @@ import SignalBase
 import SignalManager
 from common import *
 
+def func():
+    manager.Offline()
+    time.sleep(2)
+    manager.Online()
+
+
 sig = SignalManager.sig
 sig.property_name = 'State'
-manager.Offline()
-time.sleep(2)
-manager.Online()
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
 sig.mainloop.run()
 EXIT(sig.my_ret)
 

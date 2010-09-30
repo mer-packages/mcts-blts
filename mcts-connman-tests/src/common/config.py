@@ -24,7 +24,7 @@
 
 # The control server that connects to AP, so that test script can
 # set AP parameters through apset script
-cm_apset_server = "cm-srv.sh.intel.com"
+cm_apset_server = "192.168.2.201"
 
 # The full path of the apset script in control server
 cm_apset_server_path= "/usr/local/bin/apset/cisco/apset"

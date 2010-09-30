@@ -28,19 +28,13 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
-# Assume the ConnMan is in offline mode
-
-manager.Online()
-time.sleep(3)
 manager.Offline()
 time.sleep(3)
 dev = EthDevice()
-dev.ExitIfNotAvail()
+ASSERT(dev.IsExist(), "No device found", manager.Online)
 svc = dev.GetService()
-if svc == None:
-    print 'No service in offline mode'
-    EXIT(True)
-if svc.BroadcastPing():
+ret = svc != None and  svc.BroadcastPing()
+if ret:
     print 'Can ping in offline mode'
-    EXIT(False)
-EXIT(True)
+manager.Online()
+EXIT(not ret)

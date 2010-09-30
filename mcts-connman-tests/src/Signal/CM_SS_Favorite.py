@@ -35,23 +35,24 @@ import SignalBase
 import SignalService
 import common
 
+def func():
+    dev = common.WiFiGuestDevice()
+    time.sleep(20)
+    svc = dev.GetService()
+    properties = svc.GetProperties()
+    print 'Favorite = %s' % properties['Favorite']
+    svc.Remove()
+    properties = svc.GetProperties()
+    print 'Favorite = %s' % properties['Favorite']
+
+
 sig = SignalService.sig
 sig.property_name = 'Favorite'
-dev = common.WiFiGuestDevice()
-time.sleep(20)
 
-# print "Disabling..."
-# dev.Disable()
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
 
-svc = dev.GetService()
-properties = svc.GetProperties()
-print 'Favorite = %s' % properties['Favorite']
-
-# print properties
-
-svc.Remove()
-properties = svc.GetProperties()
-print 'Favorite = %s' % properties['Favorite']
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 
