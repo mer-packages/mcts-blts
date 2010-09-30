@@ -1,14 +1,23 @@
+blts-ofono-tests (0.1.12) unstable; urgency=low
+
+  [ Pasi Matilainen, Mika Niinistö, Kimmo Myllyvirta ]
+  * Add RPM packaging
+  * Fixed segfault in microphone volume test case
+  * Updated SMS cases for oFono 0.29
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 30 Sep 2010 15:14:47 +0300
+
 blts-ofono-tests (0.1.11) unstable; urgency=low
-  
-  * oFono 0.28 support 
-  
+
+  * oFono 0.28 support
+
  -- Mikko Ojala <mikko.ojala@digia.com>  Thu, 16 Sep 2010 15:02:23 +0300
 
 blts-ofono-tests (0.1.10) unstable; urgency=low
-  
+
   * Multiparty call test
   * Private chat call test
-  
+
  -- Mikko Ojala <mikko.ojala@digia.com>  Fri, 10 Sep 2010 14:41:12 +0300
 
 blts-ofono-tests (0.1.9) unstable; urgency=low

@@ -1,6 +1,6 @@
 Summary: BLTS oFono functional tests
 Name: blts-ofono-tests
-Version: 0.1.11
+Version: 0.1.12
 Release: 1
 License: GPLv2
 Group: Development/Testing
