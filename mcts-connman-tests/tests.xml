@@ -4024,7 +4024,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WF_Channel2.py</step>
 </case>
 
-<case name="CM_WA_AutoDelete" manual="false" timeout="180">
+<case name="CM_WA_AutoDelete" manual="true" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if an AP can be auto deleted after the AP is power off</p>
 <p><br />

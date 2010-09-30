@@ -35,5 +35,5 @@ import dbus.mainloop.glib
 from common import *
 from property import *
 
-value_list = ['ethernet', 'wifi', 'bluetooth', 'gprs', 'cellular']
+value_list = ['ethernet', 'wifi', 'bluetooth', 'gps', 'cellular', 'wimax']
 EXIT(InListManagerM('EnabledTechnologies', value_list))

@@ -35,14 +35,22 @@ import SignalBase
 import SignalManager
 import common
 
+def func():
+    dev = common.WiFiGuestDevice()
+    time.sleep(20)
+    print 'Disabling...'
+    dev.Disable()
+    time.sleep(3)
+    dev.Enable()
+
+
 sig = SignalManager.sig
 sig.property_name = 'DefaultTechnology'
-dev = common.WiFiGuestDevice()
-time.sleep(20)
-print 'Disabling...'
-dev.Disable()
-time.sleep(3)
-dev.Enable()
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 

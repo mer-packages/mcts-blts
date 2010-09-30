@@ -49,19 +49,26 @@ print 'Current security mothod is %s' % security
 if security != 'wep':
     EXIT(False)
 
-print 'We can assume that hidden AP is none-exist AP'
-if manager.Apset('1111000000', 'wep40', 1, 1, 1) == False:
+print 'Shutdown the AP'
+if manager.TurnAP('off') == False:
     print 'Cannot access WiFi'
     EXIT(False)
 manager.RequestScan('')
-del manager
-time.sleep(2)
-manager = Manager()
-manager.RequestScan('wifi')
-svc = manager.GetServiceByName('shz13-otc-cisco-cm')
-if svc == None:
-    print 'There is no AP named shz13-otc-cisco-cm'
-    EXIT(True)
+#del manager
+#time.sleep(2)
+#manager = Manager()
+count = 0
+while count < 6:
+    count = count + 1
+    print "try %s times" % count
+    time.sleep(10)
+    manager.RequestScan('wifi')
+    svc = manager.GetServiceByName('shz13-otc-cisco-cm')
+    if svc == None:
+        print 'There is no AP named shz13-otc-cisco-cm'
+        manager.TurnAP('on')
+        EXIT(True)
 
+manager.TurnAP('on')
 EXIT(False)
 

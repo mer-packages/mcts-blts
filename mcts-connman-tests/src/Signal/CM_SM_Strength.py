@@ -34,9 +34,18 @@ import SignalBase
 import SignalService
 import common
 
+def func():
+    time.sleep(2)
+    common.manager.manager.RequestScan('wifi')
+
+
 sig = SignalService.sig
 sig.property_name = 'Strength'
-common.manager.manager.RequestScan('wifi')
+
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
+
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 

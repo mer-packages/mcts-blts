@@ -29,5 +29,9 @@ sys.path.append(dir)
 from common import *
 
 dev = EthDevice()
+ASSERT(dev.IsExist(), "No device found", manager.Online)
 dev.PoweredOff()
-EXIT(dev.IsPoweredOff())
+time.sleep(2)
+ret=dev.IsPoweredOff()
+dev.PoweredOn()
+EXIT(ret)

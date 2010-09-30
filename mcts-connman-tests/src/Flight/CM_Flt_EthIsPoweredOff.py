@@ -35,10 +35,11 @@ time.sleep(3)
 manager.Offline()
 time.sleep(3)
 dev = EthDevice()
-if dev.IsPoweredOff():
+ASSERT(dev.IsExist(), "No device found", manager.Online)
+ret=dev.IsPoweredOff()
+if ret:
     print 'Default powered is off in offline mode'
-    EXIT(True)
 else:
     print 'Powered is on in offline mode'
-    EXIT(False)
-
+manager.Online()
+EXIT(ret)

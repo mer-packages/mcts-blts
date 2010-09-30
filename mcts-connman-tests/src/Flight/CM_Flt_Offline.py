@@ -28,13 +28,12 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 import time
 from common import *
+
 print 'Set to offline mode...'
 manager.Offline()
-time.sleep(3)
+time.sleep(10)
 state = manager.GetState()
-if state == 'offline':
-    print 'Manager state changed to offline'
-    EXIT(True)
-
+ret = state == 'offline'
 print 'Manager state is %s' % state
-EXIT(False)
+manager.Online()
+EXIT(ret)

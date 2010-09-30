@@ -35,5 +35,12 @@ import dbus.mainloop.glib
 from common import *
 from property import *
 
+dev = WiFiGuestDevice()
+svc = dev.GetService()
+time.sleep(5)
+svc.Disconnect()
+time.sleep(5)
+manager.RequestScan('wifi')
+time.sleep(5)
 value_list = range(101)
 EXIT(InListWiFiGuest('Strength', value_list))

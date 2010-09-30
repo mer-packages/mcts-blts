@@ -35,16 +35,19 @@ import SignalBase
 import SignalService
 import common
 
+def func():
+    dev = common.WiFiGuestDevice()
+    service = dev.GetService()
+    service.SetProperty('Passphrase', '1111000000')
+
+
 sig = SignalService.sig
 sig.property_name = 'PassphraseRequired'
-dev = common.WiFiGuestDevice()
 
-# dev.Disable()
-# time.sleep(2)
-# dev.Enable()
+trigger=SignalBase.Trigger(func)
+trigger.start()
+trigger.join()
 
-service = dev.GetService()
-service.SetProperty('Passphrase', '1111000000')
 sig.mainloop.run()
 common.EXIT(sig.my_ret)
 
