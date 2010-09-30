@@ -1,6 +1,6 @@
 Summary: BLTS USB low-level tests
 Name: blts-usb-tests
-Version: 0.0.11
+Version: 0.0.12
 Release: 1
 License: GPLv2
 Group: Development/Testing
