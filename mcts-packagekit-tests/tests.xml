@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
 <description></description>
-<suite name="TextMode" >
-
+<suite name="Software Management" >
+<set name="TextMode" feature="Package management"  type="Functional"> 
 <case name="PackageManage_TextMode_001" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
@@ -32,7 +32,7 @@ Run Instructions:</p>
 <meta name="ProgId" content="Word.Document">
 <meta name="Generator" content="Microsoft Word 11">
 <meta name="Originator" content="Microsoft Word 11">
-<link rel="File-List" href="file:///C:\DOCUME~1\qmu\LOCALS~1\Temp\msohtml1\08\clip_filelist.xml" />                    </meta>
+<link rel="File-List" href="file:///C:\DOCUME~1\qmu\LOCALS~1\Temp\msohtml1\08\clip_filelist.xml" />                            </meta>
 </meta>
 </meta>
 </meta>
@@ -103,7 +103,7 @@ Run Instructions:</p>
 <p><br />
 Run Instructions:</p>
 <ol>
-    <li>Enable all built-in MeeGo repos, and force GPG checking for package install/updates</li>
+    <li>Enable all built-in MeeGo repos</li>
     <li>Connect device to Internet without proxy</li>
     <li>Perform below package management tasks via MeeGo get-updates console interface: pkcon get-updates</li>
 </ol>
@@ -210,5 +210,6 @@ Run Instructions:</p>
 </ul>]]></description>
 
 </case>
+</set>
 </suite>
 </testdefinition>
