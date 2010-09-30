@@ -1,3 +1,7 @@
+* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.8
+- Add RPM packaging
+- Use default configuration file if -C argument is not given
+
 * Tue 31 Aug 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.3.7
 - Fixed possible mem allocation bug.
 

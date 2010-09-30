@@ -1,6 +1,6 @@
 Name: libbltscommon1
 Summary: Common BLTS functions
-Version: 0.3.7
+Version: 0.3.8
 Release: 1
 License: GPLv2
 Group: Development/Testing
