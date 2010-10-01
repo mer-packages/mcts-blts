@@ -7,7 +7,11 @@ Group: Development/Testing
 URL: http://wiki.meego.com/Quality/TestSuite/MCTS
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel
+BuildRequires: libbltscommon-devel libX11-devel libXdamage-devel
+BuildRequires: libXcomposite-devel libXrandr-devel libXrender-devel
+BuildRequires: libXtst-devel libXv-devel libXi-devel
+Requires: libbltscommon1 libX11 libXdamage libXcomposite libXrandr
+Requires: libXrender libXtst libXv libXi
 
 %description
 This package contains functional tests for X11.
