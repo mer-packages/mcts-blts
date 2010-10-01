@@ -7,8 +7,8 @@ Group: Development/Testing
 URL: http://wiki.meego.com/Quality/TestSuite/oFono_Modem_API_Test_Plan
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel
-Requires: blts-ofono-tests-config
+BuildRequires: libbltscommon-devel dbus-devel dbus-glib-devel glib2-devel
+Requires: blts-ofono-tests-config dbus dbus-glib glib2
 
 %package config
 Summary: BLTS oFono tests default config
