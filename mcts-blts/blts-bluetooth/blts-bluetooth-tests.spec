@@ -7,7 +7,7 @@ Group: Development/Testing
 URL: http://wiki.meego.com/Quality/TestSuite/MCTS
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-dev
+BuildRequires: libbltscommon-devel
 
 %description
 This package contains functional tests for the Bluez bluetooth stack.
