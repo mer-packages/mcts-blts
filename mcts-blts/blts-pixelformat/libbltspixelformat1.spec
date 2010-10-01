@@ -6,6 +6,8 @@ License: GPLv2
 Group: Development/Testing
 Source0: blts-pixelformat-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires: libbltscommon-devel
+Requires: libbltscommon1
 
 %package -n libbltspixelformat-devel
 Summary: BLTS pixel format conversion library dev package
