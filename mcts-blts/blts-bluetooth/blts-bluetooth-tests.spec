@@ -1,6 +1,6 @@
 Summary: BLTS Bluetooth functional tests
 Name: blts-bluetooth-tests
-Version: 0.2.7
+Version: 0.2.8
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -34,3 +34,4 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/*
 /usr/lib/tests/%{name}/*
 /usr/share/%{name}/tests.xml
+/etc/blts/blts-bluetooth-tests.cnf

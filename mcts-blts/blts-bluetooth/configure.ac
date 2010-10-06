@@ -20,11 +20,18 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([blts-bluetooth-tests], [0.2.7], [jussi.saavalainen@digia.com])
+AC_INIT([blts-bluetooth-tests], [0.2.8], [jussi.saavalainen@digia.com])
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/hci.c])
 AC_CONFIG_HEADER([config.h])
+
+# Library configs
+PKG_CHECK_MODULES(BLTS_COMMON, [
+	bltscommon
+])
+
+configdir=`pkg-config bltscommon --variable=configdir`
 
 # Checks for programs.
 AC_PROG_CC
@@ -64,6 +71,8 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([clock_gettime memset strdup strerror strtol])
+
+AC_SUBST(configdir)
 
 AC_CONFIG_FILES([     \
 	Makefile      \

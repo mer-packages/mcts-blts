@@ -14,10 +14,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-configdir = $(libdir)/tests/blts-bluetooth-tests
-config_DATA = \
+minconfigdir = $(libdir)/tests/blts-bluetooth-tests
+minconfig_DATA = \
 	blts-bluetooth.min \
 	blts-bluetooth-min.conf \
 	blts-bluetooth-req_files.cfg
 
-EXTRA_DIST = $(config_DATA)
+config_DATA = \
+	blts-bluetooth-tests.cnf
+
+EXTRA_DIST = \
+	$(config_DATA) \
+	$(minconfig_DATA)

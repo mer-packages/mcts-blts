@@ -1,3 +1,7 @@
+* Wed 6 Oct 2010 Aki Nyman <aki.nyman@digia.com> - 0.2.8
+- Test cases modified to use common library functions
+- Add configuration file support
+
 * Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.2.7
 - Add RPM packaging
 - Binary name changed to "blts-bluetooth-tests"

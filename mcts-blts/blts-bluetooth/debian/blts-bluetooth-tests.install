@@ -1,3 +1,4 @@
 usr/bin/*
-usr/share/blts-bluetooth-tests/tests.xml
 usr/lib/tests/blts-bluetooth-tests/*
+usr/share/blts-bluetooth-tests/tests.xml
+etc/blts/blts-bluetooth-tests.cnf
