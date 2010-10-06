@@ -906,7 +906,6 @@ cleanup:
  */
 int open_hci_socket(int dev)
 {
-	struct sockaddr_hci addr;
     struct hci_filter flt;
     struct hci_dev_info di;
     int sk, dd, opt;
@@ -986,7 +985,6 @@ int verify_acl_test_data(struct frame *frm)
 		return -1;
 	}
 
-	hci_acl_hdr *hdr = (void *) frm->ptr;
     frm->ptr += HCI_ACL_HDR_SIZE;
     frm->len -= HCI_ACL_HDR_SIZE;
 
