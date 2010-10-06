@@ -1,0 +1,117 @@
+# Parameter configuration for blts-bluetooth
+
+# MAC address - used in test cases where another BT device is needed
+# NOTE: command line parameter -m (mac_address) overrides this parameter
+# List of test cases that require mac_address (<-> pair)
+#
+# connect with L2CAP  						(<-> receive L2CAP connection)
+# ping-pong transfer with L2CAP  			(<-> receive L2CAP connection)
+# connect with RFCOMM     					(<-> receive RFCOMM connection)
+# ping-pong transfer with RFCOMM			(<-> receive RFCOMM connection)
+# connect with HCI         					(<-> e.g. audit incoming HCI connection)
+# transfer ACL data with HCI   				(<-> HCI receive ACL data package)
+# verify name with remote HCI 				(<-> Change name with HCI)
+# verify class with remote HCI  			(<-> Change class with HCI)
+# reset connection with HCI  				(<-> e.g. audit incoming HCI connection)
+# Read HCI controller information remote	(<-> Read HCI controller information local)
+# Read connected link information remote 	(<-> Read connected link information local)
+# authentication with pairing as master 	(<-> authentication with pairing as slave)
+
+[globals]
+	mac_address "00:00:00:00:00:00"
+[end_globals]
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# Tests
+
+[test]
+	name "Core-Bluetooth scan"
+[end_test]
+
+[test]
+	name "Core-Bluetooth drivers and userspace check"
+[end_test]
+
+[test]
+	name "Core-Bluetooth receive L2CAP connection"
+[end_test]
+
+[test]
+	name "Core-Bluetooth connect with L2CAP"
+[end_test]
+
+[test]
+	name "Core-Bluetooth ping-pong transfer with L2CAP"
+[end_test]
+
+[test]
+	name "Core-Bluetooth receive RFCOMM connection"
+[end_test]
+
+[test]
+	name "Core-Bluetooth connect with RFCOMM"
+[end_test]
+
+[test]
+	name "Core-Bluetooth ping-pong transfer with RFCOMM"
+[end_test]
+
+[test]
+	name "Core-Bluetooth connect with HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth transfer ACL data with HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth receive ACL data with HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth change name with HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth verify name with remote HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth change class with HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth verify class with remote HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth reset connection with HCI"
+[end_test]
+
+[test]
+	name "Core-Bluetooth audit incoming HCI connection"
+[end_test]
+
+[test]
+	name "Core-Bluetooth Read HCI controller information local"
+[end_test]
+
+[test]
+	name "Core-Bluetooth Read HCI controller information remote"
+[end_test]
+
+[test]
+	name "Core-Bluetooth Read connected link information local"
+[end_test]
+
+[test]
+	name "Core-Bluetooth Read connected link information remote"
+[end_test]
+
+[test]
+	name "Core-Bluetooth authentication with pairing as master"
+[end_test]
+
+[test]
+	name "Core-Bluetooth authentication with pairing as slave"
+[end_test]
