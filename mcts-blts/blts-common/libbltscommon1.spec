@@ -9,7 +9,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: flex bison
 
 %package -n libbltscommon-devel
-Summary: Common BLTS functions dev package
+Summary: Common BLTS functions devel package
 Group: Development/Libraries
 
 %description
