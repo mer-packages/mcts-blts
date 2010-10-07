@@ -37,19 +37,42 @@ Alternatively, the packagin can be skipped by just running with Autotools:
 
 Running the tests
 
-Executing test without any parameters shows list of all test cases:
+Show cases:
+blts-bluetooth-tests -s
 
-$ blts-bluetooth-tests
+Use config file:
+blts-bluetooth-tests -C <config file>
 
-Test cases are executed with following syntax:
+NOTE: Example configuration file is installed to /etc/blts/ and is used
+as default.
 
-$ blts-bluetooth-tests <logfile> <test> <test-params>
-  This runs a bluetooth functional test.
-  Parameters: <logfile>     - file for output and result logging
-              <test>        - test name
-              <test-params> - parameters for test (if any)
+Run single case like nro 1:
+blts-bluetooth-tests -e 1
 
-Note that the test case name should be given in quotes since they contain spaces.
+Run a single case with its name (note quotes when there are spaces in the name):
+blts-bluetooth-tests -en "Test case name"
+
+Command line parameter -m (mac_address) can be used to override
+mac_address defined in configuration file:
+
+blts-bluetooth-tests -m 01:02:03:04:05:06 -e 3
+
+The list of test cases that require MAC address (server-mac/remote-mac)
+to be executed (<-> test case's pair):
+
+connect with L2CAP  					(<-> receive L2CAP connection)
+ping-pong transfer with L2CAP  			(<-> receive L2CAP connection)
+connect with RFCOMM     				(<-> receive RFCOMM connection)
+ping-pong transfer with RFCOMM			(<-> receive RFCOMM connection)
+connect with HCI         				(<-> optionally - audit incoming HCI connection)
+transfer ACL data with HCI   			(<-> HCI receive ACL data package)
+verify name with remote HCI 			(<-> Change name with HCI)
+verify class with remote HCI  			(<-> Change class with HCI)
+reset connection with HCI  				(<-> optionally - audit incoming HCI connection)
+Read HCI controller information remote	(<-> Read HCI controller information local)
+Read connected link information remote 	(<-> Read connected link information local)
+authentication with pairing as master 	(<-> authentication with pairing as slave)
+
 
 You can use hciconfig to find out the required mac addresses:
 
@@ -70,13 +93,13 @@ Core-Bluetooth scan
   Parameters: ( no parameters )
    * Perform inquiry with first available Bluetooth adapter, resolving names for
      any found remote devices.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth scan"
+   $ blts-bluetooth-tests -en "Core-Bluetooth scan"
 
 Core-Bluetooth drivers and userspace check
   Parameters: ( no parameters )
    * Verify that Bluez-related components are available and correctly installed
      on the system.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth drivers and userspace check"
+   $ blts-bluetooth-tests -en "Core-Bluetooth drivers and userspace check"
 
 Core-Bluetooth receive L2CAP connection
   Parameters: ( no parameters )
@@ -84,7 +107,7 @@ Core-Bluetooth receive L2CAP connection
      client connection has been served.
    * This test requires "Core-Bluetooth connect with L2CAP" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth receive L2CAP connection"
+   $ blts-bluetooth-tests -en "Core-Bluetooth receive L2CAP connection"
 
 Core-Bluetooth connect with L2CAP
   Parameters: <server-mac>
@@ -92,7 +115,7 @@ Core-Bluetooth connect with L2CAP
      disconnect.
    * This test requires "Core-Bluetooth receive L2CAP connection" as counterpart
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth connect with L2CAP" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth connect with L2CAP" -m 00:00:00:00:00:00
 
 Core-Bluetooth ping-pong transfer with L2CAP
   Parameters: <server-mac>
@@ -100,7 +123,7 @@ Core-Bluetooth ping-pong transfer with L2CAP
      a short message and verify the returned reply, then disconnect.
    * This test requires "Core-Bluetooth receive L2CAP connection" as counterpart
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth ping-pong transfer with L2CAP" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth ping-pong transfer with L2CAP" -m 00:00:00:00:00:00
 
 Core-Bluetooth receive RFCOMM connection
   Parameters: ( no parameters )
@@ -108,7 +131,7 @@ Core-Bluetooth receive RFCOMM connection
      client connection has been served.
    * This test requires "Core-Bluetooth connect with RFCOMM" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth receive RFCOMM connection"
+   $ blts-bluetooth-tests -en "Core-Bluetooth receive RFCOMM connection"
 
 Core-Bluetooth connect with RFCOMM
   Parameters: <server-mac>
@@ -116,7 +139,7 @@ Core-Bluetooth connect with RFCOMM
      disconnect.
    * This test requires "Core-Bluetooth receive RFCOMM connection" as counterpart
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth connect with RFCOMM" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth connect with RFCOMM" -m 00:00:00:00:00:00
 
 Core-Bluetooth ping-pong transfer with RFCOMM
   Parameters: <server-mac>
@@ -124,13 +147,13 @@ Core-Bluetooth ping-pong transfer with RFCOMM
      a short message and verify the returned reply, then disconnect.
    * This test requires "Core-Bluetooth receive RFCOMM connection" as counterpart
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth ping-pong transfer with RFCOMM" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth ping-pong transfer with RFCOMM" -m 00:00:00:00:00:00
 
 Core-Bluetooth connect with HCI
   Parameters: <remote-mac>
    * Connect just the link to device <remote-mac>, wait a while, the disconnect.
      (Note: you may need to be root for this).
-   $ blts-bluetooth-tests test.log "Core-Bluetooth connect with HCI" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth connect with HCI" -m 00:00:00:00:00:00
 
 Core-Bluetooth receive ACL data with HCI
   Parameters: ( no parameters )
@@ -139,7 +162,7 @@ Core-Bluetooth receive ACL data with HCI
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth transfer ACL data with HCI" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth receive ACL data with HCI"
+   $ blts-bluetooth-tests -en "Core-Bluetooth receive ACL data with HCI"
 
 Core-Bluetooth transfer ACL data with HCI
   Parameters: <remote-mac>
@@ -147,7 +170,7 @@ Core-Bluetooth transfer ACL data with HCI
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth receive ACL data with HCI" as counterpart
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth transfer ACL data with HCI" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth transfer ACL data with HCI" -m 00:00:00:00:00:00
 
 Core-Bluetooth change name with HCI
   Parameters: ( no parameters )
@@ -155,7 +178,7 @@ Core-Bluetooth change name with HCI
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth verify name with remote HCI" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth change name with HCI"
+   $ blts-bluetooth-tests -en "Core-Bluetooth change name with HCI"
 
 Core-Bluetooth verify name with remote HCI
   Parameters: <remote-mac>
@@ -163,7 +186,7 @@ Core-Bluetooth verify name with remote HCI
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth change name with HCI" as counterpart
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth verify name with remote HCI" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth verify name with remote HCI" -m 00:00:00:00:00:00
 
 Core-Bluetooth change class with HCI
   Parameters: ( no parameters )
@@ -171,7 +194,7 @@ Core-Bluetooth change class with HCI
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth verify class with remote HCI" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth change class with HCI"
+   $ blts-bluetooth-tests -en "Core-Bluetooth change class with HCI"
 
 Core-Bluetooth verify class with remote HCI
   Parameters: <remote-mac>
@@ -179,13 +202,13 @@ Core-Bluetooth verify class with remote HCI
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth change class with HCI" as counterpart.
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth verify class with remote HCI" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth verify class with remote HCI" -m 00:00:00:00:00:00
 
 Core-Bluetooth reset connection with HCI
   Parameters: <remote-mac>
    * Connect, reset connection and connect again to <remote-mac>, wait a while and disconnect.
      (Note: you may need to be root for this).
-   $ blts-bluetooth-tests test.log "Core-Bluetooth reset connection with HCI" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth reset connection with HCI" -m 00:00:00:00:00:00
 
 Core-Bluetooth audit incoming HCI connection
   Parameters: ( no parameters )
@@ -194,7 +217,7 @@ Core-Bluetooth audit incoming HCI connection
      of Bluetooth connection to the device; for example, starting pairing with a
      mobile handset and cancelling out is enough. Running any connect test from
      the counterpart also works.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth audit incoming HCI connection"
+   $ blts-bluetooth-tests -en "Core-Bluetooth audit incoming HCI connection"
 
 Core-Bluetooth Read HCI controller information local
   Parameters: ( no parameters )
@@ -204,7 +227,7 @@ Core-Bluetooth Read HCI controller information local
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth Read HCI controller information remote" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth Read HCI controller information local"
+   $ blts-bluetooth-tests -en "Core-Bluetooth Read HCI controller information local"
 
 Core-Bluetooth Read HCI controller information remote
   Parameters: <remote-mac>
@@ -213,7 +236,7 @@ Core-Bluetooth Read HCI controller information remote
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth Read HCI controller information local" as counterpart.
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth Read HCI controller information remote" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth Read HCI controller information remote" -m 00:00:00:00:00:00
 
 Core-Bluetooth Read connected link information local
   Parameters: ( no parameters )
@@ -223,7 +246,7 @@ Core-Bluetooth Read connected link information local
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth Read connected link information remote" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth Read connected link information local"
+   $ blts-bluetooth-tests -en "Core-Bluetooth Read connected link information local"
 
 Core-Bluetooth Read connected link information remote
   Parameters: <remote-mac>
@@ -233,7 +256,7 @@ Core-Bluetooth Read connected link information remote
      (Note: you may need to be root for this).
    * This test requires "Core-Bluetooth Read connected link information local" as counterpart.
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth Read connected link information remote" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth Read connected link information remote" -m 00:00:00:00:00:00
 
 Core-Bluetooth authentication with pairing as master
   Parameters: <remote-mac>
@@ -254,7 +277,7 @@ Core-Bluetooth authentication with pairing as master
      taken care of automatically.
    * This test can be run with "Core-Bluetooth authentication with pairing as slave" as counterpart.
      and is run after it.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth authentication with pairing as master" 00:00:00:00:00:00
+   $ blts-bluetooth-tests -en "Core-Bluetooth authentication with pairing as master" -m 00:00:00:00:00:00
 
 Core-Bluetooth authentication with pairing as slave
   Parameters: (none)
@@ -274,4 +297,4 @@ Core-Bluetooth authentication with pairing as slave
      taken care of automatically.
    * This test can be run with "Core-Bluetooth authentication with pairing as master" as counterpart
      and is run first.
-   $ blts-bluetooth-tests test.log "Core-Bluetooth authentication with pairing as slave"
+   $ blts-bluetooth-tests -en "Core-Bluetooth authentication with pairing as slave"

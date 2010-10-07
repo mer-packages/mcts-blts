@@ -6,7 +6,7 @@ Build-Depends:
         debhelper (>= 5),
         cdbs,
         libbluetooth-dev (>= 4.12) | libbluetooth3-dev (>= 4.12),
-        libbltscommon-dev (>= 0.2.0)
+        libbltscommon-dev (>= 0.3.8)
 Standards-Version: 3.8.0
 
 Package: blts-bluetooth-tests
