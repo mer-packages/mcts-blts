@@ -15,36 +15,17 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.59)
-AC_INIT(blts-v4l2-tests, 0.3.4, mikko.ojala@digia.com)
-AM_INIT_AUTOMAKE(blts-v4l2-tests, 0.3.3)
+AC_INIT(blts-v4l2-tests, 0.3.5, mikko.ojala@digia.com)
+AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/camera.c])
 AC_CONFIG_HEADER([config.h])
 
-V4L2_LIBRARY_NAME=libmin-v4l2
-
-#release versioning
-V4L2_MAJOR_VERSION=0
-V4L2_MINOR_VERSION=1
-V4L2_MICRO_VERSION=0
-
-V4L2_LIBRARY_VERSION=0:1:0
-
-AC_SUBST(V4L2_LIBRARY_VERSION)
-
-PACKAGE=$V4L2_LIBRARY_NAME
-AC_SUBST(V4L2_LIBRARY_NAME)
-
-V4L2_VERSION=$V4L2_MAJOR_VERSION.$V4L2_MINOR_VERSION.$V4L2_MICRO_VERSION
-V4L2_RELEASE=$V4L2_MINOR_VERSION
-AC_SUBST(V4L2_RELEASE)
-AC_SUBST(V4L2_VERSION)
-
-VERSION=$V4L2_VERSION
-
 PKG_CHECK_MODULES([BLTSCOMMON],[bltscommon])
 PKG_CHECK_MODULES([BLTSPIXELFORMAT],[bltspixelformat])
 PKG_CHECK_MODULES([XVIDEO],[xv])
+
+configdir=`pkg-config bltscommon --variable=configdir`
 
 # Checks for programs.
 AC_PROG_CC
@@ -65,8 +46,6 @@ AC_CHECK_LIB([rt], [clock_gettime])
 
 # --- PKG_CHECK_MODULES does this already ---
 # Library configs
-# BLTS_COMMON_CFLAGS=`pkg-config --cflags bltscommon`
-# BLTS_COMMON_LIBS=`pkg-config --libs bltscommon`
 
 AC_SUBST(BLTSPIXELFORMAT_CFLAGS)
 AC_SUBST(BLTSPIXELFORMAT_LDFLAGS)
@@ -80,10 +59,14 @@ AC_SUBST(XVIDEO_CFLAGS)
 AC_SUBST(XVIDEO_LDFLAGS)
 AC_SUBST(XVIDEO_LIBS)
 
+AC_SUBST(configdir)
+
 #AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
+AC_CONFIG_FILES([     \
+	Makefile      \
+	src/Makefile  \
+	data/Makefile \
+	])
+AC_OUTPUT
 
-AC_OUTPUT([Makefile \
-	src/Makefile \
-	src/min/Makefile\
-	data/Makefile])

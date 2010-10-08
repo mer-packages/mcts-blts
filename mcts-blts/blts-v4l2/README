@@ -34,21 +34,19 @@ Login as root and install the package (dpkg -i [package name])
 Running the tests
 
 Run all tests:
-blts-v4l2
+blts-v4l2-tests
 
 Show cases:
-blts-v4l2 -s
+blts-v4l2-tests -s
 
 Use config file:
-blts-v4l2 -C <config file>
-
-Example config file blts-v4l2-n900.cnf for N900 is included in the package.
+blts-v4l2-tests -C <config file>
 
 Run single case like nro 1:
-blts-v4l2 -e 1
+blts-v4l2-tests -e 1
 
 Run a single case with its name (note quotes when there are spaces in the name):
-blts-v4l2 -en "Test case name"
+blts-v4l2-tests -en "Test case name"
 
 Test cases
 
@@ -116,6 +114,6 @@ Test cases
 	VIDIOC_S_OUTPUT
 
 * Core-Camera-Test input device standards
-	Loops through V4L2 input devices and tries to get current video standard, 
-	then enumerates and sets supported standards one by one.  
-	
+	Loops through V4L2 input devices and tries to get current video standard,
+	then enumerates and sets supported standards one by one.
+

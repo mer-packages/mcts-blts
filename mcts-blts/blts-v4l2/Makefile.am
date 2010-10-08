@@ -1,4 +1,4 @@
-# Makefile.am -- Makefile for blts-V4L2 
+# Makefile.am -- Makefile for blts-V4L2
 #
 # Copyright (c) 2009-2010 Nokia Corporation.
 #
@@ -14,8 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = src data  
-dist_doc_DATA = README
-docdir = doc
+SUBDIRS = src data
+
 pkgdata_DATA = tests.xml
-EXTRA_DIST = $(bin_SCRIPTS)
+
+EXTRA_DIST = \
+	autogen.sh \
+	blts-v4l2-tests.changes \
+	$(pkgdata_DATA)
