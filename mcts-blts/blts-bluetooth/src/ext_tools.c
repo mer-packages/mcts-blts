@@ -244,18 +244,24 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 
         while ((read_len = getline(&buf, &buf_sz, dump)) != -1) {
 		lineno++;
+
+		char* pch = NULL;
+	    pch = strchr(buf,'.'); /* search for time stamp  nnnn.nnnnnn */
+
 		switch (buf[0]) {
 		case 'H': /* header */
 			break;
-		case ' ': /* data for last packet */
-			if ((buf_sz <= 2) ||
-				append_hex_dump(buf+2, &current.data,
-				&current.data_len) < 0) {
-				log_print("Parse error on dump line %d\n", lineno);
-				ret = -1;
-				goto cleanup;
+		case ' ': /* data for last packet or new packet with time stamp*/
+			if (!pch) { /* data for last packet if '.' not found*/
+				if ((buf_sz <= 2) ||
+					append_hex_dump(buf+2, &current.data,
+					&current.data_len) < 0) {
+					log_print("Parse error on dump line %d\n", lineno);
+					ret = -1;
+					goto cleanup;
+				}
+				break;
 			}
-			break;
 		case '0':/* new packet */
 		case '1':
 		case '2':
