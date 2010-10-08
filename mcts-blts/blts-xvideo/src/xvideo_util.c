@@ -49,14 +49,6 @@ static struct xv_pix_fmt fmt_table[] =
 #define WHITE_COL 0xFFFFFFFF
 #define RGB_TO_COL(r, g, b) ((r << 16) | (g << 8) | b)
 
-typedef struct {
-	unsigned long flags;
-	unsigned long functions;
-	unsigned long decorations;
-	long inputMode;
-	unsigned long status;
-} Hints;
-
 Display *open_display()
 {
 	Display *display = XOpenDisplay(NULL);
@@ -72,7 +64,8 @@ Display *open_display()
 int xv_create_window(struct window_struct *params, const char *window_name,
 	int width, int height, int screen)
 {
-	int fs = 0;
+	unsigned int mask;
+	XSetWindowAttributes window_attr;
 
 	memset(params, 0, sizeof(*params));
 
@@ -97,8 +90,17 @@ int xv_create_window(struct window_struct *params, const char *window_name,
 		goto error_exit;
 	}
 
-	if (!width || !height)
-		fs = 1;
+	mask = CWBackPixel | CWBorderPixel | CWEventMask;
+	if (!width && !height) {
+		mask = mask | CWOverrideRedirect | CWSaveUnder | CWBackingStore;
+		window_attr.override_redirect = True;
+		window_attr.backing_store = NotUseful;
+		window_attr.save_under = False;
+	}
+
+	window_attr.background_pixel = 0;
+	window_attr.border_pixel = 0;
+	window_attr.event_mask = StructureNotifyMask | ExposureMask;
 
 	if (width)
 		params->width = width;
@@ -109,29 +111,16 @@ int xv_create_window(struct window_struct *params, const char *window_name,
 		params->height = height;
 	else
 		params->height = params->root_window_attributes.height;
-	params->window = XCreateSimpleWindow(params->display,
-		params->root_window, 0, 0, params->width, params->height,
-		0, 0x0, 0x00FFFFFF);
-	if (!params->window) {
-		BLTS_ERROR("XCreateSimpleWindow failed\n");
-		goto error_exit;
-	}
-
-	if (fs) {
-		Hints hints;
-		Atom property;
-		hints.flags = 2;
-		hints.decorations = 0;
-		property = XInternAtom(params->display, "_MOTIF_WM_HINTS", True);
-		XChangeProperty(params->display, params->window, property, property,
-			32, PropModeReplace,(unsigned char *)&hints, 5);
-	}
-
-	if (!XGetWindowAttributes(params->display, params->root_window,
+	if (!XGetWindowAttributes(params->display, params->root_window,
 		&params->window_attributes)) {
 		BLTS_ERROR("XGetWindowAttributes failed\n");
 		goto error_exit;
 	}
+
+	params->window = XCreateWindow(params->display,
+		RootWindow(params->display, params->screen), 0, 0,
+		params->width, params->height, 0, CopyFromParent, InputOutput,
+		CopyFromParent, mask, &window_attr);
 
 	if (!XMapWindow(params->display, params->window)) {
 		BLTS_ERROR("XMapWindow failed\n");

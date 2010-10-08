@@ -1,0 +1,11 @@
+* Wed 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.6
+- Add RPM packaging
+- Binary name changed to "blts-xvideo-tests"
+- Separate platform configuration packaging
+
+* Wed 08 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.5
+- Initial upload for Meego (changelog summarized)
+- 'PutImage with QueryBestSize' -test
+- 'Notify events' -test. Requests events and tries to trigger events
+  from a different process.
+

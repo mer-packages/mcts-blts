@@ -1,3 +1,12 @@
+blts-xvideo-tests (0.0.6) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Add RPM packaging
+  * Binary name changed to "blts-xvideo-tests"
+  * Separate platform configuration packaging
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 30 Sep 2010 15:52:19 +0300
+
 blts-xvideo-tests (0.0.5) unstable; urgency=low
 
   [ Kimmo Myllyvirta ]

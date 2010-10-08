@@ -14,12 +14,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-configdir = $(libdir)/tests/blts-xvideo-tests
-config_DATA = \
+minconfigdir = $(libdir)/tests/blts-xvideo-tests
+minconfig_DATA = \
 	blts-xvideo-min.conf \
 	blts-xvideo.min \
-	blts-xvideo-req-files.cfg \
-	blts-xvideo-n900.cnf
+	blts-xvideo-req-files.cfg
 
-EXTRA_DIST = $(config_DATA)
+config_DATA = \
+	blts-xvideo-tests.cnf
 
+EXTRA_DIST = \
+	$(config_DATA) \
+	$(minconfig_DATA)
