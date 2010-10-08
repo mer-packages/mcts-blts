@@ -58,6 +58,7 @@ typedef struct {
 	int access;
 	int async;
 	int link_card, link_device;
+	int period_size;
 } pcm_params;
 
 typedef struct {
@@ -74,6 +75,7 @@ typedef struct {
 	struct snd_pcm_mmap_control *mmap_control;
 	unsigned int period_size;
 	unsigned int buffer_size;
+	unsigned int frame_bits;
 	unsigned int start_threshold;
 	int configured;
 	int monotonic;
@@ -111,7 +113,7 @@ struct slist {
 
 int generate_sine(unsigned char* samples, int count, double *_phase,
 	unsigned int channels, unsigned int samplerate, unsigned int freq,
-	snd_pcm_format_t format);
+	snd_pcm_format_t format, unsigned int frame_bits);
 int bits_per_sample(snd_pcm_format_t format);
 int calc_framesize(pcm_device* hw);
 int interval_refine(snd_interval_t *i, const snd_interval_t *v);

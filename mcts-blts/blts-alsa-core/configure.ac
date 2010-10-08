@@ -1,4 +1,4 @@
-#                                               -*- Autoconf -*-
+#						-*- Autoconf -*-
 
 # configure.ac -- Autoconf script for blts-alsa-core
 #
@@ -10,7 +10,7 @@
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-alsa-core-tests, 0.0.6, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-alsa-core-tests, 0.0.7, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts_alsa_core_test.c])
@@ -42,19 +42,25 @@ AC_CHECK_LIB([rt], [clock_gettime])
 #AC_CHECK_LIB([minevent], [min_event_create])
 #AC_CHECK_LIB([mintmapi], [tm_printf])
 #AC_CHECK_LIB([minutils], [mip_get_uint])
-AC_CHECK_LIB([bltscommon], [log_open],,[AC_MSG_ERROR([cannot find libbltscommon])])
 
 #AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Library configs
-BLTS_COMMON_CFLAGS=`pkg-config --cflags bltscommon`
-BLTS_COMMON_LIBS=`pkg-config --libs bltscommon`
+PKG_CHECK_MODULES(BLTS_COMMON, [
+	bltscommon
+])
 
-DBUS_GLIB_CFLAGS=`pkg-config --cflags glib-2.0 gthread-2.0 gobject-2.0 dbus-glib-1`
-DBUS_GLIB_LIBS=`pkg-config --libs glib-2.0 gthread-2.0 gobject-2.0 dbus-glib-1`
+configdir=`pkg-config bltscommon --variable=configdir`
 
 AC_SUBST(BLTS_COMMON_CFLAGS)
 AC_SUBST(BLTS_COMMON_LIBS)
+AC_SUBST(configdir)
+
+PKG_CHECK_MODULES(DBUS_GLIB, [
+	glib-2.0
+	gthread-2.0
+	dbus-glib-1
+])
 AC_SUBST(DBUS_GLIB_CFLAGS)
 AC_SUBST(DBUS_GLIB_LIBS)
 
@@ -72,4 +78,3 @@ AC_CONFIG_FILES([     \
 	data/Makefile \
 	])
 AC_OUTPUT
-

@@ -1,0 +1,20 @@
+* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
+- Add RPM packaging
+- Binary name changed to "blts-alsa-core-tests"
+- Fix misleading configuration file option (-C / -c), -c option is now removed
+- Separate platform configuration packaging
+
+* Thu 02 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.6
+- Initial upload for Meego (changelog summarized)
+- Mixer setting for vibra.
+- Bluetooth Audio connection automation.
+- PCM device linking.
+- V4L2 tuner support for FM radio test cases.
+- Support for default control element settings.
+- Simultaneous recording from mic and playback to earpiece
+- Support for full duplex playback/recording
+- Enumerate devices with control interface: Queries information
+  about all pcm, hw dep and rawmidi devices from control device
+- Open ALSA-related devices; Control enumeration; PCM playback/record:
+  interleaved/noninterleaved, MMAP, sync/async (signal/timer); Power state.
+- Parameter variation from configuration for most cases.

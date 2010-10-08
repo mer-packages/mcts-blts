@@ -130,7 +130,7 @@ int bits_per_sample(snd_pcm_format_t format)
 		if(format == format_sample_sizes[t].format)
 			return format_sample_sizes[t].size;
 	}
-	
+
 	BLTS_ERROR("Unknown sample format %d\n", format);
 
 	return -EINVAL;
@@ -138,7 +138,7 @@ int bits_per_sample(snd_pcm_format_t format)
 
 int generate_sine(unsigned char* samples, int count, double *_phase,
 	unsigned int channels, unsigned int samplerate, unsigned int freq,
-	snd_pcm_format_t format)
+	snd_pcm_format_t format, unsigned int frame_bits)
 {
 	static double max_phase = 2. * M_PI;
 	double phase = *_phase;
@@ -146,6 +146,7 @@ int generate_sine(unsigned char* samples, int count, double *_phase,
 	int sample;
 	unsigned int t, i;
 	unsigned int bps = bits_per_sample(format);
+	unsigned int leftover_bits = frame_bits / channels - bps;
 	unsigned int maxval = (1 << (bps - 1)) - 1;
 
 	if(!samples || !_phase || bps < 1)
@@ -158,6 +159,8 @@ int generate_sine(unsigned char* samples, int count, double *_phase,
 		{
 			for(i = 0; i < bps / 8; i++)
 				*(samples++) = ((unsigned char*)&sample)[i];
+			for(i = 0; i < leftover_bits / 8; i++)
+				*(samples++) = 0;
 		}
 		phase += step;
 		if(phase >= max_phase)
@@ -170,17 +173,7 @@ int generate_sine(unsigned char* samples, int count, double *_phase,
 
 int calc_framesize(pcm_device* hw)
 {
-	unsigned int t;
-
-	for(t = 0; t < ARRAY_SIZE(format_sample_sizes); t++)
-	{
-		if(hw->params.format == format_sample_sizes[t].format)
-			return hw->params.channels * format_sample_sizes[t].size / 8;
-	}
-	
-	BLTS_ERROR("Unknown sample format %d\n", hw->params.format);
-
-	return -EINVAL;
+	return hw->frame_bits / 8;
 }
 
 int mask_test(const snd_mask_t *mask, unsigned int val)
@@ -286,13 +279,13 @@ int interval_refine(snd_interval_t *i, const snd_interval_t *v)
 		i->openmax = 1;
 		changed = 1;
 	}
-	
+
 	if(!i->integer && v->integer)
 	{
 		i->integer = 1;
 		changed = 1;
 	}
-	
+
 	if(i->integer)
 	{
 		if(i->openmin)
@@ -327,25 +320,25 @@ unsigned int ld2(u_int32_t v)
 		v >>= 16;
 		r += 16;
 	}
-	
+
 	if(v >= 0x100)
 	{
 		v >>= 8;
 		r += 8;
 	}
-	
+
 	if(v >= 0x10)
 	{
 		v >>= 4;
 		r += 4;
 	}
-	
+
 	if(v >= 4)
 	{
 		v >>= 2;
 		r += 2;
 	}
-	
+
 	if(v >= 2)
 		r++;
 
@@ -421,13 +414,13 @@ int interval_refine_min(snd_interval_t *i, unsigned int min, int openmin)
 			i->openmin = 0;
 		}
 	}
-	
+
 	if((i->min > i->max || (i->min == i->max && (i->openmin || i->openmax))))
 	{
 		i->empty = 1;
 		return -EINVAL;
 	}
-	
+
 	return changed;
 }
 
@@ -449,7 +442,7 @@ int interval_refine_max(snd_interval_t *i, unsigned int max, int openmax)
 		i->openmax = 1;
 		changed = 1;
 	}
-	
+
 	if(i->integer)
 	{
 		if(i->openmax)
@@ -458,20 +451,20 @@ int interval_refine_max(snd_interval_t *i, unsigned int max, int openmax)
 			i->openmax = 0;
 		}
 	}
-	
+
 	if((i->min > i->max || (i->min == i->max && (i->openmin || i->openmax))))
 	{
 		i->empty = 1;
 		return -EINVAL;
 	}
-	
+
 	return changed;
 }
 
 int pcm_hw_param_get(const snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 	unsigned int *val, int *dir)
 {
-	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK && 
+	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_MASK))
 	{
 		const snd_mask_t *mask = hw_param_mask(params, var);
@@ -483,7 +476,7 @@ int pcm_hw_param_get(const snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 			*val = mask_min(mask);
 		return 0;
 	}
-	else if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL && 
+	else if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_INTERVAL))
 	{
 		const snd_interval_t *i = hw_param_interval(params, var);
@@ -495,7 +488,7 @@ int pcm_hw_param_get(const snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 			*val = i->min;
 		return 0;
 	}
-	
+
 	return -EINVAL;
 }
 
@@ -503,7 +496,7 @@ int pcm_hw_param_set(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 	unsigned int val, int dir)
 {
 	int changed;
-	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK && 
+	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_MASK))
 	{
 		snd_mask_t *m = hw_param_mask(params, var);
@@ -521,7 +514,7 @@ int pcm_hw_param_set(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 			changed = mask_refine_set(hw_param_mask(params, var), val);
 		}
 	}
-	else if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL && 
+	else if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_INTERVAL))
 	{
 		snd_interval_t *i = hw_param_interval(params, var);
@@ -587,7 +580,7 @@ int pcm_hw_param_set_minmax(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 			}
 		}
 	}
-	
+
 	if(maxdir)
 	{
 		if(maxdir < 0)
@@ -600,8 +593,8 @@ int pcm_hw_param_set_minmax(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 			max++;
 		}
 	}
-	
-	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK && 
+
+	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_MASK))
 	{
 		snd_mask_t *mask = hw_param_mask(params, var);
@@ -624,7 +617,7 @@ int pcm_hw_param_set_minmax(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 			}
 		}
 	}
-	else if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL && 
+	else if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_INTERVAL))
 	{
 		snd_interval_t *i = hw_param_interval(params, var);
@@ -655,7 +648,7 @@ int pcm_hw_param_set_minmax(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var,
 
 void pcm_hw_param_any(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var)
 {
-	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK && 
+	if((var >= SNDRV_PCM_HW_PARAM_FIRST_MASK &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_MASK))
 	{
 		memset(hw_param_mask(params, var), 0xff, MASK_SIZE * sizeof(u_int32_t));
@@ -663,8 +656,8 @@ void pcm_hw_param_any(snd_pcm_hw_params_t *params, snd_pcm_hw_param_t var)
 		params->rmask |= 1 << var;
 		return;
 	}
-	
-	if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL && 
+
+	if((var >= SNDRV_PCM_HW_PARAM_FIRST_INTERVAL &&
 		var <= SNDRV_PCM_HW_PARAM_LAST_INTERVAL))
 	{
 		interval_any(hw_param_interval(params, var));
@@ -800,7 +793,7 @@ struct slist *slist_delete_head(struct slist *list, void (*free_func)(void *))
 int check_pcm_params(pcm_params* params)
 {
 	int err = 0;
-	
+
 	if(params->card < 0 || params->card >= MAX_CARDS)
 	{
 		BLTS_ERROR("Invalid card (%d)\n", params->card);
@@ -812,7 +805,7 @@ int check_pcm_params(pcm_params* params)
 		BLTS_ERROR("Invalid device (%d)\n", params->device);
 		err = -EINVAL;
 	}
-	
+
 	switch(params->format)
 	{
 		case SNDRV_PCM_FORMAT_S8:
@@ -826,7 +819,7 @@ int check_pcm_params(pcm_params* params)
 			err = -EINVAL;
 			break;
 	}
-	
+
 	if(params->channels < 1 || params->channels >= MAX_CHANNELS)
 	{
 		BLTS_ERROR("Invalid channel count (%d)\n", params->channels);
@@ -848,7 +841,7 @@ int check_pcm_params(pcm_params* params)
 			break;
 	}
 
-	if(params->async < TEST_ASYNC_MODE_NONE || 
+	if(params->async < TEST_ASYNC_MODE_NONE ||
 	 params->async > TEST_ASYNC_MODE_TIMER)
 	{
 		BLTS_ERROR("Invalid async mode (%d)\n", params->async);

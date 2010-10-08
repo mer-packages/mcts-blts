@@ -15,7 +15,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
- 
+
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -63,10 +63,10 @@ static int cnfparser_readline(const char* buf, char* line)
 	char* ptr = strchr(buf, '\n');
 	if(!ptr)
 		return strlen(buf);
-	
+
 	/* Truncate long lines */
 	len = MIN((int)(ptr - buf), MAX_LINE_LEN);
-	
+
 	if(line)
 	{
 		memcpy(line, buf, len);
@@ -90,7 +90,7 @@ static int cnfparser_cleanup(const char* in, char** out)
 		logged_perror("malloc");
 		return -1;
 	}
-	
+
 	ptr_o = *out;
 	memcpy(ptr_o, in, len);
 
@@ -146,7 +146,7 @@ static int cnfparser_cleanup(const char* in, char** out)
 		else
 			ptr += len + 1;
 	}
-	
+
 	return 0;
 }
 
@@ -163,7 +163,7 @@ static char* cnfparser_seek_section_end(char* ptr, const char* end_ptr,
 
 		ptr += len + 1;
 	}
-	
+
 	return NULL;
 }
 
@@ -175,7 +175,7 @@ static char* next_token(char* str, cnf_token* token)
 	int pos = 0;
 	int tlen = 0;
 	int in_str = 0;
-	
+
 	token->type = CNF_TOKEN_INT;
 	memset(token->str, 0, MAX_LINE_LEN);
 	while(pos++ < len)
@@ -217,7 +217,7 @@ static char* next_token(char* str, cnf_token* token)
 			token->value = atoi(token->str);
 		return ptr;
 	}
-	
+
 	return NULL;
 }
 
@@ -271,7 +271,7 @@ static int cnfparser_parse_control(char* start, char* end,
 		}
 		else
 			goto error_exit;
-		
+
 		start += len + 1;
 	}
 
@@ -291,6 +291,7 @@ static int cnfparser_parse_pcm(char* start, char* end, alsa_pcm_settings* params
 
 	params->link_card = -1;
 	params->link_device = -1;
+	params->period_size = -1;
 
 	while(start < end)
 	{
@@ -414,6 +415,13 @@ static int cnfparser_parse_pcm(char* start, char* end, alsa_pcm_settings* params
 				goto error_exit;
 			params->link_device = token.value;
 		}
+		else if(!strncmp(token.str, "period_size", 4))
+		{
+			ptr = next_token(ptr, &token);
+			if(!ptr)
+				goto error_exit;
+			params->period_size = token.value;
+		}
 		else
 			goto error_exit;
 
@@ -433,7 +441,7 @@ static int cnfparser_parse_tuner(char* start, char* end, alsa_testset* params)
 	cnf_token token;
 	int len;
 	char* ptr;
-	
+
 	params->tuner.scan = -1;
 
 	while(start < end)
@@ -466,7 +474,7 @@ static int cnfparser_parse_tuner(char* start, char* end, alsa_testset* params)
 		}
 		else
 			goto error_exit;
-		
+
 		start += len + 1;
 	}
 
@@ -620,7 +628,7 @@ static int cnfparser_parse_testset_section(char* start, char* end)
 					return -1;
 				}
 
-				if(cnfparser_parse_control(section_start, section_end, 
+				if(cnfparser_parse_control(section_start, section_end,
 					&current_testset->ctls[current_testset->num_ctls++]))
 				{
 					BLTS_ERROR("Failed to parse control section\n");
@@ -711,7 +719,7 @@ static int cnfparser_parse_testset_section(char* start, char* end)
 			}
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -721,7 +729,7 @@ static int cnfparser_parse_defaults_section(char* start, char* end)
 	char line[MAX_LINE_LEN];
 	char* section_start = start;
 	char* section_end;
-	
+
 	while(section_start < end)
 	{
 		len = cnfparser_readline(section_start, line);
@@ -755,7 +763,7 @@ static int cnfparser_parse_defaults_section(char* start, char* end)
 			section_start = section_end;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -813,7 +821,7 @@ static int cnfparser_parse_sections(char* buf)
 			section_start = section_end;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -829,11 +837,11 @@ int alsa_read_config(const char* filename, alsa_configuration* config)
 		BLTS_ERROR("Failed to open config file\n");
 		return -1;
 	}
-	
+
 	fseek(fp, 0, SEEK_END);
 	len = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	
+
 	buf = calloc(1, (len + 1));
 	if(!buf)
 	{
@@ -841,7 +849,7 @@ int alsa_read_config(const char* filename, alsa_configuration* config)
 		fclose(fp);
 		return -1;
 	}
-	
+
 	if(fread(buf, 1, len, fp) != len)
 	{
 		BLTS_ERROR("Failed to read config file\n");
@@ -850,7 +858,7 @@ int alsa_read_config(const char* filename, alsa_configuration* config)
 		return -1;
 	}
 	fclose(fp);
-	
+
 	BLTS_TRACE("Read %d bytes from file %s\n", len, filename);
 
 	if(cnfparser_cleanup(buf, &clean_buf))
@@ -865,7 +873,7 @@ int alsa_read_config(const char* filename, alsa_configuration* config)
 	memset(config, 0, sizeof(alsa_configuration));
 	g_config = config;
 
-	BLTS_TRACE("Parsing sections...\n");	
+	BLTS_TRACE("Parsing sections...\n");
 	if(cnfparser_parse_sections(clean_buf))
 	{
 		BLTS_ERROR("Config file parsing failed\n");
@@ -898,7 +906,7 @@ int alsa_free_config(alsa_configuration* config)
 		free(config->def_ctls[i]);
 
 	config->num_testsets = 0;
-	
+
 	return 0;
 }
 

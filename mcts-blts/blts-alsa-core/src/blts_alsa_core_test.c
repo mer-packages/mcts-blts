@@ -26,16 +26,14 @@
 #include "alsa_util.h"
 
 static alsa_cli_params* cli_params = NULL;
-const char* default_config =
-	"/usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf";
+const char* default_config = BLTS_CONFIG_DIR "/blts-alsa-core-tests.cnf";
 
 static void blts_alsa_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
-		"[-v] [-p] [-c config_file]",
+		"[-v] [-p]",
 		"  -v: Verbose logging\n"
 		"  -p: Enables profiling of ioctl calls\n"
-		"  -c: Used configuration file\n"
 		);
 }
 
@@ -100,6 +98,7 @@ static int generate_pcm_params(alsa_pcm_settings* pcms, pcm_params* params)
 							params[cnt].duration = pcms->duration;
 							params[cnt].link_card = pcms->link_card;
 							params[cnt].link_device = pcms->link_device;
+							params[cnt].period_size = pcms->period_size;
 						}
 						cnt++;
 					}
@@ -163,7 +162,7 @@ static testcase_params* generate_pcm_testcase_list(alsa_configuration* conf)
 
 		testcases = realloc(testcases, (ncases + count) * sizeof(testcase_params));
 		cases = realloc(cases, (ncases + count) * sizeof(blts_cli_testcase));
-		
+
 		/* figure out parameter variations with multiple [playback]/[recording] sections */
 		o = ncases;
 		memset(px, 0, sizeof(px));
@@ -187,7 +186,7 @@ static testcase_params* generate_pcm_testcase_list(alsa_configuration* conf)
 
 		for(p = 0; p < conf->testsets[t]->num_pcms; p++)
 			free(params[p]);
-		
+
 		/* generate test cases for cli */
 		for(i = 0; i < count; i++)
 		{
@@ -233,7 +232,7 @@ static testcase_params* generate_pcm_testcase_list(alsa_configuration* conf)
 					if(testcases[ncases].params[p]->dir == STREAM_DIR_OUT)
 						play = 1;
 				}
-				
+
 				if(rec && play)
 					sprintf(&case_name[strlen(case_name)], "PCM playback and recording");
 				else if(rec)
@@ -320,7 +319,7 @@ int main(int argc, char **argv)
 
 	for(t = 1; t < argc; t++)
 	{
-		if(!strcmp(argv[t], "-c"))
+		if(!strcmp(argv[t], "-C"))
 		{
 			if(++t < argc)
 				config_file = argv[t];
@@ -336,6 +335,8 @@ int main(int argc, char **argv)
 		}
 	}
 
+        BLTS_DEBUG ("Using config file %s\n", config_file);
+
 	if(alsa_read_config(config_file, &cli_params->config))
 	{
 		fprintf(stderr, "Failed to read config file %s\n", config_file);
@@ -344,7 +345,7 @@ int main(int argc, char **argv)
 	}
 
 	cli_params->testcases = generate_pcm_testcase_list(&cli_params->config);
-	
+
 	log_close();
 
 	err =  blts_cli_main(&alsa_cli, argc, argv);

@@ -94,25 +94,25 @@ Running the tests
 
 Run as root:
 
- $ blts_alsa_core_test
+ $ blts-alsa-core-tests
 
 This will execute tests using default configuration file, which is;
-/usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf
+/etc/blts/blts-alsa-core-tests.cnf
 Configuration file is platform dependant, see section "Configuration"
 
 The test results are printed to terminal and also to
 /var/log/tests/blts_alsa_core.txt.
 
-Other possible execution parameters for blts_alsa_core_test:
+Other possible execution parameters for blts-alsa-core-tests:
    * -l: Used log file, default blts_alsa_core.txt
    * -e: Execute single or multiple selected tests, for example -e 1,4,5.
    * -en: Execute test by name, for example -en "My test X"
    * -s: Show list of all tests
+   * -C: Used parameter configuration file
    * -?: This message
    * -nc: Do not output log to terminal
    * -v: Verbose logging
    * -p: Enables profiling of ioctl calls
-   * -c: Used configuration file
 
 Configuration file
 ==================

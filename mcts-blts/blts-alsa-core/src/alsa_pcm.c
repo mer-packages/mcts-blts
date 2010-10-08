@@ -85,7 +85,7 @@ struct async_playback_state {
 	long out_total;
 };
 
-/* These can be used to track opened devices for linking in different pcm 
+/* These can be used to track opened devices for linking in different pcm
    threads. */
 struct pcm_stored_devices_list
 {
@@ -194,7 +194,7 @@ static int dump_pcm_status(pcm_device *hw)
 	BLTS_TRACE("Trigger tstamp: %ld.%ld\n", status.trigger_tstamp.tv_sec,
 		status.trigger_tstamp.tv_nsec);
 	BLTS_TRACE("Suspended state: %s\n", state_to_str(status.suspended_state));
-	
+
 	return 0;
 }
 
@@ -214,10 +214,10 @@ static void dump_mmap_status(pcm_device *hw)
 static void dump_hw_params(snd_pcm_hw_params_t *params)
 {
 	unsigned int t, i;
-	
+
 	BLTS_TRACE("\nHardware parameters:\n");
-	
-	for(t = SNDRV_PCM_HW_PARAM_FIRST_MASK; 
+
+	for(t = SNDRV_PCM_HW_PARAM_FIRST_MASK;
 		t <= SNDRV_PCM_HW_PARAM_LAST_MASK; t++)
 	{
 		const snd_mask_t *mask =
@@ -259,11 +259,11 @@ static void dump_hw_params(snd_pcm_hw_params_t *params)
 	for(t = SNDRV_PCM_HW_PARAM_FIRST_INTERVAL;
 		t <= SNDRV_PCM_HW_PARAM_LAST_INTERVAL; t++)
 	{
-		const snd_interval_t *interval = 
+		const snd_interval_t *interval =
 			&((params)->intervals[(t) - SNDRV_PCM_HW_PARAM_FIRST_INTERVAL]);
 		BLTS_TRACE("%s:\n", hw_param_to_str(t));
 
-		if(interval->min == interval->max || 
+		if(interval->min == interval->max ||
 			(interval->min + 1 == interval->max && interval->openmax))
 		{
 			/* single value */
@@ -278,7 +278,7 @@ static void dump_hw_params(snd_pcm_hw_params_t *params)
 				interval->openmax ? ')' : ']');
 		}
 	}
-	
+
 	BLTS_TRACE("\n");
 }
 
@@ -357,7 +357,7 @@ static int xrun_recovery(pcm_device *handle, int err)
 	{
 		while((err = ioctl_pcm_resume(handle)) == -EAGAIN)
 			sleep(1);
-		
+
 		if(err < 0)
 		{
 			err = ioctl_pcm_prepare(handle);
@@ -423,6 +423,17 @@ static int setup_playback_params(pcm_device *hw,
 		return err;
 	}
 
+	if(hw->params.period_size > 0)
+	{
+		err = pcm_hw_param_set(hw_params, SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
+			hw->params.period_size, 0);
+		if(err < 0)
+		{
+			BLTS_ERROR("Failed to set sample format %d\n", err);
+			return err;
+		}
+	}
+
 	/* Refine and set the params */
 	err = ioctl_pcm_refine(hw, hw_params);
 	if(err)
@@ -446,6 +457,14 @@ static int setup_playback_params(pcm_device *hw,
 	if(err)
 	{
 		BLTS_ERROR("Failed to get buffer size %d\n", err);
+		return err;
+	}
+
+	err = pcm_hw_param_get(hw_params, SNDRV_PCM_HW_PARAM_FRAME_BITS,
+		&hw->frame_bits, 0);
+	if(err)
+	{
+		BLTS_ERROR("Failed to get frame size %d\n", err);
 		return err;
 	}
 
@@ -520,6 +539,17 @@ static int setup_recording_params(pcm_device *hw,
 		return err;
 	}
 
+	if(hw->params.period_size > 0)
+	{
+		err = pcm_hw_param_set(hw_params, SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
+			hw->params.period_size, 0);
+		if(err < 0)
+		{
+			BLTS_ERROR("Failed to set sample format %d\n", err);
+			return err;
+		}
+	}
+
 	/* Refine and set the params */
 	err = ioctl_pcm_refine(hw, hw_params);
 	if(err)
@@ -546,6 +576,14 @@ static int setup_recording_params(pcm_device *hw,
 		return err;
 	}
 
+	err = pcm_hw_param_get(hw_params, SNDRV_PCM_HW_PARAM_FRAME_BITS,
+		&hw->frame_bits, 0);
+	if(err)
+	{
+		BLTS_ERROR("Failed to get frame size %d\n", err);
+		return err;
+	}
+
 	hw->start_threshold = (hw->buffer_size / hw->period_size) * hw->period_size;
 
 	return 0;
@@ -566,18 +604,18 @@ static snd_pcm_state_t read_hw_state(pcm_device *hw)
 static int play_buffer_avail(pcm_device *hw)
 {
 	int avail, err;
-	
+
 	if(hw->sync_ptr)
 	{
 		err = ioctl_pcm_sync_ptr(hw, SNDRV_PCM_SYNC_PTR_AVAIL_MIN);
 		if (err < 0)
 			return err;
-		avail = hw->sync_ptr->s.status.hw_ptr + hw->buffer_size - 
+		avail = hw->sync_ptr->s.status.hw_ptr + hw->buffer_size -
 			hw->sync_ptr->c.control.appl_ptr;
 	}
 	else
 	{
-		avail = hw->mmap_status->hw_ptr + hw->buffer_size - 
+		avail = hw->mmap_status->hw_ptr + hw->buffer_size -
 			hw->mmap_control->appl_ptr;
 	}
 
@@ -592,7 +630,7 @@ static int play_buffer_avail(pcm_device *hw)
 static int rec_buffer_avail(pcm_device* hw)
 {
 	int avail, err;
-	
+
 	if(hw->sync_ptr)
 	{
 		err = ioctl_pcm_sync_ptr(hw, SNDRV_PCM_SYNC_PTR_AVAIL_MIN);
@@ -666,7 +704,7 @@ static snd_pcm_sframes_t pcm_mmap_writei(pcm_device *hw, const char *buffer,
 		c_off = hw->mmap_control->appl_ptr;
 		hw->mmap_control->appl_ptr += size;
 	}
-	
+
 	while(size > 0)
 	{
 		state = read_hw_state(hw);
@@ -709,7 +747,7 @@ static snd_pcm_sframes_t pcm_mmap_writei(pcm_device *hw, const char *buffer,
 				continue;
 			}
 		}
-		
+
 		frames = size;
 		if(frames > (snd_pcm_uframes_t) avail)
 			frames = avail;
@@ -825,10 +863,10 @@ static snd_pcm_sframes_t pcm_mmap_readi(pcm_device *hw, const char *buffer,
 			frames = avail;
 		if(!frames)
 			break;
-			
+
 		/* TODO: Read the data */
 		(void)(buffer);
-		
+
 		if(hw->sync_ptr)
 			hw->sync_ptr->c.control.appl_ptr += frames;
 		else
@@ -881,7 +919,7 @@ int pcm_play_sine(pcm_device *hw)
 		bufcount = 1;
 
 	framesize = calc_framesize(hw);
-	
+
 	for(t = 0; t < bufcount; t++)
 	{
 		buffers[t] = malloc(hw->period_size * framesize);
@@ -948,7 +986,8 @@ int pcm_play_sine(pcm_device *hw)
 			hw->params.access == SNDRV_PCM_ACCESS_MMAP_NONINTERLEAVED)
 		{
 			err = generate_sine(buffers[0], hw->period_size, &phase,
-				1, hw->params.rate, hw->params.freq, hw->params.format);
+				1, hw->params.rate, hw->params.freq, hw->params.format,
+				hw->frame_bits);
 
 			if(!err)
 			{
@@ -960,7 +999,7 @@ int pcm_play_sine(pcm_device *hw)
 		{
 			err = generate_sine(buffers[0], hw->period_size, &phase,
 				hw->params.channels, hw->params.rate, hw->params.freq,
-				hw->params.format);
+				hw->params.format, hw->frame_bits);
 		}
 
 		if(err)
@@ -1044,7 +1083,7 @@ cleanup:
 	t = 0;
 	while(buffers[t])
 		free(buffers[t++]);
-	
+
 	return err;
 }
 
@@ -1058,7 +1097,7 @@ int pcm_record(pcm_device *hw)
 	unsigned pcm_link_ok = 0;
 
 	memset(buffers, 0, sizeof(buffers));
-	
+
 	pcm_hw_params_any(&hw_params);
 
 	err = setup_recording_params(hw, &hw_params);
@@ -1173,7 +1212,7 @@ int pcm_record(pcm_device *hw)
 	pcm_thread_barrier();
 
 	ioctl_pcm_drop(hw);
-	
+
 	BLTS_DEBUG("Recorded %u frames (%u bytes)\n", rec_frames,
 		framesize * rec_frames);
 
@@ -1261,12 +1300,12 @@ static int mmap_init(pcm_device* hw)
 {
 	void *ptr;
 	int err = 0;
-	
+
 	ptr = MAP_FAILED;
 	if(!hw->sync_ptr_ioctl)
 	{
 		ptr = mmap(NULL, page_align(sizeof(struct snd_pcm_mmap_status)),
-			PROT_READ, MAP_FILE|MAP_SHARED, 
+			PROT_READ, MAP_FILE|MAP_SHARED,
 			hw->fd, SNDRV_PCM_MMAP_OFFSET_STATUS);
 	}
 
@@ -1294,7 +1333,7 @@ static int mmap_init(pcm_device* hw)
 	if(!hw->sync_ptr)
 	{
 		ptr = mmap(NULL, page_align(sizeof(struct snd_pcm_mmap_control)),
-			PROT_READ|PROT_WRITE, MAP_FILE|MAP_SHARED, 
+			PROT_READ|PROT_WRITE, MAP_FILE|MAP_SHARED,
 			hw->fd, SNDRV_PCM_MMAP_OFFSET_CONTROL);
 		if(ptr == MAP_FAILED || !ptr)
 		{
@@ -1325,7 +1364,7 @@ static int mmap_uninit(pcm_device* hw)
 	}
 	else
 	{
-		if(hw->mmap_status && munmap((void*)hw->mmap_status, 
+		if(hw->mmap_status && munmap((void*)hw->mmap_status,
 			page_align(sizeof(*hw->mmap_status))) < 0)
 		{
 			BLTS_ERROR("status munmap failed\n");
@@ -1340,7 +1379,7 @@ static int mmap_uninit(pcm_device* hw)
 	}
 	else
 	{
-		if(hw->mmap_control && munmap(hw->mmap_control, 
+		if(hw->mmap_control && munmap(hw->mmap_control,
 			page_align(sizeof(*hw->mmap_control))) < 0)
 		{
 			BLTS_ERROR("control munmap failed\n");
@@ -1356,7 +1395,7 @@ int pcm_init(pcm_device* hw)
 	int err = 0;
 #if defined(CLOCK_MONOTONIC) && defined(SNDRV_PCM_IOCTL_TTSTAMP)
 	struct timespec timespec;
-	
+
 	if(clock_gettime(CLOCK_MONOTONIC, &timespec) == 0)
 	{
 		int mode = SNDRV_PCM_TSTAMP_TYPE_MONOTONIC;
@@ -1379,10 +1418,10 @@ int pcm_init(pcm_device* hw)
 int pcm_close(pcm_device* hw)
 {
 	int ret = 0;
-	
+
 	if(!hw)
 		return -EINVAL;
-		
+
 	if(hw->params.access == SNDRV_PCM_ACCESS_MMAP_INTERLEAVED ||
 		hw->params.access == SNDRV_PCM_ACCESS_MMAP_NONINTERLEAVED)
 	{
@@ -1456,7 +1495,8 @@ static int pcm_async_playback(pcm_device *hw, struct async_playback_state *state
 
 	for (t = 0; t < state->n_buffers; ++t) {
 		ret = generate_sine(state->buffers[t], remain, &(state->phase),
-			hw->params.channels, hw->params.rate, hw->params.freq, hw->params.format);
+			hw->params.channels, hw->params.rate, hw->params.freq,
+			hw->params.format, hw->frame_bits);
 	}
 	if (ret) {
 		BLTS_ERROR("Failed generating sine wave.\n");

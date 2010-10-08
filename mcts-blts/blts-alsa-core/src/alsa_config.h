@@ -72,6 +72,7 @@ typedef struct
 	int freq;
 	int link_card;
 	int link_device;
+	int period_size;
 } alsa_pcm_settings;
 
 typedef struct
