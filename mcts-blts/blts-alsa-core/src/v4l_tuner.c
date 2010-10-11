@@ -194,7 +194,7 @@ int tuner_scan(tuner_device* dev, unsigned int timeout)
 				}
 				BLTS_DEBUG("Found channel: %u kHz\n", freq);
 				dev->channels[dev->chan_count++] = freq;
-				tuner_set_freq(dev, freq);
+				/* tuner_set_freq(dev, freq); */
 				break;
 			}
 			prev_freq = freq;
