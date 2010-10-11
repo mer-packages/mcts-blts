@@ -8,7 +8,8 @@ URL: http://wiki.meego.com/Quality/TestSuite/OpenGLGLES_Performance_Test_Specifi
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libX11-devel libXdamage-devel libXcomposite-devel
-Requires: libbltscommon1 libX11 libXdamage libXcomposite
+BuildRequires: libEGL-devel libGLESv2-devel
+Requires: libbltscommon1 libX11 libXdamage libXcomposite libEGL libGLESv2
 
 %description
 This package contains functional and performance tests for OpenGL ES2.
