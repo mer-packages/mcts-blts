@@ -634,7 +634,11 @@ int alsa_play_rec_pcm(void* user_ptr, int test_num)
 			BLTS_DEBUG("Format: %s\n", format_to_str(threads[t].pcm->format));
 			BLTS_DEBUG("HW resampling: %s\n", threads[t].pcm->hw_resampling?"on":"off");
 			BLTS_DEBUG("Duration: %d seconds\n", threads[t].pcm->duration);
-			BLTS_DEBUG("Period size: %d frames\n", threads[t].pcm->period_size);
+			if(threads[t].pcm->period_size > 0)
+			{
+				BLTS_DEBUG("Period size: %d frames\n",
+					threads[t].pcm->period_size);
+			}
 			if(threads[t].pcm->dir == STREAM_DIR_OUT)
 			{
 				BLTS_DEBUG("Output frequency: %d\n", threads[t].pcm->freq);
