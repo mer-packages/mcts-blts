@@ -1,0 +1,37 @@
+Source: mwts-filesystem
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev (>=1.0.0), min, min-dev
+Maintainer: Reijo Korhonen  <reijo.korhonen@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-filesystem
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, dosfstools, mwts-common (>= 1.0.0)
+Description: MWTS filesystem test
+ Generic File system test asset API libraries and generic configuration
+ C++ module
+ 
+Package: mwts-filesystem-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-dev, mwts-filesystem
+Description: Filesystem CST-MWTS functionality and base classes development package
+ MiddleWare Test Suite Filesystem library
+ C++ headers for test development
+
+Package: mwts-filesystem-min-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-filesystem, min(>=2009w40)
+Description: MWTS-Filesystem Generic Test case scripts for min
+ Min test cases
+ 
+Package: mwts-filesystem-cli
+Section: apps
+Architecture: any
+Depends: ${shlibs:Depends},  mwts-filesystem, min
+Description: Test cases for MWTS-Filesystem by command line
+ Application
+

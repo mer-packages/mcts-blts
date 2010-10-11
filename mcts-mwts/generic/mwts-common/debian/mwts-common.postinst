@@ -1,0 +1,13 @@
+#!/bin/sh
+
+ldconfig
+
+set -e
+
+LOGDIR=/var/log/tests
+
+if [ ! -d $LOGDIR ]
+then
+	mkdir $LOGDIR
+	chmod -R 777 $LOGDIR 
+fi

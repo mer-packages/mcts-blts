@@ -1,0 +1,20 @@
+#ifndef _INCLUDED_MWTS_COMMON
+#define _INCLUDED_MWTS_COMMON
+
+
+#if defined(MWTSCOMMON)
+#  define MWTSCOMMON_EXPORT Q_DECL_EXPORT
+#else
+#  define MWTSCOMMON_EXPORT Q_DECL_IMPORT
+#endif
+
+#include "mwtstest.h"
+#include "mwtslog.h"
+#include "mwtsresult.h"
+#include "mwtsapp.h"
+#include "mwtsconfig.h"
+#include "mwtsmonitor.h"
+#include "mwtsglobal.h"
+#include "mwtsmin.h"
+
+#endif // #ifndef _INCLUDED_MWTS_COMMON

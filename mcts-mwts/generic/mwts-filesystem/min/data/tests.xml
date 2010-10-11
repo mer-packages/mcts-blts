@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-filesystem-tests" domain="System">
+
+
+<!-- TMP tests -->
+	
+	<set name="TMP" description="File system test cases for TEMP file system" feature="TEMP">
+      <case name="NFT-FS-Write_Data_TMP-THRO" subfeature="write" type="Throughput" timeout="600" description=
+            "Purpose 
+	 	    This test measures Write performance for TMP
+            Method
+            Test case makes 20 iterations of file write and calculates throughput. File block size 32kB and block count 16.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Write_Data_TMP-THRO'</step>
+      </case>
+      <case name="NFT-FS-Read_Data_TMP-THRO" subfeature="read" type="Throughput" timeout="600" description=
+            "Purpose 
+	 	    This test measures Read performance for TMP
+            Method
+            Test case makes 20 iterations of file write and calculates throughput. File block size 32kB and block count 16.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Read_Data_TMP-THRO'</step>
+      </case>
+      <case name="NFT-FS-Create_Directory_TMP-LATE" subfeature="directory" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures create directory latency for TMP
+            Method
+            Test case makes 100 iterations of create directory and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Create_Directory_TMP-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_Directory_TMP-LATE" subfeature="directory" type="Latency"  timeout="600" description=
+            "Purpose 
+	 	    This test measures remove directory latency for TMP
+            Method
+            Test case makes 100 iterations of file write and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Remove_Directory_TMP-LATE'</step>
+      </case>
+      <case name="NFT-FS-Create_File_TMP-LATE" subfeature="file" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures file creation performance for TMP
+            Method
+            Test case makes 100 iterations of create file and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Create_File_TMP-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_File_TMP-LATE" subfeature="file" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures file removal performance for TMP
+            Method
+            Test case makes 100 iterations of remove file and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Remove_File_TMP-LATE'</step>
+      </case>
+      <case name="NFT-FS-Sync_Latency_TMP-LATE" subfeature="sync" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures sync latency performance for TMP
+            Method
+            Test case makes 100 iterations of file sync and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Sync_Latency_TMP-LATE'</step>
+      </case>
+    </set>
+    
+<!-- ROOT tests -->
+	
+	<set name="ROOT" description="File system test cases for TEMP file system" feature="TEMP">
+      <case name="NFT-FS-Write_Data_ROOT-THRO" subfeature="write" type="Throughput" timeout="600" description=
+            "Purpose 
+	 	    This test measures Write performance for ROOT
+            Method
+            Test case makes 20 iterations of file write and calculates throughput. File block size 32kB and block count 16.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Write_Data_ROOT-THRO'</step>
+      </case>
+      <case name="NFT-FS-Read_Data_ROOT-THRO" subfeature="read" type="Throughput" timeout="600" description=
+            "Purpose 
+	 	    This test measures Read performance for ROOT
+            Method
+            Test case makes 20 iterations of file write and calculates throughput. File block size 32kB and block count 16.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Read_Data_ROOT-THRO'</step>
+      </case>
+      <case name="NFT-FS-Create_Directory_ROOT-LATE" subfeature="directory" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures create directory latency for ROOT
+            Method
+            Test case makes 100 iterations of create directory and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Create_Directory_ROOT-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_Directory_ROOT-LATE" subfeature="directory" type="Latency"  timeout="600" description=
+            "Purpose 
+	 	    This test measures remove directory latency for ROOT
+            Method
+            Test case makes 100 iterations of file write and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Remove_Directory_ROOT-LATE'</step>
+      </case>
+      <case name="NFT-FS-Create_File_ROOT-LATE" subfeature="file" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures file creation performance for ROOT
+            Method
+            Test case makes 100 iterations of create file and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Create_File_ROOT-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_File_ROOT-LATE" subfeature="file" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures file removal performance for ROOT
+            Method
+            Test case makes 100 iterations of remove file and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Remove_File_ROOT-LATE'</step>
+      </case>
+      <case name="NFT-FS-Sync_Latency_ROOT-LATE" subfeature="sync" type="Latency" timeout="600" description=
+            "Purpose 
+	 	    This test measures sync latency performance for ROOT
+            Method
+            Test case makes 100 iterations of file sync and measures time taken and calculates latency.
+            Pre-/Post-Conditions
+            Test asset is installed to the device. Test must be executed as root.
+            Pass/Fail Criteria
+            Test case returns passed and latency speed is logged into /var/log/tests/.
+	    ">
+		<step>min -c -t 'NFT-FS-Sync_Latency_ROOT-LATE'</step>
+      </case>
+    </set>
+    
+    
+<!-- USBMSD tests -->
+	
+    <set name="USBMSD-MemoryCard" description="File system test cases for mass storage" feature="Filesystem">
+      <case name="NFT-FS-Write_Data_USBMSD_MemoryCard-THRO" subfeature="write" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Write performance for USBMSD-MemoryCard
+        Method
+        Test case measures writes data and measures troughput. File block size 32kB and block count 50000.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Write_Data_USBMSD_MemoryCard-THRO'</step>
+      </case>
+      <case name="NFT-FS-Read_Data_USBMSD_MemoryCard-THRO" subfeature="read" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Write performance for UBI
+        Method
+        Test case measures reads data and measures troughput. File block size 32kB and block count 50000.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Read_Data_USBMSD_MemoryCard-THRO'</step>
+      </case>
+      <case name="NFT-FS-Create_Directory_USBMSD_MemoryCard-LATE" subfeature="directory" type="Latency" timeout="600" description=
+        "Purpose 
+        This test measures Create directory latency in USBMSD-MemoryCard
+        Method
+        Test case creates directory and measures latency
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Create_Directory_USBMSD_MemoryCard-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_Directory_USBMSD_MemoryCard-LATE" subfeature="directory" type="Latency" timeout="600" description=
+        "Purpose 
+        This test measures Remove directory latency in USBMSD-MemoryCard
+        Method
+        Test case removes directory and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Remove_Directory_USBMSD_MemoryCard-LATE'</step>
+      </case>
+      <case name="NFT-FS-Create_File_USBMSD_MemoryCard-LATE" subfeature="file" type="Latency" timeout="600" description=
+        "Purpose 
+        This test measures Create file latency in USBMSD-MemoryCard
+        Method
+        Test case creates file and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Create_File_USBMSD_MemoryCard-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_File_USBMSD_MemoryCard-LATE" subfeature="file" type="Latency" timeout="600" description=
+        "Purpose 
+        This test measures Remove file latency in USBMSD-MemoryCard
+        Method
+        Test case removes file and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Remove_File_USBMSD_MemoryCard-LATE'</step>
+      </case>
+      <case name="NFT-FS-Write_Data_USBMSD_eMMC-THRO" subfeature="write" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Write performance for USBMSD-eMMC
+        Method
+        Test case writes data to eMMC-mass storage and measures latency. File block size 32kB and block count 50000.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Write_Data_USBMSD_eMMC-THRO'</step>
+      </case>
+      <case name="NFT-FS-Read_Data_USBMSD_eMMC-THRO" subfeature="read" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Read performance from USBMSD-eMMC
+        Method
+        Test case reads data from eMMC-mass storage and measures latency. File block size 32kB and block count 50000.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test asset is installed to the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Read_Data_USBMSD_eMMC-THRO'</step>
+      </case>
+      <case name="NFT-FS-Create_Directory_USBMSD_eMMC-LATE" subfeature="directory" type="Latency" timeout="600" description=
+        "Purpose 
+        This test measures Create directory latency in USBMSD-eMMC
+        Method
+        Test case creates directory to eMMC-mass storage and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Create_Directory_USBMSD_eMMC-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_Directory_USBMSD_eMMC-LATE" subfeature="directory" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Remove directory latency in USBMSD-eMMC
+        Method
+        Test case writes data to eMMC-mass storage and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Remove_Directory_USBMSD_eMMC-LATE'</step>
+      </case>
+      <case name="NFT-FS-Create_File_USBMSD_eMMC-LATE" subfeature="file" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Create file latency in USBMSD-eMMC
+        Method
+        Test case creates file to eMMC-mass storage and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Create_File_USBMSD_eMMC-LATE'</step>
+      </case>
+      <case name="NFT-FS-Remove_File_USBMSD_eMMC-LATE" subfeature="file" type="Throughput" timeout="600" description=
+        "Purpose 
+        This test measures Remove file latency in USBMSD-eMMC
+        Method
+        Test case removes file to eMMC-mass storage and measures latency, 100 iterations.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Test must be executed as root. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device.
+        Pass/Fail Criteria
+        Test case returns passed and latency speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-FS-Remove_File_USBMSD_eMMC-LATE'</step>
+      </case>
+    </set>
+      
+  </suite>
+</testdefinition>
+
+

@@ -1,0 +1,19 @@
+#!/bin/sh
+#DEBHELPER#
+
+ldconfig
+
+set -e
+
+EMMC_DIR=/mnt/emmc
+MMC_DIR=/mnt/mmc
+
+if [ ! -d $EMMC_DIR ]
+then
+	mkdir $EMMC_DIR
+fi
+
+if [ ! -d $MMC_DIR ]
+then
+	mkdir $MMC_DIR
+fi

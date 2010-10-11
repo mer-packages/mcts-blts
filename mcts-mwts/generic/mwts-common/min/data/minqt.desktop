@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MIN
+Icon=W-Icon-clock
+Exec=minqt
+
+Categories=DUI;
+

@@ -1,0 +1,31 @@
+Source: mwts-common
+Section: libs
+Priority: optional
+Maintainer: Tuomo Pelkonen <ext-tuomo.1.pelkonen@nokia.com>
+Build-Depends: libqt4-dev, debhelper, min-dev(>=2009w40), min
+Standards-Version: 3.8.0
+
+Package: mwts-common
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core
+Recommends: python
+Description: Common CST-MWTS functionality and base classes
+ MiddleWare Test Suite common library
+ C++ runtime libraries 
+
+Package: mwts-common-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-dev, mwts-common
+Description: Common CST-MWTS functionality and base classes development package
+ MiddleWare Test Suite common library
+ C++ headers for test development
+
+Package: mwts-common-tests
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, min(>=2009w40), libqt4-core
+Description: MiddleWare Test Suite common library MIN scripter interface
+ MiddleWare Test Suite common library
+ MIN scripter interface runtime
