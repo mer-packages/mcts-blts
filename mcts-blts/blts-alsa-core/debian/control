@@ -1,0 +1,14 @@
+Source: blts-alsa-core-tests
+Section: devel
+Priority: extra
+Maintainer: Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>
+Build-Depends: debhelper (>= 5), libbltscommon-dev (>= 0.2.4), linux-libc-dev | linux-kernel-headers, libglib2.0-0, libdbus-1-dev, libdbus-glib-1-dev
+Standards-Version: 3.8.0
+
+Package: blts-alsa-core-tests
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbltscommon1 (>= 0.2.4)
+Recommends: min | min-all
+Description: BLTS ALSA core test set
+ This package contains functional tests for ALSA core.
+ 

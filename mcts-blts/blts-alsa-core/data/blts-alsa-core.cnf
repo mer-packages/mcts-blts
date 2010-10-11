@@ -1,0 +1,230 @@
+# blts-alsa-core.cnf -- Configuration file for blts-alsa-core test cases
+#
+#  Copyright (C) 2000-2010, Nokia Corporation.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, version 2.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#-----------------------------------------------------------------------------
+
+[defaults]
+	[control]
+		card 0
+		set "Master Playback Volume" max
+		set "PCM Playback Volume" max
+		set "Master Playback Switch" off
+		set "Headphone Playback Switch" off
+		set "Front Playback Switch" off
+		set "Capture Switch" off
+		set "IEC958 Playback Switch" off
+		set "IEC958 Default PCM Playback Switch" off
+	[end_control]
+[end_defaults]
+
+[testset]
+	description "front headphone"
+
+	[control]
+		card 0
+		set "Master Playback Switch" on
+		set "Headphone Playback Switch" on
+		set "Front Playback Switch" on
+	[end_control]
+
+	[playback]
+		card 0
+		device 0
+		rates 8000 44100 96000 192000
+		formats S16_LE S32_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED NONINTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		freq 1000
+	[end_playback]
+[end_testset]
+
+[testset]
+	description "digital"
+
+	[control]
+		card 0
+		set "Master Playback Switch" on
+		set "IEC958 Playback Source" "PCM"
+		set "IEC958 Playback Switch" on
+		set "IEC958 Default PCM Playback Switch" on
+	[end_control]
+
+	[playback]
+		card 0
+		device 1
+		rates 44100 96000 192000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		freq 1000
+	[end_playback]
+[end_testset]
+
+[testset]
+	description "front mic with max volume"
+
+	[control]
+		card 0
+		set "Input Source" "Front Mic"
+		set "Capture Switch" on
+		set "Capture Volume" max
+		set "Front Mic Boost" min
+	[end_control]
+
+	[recording]
+		card 0
+		device 0
+		rates 8000 44100 96000 192000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED NONINTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+	[end_recording]
+[end_testset]
+
+[testset]
+	description "front headphone async"
+
+	[control]
+		card 0
+		set "Master Playback Switch" on
+		set "Headphone Playback Switch" on
+		set "Front Playback Switch" on
+	[end_control]
+
+	[playback]
+		card 0
+		device 0
+		rates 44100 192000
+		formats S16_LE S32_LE
+		channels 2
+		access INTERLEAVED
+		hw_resampling 1
+		async ASYNC_SIGNAL ASYNC_TIMER
+		duration 5
+		freq 1000
+	[end_playback]
+[end_testset]
+
+
+[testset]
+	description "front headphone, front mic and digital out"
+
+	[control]
+		card 0
+		set "Master Playback Switch" on
+		set "Headphone Playback Switch" on
+		set "Front Playback Switch" on
+		set "IEC958 Playback Switch" on
+		set "IEC958 Default PCM Playback Switch" on
+		set "Input Source" 0
+		set "Capture Switch" on
+		set "Capture Volume" max
+		set "Front Mic Boost" min
+	[end_control]
+
+	[playback]
+		card 0
+		device 0
+		rates 44100 96000
+		formats S16_LE S32_LE
+		channels 2
+		access INTERLEAVED MMAP_INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 10
+		freq 1000
+	[end_playback]
+
+	[playback]
+		card 0
+		device 1
+		rates 44100 96000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		freq 2000
+	[end_playback]
+
+	[recording]
+		card 0
+		device 0
+		rates 44100 96000
+		formats S16_LE
+		channels 2
+		access MMAP_INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+	[end_recording]
+[end_testset]
+
+
+
+[testset]
+	description "linked front mic and digital out"
+
+	[control]
+		card 0
+		set "Master Playback Switch" on
+		set "Headphone Playback Switch" on
+		set "Front Playback Switch" on
+		set "IEC958 Playback Switch" on
+		set "IEC958 Default PCM Playback Switch" on
+		set "Input Source" 0
+		set "Capture Switch" on
+		set "Capture Volume" max
+		set "Front Mic Boost" min
+	[end_control]
+
+	[playback]
+		card 0
+		device 1
+		rates 44100 96000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		freq 2000
+	[end_playback]
+
+	[recording]
+		card 0
+		device 0
+		rates 44100 96000
+		formats S16_LE
+		channels 2
+		access INTERLEAVED
+		hw_resampling 1
+		async SYNC
+		duration 5
+		link 0 1
+	[end_recording]
+[end_testset]
+

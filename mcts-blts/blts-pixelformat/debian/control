@@ -1,0 +1,29 @@
+Source: blts-pixelformat
+Priority: extra
+Maintainer: Pasi Matilainen <pasi.matilainen@digia.com>
+Build-Depends: debhelper (>= 5), libbltscommon-dev (>= 0.3.0)
+Standards-Version: 3.8.0
+Section: devel
+
+Package: libbltspixelformat-dev
+Section: libdevel
+Architecture: any
+Depends: libbltspixelformat1 (= ${binary:Version})
+Description: BLTS pixel format conversion library dev package
+ This package contains development files for the blts-pixfmt library
+
+Package: libbltspixelformat1
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: BLTS pixel format conversion library
+ Pixel format conversion functions for the BLTS test assets. Based on ffmpeg
+ libswscale.
+
+Package: libbltspixelformat-doc
+Section: doc
+Architecture: any
+Depends: ${misc:Depends}
+Description: BLTS pixel format conversion library documentation package
+ This package contains API documentation for the blts-pixfmt library
+ development files

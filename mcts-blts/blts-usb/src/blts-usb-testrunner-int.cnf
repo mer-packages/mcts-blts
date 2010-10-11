@@ -1,0 +1,72 @@
+# USB test case configuration for parameters
+
+######################
+# General parameters #
+######################
+
+[parameter]
+	name host_driver
+	const "blts_usb_host"
+[end_parameter]
+
+[parameter]
+	name host_driver_path
+	const "/usr/lib/tests/blts-usb-tests/"
+[end_parameter]
+
+[parameter]
+	name peripheral_driver
+	const "blts_gadget"
+[end_parameter]
+
+[parameter]
+	name peripheral_driver_path
+	const "/usr/lib/tests/blts-usb-tests/"
+[end_parameter]
+
+[parameter]
+	name data_transfer_timeout
+	const "10000"
+[end_parameter]
+
+[parameter]
+	name usb_transfer_size
+	const 4096
+[end_parameter]
+
+##########################
+# Endpoint configuration #
+##########################
+
+[parameter]
+	name ep_configuration_file
+	const "/usr/share/blts-usb-tests/ep-configuration-int.cfg"
+[end_parameter]
+
+################
+# Driver setup #
+################
+
+[test]
+	name "USB - Setup host driver"
+	params host_driver host_driver_path
+[end_test]
+
+[test]
+	name "USB - Setup peripheral driver"
+	params peripheral_driver peripheral_driver_path usb_transfer_size ep_configuration_file
+[end_test]
+
+#######################
+# Data transfer cases #
+#######################
+
+[test]
+	name "USB - Read test"
+	params host_driver host_driver_path peripheral_driver peripheral_driver_path usb_transfer_size
+[end_test]
+
+[test]
+	name "USB - Write test"
+	params host_driver host_driver_path peripheral_driver peripheral_driver_path usb_transfer_size
+[end_test]

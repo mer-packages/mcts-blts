@@ -1,0 +1,12 @@
+Source: blts-usb-tests
+Section: devel
+Priority: extra
+Maintainer: Mikko Ojala <mikko.ojala@digia.com>
+Build-Depends: debhelper (>= 5), libbltscommon-dev (>= 0.3.0), libc6-dev (>= 2.5.0)
+Standards-Version: 3.8.0
+
+Package: blts-usb-tests
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbltscommon1 (>= 0.3.0)
+Description: BLTS USB functional tests
+ This package contains USB testing framework

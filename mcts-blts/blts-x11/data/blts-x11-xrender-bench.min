@@ -1,0 +1,331 @@
+# -*- mode: conf-space -*-
+
+# blts-x11-xrender-bench.min -- Min test scripts blts-x11-xrender test cases
+#
+#  Copyright (C) 2000-2010, Nokia Corporation.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, version 2.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# x11Logfile: Used log file
+[Define]
+x11Logfile "blts_x11.txt"
+[Enddefine]
+
+#-----------------------------------------------------------------------------
+# XRender benchmarks
+#-----------------------------------------------------------------------------
+
+[Test]
+title XRender benchmark: PictOpClear
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 1
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpSrc
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 2
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDst
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 3
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpOver
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 4
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpOverReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 5
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpIn
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 6
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpInReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 7
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpOut
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 8
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpOutReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 9
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpAtop
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 10
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpAtopReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 11
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpXor
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 12
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpAdd
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 13
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpSaturate
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 14
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointClear
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 15
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointSrc
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 16
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointDst
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 17
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointOver
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 18
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointOverReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 19
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointIn
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 20
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointInReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 21
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointOut
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 22
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointOutReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 23
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointAtop
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 24
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointAtopReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 25
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpDisjointXor
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 26
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointClear
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 27
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointSrc
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 28
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointDst
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 29
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointOver
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 30
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointOverReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 31
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointIn
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 32
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointInReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 33
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointOut
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 34
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointOutReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 35
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointAtop
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 36
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointAtopReverse
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 37
+delete xtest
+[Endtest]
+
+[Test]
+title XRender benchmark: PictOpConjointXor
+timeout 30000
+createx libbltsx11 xtest
+xtest xrenderbench x11Logfile 10 38
+delete xtest
+[Endtest]
+

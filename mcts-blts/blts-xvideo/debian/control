@@ -1,0 +1,14 @@
+Source: blts-xvideo-tests
+Section: devel
+Priority: extra
+Maintainer: Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>
+Build-Depends: debhelper (>= 5), libbltscommon-dev (>= 0.2.4), libxv-dev (>= 2:1.0.4), libx11-dev (>= 2:1.1.5), libbltspixelformat-dev (>= 0.1.0)
+Standards-Version: 3.8.0
+
+Package: blts-xvideo-tests
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbltscommon1 (>= 0.2.4)
+Recommends: min | min-all
+Description: BLTS XVideo test set
+ This package contains functional tests for XVideo.
+

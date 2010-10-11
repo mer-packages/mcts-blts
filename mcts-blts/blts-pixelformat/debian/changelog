@@ -1,0 +1,7 @@
+blts-pixelformat (0.1.2) unstable; urgency=low
+
+  [ Pasi Matilainen ]
+  * Initial upload for Meego (changelog summarized)
+  * Support for conversion between variety of formats.
+
+ -- Kari Laakso <kari.laakso@digia.com>  Thu, 09 Sep 2010 10:44:41 +0300

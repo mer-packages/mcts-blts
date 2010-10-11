@@ -1,0 +1,55 @@
+blts-ofono-tests (0.1.10) unstable; urgency=low
+
+  [ Mikko Ojala ]
+  * Multiparty call test
+  * Private chat call test
+  
+ -- Mikko Ojala <mikko.ojala@digia.com>  Fri, 10 Sep 2010 14:41:12 +0300
+
+blts-ofono-tests (0.1.9) unstable; urgency=low
+
+  [ Mikko Ojala ]
+  * Call waiting test case added
+  * Propose scan test case added
+  * Supplementary services disable cases added
+  * SMSC number test
+
+ -- Mikko Ojala <mikko.ojala@digia.com>  Mon, 16 Aug 2010 17:36:33 +0300
+
+blts-ofono-tests (0.1.8) unstable; urgency=low
+
+  [ Jussi Saavalainen ]
+  * oFono call forwarding cases verify result by using oFono properties
+
+  [ Mika Niinistö ]
+  * Add modem online and modem offline test cases
+
+ -- Mika Niinistö <mika.niinisto@digia.com>  Thu, 24 Jun 2010 15:28:53 +0300
+
+blts-ofono-tests (0.1.7) unstable; urgency=low
+
+  * Fixes: NB#166290 - oFono cases fail to reset the modem state
+  * Test init and finalize now reset call and supplementary service state. This
+    should fix problems with running tests in series.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Thu, 10 Jun 2010 13:18:48 +0300
+
+blts-ofono-tests (0.1.6) unstable; urgency=low
+
+  * Initial upload for Meego (changelog summarized)
+  * Modem information query
+  * Support for running test asset with configuration file
+  * Voice call create/answer tests
+  * SMS send/receive tests
+  * Call disconnects
+  * SIM handling
+  * Dual voice call cases
+  * Call meter
+  * Call barring
+  * Call forwardings
+  * DTMF
+  * Call volume
+  * Hide caller ID
+  * Added listening for stray signals for future use
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Fri, 21 May 2010 10:20:18 +0300

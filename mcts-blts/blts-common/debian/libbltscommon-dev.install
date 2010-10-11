@@ -1,0 +1,5 @@
+usr/include/blts_*.h
+usr/lib/pkgconfig/blts*
+usr/lib/*.so
+usr/lib/*.a
+usr/lib/*.la

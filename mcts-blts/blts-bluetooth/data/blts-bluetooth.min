@@ -1,0 +1,159 @@
+# -*- mode: conf-space -*-
+
+# blts-bluetooth.min -- Min test scripts for blts-bluetooth test cases
+#
+#  Copyright (C) 2000-2010, Nokia Corporation.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, version 2.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#-----------------------------------------------------------------------------
+
+# BT drivers & tools check: find drivers and Bluez tools
+[Test]
+title Core-Bluetooth drivers and userspace check
+createx libbltsbluetooth bbt
+bbt DriverCheck "/var/log/tests/Core-Bluetooth_drivers_and_userspace_check.log"
+delete bbt
+[Endtest]
+
+# BT Scan test: scans with first available adapter and does name resolution
+[Test]
+title Core-Bluetooth scan
+createx libbltsbluetooth bbt
+bbt Scan "/var/log/tests/Core-Bluetooth_scan.log"
+delete bbt
+[Endtest]
+
+# BT L2CAP client: connect then disconnect with device running server
+[Test]
+title Core-Bluetooth connect with L2CAP
+createx libbltsbluetooth bbt
+bbt L2CAP_EchoClient "/var/log/tests/Core-Bluetooth_connect_with_L2CAP.log" "00:02:72:0B:98:FE" 0
+delete bbt
+[Endtest]
+
+# BT L2CAP client: transmit data, receive same data (verify)
+[Test]
+title Core-Bluetooth ping-pong transfer with L2CAP
+createx libbltsbluetooth bbt
+bbt L2CAP_EchoClient "/var/log/tests/Core-Bluetooth_ping-pong_transfer_with_L2CAP.log" "00:02:72:0B:98:FE" 1
+delete bbt
+[Endtest]
+
+# BT L2CAP server: serves one incoming L2CAP test client (connect/echo), then
+# stops
+[Test]
+title Core-Bluetooth receive L2CAP connection
+createx libbltsbluetooth bbt
+bbt L2CAP_EchoServer "/var/log/tests/Core-Bluetooth_L2CAP_server.log"
+delete bbt
+[Endtest]
+
+# BT RFCOMM client: connect then disconnect with device running server
+[Test]
+title Core-Bluetooth connect with RFCOMM
+createx libbltsbluetooth bbt
+bbt RFCOMM_EchoClient "/var/log/tests/Core-Bluetooth_connect_with_RFCOMM.log" "00:02:72:0B:98:FE" 0
+delete bbt
+[Endtest]
+
+# BT RFCOMM client: transmit data, receive same data (verify)
+[Test]
+title Core-Bluetooth ping-pong transfer with RFCOMM
+createx libbltsbluetooth bbt
+bbt RFCOMM_EchoClient "/var/log/tests/Core-Bluetooth_ping-pong_transfer_with_RFCOMM.log" "00:02:72:0B:98:FE" 1
+delete bbt
+[Endtest]
+
+# BT RFCOMM server: serves one incoming RFCOMM test client (connect/echo), then
+# stops
+[Test]
+title Core-Bluetooth receive RFCOMM connection
+createx libbltsbluetooth bbt
+bbt RFCOMM_EchoServer "/var/log/tests/Core-Bluetooth_RFCOMM_server.log"
+delete bbt
+[Endtest]
+
+# BT HCI Connect - disconnect: link-only connection w/remote
+[Test]
+title Core-Bluetooth connect with HCI
+createx libbltsbluetooth bbt
+bbt HCI_Connect "/var/log/tests/Core-Bluetooth_connect_with_HCI.log" "00:02:72:0B:98:FE"
+delete bbt
+[Endtest]
+
+# BT HCI Transfer ACL data - counterpart to HCI_Receive_ACL_data case
+[Test]
+title Core-Bluetooth transfer ACL data with HCI
+createx libbltsbluetooth bbt
+bbt HCI_Transfer_ACL_data "/var/log/tests/Core-Bluetooth_transfer_ACL_data_with_HCI.log" "00:02:72:0B:98:FE"
+delete bbt
+[Endtest]
+
+# BT HCI Receive ACL data - counterpart to HCI_Transfer_ACL_data case
+[Test]
+title Core-Bluetooth receive ACL data with HCI
+createx libbltsbluetooth bbt
+bbt HCI_Receive_ACL_data "/var/log/tests/Core-Bluetooth_receive_ACL_data_with_HCI.log"
+delete bbt
+[Endtest]
+
+# BT HCI Change name - counterpart to HCI_Verify_Name
+[Test]
+title Core-Bluetooth change name with HCI
+createx libbltsbluetooth bbt
+bbt HCI_Change_Name "/var/log/tests/Core-Bluetooth_change_name_with_HCI.log"
+delete bbt
+[Endtest]
+
+# BT HCI Verify name change - counterpart to HCI_Change_Name
+[Test]
+title Core-Bluetooth verify name with remote HCI
+createx libbltsbluetooth bbt
+#bbt HCI_Verify_Name "/var/log/tests/Core-Bluetooth_verify_name_with_remote_HCI.log" "00:02:72:0B:98:FE"
+bbt HCI_Verify_Name "/var/log/tests/Core-Bluetooth_verify_name_with_remote_HCI.log" "00:25:D0:5B:61:1C"
+delete bbt
+[Endtest]
+
+# BT HCI Change class - counterpart to HCI_Verify_Class
+[Test]
+title Core-Bluetooth change class with HCI
+createx libbltsbluetooth bbt
+bbt HCI_Change_Class "/var/log/tests/Core-Bluetooth_change_class_with_HCI.log"
+delete bbt
+[Endtest]
+
+# BT HCI Verify class change - counterpart to HCI_Change_Class
+[Test]
+title Core-Bluetooth verify class with remote HCI
+createx libbltsbluetooth bbt
+#bbt HCI_Verify_Class "/var/log/tests/Core-Bluetooth_verify_class_with_remote_HCI.log" "00:02:72:0B:98:FE"
+bbt HCI_Verify_Class "/var/log/tests/Core-Bluetooth_verify_class_with_remote_HCI.log" "00:25:D0:5B:61:1C"
+delete bbt
+[Endtest]
+
+# BT HCI Reset Connection - connect - reset connection and connect again
+[Test]
+title Core-Bluetooth reset connection with HCI
+createx libbltsbluetooth bbt
+bbt HCI_Reset_Connection "/var/log/tests/Core-Bluetooth_reset_connection_with_HCI.log" "00:02:72:0B:98:FE"
+delete bbt
+[Endtest]
+
+# BT HCI: Trace incoming connection and audit sequence
+[Test]
+title Core-Bluetooth audit incoming HCI connection
+createx libbltsbluetooth bbt
+bbt HCI_Audit_Incoming_Connect "/var/log/tests/Core-Bluetooth audit incoming HCI connection.log"
+delete bbt
+[Endtest]

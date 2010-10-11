@@ -1,0 +1,100 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+
+<node name="/org/ofono/Modem">
+  <interface name="org.ofono.Modem">
+    <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol" value="org_ofono_Modem" />
+    <annotation name="org.freedesktop.DBus.GLib.CSymbol" value="org_ofono_Modem" />
+
+<!--
+                        Returns properties for the modem object. See
+                        the properties section for available properties.
+
+                        Possible Errors: [service].Error.InvalidArguments
+-->
+    <method name="GetProperties">
+      <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+      <arg type="a{sv}" name="properties" direction="out" />
+    </method>
+
+<!--
+                        Changes the value of the specified property. Only
+                        properties that are listed as read-write are
+                        changeable. On success a PropertyChanged signal
+                        will be emitted.
+
+                        Possible Errors: [service].Error.InvalidArguments
+                                         [service].Error.DoesNotExist
+-->
+    <method name="SetProperty">
+      <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+      <arg type="s" name="property" direction="in" />
+      <arg type="v" name="value" direction="in" />
+    </method>
+
+<!--
+Signals         PropertyChanged(string name, variant value)
+
+                        This signal indicates a changed value of the given
+                        property.
+-->
+    <signal name="PropertyChanged">
+      <arg type="s" name="property" direction="out" />
+      <arg type="v" name="value" direction="out" />
+    </signal>
+
+<!--
+Properties      boolean Powered [readwrite]
+
+                        Boolean representing the power state of the modem
+                        device.
+
+                boolean Online [readwrite]
+
+                        Boolean representing the rf state of the modem.
+                        Online is false in flight mode.
+
+                string Name [readonly, optional]
+
+                        Friendly name of the modem device.
+
+                string Manufacturer [readonly, optional]
+
+                        String representing the manufacturer of the modem
+                        device.
+
+                        This is usually obtained by the +CGMI AT command.
+
+                string Model [readonly, optional]
+
+                        String representing the model of the modem device.
+
+                        This is usually obtained by the +CGMM AT command.
+
+                string Revision [readonly, optional]
+
+                        String representing the revision of the modem device.
+
+                        This is usually obtained by using the +CGMR AT command.
+
+                string Serial [readonly, optional]
+
+                        String represeting the serial number of the modem
+                        device.
+
+                        This is usually obtained by using the +CGSN AT command.
+
+                array{string} Features [readonly]
+
+                        List of currently enabled features. It uses simple
+                        string abbreviations like "sms", "sim" etc.
+
+                array{string} Interfaces [readonly]
+
+                        Set of interfaces currently supported by the mode
+                        device. The set depends on the state of the device
+                        (registration status, SIM inserted status,
+                        network capabilities, device capabilities, etc.)
+-->
+
+  </interface>
+</node>
