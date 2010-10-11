@@ -8,7 +8,11 @@ Homepage: http://wiki.meego.com/Quality/TestSuite/oFono_Modem_API_Test_Plan
 
 Package: blts-ofono-tests
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbltscommon1 (>= 0.3.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, blts-ofono-tests-config
 Description: BLTS oFono functional tests
  This package contains oFono tests
 
+Package: blts-ofono-tests-config
+Architecture: any
+Description: Configuration for BLTS oFono functional tests
+ This package contains configuration for oFono tests
