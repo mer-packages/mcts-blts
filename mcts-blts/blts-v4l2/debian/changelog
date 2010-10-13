@@ -1,3 +1,10 @@
+blts-v4l2-tests (0.3.6) unstable; urgency=low
+
+  [ Jussi Saavalainen ]
+  * Reorder includes to fix compile error with new libjpeg headers.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 13 Oct 2010 12:51:44 +0300
+
 blts-v4l2-tests (0.3.5) unstable; urgency=low
 
   [ Kimmo Myllyvirta ]

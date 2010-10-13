@@ -1,3 +1,6 @@
+* Wed 13 Oct 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.6
+- Reorder includes to fix compile error with new libjpeg headers.
+
 * Wed 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.5
 - Add RPM packaging
 - Binary name changed to "blts-v4l2-tests"
