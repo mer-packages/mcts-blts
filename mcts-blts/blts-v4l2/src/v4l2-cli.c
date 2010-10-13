@@ -25,11 +25,11 @@
 #include <blts_log.h>
 #include <blts_params.h>
 #include <blts_timing.h>
+#include "v4l2-xvideo.h"
 #include "v4l2-ioctl.h"
 #include "v4l2-profiler.h"
 #include "camera.h"
 #include "blts-v4l2-definitions.h"
-#include "v4l2-xvideo.h"
 #include "v4l2-controls.h"
 #include "v4l2-priority.h"
 #include "v4l2-stream-quality.h"

@@ -19,11 +19,11 @@
 */
 
 #define _GNU_SOURCE
+#include "v4l2-xvideo.h"
 #include "blts-bayer.h"
 #include "camera.h"
 #include "v4l2-ioctl.h"
 #include "blts-v4l2-definitions.h"
-#include "v4l2-xvideo.h"
 #include <stdio.h>
 #include <blts_log.h>
 #include <blts_timing.h>

@@ -25,11 +25,11 @@
 #include <blts_log.h>
 
 /* Own includes */
+#include "v4l2-xvideo.h"
 #include "v4l2-priority.h"
 #include "blts-v4l2-definitions.h"
 #include "camera.h"
 #include "v4l2-ioctl.h"
-#include "v4l2-xvideo.h"
 
 /* Own definitions */
 #define SCREEN_WIDTH		848

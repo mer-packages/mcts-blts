@@ -21,6 +21,7 @@
 #include <string.h>
 #include <pthread.h>
 #include <blts_log.h>
+#include "v4l2-xvideo.h"
 #include "v4l2-profiler.h"
 
 #define MAX_PROFILED_IOCTLS 256
