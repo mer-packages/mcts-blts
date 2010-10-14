@@ -1,0 +1,97 @@
+-----------------------
+ Introduction
+-----------------------
+1. Libsocialweb  
+Libsocialweb is a data client and server which will fetch data from the social web such as lastfm, Twitter ) in MeeGo. 
+The libSocialWeb provide services to get live feed of items related to you and your contacts, and update your status 
+on social web. 
+Libsocialweb runs as a core daemon process (libsocialweb-core) which loads multiple backends sources for different 
+social web services, such as flickr, twitter, last.fm. The libsocialweb core sits on the DBus at the well known name 
+com.meego.libsocialweb, and defines several general DBus interfaces for services. By the loaded different backend sources, 
+the interfaces are implemented to communicate with services:
+
+2. Libsocialweb-qt
+Libsocialweb-qt is a Qt library which make Qt application invoke the libsocialweb API easily. 
+
+3. Libsocialweb Test Suites
+Libsocialweb test suites are developed with focusing on DBus API level testing for different services. The test suites are cover:
+core -- test case for common core dbus API
+lastfm -- test cases for dbus API with lastfm services
+At the same time, the test sets 'libsocialweb-qt' and 'libsocialweb_key_store_key_fob' are also provided.
+key_mgr -- test cases for C API for key store and fob.
+qt -- test cases for the Qt API for different services.
+
+
+-----------------------
+Build and Run
+-----------------------
+For compile the source package, the below packages and its' depending packages should be installed in meego first!
+1. 'libgnome-keyring-devel'
+2. 'libsocialweb-devel'
+3. 'libsocialweb-qt-devel'
+4. 'libsocialweb-keys'
+
+Step1 and Step2 are only required if you start with source package 
+If you already have the mcts-lsw-test-1.0.0 package installed in system, plesase move forward with Step3. 
+
+Step1: 
++ Build in meego system, you need install build system and rpmbuild
+cd /path/to/<mcts-lsw-tests-source> 
+$ ./pack.sh 
+
+This will generate mcts-lsw-test-1.0.0-1.i386.rpm
+
+Step2:
+To install the rpm package, the packages 'qt-qmake' and 'libsocialweb-qt-devel' should have been installed and the command 'qmake' is in the 'PATH'.
++ Install pacakge
+$ rpm -ivh mcts-lsw-test-1.0.0-1.i386.rpm
+
+Step3:
++ Test environment setup
+Refer the section Test environment setup
+
+Step4:
++ Run
++ Notes: Pls make sure you run following command in a regular user account.
+$ cd /opt/mcts-lsw-tests
+$ testkit-lite -f /usr/share/mcts-lsw-tests/tests.xml
+
+
+-----------------------
+Common Install
+-----------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+
+-----------------------
+Test Environment Setup
+-----------------------
+1. Check libsocialweb-core is running in the system.
+2. Check libsocialweb provider DBUS services. In terminal, run 
+$ find /usr/share/dbus-1/services | grep com.meego.libsocialweb
+
+
+-----------------------
+Known Issues
+-----------------------
+1. All cases should be run in a Xterm. 
+2. In terminal, the date should be set correctly. 
+3. Before running the test suite, the account info of the corresponding service 'last.fm' and 'twitter' should be set correctly.
+   If the setting GUI ('bisho' on network, 'DuiControlPanel' on handset) is not available, the scripts 
+   "dbus_api/reading_user_account" and "dbus_api/setting_user_account" can be used to set the user account for the corresponding service. 
+       For instance, to fetch the user account of "lastfm"
+       $./reading_user_account -s lastfm
+       To fetch the user password of "lastfm"
+       $./reading_user_account -s lastfm -p
+
+       To set the user account of "lastfm"
+       $./setting_user_account -s lastfm -u USER_NAME -p PASSWORD
+
+Note: you can report the defects of this test suite to jenny.q.cao@intel.com shaofeng.tang@intel.com
+
+-----------------------
+TODO
+-----------------------
+1. Develop more test cases for other services, such as flickr, twitter. 
