@@ -14,8 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-configdir = $(libdir)/tests/blts-x11-tests
-config_DATA = \
+minconfigdir = $(libdir)/tests/blts-x11-tests
+minconfig_DATA = \
 	blts-x11-smoke.min \
 	blts-x11-min.conf \
 	blts-x11-xrender-bench.min \
@@ -26,4 +26,6 @@ images_DATA = \
 	images/image1.bmp \
 	images/image2.bmp
 
-EXTRA_DIST = $(config_DATA)
+EXTRA_DIST = \
+	$(minconfig_DATA) \
+	$(images_DATA)

@@ -56,7 +56,8 @@ typedef struct
 } my_ofono_data;
 
 void get_modem_list(char* data, gpointer user_data);
-void find_modem(char *key, GValue* value, gpointer user_data);
+//void find_modem(char *key, GValue* value, gpointer user_data);
+void find_modem(gpointer modem,  gpointer user_data);
 int my_ofono_get_modem(my_ofono_data* data);
 void hash_entry_gvalue_print(gpointer key, GValue* val, __attribute__((unused)) gpointer user_data);
 

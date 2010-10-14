@@ -22,7 +22,7 @@ requiredlibs = -lm -lrt
 h_sources = sms-cases.h call-cases.h ofono-modem-bindings.h ofono-general.h \
 	ofono-util.h call-forwarding.h sim-cases.h call-volume-cases.h \
 	call-meter-cases.h call-barring.h dual-call-cases.h modem-cases.h \
-	multiparty-call-cases.h
+	multiparty-call-cases.h ofono-call-bindings.h
 
 c_sources = blts-ofono.c sms-cases.c call-cases.c ofono-util.c \
 	call-forwarding.c sim-cases.c call-volume-cases.c call-meter-cases.c \
@@ -41,24 +41,22 @@ signal-marshal.c: signal-marshal.list signal-marshal.h
 org-ofono-Modem.h: $(top_builddir)/xml/org-ofono-Modem.xml
 	$(DBUS_BINDING_TOOL) --mode=glib-client --prefix=org_ofono_Modem $< > $@
 
-distclean-local:
-	$(RM) $(generated_sources)
+bin_PROGRAMS = blts-ofono-tests
 
-bin_PROGRAMS = blts-ofono
+# configdir is checked from configure
+config_DATA = blts-ofono-tests.cnf
 
-configdir = $(libdir)/tests/blts-ofono-tests/
-config_DATA = blts-ofono.cnf
-
-blts_ofono_SOURCES = $(generated_sources) $(h_sources) $(c_sources) 
-blts_ofono_CFLAGS = $(AM_CFLAGS)
-blts_ofono_LDADD = $(requiredlibs) $(PACKAGE_LIBS)
+blts_ofono_tests_SOURCES = $(generated_sources) $(h_sources) $(c_sources)
+blts_ofono_tests_CFLAGS = $(AM_CFLAGS)
+blts_ofono_tests_LDADD = $(requiredlibs) $(PACKAGE_LIBS)
 
 EXTRA_DIST = \
-	signal-marshal.list
+	signal-marshal.list \
+	$(config_DATA)
 
 BUILT_SOURCES = \
+	$(generated_sources) \
 	org-ofono-Modem.h
 
 CLEANFILES = \
-	$(BUILT_SOURCES) \
-	$(generated_sources)
+	$(BUILT_SOURCES)

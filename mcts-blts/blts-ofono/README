@@ -31,15 +31,15 @@ Alternatively, the packagin can be skipped by just running with Autotools:
 
 Running the tests
 
-blts-ofono
+blts-ofono-tests
 or
-blts-ofono -e [test number]
+blts-ofono-tests -e [test number]
 or
-blts-ofono -C [config file]
+blts-ofono-tests -C [config file]
 
-NOTE: Default config file is installed to /usr/share/blts-ofono-tests/blts-ofono.cnf.
+NOTE: Default config file is installed to /etc/blts/blts-ofono-tests.cnf.
 NOTE: Running cases always resets call forwardings and call barrings with each test case
-	use -o switch to give blts-ofono access to do so.
+	use -o switch to give blts-ofono-tests access to do so.
 
 N900 specific
 

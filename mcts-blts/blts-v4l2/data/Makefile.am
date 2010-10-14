@@ -14,13 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-configdir = $(libdir)/tests/blts-v4l2-tests
-
-config_DATA = blts-v4l2.min \
+minconfigdir = $(libdir)/tests/blts-v4l2-tests
+minconfig_DATA = \
+	blts-v4l2.min \
 	blts-v4l2-SMOKE.min \
 	min.conf \
-	blts-v4l2-req_file.cfg \
-	blts-v4l2-vivi.cnf \
-	blts-v4l2-n900.cnf
+	blts-v4l2-req_file.cfg
 
-EXTRA_DIST = $(config_DATA)
+config_DATA = \
+	blts-v4l2-tests.cnf
+
+EXTRA_DIST = \
+	$(config_DATA) \
+	$(minconfig_DATA)

@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-x11-tests, 0.0.12, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-x11-tests, 0.0.13, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts_x11_test.c])
@@ -42,16 +42,25 @@ AC_CHECK_LIB([rt], [clock_gettime])
 AC_CHECK_LIB([minevent], [min_event_create])
 AC_CHECK_LIB([mintmapi], [tm_printf])
 AC_CHECK_LIB([minutils], [mip_get_uint])
-AC_CHECK_LIB([bltscommon], [log_open],,[AC_MSG_ERROR([cannot find libbltscommon])])
-
-# Library configs
-BLTS_COMMON_CFLAGS=`pkg-config --cflags bltscommon`
-BLTS_COMMON_LIBS=`pkg-config --libs bltscommon`
 
 AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
-AC_SUBST(BLTS_COMMON_CFLAGS)
-AC_SUBST(BLTS_COMMON_LIBS)
+# Library configs
+PKG_CHECK_MODULES(PACKAGE, [
+        bltscommon
+        x11
+        xv
+        xtst
+        xfixes
+        xcomposite
+        xrender
+        xrandr
+        xdamage
+        xi
+])
+
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_LIBS)
 
 # Checks for header files.
 AC_HEADER_STDC

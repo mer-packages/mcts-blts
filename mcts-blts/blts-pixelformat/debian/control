@@ -1,7 +1,7 @@
 Source: blts-pixelformat
 Priority: extra
 Maintainer: Pasi Matilainen <pasi.matilainen@digia.com>
-Build-Depends: debhelper (>= 5), libbltscommon-dev (>= 0.3.0)
+Build-Depends: debhelper (>= 5), cdbs, libbltscommon-dev (>= 0.3.0)
 Standards-Version: 3.8.0
 Section: devel
 

@@ -159,7 +159,7 @@ static gboolean sms_init_start(gpointer data)
 	else
 		g_value_set_static_string(state->smsc, SMS_SMSC_ADDRESS);
 
-	org_ofono_SmsManager_set_property_async(sms_manager, "ServiceCenterAddress", state->smsc,
+	org_ofono_MessageManager_set_property_async(sms_manager, "ServiceCenterAddress", state->smsc,
 		sms_init_complete, state);
 
 	FUNC_LEAVE();
@@ -255,7 +255,7 @@ static void sms_receive_test_incoming_message_cb(__attribute__((unused)) DBusGPr
 
 
 /* Return from the send call. */
-static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, GError *error, gpointer data)
+static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *OUT_arg2, GError *error, gpointer data)
 {
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
@@ -266,6 +266,7 @@ static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, GError 
 	} else {
 		state->result = 0;
 		log_print("SMS Send success.\n");
+		BLTS_TRACE("Message path is %s\n", OUT_arg2);
 	}
 
 	g_main_loop_quit(state->mainloop);
@@ -280,7 +281,7 @@ static gboolean sms_send_start(gpointer data)
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
 
-	org_ofono_SmsManager_send_message_async(state->sms_manager,
+	org_ofono_MessageManager_send_message_async(state->sms_manager,
 		state->address, state->message, sms_send_complete, state);
 
 	log_print("Starting send to %s, message content:\n", state->address);
@@ -322,7 +323,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "12345678901234567890123");
 	log_print("Changing SMSC number (length 23)...\n");
-	if(!org_ofono_SmsManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
@@ -337,7 +338,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "1234567890123456789012");
 	log_print("Changing SMSC number (length 22)...\n");
-	if(!org_ofono_SmsManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
@@ -354,7 +355,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "123456789012345678901");
 	log_print("Changing SMSC number (length 21)...\n");
-	if(!org_ofono_SmsManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
@@ -371,7 +372,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "12345678901234567890");
 	log_print("Changing SMSC number (length 20)...\n");
-	if(!org_ofono_SmsManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Can't change SMSC number");
 		display_dbus_glib_error(error);

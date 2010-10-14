@@ -1021,8 +1021,8 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Propose scan", ofono_propose_scan, 120000 },
 	//... seconds, and up to several minutes on some modems
 	{ "oFono - SMSC number test", ofono_sms_center_number, 10000 },
-	{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 60000 },
-	{ "oFono - Private call test", blts_ofono_case_private_chat, 60000 },
+	//{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 60000 },
+	//{ "oFono - Private call test", blts_ofono_case_private_chat, 60000 },
 
 	BLTS_CLI_END_OF_LIST
 };

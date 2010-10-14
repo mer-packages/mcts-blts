@@ -16,7 +16,7 @@
 
 AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -fPIC
 
-requiredlibs = -lm -lrt -lX11 -lXv -lXtst -lXfixes -lXcomposite -lXrender -lXrandr -lXdamage -lXi
+requiredlibs = -lm -lrt
 
 if WANT_MIN
 min_libs = -lminutils -lmintmapi -lminevent
@@ -59,15 +59,14 @@ libbltsx11_la_LDFLAGS = $(AM_LDFLAGS) -shared -module
 
 endif
 
-bin_PROGRAMS =	blts_x11_test \
-				blts_xrender_bench
+bin_PROGRAMS =	blts-x11-tests \
+				blts-xrender-bench
 
-blts_x11_test_SOURCES = $(h_sources) $(c_sources) \
-	blts_x11_test.c
-blts_x11_test_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS)
-blts_x11_test_LDADD = $(requiredlibs) $(BLTS_COMMON_LIBS)
+blts_x11_tests_SOURCES = $(h_sources) $(c_sources) blts_x11_test.c
+blts_x11_tests_CFLAGS = $(AM_CFLAGS) $(PACKAGE_CFLAGS)
+blts_x11_tests_LDADD = $(requiredlibs) $(PACKAGE_LIBS)
 
 blts_xrender_bench_SOURCES = blts_x11_util.c xrender_bench.c
-blts_xrender_bench_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS)
-blts_xrender_bench_LDADD = $(requiredlibs) $(BLTS_COMMON_LIBS)
+blts_xrender_bench_CFLAGS = $(AM_CFLAGS) $(PACKAGE_CFLAGS)
+blts_xrender_bench_LDADD = $(requiredlibs) $(PACKAGE_LIBS)
 

@@ -62,14 +62,17 @@ Test cases
 Running the tests
 =================
 
-Run as root (example for N900):
+Run as root:
 
- $ blts_xvideo_test -C /usr/lib/tests/blts-xvideo-tests/blts-xvideo-n900.cnf
+ $ blts-xvideo-tests
+
+This will execute tests using default configuration file, which is;
+/etc/blts/blts-xvideo-tests.cnf
 
 The test results are printed to terminal and also to
 /var/log/tests/blts_xvideo.txt.
 
-Other possible execution parameters for blts_xvideo_test:
+Other possible execution parameters for blts-xvideo-tests:
    * -l: Used log file, default blts_xvideo_core.txt
    * -e: Execute single or multiple selected tests, for example -e 1,4,5.
    * -en: Execute test by name, for example -en "My test X"

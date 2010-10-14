@@ -416,8 +416,8 @@ static void microphone_volume_call_complete(__attribute__((unused)) DBusGProxy *
 	}
 	else
 	{
-		changed_value = atoi(state->new_speaker_volume);
-		g_value_set_uchar(new_value, atoi(state->new_microphone_volume));
+		changed_value = atoi(state->new_microphone_volume);
+		g_value_set_uchar(new_value, changed_value);
 	}
 
 	LOG("changed value: %d\n", changed_value);

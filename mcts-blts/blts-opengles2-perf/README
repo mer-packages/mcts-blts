@@ -33,13 +33,15 @@ To generate debian package
 
 Running the tests
 
- $ blts_gles2_perf_test
+Run as root:
 
-To see other options for blts_gles2_perf_test
+ $ blts-opengles2-tests
 
- $ blts_gles2_perf_test -?
-USAGE: ./blts_gles2_perf_test [-l mylog.txt] [-e test1,test2...] [-en "my test"]
-[-s] [-?] [-nc] [-t execution_time_in_seconds] [-w window_width] 
+To see other options for blts-opengles2-tests
+
+ $ blts-opengles2-tests -?
+USAGE: ./blts-opengles2-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
+[-s] [-?] [-nc] [-t execution_time_in_seconds] [-w window_width]
 [-h window_height][-d depth] [-c]
 -l: Used log file, default blts_gles2_perf.txt
 -e: Execute single or multiple selected tests, for example -e 1,4,5.
@@ -57,6 +59,6 @@ You can also run the tests using min
 
  $ min
 
-Execute the tests without window manager. Composite window managers, such as 
+Execute the tests without window manager. Composite window managers, such as
 Compiz, slow down execution considerably.
 

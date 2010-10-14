@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-configdir = $(libdir)/tests/blts-opengles2-benchmark
+configdir = $(libdir)/tests/blts-opengles2-tests
 config_DATA = \
 	blts-opengles2-perf.min \
 	blts-opengles2-perf-smoke.min \
@@ -35,4 +35,7 @@ widgets_DATA = \
 	images/widgets/image3.bmp \
 	images/widgets/image4.bmp
 
-EXTRA_DIST = $(config_DATA)
+EXTRA_DIST = \
+	$(config_DATA) \
+	$(images_DATA) \
+	$(widgets_DATA)

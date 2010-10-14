@@ -27,47 +27,47 @@
       -->
 <!-- 1: ALSA presence check -->
       <case name="Core-ALSA%20core%20presence%20check">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20presence%20check.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 1</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20presence%20check.log -e 1</step>
       </case>
 
 <!--2: Open and close PCM devices -->
       <case name="Core-ALSA%20core%20open%20and%20close%20PCM%20devices">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20PCM%20devices.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 2</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20PCM%20devices.log -e 2</step>
       </case>
 
 <!--3: Open and close timer -->
       <case name="Core-ALSA%20core%20open%20and%20close%20timer">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20timer.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 3</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20timer.log -e 3</step>
       </case>
 
 <!--4: Open and close controls -->
       <case name="Core-ALSA%20core%20open%20and%20close%20controls">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20controls.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 4</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20controls.log -e 4</step>
       </case>
 
 <!--5: Open and close hwdeps -->
       <case name="Core-ALSA%20core%20open%20and%20close%20hwdeps">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20hwdeps.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 5</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20open%20and%20close%20hwdeps.log -e 5</step>
       </case>
 
 <!--6: Enumerate control elements -->
       <case name="Core-ALSA%20core%20enumerate%20control%20elements">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20enumerate%20control%20elements.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 6</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20enumerate%20control%20elements.log -e 6</step>
       </case>
 
 <!--7: Power management -->
       <case name="Core-ALSA%20core%20power%20management">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20power%20management.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 7</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20power%20management.log -e 7</step>
       </case>
 
 <!--8: Enumerate devices with control interface -->
       <case name="Core-ALSA%20core%20enumerate%20devices%20with%20control%20interface">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20enumerate%20devices%20with%20control%20interface.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 8</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20enumerate%20devices%20with%20control%20interface.log -e 8</step>
       </case>
 
 <!--9: Add and remove control element -->
       <case name="Core-ALSA%20core%20Add%20and%20remove%20control%20element">
-        <step>/usr/bin/blts_alsa_core_test -l /var/log/tests/Core-ALSA%20core%20Add%20and%20remove%20control%20element.log -c /usr/lib/tests/blts-alsa-core-tests/blts-alsa-core.cnf -e 9</step>
+        <step>/usr/bin/blts-alsa-core-tests -l /var/log/tests/Core-ALSA%20core%20Add%20and%20remove%20control%20element.log -e 9</step>
       </case>
 
       <!-- Add shell commands to execute after this set here -->
@@ -88,9 +88,7 @@
 	<file>/var/log/tests/Core-ALSA%20core%20power%20management.log</file>
 	<file>/var/log/tests/Core-ALSA%20core%20enumerate%20devices%20with%20control%20interface.log</file>
 	<file>/var/log/tests/Core-ALSA%20core%20Add%20and%20remove%20control%20element.log</file>
-
       </get>
     </set>
   </suite>
 </testdefinition>
-

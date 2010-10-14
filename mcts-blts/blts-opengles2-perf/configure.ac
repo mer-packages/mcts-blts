@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-opengles2-benchmark, 0.0.10, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-opengles2-tests, 0.0.11, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/ogles2_perf_test.c])

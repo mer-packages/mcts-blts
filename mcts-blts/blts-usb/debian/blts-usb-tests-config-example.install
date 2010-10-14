@@ -1,0 +1,3 @@
+etc/blts/blts-usb-testrunner-default.cnf
+etc/blts/ep-configuration-default.cfg
+usr/share/blts-usb-tests/tests.xml

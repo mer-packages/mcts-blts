@@ -14,7 +14,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -I.
+AM_CFLAGS = \
+	-O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -I. \
+	-DBLTS_CONFIG_DIR=\"$(configdir)\"
 AM_YFLAGS = -d 
 
 # only export essential c-interfaces
@@ -49,4 +51,3 @@ lib_LTLIBRARIES= \
 libbltscommon_la_LIBADD = -lrt -ldl
 libbltscommon_la_SOURCES= $(parser_sources) $(h_sources) $(local_h_sources) $(c_sources)
 libbltscommon_la_LDFLAGS= -version-info $(BLTS_COMMON_LIBRARY_VERSION) 
-

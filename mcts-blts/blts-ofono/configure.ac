@@ -16,11 +16,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-ofono-tests, 0.1.9, jussi.saavalainen@digia.com)
+AC_INIT(blts-ofono-tests, 0.1.12, jussi.saavalainen@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -51,6 +50,10 @@ PKG_CHECK_MODULES(PACKAGE, [
 
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
+
+# Check for common config dir to use
+configdir=`pkg-config bltscommon --variable=configdir`
+AC_SUBST(configdir)
 
 # Checks for header files.
 AC_HEADER_STDC

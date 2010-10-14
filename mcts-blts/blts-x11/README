@@ -30,11 +30,11 @@ To build debian package
 
 Running the tests
 
- $ blts_x11_test
+ $ blts-x11-tests
 
-To see other options for blts_x11_test;
- $ blts_x11_test -h
-USAGE: ./blts_x11_test [-l mylog.txt] [-e test1,test2...] [-en "my test"]
+To see other options for blts-x11-tests;
+ $ blts-x11-tests -?
+USAGE: ./blts-x11-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
 [-s] [-?] [-nc] [-t execution_time_in_seconds]
 -l: Used log file, default blts_x11.txt
 -e: Execute single or multiple selected tests, for example -e 1,4,5.
@@ -45,5 +45,5 @@ USAGE: ./blts_x11_test [-l mylog.txt] [-e test1,test2...] [-en "my test"]
 -t: Maximum execution time of each test in seconds (default: 10s)
 
 XRender benchmarks:
- $ blts_xrender_bench
+ $ blts-xrender-bench
 

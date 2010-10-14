@@ -2,6 +2,7 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
+configdir=@configdir@
 
 Name: bltscommon
 Description: Common functions for BLTS project test assets

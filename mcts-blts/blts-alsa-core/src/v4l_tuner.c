@@ -52,7 +52,7 @@ static int update_tuner(tuner_device* dev)
 		dev->v4l2tuner.rangelow = dev->v4l2tuner.rangelow * 1000 / FREQ_UNIT;
 		dev->v4l2tuner.rangehigh = dev->v4l2tuner.rangehigh * 1000 / FREQ_UNIT;
 	}
-	
+
 	return 0;
 }
 
@@ -71,7 +71,7 @@ tuner_device* tuner_open(const char* name)
 		BLTS_ERROR("Failed to open device %s (%d)\n", name, errno);
 		return NULL;
 	}
-	
+
 	update_tuner(dev);
 
 	return dev;
@@ -124,7 +124,7 @@ unsigned int tuner_set_freq(tuner_device* dev, unsigned int freq)
 		BLTS_ERROR("Failed to set frequency (%d)\n", errno);
 		return 0;
 	}
-	
+
 	update_tuner(dev);
 
 	return tuner_get_freq(dev);
@@ -140,7 +140,8 @@ int tuner_scan(tuner_device* dev, unsigned int timeout)
 	int err;
 	struct v4l2_hw_freq_seek v4l2_seek;
 
-	BLTS_DEBUG("Starting scan from %u kHz...\n", dev->v4l2tuner.rangelow);
+	BLTS_DEBUG("Starting scan from %u kHz to %u kHz...\n",
+		dev->v4l2tuner.rangelow, dev->v4l2tuner.rangehigh);
 	dev->chan_count = 0;
 
 	memset(&v4l2_seek, 0, sizeof(v4l2_seek));
@@ -154,7 +155,7 @@ int tuner_scan(tuner_device* dev, unsigned int timeout)
 		return -1;
 
 	timing_start();
-	
+
 	while(timing_elapsed() < timeout &&
 		freq < limit &&
 		dev->chan_count < MAX_TUNER_CHANNELS)
@@ -164,6 +165,9 @@ int tuner_scan(tuner_device* dev, unsigned int timeout)
 		err = ioctl(dev->fd, VIDIOC_S_HW_FREQ_SEEK, &v4l2_seek);
 		if(err == -1)
 		{
+			if(errno == EAGAIN)
+				continue;
+
 			BLTS_ERROR("Failed to start scan (%d)\n", errno);
 			timing_stop();
 			return -errno;
@@ -178,7 +182,7 @@ int tuner_scan(tuner_device* dev, unsigned int timeout)
 				timing_stop();
 				return -errno;
 			}
-			
+
 			BLTS_TRACE("Current frequency: %d kHz\n", freq);
 
 			if(prev_freq == freq)
@@ -190,7 +194,7 @@ int tuner_scan(tuner_device* dev, unsigned int timeout)
 				}
 				BLTS_DEBUG("Found channel: %u kHz\n", freq);
 				dev->channels[dev->chan_count++] = freq;
-				tuner_set_freq(dev, freq);
+				/* tuner_set_freq(dev, freq); */
 				break;
 			}
 			prev_freq = freq;

@@ -1,0 +1,22 @@
+* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.8
+- Add RPM packaging
+- Use default configuration file if -C argument is not given
+
+* Tue 31 Aug 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.3.7
+- Fixed possible mem allocation bug.
+
+* Tue 24 Aug 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.3.6
+- Test case parameters can be defined purely in configuration file without
+  explicit definitions in test case source code.
+
+* Tue 08 Jun 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.5
+- Pool and release memory used during parsing to fix string leaks.
+
+* Fri 21 May 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.4
+- Initial upload for Meego (changelog summarized)
+- Package license is GPL 2
+- Common CLI frontend
+- Message logging
+- Timer utility
+- Minimal dependency check utility
+- Configuration file driven parameter variation engine

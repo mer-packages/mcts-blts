@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-xvideo-tests, 0.0.5, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-xvideo-tests, 0.0.6, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts_xvideo_test.c])
@@ -29,6 +29,8 @@ AC_CONFIG_HEADER([config.h])
 PKG_CHECK_MODULES([BLTSCOMMON],[bltscommon])
 PKG_CHECK_MODULES([BLTSPIXELFORMAT],[bltspixelformat])
 PKG_CHECK_MODULES([XVIDEO],[xv])
+
+configdir=`pkg-config bltscommon --variable=configdir`
 
 # Checks for programs.
 AC_PROG_CC
@@ -61,6 +63,8 @@ AC_SUBST(BLTSCOMMON_LIBS)
 AC_SUBST(XVIDEO_CFLAGS)
 AC_SUBST(XVIDEO_LDFLAGS)
 AC_SUBST(XVIDEO_LIBS)
+
+AC_SUBST(configdir)
 
 # Checks for header files.
 AC_HEADER_STDC

@@ -1,3 +1,5 @@
+/* -*- mode: C; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+
 /* blts_cli_frontend.c -- CLI handling
 
    Copyright (C) 2000-2010, Nokia Corporation.
@@ -8,7 +10,7 @@
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
@@ -52,6 +54,8 @@
 # define SIGSEGV_STACK_GENERIC
 # define REGFORMAT "%x"
 #endif
+
+#define BLTS_CONFIG_SUFFIX ".cnf"
 
 static struct sigaction *saved_sigchld_action = NULL;
 static unsigned int timout_override = 0;
@@ -136,7 +140,7 @@ static void signal_segv(int signum, siginfo_t* info, void *ptr)
 #ifndef SIGSEGV_NOSTACK
 #if defined(SIGSEGV_STACK_IA64) || defined(SIGSEGV_STACK_X86)
 	for(i = 0; i < NGREG; i++)
-		sigsegv_outp("reg[%02d]       = 0x" REGFORMAT, i,
+		sigsegv_outp("reg[%02d]	      = 0x" REGFORMAT, i,
 			ucontext->uc_mcontext.gregs[i]);
 #if defined(SIGSEGV_STACK_IA64)
 	ip = (void*)ucontext->uc_mcontext.gregs[REG_RIP];
@@ -210,7 +214,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 	LOG("\nStarting test '%d: %s'...\n", testnum, testcase->case_name);
 
 	do {
-		n_variations++;   /* <- nb. this needs to be outside the forks */
+		n_variations++;	  /* <- nb. this needs to be outside the forks */
 		save_and_clear_sigchld();
 
 		if((pid = fork()) < 0)
@@ -274,7 +278,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 				temp_var = malloc(sizeof *temp_var);
 				temp_var->values = blts_config_boxed_value_list_dup(test_variants->values);
 				temp_var->next = failed_variants;
-			        failed_variants = temp_var;
+				failed_variants = temp_var;
 			}
 			temp_var = test_variants;
 			test_variants = test_variants->next;
@@ -384,6 +388,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	int want_test_list = 0;
 	int variant_run_mode = 0;
 	int log_stack_trace = 0;
+	int config_file_given = 0;
 
 	timout_override = 0;
 
@@ -489,11 +494,12 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			}
 			if(used_config_file)
 			{
-				fprintf(stdout, "Only one configuration file supported.\n");
+				fprintf(stderr, "Only one configuration file supported.\n");
 				result = -EINVAL;
 				goto cleanup;
 			}
-			used_config_file = argv[t];
+			used_config_file = strdup (argv[t]);
+			config_file_given = 1;
 		}
 		else
 		{
@@ -524,19 +530,81 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		log_set_level(5);
 	}
 
-
-	/* Parse the configuration file, if any. */
-	if(used_config_file)
+	/* If we didn't specify a config file, try to use the default */
+	if (used_config_file == NULL)
 	{
-		if(blts_config_load_from_file(used_config_file) < 0)
+		char *program = argv[0];
+		char *slash   = NULL;
+		int   len     = 0;
+
+		/* Invalid args */
+		if (program == NULL)
 		{
-			fprintf(stdout, "Could not load configuration file.\n");
 			result = -EINVAL;
 			goto cleanup;
 		}
+
+		slash = strrchr (program, '/');
+
+		if (slash != NULL)
+		{
+			slash++;
+		}
+		else
+		{
+			slash = program;
+		}
+
+		len = strlen (BLTS_CONFIG_DIR);
+		len += strlen (slash);
+		len += strlen (BLTS_CONFIG_SUFFIX);
+		len += 2; /* Adding 2 to add a slash and ending char */
+
+		used_config_file = malloc (sizeof (char) * len);
+		if (used_config_file == NULL)
+		{
+			result = -ENOMEM;
+			goto cleanup;
+		}
+
+		memset (used_config_file, 0, sizeof (char) * len);
+
+		strcat (used_config_file, BLTS_CONFIG_DIR);
+		strcat (used_config_file, "/");
+		strcat (used_config_file, slash);
+		strcat (used_config_file, BLTS_CONFIG_SUFFIX);
+
+		BLTS_DEBUG ("No config file given, trying default: %s\n",
+			    used_config_file);
+	}
+
+	result = blts_config_load_from_file (used_config_file);
+
+	if (result == -ENOENT)
+	{
+		if (config_file_given == 0)
+		{
+			BLTS_WARNING ("No default configuration found. "
+				      "Running with inbuilt parameters.\n");
+		}
+		else
+		{
+			BLTS_ERROR ("Did not find configuration file %s!\n",
+				    used_config_file);
+			goto cleanup;
+		}
+	}
+	else
+	{
+		if (result < 0)
+		{
+			fprintf(stderr, "Could not load configuration file.\n");
+			goto cleanup;
+		}
+
 		if(blts_config_add_testcases(&cli) < 0)
 		{
-			fprintf(stdout, "Could add test cases from configuration file.\n");
+			fprintf(stderr, "Could not add test cases from configuration file.\n");
 			result = -EINVAL;
 			goto cleanup;
 		}
@@ -607,6 +675,7 @@ cleanup:
 	if(used_config_file)
 	{
 		blts_config_free();
+		free (used_config_file);
 	}
 
 	log_close();
@@ -623,4 +692,3 @@ cleanup:
 
 	return result;
 }
-

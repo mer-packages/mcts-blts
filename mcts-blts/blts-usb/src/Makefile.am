@@ -1,18 +1,41 @@
-AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) $(BLTS_COMMON_CFLAGS) -I.. -fPIC
+# Makefile.am - Automake script for blts-usb-tests
+#
+#  Copyright (C) 2000-2010, Nokia Corporation.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, version 2.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+AM_CFLAGS = \
+	-O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) \
+	$(BLTS_COMMON_CFLAGS) -I.. -fPIC
 
 requiredlibs = -lm -lrt
 
-h_sources = usb-util.h usb-general.h hostdrv_common.h transfer-cases.h peripheral-control.h
+h_sources = \
+	usb-util.h \
+	usb-general.h \
+	transfer-cases.h \
+	peripheral-control.h \
+	../common/gadgetdrv_common.h \
+	../common/hostdrv_common.h \
+	../common/usbdrv_common.h
 
-c_sources = blts-usb-testrunner.c transfer-cases.c peripheral-control.c
+c_sources = \
+	blts-usb-testrunner.c \
+	transfer-cases.c \
+	peripheral-control.c
 
-CLEANFILES =
-
-distclean-local:
-
-bin_PROGRAMS = blts_usb_testrunner
-
-pkgdata_DATA = \
+config_DATA = \
+	blts-usb-testrunner-default.cnf \
 	blts-usb-testrunner-bulk.cnf \
 	blts-usb-testrunner-isoc.cnf \
 	blts-usb-testrunner-int.cnf \
@@ -21,6 +44,17 @@ pkgdata_DATA = \
 	ep-configuration-isoc.cfg \
 	ep-configuration-int.cfg
 
-blts_usb_testrunner_SOURCES = $(h_sources) $(c_sources)
-blts_usb_testrunner_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS) $(GLIB_CFLAGS) $(DBUS_CFLAGS) $(GTHREAD_CFLAGS)
-blts_usb_testrunner_LDADD = $(requiredlibs) $(BLTS_COMMON_LIBS) $(GLIB_LIBS) $(DBUS_LIBS) $(GTHREAD_LIBS)
+bin_PROGRAMS = blts-usb-tests
+
+blts_usb_tests_SOURCES = $(h_sources) $(c_sources)
+blts_usb_tests_CFLAGS = \
+	$(AM_CFLAGS) $(BLTS_COMMON_CFLAGS) $(GLIB_CFLAGS) \
+	$(DBUS_CFLAGS) $(GTHREAD_CFLAGS)
+blts_usb_tests_LDADD = \
+	$(requiredlibs) $(BLTS_COMMON_LIBS) $(GLIB_LIBS) \
+	$(DBUS_LIBS) $(GTHREAD_LIBS)
+
+EXTRA_DIST = \
+	$(config_DATA)
+
+

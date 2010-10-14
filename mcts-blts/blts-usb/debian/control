@@ -2,11 +2,29 @@ Source: blts-usb-tests
 Section: devel
 Priority: extra
 Maintainer: Mikko Ojala <mikko.ojala@digia.com>
-Build-Depends: debhelper (>= 5), libbltscommon-dev (>= 0.3.0), libc6-dev (>= 2.5.0)
+Build-Depends:
+        debhelper (>= 5),
+        cdbs,
+        libbltscommon-dev (>= 0.3.0),
+        libc6-dev (>= 2.5.0)
 Standards-Version: 3.8.0
 
 Package: blts-usb-tests
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbltscommon1 (>= 0.3.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, blts-usb-tests-config
 Description: BLTS USB functional tests
  This package contains USB testing framework
+
+Package: blts-usb-tests-config-example
+Architecture: any
+Provides: blts-usb-tests-config
+Description: BLTS USB functional test config example
+ This package contains example how to create config for BLTS USB tests. This
+ config will not allow throughout testing for the hardware.
+
+Package: blts-usb-tests-config-n900
+Architecture: any
+Provides: blts-usb-tests-config
+Description: BLTS USB functional tests config for n900
+ This package contains configuration files to do some USB testing for Nokia
+ n900

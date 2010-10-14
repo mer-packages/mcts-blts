@@ -32,7 +32,7 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-CONF_DIR=/usr/lib/tests/blts-opengles2-benchmark
+CONF_DIR=/usr/lib/tests/blts-opengles2-tests
 MIN_SCRIPTS="blts-opengles2-perf.min"
 MIN_CONFIG=blts-opengles2-perf-min.conf
 MODULE_NAME=libbltsopengles2perf.so

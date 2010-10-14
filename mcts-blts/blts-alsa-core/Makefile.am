@@ -18,3 +18,7 @@ SUBDIRS = src . data
 
 pkgdata_DATA = tests.xml
 
+EXTRA_DIST = \
+	autogen.sh \
+	blts-alsa-core-tests.changes \
+	$(pkgdata_DATA)

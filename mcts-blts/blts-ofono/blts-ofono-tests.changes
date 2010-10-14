@@ -1,0 +1,43 @@
+* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.1.12
+- Add RPM packaging
+- Fixed segfault in microphone volume test case
+- Updated SMS cases for oFono 0.29
+
+* Thu 16 Sep 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.1.11
+- oFono 0.28 support
+
+* Fri 10 Sep 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.1.10
+- Multiparty call test
+- Private chat call test
+
+* Mon 16 Aug 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.1.9
+- Call waiting test case added
+- Propose scan test case added
+- Supplementary services disable cases added
+- SMSC number test
+
+* Thu 24 Jun 2010 Mika Niinistö <mika.niinisto@digia.com> - 0.1.8
+- [ Jussi Saavalainen ] oFono call forwarding cases verify result by using oFono properties
+- [ Mika Niinistö ] Add modem online and modem offline test cases
+
+* Thu 10 Jun 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.7
+- Fixes: NB#166290 - oFono cases fail to reset the modem state
+- Test init and finalize now reset call and supplementary service state. This
+  should fix problems with running tests in series.
+
+* Fri 21 May 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.6
+- Initial upload for Meego (changelog summarized)
+- Modem information query
+- Support for running test asset with configuration file
+- Voice call create/answer tests
+- SMS send/receive tests
+- Call disconnects
+- SIM handling
+- Dual voice call cases
+- Call meter
+- Call barring
+- Call forwardings
+- DTMF
+- Call volume
+- Hide caller ID
+- Added listening for stray signals for future use

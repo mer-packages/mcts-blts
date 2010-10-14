@@ -23,16 +23,16 @@ h_sources = \
 	xvideo_util.h
 
 c_sources = \
-   xvideo_test_cases.c \
-   xvideo_util.c
+	xvideo_test_cases.c \
+	xvideo_util.c
 
 library_includedir = $(includedir)/blts
 #library_include_HEADERS = $(h_sources)
 
-bin_PROGRAMS = blts_xvideo_test
+bin_PROGRAMS = blts-xvideo-tests
 
-blts_xvideo_test_SOURCES = $(h_sources) $(c_sources) blts_xvideo_test.c
-blts_xvideo_test_CFLAGS = $(AM_CFLAGS) $(BLTSCOMMON_CFLAGS) $(BLTSPIXELFORMAT_CFLAGS) $(XVIDEO_CFLAGS)
-blts_xvideo_test_LDFLAGS = $(BLTSCOMMON_LDFLAGS) $(XVIDEO_LDFLAGS) $(BLTSPIXELFORMAT_LDFLAGS)
-blts_xvideo_test_LDADD = $(requiredlibs) $(BLTSCOMMON_LIBS) $(BLTSPIXELFORMAT_LIBS) $(XVIDEO_LIBS)
+blts_xvideo_tests_SOURCES = $(h_sources) $(c_sources) blts_xvideo_test.c
+blts_xvideo_tests_CFLAGS = $(AM_CFLAGS) $(BLTSCOMMON_CFLAGS) $(BLTSPIXELFORMAT_CFLAGS) $(XVIDEO_CFLAGS)
+blts_xvideo_tests_LDFLAGS = $(BLTSCOMMON_LDFLAGS) $(XVIDEO_LDFLAGS) $(BLTSPIXELFORMAT_LDFLAGS)
+blts_xvideo_tests_LDADD = $(requiredlibs) $(BLTSCOMMON_LIBS) $(BLTSPIXELFORMAT_LIBS) $(XVIDEO_LIBS)
 
