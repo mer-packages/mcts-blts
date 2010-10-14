@@ -711,7 +711,7 @@ Default gateway should be of the wired network and can ping both the DHCP server
 
 </case>
 
-<case name="CM_WF_CoExists_WIFI" manual="true" timeout="90">
+<case name="CM_WF_CoExists_Wired2" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 check if wired and WIFI can coexists when connect WIFI network fist<br />
@@ -1599,9 +1599,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_WF_set_address" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if set_address for IPv6 success in wired network</p>
+<p>Check if set_address for IPv6 success in&nbsp;WiFi network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all network except wired network</p>
+<p>1. Disable all network except WiFi network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>Pass/Fail Criteria:</p>
 <p>The command return with 0</p>]]></description>
@@ -1610,9 +1610,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_3G_set_address" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if set_address for IPv6 success in wired network</p>
+<p>Check if set_address for IPv6 success in&nbsp;3G network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all network except wired network</p>
+<p>1. Disable all network except&nbsp;3G network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>Pass/Fail Criteria:</p>
 <p>The command return with 0</p>]]></description>
@@ -1621,9 +1621,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_BT_set_address" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if set_address for IPv6 success in wired network</p>
+<p>Check if set_address for IPv6 success in&nbsp;BT network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all network except wired network</p>
+<p>1. Disable all network except&nbsp;BT network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>Pass/Fail Criteria:</p>
 <p>The command return with 0</p>]]></description>
@@ -1632,9 +1632,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_WF_ping6_addr" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if ping6 addr success in wired network</p>
+<p>Check if ping6 addr success in&nbsp;WiFi network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all network except wired network</p>
+<p>1. Disable all network except&nbsp;WiFi network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>2. ping6 ::3</p>
 <p>Pass/Fail Criteria:</p>
@@ -1644,9 +1644,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_3G_ping6_addr" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if ping6 addr success in wired network</p>
+<p>Check if ping6 addr success in&nbsp;3G network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all network except wired network</p>
+<p>1. Disable all network except&nbsp;3G network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>2. ping6 ::3</p>
 <p>Pass/Fail Criteria:</p>
@@ -1656,9 +1656,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_BT_ping6_addr" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if ping6 addr success in wired network</p>
+<p>Check if ping6 addr success in&nbsp;BT network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all network except wired network</p>
+<p>1. Disable all network except&nbsp;BT network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>2. ping6 ::3</p>
 <p>Pass/Fail Criteria:</p>
@@ -1668,9 +1668,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_WF_ssh" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if ssh to other machine for wired network</p>
+<p>Check if ssh to other machine for&nbsp;WiFi network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all networks except wired network</p>
+<p>1. Disable all networks except&nbsp;WiFi network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>2. setup another machine with address ::5 in the same local network</p>
 <p>3. ssh ::5</p>
@@ -1681,9 +1681,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_3G_ssh" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if ssh to other machine for wired network</p>
+<p>Check if ssh to other machine for&nbsp;3G network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all networks except wired network</p>
+<p>1. Disable all networks except&nbsp;3G network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>2. setup another machine with address ::5 in the same local network</p>
 <p>3. ssh ::5</p>
@@ -1694,9 +1694,9 @@ Pass/Fail Criteria:</p>
 
 <case name="CM_IPv6_BT_ssh" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
-<p>Check if ssh to other machine for wired network</p>
+<p>Check if ssh to other machine for&nbsp;3G network</p>
 <p>Run Instructions:</p>
-<p>1. Disable all networks except wired network</p>
+<p>1. Disable all networks except&nbsp;3G network</p>
 <p>2. set_address ::3 64 ::4 ipv6</p>
 <p>2. setup another machine with address ::5 in the same local network</p>
 <p>3. ssh ::5</p>
@@ -3412,14 +3412,16 @@ connman should set the &quot;Powered&quot; of WIFI device correcly</p>]]></descr
 <case name="CM_Device_WIFI_Conn" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
-check if connman can break the connection when disable the wifi device<br />
+check if connman can break the connection when disable the wifi device, then enable wifi device, connman can resume wifi connection.<br />
 Run Instructions:<br />
 <br />
 1. Connect a WIFI network and then call disable_device to disable wifi device<br />
-2. List all WIFI networks in connman to check<br />
+2. List all WIFI networks in connman to check wifi connection is broken.</p>
+<p>3. Call enable-device to enable wifi device.</p>
+<p>4. List-service to check WiFi connection.<br />
 Pass/Fail Criteria:<br />
 <br />
-There should be no any WIFI network can be listed and the connection is breaked</p>]]></description>
+Disable wifi device, there should be no any WIFI network be listed and the connection is breaked; enable wifi device, wifi connection could&nbsp;be resumed.</p>]]></description>
 
 </case>
 
@@ -3508,14 +3510,17 @@ connman should remember the setting of 3g device correcly</p>]]></description>
 <case name="CM_Device_3G_Conn" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
-check if connman can break the connection when disable the 3G device<br />
+check if connman can break the connection when disable the 3G device, and connection could be resumed when enable 3G device.<br />
 Run Instructions:<br />
 <br />
 1. Connect a 3G network and then call disable_device to disable 3G device<br />
-2. List all networks in connman to check<br />
+2. List all networks in connman to check the connection is broken.</p>
+<p>3. Call enable-device to enable 3G device.</p>
+<p>4. list-service to check the connection can be resumed.<br />
 Pass/Fail Criteria:<br />
 <br />
-There should be no any 3G network can be listed and the connection is breaked</p>]]></description>
+Disable 3G device, There should be no any 3G network be listed and the connection is breaked; when enable 3G device, 3G network should be resume.</p>
+<p>&nbsp;</p>]]></description>
 
 </case>
 
@@ -3539,14 +3544,16 @@ connman should set the &quot;Powered&quot; of wired device correcly</p>]]></desc
 <case name="CM_Device_Wired_Conn" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
-check if connman can break the connection when disable the wired device<br />
+check if connman can break the connection when disable the wired device, and connman can resume&nbsp;the connection when enable wired device.<br />
 Run Instructions:<br />
 <br />
 1. Connect a wired network and then call disable_device to disable wired device<br />
-2. List all networks in connman to check<br />
+2. List all networks in connman to check</p>
+<p>3. Call enable-device to enable ethernet device.</p>
+<p>4. list-service to check ethernet network.<br />
 Pass/Fail Criteria:<br />
 <br />
-There should be no any wired network can be listed and the connection is breaked</p>]]></description>
+Disable ethernet device, there should be no any wired network be listed and the connection is breaked; enabled ethernet device, ethernet connection could be resumed.</p>]]></description>
 
 </case>
 
@@ -3595,15 +3602,17 @@ ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail
 
 </case>
 
-<case name="CM_NetworkSel_BroadcastWPA" manual="true" timeout="90">
+<case name="CM_NetworkSel_Best" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
-Check if switching between WIFI broadcast WPA security networks work well<br />
+Check if can select best WIFI APs<br />
 Run Instructions:<br />
-1. Prepare 2 WIFI Aps, and set them as broadcast and WPA security. 2. Connect the AP1 3. Connect AP2 directly and check if the connection work<br />
+1. Prepare 2 WIFI Aps, and set them as broadcast and WPA security. <br />
+2. Move 2 APs, so that AP1 signal strength is &gt;90% and AP2 is &lt;50% <br />
+3. connect-service to the ssid,&nbsp; Check if connect to AP1<br />
 Pass/Fail Criteria:<br />
 <br />
-ConnMan shoud disconnect AP1 and connect AP2 successfully. Can ping AP2 and fail to ping AP1.</p>]]></description>
+ConnMan should auto connect to AP1.</p>]]></description>
 
 </case>
 
@@ -4188,7 +4197,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WA_DetectSecurityRSN.py</step>
 </case>
 
-<case name="CM_WN_WEP40Wrong" manual="false" timeout="180">
+<case name="CM_WN_WEP64Wrong" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi&nbsp;connect&nbsp;with wrong&nbsp;WEP64 will fail</p>
 <p><br />
@@ -4201,7 +4210,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40Wrong.py</step>
 </case>
 
-<case name="CM_WN_WEP40Long" manual="false" timeout="180">
+<case name="CM_WN_WEP64Long" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi&nbsp;connect&nbsp;with long than WEP64 (like 11110000000) &nbsp;will fail</p>
 <p><br />
@@ -4214,7 +4223,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40Long.py</step>
 </case>
 
-<case name="CM_WN_WEP40Short" manual="false" timeout="180">
+<case name="CM_WN_WEP64Short" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi&nbsp;connect&nbsp;with short than WEP64 (like 111100000)&nbsp;&nbsp;will fail</p>
 <p><br />
@@ -4227,7 +4236,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WN_WEP40Short.py</step>
 </case>
 
-<case name="CM_WN_WEP40ascii" manual="false" timeout="180">
+<case name="CM_WN_WEP64ascii" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi&nbsp;connect&nbsp;with wrong&nbsp;WEP64 ascii will fail</p>
 <p><br />
@@ -4404,7 +4413,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WS_WEP128.py</step>
 </case>
 
-<case name="CM_WS_WEP40" manual="false" timeout="180">
+<case name="CM_WS_WEP64" manual="false" timeout="180">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi for WEP64</p>
 <p><br />
@@ -5701,13 +5710,13 @@ step 4 return 0</p>]]></description>
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
-1. Keep only eth connected, disable all other devices<br />
+1. Keep only&nbsp;bluetooth connected, disable all other devices<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
-4. eth will automatically connected<br />
+3. test-connman offlinemode off<br />
+4.&nbsp;bluetooth will automatically connected<br />
 Pass/Fail Criteria:<br />
 <br />
-eth will automatically connected</p>]]></description>
+bluetooth&nbsp;will automatically connected</p>]]></description>
 
 </case>
 
@@ -5746,9 +5755,9 @@ step 4 return 0</p>]]></description>
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
-1. Keep only eth connected, disable all other devices<br />
+1. Keep only&nbsp;wlan0 connected, disable all other devices<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
+3. test-connman offlinemode off<br />
 4. wlan0 will automatically connected<br />
 Pass/Fail Criteria:<br />
 <br />
@@ -5791,13 +5800,13 @@ step 4 return 0</p>]]></description>
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
-1. Keep only eth connected, disable all other devices<br />
+1. Keep only&nbsp;3G connected, disable all other devices<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
-4. eth will automatically connected<br />
+3. test-connman offlinemode off<br />
+4.&nbsp;3G will automatically connected<br />
 Pass/Fail Criteria:<br />
 <br />
-eth will automatically connected</p>]]></description>
+3G will automatically connected</p>]]></description>
 
 </case>
 
@@ -5806,10 +5815,10 @@ eth will automatically connected</p>]]></description>
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:</p>
-<p>1. disable-device wlan0<br />
+<p>1. disable-device wwan0<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
-4. test-connman dev wlan0<br />
+3. test-connman offlinemode off<br />
+4. test-connman dev wwan0<br />
 Pass/Fail Criteria:<br />
 <br />
 the device is off</p>]]></description>
