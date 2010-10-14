@@ -431,7 +431,8 @@ int fute_bt_hci_link_info_remote(char *remote_mac)
 	if((ctx = bt_ctx_new()))
 	{
 		str2ba(remote_mac, &ctx->remote_mac);
-		retval = collect_and_send_link_info(ctx);
+//		retval = collect_and_send_link_info(ctx);
+		retval = collect_and_send_link_info_one_by_one(ctx);
 		bt_ctx_free(ctx);
 	}
 

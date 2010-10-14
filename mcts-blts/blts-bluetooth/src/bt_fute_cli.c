@@ -198,7 +198,7 @@ static blts_cli_testcase bt_cases[] =
 	 * It is possible to use same function for multiple cases.
 	 * Zero timeout = infinity */
 
-	{ "Core-Bluetooth scan", bt_run_case, 30000 },
+	{ "Core-Bluetooth scan", bt_run_case, 60000 },
 	{ "Core-Bluetooth drivers and userspace check", bt_run_case, 10000 },
 	{ "Core-Bluetooth receive L2CAP connection", bt_run_case, 35000 },
 	{ "Core-Bluetooth connect with L2CAP", bt_run_case, 10000 },
@@ -218,7 +218,7 @@ static blts_cli_testcase bt_cases[] =
 	{ "Core-Bluetooth Read HCI controller information local", bt_run_case, 35000 },
 	{ "Core-Bluetooth Read HCI controller information remote", bt_run_case, 10000 },
 	{ "Core-Bluetooth Read connected link information local", bt_run_case, 35000 },
-	{ "Core-Bluetooth Read connected link information remote", bt_run_case, 10000 },
+	{ "Core-Bluetooth Read connected link information remote", bt_run_case, 35000 },
 	{ "Core-Bluetooth authentication with pairing as master", bt_run_case, 10000 },
 	{ "Core-Bluetooth authentication with pairing as slave", bt_run_case, 35000 },
 

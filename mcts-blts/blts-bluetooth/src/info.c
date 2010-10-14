@@ -43,6 +43,11 @@
 #define TEST_CHANNEL3 0x7FFF //32767
 #define TEST_CHANNEL_COUNT 3
 
+#define LINK_INFO_MISSING			-1
+#define LINK_INFO_CONTENT_MISMACH	-2
+#define CLOCK_OFFSET_MISMACH 		-3
+#define AFH_MAP_MISMACH 			-4
+
 const unsigned short test_channels[TEST_CHANNEL_COUNT] =
 {
 	TEST_CHANNEL1,
@@ -298,23 +303,23 @@ int compare_device_info_data(device_info_t* dev1, device_info_t* dev2)
 
 /**
  * Compares two link_info_t structures and returns 0 when contents are equal
- * otherwise -1 is returned
+ * otherwise error code (LINK_INFO_MISSING, LINK_INFO_CONTENT_MISMACH,
+ * CLOCK_OFFSET_MISMACH or AFH_MAP_MISMACH) is returned
  */
 int compare_link_info_data(link_info_t* dev1, link_info_t* dev2)
 {
 	int i = 0;
 
-	if(!dev1 || !dev2) return -1;
+	if(!dev1 || !dev2) return LINK_INFO_MISSING;
 
 	if(	dev1->got_rssi != dev2->got_rssi 	||
 		dev1->got_lq != dev2->got_lq 		||
 		dev1->got_level != dev2->got_level	||
-		dev1->got_map != dev2->got_map		||
 		dev1->got_clock != dev2->got_clock	||
 		dev1->got_offset != dev2->got_offset)
 		{
 			log_print("Cannot compare these structures - not equally filled");
-			return -1;
+			return LINK_INFO_CONTENT_MISMACH;
 		}
 
 	//TODO improve compare? - rssi / level / clock
@@ -328,7 +333,7 @@ int compare_link_info_data(link_info_t* dev1, link_info_t* dev2)
 	if(dev1->got_offset && dev2->got_offset)
 		if (dev1->offset != dev2->offset) {
 			if (abs(dev1->offset - dev2->offset) > 1)
-				return -1;
+				return CLOCK_OFFSET_MISMACH;
 			log_print("  Note: Clock drift +- 1 during test (still passing test)\n");
 		}
 
@@ -336,7 +341,7 @@ int compare_link_info_data(link_info_t* dev1, link_info_t* dev2)
 	if(dev1->got_map && dev2->got_map)
 		for (i = 0; i < 10; i++)
 			 if (dev1->map[i] != dev2->map[i])
-				return -1;
+				return AFH_MAP_MISMACH;
 	return 0;
 }
 
@@ -848,4 +853,170 @@ error:
 	if(sock != -1) close(sock);
 
 	pthread_exit((void *)-1);
+}
+/**
+ * Collect and send link information about multiple L2CAP test channels one by one
+ */
+int collect_and_send_link_info_one_by_one(struct bt_ctx *ctx)
+{
+	int i = 0;
+	int retval = 0;
+	int afh_map_mismach = 0;
+
+	if(hci_init_controller(ctx) < 0)
+	{
+		log_print("HCI Initialization failed!\n");
+		return -1;
+	}
+
+	thread_data* array =  (thread_data*) malloc(sizeof(thread_data) * TEST_CHANNEL_COUNT);
+
+	if(!array)
+	{
+		log_print("Memory allocation failed!\n");
+		retval = -1;
+		goto cleanup;
+	}
+
+	for (i = 0; i < TEST_CHANNEL_COUNT; i++)
+	{
+		array[i].idx = i;
+		array[i].ctx = ctx;
+
+		if( send_link_info((void *) &(array[i])) )
+		{
+			log_print("Failed to send link info!\n");
+			retval = -1;
+			goto cleanup;
+		}
+		usleep(100000); /* wait before next packet is sent */
+	}
+
+	for (i = 0; i < TEST_CHANNEL_COUNT; i++)
+	{
+		if(array[i].result == LINK_INFO_MISSING ||
+		   array[i].result == LINK_INFO_CONTENT_MISMACH ||
+		   array[i].result == CLOCK_OFFSET_MISMACH)
+		{
+			retval = -1;
+			break;
+		}
+
+		if (array[i].result == AFH_MAP_MISMACH)
+		{
+			if ( afh_map_mismach || (i != 0 && i != TEST_CHANNEL_COUNT ) )
+			{
+				retval = -1;
+				break;
+			}
+			else
+			{
+				afh_map_mismach++;
+				log_print("One AFH map mismach (the first or the last channel) does not yet fail the case!\n");
+			}
+		}
+
+	}
+
+cleanup:
+	if(array) free(array);
+
+	if((ctx->hci_fd>=0) && (hci_close_dev(ctx->hci_fd) < 0))
+	{
+		logged_perror("socket close failed");
+		retval = errno?-errno:-1;
+	}
+
+	return retval;
+}
+
+/**
+ * Non thread version of function that connects to other DUT using one test channel and
+ * writes link information data to socket.
+ */
+int send_link_info(void *dataptr)
+{
+	int sock = -1;
+	struct sockaddr_l2 addr;
+	thread_data* data = NULL;
+
+	if(!dataptr)
+	{
+		log_print("Thread data pointer is empty!\n");
+		goto error;
+	}
+
+	data = (thread_data*)dataptr;
+
+	if(!data->ctx || data->idx >= TEST_CHANNEL_COUNT ||  data->idx < 0)
+	{
+		log_print("Thread data pointer contains invalid data!\n");
+		goto error;
+	}
+
+	memset(&addr, 0, sizeof(addr));
+	sock = socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP);
+
+	if(sock < 0)
+	{
+		log_print("Cannot create socket\n");
+		goto error;
+	}
+
+	log_print("Socket:%d created\n", sock);
+
+	addr.l2_family = AF_BLUETOOTH;
+	addr.l2_psm =  htobs(test_channels[data->idx]);
+	addr.l2_bdaddr = data->ctx->remote_mac;
+
+	if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	{
+		log_print("Connection to remote address failed!\n");
+		goto error;
+	}
+
+	link_info_t *info = hci_get_link_info(data->ctx, 1);
+	if(!info)
+	{
+		log_print("Cannot read link information locally!\n");
+		data->result=-1;
+	}
+	else
+	{
+		int written = 0;
+
+		dump_link_information_data(info, 0);
+
+		log_print("Write link information data to socket...\n");
+		written = write(sock, info, sizeof(*info));
+
+		if(written > 0)
+		{
+			char end_mark[4] = {0}; /* "END" */
+
+			log_print("%d bytes written\n", written);
+
+			/* wait for end of communication mark */
+			recv(sock, end_mark, 3, 0);
+			log_print("%s\n\n", &end_mark);
+			data->result = 0;
+		}
+		else
+		{
+			log_print("Writing to socket failed!\n");
+			data->result = -1;
+		}
+	}
+
+	close(sock);
+
+	return 0;
+
+error:
+
+	if(sock != -1) close(sock);
+
+	data->result=-1;
+
+	return -1;
 }

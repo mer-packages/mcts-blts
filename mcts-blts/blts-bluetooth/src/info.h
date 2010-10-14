@@ -37,6 +37,7 @@ int do_listen(struct bt_ctx *ctx, int port);
 void *read_link_info_thread(void *dataptr);
 void *send_link_info_thread(void *dataptr);
 
+int send_link_info(void *dataptr);
 /* -------------------------------------------------------------------------- */
 /* Test code */
 int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx);
@@ -44,5 +45,6 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx);
 
 int read_and_verify_link_info(struct bt_ctx *ctx);
 int collect_and_send_link_info(struct bt_ctx *ctx);
+int collect_and_send_link_info_one_by_one(struct bt_ctx *ctx); /* non-thread version from above */
 
 #endif /* INFO_H */
