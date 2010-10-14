@@ -2,8 +2,8 @@
 
 Summary: Template meego core test suite
 Name: mcts-connman-tests
-Version: 1.0.0
-Release: 2
+Version: 1.0.3
+Release: 1
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz
