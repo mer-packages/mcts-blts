@@ -375,7 +375,7 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 	}
 
 	/* create socket and start listening */
-	sock = do_listen(ctx, -1);
+	sock = do_listen(ctx, test_channels[0]);
 
 	if(sock < 0)
 	{
@@ -412,6 +412,10 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 			log_print("Information comparison failed\n");
 			retval=-1;
 		}
+		char end_mark[] = "END";
+
+		/* send end of communication mark to other DUT */
+		send(client, &end_mark, sizeof(end_mark), 0);
     }
 	else
 	{
@@ -457,7 +461,7 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx)
 	/* set the connection parameters */
     rem_addr.l2_family = AF_BLUETOOTH;
 	rem_addr.l2_bdaddr = ctx->remote_mac;
-	rem_addr.l2_psm = htobs(0x1001);
+	rem_addr.l2_psm = htobs(test_channels[0]);
 
 	if(hci_init_controller(ctx) < 0)
 	{
@@ -485,19 +489,27 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx)
 	/* send information packet */
 	if( status == 0 )
 	{
-		int n = -1;
 
-		log_print("Write controller information data to socket...\n");
-		n = write(sock, remote_info, sizeof(*remote_info));
-		if (n < 0)
+		int written = 0;
+
+		log_print("Write  information data to socket...\n");
+		written = write(sock, remote_info, sizeof(*remote_info));
+
+		if(written > 0)
 		{
-			log_print("Error writing to socket\n");
-			retval=-1;
+			char end_mark[4] = {0}; /* "END" */
+
+			log_print("%d bytes written...\n", written);
+
+			/* wait for end of communication mark */
+			recv(sock, end_mark, 3, 0);
+			log_print("%s\n\n", &end_mark);
+			retval = 0;
 		}
 		else
 		{
-			log_print("%d bytes written\n", n);
-			retval=0;
+			log_print("Writing to socket failed!\n");
+			retval = -1;
 		}
 	}
 	else
