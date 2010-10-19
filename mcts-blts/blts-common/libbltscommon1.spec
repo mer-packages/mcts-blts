@@ -4,7 +4,7 @@ Version: 0.3.8
 Release: 1
 License: GPLv2
 Group: Development/Testing
-Source0: blts-common-%{version}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: flex bison
 
@@ -19,7 +19,7 @@ Common functions used in BLTS project test assets gathered in one library
 This package contains libbltscommon1 development files
 
 %prep
-%setup -q -n blts-common-%{version}
+%setup -q -n %{name}-%{version}
 
 %build
 ./autogen.sh
