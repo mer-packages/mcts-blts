@@ -89,7 +89,7 @@ enum BLTSoFonoCases {
 #define OFONO_PB_INTERFACE		"org.ofono.Phonebook"
 #define OFONO_NW_INTERFACE 		"org.ofono.NetworkRegistration"
 #define OFONO_VC_INTERFACE 		"org.ofono.VoiceCallManager"
-#define OFONO_SMS_INTERFACE		"org.ofono.MessageManager"
+#define OFONO_MESSAGE_INTERFACE	"org.ofono.MessageManager"
 #define OFONO_CALL_INTERFACE	"org.ofono.VoiceCall"
 #define OFONO_SIM_INTERFACE		"org.ofono.SimManager"
 #define OFONO_CV_INTERFACE		"org.ofono.CallVolume"

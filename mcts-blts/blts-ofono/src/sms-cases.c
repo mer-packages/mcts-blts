@@ -35,7 +35,7 @@ struct sms_case_state {
 
 	GMainLoop *mainloop;
 
-	DBusGProxy *sms_manager;
+	DBusGProxy *msg_manager;
 
 	GSourceFunc case_begin;
 
@@ -43,9 +43,9 @@ struct sms_case_state {
 
 	GValue *smsc;
 
-	GCallback signalcb_SmsManager_PropertyChanged;
-	GCallback signalcb_SmsManager_IncomingMessage;
-	GCallback signalcb_SmsManager_ImmediateMessage;
+	GCallback signalcb_MessageManager_PropertyChanged;
+	GCallback signalcb_MessageManager_IncomingMessage;
+	GCallback signalcb_MessageManager_ImmediateMessage;
 
 	int result;
 };
@@ -63,8 +63,8 @@ static void sms_state_finalize(struct sms_case_state *state)
 	if (state->smsc)
 		free(state->smsc);
 
-	if (state->sms_manager) {
-		g_object_unref(state->sms_manager);
+	if (state->msg_manager) {
+		g_object_unref(state->msg_manager);
 	}
 
 	free(state);
@@ -100,28 +100,28 @@ static void sms_init_complete(__attribute__((unused)) DBusGProxy *proxy, GError 
 
 	log_print("SMSC is %s\n", g_value_get_string(state->smsc));
 
-	if (state->signalcb_SmsManager_PropertyChanged) {
-		dbus_g_proxy_add_signal(state->sms_manager, "PropertyChanged",
+	if (state->signalcb_MessageManager_PropertyChanged) {
+		dbus_g_proxy_add_signal(state->msg_manager, "PropertyChanged",
 			G_TYPE_STRING, G_TYPE_VALUE,
 			G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal(state->sms_manager, "PropertyChanged",
-			state->signalcb_SmsManager_PropertyChanged, state, 0);
+		dbus_g_proxy_connect_signal(state->msg_manager, "PropertyChanged",
+			state->signalcb_MessageManager_PropertyChanged, state, 0);
 	}
 
-	if (state->signalcb_SmsManager_IncomingMessage) {
-		dbus_g_proxy_add_signal(state->sms_manager, "IncomingMessage",
+	if (state->signalcb_MessageManager_IncomingMessage) {
+		dbus_g_proxy_add_signal(state->msg_manager, "IncomingMessage",
 			G_TYPE_STRING, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
 			G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal(state->sms_manager, "IncomingMessage",
-			state->signalcb_SmsManager_IncomingMessage, state, 0);
+		dbus_g_proxy_connect_signal(state->msg_manager, "IncomingMessage",
+			state->signalcb_MessageManager_IncomingMessage, state, 0);
 	}
 
-	if (state->signalcb_SmsManager_ImmediateMessage) {
-		dbus_g_proxy_add_signal(state->sms_manager, "ImmediateMessage",
+	if (state->signalcb_MessageManager_ImmediateMessage) {
+		dbus_g_proxy_add_signal(state->msg_manager, "ImmediateMessage",
 			G_TYPE_STRING, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
 			G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal(state->sms_manager, "ImmediateMessage",
-			state->signalcb_SmsManager_ImmediateMessage, state, 0);
+		dbus_g_proxy_connect_signal(state->msg_manager, "ImmediateMessage",
+			state->signalcb_MessageManager_ImmediateMessage, state, 0);
 	}
 
 	if (state->case_begin)
@@ -130,25 +130,25 @@ static void sms_init_complete(__attribute__((unused)) DBusGProxy *proxy, GError 
 	FUNC_LEAVE();
 }
 
-/* Common init function. Prepares SmsManager, sets the SMSC. */
+/* Common init function. Prepares MessageManager, sets the SMSC. */
 static gboolean sms_init_start(gpointer data)
 {
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
 
-	DBusGProxy *sms_manager;
+	DBusGProxy *msg_manager;
 
-	sms_manager = dbus_g_proxy_new_for_name(state->ofono_data->connection,
-		OFONO_BUS, state->ofono_data->modem[0], OFONO_SMS_INTERFACE);
+	msg_manager = dbus_g_proxy_new_for_name(state->ofono_data->connection,
+		OFONO_BUS, state->ofono_data->modem[0], OFONO_MESSAGE_INTERFACE);
 
-	if (!sms_manager) {
-		log_print("Cannot get proxy for " OFONO_SMS_INTERFACE "\n");
+	if (!msg_manager) {
+		log_print("Cannot get proxy for " OFONO_MESSAGE_INTERFACE "\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
 	}
 
-	state->sms_manager = sms_manager;
+	state->msg_manager = msg_manager;
 
 	state->smsc = malloc(sizeof *(state->smsc));
 	memset(state->smsc, 0, sizeof *(state->smsc));
@@ -159,7 +159,7 @@ static gboolean sms_init_start(gpointer data)
 	else
 		g_value_set_static_string(state->smsc, SMS_SMSC_ADDRESS);
 
-	org_ofono_MessageManager_set_property_async(sms_manager, "ServiceCenterAddress", state->smsc,
+	org_ofono_MessageManager_set_property_async(msg_manager, "ServiceCenterAddress", state->smsc,
 		sms_init_complete, state);
 
 	FUNC_LEAVE();
@@ -177,7 +177,7 @@ static void sms_generic_property_changed_cb(__attribute__((unused)) DBusGProxy *
 {
 	FUNC_ENTER();
 	char *val = g_strdup_value_contents(value);
-	log_print("SmsManager PropertyChanged: '%s' -> '%s'\n", key, val);
+	log_print("MessageManager PropertyChanged: '%s' -> '%s'\n", key, val);
 	free(val);
 	FUNC_LEAVE();
 }
@@ -188,7 +188,7 @@ static void sms_smsc_property_changed_cb(__attribute__((unused)) DBusGProxy *pro
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
 	char *val = g_strdup_value_contents(value);
-	log_print("SmsManager PropertyChanged: '%s' -> '%s'\n", key, val);
+	log_print("MessageManager PropertyChanged: '%s' -> '%s'\n", key, val);
 	free(val);
 	state->result = 0;
 	g_main_loop_quit(state->mainloop);
@@ -212,7 +212,7 @@ static void sms_generic_incoming_message_cb(__attribute__((unused)) DBusGProxy *
 {
 	unsigned len;
 	FUNC_ENTER();
- 	log_print("SmsManager IncomingMessage / ImmediateMessage:\n");
+ 	log_print("MessageManager IncomingMessage / ImmediateMessage:\n");
 	log_print("+ Message contents:\n");
  	log_print("--------\n");
 	len = strlen((char*)msg);
@@ -281,7 +281,7 @@ static gboolean sms_send_start(gpointer data)
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
 
-	org_ofono_MessageManager_send_message_async(state->sms_manager,
+	org_ofono_MessageManager_send_message_async(state->msg_manager,
 		state->address, state->message, sms_send_complete, state);
 
 	log_print("Starting send to %s, message content:\n", state->address);
@@ -323,7 +323,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "12345678901234567890123");
 	log_print("Changing SMSC number (length 23)...\n");
-	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
@@ -338,7 +338,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "1234567890123456789012");
 	log_print("Changing SMSC number (length 22)...\n");
-	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
@@ -355,7 +355,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "123456789012345678901");
 	log_print("Changing SMSC number (length 21)...\n");
-	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
@@ -372,7 +372,7 @@ static gboolean smsc_change_start(gpointer data)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, "12345678901234567890");
 	log_print("Changing SMSC number (length 20)...\n");
-	if(!org_ofono_MessageManager_set_property(state->sms_manager, "ServiceCenterAddress", smsc, &error))
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
 	{
 		LOG("Can't change SMSC number");
 		display_dbus_glib_error(error);
@@ -471,11 +471,11 @@ int blts_ofono_send_sms_default(void* user_ptr, __attribute__((unused)) int test
 	test->message = strdup((data->sms_generated_message) ? (data->sms_generated_message) : "Test");
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 
-	test->signalcb_SmsManager_PropertyChanged =
+	test->signalcb_MessageManager_PropertyChanged =
 		G_CALLBACK(sms_generic_property_changed_cb);
-	test->signalcb_SmsManager_IncomingMessage =
+	test->signalcb_MessageManager_IncomingMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
-	test->signalcb_SmsManager_ImmediateMessage =
+	test->signalcb_MessageManager_ImmediateMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
 
 	test->case_begin = (GSourceFunc) sms_send_start;
@@ -499,11 +499,11 @@ int blts_ofono_receive_sms_default(void* user_ptr, __attribute__((unused)) int t
 	if (!test)
 		return -1;
 
-	test->signalcb_SmsManager_PropertyChanged =
+	test->signalcb_MessageManager_PropertyChanged =
 		G_CALLBACK(sms_generic_property_changed_cb);
-	test->signalcb_SmsManager_IncomingMessage =
+	test->signalcb_MessageManager_IncomingMessage =
 		G_CALLBACK(sms_receive_test_incoming_message_cb);
-	test->signalcb_SmsManager_ImmediateMessage =
+	test->signalcb_MessageManager_ImmediateMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
 
 	test->case_begin = (GSourceFunc) sms_receive_start;
@@ -527,11 +527,11 @@ int ofono_sms_center_number(void* user_ptr, __attribute__((unused)) int testnum)
 	if (!test)
 		return -1;
 
-	test->signalcb_SmsManager_PropertyChanged =
+	test->signalcb_MessageManager_PropertyChanged =
 		G_CALLBACK(sms_smsc_property_changed_cb);
-	test->signalcb_SmsManager_IncomingMessage =
+	test->signalcb_MessageManager_IncomingMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
-	test->signalcb_SmsManager_ImmediateMessage =
+	test->signalcb_MessageManager_ImmediateMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
 
 	test->case_begin = (GSourceFunc) smsc_change_start;
