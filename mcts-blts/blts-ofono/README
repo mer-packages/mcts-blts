@@ -29,6 +29,16 @@ Alternatively, the packagin can be skipped by just running with Autotools:
  $ make
 
 
+Setting up modem before running other test cases
+
+If modem is not already up and running online you should run following 
+tests before any other test:
+ blts-ofono-tests -e 4
+to get it up and 
+ blts-ofono-tests -e 5
+to get it to connect
+
+
 Running the tests
 
 blts-ofono-tests

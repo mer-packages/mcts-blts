@@ -4,6 +4,11 @@
 	default_pin "2648"
 [end_globals]
 
+[globals]
+	default_pin2 "3579"
+[end_globals]
+
+
 ######################
 # General parameters #
 ######################
@@ -20,7 +25,12 @@
 
 [parameter]
 	name old_pin
-	const default_pin "31337"
+	const default_pin 
+[end_parameter]
+
+[parameter]
+	name old_pin2
+	const default_pin2 
 [end_parameter]
 
 [parameter]
@@ -184,19 +194,34 @@
 
 [test]
 	name "oFono - Change password for barrings"
-	params old_pin new_pin
+	params old_pin2 new_pin
 [end_test]
 
 [test]
 	name "oFono - Disable barrings"
-	params old_pin new_pin
+	params old_pin2 new_pin
 [end_test]
 
 [test]
 	name "oFono - Call barrings test"
-	params old_pin new_pin
+	params old_pin2 new_pin
 [end_test]
 
+[test]
+	name "oFono - Check barring properties"
+	params old_pin2 new_pin
+[end_test]
+
+[test]
+	name "oFono - Disable incoming barrings"
+	params old_pin2 new_pin
+[end_test]
+
+[test]
+	name "oFono - Disable outgoing barrings"
+	params old_pin2 new_pin
+[end_test]
+	
 ####################
 # Call meter cases #
 ####################

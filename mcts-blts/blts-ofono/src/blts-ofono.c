@@ -54,7 +54,7 @@ static void my_ofono_help(const char* help_msg_base)
 	fprintf(stdout, help_msg_base,
 		/* What is displayed on the first 'USAGE' line */
 		"[-r <number>] [-m <number>] [-f <number>] [-t timeout]\n"
-		"[-n new_pin] [-o old_pin] [-y pin_type]\n"
+		//"[-n new_pin] [-o old_pin] [-y pin_type]\n"
 		"[-v volume] [-a accu_cm_max] [-p ppu] [-c currency]",
 		/* Description of the arguments */
 		"  -r: Recipient address/phone number (for voice call/SMS)\n"
@@ -111,21 +111,21 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 				free(my_data->volume);
 			my_data->volume = strdup(optarg);
 			break;
-		case 'n':
+/*		case 'n':
 			if (my_data->new_pin)
 				free(my_data->new_pin);
 			my_data->new_pin = strdup(optarg);
-			break;
-		case 'o':
+			break;*/
+/*		case 'o':
 			if (my_data->old_pin)
 				free(my_data->old_pin);
 			my_data->old_pin = strdup(optarg);
-			break;
-		case 'y':
+			break;*/
+/*		case 'y':
 			if (my_data->pin_type)
 				free(my_data->pin_type);
 			my_data->pin_type = strdup(optarg);
-			break;
+			break;*/
 		case 'r':
 			if (my_data->remote_address)
 				free(my_data->remote_address);
@@ -222,6 +222,13 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	if (ret)
 		return NULL;
 
+	ret = blts_config_declare_variable_test("oFono - Check barring properties",
+			barring_variant_set_arg_processor,
+			CONFIG_PARAM_STRING, "old_pin", "1234",
+			CONFIG_PARAM_STRING, "new_pin", "1234",
+			CONFIG_PARAM_NONE);
+		if (ret)
+			return NULL;
 
 	ret = blts_config_declare_variable_test("oFono - Change PIN",
 		sim_variant_set_arg_processor,
