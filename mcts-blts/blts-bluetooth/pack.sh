@@ -12,7 +12,7 @@ exclude_pattern="*.tar.gz"
 additional_dest=
 no_rpm=
 no_build=
-result=
+current=`pwd`
 
 USAGE="Usage: $0 [-n|-d <destination>|-h]\n"
 USAGE="$USAGE\t-n\tDon't build RPM package\n"
@@ -65,13 +65,16 @@ fi
 rm -vf $package_name-*.tar.gz
 
 # Make a temporary sub dir
-mkdir -vp $package_name-$package_version
+mkdir -vp /tmp/$package_name-$package_version
 
 # This copy will throw a warning, "can't copy into itself"
-cp -va * -t $package_name-$package_version
+cp -va * -t /tmp/$package_name-$package_version
+cd /tmp
 
 # Pack the stuff into tarball
-tar --exclude="$exclude_pattern" -cvzf $package_name-$package_version.tar.gz $package_name-$package_version
+tar --exclude="$exclude_pattern" -cvzf $current/$package_name-$package_version.tar.gz $package_name-$package_version
+
+cd $current
 
 if [ ! $? = 0 ]; then
     echo "Error: Failed to create tarball!\n"
@@ -79,7 +82,7 @@ if [ ! $? = 0 ]; then
 fi
 
 # To clean it up
-rm -vrf $package_name-$package_version
+rm -vrf /tmp/$package_name-$package_version
 
 # Do the additional copy if necessary
 if [ ! "x$additional_dest" = "x" ]; then
