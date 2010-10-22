@@ -23,63 +23,69 @@
 #include <errno.h>
 #include <string.h>
 
-//old trace definition
-//#define TRACE(s...) fprintf(stderr,s)
+/* Logging levels */
+
+/* Messages with this level are not output anywhere without -vv argument */
+#define LEVEL_TRACE	0 /* tracing-level logging */
+/* Messages with these levels are output to the log file by default,
+ * and to stdout when using -v argument */
+#define LEVEL_DEBUG	1 /* debug messages */
+#define LEVEL_WARN	2 /* warning level */
+#define LEVEL_ERROR	3 /* error cases */
+
+/* used at the beginning and end of functions */
+#define FUNC_ENTER() { \
+	blts_log_print_level(LEVEL_TRACE, "Entered %s\n", __FUNCTION__); }
+#define FUNC_LEAVE() { \
+	blts_log_print_level(LEVEL_TRACE, "Leaving %s\n", __FUNCTION__); }
+
+/* use these instead of calling blts_log_print_level */
+#define BLTS_TRACE(s...) { blts_log_print_level(LEVEL_TRACE, s); }
+#define BLTS_DEBUG(s...) { blts_log_print_level(LEVEL_DEBUG, s); }
+#define BLTS_WARNING(s...) { blts_log_print_level(LEVEL_WARN, s); }
+#define BLTS_ERROR(s...) { blts_log_print_level(LEVEL_ERROR, s); }
+#define BLTS_LOGGED_PERROR(s) \
+	do { \
+		int saved_err = errno; \
+		blts_log_print_level(LEVEL_ERROR, s " - %s\n", \
+			strerror(saved_err)); \
+		errno = saved_err; \
+	} while(0)
+
+/* possible flags for blts_log_open */
+#define BLTS_LOG_FLAG_FILE	1 /* Output log to file */
+#define BLTS_LOG_FLAG_STDOUT	2 /* Output log to stdout */
+#define BLTS_LOG_FLAG_TS	4 /* Include timestamps */
+
+int blts_log_open(const char *filename, unsigned int flags);
+int blts_log_close();
+void blts_log_set_level(int level);
+int blts_log_get_level();
+void blts_log_print_level(int level, const char *format, ...);
+
+int blts_log_start_syslog_capture();
+int blts_log_end_syslog_capture();
+
+/* ========= Old functions and macros, will be removed, do not use ========== */
+
 #define LOG(s...) { log_print(s); }
 #define LOGERR(s...) { log_print(s); }
-#define LOGTRACE(s...) fprintf(stderr,s)
-
-// debug levels
-
-// every tiny bit of information
-#define LEVEL_TRACE		5
-// debug messages
-#define LEVEL_DEBUG		4
-// warning level
-#define LEVEL_WARN		3
-// error cases
-#define LEVEL_ERROR		2
-// program crash level warning
-#define LEVEL_FATAL		1
-// no output
-#define LEVEL_OFF		0
-
-// used at the beginning and end of functions
-#define FUNC_ENTER() { log_print_level(LEVEL_TRACE, "Entered %s\n", __FUNCTION__); }
-#define FUNC_LEAVE() { log_print_level(LEVEL_TRACE, "Leaving %s\n", __FUNCTION__); }
-
-// shortcuts
-#define BLTS_TRACE(s...) { log_print_level(LEVEL_TRACE, s); }
-#define BLTS_DEBUG(s...) { log_print_level(LEVEL_DEBUG, s); }
-#define BLTS_WARNING(s...) { log_print_level(LEVEL_WARN, s); }
-#define BLTS_ERROR(s...) { log_print_level(LEVEL_ERROR, s); }
-#define BLTS_FATAL(s...) { log_print_level(LEVEL_FATAL, s); }
-
+#define LOGTRACE(s...) { log_print_level(LEVEL_TRACE, s); }
 
 #define logged_perror(s)					\
 	do {							\
 		int saved_err = errno;				\
-		perror(s);					\
 		log_print(s " - %s\n",strerror(saved_err));	\
 		errno = saved_err;				\
 	} while(0)
 
-
-int log_open(const char *filename, int log_to_console);
-
-int log_close();
-
-int log_print(const char *format, ...);
-
-void log_set_timestamp(int set_timestamp);
-
-int log_print_level(int level, const char *format, ...);
-
-void log_set_level(int level);
-
-// system log
-
-int start_syslog_capture();
-int end_syslog_capture();
+int log_open(const char *filename, int log_to_console) __attribute__ ((deprecated));
+int log_close() __attribute__ ((deprecated));
+int log_print(const char *format, ...) __attribute__ ((deprecated));
+void log_set_timestamp(int set_timestamp) __attribute__ ((deprecated));
+int log_print_level(int level, const char *format, ...) __attribute__ ((deprecated));
+void log_set_level(int level) __attribute__ ((deprecated));
+int start_syslog_capture() __attribute__ ((deprecated));
+int end_syslog_capture() __attribute__ ((deprecated));
 
 #endif
