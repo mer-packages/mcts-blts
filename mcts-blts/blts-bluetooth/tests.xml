@@ -42,12 +42,12 @@
       <!-- Remote must be running l2cap-server for following 2: -->
       <case name="Core-Bluetooth%20connect%20with%20L2CAP">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20connect%20with%20L2CAP.log -en "Core-Bluetooth connect with L2CAP" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20connect%20with%20L2CAP.log -en "Core-Bluetooth connect with L2CAP" -m 00:00:00:00:00:00</step>
       </case>
 
       <case name="Core-Bluetooth%20ping-pong%20transfer%20with%20L2CAP">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20ping-pong%20transfer%20with%20L2CAP.log -en "Core-Bluetooth ping-pong transfer with L2CAP" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20ping-pong%20transfer%20with%20L2CAP.log -en "Core-Bluetooth ping-pong transfer with L2CAP" -m 00:00:00:00:00:00</step>
       </case>
 
       <case name="Core-Bluetooth%20receive%20RFCOMM%20connection">
@@ -57,23 +57,23 @@
       <!-- Remote must be running rfcomm-server for following 2: -->
       <case name="Core-Bluetooth%20connect%20with%20RFCOMM">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20connect%20with%20RFCOMM.log -en "Core-Bluetooth connect with RFCOMM" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20connect%20with%20RFCOMM.log -en "Core-Bluetooth connect with RFCOMM" -m 00:00:00:00:00:00</step>
       </case>
 
       <case name="Core-Bluetooth%20ping-pong%20transfer%20with%20RFCOMM">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20ping-pong%20transfer%20with%20RFCOMM.log -en "Core-Bluetooth ping-pong transfer with RFCOMM" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20ping-pong%20transfer%20with%20RFCOMM.log -en "Core-Bluetooth ping-pong transfer with RFCOMM" -m 00:00:00:00:00:00</step>
       </case>
 
       <case name="Core-Bluetooth%20connect%20with%20HCI">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20connect%20with%20HCI.log -en "Core-Bluetooth connect with HCI" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20connect%20with%20HCI.log -en "Core-Bluetooth connect with HCI" -m 00:00:00:00:00:00</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth%20transfer%20ACL%20data%20with%20HCI">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20transfer%20ACL%20data%20with%20HCI.log -en "Core-Bluetooth transfer ACL data with HCI" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20transfer%20ACL%20data%20with%20HCI.log -en "Core-Bluetooth transfer ACL data with HCI" -m 00:00:00:00:00:00</step>
       </case>
       <case name="Core-Bluetooth%20receive%20ACL%20data%20with%20HCI">
         <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20receive%20ACL%20data%20with%20HCI.log -en "Core-Bluetooth receive ACL data with HCI"</step>
@@ -85,7 +85,7 @@
       </case>
       <case name="Core-Bluetooth%20verify%20name%20with%20remote%20HCI">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20verify%20name%20with%20remote%20HCI.log -en "Core-Bluetooth verify name with remote HCI" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20verify%20name%20with%20remote%20HCI.log -en "Core-Bluetooth verify name with remote HCI" -m 00:00:00:00:00:00</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
@@ -94,12 +94,12 @@
       </case>
       <case name="Core-Bluetooth%20verify%20class%20with%20remote%20HCI">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20verify%20class%20with%20remote%20HCI.log -en "Core-Bluetooth verify class with remote HCI" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20verify%20class%20with%20remote%20HCI.log -en "Core-Bluetooth verify class with remote HCI" -m 00:00:00:00:00:00</step>
       </case>
 
       <case name="Core-Bluetooth%20reset%20connection%20with%20HCI">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20reset%20connection%20with%20HCI.log -en "Core-Bluetooth reset connection with HCI" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20reset%20connection%20with%20HCI.log -en "Core-Bluetooth reset connection with HCI" -m 00:00:00:00:00:00</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
@@ -108,7 +108,7 @@
       </case>
       <case name="Core-Bluetooth%20Read%20HCI%20controller%20information%20remote">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20Read%20HCI%20controller%20information%20remote.log -en "Core-Bluetooth Read HCI controller information remote" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20Read%20HCI%20controller%20information%20remote.log -en "Core-Bluetooth Read HCI controller information remote" -m 00:00:00:00:00:00</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
@@ -117,7 +117,7 @@
       </case>
       <case name="Core-Bluetooth%20Read%20connected%20link%20information%20remote">
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20Read%20connected%20link%20information%20remote.log -en "Core-Bluetooth Read connected link information remote" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20Read%20connected%20link%20information%20remote.log -en "Core-Bluetooth Read connected link information remote" -m 00:00:00:00:00:00</step>
       </case>
 
       <case name="Core-Bluetooth%20audit%20incoming%20HCI%20connection">
@@ -129,7 +129,7 @@
       <case name="Core-Bluetooth%20authentication%20with%20pairing%20as%20master">
 	<step>initctl stop bluetoothd</step>
 	<!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20authentication%20with%20pairing%20as%20master.log -en "Core-Bluetooth authentication with pairing as master" 00:00:00:00:00:00</step>
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth%20authentication%20with%20pairing%20as%20master.log -en "Core-Bluetooth authentication with pairing as master" -m 00:00:00:00:00:00</step>
 	<step>initctl start bluetoothd</step>
       </case>
       <case name="Core-Bluetooth%20authentication%20with%20pairing%20as%20slave">

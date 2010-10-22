@@ -262,8 +262,7 @@ int compare_device_info_data(device_info_t* dev1, device_info_t* dev2)
 	if(!dev1 || !dev2) return -1;
 
 	if(	dev1->got_version != dev2->got_version 		||
-		dev1->got_features != dev2->got_features	||
-		dev1->got_ext_features != dev2->got_ext_features)
+		dev1->got_features != dev2->got_features )
 		{
 			log_print("Cannot compare these structures - not equally filled\n");
 			return -1;
@@ -318,7 +317,7 @@ int compare_link_info_data(link_info_t* dev1, link_info_t* dev2)
 		dev1->got_clock != dev2->got_clock	||
 		dev1->got_offset != dev2->got_offset)
 		{
-			log_print("Cannot compare these structures - not equally filled");
+			log_print("Cannot compare these structures - not equally filled\n");
 			return LINK_INFO_CONTENT_MISMACH;
 		}
 

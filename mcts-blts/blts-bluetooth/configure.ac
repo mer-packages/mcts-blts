@@ -26,11 +26,6 @@ AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/hci.c])
 AC_CONFIG_HEADER([config.h])
 
-# Library configs
-PKG_CHECK_MODULES(BLTS_COMMON, [
-	bltscommon
-])
-
 configdir=`pkg-config bltscommon --variable=configdir`
 
 # Checks for programs.

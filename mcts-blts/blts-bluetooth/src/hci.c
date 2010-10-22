@@ -546,9 +546,19 @@ int hci_verify_class_change(struct bt_ctx *ctx)
 				{
 					/* Wake up other DUT ...*/
 					uint16_t handle = -1;
-					retval = hci_create_connection(ctx->hci_fd, &(resps+i)->bdaddr, htobs(HCI_DM1 | HCI_DH1), 0, 0, &handle, 25000);
+					uint8_t rswitch = 0x01; /* allow role switch */
+					uint16_t clkoffset = 0x0;
+					int timeout = 25000; /* ms */
+					uint16_t ptype = HCI_DM1 | HCI_DM3 | HCI_DM5 | HCI_DH1 | HCI_DH3 | HCI_DH5; /* any packet type */
+
+					if( (retval = hci_create_connection(ctx->hci_fd, &(resps+i)->bdaddr, htobs(ptype),
+						htobs(clkoffset), rswitch, &handle, timeout)) < 0)
+					{
+						logged_perror("HCI create connection failed");
+						break;
+					}
 					sleep(WAIT_TIME_CONNECT_DISCONNECT);
-					retval |= hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
+					retval = hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
 					break;
 				}
             }
@@ -608,9 +618,20 @@ int hci_verify_name_change(struct bt_ctx *ctx)
 	{
 		/* Wake up other DUT ...*/
 		uint16_t handle = -1;
-		retval = hci_create_connection(ctx->hci_fd,  &ctx->remote_mac, htobs(HCI_DM1 | HCI_DH1), 0, 0, &handle, 25000);
+		uint8_t rswitch = 0x01; /* allow role switch */
+		uint16_t clkoffset = 0x0;
+		int timeout = 25000; /* ms */
+		uint16_t ptype = HCI_DM1 | HCI_DM3 | HCI_DM5 | HCI_DH1 | HCI_DH3 | HCI_DH5; /* any packet type */
+
+		if( (retval = hci_create_connection(ctx->hci_fd, &ctx->remote_mac, htobs(ptype),
+					htobs(clkoffset), rswitch, &handle, timeout)) < 0)
+		{
+			logged_perror("HCI create connection failed");
+			goto cleanup;
+		}
+
 		sleep(WAIT_TIME_CONNECT_DISCONNECT);
-		retval |= hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
+		retval = hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
 	}
 
 cleanup:
@@ -1161,6 +1182,11 @@ device_info_t* hci_get_info_remote(struct bt_ctx *ctx)
 
     /* do memory allocations here*/
 	device_info_t* infoptr = (device_info_t*)malloc(sizeof(device_info_t));
+
+	if (NULL == infoptr)
+		return NULL;
+
+	memset(infoptr, 0, sizeof(device_info_t));
 	struct hci_conn_info_req *cr = malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
 
     if (!infoptr || !cr )
@@ -1274,6 +1300,8 @@ device_info_t* hci_get_info_local(struct bt_ctx *ctx)
 	if (NULL == infoptr)
 		return NULL;
 
+	memset(infoptr, 0, sizeof(device_info_t));
+
 	log_print("Requesting local information ...\n");
 
 	if(ctx->hci_fd < 0)
@@ -1367,6 +1395,11 @@ link_info_t* hci_get_link_info(struct bt_ctx *ctx, int which)
 
     /* do memory allocations here*/
 	link_info_t* linkptr = (link_info_t*)malloc(sizeof(link_info_t));
+
+	if (NULL == linkptr)
+		return NULL;
+
+	memset(linkptr, 0, sizeof(link_info_t));
 	struct hci_conn_info_req *cr = malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
 
     if (!linkptr || !cr )
