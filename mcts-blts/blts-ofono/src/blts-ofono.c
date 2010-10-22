@@ -319,14 +319,14 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		sms_variant_message_generator);
 	if (ret)
 		return NULL;
-/*
+
 	ret = blts_config_declare_variable_test("oFono - Disable forwardings",
 		forwarding_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "disable_forwarding", "",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
-*/
+
 	ret = blts_config_declare_variable_test("oFono - Unconditional forwarding",
 		forwarding_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "forward_address", "0987654321",
@@ -359,7 +359,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 
 	if(!my_data->old_pin)
 	{
-		ret = blts_config_get_value_string("default_pin", &my_data->old_pin);
+		ret = blts_config_get_value_string("default_pin2", &my_data->old_pin);
 		if(ret)
 		{
 			BLTS_WARNING("Can't read original pin value from config file\n");
@@ -786,6 +786,7 @@ static int my_ofono_case_enable_modems(void* user_ptr, __attribute__((unused))in
 
 static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 {
+	FUNC_ENTER()
 	my_ofono_data* data = (my_ofono_data*)user_ptr;
 	int retval = -1;
 	int i;
@@ -794,11 +795,16 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 	{
 		LOG("forward adress: %s\n", data->forward_address);
 		LOG("-f switch missing or forward number missing!\n");
+		FUNC_LEAVE()
 		return -1;
 	}
 
 	if(my_ofono_get_modem(data))
+	{
+		LOGERR("No modems, found. Cannot proceed testing.\n");
+		FUNC_LEAVE()
 		return -1;
+	}
 
 	for(i=0; i<data->number_modems; i++)
 	{
@@ -822,7 +828,6 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 			break;
 		case BLTS_OFONO_DISABLE_FORWARDINGS:
 			retval = ofono_call_forwarding_disable_all((void *)data, data->modem[i], NULL);
-			retval = ofono_call_forwarding_check_settings(NULL, "", (void *)data, data->modem[i]);
 			if(retval)
 			{
 				LOG("Call forwarding state could not be confirmed with oFono\n");
@@ -879,7 +884,7 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 		}
 		ofono_call_forwarding_properties((void *)data, data->modem[i]);
 	}
-
+	FUNC_LEAVE()
 	return retval;
 }
 

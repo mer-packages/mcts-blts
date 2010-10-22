@@ -155,7 +155,7 @@
 
 [parameter]
 	name forward_address
-	const "0987654321"
+	const "9876543210"
 [end_parameter]
 
 [parameter]
@@ -187,6 +187,7 @@
 	name "oFono - Forward if not reachable"
 	params forward_address
 [end_test]
+
 
 ######################
 # Call barring cases #

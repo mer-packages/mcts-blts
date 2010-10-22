@@ -263,7 +263,7 @@ ofono_call_barring_set(void* user_ptr, char *arg, GValue *value)
 
 	if (!state->ofono_data->old_pin)
 	{
-		LOG("usage: -o <pin> \n");
+		LOG("No PIN numbers set on configuration\n");
 		return -1;
 	}
 
