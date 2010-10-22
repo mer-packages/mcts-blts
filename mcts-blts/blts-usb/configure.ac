@@ -49,21 +49,6 @@ AC_SUBST(BLTS_COMMON_LIBS)
 configdir=`pkg-config bltscommon --variable=configdir`
 AC_SUBST(configdir)
 
-# GLIB dependencies.
-PKG_CHECK_MODULES([GLIB], [glib-2.0])
-PKG_CHECK_MODULES([GTHREAD], [gthread-2.0])
-
-# DBUS
-PKG_CHECK_MODULES([DBUS], [dbus-glib-1])
-
-AC_SUBST(GLIB_CFLAGS)
-AC_SUBST(GLIB_LIBS)
-AC_SUBST(GTHREAD_CFLAGS)
-AC_SUBST(GTHREAD_LIBS)
-
-AC_SUBST(DBUS_CFLAGS)
-AC_SUBST(DBUS_LIBS)
-
 # Checks for header files.
 AC_HEADER_STDC
 
