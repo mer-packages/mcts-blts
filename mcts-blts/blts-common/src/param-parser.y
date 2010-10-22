@@ -299,7 +299,7 @@ testsettings:	/* empty */
 					struct symbol_table_entry *sym;
 					sym = _blts_conf_symbol_table_lookup($3);
 					if (!sym) {
-						LOGERR("PGroup %s not defined\n", $3);
+						BLTS_ERROR("PGroup %s not defined\n", $3);
 						yyerror("unknown pgroup");
 						YYERROR;
 					}
@@ -318,7 +318,7 @@ testsettings:	/* empty */
 					struct symbol_table_entry *sym;
 					sym = _blts_conf_symbol_table_lookup($3);
 					if (!sym) {
-						LOGERR("Parameter %s not defined\n", $3);
+						BLTS_ERROR("Parameter %s not defined\n", $3);
 						yyerror("unknown parameter");
 						YYERROR;
 					}
@@ -385,7 +385,7 @@ testsetsettings: /* empty */
 					struct symbol_table_entry *sym;
 					sym = _blts_conf_symbol_table_lookup($3);
 					if (!sym) {
-						LOGERR("Parameter %s not defined\n", $3);
+						BLTS_ERROR("Parameter %s not defined\n", $3);
 						yyerror("unknown parameter");
 						YYERROR;
 					}
@@ -465,7 +465,7 @@ globalvalue:	IDENT			{
 						struct symbol_table_entry *sym;
 						sym = _blts_conf_symbol_table_lookup($1);
 						if (!sym || sym->type != SYM_TYPE_BOXED_VALUE) {
-							LOGERR("Global variable %s not defined\n", $1);
+							BLTS_ERROR("Global variable %s not defined\n", $1);
 							yyerror("unknown variable");
 							YYERROR;
 						}
@@ -570,7 +570,7 @@ idlist:		/* empty */
 						struct idlist *li = 0;
 						sym = _blts_conf_symbol_table_lookup($2);
 						if (!sym) {
-							LOGERR("\"%s\" not defined\n", $2);
+							BLTS_ERROR("\"%s\" not defined\n", $2);
 							yyerror("unknown identifier");
 							YYERROR;
 						}
@@ -590,7 +590,7 @@ testlist:	/* empty */
 void yyerror(char const *e)
 {
 	/* TODO : Location info */
-	LOGERR("Parse error: %s\n",e);
+	BLTS_ERROR("Parse error: %s\n",e);
 	parse_errors++;
 	/* Need to discard current context here. We'll try to
 	   recover at the next CR. */

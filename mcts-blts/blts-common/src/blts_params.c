@@ -367,31 +367,31 @@ static void dump_boxed_value_level(struct boxed_value *v, int loglevel)
 {
 	unsigned len;
 	if (!v) {
-		log_print_level(loglevel, "(nil)");
+		blts_log_print_level(loglevel, "(nil)");
 		return;
 	}
 	switch(v->type) {
 	case CONFIG_PARAM_STRING:
 		len = strlen(v->str_val);
 		if (len < 80) {
-			log_print_level(loglevel, "\"%s\"",v->str_val);
+			blts_log_print_level(loglevel, "\"%s\"",v->str_val);
 		} else {
-			log_print_level(loglevel, "\"%.40s\"... (total %u characters)", v->str_val, len);
+			blts_log_print_level(loglevel, "\"%.40s\"... (total %u characters)", v->str_val, len);
 		}
 		break;
 	case CONFIG_PARAM_INT:
 	case CONFIG_PARAM_LONG:
-		log_print_level(loglevel, "%ld",v->int_val);
+		blts_log_print_level(loglevel, "%ld",v->int_val);
 		break;
 	case CONFIG_PARAM_BOOL:
-		log_print_level(loglevel, "%s",(v->int_val)?"true":"false");
+		blts_log_print_level(loglevel, "%s",(v->int_val)?"true":"false");
 		break;
 	case CONFIG_PARAM_FLOAT:
 	case CONFIG_PARAM_DOUBLE:
-		log_print_level(loglevel, "%lf",v->float_val);
+		blts_log_print_level(loglevel, "%lf",v->float_val);
 		break;
 	default:
-		log_print_level(loglevel, "(UNKNOWN TYPE)");
+		blts_log_print_level(loglevel, "(UNKNOWN TYPE)");
 	}
 }
 
@@ -404,47 +404,47 @@ static void dump_boxed_value_log(struct boxed_value *v)
 {
 	unsigned len;
 	if (!v) {
-		LOG("(nil)");
+		BLTS_DEBUG("(nil)");
 		return;
 	}
 	switch(v->type) {
 	case CONFIG_PARAM_STRING:
 		len = strlen(v->str_val);
 		if (len < 80) {
-			LOG("\"%s\"",v->str_val);
+			BLTS_DEBUG("\"%s\"",v->str_val);
 		} else {
-			LOG("\"%.40s\"... (total %u characters)", v->str_val, len);
+			BLTS_DEBUG("\"%.40s\"... (total %u characters)", v->str_val, len);
 		}
 		break;
 	case CONFIG_PARAM_INT:
 	case CONFIG_PARAM_LONG:
-		LOG("%ld",v->int_val);
+		BLTS_DEBUG("%ld",v->int_val);
 		break;
 	case CONFIG_PARAM_BOOL:
-		LOG("%s",(v->int_val)?"true":"false");
+		BLTS_DEBUG("%s",(v->int_val)?"true":"false");
 		break;
 	case CONFIG_PARAM_FLOAT:
 	case CONFIG_PARAM_DOUBLE:
-		LOG("%lf",v->float_val);
+		BLTS_DEBUG("%lf",v->float_val);
 		break;
 	default:
-		LOG("(UNKNOWN TYPE)");
+		BLTS_DEBUG("(UNKNOWN TYPE)");
 	}
 }
 
 void blts_config_dump_boxed_value_list_on_loglevel(struct boxed_value *v, int loglevel)
 {
 	if (!v) {
-		log_print_level(loglevel, "[]");
+		blts_log_print_level(loglevel, "[]");
 		return;
 	}
-	log_print_level(loglevel, "[");
+	blts_log_print_level(loglevel, "[");
 	while (v) {
 		dump_boxed_value_level(v, loglevel);
 		if ((v = v->next))
-			log_print_level(loglevel, ", ");
+			blts_log_print_level(loglevel, ", ");
 	}
-	log_print_level(loglevel, "]");
+	blts_log_print_level(loglevel, "]");
 }
 
 static void dump_boxed_value_list(struct boxed_value *v)
@@ -455,16 +455,16 @@ static void dump_boxed_value_list(struct boxed_value *v)
 void blts_config_dump_boxed_value_list_on_log(struct boxed_value *v)
 {
 	if (!v) {
-		LOG("[]");
+		BLTS_DEBUG("[]");
 		return;
 	}
-	LOG("[");
+	BLTS_DEBUG("[");
 	while (v) {
 		dump_boxed_value_log(v);
 		if ((v = v->next))
-			LOG(", ");
+			BLTS_DEBUG(", ");
 	}
-	LOG("]");
+	BLTS_DEBUG("]");
 }
 
 void blts_config_dump_labeled_value_list_on_log(struct boxed_value *labels, struct boxed_value *v)
@@ -1862,7 +1862,7 @@ static int process_pgroup_params(struct pgroupdef* pgroup, struct testdef* test_
 	for (unsigned int j = 0; j < pgroup->n_params; j++)
 	{
 		param_tag = pgroup->pgroup_params_syms[j]->key;
-		//LOG("Symbol type %d\n", param->param_pgroup->pgroup_params_syms[j]->type);
+		//BLTS_DEBUG("Symbol type %d\n", param->param_pgroup->pgroup_params_syms[j]->type);
 		int param_type = CONFIG_PARAM_NONE;
 		struct symbol_table_entry* sym = pgroup->pgroup_params_syms[j];
 		if (sym->type == SYM_TYPE_PARAM)

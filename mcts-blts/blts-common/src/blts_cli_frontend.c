@@ -42,7 +42,7 @@
 
 #define MAX_ARGS 256
 
-#define sigsegv_outp(x, ...) LOGERR(x "\n", ##__VA_ARGS__)
+#define sigsegv_outp(x, ...) BLTS_ERROR(x "\n", ##__VA_ARGS__)
 
 #if defined(REG_RIP)
 # define SIGSEGV_STACK_IA64
@@ -64,14 +64,15 @@ static void show_help(char* bin_name, blts_cli* cli)
 {
 	const char* help_msg_base =
 		"USAGE: %s [-l mylog.txt] [-e test1,test2...] [-en \"my test\"] [-s] "
-		"[-?] [-nc] [-C variation_config.cnf] %%s\n"
+		"[-?] [-v] [-C variation_config.cnf] %%s\n"
 		"  -l: Used log file, default %s\n"
 		"  -e: Execute single or multiple selected tests, for example -e 1,4,5.\n"
 		"  -en: Execute test by name, for example -en \"My test X\"\n"
 		"  -s: Show list of all tests\n"
 		"  -C: Used parameter configuration file\n"
 		"  -?: This message\n"
-		"  -nc: Do not output log to terminal\n%%s";
+		"  -v: Verbose logging\n"
+		"  -vv: Even more verbose logging\n%%s";
 	int log_file_len = cli->log_file?strlen(cli->log_file):0;
 	char *help_msg = malloc(strlen(help_msg_base) + strlen(bin_name) +
 		log_file_len);
@@ -103,7 +104,7 @@ static void save_and_clear_sigchld()
 	saved_sigchld_action = malloc(sizeof(struct sigaction));
 	if(sigaction(SIGCHLD, &default_sa, saved_sigchld_action) == -1)
 	{
-		LOG("Error setting SIGCHLD handler (results may be inaccurate)\n");
+		BLTS_ERROR("Error setting SIGCHLD handler (results may be inaccurate)\n");
 	}
 }
 
@@ -111,7 +112,7 @@ static void restore_sigchld()
 {
 	if(sigaction(SIGCHLD, saved_sigchld_action, NULL) == -1)
 	{
-		LOG("Error restoring SIGCHLD handler.\n");
+		BLTS_ERROR("Error restoring SIGCHLD handler.\n");
 	}
 	else
 	{
@@ -193,7 +194,7 @@ static void setup_sigsegv()
 	action.sa_sigaction = signal_segv;
 	action.sa_flags = SA_SIGINFO;
 	if(sigaction(SIGSEGV, &action, NULL) < 0)
-		logged_perror("sigaction");
+		BLTS_LOGGED_PERROR("sigaction");
 }
 
 static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
@@ -213,7 +214,16 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 
 	pid_t pid;
 
-	LOG("\nStarting test '%d: %s'...\n", testnum, testcase->case_name);
+	/* TODO: real implementation, for example;
+	 * blts-ofono(1)-001:     Voice call..........................................[PASSED]
+	 * blts-ofono(1)-017:     Emergency call......................................[PASSED]
+	 * blts-ofono(1)-023-001: Multiparty call.....................................[FAILED]
+	 * blts-ofono(1)-023:     Multiparty call.....................................[FAILED]
+	 * blts-ofono(1)-011:     Send SMS............................................[PASSED]
+	 * blts-ofono(1):         Final result........................................[FAILED]
+	 * ...and [FAILED] with red color
+	 **/
+	fprintf(stdout, "\nStarting test '%d: %s'...\n", testnum, testcase->case_name);
 
 	do {
 		n_variations++;	  /* <- nb. this needs to be outside the forks */
@@ -221,7 +231,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 
 		if((pid = fork()) < 0)
 		{
-			LOGERR("Failed to fork\n");
+			BLTS_ERROR("Failed to fork\n");
 			return -1;
 		}
 		if(!pid)
@@ -250,7 +260,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 			if(real_timeout && time_elapsed > real_timeout)
 			{
 				kill(pid, SIGKILL);
-				LOGERR("Test execution timed out.\n");
+				BLTS_ERROR("Test execution timed out.\n");
 				ret = -1;
 				break;
 			}
@@ -259,15 +269,15 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 		{
 			if(WIFSIGNALED(ret))
 			{
-				LOGERR("Killed with signal %d (%s)\n", WTERMSIG(ret),
+				BLTS_ERROR("Killed with signal %d (%s)\n", WTERMSIG(ret),
 					strsignal(WTERMSIG(ret)));
 			}
-			LOGERR("Test failed.\n");
+			fprintf(stdout, "Test failed.\n");
 			ret = 1;
 		}
 		else
 		{
-			LOG("Test passed.\n");
+			fprintf(stdout, "Test passed.\n");
 			ret = 0;
 		}
 
@@ -292,7 +302,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 	} while (test_variants);
 
 	if (failed_variants) {
-		LOGERR("Test failed for variations: \n");
+		BLTS_ERROR("Test failed for variations: \n");
 
 		while (failed_variants) {
 			LOGERR("\t");
@@ -386,7 +396,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	int result = 0, t;
 	int num_tests = 0;
 	int* test_list = NULL;
-	int log_to_console = 1;
+	unsigned int log_flags = BLTS_LOG_FLAG_FILE;
 	void* user_ptr = NULL;
 	char* used_log_file = NULL;
 	char* used_config_file = NULL;
@@ -480,12 +490,13 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			}
 			used_log_file = argv[t];
 		}
-		else if(strcmp(argv[t], "-nc") == 0)
+		else if(strcmp(argv[t], "-v") == 0)
 		{
-			log_to_console = 0;
+			log_flags |= BLTS_LOG_FLAG_STDOUT;
 		}
-		else if(strcmp(argv[t], "-trace") == 0)
+		else if(strcmp(argv[t], "-vv") == 0)
 		{
+			log_flags |= BLTS_LOG_FLAG_STDOUT;
 			log_want_trace = 1;
 		}
 		else if(strcmp(argv[t], "-strace") == 0)
@@ -523,19 +534,19 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	/* Open a log file specified by given argument or by the test module */
 	if(used_log_file)
 	{
-		log_open(used_log_file, log_to_console);
+		blts_log_open(used_log_file, log_flags);
 	}
 	else
 	{
 		if(cli->log_file)
 		{
-			log_open(cli->log_file, log_to_console);
+			blts_log_open(cli->log_file, log_flags);
 		}
 	}
 
 	if(log_want_trace)
 	{
-		log_set_level(5);
+		blts_log_set_level(LEVEL_TRACE);
 	}
 
 	/* If we didn't specify a config file, try to use the default */
@@ -648,7 +659,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		{
 			if(test_list[t] > count_tests(cli) || test_list[t] < 1)
 			{
-				LOGERR("Test case '%d' does not exist. Skipping.\n",
+				BLTS_ERROR("Test case '%d' does not exist. Skipping.\n",
 					test_list[t]);
 				result++;
 			}
@@ -686,7 +697,7 @@ cleanup:
 		free (used_config_file);
 	}
 
-	log_close();
+	blts_log_close();
 
 	if(processed_argv)
 	{
