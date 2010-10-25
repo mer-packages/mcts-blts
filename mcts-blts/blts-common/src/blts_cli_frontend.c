@@ -366,13 +366,40 @@ static int parse_test_list(const char* list, int* out)
 	return p;
 }
 
-static void list_all_tests(blts_cli* cli)
+static void list_all_variants_for_testcase(blts_cli_testcase *testcase,
+	void *user_ptr)
+{
+	struct variant_list *test_variants = 0, *temp_var;
+	unsigned n_variations = 0;
+
+	if (!blts_config_test_is_variable(testcase->case_name))
+		return;
+
+	test_variants = blts_config_generate_test_variations(
+		testcase->case_name, 0);
+
+	while (test_variants) {
+		fprintf(stdout, "\tVariant %d, parameters: ", ++n_variations);
+		blts_config_dump_boxed_value_list_on_log(test_variants->values);
+		fprintf(stdout, "\n");
+		user_ptr = _blts_config_mutate_user_params(testcase->case_name,
+			test_variants->values, user_ptr);
+
+		temp_var = test_variants;
+		test_variants = test_variants->next;
+		while ((temp_var->values = blts_config_boxed_value_free(temp_var->values)));
+			free(temp_var);
+	} while (test_variants);
+}
+
+static void list_all_tests(blts_cli* cli, void *user_ptr)
 {
 	int t = 0;
 
 	while(cli->test_cases[t].case_name)
 	{
 		fprintf(stdout, "%d: %s\n", t + 1, cli->test_cases[t].case_name);
+		list_all_variants_for_testcase(&cli->test_cases[t], user_ptr);
 		t++;
 	}
 }
@@ -462,8 +489,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			test_list[num_tests] = find_test_by_name(cli, argv[t]) + 1;
 			if(!test_list[num_tests])
 			{
-				fprintf(stdout, "Invalid name, available tests are:\n");
-				list_all_tests(cli);
+				invalid_arguments(argv[0], cli);
 				result = -EINVAL;
 				goto cleanup;
 			}
@@ -472,6 +498,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		}
 		else if(strcmp(argv[t], "-s") == 0)
 		{
+			log_flags |= BLTS_LOG_FLAG_STDOUT;
 			want_test_list = 1;
 		}
 		else if(strcmp(argv[t], "-?") == 0)
@@ -629,14 +656,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		}
 	}
 
-	/* Include additions from config file parsing */
-	if(want_test_list) {
-		list_all_tests(cli);
-		result = 0;
-		goto cleanup;
-	}
-
-	/* Pass the araguments to test module */
+	/* Pass the arguments to test module */
 	if(cli->blts_cli_process_arguments)
 	{
 		user_ptr = cli->blts_cli_process_arguments(processed_argc,
@@ -649,6 +669,12 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		}
 	}
 
+	/* Include additions from config file parsing */
+	if(want_test_list) {
+		list_all_tests(cli, user_ptr);
+		result = 0;
+		goto cleanup;
+	}
 
 	/* Run the tests given with '-e' argument or all the cases
 	 * specified by test module */
