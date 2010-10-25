@@ -57,18 +57,6 @@ void get_modem_list(char* data, gpointer user_data)
 	}
 }
 
-/* helper function to solve modem GPtrArray */
-
-/*void find_modem(char *key, GValue* value, gpointer user_data)
-{
-	my_ofono_data* data = (my_ofono_data*)user_data;
-	LOG("[ %s ]\n", key);
-
-	if(!strcmp("Modems", key))
-		if(g_value_fits_pointer (value))
-			g_ptr_array_foreach(g_value_peek_pointer (value), (GFunc)get_modem_list, data);
-}*/
-
 void find_modem(gpointer modem_data,  gpointer user_data)
 {
 	my_ofono_data* mydata = (my_ofono_data*)user_data;
@@ -154,22 +142,6 @@ int my_ofono_get_modem(my_ofono_data* data)
 
 	dbus_marshaller_init();
 
-	// get modems 0.26 and before
-/*	if (!dbus_g_proxy_call (proxy, "GetProperties", &error, G_TYPE_INVALID,
-			dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-			&list, G_TYPE_INVALID))
-
-	{
-		display_dbus_glib_error(error);
-		g_error_free (error);
-		return -1;
-	}
-
-	g_hash_table_foreach(list, (GHFunc)find_modem, data );
-	g_hash_table_foreach(list, (GHFunc)hash_table_foreach, NULL);
-	g_hash_table_destroy(list);*/
-
-	// get mdoems 0.28 and later
 	if(!org_ofono_Manager_get_modems(proxy, &modems, &error))
 	{
 		g_object_unref (proxy);
@@ -192,7 +164,10 @@ int my_ofono_get_modem(my_ofono_data* data)
 	/* reset here all supplementary services so that device is
 	 * on it's 'default' state for sure
 	 */
-	reset_supplementary_services(data);
+	if(reset_supplementary_services(data))
+	{
+		LOG("Warning: can't reset supplementary services. Wrong PIN or unitialized modem?\n");
+	}
 	return 0;
 }
 
@@ -277,9 +252,9 @@ int reset_supplementary_services(my_ofono_data* data)
 	GError *error = NULL;
 	DBusGProxy *proxy=NULL;
 	char *condition = "all";
-	int i;
+	int i, ret = 0;
 	if (!data->number_modems)
-		return 0;
+		return -1;
 
 	for (i = 0; i < data->number_modems; ++i) {
 
@@ -296,10 +271,9 @@ int reset_supplementary_services(my_ofono_data* data)
 
 		if(!org_ofono_CallForwarding_disable_all(proxy, condition, &error))
 		{
-			display_dbus_glib_error(error);
+			ret = -1;
 			g_error_free (error);
 			error = NULL;
-
 		}
 
 		if(!data->old_pin)
@@ -319,10 +293,10 @@ int reset_supplementary_services(my_ofono_data* data)
 
 		if(!org_ofono_CallBarring_disable_all(proxy, data->old_pin, &error))
 		{
-			display_dbus_glib_error(error);
+			ret = -1;
 			g_error_free (error);
 			error = NULL;
 		}
 	} // all modems loop
-	return 0;
+	return ret;
 }
