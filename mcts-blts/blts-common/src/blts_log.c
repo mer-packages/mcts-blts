@@ -91,6 +91,10 @@ int blts_log_open(const char *filename, unsigned int flags)
 		return -1;
 	}
 
+	/* TODO: Remove later. log_console is used by deprecated funcs. */
+	if (flags & BLTS_LOG_FLAG_STDOUT)
+		log_console = 1;
+
 	logging_flags = flags;
 	return 0;
 }
