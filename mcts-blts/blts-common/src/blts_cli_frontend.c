@@ -57,6 +57,11 @@
 
 #define BLTS_CONFIG_SUFFIX ".cnf"
 
+#define GREEN_TEXT "\033[32m"
+#define RED_TEXT "\033[31m"
+#define NORMAL_TEXT "\033[0m"
+#define MAX_LOG_LINE_LEN 80
+
 static struct sigaction *saved_sigchld_action = NULL;
 static unsigned int timout_override = 0;
 
@@ -197,7 +202,51 @@ static void setup_sigsegv()
 		BLTS_LOGGED_PERROR("sigaction");
 }
 
-static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
+static void print_test_case_result(const char *bin_name, const char *case_name,
+	int test_num, int var_num, int result)
+{
+	char log_line[MAX_LOG_LINE_LEN + 1];
+	const char *bin_fname;
+	const char *passed_txt = "["GREEN_TEXT"PASSED"NORMAL_TEXT"]";
+	const char *failed_txt = "["RED_TEXT"FAILED"NORMAL_TEXT"]";
+
+	bin_fname = strrchr(bin_name, '/');
+	if (bin_fname)
+		bin_fname++;
+	else
+		bin_fname = bin_name;
+
+	log_line[0] = 0;
+
+	if (test_num >= 0 && var_num >= 0) {
+		snprintf(&log_line[strlen(log_line)], 30, "%s-%03d-%03d: ",
+			bin_fname, test_num, var_num);
+	} else if (test_num >= 0) {
+		snprintf(&log_line[strlen(log_line)], 30, "%s-%03d:     ",
+			bin_fname, test_num);
+	} else {
+		snprintf(&log_line[strlen(log_line)], 30, "%s:         ",
+			bin_fname);
+	}
+
+	snprintf(&log_line[strlen(log_line)],
+		MAX_LOG_LINE_LEN - strlen(log_line) - strlen(passed_txt), "%s",
+		case_name);
+	memset(&log_line[strlen(log_line)], '.',
+		MAX_LOG_LINE_LEN - strlen(log_line));
+	if (result)
+		sprintf(&log_line[MAX_LOG_LINE_LEN -
+			strlen(failed_txt)], "%s", failed_txt);
+	else
+		sprintf(&log_line[MAX_LOG_LINE_LEN -
+			strlen(passed_txt)], "%s", passed_txt);
+
+	fprintf(stdout, "%s\n", log_line);
+	fflush(stdout);
+}
+
+static int run_test(const char *bin_name, int testnum,
+	blts_cli_testcase* testcase, void* user_ptr,
 	int var_style, int stack_trace)
 {
 	int ret = 0;
@@ -206,24 +255,14 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 	struct variant_list *test_variants = 0, *failed_variants = 0, *temp_var;
 	struct boxed_value *variant_param_names = NULL;
 	unsigned n_variations = 0;
+	pid_t pid;
 
 	if (blts_config_test_is_variable(testcase->case_name)) {
 		test_variants = blts_config_generate_test_variations(testcase->case_name, var_style);
 		variant_param_names = blts_config_get_test_param_names(testcase->case_name);
 	}
 
-	pid_t pid;
-
-	/* TODO: real implementation, for example;
-	 * blts-ofono(1)-001:     Voice call..........................................[PASSED]
-	 * blts-ofono(1)-017:     Emergency call......................................[PASSED]
-	 * blts-ofono(1)-023-001: Multiparty call.....................................[FAILED]
-	 * blts-ofono(1)-023:     Multiparty call.....................................[FAILED]
-	 * blts-ofono(1)-011:     Send SMS............................................[PASSED]
-	 * blts-ofono(1):         Final result........................................[FAILED]
-	 * ...and [FAILED] with red color
-	 **/
-	fprintf(stdout, "\nStarting test '%d: %s'...\n", testnum, testcase->case_name);
+	BLTS_DEBUG("\nStarting test '%d: %s'...\n", testnum, testcase->case_name);
 
 	do {
 		n_variations++;	  /* <- nb. this needs to be outside the forks */
@@ -232,7 +271,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 		if((pid = fork()) < 0)
 		{
 			BLTS_ERROR("Failed to fork\n");
-			return -1;
+			return 1;
 		}
 		if(!pid)
 		{
@@ -261,7 +300,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 			{
 				kill(pid, SIGKILL);
 				BLTS_ERROR("Test execution timed out.\n");
-				ret = -1;
+				ret = 1;
 				break;
 			}
 		}
@@ -272,12 +311,12 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 				BLTS_ERROR("Killed with signal %d (%s)\n", WTERMSIG(ret),
 					strsignal(WTERMSIG(ret)));
 			}
-			fprintf(stdout, "Test failed.\n");
+			BLTS_DEBUG("Test failed.\n");
 			ret = 1;
 		}
 		else
 		{
-			fprintf(stdout, "Test passed.\n");
+			BLTS_DEBUG("Test passed.\n");
 			ret = 0;
 		}
 
@@ -292,6 +331,7 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 				temp_var = malloc(sizeof *temp_var);
 				temp_var->values = blts_config_boxed_value_list_dup(test_variants->values);
 				temp_var->next = failed_variants;
+				temp_var->index = n_variations;
 				failed_variants = temp_var;
 			}
 			temp_var = test_variants;
@@ -302,6 +342,11 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 	} while (test_variants);
 
 	if (failed_variants) {
+		/* This functions should return count of failed testcases.
+		 * If any of the variants fail, the test case should fail.
+		 * */
+		ret = 1;
+
 		BLTS_ERROR("Test failed for variations: \n");
 
 		while (failed_variants) {
@@ -314,6 +359,9 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 			while ((temp_var->values = blts_config_boxed_value_free(temp_var->values)));
 			free(temp_var);
 		}
+	} else {
+		print_test_case_result(bin_name, testcase->case_name,
+			testnum, -1, ret);
 	}
 
 	while(variant_param_names)
@@ -389,7 +437,7 @@ static void list_all_variants_for_testcase(blts_cli_testcase *testcase,
 		test_variants = test_variants->next;
 		while ((temp_var->values = blts_config_boxed_value_free(temp_var->values)));
 			free(temp_var);
-	} while (test_variants);
+	}
 }
 
 static void list_all_tests(blts_cli* cli, void *user_ptr)
@@ -678,6 +726,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 
 	/* Run the tests given with '-e' argument or all the cases
 	 * specified by test module */
+	result = 0;
 	if(num_tests)
 	{
 		t = 0;
@@ -691,7 +740,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			}
 			else
 			{
-				result += run_test(test_list[t],
+				result += run_test(argv[0], test_list[t],
 					&cli->test_cases[test_list[t] - 1], user_ptr, variant_run_mode,
 					log_stack_trace);
 			}
@@ -703,11 +752,14 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		t = 0;
 		while(cli->test_cases[t].case_name)
 		{
-			result += run_test(t + 1, &cli->test_cases[t], user_ptr,
+			result += run_test(argv[0], t + 1, &cli->test_cases[t], user_ptr,
 				variant_run_mode, log_stack_trace);
 			t++;
 		}
 	}
+
+	print_test_case_result(argv[0], "Final result",
+		-1, -1, result);
 
 cleanup:
 

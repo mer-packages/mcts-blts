@@ -54,6 +54,7 @@ struct boxed_value {
 
 /* Linked list for storing generated parameter variations */
 struct variant_list {
+	unsigned index;
 	struct variant_list *next;
 	struct boxed_value *values; /* Linked list of parameter values for this variation */
 };
