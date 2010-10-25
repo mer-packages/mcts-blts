@@ -1922,7 +1922,6 @@ static int process_pgroup_params(struct pgroupdef* pgroup, struct testdef* test_
 
 int blts_config_declare_variable_test_dynamic(char* name, tagged_arg_handler_fn arg_handler)
 {
-	va_list ap;
 	struct symbol_table_entry *sym;
 	int ret;
 	unsigned use_defaults = 0;
@@ -2039,21 +2038,22 @@ int blts_config_debug_dump_variants(char *test, int style)
 void* _blts_config_mutate_user_params(char *testname, struct boxed_value *values, void* user_ptr)
 {
 	struct symbol_table_entry *sym;
+	void *res = NULL;
+
 	sym = _blts_conf_symbol_table_lookup(testname);
 	if (!sym) {
 		BLTS_ERROR("Error: undefined symbol \"%s\"\n", testname);
-		return 0;
+		return NULL;
 	}
 	if (sym->type != SYM_TYPE_TEST) {
 		BLTS_ERROR("Error: not a test \"%s\"\n", testname);
-		return 0;
+		return NULL;
 	}
 	if (! sym->test_definition->arg_handler && ! sym->test_definition->arg_handler2) {
 		BLTS_ERROR("Error: no argument handler for test \"%s\"\n", testname);
-		return 0;
+		return NULL;
 	}
 
-	int res;
 	if (sym->test_definition->arg_handler)
 	{
 		res = sym->test_definition->arg_handler(values, user_ptr);
@@ -2065,7 +2065,6 @@ void* _blts_config_mutate_user_params(char *testname, struct boxed_value *values
 	else
 	{
 		BLTS_ERROR("Error: no argument handler for test \"%s\"\n", testname);
-		res = 0;
 	}
 
 	return res;
