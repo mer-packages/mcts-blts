@@ -67,15 +67,15 @@ static void* my_example_argument_processor(int argc, char **argv)
 			/* getopt_long() flag */
 			break;
 		case 'q':
-			LOG("Argument 'q' given\n");
+			BLTS_TRACE("Argument 'q' given\n");
 			my_data->q_set = 1;
 			break;
 		case 'w':
-			LOG("Argument 'w' given\n");
+			BLTS_TRACE("Argument 'w' given\n");
 			my_data->w_set = 1;
 			break;
 		case 'p':
-			LOG("Argument 'p' given\n");
+			BLTS_TRACE("Argument 'p' given\n");
 			my_data->p_set = 1;
 			break;
 		default:
@@ -103,9 +103,9 @@ static int my_example_case_1(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
 
-	LOG("in my_example_case_1\n");
-	if(data->q_set) LOG("q is set\n");
-	LOG("This is test #%d\n", test_num);
+	BLTS_DEBUG("in my_example_case_1\n");
+	if(data->q_set) BLTS_DEBUG("q is set\n");
+	BLTS_DEBUG("This is test #%d\n", test_num);
 
 	return 0;
 }
@@ -114,10 +114,10 @@ static int my_example_case_2(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
 
-	LOG("in my_example_case_2\n");
-	if(data->w_set) LOG("w is set\n");
-	LOG("This is test #%d\n", test_num);
-	LOG("This should not timeout...\n", test_num);
+	BLTS_DEBUG("in my_example_case_2\n");
+	if(data->w_set) BLTS_DEBUG("w is set\n");
+	BLTS_DEBUG("This is test #%d\n", test_num);
+	BLTS_DEBUG("This should not timeout...\n", test_num);
 	sleep(5);
 
 	return 0;
@@ -127,11 +127,11 @@ static int my_example_case_3(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
 	int *ptr = NULL;
-	LOG("in my_example_case_3\n");
+	BLTS_DEBUG("in my_example_case_3\n");
 
-	LOG("this will crash\n");
+	BLTS_DEBUG("this will crash\n");
 	*ptr = data->p_set;
-	LOG("you should not see this\n");
+	BLTS_ERROR("you should not see this\n");
 
 	return 0;
 }
@@ -139,10 +139,10 @@ static int my_example_case_3(void* user_ptr, int test_num)
 static int my_example_case_4(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
-	LOG("in my_example_case_4\n");
+	BLTS_DEBUG("in my_example_case_4\n");
 
-	if(data->p_set) LOG("p is set\n");
-	LOG("this case should fail cleanly\n");
+	if(data->p_set) BLTS_DEBUG("p is set\n");
+	BLTS_DEBUG("this case should fail cleanly\n");
 
 	return -1;
 }
@@ -150,12 +150,12 @@ static int my_example_case_4(void* user_ptr, int test_num)
 static int my_example_case_5(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
-	LOG("in my_example_case_5\n");
+	BLTS_DEBUG("in my_example_case_5\n");
 
-	if(data->p_set) LOG("p is set\n");
-	LOG("this case should should timeout\n");
+	if(data->p_set) BLTS_DEBUG("p is set\n");
+	BLTS_DEBUG("this case should should timeout\n");
 	sleep(5);
-	LOG("you should not see me\n");
+	BLTS_ERROR("you should not see me\n");
 
 	return -1;
 }
