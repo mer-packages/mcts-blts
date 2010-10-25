@@ -101,6 +101,9 @@ static void dbus_marshaller_init()
  	dbus_g_object_register_marshaller(_blts__VOID__STRING_BOXED,
  		G_TYPE_NONE, G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
 
+ 	dbus_g_object_register_marshaller(_blts__VOID__STRING_BOXED,
+ 		G_TYPE_NONE, DBUS_TYPE_G_OBJECT_PATH, G_TYPE_VALUE, G_TYPE_INVALID);
+
 /* 	dbus_g_object_register_marshaller(_blts__VOID__STRING_POINTER, */
 /* 		G_TYPE_NONE, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_INVALID); */
 

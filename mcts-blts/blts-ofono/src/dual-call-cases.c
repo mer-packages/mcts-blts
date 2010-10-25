@@ -43,24 +43,27 @@ struct dual_call_case_state {
 
 	my_ofono_data *ofono_data;
 
-	GCallback signalcb_VoiceCallManager_PropertyChanged;
 	GCallback signalcb_VoiceCall1_PropertyChanged;
 	GCallback signalcb_VoiceCall2_PropertyChanged;
 
+	GCallback signalcb_VoiceCalls_Added;
+	GCallback signalcb_VoiceCalls_Removed;
+
 	call_handle_fp call_handle_method;
 
-	char* first_voice_call_path;
-	char* second_voice_call_path;
+	gchar* first_voice_call_path;
+	gchar* second_voice_call_path;
 
 	int retries;
 	int user_timeout;
 	int result;
 };
 
-
-static void on_voice_call_manager_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 static void on_first_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 static void on_second_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
+
+static void call_added(DBusGProxy *proxy, gchar* path, GHashTable* properties, void *user_data);
+static void call_removed(DBusGProxy *proxy, gchar* path, void *user_data);
 
 static gboolean do_transfer(gpointer user_ptr);
 static gboolean do_swap(gpointer user_ptr);
@@ -73,6 +76,8 @@ static gboolean pending_call_queue_answerable_check(gpointer data);
 
 static gboolean pending_call_state_check(gpointer data);
 static void pending_call_state_check_complete(DBusGProxy *proxy, GHashTable *properties, GError *error, gpointer data);
+
+static int check_call_count(struct dual_call_case_state *state, int expected_count);
 
 static
 void hangup_all_calls(struct dual_call_case_state* state)
@@ -95,40 +100,27 @@ void hangup_all_calls(struct dual_call_case_state* state)
 static
 gboolean find_state(__attribute__((unused))gpointer key, gpointer value, gpointer user_data)
 {
-	gchar* state =  (gchar*) user_data;
-	gchar* content = NULL;
+	gchar* expected_state = (gchar*) user_data;
+	gchar* state = NULL;
 
-	if(!state)
+	if(!expected_state)
 		return FALSE;
-
-	content = (gchar*) g_value_dup_string(value);
-
-	if(!strcmp(state, content))
+		
+	if(strcmp("State", (char *)key) == 0)
 	{
-		free(content);
-		return TRUE;
+		LOG("%s: %s\n", (char*)key, g_value_dup_string(value));
+		state = (gchar*) g_value_dup_string(value);
+		
+		if(!strcmp(expected_state, state))
+		{
+			g_free(state);
+			return TRUE;
+		}
+		g_free(state);
+		return FALSE;						
 	}
-
-	free(content);
-	return FALSE;
-}
-
-static
-GHashTable* get_voicecall_properties(DBusGProxy *proxy)
-{
-	GError *error = NULL;
-	GHashTable* list = NULL;
-
-	if(!proxy)
-		return NULL;
-
-	if(!org_ofono_VoiceCall_get_properties(proxy, &list, &error))
-	{
-		display_dbus_glib_error(error);
-		g_error_free (error);
-		return NULL;
-	}
-	return list;
+	else
+		return FALSE;
 }
 
 /* Completion of async answer call. Retry limited times if failure. */
@@ -323,11 +315,10 @@ static void hold_and_answer_complete(__attribute__((unused)) DBusGProxy *proxy, 
 }
 
 /* Answer to first call and start listening property changes */
-static void handle_first_call(gpointer data, gpointer user_data)
+static void handle_first_call(gchar* path, GHashTable* properties, gpointer user_data)
 {
 	int call_index = 0;
 	DBusGProxy *call=NULL;
-	GHashTable* list=NULL;
 	gpointer incoming = NULL;
 
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;
@@ -342,7 +333,7 @@ static void handle_first_call(gpointer data, gpointer user_data)
 	call_index = FIRST_CALL;
 
 	call = dbus_g_proxy_new_for_name (state->ofono_data->connection,
-			OFONO_BUS, data, OFONO_CALL_INTERFACE);
+			OFONO_BUS, path, OFONO_CALL_INTERFACE);
 
 	if (!call)
 	{
@@ -351,25 +342,18 @@ static void handle_first_call(gpointer data, gpointer user_data)
 	}
 
 	state->voice_calls[call_index] = call;
-	list = get_voicecall_properties(state->voice_calls[call_index]);
-
-	if (!list)
-	{
-		LOG("Cannot get voice call properties\n");
-		goto error;
-	}
 
 	LOG("Search incoming state...\n");
-	g_hash_table_foreach(list, (GHFunc)hash_entry_gvalue_print, NULL);
-	incoming = g_hash_table_find(list, (GHRFunc) find_state, "incoming");
+	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+	incoming = g_hash_table_find(properties, (GHRFunc) find_state, "incoming");
 	if(!incoming)
 	{
 		LOG("Not incoming call - test failed!\n");
 		goto error;
 	}
 
-	LOG("Listing call data for call '%s'\n", (char *)data);
-	state->first_voice_call_path = strdup((char *)data);
+	LOG("Listing call data for call '%s'\n", path);
+	state->first_voice_call_path = g_strdup(path);
 
 	if (state->signalcb_VoiceCall1_PropertyChanged)
 	{
@@ -384,24 +368,18 @@ static void handle_first_call(gpointer data, gpointer user_data)
 	org_ofono_VoiceCall_get_properties_async(state->voice_calls[call_index],
 	pending_call_answerable_check_complete, state);
 
-	g_hash_table_destroy(list);
-
 	return;
 error:
 	state->result = -1;
-
-	if(list)
-		g_hash_table_destroy(list);
-
+	
 	g_main_loop_quit(state->mainloop);
 }
 
 /* Redirect second call and start listening property changes */
-static void handle_second_call(gpointer data, gpointer user_data)
+static void handle_second_call(gchar* path, GHashTable* properties, gpointer user_data)
 {
 	int call_index = 0;
 	DBusGProxy *call=NULL;
-	GHashTable* list=NULL;
 	gpointer waiting = NULL;
 
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;
@@ -413,7 +391,7 @@ static void handle_second_call(gpointer data, gpointer user_data)
 	}
 
 	/* skip already handled voice call */
-	if(strcmp(state->first_voice_call_path, (char *)data) == 0)
+	if(strcmp(state->first_voice_call_path, path) == 0)
 	{
 		LOG("Voice call:%s skipped\n", state->first_voice_call_path);
 		return;
@@ -423,7 +401,7 @@ static void handle_second_call(gpointer data, gpointer user_data)
 	call_index = SECOND_CALL;
 
 	call = dbus_g_proxy_new_for_name (state->ofono_data->connection,
-			OFONO_BUS, data, OFONO_CALL_INTERFACE);
+			OFONO_BUS, path, OFONO_CALL_INTERFACE);
 
 	if (!call)
 	{
@@ -432,25 +410,18 @@ static void handle_second_call(gpointer data, gpointer user_data)
 	}
 
 	state->voice_calls[call_index] = call;
-	list = get_voicecall_properties(state->voice_calls[call_index]);
-
-	if (!list)
-	{
-		LOG("Cannot get voice call properties\n");
-		goto error;
-	}
-
+	
 	LOG("Search waiting state...\n");
-	g_hash_table_foreach(list, (GHFunc)hash_entry_gvalue_print, NULL);
-	waiting = g_hash_table_find(list, (GHRFunc) find_state, "waiting");
+	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+	waiting = g_hash_table_find(properties, (GHRFunc) find_state, "waiting");
 	if(!waiting)
 	{
 		LOG("Not waiting call - test failed!\n");
 		goto error;
 	}
 
-	LOG("Listing call data for call '%s'\n", (char *)data);
-	state->second_voice_call_path = strdup((char *)data);
+	LOG("Listing call data for call '%s'\n", path);
+	state->second_voice_call_path = g_strdup(path);
 
 	if (state->signalcb_VoiceCall2_PropertyChanged)
 	{
@@ -465,66 +436,62 @@ static void handle_second_call(gpointer data, gpointer user_data)
 		g_timeout_add(state->user_timeout, (GSourceFunc) call_user_timeout, state);
 	}
 
-	/* both calls are received - disconnect voicecall manager signal */
-	if (state->signalcb_VoiceCallManager_PropertyChanged)
-	{
-		dbus_g_proxy_disconnect_signal(state->voice_call_manager, "PropertyChanged",
-		state->signalcb_VoiceCallManager_PropertyChanged, state);
-	}
-
-	g_hash_table_destroy(list);
-
 	return;
 error:
 	state->result = -1;
 
-	if(list)
-		g_hash_table_destroy(list);
-
 	g_main_loop_quit(state->mainloop);
+}
+
+
+/**
+ * Signal handler
+ * Handle first or second call when signal "CallAdded" from voice call manager is sent
+ */
+static void call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GHashTable* properties, void *user_data)
+{	
+	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;		
+	
+	LOG("Call added...%s\n", path);	
+
+	if(!state->voice_calls[FIRST_CALL])
+	{
+		LOG("Handle first call...\n");
+		handle_first_call(path, properties, user_data);
+	}
+	else if (!state->voice_calls[SECOND_CALL])
+	{
+		LOG("Handle second call...\n");
+		handle_second_call(path, properties, user_data);
+	}
+	else
+	{
+		LOG("Already two calls in system...\n");
+	}
+
+	return;
 }
 
 /**
  * Signal handler
- * Check call state and call manager state changes
+ * Handle "CallRemoved" signals from voice call manager - end test case when signals 
+ * for both test calls are received
  */
-
-static void on_voice_call_manager_property_changed(__attribute__((unused))DBusGProxy *proxy, char *key, GValue* value, gpointer user_data)
+static void call_removed(__attribute__((unused))DBusGProxy *proxy, gchar* path, void *user_data)
 {
-
-	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;
-
-	if(strcmp(key, "Calls") == 0)
-	{
-		LOG("Call list modification > ");
-		if(!value)
-		{
-			LOG("No calls in system.\n");
-		}
-		else
-		{
-			if(!state->voice_calls[FIRST_CALL])
-			{
-				LOG("Handle first call...\n");
-				g_ptr_array_foreach(g_value_peek_pointer(value), (GFunc)handle_first_call, user_data);
-			}
-			else if (!state->voice_calls[SECOND_CALL])
-			{
-				LOG("Handle second call...\n");
-				g_ptr_array_foreach(g_value_peek_pointer(value), (GFunc)handle_second_call, user_data);
-			}
-			else
-			{
-				LOG("Two calls in system...\n");
-			}
-		}
-	}
-	else
-	{
-		char* value_str =g_value_dup_string (value);
-		LOG("VoiceCallManager property: %s changed to %s\n ", key, value_str);
-		free(value_str);
-	}
+	static int removed_calls = 0;
+	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;	
+	
+	LOG("Call %s removed...\n", path);
+	removed_calls++;
+	LOG("Calls removed total: %d\n", removed_calls);
+	
+	/* End test case when both "CallRemoved" signals have been received and
+	   VoiceCall1 and VoiceCall2 have both got 'disconnected' property change signals */
+	if(state->first_voice_call_path && state->second_voice_call_path && removed_calls >= 2)
+		if(!state->voice_calls[FIRST_CALL] && !state->voice_calls[SECOND_CALL])
+				g_main_loop_quit(state->mainloop);			
+	return;
 }
 
 
@@ -537,7 +504,7 @@ static void on_first_voice_call_property_changed(__attribute__((unused))DBusGPro
 
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;
 
-	char* value_str =g_value_dup_string (value);
+	gchar* value_str = g_value_dup_string (value);
 
 	LOG("Voicecall 1 property: '%s' changed to '%s'\n", key, value_str);
 
@@ -554,11 +521,7 @@ static void on_first_voice_call_property_changed(__attribute__((unused))DBusGPro
 		}
 	}
 
-	free(value_str);
-
-	if(!state->voice_calls[FIRST_CALL] &&
-		!state->voice_calls[SECOND_CALL])
-		g_main_loop_quit(state->mainloop);
+	g_free(value_str); 
 }
 
 /**
@@ -570,7 +533,7 @@ static void on_second_voice_call_property_changed(__attribute__((unused))DBusGPr
 
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;
 
-	char* value_str =g_value_dup_string (value);
+	gchar* value_str = g_value_dup_string (value);
 
 	LOG("Voicecall 2 property: '%s' changed to '%s'\n", key, value_str);
 
@@ -587,13 +550,8 @@ static void on_second_voice_call_property_changed(__attribute__((unused))DBusGPr
 		}
 	}
 
-	free(value_str);
-
-	if(!state->voice_calls[FIRST_CALL] &&
-		!state->voice_calls[SECOND_CALL])
-		g_main_loop_quit(state->mainloop);
+	g_free(value_str);
 }
-
 
 /**
  * Joins the currently Active and Held calls together and disconnects
@@ -664,10 +622,10 @@ static void call_state_finalize(struct dual_call_case_state *state)
 		return;
 
 	if(state->first_voice_call_path)
-		free(state->first_voice_call_path);
+		g_free(state->first_voice_call_path);
 
 	if(state->second_voice_call_path)
-		free(state->second_voice_call_path);
+		g_free(state->second_voice_call_path);
 
 	if (state->voice_call_manager)
 		g_object_unref(state->voice_call_manager);
@@ -678,7 +636,7 @@ static void call_state_finalize(struct dual_call_case_state *state)
 	if (state->voice_calls[SECOND_CALL])
 		g_object_unref(state->voice_calls[SECOND_CALL]);
 
-	free(state);
+	g_free(state);
 }
 
 static gboolean call_master_timeout(gpointer data)
@@ -715,6 +673,48 @@ static gboolean call_user_timeout(gpointer data)
 	return FALSE;
 }
 
+gboolean check_call_count(struct dual_call_case_state *state, int expected_count)
+{
+	GPtrArray* array;
+	GError *error;
+	int count;
+	
+	if(!org_ofono_VoiceCallManager_get_calls(state->voice_call_manager, &array, &error))
+	{
+		display_dbus_glib_error(error);
+		g_error_free (error);
+		return FALSE;
+	}
+	else
+	{
+		if(!array)
+		{
+			count = 0;
+		}
+		else
+		{	
+			int i;		
+			for (i = 0; i < (int) array->len; i++)
+			{
+				GValueArray *call = g_ptr_array_index (array, i);
+				char *path = g_value_get_boxed (g_value_array_get_nth (call, 0));
+				GHashTable *properties = g_value_get_boxed (g_value_array_get_nth (call, 1));
+						
+				BLTS_TRACE("%s\n", path);										
+				g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+			}
+			count = i;	
+		}
+	}
+	
+	BLTS_TRACE("Expected call count:%d - current call count:%d\n", expected_count, count);
+	if(expected_count != -1)
+		if(expected_count != count)
+			return FALSE;
+	
+	return TRUE;	
+}
+
 static gboolean call_init_start(gpointer data)
 {
 	FUNC_ENTER();
@@ -738,18 +738,28 @@ static gboolean call_init_start(gpointer data)
 	state->voice_call_manager = voice_call_manager;
 
 	/* Ensure that there is no previous calls in system */
+	BLTS_TRACE("Hangup previous calls...\n");
 	hangup_all_calls(state);
 
-	if (state->signalcb_VoiceCallManager_PropertyChanged) {
-			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",
-					G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
-				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
-		}
+	if (state->signalcb_VoiceCalls_Added) {
+	dbus_g_proxy_add_signal(state->voice_call_manager, "CallAdded",
+			DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", 
+			G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID);
+	
+	dbus_g_proxy_connect_signal(state->voice_call_manager, "CallAdded",
+		state->signalcb_VoiceCalls_Added, data, 0);
+	}
 
+	if (state->signalcb_VoiceCalls_Removed) {
+	dbus_g_proxy_add_signal(state->voice_call_manager, "CallRemoved",
+			DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+	
+	dbus_g_proxy_connect_signal(state->voice_call_manager, "CallRemoved",
+		state->signalcb_VoiceCalls_Removed, data, 0);
+	}
+	
 	if (state->case_begin)
 			g_idle_add(state->case_begin, state);
-
 
 	FUNC_LEAVE();
 	return FALSE;
@@ -758,7 +768,7 @@ static gboolean call_init_start(gpointer data)
 static struct dual_call_case_state *call_state_init(my_ofono_data *data)
 {
 	struct dual_call_case_state *state;
-	state = malloc(sizeof *state);
+	state = g_malloc(sizeof *state);
 	if (!state) {
 		LOG("OOM\n");
 		return 0;
@@ -813,7 +823,16 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 {
 	FUNC_ENTER();
 
-	LOG("Start listening calls\n");
+	struct dual_call_case_state *state = (struct dual_call_case_state *) data;
+
+	if(!check_call_count(state, 0))
+	{
+		LOG("Previous calls left in system! - test failed\n");
+		state->result = -1;
+		g_main_loop_quit(state->mainloop);
+	}
+
+	LOG("Start listening calls...\n");
 
 	FUNC_LEAVE();
 	return FALSE;
@@ -827,7 +846,7 @@ int blts_ofono_case_dual_call_transfer(void* user_ptr, __attribute__((unused))in
 	struct dual_call_case_state *test;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 
-/* 	log_set_level(5); */
+ /*	log_set_level(5); */
 
 	if (!data)
 		return -EINVAL;
@@ -839,12 +858,12 @@ int blts_ofono_case_dual_call_transfer(void* user_ptr, __attribute__((unused))in
 
 	test->user_timeout = data->user_timeout ? data->user_timeout : 10000;
 
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_VoiceCall1_PropertyChanged =
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
+	test->signalcb_VoiceCalls_Added = G_CALLBACK(call_added);
+	test->signalcb_VoiceCalls_Removed = G_CALLBACK(call_removed);
 
 	test->call_handle_method = do_transfer;
 
@@ -861,7 +880,7 @@ int blts_ofono_case_dual_call_swap(void* user_ptr, __attribute__((unused))int te
 	struct dual_call_case_state *test;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 
-/* 	log_set_level(5); */
+ /*	log_set_level(5); */
 
 	if (!data)
 		return -EINVAL;
@@ -873,12 +892,14 @@ int blts_ofono_case_dual_call_swap(void* user_ptr, __attribute__((unused))int te
 
 	test->user_timeout = data->user_timeout ? data->user_timeout : 10000;
 
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_VoiceCall1_PropertyChanged =
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
+	test->signalcb_VoiceCalls_Added = 
+		G_CALLBACK(call_added);
+	test->signalcb_VoiceCalls_Removed = 
+		G_CALLBACK(call_removed);
 
 	test->call_handle_method = do_swap;
 
@@ -895,7 +916,7 @@ int blts_ofono_case_dual_call_release_and_answer(void* user_ptr, __attribute__((
 	struct dual_call_case_state *test;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 
-/* 	log_set_level(5); */
+  /*	log_set_level(5); */
 
 	if (!data)
 		return -EINVAL;
@@ -907,12 +928,14 @@ int blts_ofono_case_dual_call_release_and_answer(void* user_ptr, __attribute__((
 
 	test->user_timeout = data->user_timeout ? data->user_timeout : 10000;
 
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_VoiceCall1_PropertyChanged =
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
+	test->signalcb_VoiceCalls_Added = 
+		G_CALLBACK(call_added);
+	test->signalcb_VoiceCalls_Removed = 
+		G_CALLBACK(call_removed);
 
 	test->call_handle_method = do_release_and_answer;
 
@@ -941,12 +964,14 @@ int blts_ofono_case_dual_call_hold_and_answer(void* user_ptr, __attribute__((unu
 
 	test->user_timeout = data->user_timeout ? data->user_timeout : 10000;
 
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_VoiceCall1_PropertyChanged =
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
+	test->signalcb_VoiceCalls_Added = 
+		G_CALLBACK(call_added);
+	test->signalcb_VoiceCalls_Removed = 
+		G_CALLBACK(call_removed);
 
 	test->call_handle_method = do_hold_and_answer;
 
