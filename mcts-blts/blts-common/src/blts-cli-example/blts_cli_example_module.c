@@ -23,12 +23,15 @@
 #include <blts_log.h>
 #include <getopt.h>
 #include <blts_cli_frontend.h>
+#include <blts_params.h>
 
 typedef struct
 {
 	int q_set;
 	int w_set;
 	int p_set;
+	int var_arg1;
+	int var_arg2;
 } my_example_data;
 
 static void my_example_help(const char* help_msg_base)
@@ -52,10 +55,24 @@ static const struct option long_opts[] =
 	{0,0,0,0}
 };
 
+static void *my_example_variable_parser(struct boxed_value *args, void *user_ptr)
+{
+	my_example_data *data = (my_example_data *)user_ptr;
+	if (!data)
+		return NULL;
+
+	data->var_arg1 = blts_config_boxed_value_get_int(args);
+	args = args->next;
+	data->var_arg2 = blts_config_boxed_value_get_int(args);
+	args = args->next;
+
+	return data;
+}
+
 /* Return NULL in case of an error */
 static void* my_example_argument_processor(int argc, char **argv)
 {
-	int c;
+	int c, ret;
 	my_example_data* my_data = malloc(sizeof(my_example_data));
 	memset(my_data, 0, sizeof(my_example_data));
 
@@ -84,7 +101,29 @@ static void* my_example_argument_processor(int argc, char **argv)
 		}
 	}
 
+	ret = blts_config_declare_variable_test(
+		"My example variant test A",
+		my_example_variable_parser,
+		CONFIG_PARAM_INT, "variable1", 0,
+		CONFIG_PARAM_INT, "variable2", 0,
+		CONFIG_PARAM_NONE);
+	if (ret)
+		goto error_exit;
+
+	ret = blts_config_declare_variable_test(
+		"My example variant test B",
+		my_example_variable_parser,
+		CONFIG_PARAM_INT, "variable1", 0,
+		CONFIG_PARAM_INT, "variable2", 0,
+		CONFIG_PARAM_NONE);
+	if (ret)
+		goto error_exit;
+
 	return my_data;
+
+error_exit:
+	free(my_data);
+	return NULL;
 }
 
 /* user_ptr is what you returned from my_example_argument_processor */
@@ -160,6 +199,20 @@ static int my_example_case_5(void* user_ptr, int test_num)
 	return -1;
 }
 
+static int my_example_case_6(void* user_ptr, int test_num)
+{
+	BLTS_DEBUG("in my_example_case_6\n");
+	BLTS_DEBUG("all the variants of this test case should pass\n");
+	return 0;
+}
+
+static int my_example_case_7(void* user_ptr, int test_num)
+{
+	BLTS_DEBUG("in my_example_case_7\n");
+	BLTS_DEBUG("all the variants of this test case should fail\n");
+	return -1;
+}
+
 /* Your test definitions */
 
 static blts_cli_testcase my_example_cases[] =
@@ -172,6 +225,8 @@ static blts_cli_testcase my_example_cases[] =
 	{ "My example C", my_example_case_3, 5000 },
 	{ "My example D", my_example_case_4, 5000 },
 	{ "My example E", my_example_case_5, 2000 },
+	{ "My example variant test A", my_example_case_6, 2000 },
+	{ "My example variant test B", my_example_case_7, 2000 },
 	BLTS_CLI_END_OF_LIST
 };
 
