@@ -155,7 +155,7 @@ static int print_ff_info(int fd)
 
 	memset(fftype, 0, sizeof(fftype));
 	if (ioctl(fd, EVIOCGBIT(EV_FF, sizeof(fftype)), fftype) < 0) {
-		logged_perror("EVIOCGBIT");
+		BLTS_LOGGED_PERROR("EVIOCGBIT");
 		return -errno;
 	}
 
@@ -178,7 +178,7 @@ static int print_event_types(int fd)
 
 	memset(evtype_b, 0, sizeof(evtype_b));
 	if (ioctl(fd, EVIOCGBIT(0, EV_MAX), evtype_b) < 0) {
-		logged_perror("EVIOCGBIT");
+		BLTS_LOGGED_PERROR("EVIOCGBIT");
 		return -errno;
 	}
 
@@ -211,19 +211,19 @@ static int print_device_info(const char *dev_name)
 
 	fd = open(dev_name, O_RDWR);
 	if (!fd) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
 	if (ioctl(fd, EVIOCGNAME(sizeof(name)), name) < 0) {
-		logged_perror("EVIOCGNAME");
+		BLTS_LOGGED_PERROR("EVIOCGNAME");
 		goto cleanup;
 	}
 
 	BLTS_DEBUG("Name: '%s'\n", name);
 
 	if (ioctl(fd, EVIOCGVERSION, &version)) {
-		logged_perror("EVIOCGVERSION");
+		BLTS_LOGGED_PERROR("EVIOCGVERSION");
 		goto cleanup;
 	}
 
@@ -231,7 +231,7 @@ static int print_device_info(const char *dev_name)
 		(version >> 8) & 0xff, version & 0xff);
 
 	if (ioctl(fd, EVIOCGID, &device_info)) {
-		logged_perror("EVIOCGID");
+		BLTS_LOGGED_PERROR("EVIOCGID");
 		goto cleanup;
 	}
 
@@ -276,14 +276,14 @@ static int read_input_events(int fd, struct input_event *evs, int size)
 	fdp.revents = 0;
 	ret = poll(&fdp, 1, 1000);
 	if (ret < 0) {
-		logged_perror("poll");
+		BLTS_LOGGED_PERROR("poll");
 		return -errno;
 	} else if(!ret)
 		return 0;
 
 	rb = read(fd, evs, size);
 	if (rb < (int)sizeof(struct input_event)) {
-		logged_perror("read");
+		BLTS_LOGGED_PERROR("read");
 		return -errno;
 	}
 
@@ -321,14 +321,14 @@ int test_device(const char *device)
 
 	fd = open(device, O_RDWR);
 	if (!fd) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
 	while (1) {
 		rb = read(fd, ev, sizeof(struct input_event) * 64);
 		if (rb < (int) sizeof(struct input_event)) {
-			logged_perror("read");
+			BLTS_LOGGED_PERROR("read");
 			goto cleanup;
 		}
 
@@ -368,7 +368,7 @@ int input_key_test(void *user_ptr, int test_num)
 
 	fd = open(key->device, O_RDWR);
 	if (!fd) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
@@ -386,7 +386,7 @@ int input_key_test(void *user_ptr, int test_num)
 
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 1)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 			goto cleanup;
 		}
@@ -400,7 +400,7 @@ int input_key_test(void *user_ptr, int test_num)
 	while (timing_elapsed() < 10) {
 		rb = read(fd, ev, sizeof(struct input_event) * 64);
 		if (rb < (int) sizeof(struct input_event)) {
-			logged_perror("read");
+			BLTS_LOGGED_PERROR("read");
 			goto cleanup;
 		}
 
@@ -426,7 +426,7 @@ int input_key_test(void *user_ptr, int test_num)
 cleanup:
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 0)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 		}
 	}
@@ -447,7 +447,7 @@ int input_pointer_test(void *user_ptr, int test_num)
 
 	fd = open(data->pointer_device, O_RDWR);
 	if (!fd) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
@@ -462,7 +462,7 @@ int input_pointer_test(void *user_ptr, int test_num)
 
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 1)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 			goto cleanup;
 		}
@@ -537,7 +537,7 @@ int input_pointer_test(void *user_ptr, int test_num)
 cleanup:
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 0)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 		}
 	}
@@ -562,20 +562,20 @@ static int wait_for_st_event(struct input_data *data,
 
 	fd = open(data->pointer_device, O_RDWR);
 	if (!fd) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 1)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 			goto cleanup;
 		}
 	}
 
 	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_X), &abs)) {
-		logged_perror("EVIOCGABS(ABS_MT_POSITION_X)");
+		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_X)");
 		ret = -errno;
 		goto  cleanup;
 	}
@@ -583,7 +583,7 @@ static int wait_for_st_event(struct input_data *data,
 	if (!abs.minimum && !abs.maximum) {
 		st = 1;
 		if (ioctl(fd, EVIOCGABS(ABS_X), &abs)) {
-			logged_perror("EVIOCGABS(ABS_X)");
+			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_X)");
 			ret = -errno;
 			goto  cleanup;
 		}
@@ -606,13 +606,13 @@ static int wait_for_st_event(struct input_data *data,
 
 	if (st) {
 		if (ioctl(fd, EVIOCGABS(ABS_Y), &abs)) {
-			logged_perror("EVIOCGABS(ABS_Y)");
+			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_Y)");
 			ret = -errno;
 			goto  cleanup;
 		}
 	} else {
 		if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_Y), &abs)) {
-			logged_perror("EVIOCGABS(ABS_MT_POSITION_Y)");
+			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_Y)");
 			ret = -errno;
 			goto  cleanup;
 		}
@@ -712,7 +712,7 @@ cleanup:
 
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 0)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 		}
 	}
@@ -828,13 +828,13 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 
 	fd = open(data->pointer_device, O_RDWR);
 	if (!fd) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
 	if (!data->no_grab) {
 		if (ioctl(fd, EVIOCGRAB, 1)) {
-			logged_perror("EVIOCGRAB");
+			BLTS_LOGGED_PERROR("EVIOCGRAB");
 			ret = -errno;
 			goto cleanup;
 		}
@@ -860,7 +860,7 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 	}
 
 	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_X), &abs)) {
-		logged_perror("EVIOCGABS(ABS_MT_POSITION_X)");
+		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_X)");
 		ret = -errno;
 		goto  cleanup;
 	}
@@ -882,7 +882,7 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 	}
 
 	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_Y), &abs)) {
-		logged_perror("EVIOCGABS(ABS_MT_POSITION_Y)");
+		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_Y)");
 		ret = -errno;
 		goto  cleanup;
 	}
