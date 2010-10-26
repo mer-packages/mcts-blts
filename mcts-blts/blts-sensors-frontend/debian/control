@@ -1,0 +1,19 @@
+Source: blts-sensors-frontend
+Section: devel
+Priority: extra
+Maintainer: Pasi Matilainen <pasi.matilainen@digia.com>
+Build-Depends:
+	debhelper (>= 5.0.0),
+	cdbs,
+	libbltscommon-dev (>= 0.3.6)
+Standards-Version: 3.8.0
+
+Package: blts-sensors-frontend
+Architecture: any
+Priority: optional
+Section: testing
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: blts-sensor-plugins
+Description: Sensor test front-end module
+ Main package for the BLTS sensor test module, containing the test runner
+ front-end. Sensor plug-ins are required for executing tests.

@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+
+# rules -- Debian package build script
+#
+#  Copyright (C) 2000-2010, Nokia Corporation.
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, version 2.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+DEB_DH_INSTALL_SOURCEDIR=debian/tmp
+DEB_DESTDIR=$(CURDIR)/debian/tmp
+
+ifneq (,$(findstring parallel,$(DEB_BUILD_OPTIONS)))
+    PARALLEL_JOBS := $(shell echo $(DEB_BUILD_OPTIONS) | \
+	    sed -e 's/.*parallel=\([0-9]\+\).*/\1/')
+    ifeq ($(DEB_BUILD_OPTIONS),$(PARALLEL_JOBS))
+	PARALLEL_JOBS := $(shell if [ -f /proc/cpuinfo ]; \
+		    then echo `cat /proc/cpuinfo | grep 'processor' | wc -l`; \
+				else echo 1; fi)
+    endif
+    NJOBS := -j$(PARALLEL_JOBS)
+endif
+DEB_MAKE_ENVVARS := MAKEFLAGS=$(NJOBS)
+
+makebuilddir/blts-sensors-frontend:: configure
+configure:
+	./autogen.sh

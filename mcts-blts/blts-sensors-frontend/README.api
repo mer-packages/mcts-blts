@@ -1,0 +1,227 @@
+BLTS sensor test plug-in API
+
+
+Overview
+========
+
+BLTS sensor test plug-ins provide sensor-specific variables to the BLTS sensor
+test front-end, which executes the actual test cases. The front-end implements
+a number of generic tests, which are parameterized for each test case using a
+configuration file. The configuration file may also specify values for any
+variables implemented by the plug-in, e.g. the path to the sensor device.
+
+
+Test types
+=====================
+
+init
+----
+
+Checks that the plug-in initializes and deinitializes successfully. Plug-in
+initialization may include e.g. opening the sensor device.
+
+noise
+-----
+
+Observes the value of a plug-in variable for a defined period, and checks that
+the value does not fluctuate more than is defined.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+duration
+	The duration of the observation period.
+max_noise
+	Maximum allowed fluctuation of the input variable.
+
+range
+-----
+
+Observes the value of a plug-in variable for a defined period, and checks that
+the observed values fall within a configured range.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+duration
+	The duration of the observation period.
+range_min
+	The low limit of the range.
+range_max
+	The high limit of the range.
+range_deviation
+	The maximum allowed deviation between an observed range limit and a
+	configured limit. I.e. the observed minimum should fall inside
+	[range_min - range_deviation, range_min + range_deviation], and
+	the observed maximum should fall inside
+	[range_max - range_deviation, range_max + range_deviation].
+
+axis
+----
+
+Checks that a certain axis of the sensor input changes adequately in response
+to rotation.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+duration
+	The duration of the observation period.
+axis_index
+	Index of the axis under test in the input variable array. Usually 0, 1 or 2
+	for	X, Y or Z axis, respectively. 
+axis_rotation_threshold
+	The minimum amount that the value of the input variable should change
+	during the observation period for the test to succeed.
+
+rate
+----
+
+Observes a plug-in variable for a defined period, and checks that the update
+rate of the variable matches the configured rate. The test fails if the
+observed update rate differs from the configured rate by more than the
+configured percentage.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+duration
+	The duration of the observation period.
+input_is_polled
+	0 if variable updates are driven by an interrupt, 1 if the variable is
+	polled each time its value is read. If the variable is interrupt-driven,
+	each read value is considered as a new value. When the variable is polled,
+	a read value is considered as new only when the value is different from the
+	previously read value. In the polled case, the observed update rate may	be
+	inaccurate when the value changes slowly.
+max_rate_difference_pct
+	The maximum allowed difference between the observed and	configured update
+	rates, as a percentage of the configured rate.
+
+test_value
+----------
+
+Reads the value of a plug-in variable, and checks that it matches the expected
+value.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+expected_value
+	The expected value of the plug-in variable. Due to the way the
+	configuration file is parsed, this is always defined as a string value,
+	which is converted to the type of the input	variable during test execution.
+
+value_change
+------------
+
+Tests that the value of a variable changes during test execution from one value
+to another value.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+duration
+	The duration of the observation period.
+
+no_value_change
+---------------
+
+Tests that the value of a variable remains the same during test execution.
+
+Parameters:
+input
+	The name of the plug-in variable that is used for the test.
+duration
+	The duration of the observation period.
+
+
+API description
+===============
+
+The API for BLTS sensor test plug-ins is defined in the header file
+blts_sensor_plugin.h. Each plug-in must implement all functions declared
+in that header file.
+
+	int init_plugin_data(void** plugin_data);
+
+Initializes plug-in-specific data. The plug-in needs to allocate the data
+structure and set the plugin_data argument to point to the data structure.
+Plug-in data is initialized first so that any configuration parameters
+required for plug-in initialization can be processed.
+
+	int deinit_plugin_data(void* plugin_data);
+
+Deinitializes plug-in-specific data. Should free the plug-in-specific data.
+
+	int init_plugin(void* plugin_data);
+
+Initializes the plug-in so that it can provide values for the variables that
+are needed for test case execution. Typically opens the sensor device.
+
+	int deinit_plugin(void* plugin_data);
+
+Deinitializes the plug-in, e.g. closes the sensor device.
+
+	const struct plugin_variable_spec* get_variable_spec(const char* var_name);
+
+Returns the plugin_variable_spec structure for the plug-in variable with the
+requested name, or NULL if the plug-in does not have a variable with that name.
+
+	extern const blts_cli_testcase sensors_cases[];
+
+The test case definition array. All case_func variables in the blts_cli_testcase
+instances are set by the front-end, and can be set as NULL by the plug-in.
+
+	struct plugin_variable_spec {
+	    const char* name;
+	    int num_values;
+	    int type;
+	    int (*get_value)(void* data, struct boxed_value value[]);
+	    int (*set_value)(void* data, struct boxed_value value[]);
+	};
+
+The plugin_variable_spec structure defines a variable provided by the plug-in.
+If a variable is read-only, the set_value function pointer can be NULL for that
+variable; the same applies for write-only variables and the get_value pointer.
+
+
+Program flow
+============
+
+When the front-end loads a sensor test plug-in, the program flow is as follows:
+
+1. The front-end opens the dynamic library implementing the plug-in, and loads
+   the API functions.
+2. init_plugin_data is called to allocate and initialize plug-in-specific data.
+3. The front-end processes the configuration file, and sets the value of any
+   plug-in variables by calling the set_value function of each variable.
+4. Test case execution begins by a call to the init_plugin function.
+5. The front-end executes the test case as defined in the configuration file.
+6. The front-end calls deinit_plugin.
+7. The front-end calls deinit_plugin_data to deallocate plug-in-specific data.
+
+
+Implementing new test types
+===========================
+
+All test types are implemented in the sensors-cli.c file in the
+blts-sensors-frontend package. The front-end can be extended to support a new
+test type by modifying the sensors-cli.c file as follows:
+
+1. Add a new value for the test type to the test_type enum, and add the name of
+   the test type to the test_type_names array. The name is used to refer to the
+   test type in configuration files.
+2. If the test type requires new parameters, add parameter parsing code to the
+   parse_arg function, and variables for parameter storage to the sensors_data
+   struct.
+3. Implement a function that executes the test, and add a call to the function
+   to the sensors_run_case function.
+
+
+Example plug-in
+===============
+
+The blts-sensor-plugin-example package contains an example plug-in
+implementation that demonstrates how plug-in variables are defined and used,
+and how test cases are defined in configuration files.

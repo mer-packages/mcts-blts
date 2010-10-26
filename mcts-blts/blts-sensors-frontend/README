@@ -1,0 +1,49 @@
+Overview
+
+This package contains the front-end for running sensor tests, using sensor
+plug-ins.
+
+Requirements
+
+Running the tests in the package requires
+  * linux >= 2.6.15
+  * GNU libc >= 2.3
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use the Debian packaging tools for the build; these
+will run Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ dpkg-buildpackage
+
+( you may need some combination of '-rfakeroot', '-uc', '-us', etc, depending
+  on your system configuration )
+
+Alternatively, the packaging can be skipped by just running with Autotools:
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+Installation
+
+Login as root and install the package (dpkg -i [package name])
+
+Running the tests
+
+Test cases are defined by the sensor plug-ins.
+
+Run all tests:
+blts-sensors-frontend -p <full path to plugin .so> -C <config file>
+
+Show cases:
+blts-sensors-frontend -s -p <full path to plugin .so> -C <config file>
+
+Run single case like nr 1:
+blts-sensors-frontend -e 1 -p <full path to plugin .so> -C <config file>
+
+Run a single case with its name (note quotes when there are spaces in the name):
+blts-sensors-frontend -en "Test case name" -p <full path to plugin .so> -C <config file>
