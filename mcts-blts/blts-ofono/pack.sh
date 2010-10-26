@@ -8,7 +8,9 @@
 # - With a command line parameter, release dir can be specified, so
 #   resulting package are copied to that destination
 
-package_name=
+deb_packages=
+rpm_packages=
+source_package=
 package_version=
 exclude_pattern="*.tar.gz"
 additional_dest=
@@ -28,6 +30,59 @@ print_usage()
     echo "\t-h|-?\tThis spam"
 }
 
+# Gets names of all rpm packages, assigns source package name
+get_rpm_packages()
+{
+    local name=
+    local subpackages=
+    local is_full=
+
+    name=`grep "Name:" *.spec | awk '{print $2}'`
+
+    # Failure, maybe there's no RPM files
+    if [ "x$name" = "x" ]; then
+        echo "Error: Couldn't resolve package name, possibly no RPM packaging"
+        return 1
+    fi
+
+    source_package=$name
+    rpm_packages=$name
+
+    subpackages=`grep "%package " *.spec | sed -e "s/%package//g"`
+
+    for tok in $subpackages; do
+        if [ "$tok" = "-n" ]; then
+            is_full=1
+            continue
+        fi
+        if [ $is_full = 1 ]; then
+            is_full=0
+            rpm_packages="$rpm_packages $tok"
+        else
+            rpm_packages="$rpm_packages $source_package-$tok"
+        fi
+    done
+
+    package_version=`grep "Version:" *.spec | awk '{print $2}'`
+
+    return 0
+}
+
+# Get all debian packages this package will generate
+get_debian_packages()
+{
+    if [ ! -f debian/control ]; then
+        echo "Error: Couldn't find debian/control file"
+        return 1
+    fi
+
+    source_package=`grep "Source:" debian/control | awk '{print $2}'`
+    deb_packages=`grep "Package:" debian/control | awk '{print $2}'`
+    package_version=`grep 'blts' debian/changelog | awk '{print $2; exit}' | sed -e "s/[()]//g;s/-.*//g"`
+
+    return 0
+}
+
 # Parse command line arguments
 while getopts no:rdh f; do
     case $f in
@@ -40,26 +95,24 @@ done
 shift `expr $OPTIND - 1`
 
 if [ "x$no_rpm" = "x" ]; then
-    # Parse name and version from .spec file, if there is one
-    package_name=`grep "Name:" *.spec | awk '{print $2}'`
-    if [ ! "x$package_name" = "x" ]; then
-        package_version=`grep "Version:" *.spec | awk '{print $2}'`
-    else
-        # Can't build RPM
+    # Parse RPM packages this package will create
+    get_rpm_packages
+
+    if [ $? = 1 ]; then
+        echo "Failed to parse rpm packages"
         no_rpm="yes"
     fi
 fi
 
-# Parse name, version and release from debian/changelog if there was no .spec
-# file
-if [ "x$no_debian" = "x" -o "x$package_name" = "x" ]; then
-    package_name=`grep 'blts' debian/changelog | awk '{print $1; exit}'`
-    package_version=`grep 'blts' debian/changelog | awk '{print $2; exit}' | sed -e "s/[()]//g;s/-.*//g"`
+# Parse name, version and release from debian files if there was no .spec
+# file, or debian package are going to be built
+if [ "x$no_debian" = "x" -o "x$source_package" = "x" ]; then
+    get_debian_packages
 fi
 
 # Check if package name and version have been set
-if [ "x$package_name" = "x" ]; then
-    echo "Error: Couldn't determine package name!"
+if [ "x$source_package" = "x" ]; then
+    echo "Error: Couldn't determine source package name!"
     exit 1
 fi
 
@@ -78,17 +131,17 @@ if [ -f Makefile ]; then
 fi
 
 # Clean (quietly) the old archives
-rm -f $package_name-*.tar.gz
+rm -f $source_package-*.tar.gz
 
 # Make a temporary sub dir
-mkdir -vp /tmp/$package_name-$package_version
+mkdir -vp /tmp/$source_package-$package_version
 
 # This copy will throw a warning, "can't copy into itself"
-cp -va * -t /tmp/$package_name-$package_version
+cp -va * -t /tmp/$source_package-$package_version
 cd /tmp
 
 # Pack the stuff into tarball
-tar --exclude="$exclude_pattern" -cvzf $current/$package_name-$package_version.tar.gz $package_name-$package_version
+tar --exclude="$exclude_pattern" -cvzf $current/$source_package-$package_version.tar.gz $source_package-$package_version
 
 cd $current
 
@@ -98,11 +151,11 @@ if [ ! $? = 0 ]; then
 fi
 
 # To clean it up
-rm -rf /tmp/$package_name-$package_version
+rm -rf /tmp/$source_package-$package_version
 
 # Do the additional copy if necessary
 if [ ! "x$additional_dest" = "x" ]; then
-    cp -v $package_name-$package_version.tar.gz $additional_dest
+    cp -v $source_package-$package_version.tar.gz $additional_dest
 
     if [ ! $? = 0 ]; then
         echo "Error: Failed to copy the tarball to $additional_dest!"
@@ -133,24 +186,26 @@ if [ "x$no_rpm" = "x" ]; then
     fi
 
     # Then, copy all packaged sources to build dir
-    cp -v $package_name-$package_version.tar.gz $dest
+    cp -v $source_package-$package_version.tar.gz $dest
 
     if [ ! $? = 0 ]; then
-        echo "Error: Failed to copy $package_name-$package_version.tar.gz to $dest!"
+        echo "Error: Failed to copy $source_package-$package_version.tar.gz to $dest!"
         exit 1
     fi
 
     # Then, build the stuff
-    rpmbuild -ba $package_name.spec
+    rpmbuild -ba $source_package.spec
 
     if [ ! $? = 0 ]; then
         echo "Error: Failed to rpmbuild $package_name!"
         exit 1
     fi
 
-    # Copy the resulting package into the destination give from command line
+    # Copy the resulting packages into the destination give from command line
     if [ ! "x$additional_dest" = "x" ]; then
-        find $RPM_BUILD_DIR -name "$package_name-$package_version*.rpm" | xargs -I '{}' cp -v '{}' $additional_dest
+        for tok in $rpm_packages; do
+            find $RPM_BUILD_DIR -name "$tok-$package_version*.rpm" | xargs -I '{}' cp -v '{}' $additional_dest
+        done
     fi
 fi
 
@@ -159,15 +214,17 @@ if [ "x$no_debian" = "x" ]; then
 
     dpkg-buildpackage -D -rfakeroot
 
-    if [ ?$ = 0 ]; then
-        echo "Failed to build debian package for $package name"
+    if [ $? -gt 1 ]; then
+        echo "Failed to build debian package for $source_package"
         exit 1
     fi
 
     # Copy the resulting package into the destination give from command line
     if [ ! "x$additional_dest" = "x" ]; then
-        find .. -name "$package_name*$package_version*.deb" | xargs -I '{}' cp -v '{}' $additional_dest
-        find .. -name "$package_name*$package_version*.dsc" | xargs -I '{}' cp -v '{}' $additional_dest
+        for tok in $deb_packages; do
+            find .. -name "$tok*$package_version*.deb" | xargs -I '{}' cp -v '{}' $additional_dest
+        done
+        find .. -name "$source_package*$package_version*.dsc" | xargs -I '{}' cp -v '{}' $additional_dest
     fi
 
 fi
