@@ -52,17 +52,17 @@
 /* Drivers etc check */
 int fute_bt_drivers_depcheck()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = depcheck(DEPCHECK_RULES,1);
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
 /* Simple BT scan */
 int fute_bt_scan()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -74,7 +74,7 @@ int fute_bt_scan()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
@@ -82,7 +82,7 @@ int fute_bt_scan()
 /* Echo server */
 int fute_bt_l2cap_echo_server()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -95,7 +95,7 @@ int fute_bt_l2cap_echo_server()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
@@ -104,7 +104,7 @@ int fute_bt_l2cap_echo_server()
 int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test)
 {
 	if(!server_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -117,7 +117,7 @@ int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
@@ -126,7 +126,7 @@ int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test)
 /* Echo server (rfcomm) */
 int fute_bt_rfcomm_echo_server()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -139,7 +139,7 @@ int fute_bt_rfcomm_echo_server()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
@@ -148,7 +148,7 @@ int fute_bt_rfcomm_echo_server()
 int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test)
 {
 	if(!server_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -161,7 +161,7 @@ int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
@@ -170,7 +170,7 @@ int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test)
 int fute_bt_hci_connect_disconnect(char *remote_mac)
 {
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -184,14 +184,14 @@ int fute_bt_hci_connect_disconnect(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
 /* Audit incoming HCI connection sequence */
 int fute_bt_hci_audit_incoming_connect()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -203,7 +203,7 @@ int fute_bt_hci_audit_incoming_connect()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
@@ -212,7 +212,7 @@ int fute_bt_hci_transfer_acl_data(char *remote_mac)
 {
 
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -224,7 +224,7 @@ int fute_bt_hci_transfer_acl_data(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 
 }
@@ -232,7 +232,7 @@ int fute_bt_hci_transfer_acl_data(char *remote_mac)
 /* Receive ACL test data when Transfer ACL data test case sends it*/
 int fute_bt_hci_receive_acl_data()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -243,13 +243,13 @@ int fute_bt_hci_receive_acl_data()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
 int fute_bt_hci_change_name()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -261,14 +261,14 @@ int fute_bt_hci_change_name()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
 int fute_bt_hci_verify_name(char *remote_mac)
 {
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -280,12 +280,12 @@ int fute_bt_hci_verify_name(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 int fute_bt_hci_change_class()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -297,14 +297,14 @@ int fute_bt_hci_change_class()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
 int fute_bt_hci_verify_class(char *remote_mac)
 {
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -316,7 +316,7 @@ int fute_bt_hci_verify_class(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 
 }
@@ -326,7 +326,7 @@ int fute_bt_hci_verify_class(char *remote_mac)
 int fute_bt_hci_reset_connection(char *remote_mac)
 {
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -336,14 +336,14 @@ int fute_bt_hci_reset_connection(char *remote_mac)
 		str2ba(remote_mac, &ctx->remote_mac);
 		if((retval = hci_connect_remote(ctx)))
 		{
-			log_print("*** Connection failed - Test FAILED\n");
+			BLTS_DEBUG("*** Connection failed - Test FAILED\n");
 			bt_ctx_free(ctx);
 			return retval;
 		}
 
 		if((retval = do_reset(ctx)))
 		{
-			log_print("*** Reset failed - Test FAILED\n");
+			BLTS_DEBUG("*** Reset failed - Test FAILED\n");
 			bt_ctx_free(ctx);
 			hci_disconnect_remote(ctx);
 			return retval;
@@ -360,14 +360,14 @@ int fute_bt_hci_reset_connection(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
 
 int fute_bt_hci_ctrl_info_local()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -379,14 +379,14 @@ int fute_bt_hci_ctrl_info_local()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
 int fute_bt_hci_ctrl_info_remote(char *remote_mac)
 {
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -398,13 +398,13 @@ int fute_bt_hci_ctrl_info_remote(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
 int fute_bt_hci_link_info_local()
 {
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
@@ -416,14 +416,14 @@ int fute_bt_hci_link_info_local()
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 
 	return retval;
 }
 int fute_bt_hci_link_info_remote(char *remote_mac)
 {
 	if(!remote_mac) return -EINVAL;
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -436,7 +436,7 @@ int fute_bt_hci_link_info_remote(char *remote_mac)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
 
@@ -445,7 +445,7 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master)
 	if (master && !remote_mac)
 		return -EINVAL;
 
-	log_print("*** Test case start\n");
+	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
 
 	struct bt_ctx *ctx;
@@ -461,7 +461,7 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master)
 		bt_ctx_free(ctx);
 	}
 
-	log_print("*** Test %s\n",retval?"FAILED":"PASSED");
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 
 }

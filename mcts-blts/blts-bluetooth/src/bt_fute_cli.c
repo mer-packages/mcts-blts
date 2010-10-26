@@ -186,7 +186,7 @@ static int bt_run_case(void* user_ptr, int test_num)
 		break;
 
 	default:
-		LOG("Not supported case number%d\n", test_num);
+		BLTS_DEBUG("Not supported case number %d\n", test_num);
 	}
 
 	return ret;

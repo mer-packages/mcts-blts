@@ -73,7 +73,7 @@ void dump_ctrl_information_data(device_info_t* devptr, int remote)
 {
 	if(!devptr)
 	{
-		log_print("%s: Invalid pointer to device_info_t struct passed!\n",
+		BLTS_DEBUG("%s: Invalid pointer to device_info_t struct passed!\n",
 					__FUNCTION__);
 		return;
 	}
@@ -82,14 +82,14 @@ void dump_ctrl_information_data(device_info_t* devptr, int remote)
 	char dir = remote?'R':'L';
 
 	if(devptr->got_features)
-		log_print("%c features: 0x%2.2x 0x%2.2x 0x%2.2x 0x%2.2x "
+		BLTS_DEBUG("%c features: 0x%2.2x 0x%2.2x 0x%2.2x 0x%2.2x "
                                 "0x%2.2x 0x%2.2x 0x%2.2x 0x%2.2x\n", dir,
                 		devptr->features[0], devptr->features[1], devptr->features[2],
                 		devptr->features[3], devptr->features[4], devptr->features[5],
                 		devptr->features[6], devptr->features[7]);
 
 	if(devptr->got_version)
-		log_print("%c version: %d-%d-%d-%d-%d\n", dir,
+		BLTS_DEBUG("%c version: %d-%d-%d-%d-%d\n", dir,
 				devptr->version.manufacturer,
 				devptr->version.hci_ver,
 				devptr->version.hci_rev,
@@ -98,15 +98,15 @@ void dump_ctrl_information_data(device_info_t* devptr, int remote)
 
 	if(devptr->got_ext_features)
 	{
-		log_print("%c ext_features: \n", dir);
+		BLTS_DEBUG("%c ext_features: \n", dir);
 		for(i=0; i<MAX_EXT_PAGES_TO_VERIFY && i<devptr->max_page; i++)
 		{
-			log_print("%c page %d: 0x%2.2x 0x%2.2x 0x%2.2x 0x%2.2x "
+			BLTS_DEBUG("%c page %d: 0x%2.2x 0x%2.2x 0x%2.2x 0x%2.2x "
                                 "0x%2.2x 0x%2.2x 0x%2.2x 0x%2.2x\n", dir, i+1,
                 		devptr->ext_features[i][0], devptr->ext_features[i][1], devptr->ext_features[i][2],
                 		devptr->ext_features[i][3], devptr->ext_features[i][4], devptr->ext_features[i][5],
                 		devptr->ext_features[i][6], devptr->ext_features[i][7]);
-			log_print("\n");
+			BLTS_DEBUG("\n");
 		}
 	}
 }
@@ -119,7 +119,7 @@ void dump_link_information_data(link_info_t* linkptr, int remote)
 {
 	if(!linkptr)
 	{
-		log_print("%s: Invalid pointer to link_info_t struct passed!\n",
+		BLTS_DEBUG("%s: Invalid pointer to link_info_t struct passed!\n",
 					__FUNCTION__);
 		return;
 	}
@@ -128,33 +128,33 @@ void dump_link_information_data(link_info_t* linkptr, int remote)
 	char dir = remote?'R':'L';
 
 	if(linkptr->got_rssi)
-		log_print("%c: RSSI return value: %d\n", dir, linkptr->rssi);
+		BLTS_DEBUG("%c: RSSI return value: %d\n", dir, linkptr->rssi);
 
 	if(linkptr->got_lq)
-		log_print("%c: link quality: %d\n", dir, linkptr->lq);
+		BLTS_DEBUG("%c: link quality: %d\n", dir, linkptr->lq);
 
 	if(linkptr->got_level)
-		log_print("%c: current transmit power level: %d\n", dir, linkptr->level);
+		BLTS_DEBUG("%c: current transmit power level: %d\n", dir, linkptr->level);
 
 	if(linkptr->got_map)
 	{
 		if(linkptr->got_map == (uint8_t)-1)
 		{
-			log_print("%c: AFH disabled", dir);
+			BLTS_DEBUG("%c: AFH disabled", dir);
 		}
 		else
 		{
-			log_print("%c: AFH map 0x: ", dir);
+			BLTS_DEBUG("%c: AFH map 0x: ", dir);
 			for (i = 0; i < 10; i++)
-				log_print("%02x", linkptr->map[i]);
-			log_print("\n");
+				BLTS_DEBUG("%02x", linkptr->map[i]);
+			BLTS_DEBUG("\n");
 		}
 	}
 	if(linkptr->got_clock)
-		log_print("%c: clock: 0x%4.4x\n", dir, btohl(linkptr->clock));
+		BLTS_DEBUG("%c: clock: 0x%4.4x\n", dir, btohl(linkptr->clock));
 
 	if(linkptr->got_offset)
-		log_print("%c: clock offset: 0x%4.4x\n", dir, btohs(linkptr->offset));
+		BLTS_DEBUG("%c: clock offset: 0x%4.4x\n", dir, btohs(linkptr->offset));
 }
 
 /**
@@ -166,7 +166,7 @@ int do_accept(struct bt_ctx *ctx, int fd)
 {
 	if(!ctx)
 	{
-		log_print("%s: Invalid pointer to bt_ctx struct passed!\n",
+		BLTS_DEBUG("%s: Invalid pointer to bt_ctx struct passed!\n",
 				__FUNCTION__);
 		return -1;
     }
@@ -180,13 +180,13 @@ int do_accept(struct bt_ctx *ctx, int fd)
 
     if ((client = accept(fd, (struct sockaddr *) &addr, &addrlen)) < 0)
     {
-       	log_print("%s: Cannot accept connection %s(%d)",
+	BLTS_DEBUG("%s: Cannot accept connection %s(%d)",
                		__FUNCTION__, strerror(errno), errno);
         return -1;
     }
 
     ba2str( &addr.l2_bdaddr, buf );
-	log_print("Accepted a connection from %s\n", buf);
+	BLTS_DEBUG("Accepted a connection from %s\n", buf);
 
 	ctx->remote_mac = addr.l2_bdaddr;
 
@@ -203,7 +203,7 @@ int do_listen(struct bt_ctx *ctx, int port)
 {
 	if(!ctx)
 	{
-		log_print("%s: Invalid pointer to bt_ctx struct passed!\n",
+		BLTS_DEBUG("%s: Invalid pointer to bt_ctx struct passed!\n",
 				__FUNCTION__);
 		return -1;
 	}
@@ -216,7 +216,7 @@ int do_listen(struct bt_ctx *ctx, int port)
 
     if (sock < 0)
 	{
-    	log_print("%s: Cannot create socket %s(%d)",
+	BLTS_DEBUG("%s: Cannot create socket %s(%d)",
               		__FUNCTION__, strerror(errno), errno);
         return -1;
     }
@@ -232,16 +232,16 @@ int do_listen(struct bt_ctx *ctx, int port)
 	/* binds a socket to a local socket address */
     if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
 	{
-      	log_print("%s: Cannot bind socket %s(%d)",
+	BLTS_DEBUG("%s: Cannot bind socket %s(%d)",
            		__FUNCTION__, strerror(errno), errno);
         return -1;
     }
 
     /* start listening mode */
-    log_print("Start listening data packets from other DUT...\n");
+    BLTS_DEBUG("Start listening data packets from other DUT...\n");
     if(listen(sock,1) < 0)
     {
-       	log_print("%s: Cannot listen socket %s(%d)",
+	BLTS_DEBUG("%s: Cannot listen socket %s(%d)",
        			__FUNCTION__, strerror(errno), errno);
        	close(sock);
         return -1;
@@ -264,18 +264,18 @@ int compare_device_info_data(device_info_t* dev1, device_info_t* dev2)
 	if(	dev1->got_version != dev2->got_version 		||
 		dev1->got_features != dev2->got_features )
 		{
-			log_print("Cannot compare these structures - not equally filled\n");
+			BLTS_DEBUG("Cannot compare these structures - not equally filled\n");
 			return -1;
 		}
 
-	log_print("verify features...\n");
+	BLTS_DEBUG("verify features...\n");
 	if(dev1->got_features && dev2->got_features)
 	  for (i = 0; i < 8; i++)
 		  if (dev1->features[i] != dev2->features[i])
 			  return -1;
 
 
-	log_print("verify version...\n");
+	BLTS_DEBUG("verify version...\n");
 	if(dev1->got_version && dev2->got_version)
 	{
 			if( dev1->version.manufacturer != dev2->version.manufacturer ||
@@ -286,7 +286,7 @@ int compare_device_info_data(device_info_t* dev1, device_info_t* dev2)
 				return -1;
 	}
 
-	log_print("verify ext_features...\n");
+	BLTS_DEBUG("verify ext_features...\n");
 	if(dev1->got_ext_features && dev2->got_ext_features)
 	{
 		for(j=0; j<MAX_EXT_PAGES_TO_VERIFY && j<dev1->max_page; j++)
@@ -317,26 +317,26 @@ int compare_link_info_data(link_info_t* dev1, link_info_t* dev2)
 		dev1->got_clock != dev2->got_clock	||
 		dev1->got_offset != dev2->got_offset)
 		{
-			log_print("Cannot compare these structures - not equally filled\n");
+			BLTS_DEBUG("Cannot compare these structures - not equally filled\n");
 			return LINK_INFO_CONTENT_MISMACH;
 		}
 
 	//TODO improve compare? - rssi / level / clock
 
-	log_print("verify link quality...\n");
+	BLTS_DEBUG("verify link quality...\n");
 	if(dev1->got_lq && dev2->got_lq)
 		if (dev1->lq != dev2->lq)
-			log_print("  Note: Link quality mismatch (manufacturer specific); %d != %d\n", dev1->lq, dev2->lq);
+			BLTS_DEBUG("  Note: Link quality mismatch (manufacturer specific); %d != %d\n", dev1->lq, dev2->lq);
 
-	log_print("verify clock offset...\n");
+	BLTS_DEBUG("verify clock offset...\n");
 	if(dev1->got_offset && dev2->got_offset)
 		if (dev1->offset != dev2->offset) {
 			if (abs(dev1->offset - dev2->offset) > 1)
 				return CLOCK_OFFSET_MISMACH;
-			log_print("  Note: Clock drift +- 1 during test (still passing test)\n");
+			BLTS_DEBUG("  Note: Clock drift +- 1 during test (still passing test)\n");
 		}
 
-	log_print("verify AFH map...\n");
+	BLTS_DEBUG("verify AFH map...\n");
 	if(dev1->got_map && dev2->got_map)
 		for (i = 0; i < 10; i++)
 			 if (dev1->map[i] != dev2->map[i])
@@ -360,7 +360,7 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 
 	if(hci_init_controller(ctx) < 0)
 	{
-		log_print("HCI Initialization failed!\n");
+		BLTS_DEBUG("HCI Initialization failed!\n");
 		return -1;
 	}
 
@@ -368,7 +368,7 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 
 	if(!local_info)
 	{
-		log_print("Cannot read controller information!\n");
+		BLTS_DEBUG("Cannot read controller information!\n");
 		retval=-1;
 		goto cleanup;
 	}
@@ -378,7 +378,7 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 
 	if(sock < 0)
 	{
-		log_print("Socket listening failed!\n");
+		BLTS_DEBUG("Socket listening failed!\n");
 		retval=-1;
 		goto cleanup;
 	}
@@ -388,7 +388,7 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 
 	if(client < 0)
 	{
-		log_print("Accepting client connection failed!\n");
+		BLTS_DEBUG("Accepting client connection failed!\n");
 		retval=-1;
 		goto cleanup;
 	}
@@ -397,18 +397,18 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
 	bytes_read = recv(client, &remote_info, sizeof(remote_info), 0);
     if( bytes_read > 0 )
 	{
-    	log_print("Compare remote controller information data with local one...\n");
+	BLTS_DEBUG("Compare remote controller information data with local one...\n");
     	dump_ctrl_information_data(local_info, 0);
     	dump_ctrl_information_data(&remote_info, 1);
 
 		if(!compare_device_info_data(&remote_info, local_info))
 		{
-			log_print("Information comparison success\n");
+			BLTS_DEBUG("Information comparison success\n");
 			retval=0;
 		}
 		else
 		{
-			log_print("Information comparison failed\n");
+			BLTS_DEBUG("Information comparison failed\n");
 			retval=-1;
 		}
 		char end_mark[] = "END";
@@ -418,7 +418,7 @@ int read_and_verify_loc_ctrl_info(struct bt_ctx *ctx)
     }
 	else
 	{
-		log_print("Cannot read information from remote socket\n");
+		BLTS_DEBUG("Cannot read information from remote socket\n");
 		retval=-1;
 	}
 
@@ -432,7 +432,7 @@ cleanup:
 
 	if((ctx->hci_fd>=0) && (hci_close_dev(ctx->hci_fd) < 0))
 	{
-		logged_perror("socket close failed");
+		BLTS_LOGGED_PERROR("socket close failed");
 		retval = errno?-errno:-1;
 	}
 
@@ -464,7 +464,7 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx)
 
 	if(hci_init_controller(ctx) < 0)
 	{
-		log_print("HCI Initialization failed!\n");
+		BLTS_DEBUG("HCI Initialization failed!\n");
 		return -1;
 	}
 
@@ -472,7 +472,7 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx)
 
 	if(!remote_info)
 	{
-		log_print("Cannot read controller information!\n");
+		BLTS_DEBUG("Cannot read controller information!\n");
 		retval=-1;
 		goto cleanup;
 	}
@@ -480,7 +480,7 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx)
 	dump_ctrl_information_data(remote_info, 1);
 
 	ba2str( &rem_addr.l2_bdaddr, addr );
-	log_print("Connection to %s\n", addr);
+	BLTS_DEBUG("Connection to %s\n", addr);
 
 	/* connect to other DUT */
 	status = connect(sock, (struct sockaddr *)&rem_addr, sizeof(rem_addr));
@@ -491,29 +491,29 @@ int collect_and_send_rem_ctrl_info(struct bt_ctx *ctx)
 
 		int written = 0;
 
-		log_print("Write  information data to socket...\n");
+		BLTS_DEBUG("Write  information data to socket...\n");
 		written = write(sock, remote_info, sizeof(*remote_info));
 
 		if(written > 0)
 		{
 			char end_mark[4] = {0}; /* "END" */
 
-			log_print("%d bytes written...\n", written);
+			BLTS_DEBUG("%d bytes written...\n", written);
 
 			/* wait for end of communication mark */
 			recv(sock, end_mark, 3, 0);
-			log_print("%s\n\n", &end_mark);
+			BLTS_DEBUG("%s\n\n", &end_mark);
 			retval = 0;
 		}
 		else
 		{
-			log_print("Writing to socket failed!\n");
+			BLTS_DEBUG("Writing to socket failed!\n");
 			retval = -1;
 		}
 	}
 	else
 	{
-		log_print("Error connecting to remote socket:%d\n", status);
+		BLTS_DEBUG("Error connecting to remote socket:%d\n", status);
 		retval=-1;
 	}
 
@@ -524,7 +524,7 @@ cleanup:
 
 	if((ctx->hci_fd>=0) && (hci_close_dev(ctx->hci_fd) < 0))
 	{
-		logged_perror("socket close failed");
+		BLTS_LOGGED_PERROR("socket close failed");
 		retval = errno?-errno:-1;
 	}
 
@@ -544,7 +544,7 @@ int read_and_verify_link_info(struct bt_ctx *ctx)
 
 	if(hci_init_controller(ctx) < 0)
 	{
-		log_print("HCI Initialization failed!\n");
+		BLTS_DEBUG("HCI Initialization failed!\n");
 		return -1;
 	}
 
@@ -552,7 +552,7 @@ int read_and_verify_link_info(struct bt_ctx *ctx)
 
 	if(!array)
 	{
-		log_print("Memory allocation failed!\n");
+		BLTS_DEBUG("Memory allocation failed!\n");
 		retval = -1;
 		goto cleanup;
 	}
@@ -564,7 +564,7 @@ int read_and_verify_link_info(struct bt_ctx *ctx)
 
 		if ((rc = pthread_create (&ids[i], NULL, read_link_info_thread, (void *) &(array[i]))) != 0)
 		{
-			log_print("Cannot create thread:%d \n", i);
+			BLTS_DEBUG("Cannot create thread:%d \n", i);
 				for (j = 0; j < i; j++)
 					pthread_cancel (ids[j]);
 				retval = -1;
@@ -591,7 +591,7 @@ cleanup:
 
 	if((ctx->hci_fd>=0) && (hci_close_dev(ctx->hci_fd) < 0))
 	{
-		logged_perror("socket close failed");
+		BLTS_LOGGED_PERROR("socket close failed");
 		retval = errno?-errno:-1;
 	}
 
@@ -611,7 +611,7 @@ int collect_and_send_link_info(struct bt_ctx *ctx)
 
 	if(hci_init_controller(ctx) < 0)
 	{
-		log_print("HCI Initialization failed!\n");
+		BLTS_DEBUG("HCI Initialization failed!\n");
 		return -1;
 	}
 
@@ -619,7 +619,7 @@ int collect_and_send_link_info(struct bt_ctx *ctx)
 
 	if(!array)
 	{
-		log_print("Memory allocation failed!\n");
+		BLTS_DEBUG("Memory allocation failed!\n");
 		retval = -1;
 		goto cleanup;
 	}
@@ -631,7 +631,7 @@ int collect_and_send_link_info(struct bt_ctx *ctx)
 
 		if ((rc = pthread_create (&ids[i], NULL, send_link_info_thread, (void *) &(array[i]))) != 0)
 		{
-			log_print("Cannot create thread:%d \n", i);
+			BLTS_DEBUG("Cannot create thread:%d \n", i);
 			for (j = 0; j < i; j++)
 				pthread_cancel (ids[j]);
 			retval = -1;
@@ -658,7 +658,7 @@ cleanup:
 
 	if((ctx->hci_fd>=0) && (hci_close_dev(ctx->hci_fd) < 0))
 	{
-		logged_perror("socket close failed");
+		BLTS_LOGGED_PERROR("socket close failed");
 		retval = errno?-errno:-1;
 	}
 
@@ -682,7 +682,7 @@ void *read_link_info_thread(void *dataptr)
 
 	if(!dataptr)
 	{
-		log_print("Thread data pointer is empty!\n");
+		BLTS_DEBUG("Thread data pointer is empty!\n");
 		pthread_exit((void *)-1);
 	}
 
@@ -690,23 +690,23 @@ void *read_link_info_thread(void *dataptr)
 
 	if(!data->ctx || data->idx >= TEST_CHANNEL_COUNT ||  data->idx < 0)
 	{
-		log_print("Thread data pointer contains invalid data!\n");
+		BLTS_DEBUG("Thread data pointer contains invalid data!\n");
 		pthread_exit((void *)-1);
 	}
 
-	log_print("Start listening test channel 0x%X...\n", test_channels[data->idx]);
+	BLTS_DEBUG("Start listening test channel 0x%X...\n", test_channels[data->idx]);
 	sock = do_listen(data->ctx, test_channels[data->idx]);
 
 	if(sock < 0)
 	{
-		log_print("Test channel listening failed!\n");
+		BLTS_DEBUG("Test channel listening failed!\n");
 		goto error;
 	}
 
 	client = do_accept(data->ctx, sock);
 	if(client < 0)
 	{
-		log_print("Accepting client connection failed!\n");
+		BLTS_DEBUG("Accepting client connection failed!\n");
 		goto error;
 	}
 
@@ -718,27 +718,27 @@ void *read_link_info_thread(void *dataptr)
 	{
 		char end_mark[] = "END";
 
-		log_print("Remote link information data received\n");
+		BLTS_DEBUG("Remote link information data received\n");
 		link_info_t* local_info = hci_get_link_info(data->ctx, 0);
 
 		if(!local_info)
 		{
-			log_print("Cannot read link information data locally!\n");
+			BLTS_DEBUG("Cannot read link information data locally!\n");
 			data->result=-1;
 		}
 
-		log_print("Compare remote link information data with local one...\n");
+		BLTS_DEBUG("Compare remote link information data with local one...\n");
 		dump_link_information_data(local_info, 0);
 		dump_link_information_data(&remote_info, 1);
 
 		if(!compare_link_info_data(&remote_info, local_info))
 		{
-			log_print("Information comparison success\n");
+			BLTS_DEBUG("Information comparison success\n");
 			data->result = 0;
 		}
 		else
 		{
-			log_print("Information comparison failed\n");
+			BLTS_DEBUG("Information comparison failed\n");
 			data->result = -1;
 		}
 		/* send end of communication mark to other DUT */
@@ -746,7 +746,7 @@ void *read_link_info_thread(void *dataptr)
 	}
 	else
 	{
-		log_print("Cannot read remote link information data\n");
+		BLTS_DEBUG("Cannot read remote link information data\n");
 		data->result = -1;
 	}
 	pthread_mutex_unlock( &accept_mutex );
@@ -782,7 +782,7 @@ void *send_link_info_thread(void *dataptr)
 
 	if(!dataptr)
 	{
-		log_print("Thread data pointer is empty!\n");
+		BLTS_DEBUG("Thread data pointer is empty!\n");
 		pthread_exit((void *)-1);
 	}
 
@@ -790,7 +790,7 @@ void *send_link_info_thread(void *dataptr)
 
 	if(!data->ctx || data->idx >= TEST_CHANNEL_COUNT ||  data->idx < 0)
 	{
-		log_print("Thread data pointer contains invalid data!\n");
+		BLTS_DEBUG("Thread data pointer contains invalid data!\n");
 		pthread_exit((void *)-1);
 	}
 
@@ -799,11 +799,11 @@ void *send_link_info_thread(void *dataptr)
 
 	if(sock < 0)
 	{
-		log_print("Cannot create socket\n");
+		BLTS_DEBUG("Cannot create socket\n");
 		goto error;
 	}
 
-	log_print("Socket:%d created\n", sock);
+	BLTS_DEBUG("Socket:%d created\n", sock);
 
 	addr.l2_family = AF_BLUETOOTH;
 	addr.l2_psm =  htobs(test_channels[data->idx]);
@@ -811,7 +811,7 @@ void *send_link_info_thread(void *dataptr)
 
 	if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	{
-		log_print("Connection to remote address failed!\n");
+		BLTS_DEBUG("Connection to remote address failed!\n");
 		goto error;
 	}
 
@@ -821,7 +821,7 @@ void *send_link_info_thread(void *dataptr)
 	link_info_t *info = hci_get_link_info(data->ctx, 1);
 	if(!info)
 	{
-		log_print("Cannot read link information locally!\n");
+		BLTS_DEBUG("Cannot read link information locally!\n");
 		data->result=-1;
 	}
 	else
@@ -830,23 +830,23 @@ void *send_link_info_thread(void *dataptr)
 
 		dump_link_information_data(info, 0);
 
-		log_print("Write link information data to socket...\n");
+		BLTS_DEBUG("Write link information data to socket...\n");
 		written = write(sock, info, sizeof(*info));
 
 		if(written > 0)
 		{
 			char end_mark[4] = {0}; /* "END" */
 
-			log_print("%d bytes written\n", written);
+			BLTS_DEBUG("%d bytes written\n", written);
 
 			/* wait for end of communication mark */
 			recv(sock, end_mark, 3, 0);
-			log_print("%s\n\n", &end_mark);
+			BLTS_DEBUG("%s\n\n", &end_mark);
 			data->result = 0;
 		}
 		else
 		{
-			log_print("Writing to socket failed!\n");
+			BLTS_DEBUG("Writing to socket failed!\n");
 			data->result = -1;
 		}
 	}
@@ -876,7 +876,7 @@ int collect_and_send_link_info_one_by_one(struct bt_ctx *ctx)
 
 	if(hci_init_controller(ctx) < 0)
 	{
-		log_print("HCI Initialization failed!\n");
+		BLTS_DEBUG("HCI Initialization failed!\n");
 		return -1;
 	}
 
@@ -884,7 +884,7 @@ int collect_and_send_link_info_one_by_one(struct bt_ctx *ctx)
 
 	if(!array)
 	{
-		log_print("Memory allocation failed!\n");
+		BLTS_DEBUG("Memory allocation failed!\n");
 		retval = -1;
 		goto cleanup;
 	}
@@ -896,7 +896,7 @@ int collect_and_send_link_info_one_by_one(struct bt_ctx *ctx)
 
 		if( send_link_info((void *) &(array[i])) )
 		{
-			log_print("Failed to send link info!\n");
+			BLTS_DEBUG("Failed to send link info!\n");
 			retval = -1;
 			goto cleanup;
 		}
@@ -923,7 +923,7 @@ int collect_and_send_link_info_one_by_one(struct bt_ctx *ctx)
 			else
 			{
 				afh_map_mismach++;
-				log_print("One AFH map mismach (the first or the last channel) does not yet fail the case!\n");
+				BLTS_DEBUG("One AFH map mismach (the first or the last channel) does not yet fail the case!\n");
 			}
 		}
 
@@ -934,7 +934,7 @@ cleanup:
 
 	if((ctx->hci_fd>=0) && (hci_close_dev(ctx->hci_fd) < 0))
 	{
-		logged_perror("socket close failed");
+		BLTS_LOGGED_PERROR("socket close failed");
 		retval = errno?-errno:-1;
 	}
 
@@ -953,7 +953,7 @@ int send_link_info(void *dataptr)
 
 	if(!dataptr)
 	{
-		log_print("Thread data pointer is empty!\n");
+		BLTS_DEBUG("Thread data pointer is empty!\n");
 		goto error;
 	}
 
@@ -961,7 +961,7 @@ int send_link_info(void *dataptr)
 
 	if(!data->ctx || data->idx >= TEST_CHANNEL_COUNT ||  data->idx < 0)
 	{
-		log_print("Thread data pointer contains invalid data!\n");
+		BLTS_DEBUG("Thread data pointer contains invalid data!\n");
 		goto error;
 	}
 
@@ -970,11 +970,11 @@ int send_link_info(void *dataptr)
 
 	if(sock < 0)
 	{
-		log_print("Cannot create socket\n");
+		BLTS_DEBUG("Cannot create socket\n");
 		goto error;
 	}
 
-	log_print("Socket:%d created\n", sock);
+	BLTS_DEBUG("Socket:%d created\n", sock);
 
 	addr.l2_family = AF_BLUETOOTH;
 	addr.l2_psm =  htobs(test_channels[data->idx]);
@@ -982,14 +982,14 @@ int send_link_info(void *dataptr)
 
 	if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	{
-		log_print("Connection to remote address failed!\n");
+		BLTS_DEBUG("Connection to remote address failed!\n");
 		goto error;
 	}
 
 	link_info_t *info = hci_get_link_info(data->ctx, 1);
 	if(!info)
 	{
-		log_print("Cannot read link information locally!\n");
+		BLTS_DEBUG("Cannot read link information locally!\n");
 		data->result=-1;
 	}
 	else
@@ -998,23 +998,23 @@ int send_link_info(void *dataptr)
 
 		dump_link_information_data(info, 0);
 
-		log_print("Write link information data to socket...\n");
+		BLTS_DEBUG("Write link information data to socket...\n");
 		written = write(sock, info, sizeof(*info));
 
 		if(written > 0)
 		{
 			char end_mark[4] = {0}; /* "END" */
 
-			log_print("%d bytes written\n", written);
+			BLTS_DEBUG("%d bytes written\n", written);
 
 			/* wait for end of communication mark */
 			recv(sock, end_mark, 3, 0);
-			log_print("%s\n\n", &end_mark);
+			BLTS_DEBUG("%s\n\n", &end_mark);
 			data->result = 0;
 		}
 		else
 		{
-			log_print("Writing to socket failed!\n");
+			BLTS_DEBUG("Writing to socket failed!\n");
 			data->result = -1;
 		}
 	}

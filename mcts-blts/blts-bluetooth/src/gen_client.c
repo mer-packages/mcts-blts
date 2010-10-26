@@ -42,7 +42,7 @@ int generic_client_test_echo(int sock)
 	{
 		if((bytes_out = send(sock, outbuf, bytes_left, 0)) < 0)
 		{
-			logged_perror("send() failure");
+			BLTS_LOGGED_PERROR("send() failure");
 			return -errno;
 		}
 		bytes_left -= bytes_out;
@@ -53,7 +53,7 @@ int generic_client_test_echo(int sock)
 	{
 		if((bytes_in = recv(sock, inbuf, bytes_left, 0)) < 0)
 		{
-			logged_perror("recv() failure");
+			BLTS_LOGGED_PERROR("recv() failure");
 			return -errno;
 		}
 		bytes_left -= bytes_in;
@@ -61,7 +61,7 @@ int generic_client_test_echo(int sock)
 
 	if(strncmp(inbuf,outbuf,4) != 0)
 	{
-		log_print("Received data not equal to sent.");
+		BLTS_DEBUG("Received data not equal to sent.");
 		return -EIO;
 	}
 	return 0;

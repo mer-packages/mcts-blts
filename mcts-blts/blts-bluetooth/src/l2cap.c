@@ -50,7 +50,7 @@ static int l2cap_set_test_sockopt(int sock)
 
 	if(getsockopt(sock, SOL_L2CAP, L2CAP_OPTIONS, &s_opt, &len) < 0)
 	{
-		logged_perror("getsockopt failure");
+		BLTS_LOGGED_PERROR("getsockopt failure");
 		return -errno;
 	}
 
@@ -59,7 +59,7 @@ static int l2cap_set_test_sockopt(int sock)
 
 	if(setsockopt(sock, SOL_L2CAP, L2CAP_OPTIONS, &s_opt, len) < 0)
 	{
-		logged_perror("setsockopt failure");
+		BLTS_LOGGED_PERROR("setsockopt failure");
 		return -errno;
 	}
 
@@ -78,7 +78,7 @@ static int l2cap_configure_bt_conn_for_test(bdaddr_t *remote_ba)
 
 	if((bt_dev = hci_open_dev(hci_get_route(remote_ba))) < 0)
 	{
-		logged_perror("Failure getting HCI connection");
+		BLTS_LOGGED_PERROR("Failure getting HCI connection");
 		retval=-errno;
 		goto cleanup;
 	}
@@ -92,7 +92,7 @@ static int l2cap_configure_bt_conn_for_test(bdaddr_t *remote_ba)
 
 	if(ioctl(bt_dev, HCIGETCONNINFO, cr) < 0)
 	{
-		logged_perror("HCIGETCONNINFO ioctl failure");
+		BLTS_LOGGED_PERROR("HCIGETCONNINFO ioctl failure");
 		retval = -errno;
 		goto cleanup;
 	}
@@ -102,17 +102,17 @@ static int l2cap_configure_bt_conn_for_test(bdaddr_t *remote_ba)
 
 	if(hci_read_automatic_flush_timeout(bt_dev, cr->conn_info->handle, &timeout, 0) < 0)
 	{
-		logged_perror("hci_read_automatic_flush_timeout failure");
+		BLTS_LOGGED_PERROR("hci_read_automatic_flush_timeout failure");
 		retval = -errno;
 		goto cleanup;
 	}
 
 	if(timeout)
 	{
-		log_print("Adjusting autoflush timeout (was %lf ms)\n",(double)timeout * 0.625);
+		BLTS_DEBUG("Adjusting autoflush timeout (was %lf ms)\n",(double)timeout * 0.625);
 		if(hci_write_automatic_flush_timeout(bt_dev, cr->conn_info->handle, 0, 0) < 0)
 		{
-			logged_perror("hci_write_automatic_flush_timeout failure");
+			BLTS_LOGGED_PERROR("hci_write_automatic_flush_timeout failure");
 			retval = -errno;
 		}
 	}
@@ -133,7 +133,7 @@ static int l2cap_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	/* san check */
 	if(ctx->test_timeout.tv_sec > 3600)
 	{
-		log_print("Timeout too long\n");
+		BLTS_DEBUG("Timeout too long\n");
 		return -EINVAL;
 	}
 
@@ -145,21 +145,21 @@ static int l2cap_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	FD_ZERO(&read_fds);
 	FD_SET(sock, &read_fds);
 
-	log_print("Waiting...");
+	BLTS_DEBUG("Waiting...");
 	ready = pselect(sock+1, &read_fds, (void*) 0, (void*) 0, &(ctx->test_timeout), (void*) 0);
 
 	if(ready < 0)
 	{
-		logged_perror("pselect() failure");
+		BLTS_LOGGED_PERROR("pselect() failure");
 		return -errno;
 	}
 	else if(!ready)
 	{
-		log_print("No connections, timing out.\n");
+		BLTS_DEBUG("No connections, timing out.\n");
 		return -ETIMEDOUT;
 	}
 
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	/* Ok, something is happening */
 
@@ -168,20 +168,20 @@ static int l2cap_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	socklen_t sa_in_len = sizeof(sa_in);
 	memset(&sa_in, 0, sa_in_len);
 
-	log_print("Accepting connection...");
+	BLTS_DEBUG("Accepting connection...");
 	if((sock_in = accept(sock, (void*)&sa_in, &sa_in_len)) < 0)
 	{
-		logged_perror("accept() failure");
+		BLTS_LOGGED_PERROR("accept() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	int result = generic_server_handle_echo(sock_in);
 
 	errno=0;
 	if(close(sock_in) < 0)
 	{
-		logged_perror("Incoming socket close() failure");
+		BLTS_LOGGED_PERROR("Incoming socket close() failure");
 	}
 	return result?result:-errno;
 }
@@ -201,24 +201,24 @@ int l2cap_echo_server_oneshot(struct bt_ctx *ctx)
 {
 	if(!ctx) return -EINVAL;
 
-	log_print("Server socket...");
+	BLTS_DEBUG("Server socket...");
 	int sock;
 
 	if((sock = socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP)) < 0)
 	{
-		logged_perror("Server socket() failure");
+		BLTS_LOGGED_PERROR("Server socket() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Socket options...");
+	BLTS_DEBUG("Socket options...");
 	if(l2cap_set_test_sockopt(sock) < 0)
 	{
 		/* error in fn */
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	struct sockaddr_l2 local_sa;
 	memset(&local_sa, 0, sizeof(local_sa));
@@ -226,33 +226,33 @@ int l2cap_echo_server_oneshot(struct bt_ctx *ctx)
 	local_sa.l2_bdaddr = ctx->local_mac;
 	local_sa.l2_psm = htobs(ctx->local_port);
 
-	log_print("Bind socket...");
+	BLTS_DEBUG("Bind socket...");
 	if(bind(sock, (void*)&local_sa, sizeof(local_sa)) < 0)
 	{
-		logged_perror("Server bind() failure");
+		BLTS_LOGGED_PERROR("Server bind() failure");
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Listen...");
+	BLTS_DEBUG("Listen...");
 	if(listen(sock, 1) < 0)
 	{
-		logged_perror("Server listen() failure");
+		BLTS_LOGGED_PERROR("Server listen() failure");
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Now waiting for connections.\n");
+	BLTS_DEBUG("Now waiting for connections.\n");
 	int result = l2cap_echo_server_wait_handle_one(ctx, sock);
 
 	errno=0;
 	if(close(sock)<0)
 	{
-		logged_perror("close() failure for server socket");
+		BLTS_LOGGED_PERROR("close() failure for server socket");
 	}
-	log_print("Server stopped.\n");
+	BLTS_DEBUG("Server stopped.\n");
 
 	return result?result:-errno;
 }
@@ -266,24 +266,24 @@ int l2cap_echo_test_client(struct bt_ctx *ctx, int want_transfer_test)
 {
 	if(!ctx) return -EINVAL;
 
-	log_print("Client socket...");
+	BLTS_DEBUG("Client socket...");
 	int sock;
 
 	if((sock = socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP)) < 0)
 	{
-		logged_perror("socket() failure");
+		BLTS_LOGGED_PERROR("socket() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Socket options...");
+	BLTS_DEBUG("Socket options...");
 	if(l2cap_set_test_sockopt(sock) < 0)
 	{
 		/* error in fn */
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	struct sockaddr_l2 sa;
 	memset(&sa, 0, sizeof(sa));
@@ -291,34 +291,34 @@ int l2cap_echo_test_client(struct bt_ctx *ctx, int want_transfer_test)
 	sa.l2_psm = htobs(ctx->remote_port);
 	sa.l2_bdaddr = ctx->remote_mac;
 
-	log_print("Connect...");
+	BLTS_DEBUG("Connect...");
 	if(connect(sock, (void*)&sa, sizeof(sa)) < 0)
 	{
-		logged_perror("connect() failure");
+		BLTS_LOGGED_PERROR("connect() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Check BT connection settings...");
+	BLTS_DEBUG("Check BT connection settings...");
 	if(l2cap_configure_bt_conn_for_test(&(ctx->remote_mac)) < 0)
 	{
 		/* error in fn */
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	int result = 0;
 	if(want_transfer_test)
 	{
-		log_print("Connection test start.\n");
+		BLTS_DEBUG("Connection test start.\n");
 		result = generic_client_test_echo(sock);
-		log_print("Connection test finished.\n");
+		BLTS_DEBUG("Connection test finished.\n");
 	}
 	errno=0;
 	if(close(sock) < 0)
 	{
-		logged_perror("Socket close() failure");
+		BLTS_LOGGED_PERROR("Socket close() failure");
 	}
 	return result?result:-errno;
 }

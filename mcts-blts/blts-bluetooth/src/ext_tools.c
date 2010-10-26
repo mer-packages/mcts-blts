@@ -81,24 +81,24 @@ int start_hcidump(char *dump_file, char *hci_device)
 {
 	pid_t pid;
 	if (hcidump_pid) {
-		log_print("hcidump already running.\n");
+		BLTS_DEBUG("hcidump already running.\n");
 		return -EALREADY;
 	}
 
 	if (!dump_file) {
-		log_print("No dump file specified.\n");
+		BLTS_DEBUG("No dump file specified.\n");
 		return -EINVAL;
 	}
 
 	if (!hcidump_exec_ok()) {
-		log_print("Can't run hcidump.\n");
+		BLTS_DEBUG("Can't run hcidump.\n");
 		return -EPERM;
 	}
 
 	save_reset_signals();
 
 	if ((pid = fork()) < 0) {
-		log_print("Failed to fork - %s", strerror(errno));
+		BLTS_DEBUG("Failed to fork - %s", strerror(errno));
 		restore_saved_signals();
 		return -1;
 	}
@@ -107,7 +107,7 @@ int start_hcidump(char *dump_file, char *hci_device)
 		/* parent */
 		hcidump_pid = pid;
 		usleep(250000);
-		log_print("hcidump running.\n");
+		BLTS_DEBUG("hcidump running.\n");
 		return 0;
 	}
 
@@ -134,17 +134,17 @@ int stop_hcidump()
 {
 	int status = 0;
 	if (!hcidump_pid) {
-		log_print("hcidump is not running.\n");
+		BLTS_DEBUG("hcidump is not running.\n");
 		return -ESRCH;
 	}
 
 	if (kill(hcidump_pid, SIGTERM) < 0) {
-		log_print("Could not terminate hcidump.\n");
+		BLTS_DEBUG("Could not terminate hcidump.\n");
 		return -errno;
 	}
 
 	if (waitpid(hcidump_pid, &status, 0) < 0) {
-		log_print("Could wait for hcidump.\n");
+		BLTS_DEBUG("Could wait for hcidump.\n");
 		return -errno;
 	}
 
@@ -218,17 +218,17 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 	struct hcidump_trace current = {0,0,0,0,0};
 
 	if (!dump_file || stat(dump_file,&sb) < 0) {
-		log_print("No dump to parse.\n");
+		BLTS_DEBUG("No dump to parse.\n");
 		return -ENOENT;
 	}
 
 	if (!hcidump_exec_ok()) {
-		log_print("Can't run hcidump.\n");
+		BLTS_DEBUG("Can't run hcidump.\n");
 		return -EPERM;
 	}
 
 	if (asprintf(&cmd, "%s -tR -r %s", hcidump_executable, dump_file) < 0) {
-		log_print("malloc() - %s", strerror(errno));
+		BLTS_DEBUG("malloc() - %s", strerror(errno));
 		return -errno;
 	}
 
@@ -237,7 +237,7 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 	fflush(stdout);
 	dump = popen(cmd, "r");
 	if (!dump) {
-		log_print("Failed to execute hcidump.\n");
+		BLTS_DEBUG("Failed to execute hcidump.\n");
 		ret = errno?-errno:-1;
 		goto cleanup;
 	}
@@ -256,7 +256,7 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 				if ((buf_sz <= 2) ||
 					append_hex_dump(buf+2, &current.data,
 					&current.data_len) < 0) {
-					log_print("Parse error on dump line %d\n", lineno);
+					BLTS_DEBUG("Parse error on dump line %d\n", lineno);
 					ret = -1;
 					goto cleanup;
 				}
@@ -275,7 +275,7 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 			/* Previous event now has all data, so handle it */
 			if (trace_handler && (!current_handled)) {
 				if (trace_handler(&current, user_data)) {
-					log_print("Failure in handler on dump line %d.\n",lineno);
+					BLTS_DEBUG("Failure in handler on dump line %d.\n",lineno);
 					ret = -1;
 					goto cleanup;
 				}
@@ -287,26 +287,26 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 			/* time.stamp dir hexdump */
 			if (sscanf(buf, "%lu.%lu %c %a[^\n]", &current.tv_sec, &current.tv_usec,
 				&packet_dir, &data) != 4) {
-				log_print("Parse error on dump line %d\n", lineno);
+				BLTS_DEBUG("Parse error on dump line %d\n", lineno);
 				ret = -1;
 				goto cleanup;
 			}
 			current.incoming = (packet_dir == '>');
 			if (append_hex_dump(data, &current.data, &current.data_len) < 0) {
-				log_print("Parse error on dump line %d\n", lineno);
+				BLTS_DEBUG("Parse error on dump line %d\n", lineno);
 				ret = -1;
 				goto cleanup;
 			}
 			current_handled = 0;
 			break;
 		default: /* ??? */
-			log_print("Warning: no parse for line %d\n", lineno);
+			BLTS_DEBUG("Warning: no parse for line %d\n", lineno);
 			break;
 		}
 	}
 	if (!current_handled && trace_handler) {
 		if (trace_handler(&current, user_data)) {
-			log_print("Failure in handler on dump line %d.\n",lineno);
+			BLTS_DEBUG("Failure in handler on dump line %d.\n",lineno);
 			ret = -1;
 		}
 	}
@@ -321,10 +321,10 @@ cleanup:
 		status = pclose(dump);
 
 		if (status < 0) {
-			log_print("Failed to wait for hcidump\n");
+			BLTS_DEBUG("Failed to wait for hcidump\n");
 			ret = -1;
 		} else if (status > 0) {
-			log_print("Failure in hcidump (%d)\n", status);
+			BLTS_DEBUG("Failure in hcidump (%d)\n", status);
 			ret = -1;
 		}
 	}
