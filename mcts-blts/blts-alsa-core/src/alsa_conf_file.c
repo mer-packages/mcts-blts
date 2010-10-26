@@ -48,7 +48,7 @@ static int cnfparser_remove_data(char* buf, unsigned int startpos, unsigned int 
 	tmp = calloc(1, blen + 1);
 	if(!tmp)
 	{
-		logged_perror("calloc");
+		BLTS_LOGGED_PERROR("calloc");
 		return -ENOMEM;
 	}
 	memcpy(tmp, buf, blen);
@@ -87,7 +87,7 @@ static int cnfparser_cleanup(const char* in, char** out)
 	*out = malloc(len);
 	if(!*out)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		return -1;
 	}
 
@@ -233,7 +233,7 @@ static int cnfparser_parse_control(char* start, char* end,
 	current_config = calloc(1, sizeof(alsa_control_settings));
 	if(!current_config)
 	{
-		logged_perror("calloc");
+		BLTS_LOGGED_PERROR("calloc");
 		return -1;
 	}
 
@@ -546,7 +546,7 @@ static int cnfparser_parse_config_section(alsa_testset* current_testset,
 	current_config = calloc(1, sizeof(alsa_pcm_settings));
 	if(!current_config)
 	{
-		logged_perror("calloc");
+		BLTS_LOGGED_PERROR("calloc");
 		return -1;
 	}
 
@@ -570,7 +570,7 @@ static int cnfparser_parse_testset_section(char* start, char* end)
 	alsa_testset* current_testset = calloc(1, sizeof(alsa_testset));
 	if(!current_testset)
 	{
-		logged_perror("calloc");
+		BLTS_LOGGED_PERROR("calloc");
 		return -1;
 	}
 

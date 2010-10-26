@@ -193,7 +193,7 @@ static testcase_params* generate_pcm_testcase_list(alsa_configuration* conf)
 			case_name = malloc(256 * conf->testsets[t]->num_pcms);
 			if(!case_name)
 			{
-				logged_perror("malloc failed");
+				BLTS_LOGGED_PERROR("malloc failed");
 				goto error_exit;
 			}
 

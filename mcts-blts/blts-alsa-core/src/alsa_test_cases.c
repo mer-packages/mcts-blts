@@ -611,7 +611,7 @@ int alsa_play_rec_pcm(void* user_ptr, int test_num)
 		sizeof(struct pcm_thread_params));
 	if(!threads)
 	{
-		logged_perror("calloc failed");
+		BLTS_LOGGED_PERROR("calloc failed");
 		goto cleanup;
 	}
 

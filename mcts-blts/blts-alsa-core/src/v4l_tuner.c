@@ -61,7 +61,7 @@ tuner_device* tuner_open(const char* name)
 	tuner_device* dev = calloc(1, sizeof(tuner_device));
 	if(!dev)
 	{
-		logged_perror("Failed to allocate tuner_device structure");
+		BLTS_LOGGED_PERROR("Failed to allocate tuner_device structure");
 		return NULL;
 	}
 

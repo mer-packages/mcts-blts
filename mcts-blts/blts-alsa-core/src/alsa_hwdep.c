@@ -41,7 +41,7 @@ hwdep_device* hwdep_open(int card, int device)
 	hw = calloc(1, sizeof(hwdep_device));
 	if(!hw)
 	{
-		logged_perror("Failed to allocate hwdep_device structure");
+		BLTS_LOGGED_PERROR("Failed to allocate hwdep_device structure");
 		return NULL;
 	}
 
@@ -68,7 +68,7 @@ hwdep_device* hwdep_open(int card, int device)
 		BLTS_ERROR("Protocol version < 1.0.1 not supported\n");
 		goto error_exit;
 	}
-	
+
 	hw->card = card;
 	hw->device = device;
 
