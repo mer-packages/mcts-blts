@@ -45,7 +45,7 @@ def extractElementText(tagName, pro, root):
     
 def setProxy():
     envProxy = os.getenv("http_proxy", None)
-    if(None == envProxy):
+    if(None == envProxy or 0 == len(envProxy.strip())):
         opener = urllib2.build_opener(urllib2.BaseHandler)
     else:
         if("/" == envProxy[-1]):

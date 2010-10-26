@@ -34,7 +34,7 @@ if [ -e $banned_file ]; then
     rm $banned_file
 fi
 export DISPLAY=:0.0
-export http_proxy=http://proxy.pd.intel.com:911
+#export http_proxy=http://proxy.pd.intel.com:911
 
 case_dir=`dirname $0`
 dbus_api_dir=$case_dir/../dbus_api

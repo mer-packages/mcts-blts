@@ -32,34 +32,33 @@ int main(int argc, char *argv[]) {
 			"Going to invoke the method 'getServices' for extracting the list of service names");
 
 	SwClient* client = new SwClient();
-	QStringList* services = client->getServices();
+	QStringList services = client->getServices();
 
-	if (NULL != services && services->size() > 0) {
+	if (services.size() > 0) {
 		int result = SUCCESS_RETURN;
-		foreach (QString sName, *services) {
-			qDebug() << "The service " << sName << "is available!";
-			SwClientService * clientService = client->getService(sName);
-			if (NULL != clientService) {
-				qDebug() << "The instance of the service " << sName
-						<< " is available. and its' display name is"
-						<< clientService->getDisplayName();
-			} else {
-				result = FAILURE_RETURN;
-				qDebug() << "Fail! The instance of the service "
-						<< sName << " is not available.";
+		foreach (QString sName, services)
+			{
+				qDebug() << "The service " << sName << "is available!";
+				SwClientService * clientService = client->getService(sName);
+				if (NULL != clientService) {
+					qDebug() << "The instance of the service " << sName
+							<< " is available. and its' display name is"
+							<< clientService->getDisplayName();
+				} else {
+					result = FAILURE_RETURN;
+					qDebug() << "Fail! The instance of the service " << sName
+							<< " is not available.";
+				}
 			}
-		}
-		//return result;
+		return result;
 	} else {
 		qDebug("fail to invoke the method 'getServices'");
-		//return FAILURE_RETURN;
+		return FAILURE_RETURN;
 	}
 
-	TcServiceParent parent;
-	parent.checkServices();
+	//	TcServiceParent parent;
+	//	parent.checkServices();
 
-	return a.exec();
+	//return a.exec();
 }
-
-
 
