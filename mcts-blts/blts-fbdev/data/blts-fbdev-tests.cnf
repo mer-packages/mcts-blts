@@ -1,0 +1,58 @@
+# Parameter configuration for blts-fbdev
+
+# Valid framebuffer devices for HW.
+[parameter]
+	name framebuffer_device
+	const "/dev/fb0"
+[end_parameter]
+
+# Valid backlight subsystem for HW
+[parameter]
+        name backlight_subsystem
+        const "/sys/class/backlight/<enter_valid_sysfs_entry_here>"
+[end_parameter]
+
+# Minimum light level
+[parameter]
+        name minimum_level
+        const 0
+[end_parameter]
+
+# Maximum light level
+[parameter]
+        name maximum_level
+        const 255
+[end_parameter]
+
+# Minimum light level for logarithmic tests
+[parameter]
+        name logarithmic_min
+        const 1
+[end_parameter]
+
+# Maximum light level for logarithmic tests
+[parameter]
+        name logarithmic_max
+        const 255
+[end_parameter]
+
+# Test case configurations
+[test]
+	name "Core-Set blanking levels"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Verify backlight levels"
+	params backlight_subsystem minimum_level maximum_level
+[end_test]
+
+[test]
+	name "Core-Linear backlight level changes"
+	params backlight_subsystem minimum_level maximum_level
+[end_test]
+
+[test]
+	name "Core-Logarithmic backlight level changes"
+	params backlight_subsystem logarithmic_min logarithmic_max
+[end_test]

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tests.xml - Test case definitions for test automation
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<testdefinition version="1.0">
+  <suite name="blts-fbdev-tests" domain="Graphics">
+    <set name="fb-tests" feature="Display">
+      <case name="Core-Read%20frame%20buffer%20information%20with%20ioctl">
+        <step>/usr/bin/blts-fbdev-tests -en "Core-Read frame buffer information with ioctl" -l /var/log/tests/Core-Read%20frame%20buffer%20information%20with%20ioctl.log</step>
+      </case>
+      <case name="Core-Set%20blanking%20levels">
+        <step>/usr/bin/blts-fbdev-tests -en "Core-Set blanking levels" -l /var/log/tests/Core-Set%20blanking%20levels.log</step>
+      </case>
+      <case name="Core-Verify%20backlight%20levels">
+        <step>/usr/bin/blts-fbdev-tests -en "Core-Verify backlight levels" -l /var/log/tests/Core-Verify%20backlight%20levels.log</step>
+      </case>
+      <case name="Core-Linear%20backlight%20level%20changes">
+        <step>/usr/bin/blts-fbdev-tests -en "Core-Linear backlight level changes" -l /var/log/tests/Core-Linear%20backlight%20level%20changes.log</step>
+      </case>
+      <case name="Core-Logarithmic%20backlight%20level%20changes">
+        <step>/usr/bin/blts-fbdev-tests -en "Core-Logarithmic backlight level changes" -l /var/log/tests/Core-Logarithmic%20backlight%20level%20changes.log</step>
+      </case>
+      <get>
+	<file>/var/log/tests/Core-Read%20frame%20buffer%20information%20with%20ioctl.log</file>
+	<file>/var/log/tests/Core-Set%20blanking%20levels.log</file>
+	<file>/var/log/tests/Core-Verify%20backlight%20levels.log</file>
+	<file>/var/log/tests/Core-Linear%20backlight%20level%20changes.log</file>
+	<file>/var/log/tests/Core-Logarithmic%20backlight%20level%20changes.log</file>
+      </get>
+    </set>
+  </suite>
+</testdefinition>
+

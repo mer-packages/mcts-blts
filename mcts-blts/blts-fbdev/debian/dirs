@@ -1,0 +1,4 @@
+usr/bin
+usr/lib
+usr/lib/tests/blts-fbdev-tests
+usr/share/blts-fbdev-tests

@@ -1,0 +1,9 @@
+* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.6
+- Initial upload for Meego (changelog summarized)
+- Add RPM packaging
+- Port to use libbltscommon library
+- Add configuration file support
+- Add case: Set blanking levels - Blank and unblank device screen via framebuffer device
+- Add case: Verify backlight levels - Verify via backlight framework that backlight limits are handled
+- Add case: Linear backlight level changes - Linearly go through all backlight levels of the display
+- Add case: Logarithmic backlight level changes - With a logarithmic curve, test backlight levels from 1 to maximum

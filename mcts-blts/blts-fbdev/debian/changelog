@@ -1,0 +1,14 @@
+blts-fbdev-tests (0.0.6) unstable; urgency=low
+
+  [ Mika Niinistö, Kimmo Myllyvirta, Jussi Saavalainen ]
+  * Initial upload for Meego (changelog summarized)
+  * Add RPM packaging
+  * Port to use libbltscommon library
+  * Add configuration file support
+  * Add case: Set blanking levels - Blank and unblank device screen via framebuffer device
+  * Add case: Verify backlight levels - Verify via backlight framework that backlight limits are handled
+  * Add case: Linear backlight level changes - Linearly go through all backlight levels of the display
+  * Add case: Logarithmic backlight level changes - With a logarithmic curve, test backlight levels from 1 to maximum
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 30 Sep 2010 14:37:28 +0300
+
