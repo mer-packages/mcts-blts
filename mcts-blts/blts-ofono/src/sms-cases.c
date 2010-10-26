@@ -686,14 +686,16 @@ int ofono_sms_center_number(void* user_ptr, __attribute__((unused)) int testnum)
 }
 
 /* Convert generated parameters to test case format. */
-void *sms_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
-	char *sms_generated_msg = 0, *remote_addr = 0, *smsc_addr = 0;
+	char *sms_generated_msg = NULL, *addr_prefix = NULL, *remote_addr = NULL, *smsc_addr = NULL;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
 	sms_generated_msg = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	addr_prefix = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	remote_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
@@ -701,16 +703,43 @@ void *sms_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 
 	/* These are already non-zero, if set on command line */
 
+	if (data->remote_address == NULL)
+	{
+		if (asprintf(&data->remote_address, "%s%s", addr_prefix, remote_addr) < 0)
+		{
+			free(smsc_addr);
+			free(remote_addr);
+			free(addr_prefix);
+			free(sms_generated_msg);
+			return NULL;
+		}
+	}
+
+	free(remote_addr);
+	free(addr_prefix);
+
 	if (data->sms_generated_message)
 		free(sms_generated_msg);
 	else
 		data->sms_generated_message = sms_generated_msg;
-	
-	if (data->remote_address)
-		free(remote_addr);
+
+	if (data->smsc_address)
+		free(smsc_addr);
 	else
-		data->remote_address = remote_addr;
-	
+		data->smsc_address = smsc_addr;
+
+	return data;
+}
+
+void *sms_recv_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+        char *smsc_addr = NULL;
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	smsc_addr = strdup(blts_config_boxed_value_get_string(args));
+
 	if (data->smsc_address)
 		free(smsc_addr);
 	else
@@ -737,4 +766,3 @@ struct boxed_value *sms_variant_message_generator(struct boxed_value *args)
 
 	return blts_config_boxed_value_new_string_take(message);
 }
-
