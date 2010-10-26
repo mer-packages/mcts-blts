@@ -39,19 +39,19 @@ int xtest_move_cursor(double execution_time)
 
 	if(!XTestQueryExtension(params.display, &eventB, &errorB, &ver, &rev))
 	{
-		LOGERR("X-Test extension not found\n");
+		BLTS_ERROR("X-Test extension not found\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG("XTest Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG("XTest Extension version %i.%i\n", ver, rev);
 
 	/* Create our own cursor to move around */
 	my_cursor_pxm = XCreatePixmap(params.display, params.window, 8, 8,
 		params.root_window_attributes.depth);
 	if(!my_cursor_pxm)
 	{
-		LOGERR("XCreateBitmapFromData failed\n");
+		BLTS_ERROR("XCreateBitmapFromData failed\n");
 		ret = -1;
 		goto cleanup;
 	}
@@ -59,7 +59,7 @@ int xtest_move_cursor(double execution_time)
  		&black, &black, 0, 0);
 	if(!my_cursor)
 	{
-		LOGERR("XCreatePixmapCursor failed\n");
+		BLTS_ERROR("XCreatePixmapCursor failed\n");
 		ret = -1;
 		goto cleanup;
 	}
@@ -79,7 +79,7 @@ int xtest_move_cursor(double execution_time)
 		}
 		if(!XTestFakeMotionEvent(params.display, params.screen, x, y, 2))
 		{
-			LOGERR("XTestFakeMotionEvent failed\n");
+			BLTS_ERROR("XTestFakeMotionEvent failed\n");
 			ret = -1;
 			break;
 		}

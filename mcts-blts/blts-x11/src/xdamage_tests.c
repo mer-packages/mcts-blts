@@ -40,19 +40,19 @@ int xdamage_monitor_region(double execution_time)
 
 	if(!XDamageQueryExtension(params.display, &event_base, &error_base))
 	{
-		LOGERR("XDamageQueryExtension failed\n");
+		BLTS_ERROR("XDamageQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if(!XDamageQueryVersion(params.display, &ver, &rev))
 	{
-		LOGERR("XDamageQueryVersion failed\n");
+		BLTS_ERROR("XDamageQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG("XDamage Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG("XDamage Extension version %i.%i\n", ver, rev);
 
 	/* Create damage region */
 	damage = XDamageCreate(params.display, params.window,
@@ -74,7 +74,7 @@ int xdamage_monitor_region(double execution_time)
 			if(event.type == event_base + XDamageNotify)
 			{
 				XDamageNotifyEvent* dev = (XDamageNotifyEvent*) &event;
-				LOG("Damage Event received: x:%3d, y:%3d, width: %3d, height:%3d\n",
+				BLTS_DEBUG("Damage Event received: x:%3d, y:%3d, width: %3d, height:%3d\n",
 					(int) dev->area.x, (int) dev->area.y,
 					(int) dev->area.width, (int) dev->area.height);
 				XDamageSubtract(params.display, damage, None, region);
@@ -82,10 +82,10 @@ int xdamage_monitor_region(double execution_time)
 				if(rectlist && howmany )
 				{
 					int i;
-					LOG("XDamageSubtract: %d rectangles\n", howmany);
+					BLTS_DEBUG("XDamageSubtract: %d rectangles\n", howmany);
 					for(i=0; i<howmany; i++)
 					{
-						LOG("rectangle %d: x: %d, y: %d, width: %d, height: %d\n",
+						BLTS_DEBUG("rectangle %d: x: %d, y: %d, width: %d, height: %d\n",
 							i+1, rectlist[i].x, rectlist[i].y,
 							rectlist[i].width, rectlist[i].height);
 					}
@@ -94,7 +94,7 @@ int xdamage_monitor_region(double execution_time)
 			}
 			else
 			{
-				LOG("Unknown event %x\n", event.type);
+				BLTS_DEBUG("Unknown event %x\n", event.type);
 			}
 			break;
 		}
@@ -104,7 +104,7 @@ int xdamage_monitor_region(double execution_time)
 
 	if(!event_received)
 	{
-		LOGERR("XDamageNotify event not received.\n");
+		BLTS_ERROR("XDamageNotify event not received.\n");
 		ret = -1;
 	}
 

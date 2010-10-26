@@ -38,19 +38,19 @@ int xcomposite_get_widow_contents()
 
 	if(!XCompositeQueryExtension(params.display, &eventB, &baseB))
 	{
-		LOGERR("XCompositeQueryExtension failed\n");
+		BLTS_ERROR("XCompositeQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if(!XCompositeQueryVersion(params.display, &ver, &rev))
 	{
-		LOGERR("XCompositeQueryVersion failed\n");
+		BLTS_ERROR("XCompositeQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG("XComposite Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG("XComposite Extension version %i.%i\n", ver, rev);
 
 	/* Redirect window to off-screen storage (the window might be already
 	redirected when using composite window manager) */
