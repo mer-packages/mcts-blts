@@ -86,31 +86,6 @@ static void pending_call_answerable_check_complete(DBusGProxy *proxy,
 	GHashTable *properties, GError *error, gpointer data);
 static gboolean pending_call_queue_answerable_check(gpointer data);
 
-static
-gboolean find_state(__attribute__((unused))gpointer key, gpointer value, gpointer user_data)
-{
-	gchar* expected_state = (gchar*) user_data;
-	gchar* state = NULL;
-
-	if(!expected_state)
-		return FALSE;
-		
-	if(strcmp("State", (char *)key) == 0)
-	{
-		state = (gchar*) g_value_dup_string(value);
-
-		if(!strcmp(expected_state, state))
-		{
-			g_free(state);
-			return TRUE;
-		}
-		g_free(state);
-		return FALSE;						
-	}
-	else
-		return FALSE;
-}
-
 GHashTable* get_voicecall_properties(DBusGProxy *proxy)
 {
 	GError *error = NULL;
@@ -201,7 +176,7 @@ static void pending_call_answerable_check_complete(__attribute__((unused)) DBusG
 		goto test_fail;
 	}
 
-	if (g_hash_table_find(properties, (GHRFunc) find_state, "incoming"))
+	if (g_hash_table_find(properties, (GHRFunc) check_state, "incoming"))
 		org_ofono_VoiceCall_answer_async(state->voice_call,
 			pending_call_answer_complete, state);
 	else
@@ -264,8 +239,8 @@ static void handle_incoming_call(gchar* path, GHashTable* properties, gpointer u
 	LOG("Search incoming/waiting calls...\n");
 	if (properties) {
 		g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
-		incoming = g_hash_table_find(properties, (GHRFunc) find_state, "incoming");
-		waiting = g_hash_table_find(properties, (GHRFunc) find_state, "waiting");
+		incoming = g_hash_table_find(properties, (GHRFunc) check_state, "incoming");
+		waiting = g_hash_table_find(properties, (GHRFunc) check_state, "waiting");
 	}
 
 	if(incoming)

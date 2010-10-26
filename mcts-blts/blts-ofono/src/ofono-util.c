@@ -29,6 +29,32 @@
 #include "signal-marshal.h"
 #include "ofono-modem-bindings.h"
 
+/** general function to verify call state  */
+
+gboolean check_state(__attribute__((unused))gpointer key, gpointer value, gpointer user_data)
+{
+	gchar* expected_state = (gchar*) user_data;
+	gchar* state = NULL;
+
+	if(!expected_state)
+		return FALSE;
+		
+	if(strcmp("State", (char *)key) == 0)
+	{
+		state = (gchar*) g_value_dup_string(value);
+		
+		if(!strcmp(expected_state, state))
+		{
+			g_free(state);
+			return TRUE;
+		}
+		g_free(state);
+		return FALSE;						
+	}
+	else
+		return FALSE;
+}
+
 /** general print/log function for hashtable with GValue*s */
 
 void hash_entry_gvalue_print(gpointer key, GValue* val, __attribute__((unused)) gpointer user_data)

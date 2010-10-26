@@ -46,8 +46,8 @@ struct dual_call_case_state {
 	GCallback signalcb_VoiceCall1_PropertyChanged;
 	GCallback signalcb_VoiceCall2_PropertyChanged;
 
-	GCallback signalcb_VoiceCalls_Added;
-	GCallback signalcb_VoiceCalls_Removed;
+	GCallback signalcb_VoiceCallManager_CallAdded;
+	GCallback signalcb_VoiceCallManager_CallRemoved;
 
 	call_handle_fp call_handle_method;
 
@@ -62,8 +62,8 @@ struct dual_call_case_state {
 static void on_first_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 static void on_second_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 
-static void call_added(DBusGProxy *proxy, gchar* path, GHashTable* properties, void *user_data);
-static void call_removed(DBusGProxy *proxy, gchar* path, void *user_data);
+static void on_voice_call_manager_call_added(DBusGProxy *proxy, gchar* path, GHashTable* properties, void *user_data);
+static void on_voice_call_manager_call_removed(DBusGProxy *proxy, gchar* path, void *user_data);
 
 static gboolean do_transfer(gpointer user_ptr);
 static gboolean do_swap(gpointer user_ptr);
@@ -95,32 +95,6 @@ void hangup_all_calls(struct dual_call_case_state* state)
 	{
 		state->result = 0;
 	}
-}
-
-static
-gboolean find_state(__attribute__((unused))gpointer key, gpointer value, gpointer user_data)
-{
-	gchar* expected_state = (gchar*) user_data;
-	gchar* state = NULL;
-
-	if(!expected_state)
-		return FALSE;
-		
-	if(strcmp("State", (char *)key) == 0)
-	{
-		LOG("%s: %s\n", (char*)key, g_value_dup_string(value));
-		state = (gchar*) g_value_dup_string(value);
-		
-		if(!strcmp(expected_state, state))
-		{
-			g_free(state);
-			return TRUE;
-		}
-		g_free(state);
-		return FALSE;						
-	}
-	else
-		return FALSE;
 }
 
 /* Completion of async answer call. Retry limited times if failure. */
@@ -179,7 +153,7 @@ static void pending_call_answerable_check_complete(__attribute__((unused)) DBusG
 		goto test_fail;
 	}
 
-	if (g_hash_table_find(properties, (GHRFunc) find_state, "incoming"))
+	if (g_hash_table_find(properties, (GHRFunc) check_state, "incoming"))
 		org_ofono_VoiceCall_answer_async(state->voice_calls[FIRST_CALL],
 			pending_call_answer_complete, state);
 	else
@@ -220,7 +194,7 @@ static void pending_call_state_check_complete(__attribute__((unused)) DBusGProxy
 		goto test_fail;
 	}
 
-	if (g_hash_table_find(properties, (GHRFunc) find_state, "held"))
+	if (g_hash_table_find(properties, (GHRFunc) check_state, "held"))
 	{
 		if (state->call_handle_method == do_hold_and_answer)
 				hangup_all_calls(state);
@@ -345,14 +319,14 @@ static void handle_first_call(gchar* path, GHashTable* properties, gpointer user
 
 	LOG("Search incoming state...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
-	incoming = g_hash_table_find(properties, (GHRFunc) find_state, "incoming");
+	incoming = g_hash_table_find(properties, (GHRFunc) check_state, "incoming");
 	if(!incoming)
 	{
 		LOG("Not incoming call - test failed!\n");
 		goto error;
 	}
 
-	LOG("Listing call data for call '%s'\n", path);
+	LOG("Incoming voice call '%s'\n", (char *)path);
 	state->first_voice_call_path = g_strdup(path);
 
 	if (state->signalcb_VoiceCall1_PropertyChanged)
@@ -413,14 +387,14 @@ static void handle_second_call(gchar* path, GHashTable* properties, gpointer use
 	
 	LOG("Search waiting state...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
-	waiting = g_hash_table_find(properties, (GHRFunc) find_state, "waiting");
+	waiting = g_hash_table_find(properties, (GHRFunc) check_state, "waiting");
 	if(!waiting)
 	{
 		LOG("Not waiting call - test failed!\n");
 		goto error;
 	}
 
-	LOG("Listing call data for call '%s'\n", path);
+	LOG("Incoming voice call '%s'\n", (char *)path);
 	state->second_voice_call_path = g_strdup(path);
 
 	if (state->signalcb_VoiceCall2_PropertyChanged)
@@ -448,7 +422,7 @@ error:
  * Signal handler
  * Handle first or second call when signal "CallAdded" from voice call manager is sent
  */
-static void call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GHashTable* properties, void *user_data)
+static void on_voice_call_manager_call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GHashTable* properties, void *user_data)
 {	
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;		
 	
@@ -477,7 +451,7 @@ static void call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GH
  * Handle "CallRemoved" signals from voice call manager - end test case when signals 
  * for both test calls are received
  */
-static void call_removed(__attribute__((unused))DBusGProxy *proxy, gchar* path, void *user_data)
+static void on_voice_call_manager_call_removed(__attribute__((unused))DBusGProxy *proxy, gchar* path, void *user_data)
 {
 	static int removed_calls = 0;
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;	
@@ -741,21 +715,21 @@ static gboolean call_init_start(gpointer data)
 	BLTS_TRACE("Hangup previous calls...\n");
 	hangup_all_calls(state);
 
-	if (state->signalcb_VoiceCalls_Added) {
+	if (state->signalcb_VoiceCallManager_CallAdded) {
 	dbus_g_proxy_add_signal(state->voice_call_manager, "CallAdded",
 			DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", 
 			G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID);
 	
 	dbus_g_proxy_connect_signal(state->voice_call_manager, "CallAdded",
-		state->signalcb_VoiceCalls_Added, data, 0);
+		state->signalcb_VoiceCallManager_CallAdded, data, 0);
 	}
 
-	if (state->signalcb_VoiceCalls_Removed) {
+	if (state->signalcb_VoiceCallManager_CallRemoved) {
 	dbus_g_proxy_add_signal(state->voice_call_manager, "CallRemoved",
 			DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
 	
 	dbus_g_proxy_connect_signal(state->voice_call_manager, "CallRemoved",
-		state->signalcb_VoiceCalls_Removed, data, 0);
+		state->signalcb_VoiceCallManager_CallRemoved, data, 0);
 	}
 	
 	if (state->case_begin)
@@ -862,8 +836,8 @@ int blts_ofono_case_dual_call_transfer(void* user_ptr, __attribute__((unused))in
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
-	test->signalcb_VoiceCalls_Added = G_CALLBACK(call_added);
-	test->signalcb_VoiceCalls_Removed = G_CALLBACK(call_removed);
+	test->signalcb_VoiceCallManager_CallAdded = G_CALLBACK(on_voice_call_manager_call_added);
+	test->signalcb_VoiceCallManager_CallRemoved = G_CALLBACK(on_voice_call_manager_call_removed);
 
 	test->call_handle_method = do_transfer;
 
@@ -896,10 +870,10 @@ int blts_ofono_case_dual_call_swap(void* user_ptr, __attribute__((unused))int te
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
-	test->signalcb_VoiceCalls_Added = 
-		G_CALLBACK(call_added);
-	test->signalcb_VoiceCalls_Removed = 
-		G_CALLBACK(call_removed);
+	test->signalcb_VoiceCallManager_CallAdded = 
+		G_CALLBACK(on_voice_call_manager_call_added);
+	test->signalcb_VoiceCallManager_CallRemoved = 
+		G_CALLBACK(on_voice_call_manager_call_removed);
 
 	test->call_handle_method = do_swap;
 
@@ -932,10 +906,10 @@ int blts_ofono_case_dual_call_release_and_answer(void* user_ptr, __attribute__((
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
-	test->signalcb_VoiceCalls_Added = 
-		G_CALLBACK(call_added);
-	test->signalcb_VoiceCalls_Removed = 
-		G_CALLBACK(call_removed);
+	test->signalcb_VoiceCallManager_CallAdded = 
+		G_CALLBACK(on_voice_call_manager_call_added);
+	test->signalcb_VoiceCallManager_CallRemoved = 
+		G_CALLBACK(on_voice_call_manager_call_removed);
 
 	test->call_handle_method = do_release_and_answer;
 
@@ -968,10 +942,10 @@ int blts_ofono_case_dual_call_hold_and_answer(void* user_ptr, __attribute__((unu
 		G_CALLBACK(on_first_voice_call_property_changed);
 	test->signalcb_VoiceCall2_PropertyChanged =
 		G_CALLBACK(on_second_voice_call_property_changed);
-	test->signalcb_VoiceCalls_Added = 
-		G_CALLBACK(call_added);
-	test->signalcb_VoiceCalls_Removed = 
-		G_CALLBACK(call_removed);
+	test->signalcb_VoiceCallManager_CallAdded = 
+		G_CALLBACK(on_voice_call_manager_call_added);
+	test->signalcb_VoiceCallManager_CallRemoved = 
+		G_CALLBACK(on_voice_call_manager_call_removed);
 
 	test->call_handle_method = do_hold_and_answer;
 

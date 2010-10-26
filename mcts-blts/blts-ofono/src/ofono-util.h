@@ -55,6 +55,7 @@ typedef struct
 
 } my_ofono_data;
 
+gboolean check_state(gpointer key, gpointer value, gpointer user_data);
 void get_modem_list(char* data, gpointer user_data);
 //void find_modem(char *key, GValue* value, gpointer user_data);
 void find_modem(gpointer modem,  gpointer user_data);
