@@ -382,7 +382,6 @@ static void my_ofono_teardown(void *user_ptr)
 		ensure_calls_cleared(data);
 		reset_supplementary_services(data);
 
-
 		if (data->accu_cm_max)
 			free(data->accu_cm_max);
 
@@ -1008,8 +1007,8 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Forward if busy", my_ofono_case_forwardings, 60000 },
 	{ "oFono - Forward if no reply", my_ofono_case_forwardings, 60000 },
 	{ "oFono - Forward if not reachable", my_ofono_case_forwardings, 60000 },
-	{ "oFono - Send SMS", blts_ofono_send_sms_default, 60000 },
-	{ "oFono - Receive SMS", blts_ofono_receive_sms_default, 60000 },
+	{ "oFono - Send SMS", blts_ofono_send_sms_default, 95000 },
+	{ "oFono - Receive SMS", blts_ofono_receive_sms_default, 95000 },
 	{ "oFono - Change PIN", ofono_change_pin, 5000 },
 	{ "oFono - Enter PIN", ofono_enter_pin, 5000 },
 	{ "oFono - Reset PIN", ofono_reset_pin, 5000 },

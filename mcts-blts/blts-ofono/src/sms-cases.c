@@ -16,6 +16,8 @@
 
 */
 
+#define _GNU_SOURCE // To get asprintf from stdio.h
+#include <stdio.h>
 #include <glib.h>
 #include <blts_log.h>
 #include <dbus/dbus.h>
@@ -43,9 +45,16 @@ struct sms_case_state {
 
 	GValue *smsc;
 
+	DBusGProxy *message_proxy;
+	gchar* message_state;
+	gchar* message_path;
+
 	GCallback signalcb_MessageManager_PropertyChanged;
 	GCallback signalcb_MessageManager_IncomingMessage;
 	GCallback signalcb_MessageManager_ImmediateMessage;
+	GCallback signalcb_MessageManager_MessageAdded;
+	GCallback signalcb_MessageManager_MessageRemoved;
+	GCallback signalcb_MessageManager_Message_PropertyChanged;
 
 	int result;
 };
@@ -62,10 +71,14 @@ static void sms_state_finalize(struct sms_case_state *state)
 		free(state->message);
 	if (state->smsc)
 		free(state->smsc);
-
-	if (state->msg_manager) {
+	if (state->message_proxy)
+		g_object_unref(state->message_proxy);
+	if (state->message_state)
+		g_free(state->message_state);
+	if (state->message_path)
+		g_free(state->message_path);
+	if (state->msg_manager)
 		g_object_unref(state->msg_manager);
-	}
 
 	free(state);
 }
@@ -122,6 +135,23 @@ static void sms_init_complete(__attribute__((unused)) DBusGProxy *proxy, GError 
 			G_TYPE_INVALID);
 		dbus_g_proxy_connect_signal(state->msg_manager, "ImmediateMessage",
 			state->signalcb_MessageManager_ImmediateMessage, state, 0);
+	}
+	
+	if (state->signalcb_MessageManager_MessageAdded) {
+		dbus_g_proxy_add_signal(state->msg_manager, "MessageAdded",
+			DBUS_TYPE_G_OBJECT_PATH,
+			dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+			G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->msg_manager, "MessageAdded",
+			state->signalcb_MessageManager_MessageAdded, state, 0);
+	}
+
+	if (state->signalcb_MessageManager_MessageRemoved) {
+		dbus_g_proxy_add_signal(state->msg_manager, "MessageRemoved",
+			DBUS_TYPE_G_OBJECT_PATH,
+			G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->msg_manager, "MessageRemoved",
+			state->signalcb_MessageManager_MessageRemoved, state, 0);
 	}
 
 	if (state->case_begin)
@@ -226,6 +256,95 @@ static void sms_generic_incoming_message_cb(__attribute__((unused)) DBusGProxy *
 	FUNC_LEAVE();
 }
 
+static void sms_message_added_cb(DBusGProxy *proxy, const gchar *path, GHashTable *properties, gpointer data)
+{
+	FUNC_ENTER();
+	
+	BLTS_UNUSED_PARAM(proxy);
+
+	struct sms_case_state *state = (struct sms_case_state*)data;
+
+	BLTS_TRACE("Message added @ %s\n", path);
+	
+	// Process only the message that we sent
+	if (g_strcmp0(state->message_path, path) != 0)
+	{
+		BLTS_TRACE("Message added with path %s, expecting path %s\n",
+			path, state->message_path);
+		return;
+	}
+	
+	//g_hash_table_foreach(properties, debug_print_asv_value, 0);
+	GValue* message_state = g_hash_table_lookup(properties, "State");
+	if (!message_state)
+	{
+		BLTS_ERROR("Message does not have a 'State' property\n");
+		state->result = -1;
+		g_main_loop_quit(state->mainloop);
+		return;
+	}
+
+	state->message_state = g_value_dup_string(message_state);
+
+	FUNC_LEAVE();
+}
+
+static void sms_message_removed_cb(DBusGProxy *proxy,
+	const gchar *path, gpointer data)
+{
+	FUNC_ENTER();
+	
+	BLTS_UNUSED_PARAM(proxy);
+	struct sms_case_state *state = (struct sms_case_state*)data;
+
+	BLTS_TRACE("Message removed @ %s\n", path);
+	
+	// Process only the message that we sent
+	if (g_strcmp0(state->message_path, path) != 0)
+	{
+		BLTS_TRACE("Message removed with path %s, expecting path %s\n",
+			path, state->message_path);
+		return;
+	}
+
+	dbus_g_proxy_disconnect_signal(state->message_proxy, "PropertyChanged",
+		state->signalcb_MessageManager_Message_PropertyChanged, state);
+
+	if (g_strcmp0(state->message_state, "sent") == 0)
+	{
+	    state->result = 0;
+	}
+	else
+	{
+	    BLTS_ERROR("Final message state is '%s' instead of 'sent'\n", state->message_state);
+	    state->result = -1;
+	}
+	
+	g_main_loop_quit(state->mainloop);
+
+	FUNC_LEAVE();
+}
+
+static void sms_message_property_changed_cb(DBusGProxy *proxy,
+	const gchar *key, const GValue *value, gpointer data)
+{
+	FUNC_ENTER();
+	
+	BLTS_UNUSED_PARAM(data);
+	struct sms_case_state *state = (struct sms_case_state*)data;
+
+	BLTS_TRACE("Message %s: %s -> %s\n", dbus_g_proxy_get_path(proxy),
+		key, g_value_get_string(value));
+	if (g_strcmp0(key, "State") == 0)
+	{
+		// Store the new message state
+		if (state->message_state)
+			g_free(state->message_state);
+		state->message_state = g_value_dup_string(value);
+	}
+	
+	FUNC_LEAVE();
+}
 
 static void sms_receive_test_incoming_message_cb(__attribute__((unused)) DBusGProxy *proxy,
 	gpointer *msg, GHashTable *properties, gpointer data)
@@ -255,7 +374,7 @@ static void sms_receive_test_incoming_message_cb(__attribute__((unused)) DBusGPr
 
 
 /* Return from the send call. */
-static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *OUT_arg2, GError *error, gpointer data)
+static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *message_path, GError *error, gpointer data)
 {
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
@@ -265,11 +384,30 @@ static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *O
 		log_print("SMS Send failure: %s\n", error->message);
 	} else {
 		state->result = 0;
-		log_print("SMS Send success.\n");
-		BLTS_TRACE("Message path is %s\n", OUT_arg2);
-	}
+		log_print("SMS Send call successful\n");
+		BLTS_TRACE("Message path is %s\n", message_path);
+		
+		state->message_path = g_strdup(message_path);
 
-	g_main_loop_quit(state->mainloop);
+		DBusGProxy *message;
+		message = dbus_g_proxy_new_for_name(state->ofono_data->connection,
+			OFONO_BUS, message_path, "org.ofono.Message");
+
+		if (!message) {
+			BLTS_ERROR("Cannot get proxy for org.ofono.Message %s\n", message_path);
+			state->result = -1;
+			g_main_loop_quit(state->mainloop);
+			return;
+		}
+
+		state->message_proxy = message;
+
+		dbus_g_proxy_add_signal(message, "PropertyChanged",
+			G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(message, "PropertyChanged",
+			state->signalcb_MessageManager_Message_PropertyChanged,
+			state, 0);
+	}
 
 	FUNC_LEAVE();
 }
@@ -295,8 +433,6 @@ static gboolean sms_send_start(gpointer data)
 	FUNC_LEAVE();
 	return FALSE;
 }
-
-
 
 /* Starts the receive test. */
 static gboolean sms_receive_start(__attribute__((unused)) gpointer data)
@@ -430,7 +566,7 @@ static int sms_case_run(struct sms_case_state *state)
 	BLTS_TRACE("Modem ok.\n");
 	state->mainloop = state->ofono_data->mainloop;
 
-	g_timeout_add(30000, (GSourceFunc) sms_timeout, state);
+	g_timeout_add(90000, (GSourceFunc) sms_timeout, state);
 
 	g_idle_add(sms_init_start, state);
 
@@ -439,7 +575,7 @@ static int sms_case_run(struct sms_case_state *state)
 	BLTS_TRACE("Starting main loop.\n");
 	g_main_loop_run(state->mainloop);
 	BLTS_TRACE("Back from main loop.\n");
-
+	
 	ret = state->result;
 
 done:
@@ -478,7 +614,15 @@ int blts_ofono_send_sms_default(void* user_ptr, __attribute__((unused)) int test
 	test->signalcb_MessageManager_ImmediateMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
 
-	test->case_begin = (GSourceFunc) sms_send_start;
+	test->signalcb_MessageManager_MessageAdded =
+		G_CALLBACK(sms_message_added_cb);
+	test->signalcb_MessageManager_MessageRemoved =
+		G_CALLBACK(sms_message_removed_cb);
+	test->signalcb_MessageManager_Message_PropertyChanged =
+		G_CALLBACK(sms_message_property_changed_cb);
+
+	test->case_begin = sms_send_start;
+	
 	ret = sms_case_run(test);
 
 	sms_state_finalize(test);
@@ -486,7 +630,7 @@ int blts_ofono_send_sms_default(void* user_ptr, __attribute__((unused)) int test
 }
 
 
-/* Plain SMS send with defaults */
+/* Plain SMS reception with defaults */
 int blts_ofono_receive_sms_default(void* user_ptr, __attribute__((unused)) int testnum)
 {
 	int ret;
@@ -593,3 +737,4 @@ struct boxed_value *sms_variant_message_generator(struct boxed_value *args)
 
 	return blts_config_boxed_value_new_string_take(message);
 }
+
