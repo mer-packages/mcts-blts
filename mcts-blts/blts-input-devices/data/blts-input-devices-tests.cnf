@@ -1,0 +1,47 @@
+# Input device test case configuration for parameters
+# This is just an example configuration, do not use
+
+######################
+# General parameters #
+######################
+
+[parameter]
+	name input_devices
+	const "event1 event3 event4"
+[end_parameter]
+
+[parameter]
+	name pointer_device
+	const "event4"
+[end_parameter]
+
+# todo: add more options later
+[parameter]
+	name scr_orientation
+	const 0
+[end_parameter]
+
+[parameter]
+	name scr_size
+	const "800x480"
+[end_parameter]
+
+##############
+# FuTes      #
+##############
+
+[test]
+	name "Input - Enumerate devices"
+	params input_devices
+[end_test]
+
+[test]
+	name "Input - Single touch"
+	params pointer_device scr_orientation scr_size
+[end_test]
+
+[test]
+	name "Input - Multi-touch"
+	params pointer_device scr_orientation scr_size
+[end_test]
+
