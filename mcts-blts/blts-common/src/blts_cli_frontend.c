@@ -60,7 +60,7 @@
 #define GREEN_TEXT "\033[32m"
 #define RED_TEXT "\033[31m"
 #define NORMAL_TEXT "\033[0m"
-#define MAX_LOG_LINE_LEN 80
+#define MAX_LOG_LINE_LEN 89
 
 static struct sigaction *saved_sigchld_action = NULL;
 static unsigned int timout_override = 0;
@@ -331,8 +331,10 @@ static int run_test(const char *bin_name, int testnum,
 				temp_var = malloc(sizeof *temp_var);
 				temp_var->values = blts_config_boxed_value_list_dup(test_variants->values);
 				temp_var->next = failed_variants;
-				temp_var->index = n_variations;
 				failed_variants = temp_var;
+
+				print_test_case_result(bin_name, testcase->case_name,
+					testnum, n_variations, ret);
 			}
 			temp_var = test_variants;
 			test_variants = test_variants->next;
@@ -359,13 +361,12 @@ static int run_test(const char *bin_name, int testnum,
 			while ((temp_var->values = blts_config_boxed_value_free(temp_var->values)));
 			free(temp_var);
 		}
-	} else {
-		print_test_case_result(bin_name, testcase->case_name,
-			testnum, -1, ret);
 	}
 
 	while(variant_param_names)
 		variant_param_names = blts_config_boxed_value_free(variant_param_names);
+
+	print_test_case_result(bin_name, testcase->case_name, testnum, -1, ret);
 
 	return ret;
 }

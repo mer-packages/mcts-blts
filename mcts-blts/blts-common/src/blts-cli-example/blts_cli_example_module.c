@@ -208,9 +208,15 @@ static int my_example_case_6(void* user_ptr, int test_num)
 
 static int my_example_case_7(void* user_ptr, int test_num)
 {
+	my_example_data* data = (my_example_data*)user_ptr;
 	BLTS_DEBUG("in my_example_case_7\n");
-	BLTS_DEBUG("all the variants of this test case should fail\n");
-	return -1;
+	if (data->var_arg2 == 1) {
+		BLTS_DEBUG("This should fail\n");
+		return -1;
+	} else {
+		BLTS_DEBUG("This should pass\n");
+		return 0;
+	}
 }
 
 /* Your test definitions */
