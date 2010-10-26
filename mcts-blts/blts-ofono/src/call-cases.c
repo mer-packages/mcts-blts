@@ -50,11 +50,15 @@ struct call_case_state {
 
 	my_ofono_data *ofono_data;
 
-	GCallback signalcb_VoiceCallManager_PropertyChanged;
 	GCallback signalcb_VoiceCall_PropertyChanged;
 	GCallback signalcb_VoiceCall_DisconnectReason;
 
+	GCallback signalcb_VoiceCallManager_CallAdded;
+	GCallback signalcb_VoiceCallManager_CallRemoved;
+
 	call_hangup_fp call_hangup_method;
+
+	gchar* voice_call_path;
 
 	int retries;
 	int user_timeout;
@@ -65,9 +69,11 @@ struct call_case_state {
 };
 
 
-static void on_voice_call_manager_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 static void on_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 static void on_voice_call_disconnect_reason(DBusGProxy *proxy, char *reason, gpointer user_data);
+
+static void on_voice_call_manager_call_added(DBusGProxy *proxy, gchar* path, GHashTable* properties, gpointer user_data);
+static void on_voice_call_manager_call_removed(DBusGProxy *proxy, gchar* path, gpointer user_data);
 
 gboolean do_hangup(gpointer user_ptr);
 gboolean do_hangup_all(gpointer user_ptr);
@@ -80,53 +86,30 @@ static void pending_call_answerable_check_complete(DBusGProxy *proxy,
 	GHashTable *properties, GError *error, gpointer data);
 static gboolean pending_call_queue_answerable_check(gpointer data);
 
-/**
- * Check calls against incoming indication
- * Used by list_calls
- */
-gboolean find_incoming(__attribute__((unused))gpointer key, gpointer value,
-					__attribute__((unused))gpointer user_data)
+static
+gboolean find_state(__attribute__((unused))gpointer key, gpointer value, gpointer user_data)
 {
-	gchar* content = NULL;
+	gchar* expected_state = (gchar*) user_data;
+	gchar* state = NULL;
 
-	content = (gchar*) g_value_dup_string(value);
-
-	if(!strcmp("incoming", content))
+	if(!expected_state)
+		return FALSE;
+		
+	if(strcmp("State", (char *)key) == 0)
 	{
-		LOG("-- Incoming call! --\n");
-		free(content);
-		return TRUE;
+		state = (gchar*) g_value_dup_string(value);
+
+		if(!strcmp(expected_state, state))
+		{
+			g_free(state);
+			return TRUE;
+		}
+		g_free(state);
+		return FALSE;						
 	}
-
-	/*LOG("-- Not incoming call! --\n");*/
-	free(content);
-
-	return FALSE;
+	else
+		return FALSE;
 }
-
-/**
- * check call against waiting indication
- */
-gboolean find_waiting(__attribute__((unused))gpointer key, gpointer value,
-					__attribute__((unused))gpointer user_data)
-{
-	gchar* content = NULL;
-
-	content = (gchar*) g_value_dup_string(value);
-
-	if(!strcmp("waiting", content))
-	{
-		LOG("-- Call waiting! --\n");
-		free(content);
-		return TRUE;
-	}
-
-	free(content);
-
-	return FALSE;
-}
-
-
 
 GHashTable* get_voicecall_properties(DBusGProxy *proxy)
 {
@@ -218,7 +201,7 @@ static void pending_call_answerable_check_complete(__attribute__((unused)) DBusG
 		goto test_fail;
 	}
 
-	if (g_hash_table_find(properties, (GHRFunc) find_incoming, NULL))
+	if (g_hash_table_find(properties, (GHRFunc) find_state, "incoming"))
 		org_ofono_VoiceCall_answer_async(state->voice_call,
 			pending_call_answer_complete, state);
 	else
@@ -233,20 +216,17 @@ test_fail:
 
 
 /**
- * Check and list possible calls in system
- * Used by on_voice_call_manager_property_changed
+ * Handle incoming voice call for hangup test cases
  */
-static void list_calls(gpointer data, gpointer user_data)
+static void handle_incoming_call(gchar* path, GHashTable* properties, gpointer user_data)
 {
-
 	DBusGProxy *call=NULL;
-	GHashTable* list=NULL;
 	gpointer incoming = NULL;
 	gpointer waiting = NULL;
 
 	struct call_case_state *state = (struct call_case_state *) user_data;
 
-	LOG("Listing call data for call '%s'\n", (char *)data);
+	LOG("Incoming voice call '%s'\n", (char *)path);
 	if (state->voice_call != NULL && state->waiting_call_wait == 0)
 	{
 		LOG("Previous call already active - test failed\n");
@@ -254,7 +234,7 @@ static void list_calls(gpointer data, gpointer user_data)
 	}
 
 	call = dbus_g_proxy_new_for_name (state->ofono_data->connection,
-			OFONO_BUS, data, OFONO_CALL_INTERFACE);
+			OFONO_BUS, path, OFONO_CALL_INTERFACE);
 
 	if (!call)
 	{
@@ -263,12 +243,6 @@ static void list_calls(gpointer data, gpointer user_data)
 	}
 
 	state->voice_call = call;
-	list = get_voicecall_properties(state->voice_call);
-	if (!list)
-	{
-		LOG("Cannot get voice call properties\n");
-		goto error;
-	}
 
 	if (state->signalcb_VoiceCall_PropertyChanged)
 	{
@@ -287,15 +261,17 @@ static void list_calls(gpointer data, gpointer user_data)
 	}
 
 
-	LOG("Search incoming calls...\n");
-	if (list) {
-		g_hash_table_foreach(list, (GHFunc)hash_entry_gvalue_print, NULL);
-		incoming = g_hash_table_find(list, (GHRFunc) find_incoming, NULL);
-		waiting = g_hash_table_find(list, (GHRFunc) find_waiting, NULL);
+	LOG("Search incoming/waiting calls...\n");
+	if (properties) {
+		g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+		incoming = g_hash_table_find(properties, (GHRFunc) find_state, "incoming");
+		waiting = g_hash_table_find(properties, (GHRFunc) find_state, "waiting");
 	}
 
 	if(incoming)
 	{
+		state->voice_call_path = g_strdup(path);
+		
 		/* if the cancel or deflect hangup method is active do not answer at all*/
 		if(state->call_hangup_method != do_cancel &&
 		   state->call_hangup_method != do_deflect)
@@ -330,9 +306,6 @@ static void list_calls(gpointer data, gpointer user_data)
 		g_timeout_add(state->user_timeout, (GSourceFunc) call_user_timeout, state);
 		state->result = 0;
 	}
-	if (list)
-		g_hash_table_destroy(list);
-
 	return;
 error:
 	state->result = -1;
@@ -341,57 +314,23 @@ error:
 
 /**
  * Signal handler
- * Can be used to check call state or if call manager state changes
- */
-
-static void on_voice_call_manager_property_changed(__attribute__((unused))DBusGProxy *proxy, char *key, GValue* value, gpointer user_data)
-{
-
-	if(strcmp(key, "Calls") == 0)
-	{
-		LOG("Call list modification > ");
-		if(!value)
-		{
-			LOG("No calls in system.\n");
-		}
-		else
-		{
-			 g_ptr_array_foreach(g_value_peek_pointer(value), (GFunc)list_calls, user_data);
-		}
-	}
-	else
-	{
-		char* value_str = g_value_dup_string (value);
-		LOG("VoiceCallManager property: %s changed to %s\n ", key, value_str);
-		free(value_str);
-	}
-
-
-}
-
-
-/**
- * Signal handler
  * List voice call property changes
  */
 static void on_voice_call_property_changed(__attribute__((unused))DBusGProxy *proxy, char *key, GValue* value, gpointer user_data)
 {
-	gboolean disconnected = FALSE;
+	gchar* value_str = g_value_dup_string (value);
 	struct call_case_state *state = (struct call_case_state *) user_data;
-	char* value_str = g_value_dup_string (value);
 
 	LOG("Voicecall property: '%s' changed to '%s'\n", key, value_str);
 
-	if(strcmp(key, "State") == 0)
+	if(!strcmp(key, "State") && !state->voice_call_path)
 	{
 
-		if( strcmp(value_str, "disconnected") == 0)
-			disconnected = TRUE;
-
-		if(disconnected)
+		if(strcmp(value_str, "disconnected") == 0)
 			g_main_loop_quit(state->mainloop);
 	}
-	free(value_str);
+	
+	g_free(value_str);	
 }
 
 
@@ -413,6 +352,31 @@ static void on_voice_call_disconnect_reason(__attribute__((unused))DBusGProxy *p
 
 
 /**
+ * Signal handler
+ * Handle first or second call when signal "CallAdded" from voice call manager is sent
+ */
+static void on_voice_call_manager_call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GHashTable* properties, gpointer user_data)
+{
+	LOG("Call added...%s\n", path);		
+	handle_incoming_call(path, properties, user_data);
+}
+
+/**
+ * Signal handler
+ * Handle "CallRemoved" signals from voice call manager - end test case when signals 
+ * for both test calls are received
+ */
+static void on_voice_call_manager_call_removed(__attribute__((unused))DBusGProxy *proxy, gchar* path, gpointer user_data)
+{
+	struct call_case_state *state = (struct call_case_state *) user_data;	
+	LOG("Call %s removed...\n", path);
+		
+	if(!strcmp(state->voice_call_path, path))
+		g_main_loop_quit(state->mainloop);			
+}
+
+
+/**
  * Hang up call
  */
 
@@ -428,7 +392,7 @@ gboolean do_hangup(gpointer user_ptr)
 		g_error_free (error);
 		return TRUE;
 	}
-	//g_main_loop_quit(state->mainloop);
+
 	return FALSE;
 }
 
@@ -514,6 +478,9 @@ static void call_state_finalize(struct call_case_state *state)
 		g_object_unref(state->voice_call);
 	}
 
+	if(state->voice_call_path)
+		g_free(state->voice_call_path);
+
 	free(state);
 }
 
@@ -574,12 +541,20 @@ static gboolean call_init_start(gpointer data)
 
 	state->voice_call_manager = voice_call_manager;
 
-	if (state->signalcb_VoiceCallManager_PropertyChanged) {
-			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",
-					G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
-				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
-		}
+	if (state->signalcb_VoiceCallManager_CallAdded) {
+		dbus_g_proxy_add_signal(state->voice_call_manager, "CallAdded",
+			DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", 
+			G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->voice_call_manager, "CallAdded",
+			state->signalcb_VoiceCallManager_CallAdded, data, 0);
+	}
+
+	if (state->signalcb_VoiceCallManager_CallRemoved) {
+		dbus_g_proxy_add_signal(state->voice_call_manager, "CallRemoved",
+			DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->voice_call_manager, "CallRemoved",
+			state->signalcb_VoiceCallManager_CallRemoved, data, 0);
+	}
 
 	if (state->case_begin)
 			g_idle_add(state->case_begin, state);
@@ -622,6 +597,7 @@ static int call_case_run(struct call_case_state *state)
 
 	state->voice_call_manager = NULL;
 	state->voice_call = NULL;
+	state->voice_call_path = NULL;
 
 	g_timeout_add(30000, (GSourceFunc) call_master_timeout, state);
 	g_idle_add(call_init_start, state);
@@ -798,11 +774,13 @@ int my_ofono_case_voicecall_to(void* user_ptr, __attribute__((unused)) int testn
 	test->disconnect_reason = NULL;
 	test->call_hangup_method = do_hangup;
 
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_VoiceCall_PropertyChanged =
 		G_CALLBACK(on_voice_call_property_changed);
 	test->signalcb_VoiceCall_DisconnectReason =
-		G_CALLBACK(on_voice_call_disconnect_reason);
+		G_CALLBACK(on_voice_call_disconnect_reason);		
+	test->signalcb_VoiceCallManager_CallAdded = NULL;
+	test->signalcb_VoiceCallManager_CallRemoved  = NULL; 
+		
 	switch(testnum)
 	{
 		case BLTS_OFONO_CREATE_VOICECALL:
@@ -845,12 +823,14 @@ int my_ofono_case_voicecall_answer(void* user_ptr, int test_num)
 	test->user_timeout = data->user_timeout ? data->user_timeout : 10000;
 	test->disconnect_reason = NULL;
 
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_VoiceCall_PropertyChanged =
 		G_CALLBACK(on_voice_call_property_changed);
 	test->signalcb_VoiceCall_DisconnectReason =
 		G_CALLBACK(on_voice_call_disconnect_reason);
+	test->signalcb_VoiceCallManager_CallAdded = 
+		G_CALLBACK(on_voice_call_manager_call_added);
+	test->signalcb_VoiceCallManager_CallRemoved = 
+		G_CALLBACK(on_voice_call_manager_call_removed);
 
 	switch(test_num)
 	{
@@ -922,11 +902,12 @@ int my_ofono_case_voicecall_to_DTMF(void* user_ptr, __attribute__((unused))int t
 	test->disconnect_reason = NULL;
 	test->call_hangup_method = do_hangup;
 
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_VoiceCall_PropertyChanged =
 		G_CALLBACK(on_voice_call_property_changed);
 	test->signalcb_VoiceCall_DisconnectReason =
 		G_CALLBACK(on_voice_call_disconnect_reason);
+	test->signalcb_VoiceCallManager_CallAdded = NULL;
+	test->signalcb_VoiceCallManager_CallRemoved = NULL;
 
 	test->case_begin = (GSourceFunc) call_voicecallto_start;
 	ret = dtmf_case_run(test);
