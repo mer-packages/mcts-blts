@@ -59,6 +59,7 @@ typedef struct {
 	int async;
 	int link_card, link_device;
 	int period_size;
+	int volume;
 } pcm_params;
 
 typedef struct {
@@ -113,7 +114,8 @@ struct slist {
 
 int generate_sine(unsigned char* samples, int count, double *_phase,
 	unsigned int channels, unsigned int samplerate, unsigned int freq,
-	snd_pcm_format_t format, unsigned int frame_bits);
+	snd_pcm_format_t format, unsigned int frame_bits,
+	unsigned int volume);
 int bits_per_sample(snd_pcm_format_t format);
 int calc_framesize(pcm_device* hw);
 int interval_refine(snd_interval_t *i, const snd_interval_t *v);

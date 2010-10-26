@@ -292,6 +292,7 @@ static int cnfparser_parse_pcm(char* start, char* end, alsa_pcm_settings* params
 	params->link_card = -1;
 	params->link_device = -1;
 	params->period_size = -1;
+	params->volume = 100;
 
 	while(start < end)
 	{
@@ -421,6 +422,13 @@ static int cnfparser_parse_pcm(char* start, char* end, alsa_pcm_settings* params
 			if(!ptr)
 				goto error_exit;
 			params->period_size = token.value;
+		}
+		else if(!strncmp(token.str, "volume", 6))
+		{
+			ptr = next_token(ptr, &token);
+			if(!ptr)
+				goto error_exit;
+			params->volume = token.value;
 		}
 		else
 			goto error_exit;

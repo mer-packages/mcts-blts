@@ -99,6 +99,7 @@ static int generate_pcm_params(alsa_pcm_settings* pcms, pcm_params* params)
 							params[cnt].link_card = pcms->link_card;
 							params[cnt].link_device = pcms->link_device;
 							params[cnt].period_size = pcms->period_size;
+							params[cnt].volume = pcms->volume;
 						}
 						cnt++;
 					}

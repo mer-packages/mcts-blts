@@ -987,7 +987,7 @@ int pcm_play_sine(pcm_device *hw)
 		{
 			err = generate_sine(buffers[0], hw->period_size, &phase,
 				1, hw->params.rate, hw->params.freq, hw->params.format,
-				hw->frame_bits);
+				hw->frame_bits, hw->params.volume);
 
 			if(!err)
 			{
@@ -999,7 +999,7 @@ int pcm_play_sine(pcm_device *hw)
 		{
 			err = generate_sine(buffers[0], hw->period_size, &phase,
 				hw->params.channels, hw->params.rate, hw->params.freq,
-				hw->params.format, hw->frame_bits);
+				hw->params.format, hw->frame_bits, hw->params.volume);
 		}
 
 		if(err)
@@ -1496,7 +1496,7 @@ static int pcm_async_playback(pcm_device *hw, struct async_playback_state *state
 	for (t = 0; t < state->n_buffers; ++t) {
 		ret = generate_sine(state->buffers[t], remain, &(state->phase),
 			hw->params.channels, hw->params.rate, hw->params.freq,
-			hw->params.format, hw->frame_bits);
+			hw->params.format, hw->frame_bits, hw->params.volume);
 	}
 	if (ret) {
 		BLTS_ERROR("Failed generating sine wave.\n");
