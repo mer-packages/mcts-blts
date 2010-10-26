@@ -51,7 +51,7 @@ blts_fbdev_init (blts_fbdev_device *device)
         BLTS_TRACE ("Open...");
 
         if ((fd = open (device->name, O_RDWR)) < 0) {
-                logged_perror ("Error opening frame buffer device\n");
+                BLTS_LOGGED_PERROR("Error opening frame buffer device");
                 goto ERROR;
         }
 
@@ -73,7 +73,7 @@ blts_fbdev_init (blts_fbdev_device *device)
         if ((buf = mmap (0, device->fixed_info.smem_len,
                          PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0))
             == MAP_FAILED) {
-                logged_perror ("Framebuffer mmap() failed\n");
+                BLTS_LOGGED_PERROR("Framebuffer mmap() failed");
                 goto ERROR;
         }
 
@@ -136,7 +136,7 @@ blts_fbdev_get_fixed_info (blts_fbdev_device *device)
 
         /* TODO: Separate ioctl module? */
 	if (ioctl (device->fd, FBIOGET_FSCREENINFO, &device->fixed_info) < 0) {
-		logged_perror ("Fixed screen info ioctl() failed");
+		BLTS_LOGGED_PERROR("Fixed screen info ioctl() failed");
                 goto ERROR;
 	}
 

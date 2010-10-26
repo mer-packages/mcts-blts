@@ -54,7 +54,7 @@ fetch_fb_var_screeninfo (int fb_fd)
 
 	BLTS_TRACE("Variable info..");
 	if(ioctl(fb_fd, FBIOGET_VSCREENINFO, &glob_fb_var_info) < 0) {
-		logged_perror("Variable screen info ioctl() failed");
+		BLTS_LOGGED_PERROR("Variable screen info ioctl() failed");
                 FUNC_LEAVE();
 		return NULL;
 	}
@@ -67,7 +67,7 @@ void log_print_fb_fix_screeninfo(struct fb_fix_screeninfo *fsi)
 {
 	assert(fsi);
 	/* comments courtesy of linux/fb.h */
-	log_print("====================================\n"
+	BLTS_DEBUG("====================================\n"
 	       "Fixed screen info\n"
 	       "------------------------------------\n"
 	       "id          = %s\n"                /* identification string eg "TT Builtin" */
@@ -102,7 +102,7 @@ void log_print_fb_var_screeninfo(struct fb_var_screeninfo *vsi)
 {
 	assert(vsi);
 	/* comments courtesy of linux/fb.h */
-	log_print("====================================\n"
+	BLTS_DEBUG("====================================\n"
 	       "Variable screen info\n"
 	       "------------------------------------\n"
 	       "xres           = %u\n"			/* visible resolution		*/

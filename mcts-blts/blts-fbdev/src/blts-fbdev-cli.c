@@ -45,16 +45,9 @@ static void
 blts_fbdev_cli_usage (const char *message)
 {
         fprintf (stdout, message,
-                 "[-v]",
-                 "  -v: Verbose logging\n");
+                 "",
+                 "");
 }
-
-/* Options */
-static const char short_args[] = "v";
-static const struct option long_args[] = {
-        { "verbose", no_argument, NULL, 'v' },
-        { 0, 0, 0, 0 }
-};
 
 /* Parse device name parameter from variable list */
 static void *
@@ -166,24 +159,13 @@ blts_fbdev_cli_args_backlight_level (struct boxed_value *args, void *user_data)
 static void *
 blts_fbdev_cli_parse_args (int argc, char *argv[])
 {
-        int opt, ret;
+        int ret;
         blts_fbdev_data *data = NULL;
 
         data = malloc (sizeof (blts_fbdev_data));
         memset (data, 0, sizeof (blts_fbdev_data));
         data->device = malloc (sizeof (blts_fbdev_device));
         memset (data->device, 0, sizeof (blts_fbdev_device));
-
-        while ((opt = getopt_long (
-                    argc, argv, short_args, long_args, NULL)) != -1) {
-                switch (opt) {
-                case 'v':
-                        log_set_level (LEVEL_TRACE);
-                        break;
-                default:
-                        goto ERROR;
-                }
-        }
 
         ret = blts_config_declare_variable_test (
                 "Core-Read frame buffer information with ioctl",

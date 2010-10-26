@@ -53,7 +53,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to unblank!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to unblank!");
                 goto ERROR;
         }
 
@@ -63,7 +63,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to normal!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to normal!");
                 goto ERROR;
         }
 
@@ -73,7 +73,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to unblank!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to unblank!");
                 goto ERROR;
         }
 
@@ -83,8 +83,8 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror (
-                        "Failed to set blank level to vsync suspend!\n");
+                BLTS_LOGGED_PERROR (
+                        "Failed to set blank level to vsync suspend!");
                 goto ERROR;
         }
 
@@ -94,7 +94,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to unblank!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to unblank!");
                 goto ERROR;
         }
 
@@ -104,8 +104,8 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror (
-                        "Failed to set blank level to hsync suspend!\n");
+                BLTS_LOGGED_PERROR(
+                        "Failed to set blank level to hsync suspend!");
                 goto ERROR;
         }
 
@@ -115,7 +115,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to unblank!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to unblank!");
                 goto ERROR;
         }
 
@@ -125,7 +125,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to powerdown!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to powerdown!");
                 goto ERROR;
         }
 
@@ -135,7 +135,7 @@ blts_fbdev_case_blanking (blts_fbdev_data *data)
         BLTS_TRACE ("Blank level %d\n", blank_level);
 
         if (ioctl (data->device->fd, FBIOBLANK, blank_level) < 0) {
-                logged_perror ("Failed to set blank level to unblank!\n");
+                BLTS_LOGGED_PERROR("Failed to set blank level to unblank!");
                 goto ERROR;
         }
 
