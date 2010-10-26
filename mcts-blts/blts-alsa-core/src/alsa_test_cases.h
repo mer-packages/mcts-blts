@@ -27,7 +27,6 @@
 #include "alsa_util.h"
 
 #define CLI_FLAG_PROFILING 1
-#define CLI_FLAG_VERBOSE_LOG 2
 
 typedef struct
 {
