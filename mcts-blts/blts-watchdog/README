@@ -1,0 +1,79 @@
+Overview
+========
+
+This package contains several Watchdog functionality tests for generic
+Linux-y mobile platforms.
+
+
+Software Requirements
+=====================
+
+Building the package requires
+  * linux >= 2.6.28
+  * GNU libc >= 2.1
+  * libbltscommon-dev >= 0.3.4
+
+Running the tests in the package requires
+  * linux >= 2.6.28
+  * GNU libc >= 2.1
+  * libbltscommon >= 0.3.4
+
+Hardware requirements
+=====================
+
+Running the tests requires
+  * One DUT
+
+Building the package
+====================
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+To build debian package
+
+ $ dpkg-buildpackage -rfakeroot
+
+To build RPM package
+
+ $ ./pack.sh
+
+Test cases
+==========
+   * Watchdog presence check: simple existence check for watchdog
+   * Open and close watchdog: open watchdog device node, query information
+   * Send keepalive messages: set keepalive timeout, send keepalive messages to
+     watchdog for ten second. Note that the device should reboot after the test
+     case finishes.
+
+Running the tests
+=================
+
+Run as root:
+
+ $ blts-watchdog-tests
+
+Troubleshooting:
+ * Ensure that /dev/watchdog exists ('ls -l /dev/watchdog').
+   It is possible that the watchdog kernel module is not loaded, so you may need
+   to modprobe it (the module is hardware specific).
+ * Only one process can access /dev/watchog at a time.
+   If you see this message from blts-watchdog-tests;
+   '/dev/watchdog seems to exist, but is in use by some other process.'
+   There might be some watchdog daemon or some other process using the
+   watchdog. To run the tests this daemon/some other process must not be
+   running. Use 'lsof /dev/watchdog' to find out who is using the watchdog.
+   (Usually this means that you need to tweak init scripts. Just forcibly
+   killing the process is not a good idea, as the watchdog will reset the
+   device.)
+
+To see other options for blts-watchdog-tests
+
+ $ blts-watchdog-tests -h
+
