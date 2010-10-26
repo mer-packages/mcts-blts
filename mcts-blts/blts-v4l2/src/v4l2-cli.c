@@ -50,18 +50,16 @@ io_method io = IO_METHOD_MMAP;
 static void v4l2_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
-		"[-v] [-p] [-i]",
-		"  -v: Verbose logging\n"
+		"[-p] [-i]",
 		"  -p: Enables profiling of ioctl calls\n"
 		"  -i: Save camera snapshot images to disk in control settings tests, and\n"
 		"      optionally verify them (see configuration file)\n");
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */
-static const char short_opts[] = "vpi";
+static const char short_opts[] = "pi";
 static const struct option long_opts[] =
 {
-	{"verbose", no_argument, NULL, 'v'},
 	{"profiling", no_argument, NULL, 'p'},
 	{"imgsave", no_argument, NULL, 'i'},
 	{0,0,0,0}
@@ -245,10 +243,6 @@ static void* v4l2_argument_processor(int argc, char **argv)
 	{
 		switch(c)
 		{
-		case 'v':
-			log_set_level(LEVEL_TRACE);
-			my_data->flags |= CLI_FLAG_VERBOSE_LOG;
-			break;
 		case 'p':
 			my_data->flags |= CLI_FLAG_PROFILING;
 			break;
