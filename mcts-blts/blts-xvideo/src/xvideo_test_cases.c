@@ -513,7 +513,7 @@ static int generate_test_images(Display *dpy, struct xv_image_wrapper **images,
 
 	*images = calloc(xv->num_images, sizeof(struct xv_image_wrapper));
 	if (!*images) {
-		logged_perror("calloc");
+		BLTS_LOGGED_PERROR("calloc");
 		return 	-ENOMEM;
 	}
 
@@ -1067,7 +1067,7 @@ int xvideo_notify_events_test(void* user_ptr, int test_num)
 
 	/* set port attribute, expect XvPortNotifyEvent */
 	if ((pid = fork()) < 0) {
-		LOGERR("Failed to fork\n");
+		BLTS_ERROR("Failed to fork\n");
 		ret = -1;
 		goto cleanup;
 	}
