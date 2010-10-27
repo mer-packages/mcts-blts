@@ -21,9 +21,9 @@ current=`pwd`
 # Spam the usage
 print_usage()
 {
-    echo "Usage: $0 [-o <dir>|-r|-d|-h]"
-    echo "\nScript to build a source package release. By default"
+    echo "Script to build a source package release. By default"
     echo "only sources are packed, no building is done.\n"
+    echo "Usage: $0 [-o <dir>][-r][-d][-h]"
     echo "\t-o\tCopy files (packages) to <dir>"
     echo "\t-r\tBuild RPM package, fails if there's no .spec"
     echo "\t-d\tBuild Debian package, fails if there's no debian/control"
