@@ -214,7 +214,7 @@ static int generate_widget(glesh_context* context, s_test_data* data,
 			0, 0);
 		if(!tex)
 		{
-			LOGERR("Failed to load texture\n");
+			BLTS_ERROR("Failed to load texture\n");
 			return 0;
 		}
 
@@ -280,7 +280,7 @@ static int generate_desktop(glesh_context* context, s_test_data* data,
 	}
 	if(!tex)
 	{
-		LOGERR("Failed to load texture\n");
+		BLTS_ERROR("Failed to load texture\n");
 		return 0;
 	}
 
@@ -335,7 +335,7 @@ static int load_shaders(s_test_data* data)
 	data->base_shader.prog = glesh_load_program(vshp, fshp);
 	if(!data->base_shader.prog)
 	{
-		LOGERR("Failed to load shader program\n");
+		BLTS_ERROR("Failed to load shader program\n");
 		return 0;
 	}
 
@@ -345,7 +345,7 @@ static int load_shaders(s_test_data* data)
 			frag_shader_particle);
 		if(!data->particle_shader.prog)
 		{
-			LOGERR("Failed to load shader program\n");
+			BLTS_ERROR("Failed to load shader program\n");
 			return 0;
 		}
 	}
@@ -391,7 +391,7 @@ static int build_convolution_filter(float* mat, int size, float divisor)
 	char* tex2d_sums = malloc(size * max_line_len);
 	if(!tex2d_sums)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		return 0;
 	}
 
@@ -399,7 +399,7 @@ static int build_convolution_filter(float* mat, int size, float divisor)
 		size * max_line_len);
 	if(!frag_shader_convolution)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		free(tex2d_sums);
 		return 0;
 	}
@@ -489,7 +489,7 @@ static int build_convolution_filter(float* mat, int size, float divisor)
 			sum_weight);
 	}
 
-	LOG("Used shader:\n%s\n", frag_shader_convolution);
+	BLTS_DEBUG("Used shader:\n%s\n", frag_shader_convolution);
 
 	free(tex2d_sums);
 	return 1;
@@ -892,7 +892,7 @@ int test_blitter(test_execution_params* params)
 	data = malloc(sizeof(s_test_data));
 	if(!data)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		goto cleanup;
 	}
 	memset(data, 0, sizeof(s_test_data));
@@ -903,81 +903,81 @@ int test_blitter(test_execution_params* params)
 	context = malloc(sizeof(glesh_context));
 	if(!context)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		goto cleanup;
 	}
 	memset(context, 0, sizeof(glesh_context));
 
-	LOG("Running with features:\n");
-	LOG("- %d desktops\n", data->test_config->desktop_count);
+	BLTS_DEBUG("Running with features:\n");
+	BLTS_DEBUG("- %d desktops\n", data->test_config->desktop_count);
 
 	if(data->flags & T_FLAG_BLEND)
 	{
-		LOG("- Blended background (%d layers)\n",
+		BLTS_DEBUG("- Blended background (%d layers)\n",
 			data->test_config->layer_count);
 	}
 
 	if(data->flags & T_FLAG_BLUR)
 	{
-		LOG("- Entire scene blurred\n");
+		BLTS_DEBUG("- Entire scene blurred\n");
 	}
 
 	if(data->flags & T_FLAG_WIDGETS)
 	{
-		LOG("- Widgets on desktop (%d widgets per desktop)\n",
+		BLTS_DEBUG("- Widgets on desktop (%d widgets per desktop)\n",
 			data->test_config->widget_count);
 	}
 
 	if(data->flags & T_FLAG_WIDGET_SHADOWS)
 	{
-		LOG("- Widgets with shadows\n");
+		BLTS_DEBUG("- Widgets with shadows\n");
 	}
 
 	if(data->flags & T_FLAG_ROTATE)
 	{
-		LOG("- Rotate\n");
+		BLTS_DEBUG("- Rotate\n");
 	}
 
 	if(data->flags & T_FLAG_ZOOM)
 	{
-		LOG("- Zoom in/out\n");
+		BLTS_DEBUG("- Zoom in/out\n");
 	}
 
 	if(data->flags & T_FLAG_PARTICLES)
 	{
-		LOG("- Particles (%d per widget)\n",
+		BLTS_DEBUG("- Particles (%d per widget)\n",
 			data->test_config->particle_count);
 	}
 
 	if(data->flags & T_FLAG_VIDEO_WIDGETS)
 	{
-		LOG("- Video thumbnails (texture size: %d x %d)\n",
+		BLTS_DEBUG("- Video thumbnails (texture size: %d x %d)\n",
 			data->test_config->video_widget_tex_width,
 			data->test_config->video_widget_tex_height);
 	}
 
 	if(data->flags & T_FLAG_CONVOLUTION)
 	{
-		LOG("- Convolution filter (%d x %d)\n",
+		BLTS_DEBUG("- Convolution filter (%d x %d)\n",
 			(int)sqrt(params->config.convolution_mat_size),
 			(int)sqrt(params->config.convolution_mat_size));
 	}
 
 	if(!glesh_create_context(context, NULL, params->w, params->h, params->d))
 	{
-		LOGERR("glesh_create_context failed!\n");
+		BLTS_ERROR("glesh_create_context failed!\n");
 		goto cleanup;
 	}
 
 	if(!init(context, data))
 	{
-		LOGERR("init failed!\n");
+		BLTS_ERROR("init failed!\n");
 		goto cleanup;
 	}
 
 	if(!glesh_execute_main_loop(context, draw, data, params->execution_time))
 	{
-		LOGERR("glesh_execute_main_loop failed!\n");
+		BLTS_ERROR("glesh_execute_main_loop failed!\n");
 		goto cleanup;
 	}
 

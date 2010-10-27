@@ -138,7 +138,7 @@ static int texture_from_pixmap(Display* dpy, Pixmap pixmap,
 		XImage* xi = XGetImage(dpy, pixmap, 0, 0, width, height, ~0L, ZPixmap);
 		if(!xi || !xi->data)
 		{
-			LOG("XGetImage failed\n");
+			BLTS_DEBUG("XGetImage failed\n");
 			return 1;
 		}
 
@@ -159,12 +159,12 @@ static int texture_from_pixmap(Display* dpy, Pixmap pixmap,
 		if(eglReleaseTexImage(context.egl_display, texture->eglpixmap,
 			EGL_BACK_BUFFER) == EGL_FALSE)
 		{
-			LOG("eglReleaseTexImage failed\n");
+			BLTS_DEBUG("eglReleaseTexImage failed\n");
 		}
 		if(eglBindTexImage(context.egl_display, texture->eglpixmap,
 			EGL_BACK_BUFFER) == EGL_FALSE)
 		{
-			LOG("eglBindTexImage failed\n");
+			BLTS_DEBUG("eglBindTexImage failed\n");
 		}
 	}
 
@@ -242,7 +242,7 @@ static int draw_object(glesh_object* object)
 {
 	if(!object->tex)
 	{
-		LOG("no texture for object, not drawing\n");
+		BLTS_DEBUG("no texture for object, not drawing\n");
 		return 1;
 	}
 
@@ -272,7 +272,7 @@ static int draw_object(glesh_object* object)
 
 static void generate_window_object(Display* dpy, x_window* win)
 {
-	LOG("Creating window object %p. %d,%d,%d,%d,%d\n",
+	BLTS_DEBUG("Creating window object %p. %d,%d,%d,%d,%d\n",
 		win, win->a.x, win->a.y, win->a.width, win->a.height, win->a.depth);
 
 	if(!(win->obj = create_window_object(win->a.width + win->a.border_width * 2,
@@ -302,7 +302,7 @@ static void generate_window_object(Display* dpy, x_window* win)
 		}
 	}
 
-	LOG("Window object created\n");
+	BLTS_DEBUG("Window object created\n");
 }
 
 static int generate_paint_list(x_window* w_list[])
@@ -316,7 +316,7 @@ static int generate_paint_list(x_window* w_list[])
 			w->a.x >= context.width || w->a.y >= context.height)
 		{
 			/* Not visible */
-			LOG("skipping window %p. %d,%d,%d,%d,%d\n",
+			BLTS_DEBUG("skipping window %p. %d,%d,%d,%d,%d\n",
 				w, w->a.x, w->a.y, w->a.width, w->a.height, w->a.depth);
 			continue;
 		}
@@ -331,7 +331,7 @@ static void paint_windows(Display *dpy)
 	x_window* w_list[100];
 	int t;
 
-	LOG("Painting...\n");
+	BLTS_DEBUG("Painting...\n");
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -353,7 +353,7 @@ static void paint_windows(Display *dpy)
 				w->pixmap = XCompositeNameWindowPixmap(dpy, w->id);
 				if(w->pixmap)
 				{
-					LOG("Update texture for window %p. %d,%d,%d,%d,%d\n",
+					BLTS_DEBUG("Update texture for window %p. %d,%d,%d,%d,%d\n",
 						w, w->a.x, w->a.y, w->a.width, w->a.height, w->a.depth);
 					update_object_texture(dpy, w->pixmap, w->obj);
 				}
@@ -378,7 +378,7 @@ static void paint_windows(Display *dpy)
 		}
 	}
 	eglSwapBuffers(context.egl_display, context.egl_surface);
-	LOG("Done\n");
+	BLTS_DEBUG("Done\n");
 }
 
 static void map_win(Display *dpy, Window id)
@@ -409,14 +409,14 @@ static void add_win(Display *dpy, Window id, Window prev)
 
 	if(id == context.x11_window || id == xoverlay)
 	{
-		LOG("Not adding our own window\n");
+		BLTS_DEBUG("Not adding our own window\n");
 		return;
 	}
 
 	new = malloc(sizeof(x_window));
 	if(!new)
 	{
-		LOG("malloc failed\n");
+		BLTS_DEBUG("malloc failed\n");
 		return;
 	}
 	memset(new, 0, sizeof(x_window));
@@ -435,19 +435,19 @@ static void add_win(Display *dpy, Window id, Window prev)
 
 	if(!XGetWindowAttributes(dpy, id, &new->a))
 	{
-		LOG("XGetWindowAttributes failed\n");
+		BLTS_DEBUG("XGetWindowAttributes failed\n");
 		free(new);
 		return;
 	}
 
-	LOG("New window %p. %d,%d,%d,%d,%d\n",
+	BLTS_DEBUG("New window %p. %d,%d,%d,%d,%d\n",
 		new, new->a.x, new->a.y, new->a.width, new->a.height, new->a.depth);
 
 	dpy_damaged = 1;
 	new->damaged = 1;
 	if(new->a.class == InputOnly)
 	{
-		LOG("Input only window, no damage\n");
+		BLTS_DEBUG("Input only window, no damage\n");
 		new->damage = None;
 	}
 	else
@@ -472,7 +472,7 @@ static void configure_win(Display* dpy, XConfigureEvent *ce)
 	{
 		if(ce->window == root)
 		{
-			LOGERR("TODO: Root window size change not supported\n");
+			BLTS_ERROR("TODO: Root window size change not supported\n");
 		}
 		return;
 	}
@@ -499,7 +499,7 @@ static void destroy_win(Display *dpy, Window id, int gone)
 	{
 		if(w->id == id)
 		{
-			LOG("Destroy window %p. %d,%d,%d,%d,%d\n",
+			BLTS_DEBUG("Destroy window %p. %d,%d,%d,%d,%d\n",
 				w, w->a.x, w->a.y, w->a.width, w->a.height, w->a.depth);
 			if(gone) unmap_win(dpy, w->id);
 			*prev = w->next;
@@ -518,7 +518,7 @@ static int x_error(Display *dpy, XErrorEvent *ev)
 	XGetErrorText(dpy, ev->error_code, buffer, sizeof (buffer));
 	name = buffer;
 
-	LOG("error %d: %s request %d minor %d serial %lu\n",
+	BLTS_DEBUG("error %d: %s request %d minor %d serial %lu\n",
 		ev->error_code, (strlen (name) > 0) ? name : "unknown",
 		ev->request_code, ev->minor_code, ev->serial);
 
@@ -551,27 +551,27 @@ static int x11_event_handler_loop(Display* dpy)
 			switch(ev.type)
 			{
 			case CreateNotify:
-				LOG("CreateNotify\n");
+				BLTS_DEBUG("CreateNotify\n");
 				add_win(dpy, ev.xcreatewindow.window, 0);
 				break;
 			case ConfigureNotify:
-				LOG("ConfigureNotify\n");
+				BLTS_DEBUG("ConfigureNotify\n");
 				configure_win(dpy, &ev.xconfigure);
 				break;
 			case DestroyNotify:
-				LOG("DestroyNotify\n");
+				BLTS_DEBUG("DestroyNotify\n");
 				destroy_win(dpy, ev.xdestroywindow.window, 1);
 				break;
 			case MapNotify:
-				LOG("MapNotify\n");
+				BLTS_DEBUG("MapNotify\n");
 				map_win(dpy, ev.xmap.window);
 				break;
 			case UnmapNotify:
-				LOG("UnmapNotify\n");
+				BLTS_DEBUG("UnmapNotify\n");
 				unmap_win(dpy, ev.xunmap.window);
 				break;
 			case ReparentNotify:
-				LOG("ReparentNotify\n");
+				BLTS_DEBUG("ReparentNotify\n");
 				if(ev.xreparent.parent == root)
 				{
 					add_win(dpy, ev.xreparent.window, 0);
@@ -582,17 +582,17 @@ static int x11_event_handler_loop(Display* dpy)
 				}
 				break;
 			case CirculateNotify:
-				LOG("CirculateNotify\n");
+				BLTS_DEBUG("CirculateNotify\n");
 				break;
 			case Expose:
-				LOG("Expose\n");
+				BLTS_DEBUG("Expose\n");
 				dpy_damaged = 1;
 				break;
 			case PropertyNotify:
-				LOG("PropertyNotify\n");
+				BLTS_DEBUG("PropertyNotify\n");
 				break;
 			default:
-				LOG("Event: %d\n", ev.type);
+				BLTS_DEBUG("Event: %d\n", ev.type);
 				if(ev.type == damage_event + XDamageNotify)
 				{
 					x_window* w = find_win(((XDamageNotifyEvent *)&ev)->drawable);
@@ -641,14 +641,14 @@ static int setup_composite_manager(int scr)
 		if(!XGetTextProperty(context.x11_display, win, &tp, winNameAtom) &&
 			!XGetTextProperty(context.x11_display, win, &tp, XA_WM_NAME))
 		{
-			LOGERR("Composite manager is already running (0x%lx)\n",
+			BLTS_ERROR("Composite manager is already running (0x%lx)\n",
 				(unsigned long) win);
 			return 1;
 		}
 		if(XmbTextPropertyToTextList (context.x11_display, &tp, &strs,
 			&count) == Success)
 		{
-			LOGERR("Composite manager is already running (%s)\n", strs[0]);
+			BLTS_ERROR("Composite manager is already running (%s)\n", strs[0]);
 			XFreeStringList(strs);
 		}
 
@@ -666,7 +666,7 @@ static int setup_composite_manager(int scr)
 	shader.prog = glesh_load_program(vertex_shader_proj, frag_shader_simple);
 	if(!shader.prog)
 	{
-		LOGERR("Failed to load shader program\n");
+		BLTS_ERROR("Failed to load shader program\n");
 		return 1;
 	}
 
@@ -767,7 +767,8 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	if(log_enabled) log_open(logfile, 0);
+	if(log_enabled)
+		blts_log_open(logfile, BLTS_LOG_FLAG_FILE);
 
 	if(!glesh_create_context(&context, NULL, 0, 0, depth))
 	{
@@ -779,7 +780,7 @@ int main(int argc, char *argv[])
 		if(!eglChooseConfig(context.egl_display, pixmap_config, configs,
 			20, &ecfgs) || !ecfgs)
 		{
-			LOG("No EGL configuration for texture from pixmap. "
+			BLTS_DEBUG("No EGL configuration for texture from pixmap. "
 				"Using slow 'copy from pixmap.'\n");
 			custom_tfp = 1;
 		}
@@ -789,19 +790,19 @@ int main(int argc, char *argv[])
 
 	if(!XQueryExtension(context.x11_display, COMPOSITE_NAME, &tmp1, &tmp2, &tmp3))
 	{
-		LOGERR("No composite extension\n");
+		BLTS_ERROR("No composite extension\n");
 		exit (1);
 	}
 
 	if(!XDamageQueryExtension(context.x11_display, &damage_event, &tmp2))
 	{
-		LOGERR("No damage extension\n");
+		BLTS_ERROR("No damage extension\n");
 		exit (1);
 	}
 
 	if(!XFixesQueryExtension(context.x11_display, &tmp1, &tmp2))
 	{
-		LOGERR("No XFixes extension\n");
+		BLTS_ERROR("No XFixes extension\n");
 		exit (1);
 	}
 
@@ -827,7 +828,7 @@ int main(int argc, char *argv[])
 	i = x11_event_handler_loop(context.x11_display);
 
 	glesh_destroy_context(&context);
-	log_close();
+	blts_log_close();
 
 	return i;
 }

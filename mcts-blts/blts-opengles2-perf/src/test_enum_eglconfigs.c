@@ -77,12 +77,12 @@ void config_contents(EGLDisplay display, EGLConfig* config)
 	{
 		if(!eglGetConfigAttrib(display, *config, conf_attribs[t].value, &value))
 		{
-			LOGERR("Failed to get config attribute '%s'\n",
+			BLTS_ERROR("Failed to get config attribute '%s'\n",
 				conf_attribs[t].name);
 		}
 		else
 		{
-			LOG("%s: %d\n", conf_attribs[t].name, value);
+			BLTS_DEBUG("%s: %d\n", conf_attribs[t].name, value);
 		}
 	}
 }
@@ -98,23 +98,23 @@ int test_enum_eglconfigs(test_execution_params* params)
 
 	if(!glesh_create_context(&context, NULL, params->w, params->h, params->d))
 	{
-		LOGERR("glesh_create_context failed!\n");
+		BLTS_ERROR("glesh_create_context failed!\n");
 		return -1;
 	}
 
 
 	if(!eglGetConfigs(context.egl_display, configs, config_size, &num_configs))
 	{
-		LOGERR("Failed to EGL configurations\n");
+		BLTS_ERROR("Failed to EGL configurations\n");
 		glesh_report_eglerror("eglGetConfigs");
 		ret = -1;
 	}
 	else
 	{
-		LOG("Found %d EGL configurations\n", num_configs);
+		BLTS_DEBUG("Found %d EGL configurations\n", num_configs);
 		for(t = 0; t < num_configs; t++)
 		{
-			LOG("\nContents of configuration %d:\n", t);
+			BLTS_DEBUG("\nContents of configuration %d:\n", t);
 			config_contents(context.egl_display, &configs[t]);
 		}
 	}

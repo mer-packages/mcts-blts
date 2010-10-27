@@ -109,7 +109,7 @@ static int exec_test(void* user_ptr, int test_num)
 
 	if(read_config(config_filename, &params->config))
 	{
-		LOGERR("Failed to read configuration file\n");
+		BLTS_ERROR("Failed to read configuration file\n");
 		return 1;
 	}
 
@@ -117,7 +117,7 @@ static int exec_test(void* user_ptr, int test_num)
 	{
 		if(start_compositor(params->config.compositor_cmd))
 		{
-			LOGERR("Failed to start compositor. Running without it.\n");
+			BLTS_ERROR("Failed to start compositor. Running without it.\n");
 		}
 	}
 

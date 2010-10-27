@@ -28,26 +28,26 @@ static pthread_t runner_thread = 0;
 void *runner_thread_function(void *ptr)
 {
 	const char* cmd = (const char*)ptr;
-	LOG("Starting compositor '%s'\n", cmd);
+	BLTS_DEBUG("Starting compositor '%s'\n", cmd);
 	int exit_stat = system(cmd);
 	if(WIFEXITED(exit_stat))
 	{
 		int child_exit_val = WEXITSTATUS(exit_stat);
 		if (child_exit_val != 0)
 		{
-			LOGERR("Compositor returned %d\n",child_exit_val);
+			BLTS_ERROR("Compositor returned %d\n",child_exit_val);
 		}
 	}
 	else
 	{
-		LOG("Compositor terminated unexpectedly.\n");
+		BLTS_DEBUG("Compositor terminated unexpectedly.\n");
 		if(WIFSIGNALED(exit_stat))
 		{
-			LOG("Terminated on signal %d\n",WTERMSIG(exit_stat));
+			BLTS_DEBUG("Terminated on signal %d\n",WTERMSIG(exit_stat));
 		}
 		else
 		{
-			LOG("Unknown termination reason.\n");
+			BLTS_DEBUG("Unknown termination reason.\n");
 		}
 	}
 	return NULL;

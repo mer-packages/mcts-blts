@@ -52,34 +52,34 @@ int test_enum_eglextensions(test_execution_params* params)
 
 	if(!glesh_create_context(&context, NULL, params->w, params->h, params->d))
 	{
-		LOGERR("glesh_create_context failed!\n");
+		BLTS_ERROR("glesh_create_context failed!\n");
 		return -1;
 	}
 
 	query_str = (char*)eglQueryString(context.egl_display, EGL_VERSION);
 	if(!query_str)
 	{
-		LOGERR("Failed to get EGL_VERSION)\n");
+		BLTS_ERROR("Failed to get EGL_VERSION)\n");
 		return -1;
 	}
-	LOG("EGL_VERSION: %s\n", query_str);
+	BLTS_DEBUG("EGL_VERSION: %s\n", query_str);
 
 	query_str = (char*)eglQueryString(context.egl_display, EGL_CLIENT_APIS);
 	if(!query_str)
 	{
-		LOGERR("Failed to get EGL_CLIENT_APIS\n");
+		BLTS_ERROR("Failed to get EGL_CLIENT_APIS\n");
 		return -1;
 	}
-	LOG("EGL_CLIENT_APIS: %s\n", query_str);
+	BLTS_DEBUG("EGL_CLIENT_APIS: %s\n", query_str);
 
 	query_str = (char*)eglQueryString(context.egl_display, EGL_EXTENSIONS);
 	if(!query_str)
 	{
-		LOGERR("Failed to get list of EGL extensions\n");
+		BLTS_ERROR("Failed to get list of EGL extensions\n");
 		return -1;
 	}
 
-	LOG("List of found extensions:\n");
+	BLTS_DEBUG("List of found extensions:\n");
 
 	end = query_str + strlen(query_str);
 	p = query_str;
@@ -90,27 +90,27 @@ int test_enum_eglextensions(test_execution_params* params)
 		{
 			memcpy(ext_name, p, n);
 			ext_name[n] = 0;
-			LOG("%s\n", ext_name);
+			BLTS_DEBUG("%s\n", ext_name);
 		}
 
 		p += (n + 1);
 	}
 
-	LOG("end of list\n");
+	BLTS_DEBUG("end of list\n");
 
 	t = 0;
 	while(egl_ext_list[t])
 	{
 		if(check_extensions(query_str, egl_ext_list[t]))
 		{
-			LOGERR("Required extension '%s' missing.\n", egl_ext_list[t]);
+			BLTS_ERROR("Required extension '%s' missing.\n", egl_ext_list[t]);
 			missing_extensions++;
 		}
 		t++;
 	}
 	if(!missing_extensions)
 	{
-		LOG("All required extensions found.\n");
+		BLTS_DEBUG("All required extensions found.\n");
 		ret = 0;
 	}
 	sleep(1);

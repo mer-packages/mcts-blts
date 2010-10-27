@@ -165,13 +165,13 @@ static int cnfparser_read_str(const char* start, const char* end,
 				char* start_ptr = strchr(line, '\"');
 				if(!start_ptr)
 				{
-					LOGERR("Missing '\"' in line %s\n", line);
+					BLTS_ERROR("Missing '\"' in line %s\n", line);
 					return -1;
 				}
 				char* end_ptr = strchr(start_ptr + 1, '\"');
 				if(!end_ptr)
 				{
-					LOGERR("Missing '\"' in line %s\n", line);
+					BLTS_ERROR("Missing '\"' in line %s\n", line);
 					return -1;
 				}
 
@@ -198,7 +198,7 @@ static int cnfparser_read_val(const char* start, const char* end,
 
 	if(!val || !name)
 	{
-		LOGERR("NULL pointer in cnfparser_read_int\n");
+		BLTS_ERROR("NULL pointer in cnfparser_read_int\n");
 		return -1;
 	}
 
@@ -226,7 +226,7 @@ static int cnfparser_read_val(const char* start, const char* end,
 				}
 				else
 				{
-					LOGERR("Unknown value type %d\n", type);
+					BLTS_ERROR("Unknown value type %d\n", type);
 				}
 				LOGTRACE("%s: %s\n", name, p);
 				return 0;
@@ -319,7 +319,7 @@ int read_config(const char* filename,
 
 	if(!(fp = fopen(filename, "rb")))
 	{
-		LOGERR("Failed to open config file\n");
+		BLTS_ERROR("Failed to open config file\n");
 		return -1;
 	}
 
@@ -330,14 +330,14 @@ int read_config(const char* filename,
 	buf = malloc((len + 1) * sizeof(char));
 	if(!buf)
 	{
-		LOGERR("Failed to allocate buffer\n");
+		BLTS_ERROR("Failed to allocate buffer\n");
 		fclose(fp);
 		return -1;
 	}
 
 	if(fread(buf, 1, len, fp) != len)
 	{
-		LOGERR("Failed to read config file\n");
+		BLTS_ERROR("Failed to read config file\n");
 		fclose(fp);
 		free(buf);
 		return -1;
@@ -350,7 +350,7 @@ int read_config(const char* filename,
 
 	if(cnfparser_cleanup(buf, &clean_buf))
 	{
-		LOGERR("Config file parsing failed\n");
+		BLTS_ERROR("Config file parsing failed\n");
 		free(buf);
 		free(clean_buf);
 		return 1;
@@ -362,7 +362,7 @@ int read_config(const char* filename,
 	LOGTRACE("Parsing sections...\n");
 	if(cnfparser_parse_sections(clean_buf))
 	{
-		LOGERR("Config file parsing failed\n");
+		BLTS_ERROR("Config file parsing failed\n");
 		free(clean_buf);
 		return 1;
 	}
