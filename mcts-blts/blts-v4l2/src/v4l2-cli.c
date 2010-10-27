@@ -121,8 +121,6 @@ static void *variant_args_dev_capfmt_io(struct boxed_value *args, void *user_ptr
 	data->device->fmt_c = work[2];
 	data->device->fmt_d = work[3];
 
-	free(work);
-
 	args = args->next;
 	if (!args) {
 		BLTS_WARNING("Error: No arguments left to process in %s:%s\n",__FILE__,__func__);
@@ -185,7 +183,6 @@ static void *variant_args_dev_capfmt_io_res(struct boxed_value *args, void *user
 		BLTS_ERROR("Error: Invalid resolution \"%s\" %s:%s\n",work,__FILE__,__func__);
 		data = NULL;
 	}
-	free(work);
 
 	return data;
 }
