@@ -47,7 +47,7 @@ struct multipart_call_case_state {
 	GMainLoop *mainloop;
 
 	int test_stage;
-	DBusGProxy *voice_calls[6];
+	DBusGProxy *voice_calls[MAX_VOICECALLS];
 	int number_voice_calls;
 	DBusGProxy *voice_call_manager;
 
@@ -56,11 +56,14 @@ struct multipart_call_case_state {
 	my_ofono_data *ofono_data;
 
 	GCallback signalcb_VoiceCallManager_PropertyChanged;
-	GCallback signalcb_VoiceCall_PropertyChanged[6];
-
+	GCallback signalcb_VoiceCall_PropertyChanged[MAX_VOICECALLS];
+	
+	GCallback signalcb_VoiceCallManager_CallAdded;
+	GCallback signalcb_VoiceCallManager_CallRemoved;
+	
 	call_handle_fp call_handle_method;
 
-	char* voice_call_path[6];
+	char* voice_call_path[MAX_VOICECALLS];
 	int multiparty_ongoing;
 
 	int retries;
@@ -68,11 +71,49 @@ struct multipart_call_case_state {
 	int result;
 };
 
-
+static void on_voice_call_manager_call_added(DBusGProxy *proxy, gchar* path, GHashTable* properties, gpointer user_data);
+static void on_voice_call_manager_call_removed(DBusGProxy *proxy, gchar* path, gpointer user_data);
 static void on_voice_call_manager_property_changed(DBusGProxy *proxy, char *key, GValue* value, gpointer user_data);
 static void pending_call_answerable_check_complete(DBusGProxy *proxy, GHashTable *properties, GError *error, gpointer data);
 static gboolean pending_call_queue_answerable_check(gpointer data);
 
+
+static int parse_call_index_from_path(const char* path)
+{	
+	char* tmp_path = NULL; /* /../voicecallN */
+	char* call_name = NULL; /* voicecallN */	
+	int call_index = -1;
+	
+	if(!path)
+	{
+		LOG("Cannot parse empty path!\n");	
+		goto error;
+	}
+	
+	BLTS_TRACE("Parsing call name from call %s\n", path);
+	tmp_path = strdup(path);
+	
+	if(!strtok_r(tmp_path, "/", &call_name))
+	{
+		LOG("Parsing call name failed!\n");
+		goto error;
+	}
+		
+	BLTS_TRACE("Parsing call index from call %s\n", call_name);
+	if (sscanf(call_name, "voicecall%d", &call_index) != 1)
+	{
+		LOG("Parsing call index failed!\n");
+		goto error;
+	}
+
+	free(tmp_path); 	
+	
+	return call_index;  	
+error:
+	if(tmp_path)	
+		free(tmp_path); 
+	return -1;	
+}
 
 static
 void hangup_all_calls(struct multipart_call_case_state* state)
@@ -91,46 +132,6 @@ void hangup_all_calls(struct multipart_call_case_state* state)
 		state->result = 0;
 	}
 }
-
-static
-gboolean find_state(__attribute__((unused))gpointer key, gpointer value, gpointer user_data)
-{
-	gchar* state =  (gchar*) user_data;
-	gchar* content = NULL;
-
-	if(!state)
-		return FALSE;
-
-	content = (gchar*) g_value_dup_string(value);
-
-	if(!strcmp(state, content))
-	{
-		free(content);
-		return TRUE;
-	}
-
-	free(content);
-	return FALSE;
-}
-
-static
-GHashTable* get_voicecall_properties(DBusGProxy *proxy)
-{
-	GError *error = NULL;
-	GHashTable* list = NULL;
-
-	if(!proxy)
-		return NULL;
-
-	if(!org_ofono_VoiceCall_get_properties(proxy, &list, &error))
-	{
-		display_dbus_glib_error(error);
-		g_error_free (error);
-		return NULL;
-	}
-	return list;
-}
-
 
 /* Completion of async answer call. Retry limited times if failure. */
 static void pending_call_holdandanswer_complete(__attribute__((unused)) DBusGProxy *proxy,
@@ -158,7 +159,7 @@ static void pending_call_answer_complete(DBusGProxy *proxy,
 	struct multipart_call_case_state *state;
 	int call_index = 0;
 	const char *name = dbus_g_proxy_get_path(proxy);
-	call_index = atoi((char*)((char *)name+strlen((char *)name)-1));
+	call_index = parse_call_index_from_path(name);
 
 	g_assert(data);
 	state = (struct multipart_call_case_state *) data;
@@ -210,13 +211,13 @@ static void pending_call_answerable_check_complete(DBusGProxy *proxy,
 		goto test_fail;
 	}
 	const char *name = dbus_g_proxy_get_path(proxy);
-	call_index = atoi((char*)((char *)name+strlen((char *)name)-1));
+	call_index = parse_call_index_from_path(name);
 	g_assert(data);
 
 	LOG("Call state is...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 	state->call_index=call_index;
-	if (g_hash_table_find(properties, (GHRFunc) find_state, "incoming"))
+	if (g_hash_table_find(properties, (GHRFunc) check_state, "incoming"))
 		org_ofono_VoiceCall_answer_async(state->voice_calls[call_index],
 			pending_call_answer_complete, state);
 	else
@@ -243,27 +244,24 @@ static void handle_multiparty_call(gpointer data, gpointer user_data)
 
 
 /* Answer to first call and start listening property changes */
-static void handle_incoming_call(gpointer data, gpointer user_data)
+ void handle_incoming_call(gchar* path, GHashTable* properties, gpointer user_data)
 {
 	FUNC_ENTER();
 	int call_index = 0;
 	DBusGProxy *call=NULL;
-	GHashTable* list=NULL;
 	gpointer incoming = NULL;
 	gpointer waiting = NULL;
-
-
+		
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_data;
-
-	LOG("Call received...\n");
-	//char *index = (char *)data;
-	call_index = atoi((char*)((char *)data+strlen((char *)data)-1));
+	
+	call_index = parse_call_index_from_path((const char*) path);
 	LOG("Call index is %i\n", call_index);
+	
 	// create new proxy for call
 	if(!state->voice_calls[call_index])
 	{
 		call = dbus_g_proxy_new_for_name (state->ofono_data->connection,
-				OFONO_BUS, data, OFONO_CALL_INTERFACE);
+				OFONO_BUS, path, OFONO_CALL_INTERFACE);
 
 		if (!call)
 		{
@@ -273,34 +271,32 @@ static void handle_incoming_call(gpointer data, gpointer user_data)
 
 		state->voice_calls[call_index] = call;
 	}
-	list = get_voicecall_properties(state->voice_calls[call_index]);
-
-	if (!list)
-	{
-		LOG("Cannot get voice call properties\n");
-		goto error;
-	}
-
+	
 	LOG("Search call state...\n");
-	g_hash_table_foreach(list, (GHFunc)hash_entry_gvalue_print, NULL);
-	incoming = g_hash_table_find(list, (GHRFunc) find_state, "active");
-	incoming = g_hash_table_find(list, (GHRFunc) find_state, "incoming");
+	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+	incoming = g_hash_table_find(properties, (GHRFunc) check_state, "incoming");
+	
 	if(!incoming)
 	{
-		waiting = g_hash_table_find(list, (GHRFunc) find_state, "waiting");
+		waiting = g_hash_table_find(properties, (GHRFunc) check_state, "waiting");
 		if(waiting)
 		{
-			LOG("HoldAndAnswer\n");
+			LOG("Hold the first call and answer the second call...\n");
+			state->test_stage = MP_SECOND_CALL_IN;
 			org_ofono_VoiceCallManager_hold_and_answer_async(state->voice_call_manager,
 					pending_call_holdandanswer_complete, state);
 
-			return;
+			if (state->signalcb_VoiceCall_PropertyChanged[call_index])
+			{
+				dbus_g_proxy_add_signal(state->voice_calls[call_index], "PropertyChanged",
+									G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
+				dbus_g_proxy_connect_signal(state->voice_calls[call_index], "PropertyChanged",
+									state->signalcb_VoiceCall_PropertyChanged[call_index], state, 0);
+			}
 		}
-		goto skip;
+		return;
 	}
-
-	LOG("Listing call data for call '%s'\n", (char *)data);
-
+	
 	if (state->signalcb_VoiceCall_PropertyChanged[call_index])
 	{
 		dbus_g_proxy_add_signal(state->voice_calls[call_index], "PropertyChanged",
@@ -309,27 +305,41 @@ static void handle_incoming_call(gpointer data, gpointer user_data)
 							state->signalcb_VoiceCall_PropertyChanged[call_index], state, 0);
 	}
 
-	LOG("Answer the call...\n");
+	LOG("Answer the first call...\n");
+	state->test_stage = MP_FIRST_CALL_IN;
 	state->retries = 10;
 	org_ofono_VoiceCall_get_properties_async(state->voice_calls[call_index],
 	pending_call_answerable_check_complete, state);
 
-	g_hash_table_destroy(list);
-
 	return;
 error:
 	state->result = -1;
-
-	if(list)
-		g_hash_table_destroy(list);
-
 	g_main_loop_quit(state->mainloop);
-skip:
-  LOG("skipping...\n");
-	if(list)
-		g_hash_table_destroy(list);
 }
 
+
+/**
+ * Signal handler
+ * Handle "CallAdded" signals from voice call manager
+ */
+static void on_voice_call_manager_call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GHashTable* properties, gpointer user_data)
+{
+	LOG("Call added...%s\n", path);		
+	handle_incoming_call(path, properties, user_data);
+}
+
+/**
+ * Signal handler
+ * Handle "CallRemoved" signals from voice call manager
+ */
+static void on_voice_call_manager_call_removed(__attribute__((unused))DBusGProxy *proxy, gchar* path, gpointer user_data)
+{
+	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_data;	
+	LOG("Call %s removed...\n", path);
+		
+	if(!state->number_voice_calls && state->test_stage == MP_HANGUP)
+		g_main_loop_quit(state->mainloop);			
+}
 
 /**
  * Signal handler
@@ -385,20 +395,25 @@ static void on_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue*
 {
 	FUNC_ENTER();
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_data;
-	char* value_str =g_value_dup_string (value);
-
-	LOG("Voicecall %s property: '%s' changed to '%s'\n", dbus_g_proxy_get_path(proxy), key, value_str);
 
 	if(strcmp(key, "State") == 0)
 	{
+		gchar* value_str =g_value_dup_string (value);
+		
 		if( strcmp(value_str, "disconnected") == 0)
 		{
 			state->number_voice_calls--;
 		}
+		
+		LOG("Voicecall %s property: '%s' changed to '%s'\n", dbus_g_proxy_get_path(proxy), key, value_str);
+		g_free(value_str);
 	}
 
-	free(value_str);
-
+	if(strcmp(key, "Multiparty") == 0)
+	{
+		gboolean multiparty = g_value_get_boolean(value);
+		LOG("Voicecall %s property: '%s' changed to '%d'\n", dbus_g_proxy_get_path(proxy), key, multiparty);
+	}
 }
 
 /*
@@ -422,7 +437,7 @@ static void call_state_finalize(struct multipart_call_case_state *state)
 	if (!state)
 		return;
 
-	for(i=0; i<6; i++)
+	for(i=0; i<MAX_VOICECALLS; i++)
 	{
 		if(state->voice_call_path[i])
 				free(state->voice_call_path[i]);
@@ -481,6 +496,21 @@ static gboolean call_init_start(gpointer data)
 			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
 				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
 		}
+	if (state->signalcb_VoiceCallManager_CallAdded) {
+		dbus_g_proxy_add_signal(state->voice_call_manager, "CallAdded",
+			DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", 
+			G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->voice_call_manager, "CallAdded",
+			state->signalcb_VoiceCallManager_CallAdded, data, 0);
+	}
+
+	if (state->signalcb_VoiceCallManager_CallRemoved) {
+		dbus_g_proxy_add_signal(state->voice_call_manager, "CallRemoved",
+			DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->voice_call_manager, "CallRemoved",
+			state->signalcb_VoiceCallManager_CallRemoved, data, 0);
+	}
+	
 
 	if (state->case_begin)
 		g_timeout_add(2000, state->case_begin, state);
@@ -568,45 +598,47 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 	LOG("Waiting for two calls...\nCalls currently in system: %i\n", state->number_voice_calls);
 	if(state->number_voice_calls == 2 && state->multiparty_ongoing)
 	{
-		// hang up multiparty
+		/* Hang up multiparty */
 		if(org_ofono_VoiceCallManager_hangup_multiparty (state->voice_call_manager, &error))
 		{
 			LOG("Multiparty hanged up\n");
 			state->multiparty_ongoing = 0;
 			state->result = 0;
-			g_main_loop_quit(state->mainloop);
+			state->test_stage = MP_HANGUP;
 			return FALSE;
 		}
 		if(error)
-		{
-			display_dbus_glib_error(error);
-			g_error_free (error);
-		}
+			goto error;
 	}
 
 	if(state->number_voice_calls == 2 && !state->multiparty_ongoing)
 	{
-		// Create multiparty when we have 2 calls in
+		/* Create multiparty when we have 2 calls in */
 		LOG("Creating multiparty call\n");
 		if(org_ofono_VoiceCallManager_create_multiparty (state->voice_call_manager, &call_list, &error))
 		{
 			LOG("Multiparty call created\n");
 			state->multiparty_ongoing = 1;
+			state->test_stage = MP_MULTIPARTY_CREATED;
 			LOG("Calls in multiparty call:\n");
 			g_ptr_array_foreach(call_list, pointer_array_foreach, NULL);
 			g_ptr_array_free(call_list, TRUE);
 			return TRUE;
 		}
 		if(error)
-		{
-			display_dbus_glib_error(error);
-			g_error_free (error);
-		}
-
+			goto error;
 	}
 
 	FUNC_LEAVE();
 	return TRUE;
+	
+error:
+	display_dbus_glib_error(error);
+	g_error_free (error);		
+	state->result = -1;
+	g_main_loop_quit(state->mainloop);	
+	FUNC_LEAVE();	
+	return FALSE;	
 }
 
 
@@ -727,8 +759,11 @@ int blts_ofono_case_multiparty(void* user_ptr, __attribute__((unused))int test_n
 
 	test->user_timeout = data->user_timeout ? data->user_timeout : 60000;
 
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
+	test->signalcb_VoiceCallManager_CallAdded = 
+		G_CALLBACK(on_voice_call_manager_call_added);
+	test->signalcb_VoiceCallManager_CallRemoved = 
+		G_CALLBACK(on_voice_call_manager_call_removed);
+
 	for(i=0; i<MAX_VOICECALLS; i++)
 	{
 		test->signalcb_VoiceCall_PropertyChanged[i] =
