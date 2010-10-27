@@ -40,9 +40,9 @@ static void my_example_help(const char* help_msg_base)
 		/* What is displayed on the first 'USAGE' line */
 		"[-q] [-w] [-p]",
 		/* Description of the arguments */
-		"-q: Some argument\n"
-		"-w: Some argument\n"
-		"-p: Some argument\n");
+		"  -q: Example argument q\n"
+		"  -w: Example argument w\n"
+		"  -p: Example argument p\n");
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */

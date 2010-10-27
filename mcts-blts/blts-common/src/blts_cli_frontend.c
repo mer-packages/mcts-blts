@@ -64,6 +64,8 @@
 
 static struct sigaction *saved_sigchld_action = NULL;
 static unsigned int timout_override = 0;
+/* TODO: temporary flag for manual vs. test automation, remove this later */
+static int manual_execution = 1;
 
 static void show_help(char* bin_name, blts_cli* cli)
 {
@@ -76,7 +78,8 @@ static void show_help(char* bin_name, blts_cli* cli)
 		"  -s: Show list of all tests\n"
 		"  -C: Used parameter configuration file\n"
 		"  -?: This message\n"
-		"  -v: Verbose logging\n"
+		"  -auto: Silent logging for test automation. Only the results are printed to stdout.\n"
+		"  -v: Verbose logging (default)\n"
 		"  -vv: Even more verbose logging\n%%s";
 	int log_file_len = cli->log_file?strlen(cli->log_file):0;
 	char *help_msg = malloc(strlen(help_msg_base) + strlen(bin_name) +
@@ -210,6 +213,9 @@ static void print_test_case_result(const char *bin_name, const char *case_name,
 	const char *passed_txt = "["GREEN_TEXT"PASSED"NORMAL_TEXT"]";
 	const char *failed_txt = "["RED_TEXT"FAILED"NORMAL_TEXT"]";
 
+	if (manual_execution)
+		return;
+
 	bin_fname = strrchr(bin_name, '/');
 	if (bin_fname)
 		bin_fname++;
@@ -219,13 +225,13 @@ static void print_test_case_result(const char *bin_name, const char *case_name,
 	log_line[0] = 0;
 
 	if (test_num >= 0 && var_num >= 0) {
-		snprintf(&log_line[strlen(log_line)], 30, "%s-%03d-%03d: ",
+		snprintf(&log_line[strlen(log_line)], 35, "%s-%03d-%03d: ",
 			bin_fname, test_num, var_num);
 	} else if (test_num >= 0) {
-		snprintf(&log_line[strlen(log_line)], 30, "%s-%03d:     ",
+		snprintf(&log_line[strlen(log_line)], 35, "%s-%03d:     ",
 			bin_fname, test_num);
 	} else {
-		snprintf(&log_line[strlen(log_line)], 30, "%s:         ",
+		snprintf(&log_line[strlen(log_line)], 35, "%s:         ",
 			bin_fname);
 	}
 
@@ -294,8 +300,8 @@ static int run_test(const char *bin_name, int testnum,
 		time_elapsed = 0;
 		while(waitpid(pid, &ret, WNOHANG) != -1)
 		{
-			sleep(1);
-			time_elapsed += 1000;
+			usleep(100000);
+			time_elapsed += 100;
 			if(real_timeout && time_elapsed > real_timeout)
 			{
 				kill(pid, SIGKILL);
@@ -472,7 +478,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	int result = 0, t;
 	int num_tests = 0;
 	int* test_list = NULL;
-	unsigned int log_flags = BLTS_LOG_FLAG_FILE;
+	unsigned int log_flags = BLTS_LOG_FLAG_FILE | BLTS_LOG_FLAG_STDOUT;
 	void* user_ptr = NULL;
 	char* used_log_file = NULL;
 	char* used_config_file = NULL;
@@ -547,7 +553,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 		}
 		else if(strcmp(argv[t], "-s") == 0)
 		{
-			log_flags |= BLTS_LOG_FLAG_STDOUT;
+			log_flags = BLTS_LOG_FLAG_STDOUT;
 			want_test_list = 1;
 		}
 		else if(strcmp(argv[t], "-?") == 0)
@@ -565,6 +571,11 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 				goto cleanup;
 			}
 			used_log_file = argv[t];
+		}
+		else if(strcmp(argv[t], "-auto") == 0)
+		{
+			log_flags &= ~BLTS_LOG_FLAG_STDOUT;
+			manual_execution = 0;
 		}
 		else if(strcmp(argv[t], "-v") == 0)
 		{
