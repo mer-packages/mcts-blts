@@ -51,16 +51,16 @@ _get_high_quality_on (v4l2_dev_data *dev)
 	ret = ioctl_VIDIOC_G_PARM (dev->dev_fd, &params, 0);
 
 	if (ret < 0) {
-                LOG ("Failed to get capture params from device!\n");
+                BLTS_DEBUG("Failed to get capture params from device!\n");
 		return ret;
 	}
 
         if (params.parm.capture.capturemode & V4L2_MODE_HIGHQUALITY) {
-                LOG ("High quality mode on.\n");
+                BLTS_DEBUG("High quality mode on.\n");
                 return 1;
         }
 
-        LOG ("High quality mode off.\n");
+        BLTS_DEBUG("High quality mode off.\n");
         return 0;
 }
 
@@ -76,22 +76,22 @@ _set_high_quality_on (v4l2_dev_data *dev, int status)
 	ret = ioctl_VIDIOC_G_PARM (dev->dev_fd, &params, 0);
 
 	if (ret < 0) {
-		LOG ("Failed to get capture params!\n");
+		BLTS_DEBUG("Failed to get capture params!\n");
 		return ret;
 	}
 
         if (status > 0) {
-                LOG ("Setting high quality mode on.\n");
+                BLTS_DEBUG("Setting high quality mode on.\n");
                 params.parm.capture.capturemode |= V4L2_MODE_HIGHQUALITY;
         } else {
-                LOG ("Setting high quality mode off.\n");
+                BLTS_DEBUG("Setting high quality mode off.\n");
                 params.parm.capture.capturemode &= ~V4L2_MODE_HIGHQUALITY;
         }
 
         ret = ioctl_VIDIOC_S_PARM (dev->dev_fd, &params, 0);
 
         if (ret < 0) {
-                LOG ("Failed to set capture params!\n");
+                BLTS_DEBUG("Failed to set capture params!\n");
                 return ret;
         }
 
@@ -109,13 +109,13 @@ v4l2_case_get_stream_quality (v4l2_data *user_data, int test_num)
         BLTS_DEBUG ("Test number %i:\n", test_num);
 
         if (!open_device (user_data->device)) {
-                LOG ("Couldn't open device %s\n", user_data->device->dev_name);
+                BLTS_DEBUG("Couldn't open device %s\n", user_data->device->dev_name);
                 goto ERROR;
         }
 
 	user_data->device->use_streaming = 1;
         if (!init_device (user_data->device, SCREEN_WIDTH, SCREEN_HEIGHT)) {
-                LOG ("Couldn't init device %s\n", user_data->device->dev_name);
+                BLTS_DEBUG("Couldn't init device %s\n", user_data->device->dev_name);
                 goto ERROR;
         }
 
@@ -124,20 +124,20 @@ v4l2_case_get_stream_quality (v4l2_data *user_data, int test_num)
         xvideo_init (w, h, 0);
 
         if (!start_capturing (user_data->device)) {
-                LOG ("Failed to capture from device\n");
+                BLTS_DEBUG("Failed to capture from device\n");
                 ret = -1;
                 goto ERROR;
         }
 
         if (_get_high_quality_on (user_data->device) < 0) {
                 ret = -1;
-                LOG ("Failed to get stream quality mode!\n");
+                BLTS_DEBUG("Failed to get stream quality mode!\n");
                 goto ERROR;
         }
 
         if (!stream_image_xv (user_data->device, 50)) {
                 ret = -1;
-                LOG ("Failed to stream image\n");
+                BLTS_DEBUG("Failed to stream image\n");
                 goto ERROR;
         }
 
@@ -161,13 +161,13 @@ v4l2_case_set_stream_quality (v4l2_data *user_data, int test_num)
         BLTS_DEBUG ("Test number %i:\n", test_num);
 
         if (!open_device (user_data->device)) {
-                LOG ("Couldn't open device %s\n", user_data->device->dev_name);
+                BLTS_DEBUG("Couldn't open device %s\n", user_data->device->dev_name);
                 goto ERROR;
         }
 
 	user_data->device->use_streaming = 1;
         if (!init_device (user_data->device, SCREEN_WIDTH, SCREEN_HEIGHT)) {
-                LOG ("Couldn't init device %s\n", user_data->device->dev_name);
+                BLTS_DEBUG("Couldn't init device %s\n", user_data->device->dev_name);
                 goto ERROR;
         }
 
@@ -177,19 +177,19 @@ v4l2_case_set_stream_quality (v4l2_data *user_data, int test_num)
 
         if (_set_high_quality_on (user_data->device, 1) < 0) {
                 ret = -1;
-                LOG ("Failed to get stream quality mode!\n");
+                BLTS_DEBUG("Failed to get stream quality mode!\n");
                 goto ERROR;
         }
 
         if (!start_capturing (user_data->device)) {
-                LOG ("Failed to capture from device\n");
+                BLTS_DEBUG("Failed to capture from device\n");
                 ret = -1;
                 goto ERROR;
         }
 
         if (!stream_image_xv (user_data->device, 50)) {
                 ret = -1;
-                LOG ("Failed to stream image\n");
+                BLTS_DEBUG("Failed to stream image\n");
                 goto ERROR;
         }
 
@@ -197,7 +197,7 @@ v4l2_case_set_stream_quality (v4l2_data *user_data, int test_num)
 
         if (ret < 1) {
                 ret = -1;
-                LOG ("Device doesn't report a high quality mode!\n");
+                BLTS_DEBUG("Device doesn't report a high quality mode!\n");
                 goto ERROR;
         }
 

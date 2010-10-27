@@ -115,7 +115,7 @@ static int test_control(v4l2_data* data, int ctlid)
 		return 1;
 	}
 
-	LOG("Testing control \"%s\"\n", queryctrl.name);
+	BLTS_DEBUG("Testing control \"%s\"\n", queryctrl.name);
 	BLTS_DEBUG("Control \"%s\" (0x%08X) value range %d - %d type %d flags 0x%X\n",
 			queryctrl.name, ctlid, queryctrl.minimum, queryctrl.maximum, queryctrl.type, queryctrl.flags);
 
@@ -258,12 +258,12 @@ static int test_control_value(v4l2_data* data, const unsigned char* ctlname, int
 	int res;
 	if (set_control_value(data->device, ctlid, value))
 	{
-		LOG("\tValue set to %d\n", value);
+		BLTS_DEBUG("\tValue set to %d\n", value);
 		res = 1;
 
 		if (data->flags & CLI_FLAG_IMGSAVE)
 		{
-			LOG("\tTaking snapshot\n");
+			BLTS_DEBUG("\tTaking snapshot\n");
 			char filename[128];
 			create_picture_filename_for_ctlvalue(filename, data, ctlname, value);
 			res = take_snapshot(data->device, filename);
@@ -301,7 +301,7 @@ static int test_control_menu_values(v4l2_data* data, const unsigned char* ctlnam
 		}
 		else if (errno == EINVAL)
 		{
-			LOG("\tMenu index %d not supported\n", querymenu.index);
+			BLTS_DEBUG("\tMenu index %d not supported\n", querymenu.index);
 		}
 		else
 		{
@@ -450,7 +450,7 @@ static int verify_image(v4l2_data* data, const char* filename, const unsigned ch
 	int res;
 	char line[256];
 
-	LOG("\tVerifying image\n");
+	BLTS_DEBUG("\tVerifying image\n");
 
 	sprintf(verifycmd, "%s '%s' '%s' %d %d",
 			data->img_verify_tool, filename, ctlname, ctlid, value);
@@ -468,7 +468,7 @@ static int verify_image(v4l2_data* data, const char* filename, const unsigned ch
 		while (fgets(line, sizeof(line), fpipe))
 		{
 			int n = strlen(line);
-			LOG("\t%s: %s%s", data->img_verify_tool, line, (line[n-1] == '\n') ? "" : "\n");
+			BLTS_DEBUG("\t%s: %s%s", data->img_verify_tool, line, (line[n-1] == '\n') ? "" : "\n");
 		}
 
 		verifyres = pclose(fpipe);
@@ -489,7 +489,7 @@ static int verify_image(v4l2_data* data, const char* filename, const unsigned ch
 			}
 			else
 			{
-				LOG("\tImage verified successfully\n");
+				BLTS_DEBUG("\tImage verified successfully\n");
 				res = 1;
 			}
 		}

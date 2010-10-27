@@ -461,13 +461,13 @@ static int v4l2_case_open(void* user_ptr, int test_num)
 	BLTS_DEBUG("Test number %i:\n", test_num);
 	if( open_device (data->device) )
 	{
-		LOG("Device opened\n");
+		BLTS_DEBUG("Device opened\n");
 		close_device(data->device);
 		return 0;
 	}
 	else
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		close_device(data->device);
 		return -1;
 	}
@@ -484,13 +484,13 @@ static int v4l2_case_read(void* user_ptr, int test_num)
 
 	if( open_device (data->device) && init_device (data->device,w, h))
 	{
-		LOG("Device opened\n");
+		BLTS_DEBUG("Device opened\n");
 		close_device(data->device);
 		return 0;
 	}
 	else
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		close_device(data->device);
 		return -1;
 	}
@@ -507,7 +507,7 @@ static int v4l2_case_measure(void* user_ptr, int test_num)
 	BLTS_DEBUG("Test number %i:\n", test_num);
 	if(!open_device (data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		FUNC_LEAVE();
 		return -1;
 	}
@@ -515,13 +515,13 @@ static int v4l2_case_measure(void* user_ptr, int test_num)
 	if(init_device (data->device, MAX_WIDTH, MAX_HEIGHT))
 	{
 		BLTS_DEBUG("Maximum resolution is: %ix%i\n", data->device->format.fmt.pix.width, data->device->format.fmt.pix.height);
-		LOG("Measuring FPS on maximum resolution\n");
+		BLTS_DEBUG("Measuring FPS on maximum resolution\n");
 
 		max_width = data->device->format.fmt.pix.width;
 		max_height = data->device->format.fmt.pix.height;
-		LOG("-----------------------\n");
-		LOG("%ix%i resolution\n", max_width, max_height);
-		LOG("-----------------------\n");
+		BLTS_DEBUG("-----------------------\n");
+		BLTS_DEBUG("%ix%i resolution\n", max_width, max_height);
+		BLTS_DEBUG("-----------------------\n");
 
 		if(!start_capturing (data->device))
 			goto err;
@@ -533,11 +533,11 @@ static int v4l2_case_measure(void* user_ptr, int test_num)
 	}
 	else
 	{
-		LOG("Can't initialize device\n");
+		BLTS_DEBUG("Can't initialize device\n");
 		goto err;
 	}
 
-	LOG("Stepping down resolutions and calculating FPS\n");
+	BLTS_DEBUG("Stepping down resolutions and calculating FPS\n");
 
 	int step_size_x, step_size_y, i, x, y;
 
@@ -549,15 +549,15 @@ static int v4l2_case_measure(void* user_ptr, int test_num)
 	{
 		x = max_width - step_size_x * i;
 		y = max_height - step_size_y * i;
-		LOG("-----------------------\n");
-		LOG("%ix%i resolution\n", x, y);
-		LOG("-----------------------\n");
+		BLTS_DEBUG("-----------------------\n");
+		BLTS_DEBUG("%ix%i resolution\n", x, y);
+		BLTS_DEBUG("-----------------------\n");
 		if(!open_device (data->device))
 			goto err;
 
 		if(init_device (data->device, x, y))
 		{
-			LOG("Resolution is: %ix%i\n", x, y);
+			BLTS_DEBUG("Resolution is: %ix%i\n", x, y);
 			if(!start_capturing (data->device))
 				goto err;
 
@@ -569,7 +569,7 @@ static int v4l2_case_measure(void* user_ptr, int test_num)
 		}
 		else
 		{
-			LOG("Can't initialize device\n");
+			BLTS_DEBUG("Can't initialize device\n");
 			goto err;
 		}
 
@@ -597,14 +597,14 @@ static int v4l2_case_check_controls(void* user_ptr, int test_num)
 
 	if( open_device (data->device) && init_device (data->device, w, h))
 	{
-		LOG("Device opened\n");
+		BLTS_DEBUG("Device opened\n");
 		if(!enum_controls(data->device))
 			return -1;
 		return 0;
 	}
 	else
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		close_device(data->device);
 		return -1;
 	}
@@ -623,14 +623,14 @@ static int v4l2_case_check_capa(void* user_ptr, int test_num)
 
 	if( open_device (data->device) && init_device (data->device, w, h))
 	{
-		LOG("Device opened\n");
+		BLTS_DEBUG("Device opened\n");
 		if(!query_capabilites(data->device))
 			return -1;
 		return 0;
 	}
 	else
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 	close_device(data->device);
@@ -648,14 +648,14 @@ static int v4l2_case_check_formats(void* user_ptr, int test_num)
 
 	if( open_device (data->device) && init_device (data->device, w, h))
 	{
-		LOG("Device opened\n");
+		BLTS_DEBUG("Device opened\n");
 		if(!enum_formats(data->device))
 			return -1;
 		return 0;
 	}
 	else
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 	close_device(data->device);
@@ -671,7 +671,7 @@ static int v4l2_case_measure_resolution(void* user_ptr, int test_num)
 
 	if(!open_device (data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 
@@ -688,7 +688,7 @@ static int v4l2_case_measure_resolution(void* user_ptr, int test_num)
 	}
 	else
 	{
-		LOG("Can't initialize device\n");
+		BLTS_DEBUG("Can't initialize device\n");
 		goto err;
 	}
 
@@ -711,7 +711,7 @@ static int v4l2_case_take_pic(void* user_ptr, int test_num)
 
 	if(!open_device (data->device))
 	{
-		LOGERR("Can't open device %s\n", data->device->dev_name);
+		BLTS_ERROR("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 
@@ -730,13 +730,13 @@ static int v4l2_case_take_pic(void* user_ptr, int test_num)
 			goto err;
 		if(!mainloop (data->device, 0))
 			goto err;
-		LOG("Taking picture %s\n", data->snapshot_filename);
+		BLTS_DEBUG("Taking picture %s\n", data->snapshot_filename);
 		if(!do_snapshot (data->device, data->snapshot_filename))
 			goto err;
 		// ensure that image is actual JPEG
 		if(read_jpeg_image(data->snapshot_filename))
 		{
-			LOG("Error, image %s is not JPEG standard.\n", data->snapshot_filename);
+			BLTS_DEBUG("Error, image %s is not JPEG standard.\n", data->snapshot_filename);
 			return -1;
 		}
 
@@ -746,7 +746,7 @@ static int v4l2_case_take_pic(void* user_ptr, int test_num)
 	}
 	else
 	{
-		LOGERR("Can't initialize device\n");
+		BLTS_ERROR("Can't initialize device\n");
 		goto err;
 	}
 
@@ -788,7 +788,7 @@ static int v4l2_run_stream(v4l2_data *data, int do_crop)
 	int screen_width = SCREEN_HEIGHT;
 
 	if (!open_device(data->device))	{
-			LOG("Can't open device %s\n", data->device->dev_name);
+			BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 			return -1;
 	}
 
@@ -813,7 +813,7 @@ static int v4l2_run_stream(v4l2_data *data, int do_crop)
 		uninit_device(data->device);
 	} else {
 		close_device(data->device);
-		LOG("Could not open device\n");
+		BLTS_DEBUG("Could not open device\n");
 		data->device->use_streaming = 0;
 		return -1;
 	}
@@ -863,14 +863,14 @@ static int v4l2_case_read_with_poll(void* user_ptr, int test_num)
 		goto err;
 	}
 
-	LOG("Resolution used: %ix%i\n",
+	BLTS_DEBUG("Resolution used: %ix%i\n",
 		data->device->format.fmt.pix.width,
 		data->device->format.fmt.pix.height);
 
 	if (!start_capturing(data->device))
 		goto err;
 
-	LOG("Starting polled reads\n");
+	BLTS_DEBUG("Starting polled reads\n");
 	if (!mainloop(data->device, LOOPS))
 		goto err;
 
@@ -911,7 +911,7 @@ static int setup_img_save_params(v4l2_data* data)
 			}
 			else
 			{
-				LOG("Saving images to %s\n", data->img_save_path);
+				BLTS_DEBUG("Saving images to %s\n", data->img_save_path);
 			}
 		}
 		else
@@ -935,12 +935,12 @@ static int setup_img_save_params(v4l2_data* data)
 			}
 			else
 			{
-				LOG("Using %s to verify images\n", data->img_verify_tool);
+				BLTS_DEBUG("Using %s to verify images\n", data->img_verify_tool);
 			}
 		}
 		else
 		{
-			LOG("\"image_verify_tool\" not defined in config, verification disabled\n");
+			BLTS_DEBUG("\"image_verify_tool\" not defined in config, verification disabled\n");
 		}
 	}
 
@@ -974,13 +974,13 @@ static int v4l2_case_test_controls(void* user_ptr, int test_num)
 	int res = 0;
 	if (test_num == CORE_TEST_STD_CONTROLS)
 	{
-		LOG("Starting standard control test\n");
+		BLTS_DEBUG("Starting standard control test\n");
 		if (!test_std_controls(data))
 			res = -1;
 	}
 	else if (test_num == CORE_TEST_EXT_CONTROLS)
 	{
-		LOG("Starting extended control test\n");
+		BLTS_DEBUG("Starting extended control test\n");
 		if (!test_ext_controls(data))
 			res = -1;
 	}
@@ -1018,7 +1018,7 @@ static int test_frame_rate(v4l2_dev_data *dev, float* fps, float* calculated_fps
 	else
 	{
 		close_device(dev);
-		LOG("Could not open device\n");
+		BLTS_DEBUG("Could not open device\n");
 		dev->use_streaming = 0;
 		return -1;
 	}
@@ -1050,28 +1050,28 @@ static int v4l2_case_vary_frame_rate(void* user_ptr, int test_num)
 
 	if (!open_device(data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 
 	/* find out initial frame rate */
 	if(get_framerate_fps(data->device, &initial_fps) != 0)
 	{
-		LOG("Can't get initial fps\n");
+		BLTS_DEBUG("Can't get initial fps\n");
 		goto err;
 	}
 
 	/* test frame rate with initial values */
 	if(test_frame_rate(data->device, &initial_fps, &initial_cfps) != 0)
 	{
-		LOG("Can't test initial frame rate\n");
+		BLTS_DEBUG("Can't test initial frame rate\n");
 		goto err;
 	}
 
 	/* try to set new frame rate values */
 	if(set_framerate_fps(data->device, &target_fps) != 0)
 	{
-		LOG("Can't set new frame rate\n");
+		BLTS_DEBUG("Can't set new frame rate\n");
 		reset = TRUE;
 		goto err;
 	}
@@ -1079,7 +1079,7 @@ static int v4l2_case_vary_frame_rate(void* user_ptr, int test_num)
 	/* test frame rate with new values */
 	if(test_frame_rate(data->device, &target_fps, &target_cfps) != 0)
 	{
-		LOG("Can't test new frame rate\n");
+		BLTS_DEBUG("Can't test new frame rate\n");
 		reset = TRUE;
 		goto err;
 	}
@@ -1111,10 +1111,10 @@ static int v4l2_case_debug_capability(void* user_ptr, int test_num)
 	int ret = 0;
 	if (!open_device(data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
-	if(start_syslog_capture())
+	if(blts_log_start_syslog_capture())
 	{
 		BLTS_ERROR("Can't initiate syslog capture\n");
 		goto err;
@@ -1124,11 +1124,11 @@ static int v4l2_case_debug_capability(void* user_ptr, int test_num)
 
 	if(errno == EINVAL)
 	{
-		LOG("Driver returned EINVAL, and does not support driver status logging\n");
+		BLTS_DEBUG("Driver returned EINVAL, and does not support driver status logging\n");
 		ret = 0;
 	}
 
-	if(end_syslog_capture())
+	if(blts_log_end_syslog_capture())
 	{
 		BLTS_ERROR("Common library can't stop syslog capture\n");
 	}
@@ -1147,7 +1147,7 @@ static int v4l2_select_output_stream(void* user_ptr, int test_num)
 
 	if (!open_device(data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 
@@ -1174,7 +1174,7 @@ static int v4l2_select_output_stream(void* user_ptr, int test_num)
 	return 0;
 
 force_testing:
-	LOG("No output device available, force testing IOCTL\n");
+	BLTS_DEBUG("No output device available, force testing IOCTL\n");
 	if(try_output(data->device, 0))
 		if(errno != EINVAL)
 			goto err;
@@ -1195,7 +1195,7 @@ static int v4l2_select_input_stream(void* user_ptr, int test_num)
 
 	if (!open_device(data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
 
@@ -1211,13 +1211,13 @@ static int v4l2_select_input_stream(void* user_ptr, int test_num)
 
 		if(!try_input(data->device, i))
 		{
-			LOG("Trying to stream from found input %i\n", i);
+			BLTS_DEBUG("Trying to stream from found input %i\n", i);
 			close_device(data->device);
 			if(-1 == v4l2_run_stream(data, 0))
 				goto err;
 			if (!open_device(data->device))
 			{
-				LOG("Error opening device after streaming\n");
+				BLTS_DEBUG("Error opening device after streaming\n");
 				return -1;
 			}
 		}
@@ -1234,7 +1234,7 @@ static int v4l2_select_input_stream(void* user_ptr, int test_num)
 
 
 force_testing:
-	LOG("No input device available, force testing IOCTL\n");
+	BLTS_DEBUG("No input device available, force testing IOCTL\n");
 	if(try_input(data->device, 0))
 		if(errno != EINVAL)
 			goto err;
@@ -1258,13 +1258,13 @@ static int v4l2_case_test_standards(void* user_ptr, int test_num)
 
 	if (!open_device(data->device))
 	{
-		LOG("Can't open device %s\n", data->device->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", data->device->dev_name);
 		return -1;
 	}
-	LOG("**Get standards**\n");
+	BLTS_DEBUG("**Get standards**\n");
 	ret_get = loop_through_video_inputs(data->device, do_get_standards);
 
-	LOG("**Set standards**\n");
+	BLTS_DEBUG("**Set standards**\n");
 	ret_set = loop_through_video_inputs(data->device, do_set_standards);
 
 
@@ -1300,7 +1300,7 @@ static void app_init_once(v4l2_data *data)
 	memset(data->device, 0, sizeof(v4l2_dev_data));
 	if (data->device==NULL)
 	{
-		LOG("Not enough memory to allocate camera data\n");
+		BLTS_DEBUG("Not enough memory to allocate camera data\n");
 		exit(1);
 	}
 	data->snapshot_filename = NULL;
@@ -1348,7 +1348,7 @@ static int v4l2_run_case(void* user_ptr, int test_num)
 	case CORE_SELECT_INPUT_STREAM: ret = v4l2_select_input_stream(user_ptr, test_num); break;
 	case CORE_SELECT_OUTPUT_STREAM: ret = v4l2_select_output_stream(user_ptr, test_num); break;
 	case CORE_TEST_STANDARDS: ret = v4l2_case_test_standards(user_ptr, test_num); break;
-	default: LOG("Not supported case number%d\n", test_num);
+	default: BLTS_DEBUG("Not supported case number%d\n", test_num);
 	}
 
 	if(data->flags&CLI_FLAG_PROFILING)
