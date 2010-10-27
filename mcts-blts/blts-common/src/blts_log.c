@@ -161,7 +161,11 @@ void blts_log_print_level(int level, const char *format, ...)
 	}
 
 	if (logging_flags & BLTS_LOG_FLAG_FILE) {
-		fprintf(log_file, "%s", logging_level_message[level]);
+		/* TODO: Disabled for now. This does not work properly if given
+		 * string contains multiple line feeds, or does not contain one
+		 * at all */
+		/*fprintf(log_file, "%s", logging_level_message[level]);*/
+
 		va_start(ap, format);
 		vfprintf(log_file, format, ap);
 		va_end(ap);
