@@ -613,7 +613,6 @@ void modem_properties_foreach(gpointer key, GValue* val, gpointer user_data)
 
 		while(interf[i]!=NULL)
 		{
-			//LOG("\t[%s]\n", interf[i]);
 			interface_properties(interf[i], data);
 			i++;
 		}
@@ -786,7 +785,7 @@ static int my_ofono_case_enable_modems(void* user_ptr, __attribute__((unused))in
 			retval = -1;
 		}
 	}
-
+	g_object_unref(proxy);
 	return retval;
 }
 
@@ -965,12 +964,14 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 			LOG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
 			return -1;
 		}
-			if(!org_ofono_NetworkRegistration_propose_scan(proxy, &networks, &error))
+
+		if(!org_ofono_NetworkRegistration_propose_scan(proxy, &networks, &error))
 		{
 			display_dbus_glib_error(error);
 			g_error_free (error);
 			retval = -1;
 		}
+
 		if(networks == NULL)
 		{
 			LOG("No networks found on scan\n");
@@ -978,6 +979,7 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 		}
 		else
 			 g_ptr_array_free(networks, TRUE);
+
 		g_object_unref (proxy);
 		proxy = NULL;
 	}
@@ -991,12 +993,12 @@ static blts_cli_testcase my_ofono_cases[] =
 	/* Test case name, test case function, timeout in ms
 	 * It is possible to use same function for multiple cases.
 	 * Zero timeout = infinity */
-	{ "oFono - Information Query", my_ofono_case_query, 5000 },
-	{ "oFono - Register to network", my_ofono_case_regnetwork, 5000 },
-	{ "oFono - De-register from network", my_ofono_case_deregnetwork, 5000 },
-	{ "oFono - Enable modems", my_ofono_case_enable_modems, 5000 },
-	{ "oFono - Set modems online", blts_ofono_case_modems_online, 5000 },
-	{ "oFono - Set modems offline", blts_ofono_case_modems_offline, 5000 },
+	{ "oFono - Information Query", my_ofono_case_query, 15000 },
+	{ "oFono - Register to network", my_ofono_case_regnetwork, 15000 },
+	{ "oFono - De-register from network", my_ofono_case_deregnetwork, 15000 },
+	{ "oFono - Enable modems", my_ofono_case_enable_modems, 15000 },
+	{ "oFono - Set modems online", blts_ofono_case_modems_online, 15000 },
+	{ "oFono - Set modems offline", blts_ofono_case_modems_offline, 15000 },
 	{ "oFono - Create voicecall", my_ofono_case_voicecall_to, 60000 },
 	{ "oFono - Create voicecall with hidden caller ID", my_ofono_case_voicecall_to, 60000 },
 	{ "oFono - Answer to voicecall and hangup", my_ofono_case_voicecall_answer, 50000 },
@@ -1017,29 +1019,29 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Forward if not reachable", my_ofono_case_forwardings, 60000 },
 	{ "oFono - Send SMS", blts_ofono_send_sms_default, 95000 },
 	{ "oFono - Receive SMS", blts_ofono_receive_sms_default, 95000 },
-	{ "oFono - Change PIN", ofono_change_pin, 5000 },
-	{ "oFono - Enter PIN", ofono_enter_pin, 5000 },
-	{ "oFono - Reset PIN", ofono_reset_pin, 5000 },
-	{ "oFono - Lock PIN", ofono_lock_pin, 5000 },
-	{ "oFono - Unlock PIN", ofono_unlock_pin, 5000 },
+	{ "oFono - Change PIN", ofono_change_pin, 15000 },
+	{ "oFono - Enter PIN", ofono_enter_pin, 15000 },
+	{ "oFono - Reset PIN", ofono_reset_pin, 15000 },
+	{ "oFono - Lock PIN", ofono_lock_pin, 15000 },
+	{ "oFono - Unlock PIN", ofono_unlock_pin, 15000 },
 	{ "oFono - Set microphone volume", blts_ofono_set_microphone_volume, 60000 },
 	{ "oFono - Set speaker volume", blts_ofono_set_speaker_volume, 60000 },
 	{ "oFono - Set muted", blts_ofono_set_muted, 60000 },
-	{ "oFono - Call meters read", blts_ofono_read_call_meter_data, 10000 },
-	{ "oFono - Call meters set", blts_ofono_set_call_meter_data, 10000 },
-	{ "oFono - Call meters reset", blts_ofono_reset_call_meter_data, 10000 },
-	{ "oFono - Call meters near max warning", blts_ofono_test_near_max_warning, 10000 },
-	{ "oFono - Check barring properties", ofono_barring_properties, 5000 },
+	{ "oFono - Call meters read", blts_ofono_read_call_meter_data, 15000 },
+	{ "oFono - Call meters set", blts_ofono_set_call_meter_data, 15000 },
+	{ "oFono - Call meters reset", blts_ofono_reset_call_meter_data, 15000 },
+	{ "oFono - Call meters near max warning", blts_ofono_test_near_max_warning, 15000 },
+	{ "oFono - Check barring properties", ofono_barring_properties, 15000 },
 	{ "oFono - Disable barrings", ofono_barring_properties, 30000 },
 	{ "oFono - Disable incoming barrings", ofono_barring_properties, 60000 },
 	{ "oFono - Disable outgoing barrings", ofono_barring_properties, 60000 },
 	{ "oFono - Change password for barrings", ofono_barring_properties, 30000 },
 	{ "oFono - Call barrings test", ofono_call_barring_test, 60000 },
-	{ "oFono - List all properties", ofono_list_modems, 10000 },
+	{ "oFono - List all properties", ofono_list_modems, 15000 },
 	// This operation can take several...
 	{ "oFono - Propose scan", ofono_propose_scan, 120000 },
 	//... seconds, and up to several minutes on some modems
-	{ "oFono - SMSC number test", ofono_sms_center_number, 10000 },
+	{ "oFono - SMSC number test", ofono_sms_center_number, 15000 },
 	{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 60000 },
 	//{ "oFono - Private call test", blts_ofono_case_private_chat, 60000 },
 

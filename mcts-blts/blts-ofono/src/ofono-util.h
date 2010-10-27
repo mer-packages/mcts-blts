@@ -64,6 +64,8 @@ void hash_entry_gvalue_print(gpointer key, GValue* val, __attribute__((unused)) 
 
 int ensure_calls_cleared(my_ofono_data *data);
 int reset_supplementary_services(my_ofono_data* data);
+int set_modems_power_on(my_ofono_data *data);
+int set_modems_online(my_ofono_data *data);
 
 void display_dbus_glib_error(GError *error);
 
