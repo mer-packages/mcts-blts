@@ -1,0 +1,4 @@
+usr/lib/*.so*
+usr/lib/tests
+usr/share/telepathy/clients/*
+usr/lib/min/*.so*

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-qmsystem-tests" domain="System">
+    <set name="FUTE-Sensors" feature="Sensors" type="Functional">
+      <case name="FUTE-Sensors_accelerometer" timeout="10" description=
+        "Purpose
+        Get values from Accelerometer
+        Method
+        QT Mobility Sensors API call, waiting simultenaus changing values from API callback  
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_accelerometer'</step>
+      </case>
+      <case name="FUTE-Sensors_ambient_light_sensor" timeout="10" description=
+        "Purpose
+        Get values from Ambient Light Sensor
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_ambient_light_sensor'</step>
+      </case>
+      <case name="FUTE-Sensors_compass" timeout="10" description=
+        "Purpose
+        Get values from Compass
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_compass'</step>
+      </case>
+      <case name="FUTE-Sensors_magnetometer" timeout="10" description=
+        "Purpose
+        Get values from Magnetometer
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_magnetometer'</step>
+      </case>
+      <case name="FUTE-Sensors_orientation" timeout="10" description=
+        "Purpose
+        Get values from Orientation
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback 
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_orientation'</step>
+      </case>
+      <case name="FUTE-Sensors_proximity" timeout="10" description=
+        "Purpose
+        Get values from Proximity
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_proximity'</step>
+      </case>
+      <case name="FUTE-Sensors_rotation" timeout="10" description=
+        "Purpose
+        Get values from Proximity
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user, DUT must be moved during test to get not zero values
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_rotation'</step>
+      </case>
+      <case name="FUTE-Sensors_tap" timeout="10" description=
+        "Purpose
+        Get values from Tap
+        Method
+        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user, Screen must be tapped by finger or external vece playing finger to get values 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Sensors_tap'</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>

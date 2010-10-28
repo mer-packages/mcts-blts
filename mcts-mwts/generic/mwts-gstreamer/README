@@ -1,0 +1,91 @@
+
+        mwts-gstreamer
+        ---------------
+
+INTRODUCTION 
+
+  The mwts-gstreamer tests media playing features of gstreamer.
+
+  Test are done to:
+    - audio playback
+    - video playback
+
+  Playback can be: 
+    - local
+    - http-streaming
+    - rtsp-streaming
+  
+  Test scenarios include:
+    - Normal playback
+    - seeking forwards and backwards, to absolute position
+    - long-lasting
+    - iterative
+    - framerate measurements
+
+  Questions: MWTSSupport@nokia.com
+
+  See document MWTS.README under doc directory for detailed general 
+  information about mwts test modules.
+
+SOURCE CODE AND COMPILING
+
+  Mwts-gstreamer is fetched and compiled normally. Check doc/MWTS.README.
+
+ENVIRONMENT REQUIREMENTS
+
+  Set base paths for local and streaming into /usr/lib/tests/GstreamerTest.conf.
+
+  For streaming playback
+    For remote (streaming) playback cases the device need to be connected to the network
+    of the streaming server via USB or WLAN. The server IP address has to be 192.168.1.1.
+      - rtsp server has to provide the media files,
+        e.g. AAC audio files should be located at: rtsp://192.168.1.1/Audio/AAC/
+      - http server has to provide the media files,
+        e.g. AAC audio files should be located at: http://192.168.1.1/media/Audio/AAC/
+
+EXECUTING TESTS
+
+  Test execution is done normally. Check doc/MWTS.README.
+
+TEST RESULTS
+
+  Test results are accessible normally. Check doc/MWTS.README.
+
+
+MIN SCRIPTER INTERFACE
+
+  SetSource <protocol> <URI>
+    Selects the URI for next Play command, protocols: file,http,rtsp
+  RunTest
+    Starts playing the previously selected URL, returns when playback ends 
+  SetFailTimeout <seconds>
+    Sets timeout after which playback is stopped by force and case fails
+  SetDuration <seconds>
+    Sets duration after which playback stops normally.
+  SetSeekTimeout <seconds>
+    Sets time when seeking is supposed to occur
+  SetSeekPosition <seconds>
+    Sets absolute timestamp position where to seek
+  SetSeekToEndPosition 
+    Sets absolute timestamp position where to seek to the end of file.
+  SetEvent SeekToEnd|Pause <seconds>
+    Sets time when seeking to end or pausing occurs
+  SetSecondEvent Continue <seconds>
+    Set time when continuing will happen.
+  MeasureFramerate
+    Sets Framerate measurement on.
+  SetChangeVolumeLevel
+    Sets volume changing on, so volume goes between 0-100 % during playback
+
+
+KNOWN ISSUES
+
+  Certain testcases do not work on MeeGo regard to the lack of codecs (currently
+  available: vorbix, speech, PCM), instead the rehearsal took place on Fremantle.
+  Using the server locally (192.168.1.1) got a couple of testdata files got injected
+  from https://projects.maemo.org/svn/testdata/media/Audio. The test cases using
+  rtsp protocol needs 'hinted' audio files due to the media server's requirement.
+
+
+  
+                               

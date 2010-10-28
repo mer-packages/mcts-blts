@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-location-tests" domain="Location">
+
+<!--This set contains FUNCTIONAL tests of mwts-location, script file: mwts-location.cfg-->
+    <set name="FUTE-location" description="Location Functionality" feature="(A)-GPS" type="Functional">
+      <case name="FUTE-GPS-TestColdFix" timeout="600" description=
+            "Purpose
+            Get GPS cold fix 
+            Method
+            Using Qt Mobility location API
+            Pre-/Post-Conditions
+            Device located so that signal receivable from at least 4 satellites
+            Pass/Fail Criteria
+            Test runs successfully, test does not crash
+            ">
+            <step>min -c -t 'FUTE-GPS-TestGPSColdFix'</step>
+      </case>
+      <case name="FUTE-GPS-TestHotFix" timeout="600" description=
+            "Purpose
+            Get GPS hot fix 
+            Method
+            Using Qt Mobility location API.
+            Pre-/Post-Conditions
+            Device located so that signal receivable from at least 4 satellites
+            Pass/Fail Criteria
+            Test runs successfully, test does not crash
+            ">
+            <step>min -c -t 'FUTE-GPS-TestGPSHotFix'</step>
+      </case>
+    </set>
+
+<!--This set contains ITERATIVE tests of mwts-location, script file: mwts-location-nft.cfg-->
+    <set name="ITER-location" description="Location reliability" feature="(A)-GPS" type="Iterative">
+      <case name="NFT-GPS-HotFix-ITER" timeout="600" description=
+            "Purpose
+            Get GPS hot fix. Tests reliability of the positioning engine
+            Method
+            Using Qt Mobility location API.
+            Pre-/Post-Conditions
+            Device located so that signal receivable from at least 4 satellites
+            Pass/Fail Criteria
+            Test runs successfully, test does not crash
+            ">
+            <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-ITER'</step>
+      </case>
+    </set>
+
+<!--This set contains LONG-LASTING tests of mwts-location, script file: mwts-location-nft.cfg-->
+    <set name="LOLA-location" description="Location reliability" feature="(A)-GPS" type="Long-lasting">
+      <case name="NFT-GPS-HotFix-LOLA" timeout="4200" description=
+            "Purpose
+            Get GPS hot fix. Tests reliability of the positioning engine
+            Method
+            Using Qt Mobility location API.
+            Pre-/Post-Conditions
+            Device located so that signal receivable from at least 4 satellites
+            Pass/Fail Criteria
+            Test runs successfully, test does not crash
+            ">
+            <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-LOLA'</step>
+      </case>
+    </set>
+
+<!--This set contains LATENCY tests of mwts-location, script file: mwts-location-nft.cfg-->
+    <set name="LOLA-location" description="Location performance" feature="(A)-GPS" type="Latency">
+      <case name="NFT-GPS-HotFix-LATE" timeout="4200" description=
+            "Purpose
+            Get GPS hot fix. Tests performance of the positioning engine.
+            Method
+            Using Qt Mobility location API.
+            Pre-/Post-Conditions
+            Device located so that signal receivable from at least 4 satellites
+            Pass/Fail Criteria
+            Test runs successfully, test does not crash
+            ">
+            <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-LATE'</step>
+      </case>
+    </set>
+    
+  </suite>
+</testdefinition>

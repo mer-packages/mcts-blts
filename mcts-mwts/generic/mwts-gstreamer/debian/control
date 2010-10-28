@@ -1,0 +1,20 @@
+Source: mwts-gstreamer
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libglib2.0-0, libdbus-1-dev, libdbus-glib-1-dev,libgstreamer0.10-dev
+Maintainer: Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-gstreamer
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0), libgstreamer0.10-0
+Description: Testing libraries for MIN
+ MIN libraries for mwts-gstreamer
+
+Package: mwts-gstreamer-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-gstreamer, min
+Description: Test cases for Gstreamer library
+ Test case files for mwts-gstreamer

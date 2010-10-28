@@ -1,0 +1,52 @@
+  mwts-location
+  -------------
+
+INTRODUCTION 
+
+  The mwts-location test-asset tests basic positioning functionality.
+  test asset uses Qt Mobility Location API.
+
+  This document uses the terms "cold fix", "warm fix" and "hot fix" in
+  the meaning it is described at http://en.wikipedia.org/wiki/Time_to_first_fix
+
+  See document MWTS.README under doc directory for detailed general 
+  information about mwts test modules.
+
+SOURCE CODE AND COMPILING
+
+  mwts-location is fetched and compiled normally. Check doc/MWTS.README.
+
+ENVIRONMENT REQUIREMENTS
+
+  To run the tests the device under test needs to have positioning capabilities and
+  it must be located so that it can receive GPS signals from at least 4 satellites
+
+EXECUTING TESTS
+
+  For generic information on how to execute mwts test check doc/MWTS.README.
+  
+  Asset specific information:
+    - before running any "cold fix" test case always reboot the device to make sure that
+      the device has not enough information to receive a "warm fix".
+    - it is possible that the positioning daemon is not running by default on the device,
+      in which case tester needs to start the daemon manually, how to do that
+      depends on tested platform
+
+TEST RESULTS
+
+  Test results are accessible normally. Check doc/MWTS.README.
+
+MIN SCRIPTER INTERFACE
+
+  RunLocationColdFix GPS | A-GPS
+    Runs "cold fix" test using the specified method.
+  RunLocationHotFix <GPS | A-GPS>
+    Runs "hot fix" test using the specified method.
+  RunGetLocation <GPS | A-GPS> <HOT | COLD>
+    Runs get one location fix test using the specified method.
+  CalculateDistances
+    Calculates center point, median distance, distance to nearest and most faraway point
+    from results received by RunGetLocation. This method works only if RunGetLocation has
+    been successfully called previously at least 2 times.
+
+KNOWN ISSUES

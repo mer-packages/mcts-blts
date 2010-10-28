@@ -1,0 +1,78 @@
+
+	MWTS-USB
+	--------
+
+
+INTRODUCTION
+
+  mwts-usb is a test package aimed for measuring USB network
+  performance and reliability. Verifying USB network speed and
+  reliability is important for delivering good end user experience
+  on the device.
+  
+  Test cases are using two different kind of measurements:
+   - iperf measurement tool and
+   - scp, SSH file transfer
+      
+  There are send and receive test cases for both measurement
+  type.
+
+  Questions: MWTSSupport@nokia.com
+
+  See document MWTS.README under doc directory for detailed general 
+  information about mwts test modules.
+
+SOURCE CODE AND COMPILING
+
+  mwts-usb is fetched and compiled normally. Check doc/MWTS.README.
+
+ENVIRONMENT REQUIREMENTS
+
+  In order to execute all tests on mwts-usb, you need following:
+  
+     * Master-slave setup between desktop and device (see doc/MWTS.README )
+        * Desktop is the master and device is the slave
+        
+     * Passwordless SSH login to device from desktop
+        * Automated Testing images includes ssh-keys (https://projects.maemo.org/trac/testautomation/wiki/sshkeys)
+        * To create your own ssh-keys in the desktop
+           * Type 'ssh-keygen' in the command line and leave passphrase empty
+           * Copy public SSH pair to the device by 'ssh-copy-id root@192.168.2.15'
+           * Now you should be able to create SSH connection without password
+             
+     * Default path for test files is /usr/share/mwts/testdata/
+        * Create files using dd:
+        * sudo mkdir -p /usr/share/mwts/testdata/
+        * sudo dd if=/dev/zero of=/usr/share/mwts/testdata/0512k.bin bs=1024 count=5
+        * sudo dd if=/dev/zero of=/usr/share/mwts/testdata/5MB.bin bs=1024 count=5000
+        * sudo dd if=/dev/zero of=/usr/share/mwts/testdata/640MB.bin bs=1024 count=640000
+
+
+EXECUTING TESTS
+
+  Test execution is done normally. Check doc/MWTS.README.
+
+TEST RESULTS
+
+  Test results are accessible normally. Check doc/MWTS.README.
+
+MIN SCRIPTER INTERFACE
+
+  SendFile ip <address> srcfile <src path> destfile <dest path>
+     use scp to transfer file from desktop to device
+  ReceiveFile ip <address> srcfile <src path> destfile <dest path>
+     use scp to transfer file from device to desktop
+  
+  mwts-common MIN interface:
+  
+  StartClientThroughput <server ip> <time>
+     uses iperf to measure throughput
+  StartServerThroughput
+     starts iperf server
+  StopThroughput
+     stops iperf measuring, if it is still running
+
+
+KNOWN ISSUES
+
+  - 640MB file transfer might fill up the disk space of device
