@@ -1,6 +1,4 @@
-#                                               -*- Autoconf -*-
-
-# configure.ac -- Autoconf script for blts-usb-tests
+# configure.ac -- Autoconf script
 #
 #  Copyright (C) 2000-2010, Nokia Corporation.
 #
@@ -16,15 +14,20 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-# Process this file with autoconf to produce a configure script.
-
-AC_PREREQ(2.61)
-AC_INIT(blts-usb-tests, 0.0.13, mikko.ojala@digia.com)
+AC_PREREQ(2.59)
+AC_INIT(blts-sensor-plugin-example, 0.1.2, pasi.matilainen@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
-AC_CONFIG_SRCDIR([src/blts-usb-testrunner.c])
+AC_CONFIG_SRCDIR([src/sensor-plugin-example.c])
 AC_CONFIG_HEADER([config.h])
+
+PLUGIN_LIBRARY_NAME=blts-sensor-plugins
+
+PKG_CHECK_MODULES([BLTSCOMMON],[bltscommon])
+
+configdir=`pkg-config bltscommon --variable=configdir`
+
+AC_DISABLE_STATIC
 
 # Checks for programs.
 AC_PROG_CC
@@ -36,30 +39,13 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-# Checks for libraries.
-AC_CHECK_LIB([m], [acosf])
-AC_CHECK_LIB([rt], [clock_gettime])
-
-# Library configs
-PKG_CHECK_MODULES([BLTS_COMMON], [bltscommon])
-
-AC_SUBST(BLTS_COMMON_CFLAGS)
-AC_SUBST(BLTS_COMMON_LIBS)
-
-configdir=`pkg-config bltscommon --variable=configdir`
+AC_SUBST(BLTSCOMMON_CFLAGS)
+AC_SUBST(BLTSCOMMON_LDFLAGS)
+AC_SUBST(BLTSCOMMON_LIBS)
 AC_SUBST(configdir)
 
-# Checks for header files.
-AC_HEADER_STDC
-
-# Checks for typedefs, structures, and compiler characteristics.
-
-# Checks for library functions.
-
-AC_CONFIG_FILES([
-	Makefile
+AC_CONFIG_FILES([Makefile
 	src/Makefile
-	driver-common/Makefile
-	common/Makefile
-])
+	data/Makefile])
+
 AC_OUTPUT

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tests.xml - Test case descriptions for automation tools.
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<testdefinition version="1.0">
+  <suite name="blts-watchdog-tests" domain="Core">
+    <set name="watchdog-tests" feature="Linux Kernel">
+      <case name="Core-Watchdog%20presence%20check">
+        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Watchdog_presence_check.log</step>
+      </case>
+      <case name="Core-Open%20and%20close%20watchdog">
+        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Open_and_close_watchdog.log</step>
+      </case>
+      <case name="Core-Send%20keepalive%20messages">
+        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Send_keepalive_messages.log</step>
+      </case>
+	  <get>
+		<file>/var/log/tests/Core-Watchdog_presence_check.log</file>
+		<file>/var/log/tests/Core-Open_and_close_watchdog.log</file>
+		<file>/var/log/tests/Core-Send_keepalive_messages.log</file>
+      </get>
+    </set>
+  </suite>
+</testdefinition>

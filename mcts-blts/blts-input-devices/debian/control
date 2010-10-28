@@ -1,0 +1,30 @@
+Source: blts-input-devices-tests
+Section: devel
+Priority: extra
+Maintainer: Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>
+Build-Depends:
+	debhelper (>= 5),
+	cdbs,
+	libbltscommon-dev (>= 0.2.4),
+	libx11-dev,
+	linux-kernel-headers
+Standards-Version: 3.8.0
+Homepage: http://wiki.meego.com/Quality/TestSuite/MCTS
+
+Package: blts-input-devices-tests
+Architecture: any
+Priority: optional
+Section: testing
+Depends: ${shlibs:Depends}, ${misc:Depends}, blts-input-devices-tests-config
+Recommends: min | min-all
+Description: BLTS input devices -test set
+ This package contains functional tests for input devices.
+
+Package: blts-input-devices-tests-config-example
+Architecture: any
+Priority: optional
+Section: testing
+Provides: blts-input-devices-tests-config
+Description: BLTS input devices -test configuration example
+ This package contains examples for creating a working configuration for
+ BLTS input devices functional tests.

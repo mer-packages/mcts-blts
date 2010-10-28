@@ -1,0 +1,10 @@
+* Fri 08 Oct 2010 Kari Laakso <kari.laakso@digia.com> - 0.1.2
+- Initial upload for Meego
+
+* Thu 08 Oct 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.1.1
+- Added RPM packaging
+- Configuration file is installed to /etc/blts
+
+* Fri 03 Sep 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.1.0
+- Initial Release.
+

@@ -1,0 +1,5 @@
+* Wed 29 Sep 2010 Kimmo Myllyvirta <Kimmo.Myllyvirta@digia.com> - 0.0.1
+- Initial upload for Meego
+- Test cases include; query information from configured input devices, and
+  simple touchscreen tests
+

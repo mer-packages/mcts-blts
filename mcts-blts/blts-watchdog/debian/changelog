@@ -1,0 +1,8 @@
+blts-watchdog-tests (0.0.6) unstable; urgency=low
+
+  * Initial upload for Meego
+  * Test cases include; querying watchdog information and sending keepalive
+    messages to watchdog
+
+ -- Kimmo Myllyvirta <Kimmo.Myllyvirta@digia.com>  Fri, 24 Sep 2010 13:36:10 +0300
+

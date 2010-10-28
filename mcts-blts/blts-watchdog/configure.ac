@@ -1,6 +1,6 @@
 #                                               -*- Autoconf -*-
 
-# configure.ac -- Autoconf script for blts-usb-tests
+# configure.ac -- Autoconf script for blts-watchdog
 #
 #  Copyright (C) 2000-2010, Nokia Corporation.
 #
@@ -20,10 +20,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-usb-tests, 0.0.13, mikko.ojala@digia.com)
+AC_INIT(blts-watchdog-tests, 0.0.6, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
-AC_CONFIG_SRCDIR([src/blts-usb-testrunner.c])
+AC_CONFIG_SRCDIR([src/blts_watchdog_test.c])
 AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
@@ -39,15 +39,19 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
+AC_CHECK_LIB([minevent], [min_event_create])
+AC_CHECK_LIB([mintmapi], [tm_printf])
+AC_CHECK_LIB([minutils], [mip_get_uint])
+
+AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Library configs
-PKG_CHECK_MODULES([BLTS_COMMON], [bltscommon])
+PKG_CHECK_MODULES(BLTS_COMMON, [
+        bltscommon
+])
 
 AC_SUBST(BLTS_COMMON_CFLAGS)
 AC_SUBST(BLTS_COMMON_LIBS)
-
-configdir=`pkg-config bltscommon --variable=configdir`
-AC_SUBST(configdir)
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -56,10 +60,10 @@ AC_HEADER_STDC
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([
-	Makefile
-	src/Makefile
-	driver-common/Makefile
-	common/Makefile
-])
+AC_CONFIG_FILES([     \
+	Makefile      \
+	src/Makefile  \
+	data/Makefile \
+	])
 AC_OUTPUT
+

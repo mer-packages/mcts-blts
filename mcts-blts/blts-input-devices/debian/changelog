@@ -1,0 +1,7 @@
+blts-input-devices-tests (0.0.1) unstable; urgency=low
+
+  * Initial upload for Meego
+  * Test cases include; query information from configured input devices, and
+    simple touchscreen tests
+
+ -- Kimmo Myllyvirta <Kimmo.Myllyvirta@digia.com>  Wed, 29 Sep 2010 11:52:29 +0300

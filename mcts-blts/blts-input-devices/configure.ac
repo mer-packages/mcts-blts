@@ -1,6 +1,6 @@
 #                                               -*- Autoconf -*-
 
-# configure.ac -- Autoconf script for blts-usb-tests
+# configure.ac -- Autoconf script for blts-input-devices
 #
 #  Copyright (C) 2000-2010, Nokia Corporation.
 #
@@ -20,11 +20,16 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-usb-tests, 0.0.13, mikko.ojala@digia.com)
+AC_INIT(blts-input-devices-tests, 0.0.1, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
-AC_CONFIG_SRCDIR([src/blts-usb-testrunner.c])
+AC_CONFIG_SRCDIR([src/blts_input_devices_test.c])
 AC_CONFIG_HEADER([config.h])
+
+PKG_CHECK_MODULES([BLTSCOMMON],[bltscommon])
+PKG_CHECK_MODULES([XLIB],[x11])
+
+configdir=`pkg-config bltscommon --variable=configdir`
 
 # Checks for programs.
 AC_PROG_CC
@@ -41,12 +46,14 @@ AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
 
 # Library configs
-PKG_CHECK_MODULES([BLTS_COMMON], [bltscommon])
+AC_SUBST(BLTSCOMMON_CFLAGS)
+AC_SUBST(BLTSCOMMON_LDFLAGS)
+AC_SUBST(BLTSCOMMON_LIBS)
 
-AC_SUBST(BLTS_COMMON_CFLAGS)
-AC_SUBST(BLTS_COMMON_LIBS)
+AC_SUBST(XLIB_CFLAGS)
+AC_SUBST(XLIB_LDFLAGS)
+AC_SUBST(XLIB_LIBS)
 
-configdir=`pkg-config bltscommon --variable=configdir`
 AC_SUBST(configdir)
 
 # Checks for header files.
@@ -56,10 +63,10 @@ AC_HEADER_STDC
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([
-	Makefile
-	src/Makefile
-	driver-common/Makefile
-	common/Makefile
-])
+AC_CONFIG_FILES([     \
+	Makefile      \
+	src/Makefile  \
+	data/Makefile \
+	])
 AC_OUTPUT
+

@@ -1,0 +1,9 @@
+blts-sensor-plugin-example (0.1.2) UNRELEASED; urgency=low
+
+  [ Pasi Matilainen ]
+  * Initial upload for Meego
+  * Added RPM packaging
+  * Configuration file is installed to /etc/blts
+
+ -- Kari Laakso <kari.laakso@digia.com>  Fri, 08 Oct 2010 15:54:23 +0300
+

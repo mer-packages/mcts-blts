@@ -1,6 +1,6 @@
 #                                               -*- Autoconf -*-
 
-# configure.ac -- Autoconf script for blts-usb-tests
+# configure.ac -- Autoconf script
 #
 #  Copyright (C) 2000-2010, Nokia Corporation.
 #
@@ -16,50 +16,58 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.61)
-AC_INIT(blts-usb-tests, 0.0.13, mikko.ojala@digia.com)
-AM_INIT_AUTOMAKE([-Wall gnu])
-AM_MAINTAINER_MODE
-AC_CONFIG_SRCDIR([src/blts-usb-testrunner.c])
+AC_PREREQ([2.61])
+AC_INIT([blts-fbdev-tests], [0.0.6], [mika.niinisto@digia.com])
+AM_INIT_AUTOMAKE([gnu])
 AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
+AC_ISC_POSIX
 AC_PROG_CC
-AM_PROG_CC_C_O
-AC_PROG_LIBTOOL
-AC_PROG_AWK
-AC_PROG_CPP
-AC_PROG_INSTALL
-AC_PROG_LN_S
-AC_PROG_MAKE_SET
+AM_PROG_CC_STDC
+AC_HEADER_STDC
+AM_PROG_LIBTOOL
+
+AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
+AC_CHECK_LIB([minevent], [min_event_create])
+AC_CHECK_LIB([mintmapi], [tm_printf])
+AC_CHECK_LIB([minutils], [mip_get_uint])
 
-# Library configs
-PKG_CHECK_MODULES([BLTS_COMMON], [bltscommon])
-
-AC_SUBST(BLTS_COMMON_CFLAGS)
-AC_SUBST(BLTS_COMMON_LIBS)
-
-configdir=`pkg-config bltscommon --variable=configdir`
-AC_SUBST(configdir)
+AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Checks for header files.
 AC_HEADER_STDC
-
-# Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADERS([fcntl.h float.h stdlib.h string.h sys/ioctl.h sys/time.h unistd.h])
 
 # Checks for library functions.
+AC_FUNC_FORK
+AC_FUNC_MALLOC
+AC_FUNC_MMAP
+AC_FUNC_REALLOC
+AC_CHECK_FUNCS([clock_gettime memset munmap strdup strerror strtol])
 
-AC_CONFIG_FILES([
+# Checks for common, needed packages
+PKG_CHECK_MODULES(BLTS_FBDEV, [
+        bltscommon
+])
+
+configdir=`pkg-config bltscommon --variable=configdir`
+
+AC_SUBST(BLTS_FBDEV_CFLAGS)
+AC_SUBST(BLTS_FBDEV_LDFLAGS)
+AC_SUBST(BLTS_FBDEV_LIBS)
+
+AC_SUBST(configdir)
+
+AC_OUTPUT([
 	Makefile
 	src/Makefile
-	driver-common/Makefile
-	common/Makefile
+	min-scripts/Makefile
+	data/Makefile
 ])
-AC_OUTPUT

@@ -1,0 +1,109 @@
+[parameter]
+	name test_type
+	const "none"
+[end_parameter]
+
+[parameter]
+	name input
+	const "value"
+[end_parameter]
+
+[parameter]
+	name duration
+	const 5
+[end_parameter]
+
+[parameter]
+	name expected_value
+	const ""
+[end_parameter]
+
+[parameter]
+	name max_noise
+	const 999990
+[end_parameter]
+
+[parameter]
+	name range_min
+	const 0
+[end_parameter]
+
+[parameter]
+	name range_max
+	const 1000
+[end_parameter]
+
+[parameter]
+	name range_deviation
+	const 1
+[end_parameter]
+
+[pgroup]
+	name rangeparams
+	range_min range_max range_deviation
+[end_pgroup]
+
+[parameter]
+	name plugin_seed_value
+	const 123 456
+[end_parameter]
+
+[parameter]
+	name plugin_max_value
+	const 1000
+[end_parameter]
+
+[test]
+	name "Example init test"
+	params input test_type
+	fix test_type "init"
+[end_test]
+
+[test]
+	name "Example range test 1"
+	params input test_type duration plugin_seed_value plugin_max_value
+	pgroup rangeparams
+	fix test_type "range"
+[end_test]
+
+[test]
+	name "Example range test 2"
+	params input test_type duration plugin_seed_value plugin_max_value
+	pgroup rangeparams
+	fix test_type "range"
+	fix plugin_max_value 1000000
+	fix range_max 1000000
+[end_test]
+
+[test]
+	name "Example noise test"
+	params input test_type duration plugin_seed_value plugin_max_value max_noise
+	fix test_type "noise"
+	fix plugin_seed_value 1
+	fix plugin_max_value 1000000
+	fix duration 1
+[end_test]
+
+[test]
+	name "Example no value change test"
+	params input test_type duration plugin_seed_value
+	fix test_type "no_value_change"
+	fix input "seed_value"
+	fix duration 0
+[end_test]
+
+[test]
+	name "Example value change test"
+	params input test_type duration plugin_seed_value plugin_max_value
+	fix test_type "value_change"
+	fix duration 0
+[end_test]
+
+[test]
+	name "Example value check test"
+	params input test_type expected_value plugin_seed_value
+	fix test_type "test_value"
+	fix plugin_seed_value 789
+	fix input "seed_value"
+	fix expected_value "789"
+[end_test]
