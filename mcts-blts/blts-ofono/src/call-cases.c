@@ -403,7 +403,7 @@ gboolean do_deflect(gpointer user_ptr)
 
 	LOG("-- Deflect to address:%s--\n", state->address);
 
-	if(!org_ofono_VoiceCall_deflect(state->voice_call, "12345", &error))
+	if(!org_ofono_VoiceCall_deflect(state->voice_call, state->address, &error))
 	{
 		display_dbus_glib_error(error);
 		g_error_free (error);
