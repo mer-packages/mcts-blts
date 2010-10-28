@@ -184,10 +184,7 @@ static gboolean sms_init_start(gpointer data)
 	memset(state->smsc, 0, sizeof *(state->smsc));
 
 	g_value_init(state->smsc, G_TYPE_STRING);
-	if (state->ofono_data->smsc_address)
-		g_value_set_string(state->smsc, state->ofono_data->smsc_address);
-	else
-		g_value_set_static_string(state->smsc, SMS_SMSC_ADDRESS);
+	g_value_set_string(state->smsc, state->ofono_data->smsc_address);
 
 	org_ofono_MessageManager_set_property_async(msg_manager, "ServiceCenterAddress", state->smsc,
 		sms_init_complete, state);
