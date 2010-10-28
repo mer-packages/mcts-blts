@@ -1922,7 +1922,7 @@ void print_crop_data(v4l2_dev_data *dev)
 		ret = ioctl_VIDIOC_G_CROP(dev->dev_fd, &crop, 0);
 		if(ret)
 		{
-			perror("VIDIOC_G_CROP\n");
+			BLTS_LOGGED_PERROR("VIDIOC_G_CROP");
 			return;
 		}
 		else
@@ -2038,7 +2038,7 @@ int crop_corners(v4l2_dev_data *dev, int loops)
 
 	if (-1 == ioctl_VIDIOC_CROPCAP(dev->dev_fd, &cropcap, 0))
 	{
-		perror ("VIDIOC_CROPCAP");
+		BLTS_LOGGED_PERROR("VIDIOC_CROPCAP");
 		return FALSE;
 	}
 
