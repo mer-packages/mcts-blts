@@ -1,3 +1,10 @@
+blts-usb-tests (0.0.13) unstable; urgency=low
+
+  [ Jussi Saavalainen ]
+  * Remove unused dependencies to glib and dbus-glib
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Thu, 28 Oct 2010 13:01:25 +0300
+
 blts-usb-tests (0.0.12) unstable; urgency=low
 
   [ Mika Niinistö, Jussi Saavalainen ]

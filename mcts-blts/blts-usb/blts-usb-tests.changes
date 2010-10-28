@@ -1,3 +1,6 @@
+* Thu 28 Oct 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.13
+- Remove unused dependencies to glib and dbus-glib
+
 * Wed 29 Sep 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.12
 - Separate platform configuration packaging
 - Add RPM packaging
