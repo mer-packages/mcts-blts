@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-usb-scripts" domain="Local Connectivity">
+
+    <set name="USB_Performance" description="USB network performance tests" type="Throughput" feature="USB">
+      <case name="NFT-USB-Send_throughput-THRO" subfeature="send" timeout="1800" description=
+        "Purpose 
+        This test case measures USB network throughput from desktop PC to test device.
+        Method
+        Iperf network tool is used to measure the performance, the test case makes 7 iterations and one iteration takes 180 seconds.
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Send_throughput-THRO'</step>
+      </case>
+      <case name="NFT-USB-Receive_throughput-THRO" subfeature="receive" timeout="1800" description=
+        "Purpose 
+        This test case measures USB network throughput from test device to desktop PC.
+        Method
+        Iperf network tool is used to measure the performance, the test case makes 7 iterations and one iteration takes 180 seconds.
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_throughput-THRO'</step>
+      </case>
+      <case name="NFT-USB-Send_512kb_file-THRO" subfeature="send" timeout="120" description=
+        "Purpose 
+        This test case measures USB network throughput with real file from desktop PC to test device.
+        Method
+        Scp program is used to measure the performance, the file (512kb) is copied from the PC's hard drive to the test device 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Send_512kb_file-THRO'</step>
+      </case>
+      <case name="NFT-USB-Receive_512kb_file-THRO" subfeature="receive" timeout="120" description=
+        "Purpose 
+        This test case measures USB network throughput with real file test device to desktop PC.
+        Method
+        Scp program is used to measure the performance, the file (512kb) is copied from the test device to the PC's hard drive 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Send case must be run before this, so the test data is available in the device.Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_512kb_file-THRO'</step>
+      </case>
+      <case name="NFT-USB-Send_5MB_file-THRO" subfeature="send" timeout="300" description=
+        "Purpose 
+        This test case measures USB network throughput with real file from desktop PC to test device.
+        Method
+        Scp program is used to measure the performance, the file (5MB) is copied from the PC's hard drive to the test device 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Send_5MB_file-THRO'</step>
+      </case>
+      <case name="NFT-USB-Receive_5MB_file-THRO" subfeature="receive" timeout="300" description=
+        "Purpose 
+        This test case measures USB network throughput with real file test device to desktop PC.
+        Method
+        Scp program is used to measure the performance, the file (5MB) is copied from the test device to the PC's hard drive 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Send case must be run before this, so the test data is available in the device.Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_5MB_file-THRO'</step>
+      </case>
+      <case name="NFT-USB-Send_640MB_file-THRO" subfeature="send" timeout="1200" description=
+        "Purpose 
+        This test case measures USB network throughput with real file from desktop PC to test device.
+        Method
+        Scp program is used to measure the performance, the file (640MB) is copied from the PC's hard drive to the test device 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Send_640MB_file-THRO'</step>
+      </case>
+      <case name="NFT-USB-Receive_640MB_file-THRO" subfeature="receive" timeout="1200" description=
+        "Purpose 
+        This test case measures USB network throughput with real file test device to desktop PC.
+        Method
+        Scp program is used to measure the performance, the file (640MB) is copied from the test device to the PC's hard drive 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Send case must be run before this, so the test data is available in the device.Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_640MB_file-THRO'</step>
+      </case>
+    </set>
+    
+    
+    <set name="USB_Relibiality" description="USB network reliability tests" feature="USB" type="Iterative">
+      <case name="NFT-USB-Send_512kb_file-ITER" subfeature="send" timeout="180" description=
+        "Purpose 
+        This test case measures USB network reliability from desktop PC to test device.
+        Method
+        Scp program is used to test reliability, the file (512kb) is copied from the PC's hard drive to the test device 120 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed.
+        ">
+        <step>min -c -t 'NFT-USB-Send_512kb_file-ITER'</step>
+      </case>
+      <case name="NFT-USB-Receive_512kb_file-ITER" subfeature="receive" timeout="180" description=
+        "Purpose 
+        This test case measures USB network reliability from test device to desktop PC.
+        Method
+        Scp program is used to test reliability, the file (512kb) is copied from the test device to the PC's hard drive 120 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Send case must be run before this, so the test data is available in the device.Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_512kb_file-ITER'</step>
+      </case>
+      <case name="NFT-USB-Send_5MB_file-ITER" subfeature="send" timeout="300" description=
+        "Purpose 
+        This test case measures USB network reliability from desktop PC to test device.
+        Method
+        Scp program is used to test reliability, the file (5MB) is copied from the PC's hard drive to the test device 120 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed.
+        ">	
+        <step>min -c -t 'NFT-USB-Send_5MB_file-ITER'</step>
+      </case>
+      <case name="NFT-USB-Receive_5MB_file-ITER" subfeature="receive" timeout="300" description=
+        "Purpose 
+        This test case measures USB network reliability from test device to desktop PC.
+        Method
+        Scp program is used to test reliability, the file (5MB) is copied from the test device to the PC's hard drive 120 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Send case must be run before this, so the test data is available in the device.Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_5MB_file-ITER'</step>
+      </case>
+    </set>
+
+    <set name="USB_LongLasting" description="USB network long-lasting tests" feature="USB" type="Long-lasting">
+      <case name="NFT-USB-Send_throughput_2h-LOLA" subfeature="send" timeout="600" description=
+        "Purpose 
+        This test case measures USB network reliability from desktop PC to test device with a long lasting transfer.
+        Method
+        Iperf network tool is used to measure the performance, test time is 2h.
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed after 2 hours of execution.
+        ">
+        <step>min -c -t 'NFT-USB-Send_throughput_2h-LOLA'</step>
+      </case>
+      <case name="NFT-USB-Receive_throughput_2h-LOLA" subfeature="receive" timeout="600" description=
+        "Purpose 
+        This test case measures USB network reliability from test device to desktop PC with a long lasting transfer.
+        Method
+        Iperf network tool is used to measure the performance, test time is 2h.
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed after 2 hours of execution.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_throughput_2h-LOLA'</step>
+      </case>
+    </set>
+    
+    <set name="USB_Functional" description="USB network functinal tests" feature="USB" type="Functional">
+      <case name="FUTE-USB-Send_throughput" subfeature="Send" timeout="600" description=
+        "Purpose 
+        This test case measures USB network functionality from device to PC
+        Method
+        Using iperf to verify that usb connection is working
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed if connection can be made and data can be transffered using iperf
+        ">
+        <step>min -c -t 'FUTE-USB-Send_throughput'</step>
+      </case>
+      <case name="FUTE-USB-Receive_throughput" subfeature="Receive" timeout="600" description=
+        "Purpose 
+        This test case measures USB network functionality from PC to device
+        Method
+        Using iperf to verify that usb connection is working
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed if connection can be made and data can be transffered using iperf
+        ">
+        <step>min -c -t 'FUTE-USB-Receive_throughput'</step>
+      </case>
+      <case name="FUTE-USB-Send_512kb_file" subfeature="Send" timeout="600" description=
+        "Purpose 
+        This test case measures USB network functionality from device to PC
+        Method
+        Using scp to transfer file and verify that usb connection is working
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed if connection can be made and file can be transffered using scp
+        ">
+        <step>min -c -t 'FUTE-USB-Send_512kb_file'</step>
+      </case>
+      <case name="FUTE-USB-Receive_512kb_file" subfeature="Receive" timeout="600" description=
+        "Purpose 
+        This test case measures USB network functionality from PC to device
+        Method
+        Using scp to transfer file and verify that usb connection is working
+        Pre-/Post-Conditions
+        Test asset is installed to the device and the desktop and MIN master-slave is set up between. Test case is executed in the desktop. Test can be executed as user or root.
+        Pass/Fail Criteria
+        Test case returns passed if connection can be made and file can be transffered using scp
+        ">
+        <step>min -c -t 'FUTE-USB-Receive_512kb_file'</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>
+
+

@@ -1,0 +1,17 @@
+mwts-location (0.0.3) unstable; urgency=low
+  * More clear scripter interface
+  * Refactoring
+  * Updating readme for opensourcing
+ -- Tuomo Pelkonen <tuomo.pelkonen@digia.com>  Tue, 21 Sep 2010 13:08:00 +0300
+
+mwts-location (0.0.2) unstable; urgency=low
+  * Added alltests.xml
+  * Added NFT functionality and test cases
+  * Added distance calculation functionality
+ -- Fabian Bertalan <ext-fabian.bertalan@nokia.com>  Thu, 29 Jul 2010 10:05:00 +0300
+
+mwts-location (0.0.1) unstable; urgency=low
+  * initial version
+ -- Fabian Bertalan <ext-fabian.bertalan@nokia.com>  Tue, 11 Aug 2009 15:11:00 +0200
+
+

@@ -1,0 +1,38 @@
+Source: mwts-telepathy-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libtelepathy-qt4-dev, libtelepathy-stamp-dev
+Maintainer: Arttu Valo <ext-arttu.valo@nokia.com> 
+Standards-Version: 3.8.0
+
+Package: mwts-telepathy
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0), libtelepathy-qt4-0, min
+Description: MWTS Telepathy
+ Telepathy test asset for Telepathy QT bindings
+ C++ interface
+
+Package: mwts-telepathy-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-telepathy, min
+Description: MWTS Telepathy test scripts
+ Telepathy test asset for Telepathy QT bindings
+ Min interface and test cases
+
+Package: mwts-telepathy-cli
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-telepathy, mwts-common
+Description: MWTS Telepathy
+ Telepathy test asset for Telepathy QT bindings
+ Command line interface interface
+
+Package: mwts-telepathy-doc
+Section: libs
+Architecture: any
+Depends: 
+Description: MWTS Telepathy documentation
+ Telepathy test asset for Telepathy QT bindings
+ Documentation

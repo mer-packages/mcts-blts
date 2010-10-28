@@ -1,0 +1,21 @@
+Source: mwts-location
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libqtm-location-dev|libqtm-dev
+Maintainer: Tuomo Pelkonen <tommi.toropainen@nokia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-location
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, libqtm-location, mwts-common(>=0.2.0)
+Description: MWTS 
+ Test asset for GNSS feature testing
+
+Package: mwts-location-tests
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-location, min
+Description: MWTS template
+ Test asset for GNSS feature testing
+ Min interface

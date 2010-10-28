@@ -1,0 +1,62 @@
+
+        mwts-sensors
+        -------------
+
+INTRODUCTION
+
+  Mwts-sensors contains tests for sensors.
+
+  Qt Mobility Sensors API tests are done for validating sensor functionality from API-level.
+
+
+SOURCE CODE AND COMPILING
+
+  Mwts-sensors is fetched and compiled normally. Check doc/MWTS.README.
+
+
+ENVIRONMENT REQUIREMENTS
+
+  Setting up test environment is done normally. Check doc/MWTS.README.
+
+
+EXECUTING TESTS
+
+  Mwts-sensors test execution is performed normally.  Check doc/MWTS.README.
+
+  NOTE you must move DUT while executing sensor test, when testing sensors metering DUT movement like rotation.
+
+  NOTE if running dataflow test cases for sensors and if you must know if sensors give right values and detect changes, you must must
+  run tests two times and change device conditions, because all sensors test just pass, if sensors give a value given it is correct or not.
+  Look details information of sensor tests functionality on MIN SCRIPTER INTERFACE.
+
+
+TEST RESULTS
+
+  Test results can be found from device in directory /var/log/tests/
+  Check doc/MWTS.README.
+
+MIN SCRIPTER INTERFACE
+
+  AccelerometerTestFunc
+    Tests that accelerometer gives data. Passed if accelometer sensor gives a value.
+  AmbientLightSensorTestFunc
+    Tests that Ambient Light sensors gives data. Passed if Ambient Light sensor gives a value.
+  CompassTestFunc
+    Tests that compass gives data. Passed if compass sensor gives a value.
+  MagnetometerTestFunc
+    Tests that magnetometer gives data. Passed if magnetometer sensor gives a value.
+  OrientationSensorTestFunc
+    Tests that orientation sensor gives data. Passed if orientation sensor gives a value.
+  ProximitySensorTestFunc
+    Test that proximity sensor gives data.  Passed if proximity sensor gives a value, so device is not needed to be covered and uncovered.
+  RotationSensorTestFunc
+    Tests that rotation sensor gives data. Passed if rotation sensor gives a value. If you don't move DUT, it does not rotate and you get zero values.
+    It's better to move DUT while testing.
+  TapSensorTestFunc
+    Tests that tap sensor gives data. Passed if tap sensor gives a value.
+    You must manually tap the screen by you finger or use some kind external device to play finger to get tap sensor values.
+
+Known Issues
+
+  No sensor is verified to work when running tests as user. Cases stuck. Running test as root works.
+  Tap sensor is unsure, sometimes work, sometimes not.

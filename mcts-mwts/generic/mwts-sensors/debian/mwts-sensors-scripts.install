@@ -1,0 +1,3 @@
+etc/min.d/mwts-sensors.min.conf
+usr/share/mwts-sensors-scripts/tests.xml
+usr/lib/min/*.cfg

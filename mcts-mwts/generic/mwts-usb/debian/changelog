@@ -1,0 +1,26 @@
+mwts-usb-tests (0.0.6) unstable; urgency=low
+  * Fixed documentation, code and test scripts for open sourcing
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Fri, 1 Oct 2010 10:41:00 +0200
+
+mwts-usb-tests (0.0.5) unstable; urgency=low
+  * Fixed NB#178311: 'mwts-usb-tests' failed to build validation image
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Tue, 10 Aug 2010 11:49:00 +0200
+
+mwts-usb-tests (0.0.4) unstable; urgency=low
+  * Changed source package name to mwts-usb-tests
+  * Cheched and fixed alltests.xml and tests.xml
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Tue, 15 Jun 2010 15:19:00 +0200
+
+mwts-usb (0.0.3) unstable; urgency=low
+  * Package overhauled
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Thu, 01 Apr 2010 10:18:00 +0200
+
+mwts-usb (0.0.2) unstable; urgency=low
+  * Send/Receive file throughput implemented
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Wed, 24 Feb 2010 10:14:00 +0200
+
+mwts-usb (0.0.1) unstable; urgency=low
+  * initial version
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Tue, 11 Aug 2009 15:11:00 +0200
+
+

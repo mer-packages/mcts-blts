@@ -1,0 +1,21 @@
+Source: mwts-usb-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev (>= 0.2.0), min-dev
+Maintainer: Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-usb
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-common (>= 0.2.0), libqt4-core, min
+Recommends: iperf
+Description: Test libraries for USB network
+ C++ and MIN test modules
+
+Package: mwts-usb-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-usb
+Description: Test cases for USB network
+ MIN test cases for measuring performance and reliability

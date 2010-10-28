@@ -1,0 +1,27 @@
+Source: mwts-sensors
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, libqtm-sensors-dev, mwts-common-dev(>=1.0.0), min-dev
+Maintainer: Reijo Korhonen <reijo.korhonen@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-sensors
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=1.0.0), libqtm-sensors
+Description: Test asset for Mobility Sensors
+ C++ and MIN module
+
+Package: mwts-sensors-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends},  mwts-sensors, min
+Description: Test cases for Mobility Sensors
+ MIN test cases
+
+Package: mwts-sensors-cli
+Section: apps
+Architecture: any
+Depends: ${shlibs:Depends},  mwts-sensors, min
+Description: Test cases for Mobility Sensors by command line
+ Application

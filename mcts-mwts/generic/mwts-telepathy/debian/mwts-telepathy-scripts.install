@@ -1,0 +1,3 @@
+etc/min.d/mwts-telepathy.min.conf
+usr/lib/min/*.cfg
+
