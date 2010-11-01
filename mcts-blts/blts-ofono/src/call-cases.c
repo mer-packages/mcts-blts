@@ -495,6 +495,48 @@ static gboolean call_user_timeout(gpointer data)
 	return FALSE;
 }
 
+static gboolean check_call_count(struct call_case_state *state, int expected_count)
+{
+	GPtrArray* array;
+	GError *error;
+	int count;
+	
+	if(!org_ofono_VoiceCallManager_get_calls(state->voice_call_manager, &array, &error))
+	{
+		display_dbus_glib_error(error);
+		g_error_free (error);
+		return FALSE;
+	}
+	else
+	{
+		if(!array)
+		{
+			count = 0;
+		}
+		else
+		{	
+			int i;		
+			for (i = 0; i < (int) array->len; i++)
+			{
+				GValueArray *call = g_ptr_array_index (array, i);
+				char *path = g_value_get_boxed (g_value_array_get_nth (call, 0));
+				GHashTable *properties = g_value_get_boxed (g_value_array_get_nth (call, 1));
+						
+				BLTS_TRACE("%s\n", path);										
+				g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+			}
+			count = i;	
+		}
+	}
+	
+	BLTS_TRACE("Expected call count:%d - current call count:%d\n", expected_count, count);
+	if(expected_count != -1)
+		if(expected_count != count)
+			return FALSE;
+	
+	return TRUE;	
+}
+
 static gboolean call_init_start(gpointer data)
 {
 	FUNC_ENTER();
@@ -529,6 +571,13 @@ static gboolean call_init_start(gpointer data)
 			DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
 		dbus_g_proxy_connect_signal(state->voice_call_manager, "CallRemoved",
 			state->signalcb_VoiceCallManager_CallRemoved, data, 0);
+	}
+
+	if(!check_call_count(state, 0)) {
+		LOG("Previous calls left in system! - test failed\n");
+		state->result = -1;
+		g_main_loop_quit(state->mainloop);
+		return FALSE;
 	}
 
 	if (state->case_begin)

@@ -124,24 +124,6 @@ error:
 	return -1;	
 }
 
-static
-void hangup_all_calls(struct multipart_call_case_state* state)
-{
-	GError *error = NULL;
-	if(!org_ofono_VoiceCallManager_hangup_all(state->voice_call_manager, &error))
-	{
-		display_dbus_glib_error(error);
-		g_error_free (error);
-		LOG("Cannot hangup calls! - test failed\n");
-		state->result = -1;
-		g_main_loop_quit(state->mainloop);
-	}
-	else
-	{
-		state->result = 0;
-	}
-}
-
 static gboolean do_hangup_all(gpointer user_ptr)
 {
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_ptr;
@@ -468,7 +450,7 @@ static gboolean call_user_timeout(gpointer data)
 	return FALSE;
 }
 
-gboolean check_call_count(struct multipart_call_case_state *state, int expected_count)
+static gboolean check_call_count(struct multipart_call_case_state *state, int expected_count)
 {
 	GPtrArray* array;
 	GError *error;
@@ -531,9 +513,6 @@ static gboolean call_init_start(gpointer data)
 	}
 
 	state->voice_call_manager = voice_call_manager;
-
-	/* Ensure that there is no previous calls in system */
-	hangup_all_calls(state);
 
 	if (state->signalcb_VoiceCallManager_PropertyChanged) {
 			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",

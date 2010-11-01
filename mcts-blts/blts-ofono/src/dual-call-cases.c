@@ -647,7 +647,7 @@ static gboolean call_user_timeout(gpointer data)
 	return FALSE;
 }
 
-gboolean check_call_count(struct dual_call_case_state *state, int expected_count)
+static gboolean check_call_count(struct dual_call_case_state *state, int expected_count)
 {
 	GPtrArray* array;
 	GError *error;
@@ -711,10 +711,6 @@ static gboolean call_init_start(gpointer data)
 
 	state->voice_call_manager = voice_call_manager;
 
-	/* Ensure that there is no previous calls in system */
-	BLTS_TRACE("Hangup previous calls...\n");
-	hangup_all_calls(state);
-
 	if (state->signalcb_VoiceCallManager_CallAdded) {
 	dbus_g_proxy_add_signal(state->voice_call_manager, "CallAdded",
 			DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", 
@@ -730,6 +726,13 @@ static gboolean call_init_start(gpointer data)
 	
 	dbus_g_proxy_connect_signal(state->voice_call_manager, "CallRemoved",
 		state->signalcb_VoiceCallManager_CallRemoved, data, 0);
+	}
+	
+	if(!check_call_count(state, 0)){
+		LOG("Previous calls left in system! - test failed\n");
+		state->result = -1;
+		g_main_loop_quit(state->mainloop);
+		return FALSE;
 	}
 	
 	if (state->case_begin)
@@ -796,15 +799,6 @@ done:
 static gboolean call_listen_start(__attribute__((unused))gpointer data)
 {
 	FUNC_ENTER();
-
-	struct dual_call_case_state *state = (struct dual_call_case_state *) data;
-
-	if(!check_call_count(state, 0))
-	{
-		LOG("Previous calls left in system! - test failed\n");
-		state->result = -1;
-		g_main_loop_quit(state->mainloop);
-	}
 
 	LOG("Start listening calls...\n");
 
