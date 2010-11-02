@@ -312,6 +312,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		CONFIG_PARAM_STRING, "country_code", "+000",
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_STRING, "SMSC", "+000123456789",
+		CONFIG_PARAM_STRING, "bearer", "cs-preferred",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -319,6 +320,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Receive SMS",
 		sms_recv_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "SMSC", "+000123456789",
+		CONFIG_PARAM_STRING, "bearer", "cs-preferred",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -407,6 +409,9 @@ static void my_ofono_teardown(void *user_ptr)
 
 		if (data->smsc_address)
 			free(data->smsc_address);
+
+		if (data->bearer)
+			free(data->bearer);
 
 		if (data->forward_address)
 			free(data->forward_address);

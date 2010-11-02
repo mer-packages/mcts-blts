@@ -33,6 +33,7 @@ typedef struct
 
 	char *remote_address;
 	char *smsc_address;
+	char *bearer;
 	char *sms_generated_message;
 	char *forward_address;
 

@@ -110,14 +110,19 @@
 	const "+000123456789"
 [end_parameter]
 
+[parameter]
+	name bearer
+	const "cs-only" "ps-only"
+[end_parameter]
+
 [test]
 	name "oFono - Send SMS"
-	params sms_message country_code remote_address SMSC
+	params sms_message country_code remote_address SMSC bearer
 [end_test]
 
 [test]
 	name "oFono - Receive SMS"
-	params SMSC
+	params SMSC bearer
 [end_test]
 
 #############

@@ -44,6 +44,7 @@ struct sms_case_state {
 	my_ofono_data *ofono_data;
 
 	GValue *smsc;
+	GValue *bearer;
 
 	DBusGProxy *message_proxy;
 	gchar* message_state;
@@ -70,7 +71,9 @@ static void sms_state_finalize(struct sms_case_state *state)
 	if (state->message)
 		free(state->message);
 	if (state->smsc)
-		free(state->smsc);
+		g_free(state->smsc);
+	if (state->bearer)
+		g_free(state->bearer);
 	if (state->message_proxy)
 		g_object_unref(state->message_proxy);
 	if (state->message_state)
@@ -180,8 +183,24 @@ static gboolean sms_init_start(gpointer data)
 
 	state->msg_manager = msg_manager;
 
-	state->smsc = malloc(sizeof *(state->smsc));
-	memset(state->smsc, 0, sizeof *(state->smsc));
+	state->bearer = calloc(1, sizeof(*state->bearer));
+	g_value_init(state->bearer, G_TYPE_STRING);
+	if (state->ofono_data->bearer)
+	{
+		GError* error = NULL;
+		g_value_set_string(state->bearer, state->ofono_data->bearer);
+		org_ofono_MessageManager_set_property(msg_manager, "Bearer", state->bearer, &error);
+		if (error)
+		{
+			display_dbus_glib_error(error);
+			g_error_free(error);
+			state->result = -1;
+			g_main_loop_quit(state->mainloop);
+			return FALSE;
+		}
+	}
+
+	state->smsc = calloc(1, sizeof(*state->smsc));
 
 	g_value_init(state->smsc, G_TYPE_STRING);
 	g_value_set_string(state->smsc, state->ofono_data->smsc_address);
@@ -368,8 +387,6 @@ static void sms_receive_test_incoming_message_cb(__attribute__((unused)) DBusGPr
 	FUNC_LEAVE();
 }
 
-
-
 /* Return from the send call. */
 static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *message_path, GError *error, gpointer data)
 {
@@ -386,12 +403,13 @@ static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *m
 		
 		state->message_path = g_strdup(message_path);
 
+		// Get a DBus proxy for the message
 		DBusGProxy *message;
 		message = dbus_g_proxy_new_for_name(state->ofono_data->connection,
 			OFONO_BUS, message_path, "org.ofono.Message");
-
-		if (!message) {
-			BLTS_ERROR("Cannot get proxy for org.ofono.Message %s\n", message_path);
+		if (!message)
+		{
+			BLTS_ERROR("Cannot get proxy for org.ofono.Message %s\n",message_path);
 			state->result = -1;
 			g_main_loop_quit(state->mainloop);
 			return;
@@ -399,6 +417,7 @@ static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *m
 
 		state->message_proxy = message;
 
+		// Hook the PropertyChanged signal of the message
 		dbus_g_proxy_add_signal(message, "PropertyChanged",
 			G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
 		dbus_g_proxy_connect_signal(message, "PropertyChanged",
@@ -686,6 +705,8 @@ int ofono_sms_center_number(void* user_ptr, __attribute__((unused)) int testnum)
 void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *sms_generated_msg = NULL, *addr_prefix = NULL, *remote_addr = NULL, *smsc_addr = NULL;
+	char *bearer = NULL;
+
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -697,6 +718,8 @@ void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 	remote_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	smsc_addr = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	bearer = strdup(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -704,6 +727,7 @@ void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 	{
 		if (asprintf(&data->remote_address, "%s%s", addr_prefix, remote_addr) < 0)
 		{
+			free(bearer);
 			free(smsc_addr);
 			free(remote_addr);
 			free(addr_prefix);
@@ -725,22 +749,28 @@ void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 	else
 		data->smsc_address = smsc_addr;
 
+	data->bearer = bearer;
+
 	return data;
 }
 
 void *sms_recv_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
-        char *smsc_addr = NULL;
+        char *smsc_addr = NULL, *bearer = NULL;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
 	smsc_addr = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	bearer = strdup(blts_config_boxed_value_get_string(args));
 
 	if (data->smsc_address)
 		free(smsc_addr);
 	else
 		data->smsc_address = smsc_addr;
+
+	data->bearer = bearer;
 
 	return data;
 }
