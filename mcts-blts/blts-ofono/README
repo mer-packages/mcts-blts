@@ -28,17 +28,6 @@ Alternatively, the packagin can be skipped by just running with Autotools:
  $ ./configure
  $ make
 
-
-Setting up modem before running other test cases
-
-If modem is not already up and running online you should run following 
-tests before any other test:
- blts-ofono-tests -e 4
-to get it up and 
- blts-ofono-tests -e 5
-to get it to connect
-
-
 Running the tests
 
 blts-ofono-tests
@@ -211,9 +200,6 @@ Call barrings:
 
   * oFono - Change password for barrings
      Change password
-     Extra command line parameters:
-	       -n <code> : New PIN
-	       -o <code> : Old PIN
 
   * oFono - Call barrings test
   	Sets different call barrings.

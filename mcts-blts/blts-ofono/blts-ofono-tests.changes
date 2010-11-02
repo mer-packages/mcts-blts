@@ -1,3 +1,8 @@
+* Thu 28 Oct 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.1.13  
+- Fixed call forwarding tests for oFono 0.31
+- Fixed call barring tests for oFono 0.31
+- Added modem power on and online checks to test case inits  
+
 * Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.1.12
 - Add RPM packaging
 - Fixed segfault in microphone volume test case

@@ -1,3 +1,13 @@
+blts-ofono-tests (0.1.13) unstable; urgency=low
+
+  [ Mikko Ojala ]
+  * Fixed call forwarding tests for oFono 0.31
+  * Fixed call barring tests for oFono 0.31
+  * Added modem power on and online checks to test case inits  
+  
+ -- Mikko Ojala <mikko.ojala@digia.com>  Thu, 28 Oct 2010 15:23:13 +0300
+
+
 blts-ofono-tests (0.1.12) unstable; urgency=low
 
   [ Pasi Matilainen, Mika Niinistö, Kimmo Myllyvirta ]
