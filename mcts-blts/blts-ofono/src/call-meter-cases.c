@@ -53,7 +53,6 @@ struct call_meter_case_state {
 
 	my_ofono_data *ofono_data;
 
-	GCallback signalcb_VoiceCallManager_PropertyChanged;
 	GCallback signalcb_CallMeter_PropertyChanged;
 	GCallback signalcb_CallMeter_NearMaximumWarning;
 
@@ -61,27 +60,6 @@ struct call_meter_case_state {
 	gboolean warning_received;
 	int result;
 };
-
-/**
- * Signal handler
- * Can be used to check call manager state changes
- */
-
-static void on_voice_call_manager_property_changed(__attribute__((unused))DBusGProxy *proxy, char *key, GValue* value, __attribute__((unused))gpointer user_data)
-{
-	char* value_str = g_strdup_value_contents (value);
-
-	if( (strcmp(key, "Calls") == 0) )
-	{
-		LOG("Call list modification > \n");
-	}
-	else
-	{
-		LOG("VoiceCallManager property: %s changed to %s\n ", key, value_str);
-	}
-
-	free(value_str);
-}
 
 /**
  * Signal handler
@@ -94,7 +72,7 @@ static void on_call_meter_property_changed(__attribute__((unused))DBusGProxy *pr
 
 	LOG("Callmeter property: %s changed to %s\n ", key, value_str);
 
-	free(value_str);
+	g_free(value_str);
 }
 
 /* NearMaximumWarning is emitted shortly before the ACM maximum value is reached.
@@ -612,13 +590,6 @@ static gboolean call_meter_init_start(gpointer data)
 
 	state->call_meter = call_meter;
 
-	if (state->signalcb_VoiceCallManager_PropertyChanged) {
-			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",
-					G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
-				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
-		}
-
 	if (state->signalcb_CallMeter_PropertyChanged) {
 				dbus_g_proxy_add_signal(state->call_meter, "PropertyChanged",
 						G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
@@ -953,8 +924,6 @@ int blts_ofono_read_call_meter_data(void* user_ptr, __attribute__((unused)) int 
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
 
@@ -995,8 +964,6 @@ int blts_ofono_set_call_meter_data(void* user_ptr, __attribute__((unused)) int t
 	}
 
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
 
@@ -1023,8 +990,6 @@ int blts_ofono_reset_call_meter_data(void* user_ptr, __attribute__((unused)) int
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->pin = strdup((data->old_pin) ? (data->old_pin) : "31337");
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
 
@@ -1051,8 +1016,6 @@ int blts_ofono_test_near_max_warning(void* user_ptr, __attribute__((unused)) int
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->pin = strdup((data->old_pin) ? (data->old_pin) : "31337");
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
-	test->signalcb_VoiceCallManager_PropertyChanged =
-		G_CALLBACK(on_voice_call_manager_property_changed);
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
 	test->signalcb_CallMeter_NearMaximumWarning =

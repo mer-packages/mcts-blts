@@ -51,7 +51,6 @@ struct call_volume_case_state {
 
 	my_ofono_data *ofono_data;
 
-	GCallback signalcb_VoiceCallManager_PropertyChanged;
 	GCallback signalcb_CallVolume_PropertyChanged;
 
 	int result;
@@ -116,8 +115,9 @@ static void on_call_volume_property_changed(__attribute__((unused))DBusGProxy *p
 	gboolean restored = TRUE;
 	GError *error = NULL;
 	struct call_volume_case_state *state = (struct call_volume_case_state *) user_data;
-
-	LOG("CallVolume property: %s changed to %s\n ", key, g_strdup_value_contents (value));
+	gchar *value_str = g_strdup_value_contents (value);
+	
+	LOG("CallVolume property: %s changed to %s\n ", key, value_str);
 
 	if (state->signalcb_CallVolume_PropertyChanged)
 	{
@@ -148,6 +148,7 @@ static void on_call_volume_property_changed(__attribute__((unused))DBusGProxy *p
 			state->result = -1;
 	}
 
+	g_free(value_str);
 	g_main_loop_quit(state->mainloop);
 }
 
@@ -166,13 +167,13 @@ static void call_volume_state_finalize(struct call_volume_case_state *state)
 		free(state->address);
 
 	if (state->initial_microphone_volume)
-		free(state->initial_microphone_volume);
+		g_free(state->initial_microphone_volume);
 
 	if (state->initial_speaker_volume)
-		free(state->initial_speaker_volume);
+		g_free(state->initial_speaker_volume);
 
 	if (state->initial_mute_state)
-		free(state->initial_mute_state);
+		g_free(state->initial_mute_state);
 
 	free(state);
 }
@@ -224,13 +225,6 @@ static gboolean call_volume_init_start(gpointer data)
 	}
 
 	state->call_volume = call_volume;
-
-	if (state->signalcb_VoiceCallManager_PropertyChanged) {
-			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",
-					G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
-				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
-		}
 
 	if (state->signalcb_CallVolume_PropertyChanged) {
 				dbus_g_proxy_add_signal(state->call_volume, "PropertyChanged",
@@ -645,7 +639,6 @@ int blts_ofono_set_microphone_volume(void* user_ptr, __attribute__((unused)) int
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->new_microphone_volume = strdup((data->volume) ? (data->volume) : "null");
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_CallVolume_PropertyChanged =
 		G_CALLBACK(on_call_volume_property_changed);
 
@@ -671,7 +664,6 @@ int blts_ofono_set_speaker_volume(void* user_ptr, __attribute__((unused)) int te
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->new_speaker_volume = strdup((data->volume) ? (data->volume) : "null");
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_CallVolume_PropertyChanged =
 		G_CALLBACK(on_call_volume_property_changed);
 
@@ -695,7 +687,6 @@ int blts_ofono_set_muted(void* user_ptr, __attribute__((unused)) int testnum)
 		return -1;
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_CallVolume_PropertyChanged =
 		G_CALLBACK(on_call_volume_property_changed);
 
