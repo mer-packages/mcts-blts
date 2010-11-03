@@ -467,6 +467,26 @@ void blts_config_dump_boxed_value_list_on_log(struct boxed_value *v)
 	LOG("]");
 }
 
+void blts_config_dump_labeled_value_list_on_log(struct boxed_value *labels, struct boxed_value *v)
+{
+	if (!v) {
+		LOG("[]");
+		return;
+	}
+	LOG("[");
+	while (v) {
+		if(labels) {
+			LOG("%s", blts_config_boxed_value_get_string(labels));
+			labels = labels->next;
+		}
+		LOG(":");
+		dump_boxed_value_log(v);
+		if ((v = v->next))
+			LOG(", ");
+	}
+	LOG("]");
+}
+
 static void dump_param_generated_args(struct param_generated_args *g)
 {
 	unsigned i;
@@ -1678,8 +1698,35 @@ done:
 	return variants;
 }
 
+/* Return list of strings with names of parameters the given
+ * variation-enabled test uses (NULL==error/none available) */
+struct boxed_value *blts_config_get_test_param_names(char *variant_test_name)
+{
+	struct test_param_list *params = NULL, *fixed_params = NULL, *p;
+	struct boxed_value *fixed_values = NULL, *ret = NULL, *val;
+	int err;
 
+	err = collect_test_params(variant_test_name, &params, &fixed_params,
+				  &fixed_values);
 
+	if(err)
+		goto done;
+
+	p = params;
+	while(p) {
+		val = blts_config_boxed_value_new_string(p->param->key);
+		val->next = ret;
+		ret = val;
+		p = p->next;
+	}
+
+done:
+	test_param_list_free(params);
+	test_param_list_free(fixed_params);
+	while (fixed_values)
+		fixed_values = blts_config_boxed_value_free(fixed_values);
+	return blts_config_boxed_value_list_reverse(ret);
+}
 
 /* Declare given test case able to use parameter variation according to
    config file loaded. After this, running the test case results in
