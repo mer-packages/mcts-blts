@@ -203,10 +203,12 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 	unsigned int time_elapsed = 0;
 	unsigned int real_timeout = timout_override?timout_override:testcase->timeout;
 	struct variant_list *test_variants = 0, *failed_variants = 0, *temp_var;
+	struct boxed_value *variant_param_names = NULL;
 	unsigned n_variations = 0;
 
 	if (blts_config_test_is_variable(testcase->case_name)) {
 		test_variants = blts_config_generate_test_variations(testcase->case_name, var_style);
+		variant_param_names = blts_config_get_test_param_names(testcase->case_name);
 	}
 
 	pid_t pid;
@@ -229,7 +231,8 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 			if(test_variants) {
 				LOG("\n----------------------------------------------------------------\n");
 				LOG("Variant %d, parameters: ", n_variations);
-				blts_config_dump_boxed_value_list_on_log(test_variants->values);
+				blts_config_dump_labeled_value_list_on_log(variant_param_names,
+									   test_variants->values);
 				LOG("\n");
 				/* Process test variation parameters */
 				user_ptr = _blts_config_mutate_user_params(testcase->case_name, test_variants->values, user_ptr);
@@ -273,7 +276,8 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 		if (test_variants) {
 			if (ret) {
 				LOGERR("Test failed for values: ");
-				blts_config_dump_boxed_value_list_on_log(test_variants->values);
+				blts_config_dump_labeled_value_list_on_log(variant_param_names,
+									   test_variants->values);
 				LOGERR("\n");
 				temp_var = malloc(sizeof *temp_var);
 				temp_var->values = blts_config_boxed_value_list_dup(test_variants->values);
@@ -292,7 +296,8 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 
 		while (failed_variants) {
 			LOGERR("\t");
-			blts_config_dump_boxed_value_list_on_log(failed_variants->values);
+			blts_config_dump_labeled_value_list_on_log(variant_param_names,
+								   failed_variants->values);
 			LOGERR("\n");
 			temp_var = failed_variants;
 			failed_variants = failed_variants->next;
@@ -300,6 +305,9 @@ static int run_test(int testnum, blts_cli_testcase* testcase, void* user_ptr,
 			free(temp_var);
 		}
 	}
+
+	while(variant_param_names)
+		variant_param_names = blts_config_boxed_value_free(variant_param_names);
 
 	return ret;
 }
