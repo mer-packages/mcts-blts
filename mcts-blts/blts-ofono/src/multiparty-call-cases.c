@@ -34,8 +34,8 @@ enum MultiPartyStages
 {
 	MP_UNDEFINED = -1,
 	MP_INIT,
-	MP_MULTIPARTY_CREATED1,
-	MP_MULTIPARTY_CREATED2,	
+	MP_MULTIPARTY_WITH_TWO_CREATED,
+	MP_MULTIPARTY_WITH_THREE_CREATED,	
 	MP_PRIVATE_CHAT,
 	MP_HANGUP,
 	MP_LAST
@@ -58,9 +58,7 @@ struct multipart_call_case_state {
 	int call_index;
 	my_ofono_data *ofono_data;
 
-	GCallback signalcb_VoiceCallManager_PropertyChanged;
-	GCallback signalcb_VoiceCall_PropertyChanged[MAX_VOICECALLS];
-	
+	GCallback signalcb_VoiceCall_PropertyChanged[MAX_VOICECALLS];	
 	GCallback signalcb_VoiceCallManager_CallAdded;
 	GCallback signalcb_VoiceCallManager_CallRemoved;
 	
@@ -514,12 +512,6 @@ static gboolean call_init_start(gpointer data)
 
 	state->voice_call_manager = voice_call_manager;
 
-	if (state->signalcb_VoiceCallManager_PropertyChanged) {
-			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",
-					G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
-				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
-	}
 	if (state->signalcb_VoiceCallManager_CallAdded) {
 		dbus_g_proxy_add_signal(state->voice_call_manager, "CallAdded",
 			DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", 
@@ -618,8 +610,8 @@ char* get_multiparty_stage_str(enum MultiPartyStages stage)
 	{
 		case MP_UNDEFINED: return "MP_UNDEFINED"; 	
 		case MP_INIT: return "MP_INIT"; 	
-		case MP_MULTIPARTY_CREATED1: return "MP_MULTIPARTY_CREATED1"; 	
-		case MP_MULTIPARTY_CREATED2: return "MP_MULTIPARTY_CREATED2"; 	
+		case MP_MULTIPARTY_WITH_TWO_CREATED: return "MP_MULTIPARTY_WITH_TWO_CREATED"; 	
+		case MP_MULTIPARTY_WITH_THREE_CREATED: return "MP_MULTIPARTY_WITH_THREE_CREATED"; 	
 		case MP_PRIVATE_CHAT: return "MP_PRIVATE_CHAT"; 	
 		case MP_HANGUP: return "MP_HANGUP";
 		default:
@@ -676,7 +668,8 @@ void on_voice_call_manager_create_multiparty_reply(__attribute__((unused))DBusGP
 		g_error_free(error);
 		BLTS_WARNING("Could not create multiparty call!\n");
 		state->result = -1;
-		g_main_loop_quit(state->mainloop);		
+		g_main_loop_quit(state->mainloop);
+		return;		
 	}
 
 	LOG("Calls in multiparty call:\n");
@@ -685,9 +678,9 @@ void on_voice_call_manager_create_multiparty_reply(__attribute__((unused))DBusGP
 
 	/* update to the next stage */
 	if(state->test_stage == MP_INIT)
-		state->test_stage = MP_MULTIPARTY_CREATED1;
-	else if	(state->test_stage == MP_MULTIPARTY_CREATED1)
-		state->test_stage = MP_MULTIPARTY_CREATED2;
+		state->test_stage = MP_MULTIPARTY_WITH_TWO_CREATED;
+	else if	(state->test_stage == MP_MULTIPARTY_WITH_TWO_CREATED)
+		state->test_stage = MP_MULTIPARTY_WITH_THREE_CREATED;
 	else
 		state->test_stage = MP_UNDEFINED;	
 }
@@ -701,10 +694,11 @@ void on_voice_call_manager_private_chat_reply (__attribute__((unused))DBusGProxy
 		g_error_free(error);
 		BLTS_WARNING("Could not create private chat!\n");
 		state->result = -1;
-		g_main_loop_quit(state->mainloop);		
+		g_main_loop_quit(state->mainloop);
+		return;		
 	}	
 	
-	LOG("Calls in private chat:\n");
+	LOG("Calls left in multiparty call:\n");
 	g_ptr_array_foreach(calls, pointer_array_foreach, NULL);
 	g_ptr_array_free(calls, TRUE);
 	
@@ -726,14 +720,18 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 	if(state->number_voice_calls == 2 && state->test_stage == MP_INIT)
 	{
 		/* Create multiparty when we have 2 calls in */
+		if(!check_call_count(state, 2))
+			goto error;
 		LOG("%s: Creating multiparty call\n", stage_str);		
 		org_ofono_VoiceCallManager_create_multiparty_async (state->voice_call_manager, 
 		on_voice_call_manager_create_multiparty_reply, state);
 	}
-	else if(state->number_voice_calls == 2 && state->test_stage == MP_MULTIPARTY_CREATED1)
+	else if(state->number_voice_calls == 2 && state->test_stage == MP_MULTIPARTY_WITH_TWO_CREATED)
 	{
 		/* Hang up multiparty */
 		LOG("%s: Hang up multiparty call\n", stage_str);
+		if(!check_call_count(state, 2))
+			goto error;
 		if (state->call_hangup_method)
 		{
 			g_timeout_add(state->user_timeout, (GSourceFunc) call_user_timeout, state);
@@ -755,6 +753,11 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 
 	FUNC_LEAVE();
 	return TRUE;
+error:
+	BLTS_WARNING("%s: invalid call count %d for this stage!\n", stage_str, state->number_voice_calls);
+	state->result = -1;
+	g_main_loop_quit(state->mainloop);
+	return FALSE;
 }
 
 /**
@@ -773,23 +776,29 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	if(state->number_voice_calls == 2 && state->test_stage == MP_INIT)
 	{
 		/* Create multiparty when we have 2 calls in */
-		LOG("%s: Creating multiparty call phase 1\n", stage_str);		
+		LOG("%s: Creating multiparty call phase 1\n", stage_str);
+		if(!check_call_count(state, 2))
+			goto error;		
 		org_ofono_VoiceCallManager_create_multiparty_async (state->voice_call_manager, 
 		on_voice_call_manager_create_multiparty_reply, state);
 	}
 		
-	else if(state->number_voice_calls == 3 && state->test_stage == MP_MULTIPARTY_CREATED1)
+	else if(state->number_voice_calls == 3 && state->test_stage == MP_MULTIPARTY_WITH_TWO_CREATED)
 	{
 		/* Create multiparty with 3rd call */
 		LOG("%s: Creating multiparty call phase 2\n", stage_str);
+		if(!check_call_count(state, 3))
+			goto error;	
 		org_ofono_VoiceCallManager_create_multiparty_async (state->voice_call_manager, 
 		on_voice_call_manager_create_multiparty_reply, state);
 	}
 
-	else if(state->number_voice_calls == 3 && state->test_stage == MP_MULTIPARTY_CREATED2)
+	else if(state->number_voice_calls == 3 && state->test_stage == MP_MULTIPARTY_WITH_THREE_CREATED)
 	{
 		/* Create private chat */
 		LOG("%s: Creating private chat with first call\n", stage_str);
+		if(!check_call_count(state, 3))
+			goto error;
 		org_ofono_VoiceCallManager_private_chat_async (state->voice_call_manager, 
 		(const char*)state->voice_call_path[PRIVATE_CHAT_CALL_INDEX], 
 		on_voice_call_manager_private_chat_reply, state);
@@ -799,7 +808,8 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	{
 		/* Hang up all calls */
 		LOG("%s: Hang up all after private chat has been established\n", stage_str);
-
+		if(!check_call_count(state, 3))
+			goto error;
 		if (state->call_hangup_method)
 		{
 			g_timeout_add(state->user_timeout, (GSourceFunc) call_user_timeout, state);
@@ -821,6 +831,11 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 
 	FUNC_LEAVE();
 	return TRUE;
+error:
+	BLTS_WARNING("%s: invalid call count %d for this stage!\n", stage_str, state->number_voice_calls);
+	state->result = -1;
+	g_main_loop_quit(state->mainloop);
+	return FALSE;	
 }
 
 /* Test cases ------------> */
