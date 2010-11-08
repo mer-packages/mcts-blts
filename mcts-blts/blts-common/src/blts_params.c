@@ -470,21 +470,21 @@ void blts_config_dump_boxed_value_list_on_log(struct boxed_value *v)
 void blts_config_dump_labeled_value_list_on_log(struct boxed_value *labels, struct boxed_value *v)
 {
 	if (!v) {
-		LOG("[]");
+		BLTS_DEBUG("[]");
 		return;
 	}
-	LOG("[");
+	BLTS_DEBUG("[");
 	while (v) {
 		if(labels) {
-			LOG("%s", blts_config_boxed_value_get_string(labels));
+			BLTS_DEBUG("%s", blts_config_boxed_value_get_string(labels));
 			labels = labels->next;
 		}
-		LOG(":");
+		BLTS_DEBUG(":");
 		dump_boxed_value_log(v);
 		if ((v = v->next))
-			LOG(", ");
+			BLTS_DEBUG(", ");
 	}
-	LOG("]");
+	BLTS_DEBUG("]");
 }
 
 static void dump_param_generated_args(struct param_generated_args *g)
