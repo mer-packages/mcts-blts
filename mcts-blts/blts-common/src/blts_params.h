@@ -124,5 +124,6 @@ struct boxed_value *blts_config_boxed_value_list_dup(struct boxed_value *v);
 void blts_config_dump_boxed_value_list_on_loglevel(struct boxed_value *v, int loglevel);
 void blts_config_dump_boxed_value_list_on_log(struct boxed_value *v);
 void blts_config_dump_labeled_value_list_on_log(struct boxed_value *labels, struct boxed_value *v);
+char *blts_config_dump_labeled_value_list_to_str(struct boxed_value *labels, struct boxed_value *v);
 
 #endif

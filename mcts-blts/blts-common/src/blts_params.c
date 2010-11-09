@@ -432,6 +432,47 @@ static void dump_boxed_value_log(struct boxed_value *v)
 	}
 }
 
+/* TODO: This function is similar to dump_boxed_value_log, remove it */
+static char *dump_boxed_value_str(struct boxed_value *v)
+{
+	char *str = NULL;
+	unsigned len;
+	if (!v)
+		return strdup("(nil)");
+
+	switch(v->type) {
+	case CONFIG_PARAM_STRING:
+		len = strlen(v->str_val);
+		if (len < 80) {
+			if (asprintf(&str, "\"%s\"",v->str_val) < 0)
+				return NULL;
+		} else {
+			if (asprintf(&str, "\"%.40s\"... (total %u characters)",
+				v->str_val, len) < 0)
+				return NULL;
+		}
+		break;
+	case CONFIG_PARAM_INT:
+	case CONFIG_PARAM_LONG:
+		if (asprintf(&str, "%ld",v->int_val) < 0)
+			return NULL;
+		break;
+	case CONFIG_PARAM_BOOL:
+		if (asprintf(&str, "%s",(v->int_val)?"true":"false") < 0)
+			return NULL;
+		break;
+	case CONFIG_PARAM_FLOAT:
+	case CONFIG_PARAM_DOUBLE:
+		if (asprintf(&str, "%lf", v->float_val)  < 0)
+			return NULL;
+		break;
+	default:
+		return strdup("(UNKNOWN TYPE)");
+	}
+
+	return str;
+}
+
 void blts_config_dump_boxed_value_list_on_loglevel(struct boxed_value *v, int loglevel)
 {
 	if (!v) {
@@ -485,6 +526,51 @@ void blts_config_dump_labeled_value_list_on_log(struct boxed_value *labels, stru
 			BLTS_DEBUG(", ");
 	}
 	BLTS_DEBUG("]");
+}
+
+static char *stracat(char *src, const char *str)
+{
+	if (!src)
+		return strdup(str);
+
+	src = realloc(src, strlen(src) + strlen(str) + 1);
+	if (!src)
+		return NULL;
+	return strcat(src, str);
+}
+
+char *blts_config_dump_labeled_value_list_to_str(struct boxed_value *labels, struct boxed_value *v)
+{
+	char *str, *tmp;
+	if (!v)
+		return strdup("[]");
+
+	str = strdup("[");
+	if (!str)
+		return NULL;
+	while (v) {
+		if(labels) {
+			str = stracat(str, blts_config_boxed_value_get_string(labels));
+			if (!str)
+				return NULL;
+			labels = labels->next;
+		}
+		str = stracat(str, ":");
+		tmp = dump_boxed_value_str(v);
+		if (!tmp)
+			return NULL;
+		str = stracat(str, tmp);
+		free(tmp);
+		if (!str)
+			return NULL;
+		if ((v = v->next)) {
+			str = stracat(str, ", ");
+			if (!str)
+				return NULL;
+		}
+	}
+
+	return stracat(str, "]");
 }
 
 static void dump_param_generated_args(struct param_generated_args *g)
