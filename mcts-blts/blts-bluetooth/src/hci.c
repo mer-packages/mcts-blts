@@ -41,10 +41,10 @@
 char *acl_test_data = "BLTS-BLUETOOTH-TESTCASE";
 char test_device_name[] = "BLTS-TEST-DEVICE-NAME";
 
-#define ACL_DATA_HDR_SIZE 5    // header size of an HCI ACL data packet
-#define BLTS_TEST_DEV_CLASS_0                         0x00
-#define BLTS_TEST_DEV_CLASS_1                         0x01
-#define BLTS_TEST_DEV_CLASS_2                         0x02
+#define ACL_DATA_HDR_SIZE 5 /* header size of an HCI ACL data packet */
+#define BLTS_TEST_DEV_CLASS_0	0x00
+#define BLTS_TEST_DEV_CLASS_1	0x01
+#define BLTS_TEST_DEV_CLASS_2	0x02
 
 #define READ_HCI_SOCKET_TIMEOUT 30
 /* -------------------------------------------------------------------------- */
@@ -77,15 +77,15 @@ int hci_init_controller(struct bt_ctx *ctx)
 		return -errno;
 	}
 
-    dr.dev_id  = ctx->dev_id;
-    dr.dev_opt = SCAN_PAGE | SCAN_INQUIRY;
+	dr.dev_id  = ctx->dev_id;
+	dr.dev_opt = SCAN_PAGE | SCAN_INQUIRY;
 
-    if (ioctl(fd, HCISETSCAN, (unsigned long) &dr) < 0)
+	if (ioctl(fd, HCISETSCAN, (unsigned long) &dr) < 0)
 	{
 		BLTS_LOGGED_PERROR("Can't set scan mode");
 		hci_close_dev(fd);
 		return -errno;
-    }
+	}
 
 	ctx->hci_fd = fd;
 
@@ -110,16 +110,16 @@ int do_change_name(struct bt_ctx *ctx)
 	}
 
 	/* Read and store initial local name */
-    if (hci_read_local_name(ctx->hci_fd, sizeof(name), name, 1000) < 0)
+	if (hci_read_local_name(ctx->hci_fd, sizeof(name), name, 1000) < 0)
 	{
-        BLTS_LOGGED_PERROR("Can't read local name");
+		BLTS_LOGGED_PERROR("Can't read local name");
 		retval=-errno;
 		goto cleanup;
-    }
+	}
 	BLTS_DEBUG("Initial local name: %s\n", &name);
 
 	/* Replace local name with test value */
-    if (hci_write_local_name(ctx->hci_fd, (char*)&test_device_name, 1000) < 0)
+	if (hci_write_local_name(ctx->hci_fd, (char*)&test_device_name, 1000) < 0)
 	{
 		BLTS_LOGGED_PERROR("Can't change local name to test value");
 		retval=-errno;
@@ -168,12 +168,12 @@ int do_change_class(struct bt_ctx *ctx)
 	}
 
 	/* Read and store initial class of device */
-    if (hci_read_class_of_dev(ctx->hci_fd, cls, 1000) < 0)
+	if (hci_read_class_of_dev(ctx->hci_fd, cls, 1000) < 0)
 	{
 		BLTS_LOGGED_PERROR("Can't read class of device");
-        retval=-errno;
+		retval=-errno;
 		goto cleanup;
-    }
+	}
 
 
 	changed_cod = 	(BLTS_TEST_DEV_CLASS_2  << 16) |
@@ -254,10 +254,10 @@ int do_scan(struct bt_ctx *ctx, int *n_responses, inquiry_info *responses, char 
 		goto cleanup;
 	}
 	BLTS_DEBUG("ok.\nStarting scan...");
-        /* Don't return devices not currently in range */
+	/* Don't return devices not currently in range */
 	req_flags = IREQ_CACHE_FLUSH;
 
-        /* Use max 8*1.28 = 10.24 seconds (this is supposed to be standard) */
+	/* Use max 8*1.28 = 10.24 seconds (this is supposed to be standard) */
 	req_max_time = 8;
 
 	resps = malloc(max_resps * sizeof(resps));
@@ -354,45 +354,45 @@ int do_reset(struct bt_ctx *ctx)
 
 	BLTS_DEBUG("Trying to reset device...\n");
 
-    if ((sk = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI)) < 0)
-    {
+	if ((sk = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI)) < 0)
+	{
 	BLTS_DEBUG("%s: %s", __FUNCTION__, strerror(errno));
-        goto error;
-    }
+		goto error;
+	}
 
 	BLTS_DEBUG("HCIDEVRESET...\n");
-    if(ioctl(sk, HCIDEVRESET, ctx->dev_id) < 0 )
+	if(ioctl(sk, HCIDEVRESET, ctx->dev_id) < 0 )
 	{
 	BLTS_DEBUG("%s: unable to reset device %d down: %s",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-    	goto error;
-    }
+		__FUNCTION__, ctx->dev_id, strerror(errno));
+		goto error;
+	}
 
 	BLTS_DEBUG("HCIDEVDOWN...\n");
-    if(ioctl(sk, HCIDEVDOWN, ctx->dev_id) < 0 )
+	if(ioctl(sk, HCIDEVDOWN, ctx->dev_id) < 0 )
 	{
-    	if (errno != EALREADY)
+		if (errno != EALREADY)
 		{
-		BLTS_DEBUG("%s: unable to bring device %d down: %s",
-            __FUNCTION__, ctx->dev_id, strerror(errno));
-          	goto error;
+			BLTS_DEBUG("%s: unable to bring device %d down: %s",
+				__FUNCTION__, ctx->dev_id, strerror(errno));
+			goto error;
 		}
-    }
+	}
 
 	BLTS_DEBUG("HCIDEVUP...\n");
-    if(ioctl(sk, HCIDEVUP, ctx->dev_id) < 0)
+	if(ioctl(sk, HCIDEVUP, ctx->dev_id) < 0)
 	{
-    	if (errno != EALREADY)
+		if (errno != EALREADY)
 		{
-		BLTS_DEBUG("%s(): unable to bring device %d up: %s",
-            __FUNCTION__, ctx->dev_id, strerror(errno));
-        	goto error;
-        }
-    }
+			BLTS_DEBUG("%s(): unable to bring device %d up: %s",
+				__FUNCTION__, ctx->dev_id, strerror(errno));
+			goto error;
+		}
+	}
 
-    close(sk);
+	close(sk);
 
-    return 0;
+	return 0;
 
 error:
 	close(sk);
@@ -539,29 +539,29 @@ int hci_verify_class_change(struct bt_ctx *ctx)
 	{
 		errno = ENOENT; retval=-1;
 		if (((resps+i)->dev_class[0] == BLTS_TEST_DEV_CLASS_0) &&
-            ((resps+i)->dev_class[1] == BLTS_TEST_DEV_CLASS_1) &&
-            ((resps+i)->dev_class[2] == BLTS_TEST_DEV_CLASS_2))
-            {
-				if(memcmp(&(resps+i)->bdaddr, &ctx->remote_mac, sizeof(bdaddr_t)) == 0)
-				{
-					/* Wake up other DUT ...*/
-					uint16_t handle = -1;
-					uint8_t rswitch = 0x01; /* allow role switch */
-					uint16_t clkoffset = 0x0;
-					int timeout = 25000; /* ms */
-					uint16_t ptype = HCI_DM1 | HCI_DM3 | HCI_DM5 | HCI_DH1 | HCI_DH3 | HCI_DH5; /* any packet type */
+			((resps+i)->dev_class[1] == BLTS_TEST_DEV_CLASS_1) &&
+			((resps+i)->dev_class[2] == BLTS_TEST_DEV_CLASS_2))
+		{
+			if(memcmp(&(resps+i)->bdaddr, &ctx->remote_mac, sizeof(bdaddr_t)) == 0)
+			{
+				/* Wake up other DUT ...*/
+				uint16_t handle = -1;
+				uint8_t rswitch = 0x01; /* allow role switch */
+				uint16_t clkoffset = 0x0;
+				int timeout = 25000; /* ms */
+				uint16_t ptype = HCI_DM1 | HCI_DM3 | HCI_DM5 | HCI_DH1 | HCI_DH3 | HCI_DH5; /* any packet type */
 
-					if( (retval = hci_create_connection(ctx->hci_fd, &(resps+i)->bdaddr, htobs(ptype),
-						htobs(clkoffset), rswitch, &handle, timeout)) < 0)
-					{
-						BLTS_LOGGED_PERROR("HCI create connection failed");
-						break;
-					}
-					sleep(WAIT_TIME_CONNECT_DISCONNECT);
-					retval = hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
+				if( (retval = hci_create_connection(ctx->hci_fd, &(resps+i)->bdaddr, htobs(ptype),
+					htobs(clkoffset), rswitch, &handle, timeout)) < 0)
+				{
+					BLTS_LOGGED_PERROR("HCI create connection failed");
 					break;
 				}
-            }
+				sleep(WAIT_TIME_CONNECT_DISCONNECT);
+				retval = hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
+				break;
+			}
+		}
 	}
 
 cleanup:
@@ -662,7 +662,7 @@ int hci_transfer_acl_data(struct bt_ctx *ctx)
 	size_t dlen = strlen(acl_test_data);
 
 	if (!hci_connect_remote(ctx))
-  	{
+	{
 		struct acl_test_packet p;
 		memset(&p, 0, sizeof(struct acl_test_packet));
 
@@ -721,16 +721,16 @@ int hci_receive_acl_data(struct bt_ctx *ctx)
 		goto cleanup;
 	}
 
-    /* Bind socket to the HCI device */
-    addr.hci_family = AF_BLUETOOTH;
-    addr.hci_dev = ctx->dev_id;
+	/* Bind socket to the HCI device */
+	addr.hci_family = AF_BLUETOOTH;
+	addr.hci_dev = ctx->dev_id;
 
-    if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
-  	{
-	  BLTS_LOGGED_PERROR("open_hci_socket failed");
-    	  retval = -1;
-    	  goto cleanup;
-  	}
+	if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
+	{
+		BLTS_LOGGED_PERROR("open_hci_socket failed");
+		retval = -1;
+		goto cleanup;
+	}
 
 	retval = read_hci_socket(sock, HCI_MAX_FRAME_SIZE, 1, (read_hci_data_callback) verify_acl_test_data);
 
@@ -821,43 +821,43 @@ int hci_write_automatic_flush_timeout(int dd, uint16_t handle, uint16_t timeout,
 int read_hci_socket(int sock, int buf_size, int count, read_hci_data_callback call_function)
 {
 	struct cmsghdr *cmsg;
-    struct msghdr msg;
-    struct iovec  iv;
-    struct frame frm;
-    char *buf = NULL;
-    char *ctrl = NULL;
+	struct msghdr msg;
+	struct iovec  iv;
+	struct frame frm;
+	char *buf = NULL;
+	char *ctrl = NULL;
 	int retval = -1;
 
-    if (!(buf = malloc(buf_size)))
+	if (!(buf = malloc(buf_size)))
 	{
-	BLTS_LOGGED_PERROR("Can't allocate data buffer");
-        retval = -1;
-        goto cleanup;
-    }
-
-    frm.data = buf;
-
-    if (!(ctrl = malloc(100)))
-	{
-	BLTS_LOGGED_PERROR("Can't allocate control buffer");
-        retval = -1;
+		BLTS_LOGGED_PERROR("Can't allocate data buffer");
+		retval = -1;
 		goto cleanup;
-    }
+	}
 
-    memset(&msg, 0, sizeof(msg));
+	frm.data = buf;
 
-    while (count--)
+	if (!(ctrl = malloc(100)))
+	{
+		BLTS_LOGGED_PERROR("Can't allocate control buffer");
+		retval = -1;
+		goto cleanup;
+	}
+
+	memset(&msg, 0, sizeof(msg));
+
+	while (count--)
 	{
 		int round=0;
 		int ret=-1;
 
-    	iv.iov_base = frm.data;
-        iv.iov_len  = buf_size;
+		iv.iov_base = frm.data;
+		iv.iov_len  = buf_size;
 
 		/* Set msg struct */
-        msg.msg_iov = &iv;
-        msg.msg_iovlen = 1;
-        msg.msg_control = ctrl;
+		msg.msg_iov = &iv;
+		msg.msg_iovlen = 1;
+		msg.msg_control = ctrl;
 		msg.msg_controllen = 100;
 
 		BLTS_DEBUG("Wait messages from hci socket (~ %d sec)...\n", READ_HCI_SOCKET_TIMEOUT);
@@ -878,31 +878,31 @@ int read_hci_socket(int sock, int buf_size, int count, read_hci_data_callback ca
 
 		if ((frm.data_len = recvmsg(sock, &msg, 0)) < 0)
 		{
-		BLTS_LOGGED_PERROR("Receive failed");
-		    retval = -1;
+			BLTS_LOGGED_PERROR("Receive failed");
+			retval = -1;
 			goto cleanup;
-        }
+		}
 
-        /* Process control message */
-        frm.in = 0;
-        cmsg = CMSG_FIRSTHDR(&msg);
+		/* Process control message */
+		frm.in = 0;
+		cmsg = CMSG_FIRSTHDR(&msg);
 
-        while (cmsg)
+		while (cmsg)
 		{
-        	switch (cmsg->cmsg_type)
+			switch (cmsg->cmsg_type)
 			{
 				case HCI_CMSG_DIR:
 					frm.in = *((int *)CMSG_DATA(cmsg));
 					break;
-               	case HCI_CMSG_TSTAMP:
-		            frm.ts = *((struct timeval *)CMSG_DATA(cmsg));
-		            break;
-            }
-            cmsg = CMSG_NXTHDR(&msg, cmsg);
-        }
+				case HCI_CMSG_TSTAMP:
+					frm.ts = *((struct timeval *)CMSG_DATA(cmsg));
+					break;
+			}
+			cmsg = CMSG_NXTHDR(&msg, cmsg);
+		}
 
-        frm.ptr = frm.data;
-        frm.len = frm.data_len;
+		frm.ptr = frm.data;
+		frm.len = frm.data_len;
 
 		if(call_function)
 			retval = call_function(&frm);
@@ -927,68 +927,68 @@ cleanup:
  */
 int open_hci_socket(int dev)
 {
-    struct hci_filter flt;
-    struct hci_dev_info di;
-    int sk, dd, opt;
+	struct hci_filter flt;
+	struct hci_dev_info di;
+	int sk, dd, opt;
 
-    dd = hci_open_dev(dev);
-    if (dd < 0)
+	dd = hci_open_dev(dev);
+	if (dd < 0)
 	{
-	BLTS_LOGGED_PERROR("Can't open device");
-        return -1;
-    }
+		BLTS_LOGGED_PERROR("Can't open device");
+		return -1;
+	}
 
-    if (hci_devinfo(dev, &di) < 0)
+	if (hci_devinfo(dev, &di) < 0)
 	{
-	BLTS_LOGGED_PERROR("Can't get device info");
-        return -1;
-    }
+		BLTS_LOGGED_PERROR("Can't get device info");
+		return -1;
+	}
 
-    opt = hci_test_bit(HCI_RAW, &di.flags);
+	opt = hci_test_bit(HCI_RAW, &di.flags);
 
 	if (ioctl(dd, HCISETRAW, opt) < 0)
 	{
-       	if (errno == EACCES)
+		if (errno == EACCES)
 		{
-		BLTS_LOGGED_PERROR("Can't access device");
-           	return -1;
-        }
+			BLTS_LOGGED_PERROR("Can't access device");
+			return -1;
+		}
 	}
 
-    hci_close_dev(dd);
+	hci_close_dev(dd);
 
-    /* Create HCI socket */
-    sk = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
-    if (sk < 0)
+	/* Create HCI socket */
+	sk = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
+	if (sk < 0)
 	{
-	BLTS_LOGGED_PERROR("Can't create raw socket");
-        return -1;
-    }
+		BLTS_LOGGED_PERROR("Can't create raw socket");
+		return -1;
+	}
 
-    opt = 1;
-    if (setsockopt(sk, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) < 0)
+	opt = 1;
+	if (setsockopt(sk, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) < 0)
 	{
-	BLTS_LOGGED_PERROR("Can't enable data direction info");
-        return -1;
-    }
+		BLTS_LOGGED_PERROR("Can't enable data direction info");
+		return -1;
+	}
 
-    opt = 1;
-    if (setsockopt(sk, SOL_HCI, HCI_TIME_STAMP, &opt, sizeof(opt)) < 0)
-    {
-	BLTS_LOGGED_PERROR("Can't enable time stamp");
-        return -1;
-    }
-
-    /* Setup filter */
-    hci_filter_clear(&flt);
-    hci_filter_all_ptypes(&flt);
-    hci_filter_all_events(&flt);
-    if (setsockopt(sk, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0)
+	opt = 1;
+	if (setsockopt(sk, SOL_HCI, HCI_TIME_STAMP, &opt, sizeof(opt)) < 0)
 	{
-	BLTS_LOGGED_PERROR("Can't set filter");
-        return -1;
-    }
-    return sk;
+		BLTS_LOGGED_PERROR("Can't enable time stamp");
+		return -1;
+	}
+
+	/* Setup filter */
+	hci_filter_clear(&flt);
+	hci_filter_all_ptypes(&flt);
+	hci_filter_all_events(&flt);
+	if (setsockopt(sk, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0)
+	{
+		BLTS_LOGGED_PERROR("Can't set filter");
+		return -1;
+	}
+	return sk;
 }
 
 /**
@@ -1006,10 +1006,10 @@ int verify_acl_test_data(struct frame *frm)
 		return -1;
 	}
 
-    frm->ptr += HCI_ACL_HDR_SIZE;
-    frm->len -= HCI_ACL_HDR_SIZE;
+	frm->ptr += HCI_ACL_HDR_SIZE;
+	frm->len -= HCI_ACL_HDR_SIZE;
 
-    buf = frm->ptr;
+	buf = frm->ptr;
 	len = frm->len;
 
 	if(!len || !buf)
@@ -1037,7 +1037,7 @@ int filter_acl_data(int sock)
 	if(setsockopt(sock, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0)
 	{
 		BLTS_LOGGED_PERROR("setsockopt failed");
-  		return -1;
+		return -1;
 	}
 
 	return 0;
@@ -1098,20 +1098,20 @@ int filter_events(int sock, int *events)
 	BLTS_DEBUG("Set filter to accept only predefined events\n");
 
 	hci_filter_clear(&flt);
-    hci_filter_set_ptype(HCI_EVENT_PKT, &flt);
+	hci_filter_set_ptype(HCI_EVENT_PKT, &flt);
 
-    for (i = 0; events[i] != 0; i++)
+	for (i = 0; events[i] != 0; i++)
 	{
-        hci_filter_set_event(events[i], &flt);
+		hci_filter_set_event(events[i], &flt);
 	}
 
-    if (setsockopt(sock, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0)
+	if (setsockopt(sock, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0)
 	{
 		BLTS_LOGGED_PERROR("setsockopt failed");
-  		return -1;
-    }
+		return -1;
+	}
 
-    return 0;
+	return 0;
 }
 
 /**
@@ -1142,16 +1142,16 @@ int hci_receive_conn_request(struct bt_ctx *ctx)
 		goto cleanup;
 	}
 
-    /* Bind socket to the HCI device */
-    addr.hci_family = AF_BLUETOOTH;
-    addr.hci_dev = ctx->dev_id;
+	/* Bind socket to the HCI device */
+	addr.hci_family = AF_BLUETOOTH;
+	addr.hci_dev = ctx->dev_id;
 
-    if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
-  	{
-	BLTS_LOGGED_PERROR("open_hci_socket failed");
-    	retval = -1;
-    	goto cleanup;
-  	}
+	if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
+	{
+		BLTS_LOGGED_PERROR("open_hci_socket failed");
+		retval = -1;
+		goto cleanup;
+	}
 
 	retval = read_hci_socket(sock, HCI_MAX_FRAME_SIZE, 1, NULL);
 
@@ -1177,11 +1177,11 @@ device_info_t* hci_get_info_remote(struct bt_ctx *ctx)
 	if(!ctx) return NULL;
 
 	uint16_t handle = -1;
-    struct hci_dev_info di;
-    int connected = 0;
+	struct hci_dev_info di;
+	int connected = 0;
 
-    /* do memory allocations here*/
-	device_info_t* infoptr = (device_info_t*)malloc(sizeof(device_info_t));
+	/* do memory allocations here*/
+	device_info_t* infoptr = malloc(sizeof(device_info_t));
 
 	if (NULL == infoptr)
 		return NULL;
@@ -1189,11 +1189,11 @@ device_info_t* hci_get_info_remote(struct bt_ctx *ctx)
 	memset(infoptr, 0, sizeof(device_info_t));
 	struct hci_conn_info_req *cr = malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
 
-    if (!infoptr || !cr )
+	if (!infoptr || !cr )
 	{
-	BLTS_DEBUG("%s: Cannot allocate memory for connection info", __FUNCTION__);
-	goto error;
-    }
+		BLTS_DEBUG("%s: Cannot allocate memory for connection info", __FUNCTION__);
+		goto error;
+	}
 
 	BLTS_DEBUG("Requesting remote information ...\n");
 
@@ -1211,47 +1211,47 @@ device_info_t* hci_get_info_remote(struct bt_ctx *ctx)
 
 	if (ioctl(ctx->hci_fd, HCIGETDEVINFO, (void *) &di))
 	{
-	BLTS_DEBUG("%s: Unable to get device info %d: %s\n",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-       	goto error;
+		BLTS_DEBUG("%s: Unable to get device info %d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+		goto error;
 	}
 
-    bacpy(&cr->bdaddr, &ctx->remote_mac);
-    cr->type = ACL_LINK;
+	bacpy(&cr->bdaddr, &ctx->remote_mac);
+	cr->type = ACL_LINK;
 
-    if (hci_create_connection(ctx->hci_fd, &ctx->remote_mac,
-                            htobs(di.pkt_type & ACL_PTYPE_MASK),
-                                        0, 0x01, &handle, 25000) < 0)
+	if (hci_create_connection(ctx->hci_fd, &ctx->remote_mac,
+		htobs(di.pkt_type & ACL_PTYPE_MASK),
+		0, 0x01, &handle, 25000) < 0)
 	{
-	BLTS_DEBUG("%s: Cannot create connection\n", __FUNCTION__);
-    	goto error;
-    }
-    connected = 1;
+		BLTS_DEBUG("%s: Cannot create connection\n", __FUNCTION__);
+		goto error;
+	}
+	connected = 1;
 
-    if (hci_read_remote_version(ctx->hci_fd, handle, &(infoptr->version), 20000) < 0)
+	if (hci_read_remote_version(ctx->hci_fd, handle, &(infoptr->version), 20000) < 0)
 	{
-	BLTS_DEBUG("%s: Cannot read version info for hci%d: %s\n",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-    }
+		BLTS_DEBUG("%s: Cannot read version info for hci%d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
 	infoptr->got_version=1;
 
-    if (hci_read_remote_features(ctx->hci_fd, handle, infoptr->features, 20000) < 0)
-    {
-	BLTS_DEBUG("%s: Cannot read features for hci%d: %s",
-    	__FUNCTION__, ctx->dev_id, strerror(errno));
-    }
-    infoptr->got_features=1;
-
-    if ((di.features[7] & LMP_EXT_FEAT) && (infoptr->features[7] & LMP_EXT_FEAT))
+	if (hci_read_remote_features(ctx->hci_fd, handle, infoptr->features, 20000) < 0)
 	{
-    	int i = 0;
+		BLTS_DEBUG("%s: Cannot read features for hci%d: %s",
+		__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	infoptr->got_features=1;
+
+	if ((di.features[7] & LMP_EXT_FEAT) && (infoptr->features[7] & LMP_EXT_FEAT))
+	{
+		int i = 0;
 		uint8_t features[8];
 
 		if (hci_read_remote_ext_features(ctx->hci_fd, handle, 0,
 				&(infoptr->max_page), features, 20000) < 0)
 		{
 			BLTS_DEBUG("%s: Cannot read ext features for hci%d: %s",
-		    __FUNCTION__, ctx->dev_id, strerror(errno));
+				__FUNCTION__, ctx->dev_id, strerror(errno));
 		}
 		else
 		{
@@ -1270,10 +1270,10 @@ device_info_t* hci_get_info_remote(struct bt_ctx *ctx)
 		}
 	}
 
-   	hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
-    if(cr) free(cr);
+	hci_disconnect(ctx->hci_fd, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
+	if(cr) free(cr);
 
-    return infoptr;
+	return infoptr;
 
 error:
 
@@ -1295,7 +1295,7 @@ device_info_t* hci_get_info_local(struct bt_ctx *ctx)
 
 	struct hci_dev_info di;
 
-	device_info_t* infoptr = (device_info_t*)malloc(sizeof(device_info_t));
+	device_info_t* infoptr = malloc(sizeof(device_info_t));
 
 	if (NULL == infoptr)
 		return NULL;
@@ -1318,24 +1318,24 @@ device_info_t* hci_get_info_local(struct bt_ctx *ctx)
 
 	if (ioctl(ctx->hci_fd, HCIGETDEVINFO, (void *) &di))
 	{
-	BLTS_DEBUG("%s: Unable to get device info %d: %s\n",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-       	goto error;
+		BLTS_DEBUG("%s: Unable to get device info %d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+		goto error;
 	}
 
-    if (hci_read_local_version(ctx->hci_fd, &(infoptr->version), 1000) < 0)
-    {
-	BLTS_DEBUG("%s: Cannot read version info for hci%d: %s\n",
-       	__FUNCTION__, ctx->dev_id, strerror(errno));
-    }
-    else infoptr->got_version=1;
+	if (hci_read_local_version(ctx->hci_fd, &(infoptr->version), 1000) < 0)
+	{
+		BLTS_DEBUG("%s: Cannot read version info for hci%d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else infoptr->got_version=1;
 
 
 	if (hci_read_local_features(ctx->hci_fd, infoptr->features, 1000) < 0)
 	{
 		BLTS_DEBUG("%s: Cannot read features for hci%d: %s",
 		__FUNCTION__, ctx->dev_id, strerror(errno));
-    }
+	}
 	else infoptr->got_features=1;
 
 	if ((di.features[7] & LMP_EXT_FEAT) && (infoptr->features[7] & LMP_EXT_FEAT))
@@ -1390,10 +1390,10 @@ link_info_t* hci_get_link_info(struct bt_ctx *ctx, int which)
 	if(!ctx) return NULL;
 
 	uint8_t mode=0;
-    uint16_t handle = -1;
+	uint16_t handle = -1;
 	struct hci_dev_info di;
 
-    /* do memory allocations here*/
+	/* do memory allocations here*/
 	link_info_t* linkptr = (link_info_t*)malloc(sizeof(link_info_t));
 
 	if (NULL == linkptr)
@@ -1402,24 +1402,24 @@ link_info_t* hci_get_link_info(struct bt_ctx *ctx, int which)
 	memset(linkptr, 0, sizeof(link_info_t));
 	struct hci_conn_info_req *cr = malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
 
-    if (!linkptr || !cr )
+	if (!linkptr || !cr )
 	{
-	BLTS_DEBUG("%s: Cannot allocate memory for connection link info", __FUNCTION__);
-	goto error;
-    }
+		BLTS_DEBUG("%s: Cannot allocate memory for connection link info", __FUNCTION__);
+		goto error;
+	}
 
-    BLTS_DEBUG("Requesting link information ...\n");
+	BLTS_DEBUG("Requesting link information ...\n");
 
-    /* We'll use this in the error case */
-    if (hci_devinfo(ctx->dev_id, &di) < 0)
-    {
-	    BLTS_DEBUG("$s: Adapter %d failure", __FUNCTION__, ctx->dev_id);
-	    goto error;
-    }
+	/* We'll use this in the error case */
+	if (hci_devinfo(ctx->dev_id, &di) < 0)
+	{
+		BLTS_DEBUG("$s: Adapter %d failure", __FUNCTION__, ctx->dev_id);
+		goto error;
+	}
 
 
-    if(ctx->hci_fd < 0)
-    {
+	if(ctx->hci_fd < 0)
+	{
 		ctx->hci_fd = hci_open_dev(ctx->dev_id);
 
 		if (ctx->hci_fd < 0)
@@ -1427,85 +1427,85 @@ link_info_t* hci_get_link_info(struct bt_ctx *ctx, int which)
 			BLTS_DEBUG("%s: HCI device open failed", __FUNCTION__);
 			goto error;
 		}
-    }
+	}
 
-   bacpy(&cr->bdaddr, &ctx->remote_mac);
-   cr->type = ACL_LINK;
+	bacpy(&cr->bdaddr, &ctx->remote_mac);
+	cr->type = ACL_LINK;
 
-   if (ioctl(ctx->hci_fd, HCIGETCONNINFO, (unsigned long) cr) < 0)
-   {
+	if (ioctl(ctx->hci_fd, HCIGETCONNINFO, (unsigned long) cr) < 0)
+	{
 		if (hci_create_connection(ctx->hci_fd, &ctx->remote_mac,
 			htobs(di.pkt_type & ACL_PTYPE_MASK),
-            0, 0x01, &handle, 25000) < 0)
+			0, 0x01, &handle, 25000) < 0)
 		{
 			BLTS_DEBUG("%s: Unable to get connection info %d: %s\n",
-			__FUNCTION__, ctx->dev_id, strerror(errno));
+				__FUNCTION__, ctx->dev_id, strerror(errno));
 			goto error;
-        }
-   }
-   else
-   {
-	   handle = htobs(cr->conn_info->handle);
-   }
+		}
+	}
+	else
+	{
+		handle = htobs(cr->conn_info->handle);
+	}
 
-   if (hci_read_rssi(ctx->hci_fd, handle, &(linkptr->rssi), 1000) < 0)
-   {
+	if (hci_read_rssi(ctx->hci_fd, handle, &(linkptr->rssi), 1000) < 0)
+	{
 		BLTS_DEBUG("%s: Cannot read RSSI info for hci%d: %s\n",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-   }
-   else
-	   linkptr->got_rssi=1;
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else
+		linkptr->got_rssi=1;
 
-   if (hci_read_link_quality(ctx->hci_fd, handle,  &(linkptr->lq), 1000) < 0)
-   {
-	   BLTS_DEBUG("%s: Cannot read link quality for hci%d: %s\n",
-       __FUNCTION__, ctx->dev_id, strerror(errno));
-   }
-   else
-	   linkptr->got_lq=1;
-
-
-   if (hci_read_transmit_power_level(ctx->hci_fd, handle, 0, &(linkptr->level), 1000) < 0)
-   {
-	   BLTS_DEBUG("%s: Cannot read transmit power level for hci%d: %s\n",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-   }
-   else
-	   linkptr->got_level = 1;
+	if (hci_read_link_quality(ctx->hci_fd, handle, &(linkptr->lq), 1000) < 0)
+	{
+		BLTS_DEBUG("%s: Cannot read link quality for hci%d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else
+		linkptr->got_lq=1;
 
 
-   if (hci_read_afh_map(ctx->hci_fd, handle, &mode, linkptr->map, 1000) < 0)
-   {
+	if (hci_read_transmit_power_level(ctx->hci_fd, handle, 0, &(linkptr->level), 1000) < 0)
+	{
+		BLTS_DEBUG("%s: Cannot read transmit power level for hci%d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else
+		linkptr->got_level = 1;
+
+
+	if (hci_read_afh_map(ctx->hci_fd, handle, &mode, linkptr->map, 1000) < 0)
+	{
 		BLTS_DEBUG("%s: Cannot read AFH map request for hci%d: %s\n",
-        __FUNCTION__, ctx->dev_id, strerror(errno));
-   }
-   else
-   {
-	   if (mode != 0x01)
-		   linkptr->got_map=-1; /* undefined */
-	   else
-		   linkptr->got_map=1;
-   }
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else
+	{
+		if (mode != 0x01)
+			linkptr->got_map=-1; /* undefined */
+		else
+			linkptr->got_map=1;
+	}
 
-   if (hci_read_clock(ctx->hci_fd, handle, which, &(linkptr->clock), &(linkptr->accuracy), 1000) < 0)
-   {
-	   BLTS_DEBUG("%s: Cannot read clock for hci%d: %s\n",
-       __FUNCTION__, ctx->dev_id, strerror(errno));
-   }
-   else
-	   linkptr->got_clock = 1;
+	if (hci_read_clock(ctx->hci_fd, handle, which, &(linkptr->clock), &(linkptr->accuracy), 1000) < 0)
+	{
+		BLTS_DEBUG("%s: Cannot read clock for hci%d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else
+		linkptr->got_clock = 1;
 
-   if (hci_read_clock_offset(ctx->hci_fd, handle, &(linkptr->offset), 1000) < 0)
-   {
-	   BLTS_DEBUG("%s: Cannot read clock offset for hci%d: %s\n",
-       __FUNCTION__, ctx->dev_id, strerror(errno));
-   }
-   else
-	   linkptr->got_offset = 1;
+	if (hci_read_clock_offset(ctx->hci_fd, handle, &(linkptr->offset), 1000) < 0)
+	{
+		BLTS_DEBUG("%s: Cannot read clock offset for hci%d: %s\n",
+			__FUNCTION__, ctx->dev_id, strerror(errno));
+	}
+	else
+		linkptr->got_offset = 1;
 
-   if(cr) free(cr);
+	if(cr) free(cr);
 
-   return linkptr;
+	return linkptr;
 
 error:
 	if(linkptr) free(linkptr);

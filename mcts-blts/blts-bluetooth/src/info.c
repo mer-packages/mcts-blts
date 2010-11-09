@@ -959,7 +959,7 @@ int send_link_info(void *dataptr)
 
 	data = (thread_data*)dataptr;
 
-	if(!data->ctx || data->idx >= TEST_CHANNEL_COUNT ||  data->idx < 0)
+	if(!data->ctx || data->idx >= TEST_CHANNEL_COUNT || data->idx < 0)
 	{
 		BLTS_DEBUG("Thread data pointer contains invalid data!\n");
 		goto error;
@@ -977,7 +977,7 @@ int send_link_info(void *dataptr)
 	BLTS_DEBUG("Socket:%d created\n", sock);
 
 	addr.l2_family = AF_BLUETOOTH;
-	addr.l2_psm =  htobs(test_channels[data->idx]);
+	addr.l2_psm = htobs(test_channels[data->idx]);
 	addr.l2_bdaddr = data->ctx->remote_mac;
 
 	if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)

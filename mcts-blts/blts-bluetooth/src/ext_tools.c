@@ -242,11 +242,11 @@ int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *us
 		goto cleanup;
 	}
 
-        while ((read_len = getline(&buf, &buf_sz, dump)) != -1) {
+	while ((read_len = getline(&buf, &buf_sz, dump)) != -1) {
 		lineno++;
 
 		char* pch = NULL;
-	    pch = strchr(buf,'.'); /* search for time stamp  nnnn.nnnnnn */
+		pch = strchr(buf,'.'); /* search for time stamp nnnn.nnnnnn */
 
 		switch (buf[0]) {
 		case 'H': /* header */
