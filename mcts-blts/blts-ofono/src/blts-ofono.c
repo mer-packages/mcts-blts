@@ -939,7 +939,8 @@ static int ofono_barring_properties(void* user_ptr, int test_num)
 
 
 /**
- * Runs a network operator scan to discover the currently available operators.
+ * Runs a network operator scan to discover the currently available operators
+ * and retrieves also the current cached operator list after scan.
  * The operator scan can interfere with any active
  * GPRS contexts.  Expect the context to be unavailable
  * for the duration of the operator scan.
@@ -951,14 +952,15 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 	GError *error = NULL;
 	DBusGProxy *proxy=NULL;
 	int i;
-	int retval = 0;
 	GPtrArray *networks = NULL;
+	GPtrArray *cached_networks = NULL;
 
 	if(my_ofono_get_modem(data))
 		return -1;
 
 	for(i=0; i<data->number_modems; i++)
 	{
+		int j;		
 		// testing network interface
 			proxy = dbus_g_proxy_new_for_name (data->connection,
 											OFONO_BUS,
@@ -969,26 +971,73 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 			LOG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
 			return -1;
 		}
-
-		if(!org_ofono_NetworkRegistration_propose_scan(proxy, &networks, &error))
+		/* Run network operator scan to discover available operators */
+		if(!org_ofono_NetworkRegistration_scan(proxy, &networks, &error))
 		{
 			display_dbus_glib_error(error);
 			g_error_free (error);
-			retval = -1;
-		}
-
-		if(networks == NULL)
-		{
-			LOG("No networks found on scan\n");
-			retval = -1;
+			goto error;
 		}
 		else
-			 g_ptr_array_free(networks, TRUE);
+		{
+			if(!networks)
+			{
+				LOG("No networks found on scan\n");
+				goto error;
+			}
+		}		
+		LOG("\n--Networks found on scan--\n");
+		for (j = 0; j < (int) networks->len; j++)
+		{
+			GValueArray *operator = g_ptr_array_index (networks, j);
+			char *operator_name = g_value_get_boxed (g_value_array_get_nth (operator, 0));
+			GHashTable *properties = g_value_get_boxed (g_value_array_get_nth (operator, 1));			
+			LOG("\n%s\n", operator_name);
+			g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+		}
+
+		/* Retrieve the current cached operator list */
+		if(!org_ofono_NetworkRegistration_get_operators(proxy, &cached_networks, &error))
+		{
+			display_dbus_glib_error(error);
+			g_error_free (error);
+			goto error;			
+		}
+		else
+		{
+			if(!cached_networks)
+			{
+				LOG("No networks found from cache\n");
+				goto error;
+			}
+		}
+		
+		LOG("\n--Networks found from cache--\n");
+		for (j = 0; j < (int) cached_networks->len; j++)
+		{
+			GValueArray *operator = g_ptr_array_index (cached_networks, j);
+			char *operator_name = g_value_get_boxed (g_value_array_get_nth (operator, 0));
+			GHashTable *properties = g_value_get_boxed (g_value_array_get_nth (operator, 1));			
+			LOG("\n%s\n", operator_name);
+			g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
+		}
+		
+		g_ptr_array_free(networks, TRUE); networks = NULL;
+		g_ptr_array_free(cached_networks, TRUE); cached_networks = NULL;
 
 		g_object_unref (proxy);
 		proxy = NULL;
 	}
-	return retval;
+	return 0;
+	
+error:
+	if(networks)
+		g_ptr_array_free(networks, TRUE);
+	if(cached_networks)	
+		g_ptr_array_free(cached_networks, TRUE);
+	if(proxy)
+		g_object_unref (proxy);
+	return -1;
 }
 
 /* Your test definitions */
