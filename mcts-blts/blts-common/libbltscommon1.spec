@@ -6,7 +6,8 @@ License: GPLv2
 Group: Development/Testing
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: flex bison
+BuildRequires: flex bison libxml2-devel
+Requires: libxml2
 
 %package -n libbltscommon-devel
 Summary: Common BLTS functions devel package

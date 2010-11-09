@@ -16,8 +16,8 @@
 
 AM_CFLAGS = \
 	-O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -I. \
-	-DBLTS_CONFIG_DIR=\"$(configdir)\"
-AM_YFLAGS = -d 
+	-DBLTS_CONFIG_DIR=\"$(configdir)\" $(XML_CFLAGS)
+AM_YFLAGS = -d
 
 # only export essential c-interfaces
 h_sources = \
@@ -29,14 +29,16 @@ h_sources = \
 
 # not needed in distribution
 local_h_sources = \
-	blts_params_local.h
+	blts_params_local.h \
+	blts_results_xml.h
 
 c_sources = \
 	blts_log.c \
 	blts_timing.c \
 	blts_dep_check.c \
 	blts_cli_frontend.c \
-	blts_params.c
+	blts_params.c \
+	blts_results_xml.c
 
 
 BUILT_SOURCES = param-parser.h param-parser.c param-scanner.c
@@ -48,6 +50,6 @@ library_include_HEADERS = $(h_sources)
 lib_LTLIBRARIES= \
 	libbltscommon.la
 
-libbltscommon_la_LIBADD = -lrt -ldl
+libbltscommon_la_LIBADD = -lrt -ldl $(XML_LIBS)
 libbltscommon_la_SOURCES= $(parser_sources) $(h_sources) $(local_h_sources) $(c_sources)
-libbltscommon_la_LDFLAGS= -version-info $(BLTS_COMMON_LIBRARY_VERSION) 
+libbltscommon_la_LDFLAGS= -version-info $(BLTS_COMMON_LIBRARY_VERSION)
