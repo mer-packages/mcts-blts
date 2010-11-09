@@ -43,6 +43,7 @@ struct sms_case_state {
 
 	my_ofono_data *ofono_data;
 
+	GValue *orig_smsc;
 	GValue *smsc;
 	GValue *bearer;
 
@@ -60,6 +61,67 @@ struct sms_case_state {
 	int result;
 };
 
+static gboolean save_original_smsc(struct sms_case_state *state)
+{
+	GHashTable* properties = NULL;
+	GError *error = NULL;
+	
+	if(!org_ofono_MessageManager_get_properties(state->msg_manager, &properties, &error))
+	{
+		display_dbus_glib_error(error);
+		g_error_free (error);
+		return FALSE;
+	}
+	
+	if(!properties)
+		return FALSE;
+		
+	GValue* orig_value = g_hash_table_lookup(properties, "ServiceCenterAddress");
+	if (!orig_value)
+	{
+		BLTS_ERROR("MessageManager does not have a 'ServiceCenterAddress' property\n");
+		return FALSE;
+	}
+
+	const gchar* orig_str = g_value_get_string(orig_value);
+	guint len = strlen(orig_str);
+	state->orig_smsc = calloc(1, sizeof(*state->orig_smsc));
+
+	if(!state->orig_smsc)
+		return FALSE;
+
+	if(len && len <= 20)
+	{
+		g_value_init(state->orig_smsc, G_TYPE_STRING);
+		g_value_set_string(state->orig_smsc, orig_str);	
+		BLTS_TRACE("ServiceCenterAddress to save: %s\n", orig_str);
+	}
+	else
+	{
+		g_value_init(state->orig_smsc, G_TYPE_STRING);
+		g_value_set_string(state->orig_smsc, "+000000000000");	
+	}
+
+	return TRUE;
+}
+
+static gboolean restore_original_smsc(struct sms_case_state *state)
+{
+	GError *error = NULL;
+	
+	if(!state->orig_smsc)
+		return FALSE;
+		
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", state->orig_smsc, &error))
+	{
+		LOG("Cannot restore original SMSC number");
+		display_dbus_glib_error(error);
+		g_error_free (error);
+		return FALSE;
+	}
+	
+	return TRUE;	
+}
 
 static void sms_state_finalize(struct sms_case_state *state)
 {
@@ -71,7 +133,12 @@ static void sms_state_finalize(struct sms_case_state *state)
 	if (state->message)
 		free(state->message);
 	if (state->smsc)
-		g_free(state->smsc);
+		g_free(state->smsc);		
+	if(state->orig_smsc)
+	{
+		restore_original_smsc(state);		
+		g_free(state->orig_smsc);
+	}
 	if (state->bearer)
 		g_free(state->bearer);
 	if (state->message_proxy)
@@ -201,19 +268,41 @@ static gboolean sms_init_start(gpointer data)
 	}
 
 	state->smsc = calloc(1, sizeof(*state->smsc));
+	state->orig_smsc = NULL;
 
 	g_value_init(state->smsc, G_TYPE_STRING);
 	g_value_set_string(state->smsc, state->ofono_data->smsc_address);
 
-	org_ofono_MessageManager_set_property_async(msg_manager, "ServiceCenterAddress", state->smsc,
+	if(g_value_get_string(state->smsc))
+	{
+		org_ofono_MessageManager_set_property_async(msg_manager, "ServiceCenterAddress", state->smsc,
 		sms_init_complete, state);
+	}
+	else /* SMS center number test */
+	{
+		if(!save_original_smsc(state))
+		{
+			BLTS_ERROR("Cannot save original SMSC number - test failed!\n");
+			state->result = -1;
+			g_main_loop_quit(state->mainloop);
+			return FALSE;
+		}
+		
+		if (state->signalcb_MessageManager_PropertyChanged) {
+		dbus_g_proxy_add_signal(state->msg_manager, "PropertyChanged",
+			G_TYPE_STRING, G_TYPE_VALUE,
+			G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->msg_manager, "PropertyChanged",
+			state->signalcb_MessageManager_PropertyChanged, state, 0);
+		}
+		if (state->case_begin)
+			g_idle_add(state->case_begin, state);
 
+	}
+	
 	FUNC_LEAVE();
 	return FALSE;
 }
-
-
-
 
 /* Some generic callbacks with debug output, for use when more specific things
    are unnecessary */
@@ -665,7 +754,10 @@ int blts_ofono_receive_sms_default(void* user_ptr, __attribute__((unused)) int t
 		G_CALLBACK(sms_receive_test_incoming_message_cb);
 	test->signalcb_MessageManager_ImmediateMessage =
 		G_CALLBACK(sms_generic_incoming_message_cb);
-
+	test->signalcb_MessageManager_MessageAdded = NULL;
+	test->signalcb_MessageManager_MessageRemoved = NULL;
+	test->signalcb_MessageManager_Message_PropertyChanged = NULL;
+	
 	test->case_begin = (GSourceFunc) sms_receive_start;
 	ret = sms_case_run(test);
 
@@ -689,10 +781,11 @@ int ofono_sms_center_number(void* user_ptr, __attribute__((unused)) int testnum)
 
 	test->signalcb_MessageManager_PropertyChanged =
 		G_CALLBACK(sms_smsc_property_changed_cb);
-	test->signalcb_MessageManager_IncomingMessage =
-		G_CALLBACK(sms_generic_incoming_message_cb);
-	test->signalcb_MessageManager_ImmediateMessage =
-		G_CALLBACK(sms_generic_incoming_message_cb);
+	test->signalcb_MessageManager_IncomingMessage = NULL;
+	test->signalcb_MessageManager_ImmediateMessage = NULL;
+	test->signalcb_MessageManager_MessageAdded = NULL;
+	test->signalcb_MessageManager_MessageRemoved = NULL;
+	test->signalcb_MessageManager_Message_PropertyChanged = NULL;
 
 	test->case_begin = (GSourceFunc) smsc_change_start;
 	ret = sms_case_run(test);
