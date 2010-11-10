@@ -432,6 +432,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 
 	ret = blts_config_declare_variable_test("oFono - SMSC number test",
 		sms_smsc_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "valid_tst_smsc", "12345678901234567890",
 		CONFIG_PARAM_STRING, "sms_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)

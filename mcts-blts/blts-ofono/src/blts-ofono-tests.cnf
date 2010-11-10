@@ -186,6 +186,11 @@
 [end_parameter]
 
 [parameter]
+	name valid_tst_smsc
+	const "12345678901234567890"
+[end_parameter]
+
+[parameter]
 	name bearer
 	const "cs-only" "ps-only"
 [end_parameter]
@@ -202,7 +207,7 @@
 
 [test]
 	name "oFono - SMSC number test"
-	params sms_timeout
+	params valid_tst_smsc sms_timeout
 [end_test]
 
 #############

@@ -32,6 +32,7 @@
 #include "ofono-util.h"
 
 struct sms_case_state {
+	int testnum;
 	char* message;
 	char* address;
 
@@ -99,7 +100,8 @@ static gboolean save_original_smsc(struct sms_case_state *state)
 	else
 	{
 		g_value_init(state->orig_smsc, G_TYPE_STRING);
-		g_value_set_string(state->orig_smsc, "+000000000000");	
+		g_value_set_string(state->orig_smsc, "+000000000000");
+		BLTS_TRACE("ServiceCenterAddress to use: +000000000000\n");	
 	}
 
 	return TRUE;
@@ -250,35 +252,14 @@ static gboolean sms_init_start(gpointer data)
 
 	state->msg_manager = msg_manager;
 
-	state->bearer = calloc(1, sizeof(*state->bearer));
-	g_value_init(state->bearer, G_TYPE_STRING);
-	if (state->ofono_data->bearer)
-	{
-		GError* error = NULL;
-		g_value_set_string(state->bearer, state->ofono_data->bearer);
-		org_ofono_MessageManager_set_property(msg_manager, "Bearer", state->bearer, &error);
-		if (error)
-		{
-			display_dbus_glib_error(error);
-			g_error_free(error);
-			state->result = -1;
-			g_main_loop_quit(state->mainloop);
-			return FALSE;
-		}
-	}
-
 	state->smsc = calloc(1, sizeof(*state->smsc));
 	state->orig_smsc = NULL;
 
 	g_value_init(state->smsc, G_TYPE_STRING);
 	g_value_set_string(state->smsc, state->ofono_data->smsc_address);
 
-	if(g_value_get_string(state->smsc))
-	{
-		org_ofono_MessageManager_set_property_async(msg_manager, "ServiceCenterAddress", state->smsc,
-		sms_init_complete, state);
-	}
-	else /* SMS center number test */
+	/* SMS center number test */
+	if(state->testnum == BLTS_OFONO_SMSC_NUMBER_TEST)
 	{
 		if(!save_original_smsc(state))
 		{
@@ -298,8 +279,33 @@ static gboolean sms_init_start(gpointer data)
 		if (state->case_begin)
 			g_idle_add(state->case_begin, state);
 
+		FUNC_LEAVE();
+		return FALSE;
 	}
-	
+
+	state->bearer = calloc(1, sizeof(*state->bearer));
+	g_value_init(state->bearer, G_TYPE_STRING);
+	if (state->ofono_data->bearer)
+	{
+		GError* error = NULL;
+		g_value_set_string(state->bearer, state->ofono_data->bearer);
+		org_ofono_MessageManager_set_property(msg_manager, "Bearer", state->bearer, &error);
+		if (error)
+		{
+			display_dbus_glib_error(error);
+			g_error_free(error);
+			state->result = -1;
+			g_main_loop_quit(state->mainloop);
+			return FALSE;
+		}
+	}
+
+	if(g_value_get_string(state->smsc))
+	{
+		org_ofono_MessageManager_set_property_async(msg_manager, "ServiceCenterAddress", state->smsc,
+		sms_init_complete, state);
+	}
+		
 	FUNC_LEAVE();
 	return FALSE;
 }
@@ -322,11 +328,17 @@ static void sms_smsc_property_changed_cb(__attribute__((unused)) DBusGProxy *pro
 {
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
-	char *val = g_strdup_value_contents(value);
-	log_print("MessageManager PropertyChanged: '%s' -> '%s'\n", key, val);
-	free(val);
-	state->result = 0;
-	g_main_loop_quit(state->mainloop);
+	const gchar *value_str = g_value_get_string(value);
+	log_print("MessageManager PropertyChanged: '%s' -> '%s'\n", key, value_str);
+	
+	if(!strcmp(key, "ServiceCenterAddress"))
+	{
+		if(!strcmp(g_value_get_string(state->smsc), value_str))
+		{
+			state->result = 0;
+			g_main_loop_quit(state->mainloop);
+		}
+	}
 	FUNC_LEAVE();
 }
 
@@ -550,94 +562,82 @@ static gboolean sms_receive_start(__attribute__((unused)) gpointer data)
 	return FALSE;
 }
 
+static gboolean smsc_do_negative_test(gpointer data, const char* invalid_smsc)
+{
+	FUNC_ENTER();
+	struct sms_case_state *state = (struct sms_case_state *) data;
+	GError *error = NULL;
+	GValue *smsc = NULL;
+	smsc = malloc(sizeof *(smsc));
+	memset(smsc, 0, sizeof *(smsc));
+	gboolean ret = 0;
+	int len = 0;
+	
+	if(!invalid_smsc || !smsc)
+		return FALSE;
+	
+	len = strlen(invalid_smsc);
+	
+	if(len && len <= 20)
+		return FALSE;
+		
+	g_value_init(smsc, G_TYPE_STRING);
+	g_value_set_static_string(smsc, invalid_smsc);
 
-/* Starts the receive test. */
+	log_print("Changing SMSC number to %s (length %d)...\n", invalid_smsc, len);
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
+	{
+		LOG("Not changed to too long SMSC, test ok\n");
+		g_error_free (error);
+		error=NULL;
+		ret = TRUE;
+	}
+	else
+	{
+		LOG("Changed to too long SMSC");
+		ret = FALSE;
+	}
+	
+	free(smsc);
+	FUNC_LEAVE();
+	return ret;
+}
+
+/* Starts the change smsc number test. */
 static gboolean smsc_change_start(gpointer data)
 {
 	FUNC_ENTER();
  	struct sms_case_state *state = (struct sms_case_state *) data;
 	GError *error = NULL;
-	GValue *smsc = NULL;
-	smsc = malloc(sizeof *(smsc));
-	memset(smsc, 0, sizeof *(smsc));
+	const gchar* tst_smsc = g_value_get_string(state->smsc);		
+	int tst_len = strlen(tst_smsc);
 	state->result=0;
-	g_value_init(smsc, G_TYPE_STRING);
-	g_value_set_static_string(smsc, "12345678901234567890123");
-	log_print("Changing SMSC number (length 23)...\n");
-	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
-	{
-		LOG("Not changed to too long SMSC, test ok\n");
-		g_error_free (error);
-		error=NULL;
-	}
-	else
-	{
-		LOG("Changed to too long SMSC");
+		
+	/* first - do some negative tests with addresses having too many numbers */
+	//TODO remove (replace) when common library supports negative tests in configuration file
+	if(!smsc_do_negative_test(data, "12345678901234567890123") ||
+		!smsc_do_negative_test(data, "1234567890123456789012") || 
+		!smsc_do_negative_test(data, "123456789012345678901"))
 		goto error;
-	}
-	g_value_unset(smsc);
-	g_value_init(smsc, G_TYPE_STRING);
-	g_value_set_static_string(smsc, "1234567890123456789012");
-	log_print("Changing SMSC number (length 22)...\n");
-	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
-	{
-		LOG("Not changed to too long SMSC, test ok\n");
-		g_error_free (error);
-		error=NULL;
-		state->result = 0;
-	}
-	else
-	{
-		LOG("Changed to too long SMSC");
-		goto error;
-	}
 
-	g_value_unset(smsc);
-	g_value_init(smsc, G_TYPE_STRING);
-	g_value_set_static_string(smsc, "123456789012345678901");
-	log_print("Changing SMSC number (length 21)...\n");
-	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
+	log_print("Changing SMSC number to %s (length %d)...\n", tst_smsc, tst_len);
+	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", state->smsc, &error))
 	{
-		LOG("Not changed to too long SMSC, test ok\n");
-		g_error_free (error);
-		error=NULL;
-		state->result = 0;
-	}
-	else
-	{
-		LOG("Changed to too long SMSC");
-		goto error;
-	}
-
-	g_value_unset(smsc);
-	g_value_init(smsc, G_TYPE_STRING);
-	g_value_set_static_string(smsc, "12345678901234567890");
-	log_print("Changing SMSC number (length 20)...\n");
-	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
-	{
-		LOG("Can't change SMSC number");
+		LOG("Can't change SMSC number\n");
 		display_dbus_glib_error(error);
 		g_error_free (error);
-		error=NULL;
 		state->result = -1;
+		g_main_loop_quit(state->mainloop);
 	}
 
-
-	g_value_unset(smsc);
-	free(smsc);
 	FUNC_LEAVE();
 	return FALSE;
 error:
-
 	state->result=-1;
 	g_main_loop_quit(state->mainloop);
-	free(smsc);
 	FUNC_LEAVE();
 	return FALSE;
-
 }
-
-
 
 static struct sms_case_state *sms_state_init(my_ofono_data *data)
 {
@@ -725,7 +725,7 @@ int blts_ofono_send_sms_default(void* user_ptr, __attribute__((unused)) int test
 		G_CALLBACK(sms_message_removed_cb);
 	test->signalcb_MessageManager_Message_PropertyChanged =
 		G_CALLBACK(sms_message_property_changed_cb);
-
+	test->testnum = testnum;
 	test->case_begin = sms_send_start;
 	
 	ret = sms_case_run(test);
@@ -757,7 +757,7 @@ int blts_ofono_receive_sms_default(void* user_ptr, __attribute__((unused)) int t
 	test->signalcb_MessageManager_MessageAdded = NULL;
 	test->signalcb_MessageManager_MessageRemoved = NULL;
 	test->signalcb_MessageManager_Message_PropertyChanged = NULL;
-	
+	test->testnum = testnum;
 	test->case_begin = (GSourceFunc) sms_receive_start;
 	ret = sms_case_run(test);
 
@@ -786,7 +786,7 @@ int ofono_sms_center_number(void* user_ptr, __attribute__((unused)) int testnum)
 	test->signalcb_MessageManager_MessageAdded = NULL;
 	test->signalcb_MessageManager_MessageRemoved = NULL;
 	test->signalcb_MessageManager_Message_PropertyChanged = NULL;
-
+	test->testnum = testnum;
 	test->case_begin = (GSourceFunc) smsc_change_start;
 	ret = sms_case_run(test);
 
@@ -882,12 +882,21 @@ void *sms_recv_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 
 void *sms_smsc_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
+	char *smsc_addr = NULL;
 	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
+	smsc_addr = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+
 	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	if (data->smsc_address)
+		free(smsc_addr);
+	else
+		data->smsc_address = smsc_addr;
 
 	if (!data->timeout)
 		data->timeout = timeout;
