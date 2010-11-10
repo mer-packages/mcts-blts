@@ -671,7 +671,7 @@ static int sms_case_run(struct sms_case_state *state)
 	BLTS_TRACE("Modem ok.\n");
 	state->mainloop = state->ofono_data->mainloop;
 
-	g_timeout_add(90000, (GSourceFunc) sms_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) sms_timeout, state);
 
 	g_idle_add(sms_init_start, state);
 
@@ -799,6 +799,7 @@ void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 {
 	char *sms_generated_msg = NULL, *addr_prefix = NULL, *remote_addr = NULL, *smsc_addr = NULL;
 	char *bearer = NULL;
+	long timeout = 0;
 
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
@@ -813,6 +814,8 @@ void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 	smsc_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	bearer = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -844,12 +847,16 @@ void *sms_send_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 
 	data->bearer = bearer;
 
+	if (!data->timeout)
+		data->timeout = timeout;
+
 	return data;
 }
 
 void *sms_recv_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
         char *smsc_addr = NULL, *bearer = NULL;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -857,6 +864,8 @@ void *sms_recv_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 	smsc_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	bearer = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	if (data->smsc_address)
 		free(smsc_addr);
@@ -864,6 +873,24 @@ void *sms_recv_variant_set_arg_processor(struct boxed_value *args, void *user_pt
 		data->smsc_address = smsc_addr;
 
 	data->bearer = bearer;
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}
+
+void *sms_smsc_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	if (!data->timeout)
+		data->timeout = timeout;
 
 	return data;
 }

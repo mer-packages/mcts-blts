@@ -27,6 +27,7 @@ int my_ofono_case_voicecall_to_DTMF(void* user_ptr, int test_num);
 
 // variable data
 void *voicecall_variant_set_arg_processor(struct boxed_value *, void *);
+void *voicecall_answer_variant_set_arg_processor(struct boxed_value *, void *);
 void *dtmf_variant_set_arg_processor(struct boxed_value *, void *);
 struct boxed_value *dtmf_variant_tones_generator(struct boxed_value *);
 

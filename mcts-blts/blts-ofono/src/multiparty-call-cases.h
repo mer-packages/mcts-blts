@@ -19,8 +19,13 @@
 #ifndef MULTIPARTY_CALL_CASES_H
 #define MULTIPARTY_CALL_CASES_H
 
+#include <blts_params.h>
+
 int blts_ofono_case_multiparty(void* user_ptr, int test_num);
 int blts_ofono_case_private_chat(void* user_ptr, int test_num);
 
+//variable parameters processing
+void *
+multiparty_variant_set_arg_processor(struct boxed_value *, void *);
 
 #endif /* MULTIPARTY_CALL_CASES_H */

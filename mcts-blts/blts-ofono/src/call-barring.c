@@ -282,7 +282,7 @@ ofono_call_barring_set(void* user_ptr, char *arg, GValue *value)
 		return -1;
 	}
 
-	guint source_id = g_timeout_add(1000, (GSourceFunc) call_barring_timeout,
+	guint source_id = g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_barring_timeout,
 	    state);
 
 	g_main_loop_run(state->ofono_data->mainloop);
@@ -449,7 +449,8 @@ on_call_barring_outgoing_barring_in_effect(__attribute__((unused))DBusGProxy * p
 void *
 barring_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
-
+	long timeout = 0;
+  
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -459,8 +460,11 @@ barring_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 	args = args->next;
 	data->new_pin = strdup(blts_config_boxed_value_get_string(args));
 
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	if (!data->timeout)
+		data->timeout = timeout;
 
 	return data;
 }
-
-

@@ -8,6 +8,11 @@
 	default_pin2 "3579"
 [end_globals]
 
+# This is used if not otherwise specified on individual test cases
+
+[globals]
+	global_timeout "60000"
+[end_globals]
 
 ######################
 # General parameters #
@@ -42,24 +47,89 @@
 # Voice call cases #
 ####################
 
+[parameter]
+	name voicecall_timeout
+	const global_timeout
+[end_parameter]
+
 [test]
 	name "oFono - Create voicecall"
-	params country_code remote_address
+	params country_code remote_address voicecall_timeout
 [end_test]
 
 [test]
 	name "oFono - Create voicecall with hidden caller ID"
-	params country_code remote_address
+	params country_code remote_address voicecall_timeout
 [end_test]
 
 [test]
 	name "oFono - Answer to voicecall and deflect"
-	params country_code remote_address
+	params country_code remote_address voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Answer to voicecall and hangup"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Answer to voicecall and hangup all"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Answer to voicecall and wait another call"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Answer to voicecall and remote hangup"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Cancel voicecall"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Transfer"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Swap"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Release and answer"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Hold and answer"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Multiparty call test"
+	params voicecall_timeout
+[end_test]
+
+[test]
+	name "oFono - Private call test"
+	params voicecall_timeout
 [end_test]
 
 ##############
 # DTMF cases #
 ##############
+
+[parameter]
+	name dtmf_timeout
+	const global_timeout
+[end_parameter]
 
 [parameter]
 	name dtmf_length
@@ -83,12 +153,17 @@
 
 [test]
 	name "oFono - Call and send DTMF"
-	params remote_address dtmf_tones
+	params remote_address dtmf_tones dtmf_timeout
 [end_test]
 
 #############
 # SMS cases #
 #############
+
+[parameter]
+	name sms_timeout
+	const global_timeout
+[end_parameter]
 
 [parameter]
 	name message_length
@@ -117,12 +192,17 @@
 
 [test]
 	name "oFono - Send SMS"
-	params sms_message country_code remote_address SMSC bearer
+	params sms_message country_code remote_address SMSC bearer sms_timeout
 [end_test]
 
 [test]
 	name "oFono - Receive SMS"
-	params SMSC bearer
+	params SMSC bearer sms_timeout
+[end_test]
+
+[test]
+	name "oFono - SMSC number test"
+	params sms_timeout
 [end_test]
 
 #############
@@ -159,6 +239,11 @@
 #########################
 
 [parameter]
+	name call_forwarding_timeout
+	const global_timeout
+[end_parameter]
+
+[parameter]
 	name call_forwarding_keepalive
 	const "1" "15" "30"
 [end_parameter]
@@ -175,27 +260,27 @@
 
 [test]
 	name "oFono - Disable forwardings"
-	params disable_forwarding
+	params disable_forwarding call_forwarding_timeout
 [end_test]
 
 [test]
 	name "oFono - Unconditional forwarding"
-	params forward_address
+	params forward_address call_forwarding_timeout
 [end_test]
 
 [test]
 	name "oFono - Forward if busy"
-	params remote_address forward_address call_forwarding_keepalive
+	params remote_address forward_address call_forwarding_keepalive call_forwarding_timeout
 [end_test]
 
 [test]
 	name "oFono - Forward if no reply"
-	params forward_address
+	params forward_address call_forwarding_timeout
 [end_test]
 
 [test]
 	name "oFono - Forward if not reachable"
-	params forward_address
+	params forward_address call_forwarding_timeout
 [end_test]
 
 
@@ -203,39 +288,49 @@
 # Call barring cases #
 ######################
 
+[parameter]
+	name call_barring_timeout
+	const global_timeout
+[end_parameter]
+
 [test]
 	name "oFono - Change password for barrings"
-	params old_pin2 new_pin
+	params old_pin2 new_pin call_barring_timeout
 [end_test]
 
 [test]
 	name "oFono - Disable barrings"
-	params old_pin2 new_pin
+	params old_pin2 new_pin call_barring_timeout
 [end_test]
 
 [test]
 	name "oFono - Call barrings test"
-	params old_pin2 new_pin
+	params old_pin2 new_pin call_barring_timeout
 [end_test]
 
 [test]
 	name "oFono - Check barring properties"
-	params old_pin2 new_pin
+	params old_pin2 new_pin call_barring_timeout
 [end_test]
 
 [test]
 	name "oFono - Disable incoming barrings"
-	params old_pin2 new_pin
+	params old_pin2 new_pin call_barring_timeout
 [end_test]
 
 [test]
 	name "oFono - Disable outgoing barrings"
-	params old_pin2 new_pin
+	params old_pin2 new_pin call_barring_timeout
 [end_test]
 	
 ####################
 # Call meter cases #
 ####################
+
+[parameter]
+	name call_meter_timeout
+	const global_timeout
+[end_parameter]
 
 [parameter]
 	name call_meter_max
@@ -253,23 +348,33 @@
 [end_parameter]
 
 [test]
+	name "oFono - Call meters read"
+	params call_meter_timeout
+[end_test]
+
+[test]
 	name "oFono - Call meters set"
-	params call_meter_max price_per_unit currency
+	params call_meter_max price_per_unit currency call_meter_timeout
 [end_test]
 
 [test]
 	name "oFono - Call meters reset"
-	params remote_address old_pin
+	params remote_address old_pin call_meter_timeout
 [end_test]
 
 [test]
 	name "oFono - Call meters near max warning"
-	params remote_address old_pin
+	params remote_address old_pin call_meter_timeout
 [end_test]
 
 ################
 # Volume cases #
 ################
+
+[parameter]
+	name call_volume_timeout
+	const global_timeout
+[end_parameter]
 
 [parameter]
 	name volume
@@ -278,10 +383,15 @@
 
 [test]
 	name "oFono - Set microphone volume"
-	params volume
+	params volume call_volume_timeout
 [end_test]
 
 [test]
 	name "oFono - Set speaker volume"
-	params volume
+	params volume call_volume_timeout
+[end_test]
+
+[test]
+	name "oFono - Set muted"
+	params call_volume_timeout
 [end_test]

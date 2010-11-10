@@ -30,6 +30,7 @@ typedef struct
 	DBusGConnection *connection;
 	GMainLoop *mainloop;
 	DBusGProxy *proxy_to_use;
+	long timeout;
 
 	char *remote_address;
 	char *smsc_address;

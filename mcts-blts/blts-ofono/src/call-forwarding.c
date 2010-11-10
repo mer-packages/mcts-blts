@@ -159,7 +159,7 @@ forwarding_handling(void* user_ptr, char* modem_path, GValue *val, char *action)
 
 		return -1;
 	}
-	guint source_id = g_timeout_add(3000, (GSourceFunc) call_forwarding_timeout,
+	guint source_id = g_timeout_add(data->timeout, (GSourceFunc) call_forwarding_timeout,
 	    &state);
 
 	g_main_loop_run(state.ofono_data->mainloop);
@@ -240,6 +240,7 @@ forwarding_if_busy_variant_set_arg_processor(struct boxed_value *args,
 	FUNC_ENTER();
 	char *remote_addr = 0, *forward_addr = 0;
 	int user_timeout = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 	{
@@ -252,6 +253,8 @@ forwarding_if_busy_variant_set_arg_processor(struct boxed_value *args,
 	forward_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	user_timeout = strtol(blts_config_boxed_value_get_string(args), NULL, 10);
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -264,6 +267,10 @@ forwarding_if_busy_variant_set_arg_processor(struct boxed_value *args,
 		free(forward_addr);
 	else
 		data->forward_address = forward_addr;
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
 	FUNC_LEAVE();
 	return data;
 }
@@ -273,11 +280,14 @@ forwarding_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	FUNC_ENTER();
 	char *forward_addr = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
 	forward_addr = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -285,6 +295,10 @@ forwarding_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 		free(forward_addr);
 	else
 		data->forward_address = forward_addr;
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
 	FUNC_LEAVE();
 	return data;
 }

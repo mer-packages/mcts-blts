@@ -53,14 +53,15 @@ static void my_ofono_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
 		/* What is displayed on the first 'USAGE' line */
-		"[-r <number>] [-m <number>] [-f <number>] [-t timeout]\n"
+		"[-r <number>] [-m <number>] [-f <number>] [-h hangup]\n"
 		//"[-n new_pin] [-o old_pin] [-y pin_type]\n"
 		"[-v volume] [-a accu_cm_max] [-p ppu] [-c currency]",
+		"[-t timeout]",
 		/* Description of the arguments */
 		"  -r: Recipient address/phone number (for voice call/SMS)\n"
 		"  -m: SMS Center address (for SMS send)\n"
 		"  -f: Call Forwarding address\n"
-		"  -t: Hangup timeout\n"
+		"  -h: Hangup timeout\n"
 		"  -n: New PIN code\n"
 		"  -o: Old (current) PIN code\n"
 		"  -y: PIN code type (puk, ..)\n"
@@ -68,12 +69,13 @@ static void my_ofono_help(const char* help_msg_base)
 		"  -a: Accumulated Call Meter maximum value\n"
 		"  -p: Price Per Unit conversion value\n"
 		"  -c: Three character currency code\n"
+		"  -t: Set timeout for test case execution\n"
 		"  --dontcleanup: Don't clean up call state before/after tests\n"
 		);
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */
-static const char short_opts[] = "r:m:f:t:n:o:y:v:a:p:c:";
+static const char short_opts[] = "r:m:f:h:n:o:y:v:a:p:c:t:";
 static const struct option long_opts[] =
 {
 	{"dontcleanup", 0, NULL, 1},
@@ -141,8 +143,11 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 				free(my_data->smsc_address);
 			my_data->smsc_address = strdup(optarg);
 			break;
-		case 't':
+		case 'h':
 			my_data->user_timeout = atoi(optarg);
+			break;
+		case 't':
+			my_data->timeout = atol(optarg);
 			break;
 		case 0:
 			/* getopt_long() flag */
@@ -159,6 +164,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Set microphone volume",
 		volume_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "volume", "null",
+		CONFIG_PARAM_STRING, "call_volume_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -166,6 +172,15 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Set speaker volume",
 		volume_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "volume", "null",
+		CONFIG_PARAM_STRING, "call_volume_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Set muted",
+		volume_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "volume", "null",
+		CONFIG_PARAM_STRING, "call_volume_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -174,6 +189,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		dtmf_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_STRING, "dtmf_tones", "1",
+		CONFIG_PARAM_STRING, "dtmf_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -185,6 +201,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		barring_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "call_barring_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -193,6 +210,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		barring_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "call_barring_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -201,6 +219,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		barring_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "call_barring_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -209,6 +228,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		barring_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "call_barring_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -218,6 +238,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		barring_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "call_barring_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -226,6 +247,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 			barring_variant_set_arg_processor,
 			CONFIG_PARAM_STRING, "old_pin", "1234",
 			CONFIG_PARAM_STRING, "new_pin", "1234",
+			CONFIG_PARAM_STRING, "call_barring_timeout", "60000",
 			CONFIG_PARAM_NONE);
 		if (ret)
 			return NULL;
@@ -257,11 +279,19 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	if (ret)
 		return NULL;
 
+	ret = blts_config_declare_variable_test("oFono - Call meters read",
+		call_meter_variant_read_arg_processor,
+		CONFIG_PARAM_STRING, "call_meter_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
 	ret = blts_config_declare_variable_test("oFono - Call meters set",
 		call_meter_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "call_meter_max", "20",
 		CONFIG_PARAM_STRING, "price_per_unit", "1.0",
 		CONFIG_PARAM_STRING, "currency", "FIM",
+		CONFIG_PARAM_STRING, "call_meter_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -270,6 +300,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		call_meter_variant_reset_arg_processor,
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_STRING, "old_pin", "1234",
+		CONFIG_PARAM_STRING, "call_meter_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -278,6 +309,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		call_meter_variant_reset_arg_processor,
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_STRING, "old_pin", "1234",
+		CONFIG_PARAM_STRING, "call_meter_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -286,6 +318,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		voicecall_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "country_code", "+000",
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -294,6 +327,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		voicecall_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "country_code", "+000",
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -302,6 +336,84 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		voicecall_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "country_code", "+000",
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Answer to voicecall and hangup",
+		voicecall_answer_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Answer to voicecall and hangup all",
+		voicecall_answer_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Answer to voicecall and wait another call",
+		voicecall_answer_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Answer to voicecall and remote hangup",
+		voicecall_answer_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Cancel voicecall",
+		voicecall_answer_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Transfer",
+		dual_call_case_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Swap",
+		dual_call_case_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Release and answer",
+		dual_call_case_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Hold and answer",
+		dual_call_case_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Multiparty call test",
+		multiparty_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Private call test",
+		multiparty_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "voicecall_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -313,6 +425,14 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_STRING, "SMSC", "+000123456789",
 		CONFIG_PARAM_STRING, "bearer", "cs-preferred",
+		CONFIG_PARAM_STRING, "sms_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - SMSC number test",
+		sms_smsc_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "sms_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -321,6 +441,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		sms_recv_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "SMSC", "+000123456789",
 		CONFIG_PARAM_STRING, "bearer", "cs-preferred",
+		CONFIG_PARAM_STRING, "sms_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -333,6 +454,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Disable forwardings",
 		forwarding_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "disable_forwarding", "",
+		CONFIG_PARAM_STRING, "call_forwarding_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -340,6 +462,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Unconditional forwarding",
 		forwarding_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "forward_address", "0987654321",
+		CONFIG_PARAM_STRING, "call_forwarding_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -349,6 +472,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_STRING, "forward_address", "0987654321",
 		CONFIG_PARAM_STRING, "call_forwarding_keepalive", "15",
+		CONFIG_PARAM_STRING, "call_forwarding_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -356,6 +480,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Forward if no reply",
 		forwarding_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "forward_address", "0987654321",
+		CONFIG_PARAM_STRING, "call_forwarding_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -363,6 +488,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Forward if not reachable",
 		forwarding_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "forward_address", "0987654321",
+		CONFIG_PARAM_STRING, "call_forwarding_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -1046,58 +1172,60 @@ static blts_cli_testcase my_ofono_cases[] =
 {
 	/* Test case name, test case function, timeout in ms
 	 * It is possible to use same function for multiple cases.
-	 * Zero timeout = infinity */
+	 * Zero timeout = infinity
+	 *
+	 * Test case timeouts set to 0 are handled via configuration file! */
 	{ "oFono - Information Query", my_ofono_case_query, 15000 },
 	{ "oFono - Register to network", my_ofono_case_regnetwork, 15000 },
 	{ "oFono - De-register from network", my_ofono_case_deregnetwork, 15000 },
 	{ "oFono - Enable modems", my_ofono_case_enable_modems, 15000 },
 	{ "oFono - Set modems online", blts_ofono_case_modems_online, 15000 },
 	{ "oFono - Set modems offline", blts_ofono_case_modems_offline, 15000 },
-	{ "oFono - Create voicecall", my_ofono_case_voicecall_to, 60000 },
-	{ "oFono - Create voicecall with hidden caller ID", my_ofono_case_voicecall_to, 60000 },
-	{ "oFono - Answer to voicecall and hangup", my_ofono_case_voicecall_answer, 50000 },
-	{ "oFono - Answer to voicecall and hangup all", my_ofono_case_voicecall_answer, 50000 },
-	{ "oFono - Answer to voicecall and wait another call", my_ofono_case_voicecall_answer, 120000 },
-	{ "oFono - Answer to voicecall and deflect", my_ofono_case_voicecall_answer, 50000 },
-	{ "oFono - Answer to voicecall and remote hangup", my_ofono_case_voicecall_answer, 50000 },
-	{ "oFono - Cancel voicecall", my_ofono_case_voicecall_answer, 50000 },
-	{ "oFono - Transfer", blts_ofono_case_dual_call_transfer, 50000 },
-	{ "oFono - Swap", blts_ofono_case_dual_call_swap, 50000 },
-	{ "oFono - Release and answer", blts_ofono_case_dual_call_release_and_answer, 50000 },
-	{ "oFono - Hold and answer", blts_ofono_case_dual_call_hold_and_answer, 50000 },
-	{ "oFono - Call and send DTMF", my_ofono_case_voicecall_to_DTMF, 60000 },
-	{ "oFono - Disable forwardings", my_ofono_case_forwardings, 60000 },
-	{ "oFono - Unconditional forwarding", my_ofono_case_forwardings, 60000 },
-	{ "oFono - Forward if busy", my_ofono_case_forwardings, 60000 },
-	{ "oFono - Forward if no reply", my_ofono_case_forwardings, 60000 },
-	{ "oFono - Forward if not reachable", my_ofono_case_forwardings, 60000 },
-	{ "oFono - Send SMS", blts_ofono_send_sms_default, 95000 },
-	{ "oFono - Receive SMS", blts_ofono_receive_sms_default, 95000 },
+	{ "oFono - Create voicecall", my_ofono_case_voicecall_to, 0 },
+	{ "oFono - Create voicecall with hidden caller ID", my_ofono_case_voicecall_to, 0 },
+	{ "oFono - Answer to voicecall and hangup", my_ofono_case_voicecall_answer, 0 },
+	{ "oFono - Answer to voicecall and hangup all", my_ofono_case_voicecall_answer, 0 },
+	{ "oFono - Answer to voicecall and wait another call", my_ofono_case_voicecall_answer, 0 },
+	{ "oFono - Answer to voicecall and deflect", my_ofono_case_voicecall_answer, 0 },
+	{ "oFono - Answer to voicecall and remote hangup", my_ofono_case_voicecall_answer, 0 },
+	{ "oFono - Cancel voicecall", my_ofono_case_voicecall_answer, 0 },
+	{ "oFono - Transfer", blts_ofono_case_dual_call_transfer, 0 },
+	{ "oFono - Swap", blts_ofono_case_dual_call_swap, 0 },
+	{ "oFono - Release and answer", blts_ofono_case_dual_call_release_and_answer, 0 },
+	{ "oFono - Hold and answer", blts_ofono_case_dual_call_hold_and_answer, 0 },
+	{ "oFono - Call and send DTMF", my_ofono_case_voicecall_to_DTMF, 0 },
+	{ "oFono - Disable forwardings", my_ofono_case_forwardings, 0 },
+	{ "oFono - Unconditional forwarding", my_ofono_case_forwardings, 0 },
+	{ "oFono - Forward if busy", my_ofono_case_forwardings, 0 },
+	{ "oFono - Forward if no reply", my_ofono_case_forwardings, 0 },
+	{ "oFono - Forward if not reachable", my_ofono_case_forwardings, 0 },
+	{ "oFono - Send SMS", blts_ofono_send_sms_default, 0 },
+	{ "oFono - Receive SMS", blts_ofono_receive_sms_default, 0 },
 	{ "oFono - Change PIN", ofono_change_pin, 15000 },
 	{ "oFono - Enter PIN", ofono_enter_pin, 15000 },
 	{ "oFono - Reset PIN", ofono_reset_pin, 15000 },
 	{ "oFono - Lock PIN", ofono_lock_pin, 15000 },
 	{ "oFono - Unlock PIN", ofono_unlock_pin, 15000 },
-	{ "oFono - Set microphone volume", blts_ofono_set_microphone_volume, 60000 },
-	{ "oFono - Set speaker volume", blts_ofono_set_speaker_volume, 60000 },
-	{ "oFono - Set muted", blts_ofono_set_muted, 60000 },
-	{ "oFono - Call meters read", blts_ofono_read_call_meter_data, 15000 },
-	{ "oFono - Call meters set", blts_ofono_set_call_meter_data, 15000 },
-	{ "oFono - Call meters reset", blts_ofono_reset_call_meter_data, 15000 },
-	{ "oFono - Call meters near max warning", blts_ofono_test_near_max_warning, 15000 },
-	{ "oFono - Check barring properties", ofono_barring_properties, 15000 },
-	{ "oFono - Disable barrings", ofono_barring_properties, 30000 },
-	{ "oFono - Disable incoming barrings", ofono_barring_properties, 60000 },
-	{ "oFono - Disable outgoing barrings", ofono_barring_properties, 60000 },
-	{ "oFono - Change password for barrings", ofono_barring_properties, 30000 },
-	{ "oFono - Call barrings test", ofono_call_barring_test, 60000 },
+	{ "oFono - Set microphone volume", blts_ofono_set_microphone_volume, 0 },
+	{ "oFono - Set speaker volume", blts_ofono_set_speaker_volume, 0 },
+	{ "oFono - Set muted", blts_ofono_set_muted, 0 },
+	{ "oFono - Call meters read", blts_ofono_read_call_meter_data, 0 },
+	{ "oFono - Call meters set", blts_ofono_set_call_meter_data, 0 },
+	{ "oFono - Call meters reset", blts_ofono_reset_call_meter_data, 0 },
+	{ "oFono - Call meters near max warning", blts_ofono_test_near_max_warning, 0 },
+	{ "oFono - Check barring properties", ofono_barring_properties, 0 },
+	{ "oFono - Disable barrings", ofono_barring_properties, 0 },
+	{ "oFono - Disable incoming barrings", ofono_barring_properties, 0 },
+	{ "oFono - Disable outgoing barrings", ofono_barring_properties, 0 },
+	{ "oFono - Change password for barrings", ofono_barring_properties, 0 },
+	{ "oFono - Call barrings test", ofono_call_barring_test, 0 },
 	{ "oFono - List all properties", ofono_list_modems, 15000 },
 	// This operation can take several...
 	{ "oFono - Propose scan", ofono_propose_scan, 120000 },
 	//... seconds, and up to several minutes on some modems
-	{ "oFono - SMSC number test", ofono_sms_center_number, 15000 },
-	{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 60000 },
-	{ "oFono - Private call test", blts_ofono_case_private_chat, 60000 },
+	{ "oFono - SMSC number test", ofono_sms_center_number, 0 },
+	{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 0 },
+	{ "oFono - Private call test", blts_ofono_case_private_chat, 0 },
 
 	BLTS_CLI_END_OF_LIST
 };

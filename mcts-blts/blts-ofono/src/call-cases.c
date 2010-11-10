@@ -623,7 +623,7 @@ static int call_case_run(struct call_case_state *state)
 	state->voice_call = NULL;
 	state->voice_call_path = NULL;
 
-	g_timeout_add(30000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 	g_idle_add(call_init_start, state);
 
 	state->result=-1;
@@ -678,8 +678,8 @@ static int dtmf_case_run(struct call_case_state *state)
 
 	state->voice_call_manager = NULL;
 	state->voice_call = NULL;
-	g_timeout_add(10000, (GSourceFunc) call_send_dtmf, state);
-	g_timeout_add(30000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout-20000, (GSourceFunc) call_send_dtmf, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 	g_idle_add(call_init_start, state);
 
 	state->result=-1;
@@ -946,6 +946,7 @@ int my_ofono_case_voicecall_to_DTMF(void* user_ptr, __attribute__((unused))int t
 void *voicecall_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *addr_prefix = NULL, *addr = NULL, *new_addr = NULL;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -953,6 +954,8 @@ void *voicecall_variant_set_arg_processor(struct boxed_value *args, void *user_p
 	addr_prefix = blts_config_boxed_value_get_string(args);
 	args = args->next;
 	addr = blts_config_boxed_value_get_string(args);
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -961,12 +964,34 @@ void *voicecall_variant_set_arg_processor(struct boxed_value *args, void *user_p
 			return NULL;
 		data->remote_address = new_addr;
 	}
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}
+
+void *voicecall_answer_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	/* These are already non-zero, if set on command line */
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
 	return data;
 }
 
 void *dtmf_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *remote_addr = 0, *dtmf_tone = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -974,6 +999,8 @@ void *dtmf_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 	remote_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	dtmf_tone = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	if (data->remote_address)
 		free(remote_addr);
@@ -984,6 +1011,9 @@ void *dtmf_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 		free(dtmf_tone);
 	else
 		data->dtmf_tone = dtmf_tone;
+
+	if (!data->timeout)
+		data->timeout = timeout;
 
 	return data;
 }

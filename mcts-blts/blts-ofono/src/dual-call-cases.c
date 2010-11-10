@@ -779,7 +779,7 @@ static int call_case_run(struct dual_call_case_state *state)
 	state->first_voice_call_path = NULL;
 	state->second_voice_call_path = NULL;
 
-	g_timeout_add(30000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 	g_idle_add(call_init_start, state);
 
 	state->result=-1;
@@ -950,3 +950,21 @@ int blts_ofono_case_dual_call_hold_and_answer(void* user_ptr, __attribute__((unu
 	return ret;
 }
 
+//variable data seeds
+/* Convert generated parameters to test case format. */
+void *
+dual_call_case_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+  
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}

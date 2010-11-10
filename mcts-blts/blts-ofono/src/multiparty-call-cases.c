@@ -582,7 +582,7 @@ static int call_case_run(struct multipart_call_case_state *state)
 	state->number_voice_calls = 0;
 	state->test_stage = MP_INIT;
 
-	g_timeout_add(120000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 	g_idle_add(call_init_start, state);
 
 	state->result=-1;
@@ -911,3 +911,21 @@ int blts_ofono_case_private_chat(void* user_ptr, __attribute__((unused))int test
 	return ret;
 }
 
+//variable data seeds
+/* Convert generated parameters to test case format. */
+void *
+multiparty_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+  
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}

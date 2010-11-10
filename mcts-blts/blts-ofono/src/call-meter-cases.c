@@ -890,7 +890,7 @@ static int call_meter_case_run(struct call_meter_case_state *state)
 	state->call_meter = NULL;
 	state->voice_call_manager = NULL;
 
-	g_timeout_add(60000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 
 	g_idle_add(call_meter_init_start, state);
 
@@ -1031,9 +1031,27 @@ int blts_ofono_test_near_max_warning(void* user_ptr, __attribute__((unused)) int
 
 //variable data seeds
 /* Convert generated parameters to test case format. */
+void *call_meter_variant_read_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	/* These are already non-zero, if set on command line */
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}
+
 void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *acc_max = 0, *ppu = 0, *currency = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -1043,6 +1061,8 @@ void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_
 	ppu = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	currency = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -1061,12 +1081,16 @@ void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_
 	else
 		data->currency = currency;
 
+	if (!data->timeout)
+		data->timeout = timeout;
+
 	return data;
 }
 
 void *call_meter_variant_reset_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *remote_addr = 0, *old_pin = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -1074,6 +1098,8 @@ void *call_meter_variant_reset_arg_processor(struct boxed_value *args, void *use
 	remote_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
 	old_pin = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -1086,6 +1112,9 @@ void *call_meter_variant_reset_arg_processor(struct boxed_value *args, void *use
 		free(old_pin);
 	else
 		data->old_pin = old_pin;
+
+	if (!data->timeout)
+		data->timeout = timeout;
 
 	return data;
 }

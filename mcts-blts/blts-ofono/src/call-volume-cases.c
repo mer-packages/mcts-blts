@@ -605,7 +605,7 @@ static int call_volume_case_run(struct call_volume_case_state *state)
 	state->call_volume = NULL;
 	state->voice_call_manager = NULL;
 
-	g_timeout_add(60000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 
 	g_idle_add(call_volume_init_start, state);
 
@@ -700,11 +700,14 @@ int blts_ofono_set_muted(void* user_ptr, __attribute__((unused)) int testnum)
 void *volume_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *volume = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
 	volume = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -712,6 +715,9 @@ void *volume_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 		free(volume);
 	else
 		data->volume = volume;
+
+	if (!data->timeout)
+		data->timeout = timeout;
 
 	return data;
 }
