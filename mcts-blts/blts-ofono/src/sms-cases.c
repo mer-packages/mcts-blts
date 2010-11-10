@@ -31,6 +31,8 @@
 #include "ofono-general.h"
 #include "ofono-util.h"
 
+#define SMSC_NUMBER_MAX_LEN 20
+
 struct sms_case_state {
 	int testnum;
 	char* message;
@@ -91,7 +93,7 @@ static gboolean save_original_smsc(struct sms_case_state *state)
 	if(!state->orig_smsc)
 		return FALSE;
 
-	if(len && len <= 20)
+	if(len && len <= SMSC_NUMBER_MAX_LEN)
 	{
 		g_value_init(state->orig_smsc, G_TYPE_STRING);
 		g_value_set_string(state->orig_smsc, orig_str);	
@@ -269,11 +271,11 @@ static gboolean sms_init_start(gpointer data)
 			return FALSE;
 		}
 		
-		if (state->signalcb_MessageManager_PropertyChanged) {
-		dbus_g_proxy_add_signal(state->msg_manager, "PropertyChanged",
-			G_TYPE_STRING, G_TYPE_VALUE,
-			G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal(state->msg_manager, "PropertyChanged",
+		if (state->signalcb_MessageManager_PropertyChanged) 
+		{
+			dbus_g_proxy_add_signal(state->msg_manager, "PropertyChanged",
+			G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
+			dbus_g_proxy_connect_signal(state->msg_manager, "PropertyChanged",
 			state->signalcb_MessageManager_PropertyChanged, state, 0);
 		}
 		if (state->case_begin)
@@ -578,7 +580,7 @@ static gboolean smsc_do_negative_test(gpointer data, const char* invalid_smsc)
 	
 	len = strlen(invalid_smsc);
 	
-	if(len && len <= 20)
+	if(len && len <= SMSC_NUMBER_MAX_LEN)
 		return FALSE;
 		
 	g_value_init(smsc, G_TYPE_STRING);
