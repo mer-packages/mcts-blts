@@ -287,5 +287,5 @@ General:
  * oFono - Set modems offline
         Sets modems offline (turns on flight mode)
 
- * oFono - Propse scan
+ * oFono - Propose scan
     Scans possible networks
