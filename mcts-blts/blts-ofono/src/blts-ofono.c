@@ -55,8 +55,7 @@ static void my_ofono_help(const char* help_msg_base)
 		/* What is displayed on the first 'USAGE' line */
 		"[-r <number>] [-m <number>] [-f <number>] [-h hangup]\n"
 		//"[-n new_pin] [-o old_pin] [-y pin_type]\n"
-		"[-v volume] [-a accu_cm_max] [-p ppu] [-c currency]",
-		"[-t timeout]",
+		"[-V volume] [-a accu_cm_max] [-p ppu] [-c currency] [-t timeout]",
 		/* Description of the arguments */
 		"  -r: Recipient address/phone number (for voice call/SMS)\n"
 		"  -m: SMS Center address (for SMS send)\n"
@@ -65,7 +64,7 @@ static void my_ofono_help(const char* help_msg_base)
 		"  -n: New PIN code\n"
 		"  -o: Old (current) PIN code\n"
 		"  -y: PIN code type (puk, ..)\n"
-		"  -v: Call volume for Microphone/Speaker (0-100%)\n"
+		"  -V: Call volume for Microphone/Speaker (0-100%)\n"
 		"  -a: Accumulated Call Meter maximum value\n"
 		"  -p: Price Per Unit conversion value\n"
 		"  -c: Three character currency code\n"
@@ -75,7 +74,7 @@ static void my_ofono_help(const char* help_msg_base)
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */
-static const char short_opts[] = "r:m:f:h:n:o:y:v:a:p:c:t:";
+static const char short_opts[] = "r:m:f:h:n:o:y:V:a:p:c:t:";
 static const struct option long_opts[] =
 {
 	{"dontcleanup", 0, NULL, 1},
@@ -108,7 +107,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 				free(my_data->currency);
 			my_data->currency = strdup(optarg);
 			break;
-		case 'v':
+		case 'V':
 			if (my_data->volume)
 				free(my_data->volume);
 			my_data->volume = strdup(optarg);
