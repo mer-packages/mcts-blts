@@ -61,7 +61,7 @@ ofono_call_forwarding_disable_all(void* user_ptr, char* modem_path,
 	    OFONO_CALL_FORWARDING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
 		return -1;
 		FUNC_LEAVE();
 	}
@@ -86,7 +86,7 @@ on_call_forwarding_manager_property_changed(__attribute__((unused))DBusGProxy *p
 	FUNC_ENTER();
 	struct call_forwarding_state* state =
 	    (struct call_forwarding_state*) user_data;
-	LOG("Call forwarding property: '%s' changed to '%s'\n", key,
+	BLTS_DEBUG("Call forwarding property: '%s' changed to '%s'\n", key,
 	    g_strdup_value_contents(value));
 	g_main_loop_quit(state->ofono_data->mainloop);
 }
@@ -99,7 +99,7 @@ call_forwarding_timeout(gpointer user_data)
 	    (struct call_forwarding_state*) user_data;
 	state->result = -1;
 
-	LOG("Timeout while waiting for signal\n");
+	BLTS_DEBUG("Timeout while waiting for signal\n");
 
 	g_main_loop_quit(state->ofono_data->mainloop);
 
@@ -143,7 +143,7 @@ forwarding_handling(void* user_ptr, char* modem_path, GValue *val, char *action)
 	    modem_path, OFONO_CALL_FORWARDING_INTERFACE);
 	if (!state.proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
 		FUNC_LEAVE();
 		return -1;
 	}
@@ -318,7 +318,7 @@ ofono_call_forwarding_properties(void* user_ptr, char* modem_path)
 	    OFONO_CALL_FORWARDING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
 		return -1;
 	}
 
@@ -356,7 +356,7 @@ ofono_call_forwarding_check_settings(char *forwarding, char *number,
 
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_FORWARDING_INTERFACE "\n");
 		FUNC_LEAVE();
 		return -1;
 	}

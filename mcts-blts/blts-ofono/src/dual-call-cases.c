@@ -87,7 +87,7 @@ void hangup_all_calls(struct dual_call_case_state* state)
 	{
 		display_dbus_glib_error(error);
 		g_error_free (error);
-		LOG("Cannot hangup calls! - test failed\n");
+		BLTS_DEBUG("Cannot hangup calls! - test failed\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 	}
@@ -220,7 +220,7 @@ static void transfer_complete(__attribute__((unused)) DBusGProxy *proxy,  GError
 
 	if (error)
 	{
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -238,7 +238,7 @@ static void swap_complete(__attribute__((unused)) DBusGProxy *proxy,  GError *er
 
 	if (error)
 	{
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -256,7 +256,7 @@ static void release_and_answer_complete(__attribute__((unused)) DBusGProxy *prox
 
 	if (error)
 	{
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -274,7 +274,7 @@ static void hold_and_answer_complete(__attribute__((unused)) DBusGProxy *proxy, 
 
 	if (error)
 	{
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -299,11 +299,11 @@ static void handle_first_call(gchar* path, GHashTable* properties, gpointer user
 
 	if(state->voice_calls[FIRST_CALL] != NULL)
 	{
-		LOG("First call already in system!\n");
+		BLTS_DEBUG("First call already in system!\n");
 		goto error;
 	}
 
-	LOG("First call received...\n");
+	BLTS_DEBUG("First call received...\n");
 	call_index = FIRST_CALL;
 
 	call = dbus_g_proxy_new_for_name (state->ofono_data->connection,
@@ -311,22 +311,22 @@ static void handle_first_call(gchar* path, GHashTable* properties, gpointer user
 
 	if (!call)
 	{
-		LOG("Cannot get proxy for " OFONO_CALL_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_CALL_INTERFACE "\n");
 		goto error;
 	}
 
 	state->voice_calls[call_index] = call;
 
-	LOG("Search incoming state...\n");
+	BLTS_DEBUG("Search incoming state...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 	incoming = g_hash_table_find(properties, (GHRFunc) check_state, "incoming");
 	if(!incoming)
 	{
-		LOG("Not incoming call - test failed!\n");
+		BLTS_DEBUG("Not incoming call - test failed!\n");
 		goto error;
 	}
 
-	LOG("Incoming voice call '%s'\n", (char *)path);
+	BLTS_DEBUG("Incoming voice call '%s'\n", (char *)path);
 	state->first_voice_call_path = g_strdup(path);
 
 	if (state->signalcb_VoiceCall1_PropertyChanged)
@@ -337,7 +337,7 @@ static void handle_first_call(gchar* path, GHashTable* properties, gpointer user
 							state->signalcb_VoiceCall1_PropertyChanged, state, 0);
 	}
 
-	LOG("Answer the call...\n");
+	BLTS_DEBUG("Answer the call...\n");
 	state->retries = 10;
 	org_ofono_VoiceCall_get_properties_async(state->voice_calls[call_index],
 	pending_call_answerable_check_complete, state);
@@ -360,18 +360,18 @@ static void handle_second_call(gchar* path, GHashTable* properties, gpointer use
 
 	if(state->voice_calls[FIRST_CALL] == NULL)
 	{
-		LOG("First call not received!\n");
+		BLTS_DEBUG("First call not received!\n");
 		goto error;
 	}
 
 	/* skip already handled voice call */
 	if(strcmp(state->first_voice_call_path, path) == 0)
 	{
-		LOG("Voice call:%s skipped\n", state->first_voice_call_path);
+		BLTS_DEBUG("Voice call:%s skipped\n", state->first_voice_call_path);
 		return;
 	}
 
-	LOG("Second call received...\n");
+	BLTS_DEBUG("Second call received...\n");
 	call_index = SECOND_CALL;
 
 	call = dbus_g_proxy_new_for_name (state->ofono_data->connection,
@@ -379,22 +379,22 @@ static void handle_second_call(gchar* path, GHashTable* properties, gpointer use
 
 	if (!call)
 	{
-		LOG("Cannot get proxy for " OFONO_CALL_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_CALL_INTERFACE "\n");
 		goto error;
 	}
 
 	state->voice_calls[call_index] = call;
 	
-	LOG("Search waiting state...\n");
+	BLTS_DEBUG("Search waiting state...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 	waiting = g_hash_table_find(properties, (GHRFunc) check_state, "waiting");
 	if(!waiting)
 	{
-		LOG("Not waiting call - test failed!\n");
+		BLTS_DEBUG("Not waiting call - test failed!\n");
 		goto error;
 	}
 
-	LOG("Incoming voice call '%s'\n", (char *)path);
+	BLTS_DEBUG("Incoming voice call '%s'\n", (char *)path);
 	state->second_voice_call_path = g_strdup(path);
 
 	if (state->signalcb_VoiceCall2_PropertyChanged)
@@ -426,21 +426,21 @@ static void on_voice_call_manager_call_added(__attribute__((unused))DBusGProxy *
 {	
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;		
 	
-	LOG("Call added...%s\n", path);	
+	BLTS_DEBUG("Call added...%s\n", path);	
 
 	if(!state->voice_calls[FIRST_CALL])
 	{
-		LOG("Handle first call...\n");
+		BLTS_DEBUG("Handle first call...\n");
 		handle_first_call(path, properties, user_data);
 	}
 	else if (!state->voice_calls[SECOND_CALL])
 	{
-		LOG("Handle second call...\n");
+		BLTS_DEBUG("Handle second call...\n");
 		handle_second_call(path, properties, user_data);
 	}
 	else
 	{
-		LOG("Already two calls in system...\n");
+		BLTS_DEBUG("Already two calls in system...\n");
 	}
 
 	return;
@@ -456,9 +456,9 @@ static void on_voice_call_manager_call_removed(__attribute__((unused))DBusGProxy
 	static int removed_calls = 0;
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_data;	
 	
-	LOG("Call %s removed...\n", path);
+	BLTS_DEBUG("Call %s removed...\n", path);
 	removed_calls++;
-	LOG("Calls removed total: %d\n", removed_calls);
+	BLTS_DEBUG("Calls removed total: %d\n", removed_calls);
 	
 	/* End test case when both "CallRemoved" signals have been received and
 	   VoiceCall1 and VoiceCall2 have both got 'disconnected' property change signals */
@@ -480,7 +480,7 @@ static void on_first_voice_call_property_changed(__attribute__((unused))DBusGPro
 
 	gchar* value_str = g_value_dup_string (value);
 
-	LOG("Voicecall 1 property: '%s' changed to '%s'\n", key, value_str);
+	BLTS_DEBUG("Voicecall 1 property: '%s' changed to '%s'\n", key, value_str);
 
 	if(strcmp(key, "State") == 0)
 	{
@@ -509,7 +509,7 @@ static void on_second_voice_call_property_changed(__attribute__((unused))DBusGPr
 
 	gchar* value_str = g_value_dup_string (value);
 
-	LOG("Voicecall 2 property: '%s' changed to '%s'\n", key, value_str);
+	BLTS_DEBUG("Voicecall 2 property: '%s' changed to '%s'\n", key, value_str);
 
 	if(strcmp(key, "State") == 0)
 	{
@@ -536,7 +536,7 @@ gboolean do_transfer(gpointer user_ptr)
 	FUNC_ENTER();
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_ptr;
 
-	LOG("-- Transfer calls--\n");
+	BLTS_DEBUG("-- Transfer calls--\n");
 
 	org_ofono_VoiceCallManager_transfer_async (state->voice_call_manager, transfer_complete, state);
 
@@ -551,7 +551,7 @@ gboolean do_swap(gpointer user_ptr)
 	FUNC_ENTER();
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_ptr;
 
-	LOG("-- Swap calls--\n");
+	BLTS_DEBUG("-- Swap calls--\n");
 
 	org_ofono_VoiceCallManager_swap_calls_async (state->voice_call_manager, swap_complete, state);
 
@@ -567,7 +567,7 @@ gboolean do_hold_and_answer(gpointer user_ptr)
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_ptr;
 
 
-	LOG("-- Hold and answer--\n");
+	BLTS_DEBUG("-- Hold and answer--\n");
 
 	org_ofono_VoiceCallManager_hold_and_answer_async (state->voice_call_manager, hold_and_answer_complete, state);
 
@@ -583,7 +583,7 @@ gboolean do_release_and_answer(gpointer user_ptr)
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_ptr;
 
 
-	LOG("-- Release and answer--\n");
+	BLTS_DEBUG("-- Release and answer--\n");
 
 	org_ofono_VoiceCallManager_release_and_answer_async (state->voice_call_manager, release_and_answer_complete, state);
 
@@ -620,7 +620,7 @@ static gboolean call_master_timeout(gpointer data)
 
 	state->result = -1;
 
-	LOG("Timeout reached, failing test.\n");
+	BLTS_DEBUG("Timeout reached, failing test.\n");
 
 	g_main_loop_quit(state->mainloop);
 	return FALSE;
@@ -633,7 +633,7 @@ static gboolean call_user_timeout(gpointer data)
 
 	state->result = 0;
 
-	LOG("Own Timeout reached\n");
+	BLTS_DEBUG("Own Timeout reached\n");
 
 	if (state->call_handle_method == do_release_and_answer)
 	{
@@ -703,7 +703,7 @@ static gboolean call_init_start(gpointer data)
 											OFONO_VC_INTERFACE);
 
 	if (!voice_call_manager) {
-		LOG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -729,7 +729,7 @@ static gboolean call_init_start(gpointer data)
 	}
 	
 	if(!check_call_count(state, 0)){
-		LOG("Previous calls left in system! - test failed\n");
+		BLTS_DEBUG("Previous calls left in system! - test failed\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -747,7 +747,7 @@ static struct dual_call_case_state *call_state_init(my_ofono_data *data)
 	struct dual_call_case_state *state;
 	state = g_malloc(sizeof *state);
 	if (!state) {
-		LOG("OOM\n");
+		BLTS_DEBUG("OOM\n");
 		return 0;
 	}
 	memset(state, 0, sizeof *state);
@@ -762,11 +762,11 @@ static int call_case_run(struct dual_call_case_state *state)
 
 	ret = my_ofono_get_modem(state->ofono_data);
 	if (ret) {
-		LOG("Failed getting modem.\n");
+		BLTS_DEBUG("Failed getting modem.\n");
 		goto done;
 	}
 	if (state->ofono_data->number_modems < 1) {
-		LOG("No modems available.\n");
+		BLTS_DEBUG("No modems available.\n");
 		ret = -1;
 		goto done;
 	}
@@ -800,7 +800,7 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 {
 	FUNC_ENTER();
 
-	LOG("Start listening calls...\n");
+	BLTS_DEBUG("Start listening calls...\n");
 
 	FUNC_LEAVE();
 	return FALSE;

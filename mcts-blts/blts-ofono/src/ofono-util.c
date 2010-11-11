@@ -70,9 +70,9 @@ hash_entry_gvalue_print(gpointer key, GValue* val,
     __attribute__((unused))  gpointer user_data)
 {
 	char *str;
-	LOG("[ %s ]\n", key);
+	BLTS_DEBUG("[ %s ]\n", key);
 	str = g_strdup_value_contents(val);
-	LOG("\t%s\n", str);
+	BLTS_DEBUG("\t%s\n", str);
 	free(str);
 }
 
@@ -87,7 +87,7 @@ get_modem_list(char* data, gpointer user_data)
 		    + 1);
 		if (mydata->modem[mydata->number_modems] == NULL)
 		{
-			LOG("Warning: not enough memory to allocate space for modem data\n");
+			BLTS_DEBUG("Warning: not enough memory to allocate space for modem data\n");
 			return;
 		}
 		strcpy(mydata->modem[mydata->number_modems], data);
@@ -113,7 +113,7 @@ find_modem(gpointer modem_data, gpointer user_data)
 		    + 1);
 		if (mydata->modem[mydata->number_modems] == NULL)
 		{
-			LOG("Warning: not enough memory to allocate space for modem data\n");
+			BLTS_DEBUG("Warning: not enough memory to allocate space for modem data\n");
 			return;
 		}
 		strcpy(mydata->modem[mydata->number_modems], modem);
@@ -161,19 +161,19 @@ my_ofono_get_modem(my_ofono_data* data)
 
 	if (data->connection == NULL)
 	{
-		LOG("Failed to open connection to bus: %s\n", error->message);
+		BLTS_DEBUG("Failed to open connection to bus: %s\n", error->message);
 		g_error_free(error);
 		error = NULL;
 		return -1;
 	}
-	LOG("connection object is %d\n", data->connection);
+	BLTS_DEBUG("connection object is %d\n", data->connection);
 
 	proxy = dbus_g_proxy_new_for_name(data->connection, OFONO_BUS,
 	    OFONO_MNGR_PATH, OFONO_MNGR_INTERFACE);
 
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_MNGR_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_MNGR_INTERFACE "\n");
 		return -1;
 	}
 
@@ -205,7 +205,7 @@ my_ofono_get_modem(my_ofono_data* data)
 	 */
 	if (reset_supplementary_services(data))
 	{
-		LOG(
+		BLTS_DEBUG(
 		    "Warning: can't reset supplementary services. Wrong PIN or unitialized modem?\n");
 	}
 	return 0;
@@ -363,18 +363,18 @@ set_modems_power_on(my_ofono_data *data)
 	for (i = 0; i < data->number_modems; i++)
 	{
 
-		//LOG("{Powering up modem %s}\n", data->modem[i]);
+		//BLTS_DEBUG("{Powering up modem %s}\n", data->modem[i]);
 		proxy = dbus_g_proxy_new_for_name(data->connection, OFONO_BUS,
 		    data->modem[i], OFONO_MODEM_INTERFACE);
 		if (!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
 			return -1;
 		}
 
 		if (!org_ofono_Modem_get_properties(proxy, &props, &error))
 		{
-			LOG("Modem powered: Failed to check modem properties\n");
+			BLTS_DEBUG("Modem powered: Failed to check modem properties\n");
 			display_dbus_glib_error(error);
 			g_error_free(error);
 			retval = -1;
@@ -385,7 +385,7 @@ set_modems_power_on(my_ofono_data *data)
 		{
 			if (!org_ofono_Modem_set_property(proxy, "Powered", &val, &error))
 			{
-				LOG("Modem powered: Failed to power up modem\n");
+				BLTS_DEBUG("Modem powered: Failed to power up modem\n");
 				display_dbus_glib_error(error);
 				g_error_free(error);
 				retval = -1;

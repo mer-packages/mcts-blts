@@ -93,7 +93,7 @@ static int parse_call_index_from_path(const char* path)
 	
 	if(!path)
 	{
-		LOG("Cannot parse empty path!\n");	
+		BLTS_DEBUG("Cannot parse empty path!\n");	
 		goto error;
 	}
 	
@@ -102,14 +102,14 @@ static int parse_call_index_from_path(const char* path)
 	
 	if(!strtok_r(tmp_path, "/", &call_name))
 	{
-		LOG("Parsing call name failed!\n");
+		BLTS_DEBUG("Parsing call name failed!\n");
 		goto error;
 	}
 		
 	BLTS_TRACE("Parsing call index from call %s\n", call_name);
 	if (sscanf(call_name, "voicecall%d", &call_index) != 1)
 	{
-		LOG("Parsing call index failed!\n");
+		BLTS_DEBUG("Parsing call index failed!\n");
 		goto error;
 	}
 
@@ -127,7 +127,7 @@ static gboolean do_hangup_all(gpointer user_ptr)
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_ptr;
 	GError *error = NULL;
 
-	LOG("-- Hanging up all calls--\n");
+	BLTS_DEBUG("-- Hanging up all calls--\n");
 	if(!org_ofono_VoiceCallManager_hangup_all(state->voice_call_manager, &error))
 	{
 		display_dbus_glib_error(error);
@@ -148,7 +148,7 @@ static gboolean do_hangup_multiparty(gpointer user_ptr)
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_ptr;
 	GError *error = NULL;
 
-	LOG("-- Hanging up multiparty calls--\n");
+	BLTS_DEBUG("-- Hanging up multiparty calls--\n");
 	if(!org_ofono_VoiceCallManager_hangup_multiparty(state->voice_call_manager, &error))
 	{
 		display_dbus_glib_error(error);
@@ -173,7 +173,7 @@ static void pending_call_holdandanswer_complete(__attribute__((unused)) DBusGPro
 
 	if (error)
 	{
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -204,7 +204,7 @@ static void pending_call_answer_complete(DBusGProxy *proxy,
 		state->retries--;
 		g_timeout_add(500, pending_call_queue_answerable_check, state);
 	}
-	LOG("call answered\n");
+	BLTS_DEBUG("call answered\n");
 	return;
 
 test_fail:
@@ -247,7 +247,7 @@ static void pending_call_answerable_check_complete(DBusGProxy *proxy,
 
 	g_assert(data);
 
-	LOG("Call state is...\n");
+	BLTS_DEBUG("Call state is...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 	state->call_index=call_index;
 	if (g_hash_table_find(properties, (GHRFunc) check_state, "incoming"))
@@ -278,7 +278,7 @@ test_fail:
 	call_index = parse_call_index_from_path((const char*) path);
 	if(call_index < 0)
 		goto error;
-	LOG("Call index is %i\n", call_index);
+	BLTS_DEBUG("Call index is %i\n", call_index);
 		
 	// create new proxy for call
 	if(!state->voice_calls[call_index])
@@ -288,14 +288,14 @@ test_fail:
 
 		if (!call)
 		{
-			LOG("Cannot get proxy for " OFONO_CALL_INTERFACE "\n");
+			BLTS_DEBUG("Cannot get proxy for " OFONO_CALL_INTERFACE "\n");
 			goto error;
 		}
 
 		state->voice_calls[call_index] = call;
 	}
 	
-	LOG("Search call state...\n");
+	BLTS_DEBUG("Search call state...\n");
 	g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 	incoming = g_hash_table_find(properties, (GHRFunc) check_state, "incoming");
 	
@@ -304,7 +304,7 @@ test_fail:
 		waiting = g_hash_table_find(properties, (GHRFunc) check_state, "waiting");
 		if(waiting)
 		{
-			LOG("Hold the first call and answer the second call...\n");
+			BLTS_DEBUG("Hold the first call and answer the second call...\n");
 	
 			org_ofono_VoiceCallManager_hold_and_answer_async(state->voice_call_manager,
 					pending_call_holdandanswer_complete, state);
@@ -328,7 +328,7 @@ test_fail:
 							state->signalcb_VoiceCall_PropertyChanged[call_index], state, 0);
 	}
 
-	LOG("Answer the first call...\n");
+	BLTS_DEBUG("Answer the first call...\n");
 
 	state->retries = 10;
 	org_ofono_VoiceCall_get_properties_async(state->voice_calls[call_index],
@@ -348,7 +348,7 @@ error:
  */
 static void on_voice_call_manager_call_added(__attribute__((unused))DBusGProxy *proxy, gchar* path, GHashTable* properties, gpointer user_data)
 {
-	LOG("Call added...%s\n", path);	
+	BLTS_DEBUG("Call added...%s\n", path);	
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_data;	
 	multiparty_stage_add_call(state, path);
 	handle_incoming_call(path, properties, user_data);
@@ -361,7 +361,7 @@ static void on_voice_call_manager_call_added(__attribute__((unused))DBusGProxy *
 static void on_voice_call_manager_call_removed(__attribute__((unused))DBusGProxy *proxy, gchar* path, gpointer user_data)
 {
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) user_data;	
-	LOG("Call %s removed...\n", path);
+	BLTS_DEBUG("Call %s removed...\n", path);
 	multiparty_stage_remove_call(state);
 		
 	if(!state->number_voice_calls && state->test_stage == MP_HANGUP)
@@ -381,7 +381,7 @@ static void on_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue*
 	if(strcmp(key, "State") == 0)
 	{
 		gchar* value_str =g_value_dup_string (value);				
-		LOG("Voicecall %s property: '%s' changed to '%s'\n", dbus_g_proxy_get_path(proxy), key, value_str);
+		BLTS_DEBUG("Voicecall %s property: '%s' changed to '%s'\n", dbus_g_proxy_get_path(proxy), key, value_str);
 		g_free(value_str);
 	}
 
@@ -389,7 +389,7 @@ static void on_voice_call_property_changed(DBusGProxy *proxy, char *key, GValue*
 	{
 		
 		gboolean multiparty = g_value_get_boolean(value);
-		LOG("Voicecall %s property: '%s' changed to '%d'\n", dbus_g_proxy_get_path(proxy), key, multiparty);
+		BLTS_DEBUG("Voicecall %s property: '%s' changed to '%d'\n", dbus_g_proxy_get_path(proxy), key, multiparty);
 	}
 }
 
@@ -421,7 +421,7 @@ static gboolean call_master_timeout(gpointer data)
 
 	state->result = -1;
 
-	LOG("Timeout reached, failing test.\n");
+	BLTS_DEBUG("Timeout reached, failing test.\n");
 
 	g_main_loop_quit(state->mainloop);
 	return FALSE;
@@ -433,11 +433,11 @@ static gboolean call_user_timeout(gpointer data)
 
 	state->result = 0;
 
-	LOG("Own Timeout reached\n");
+	BLTS_DEBUG("Own Timeout reached\n");
 
 	if (state->call_hangup_method)
 	{
-		LOG("Hang up calls...\n");
+		BLTS_DEBUG("Hang up calls...\n");
 		if (state->call_hangup_method(state))
 		{
 			state->result = -1;
@@ -504,7 +504,7 @@ static gboolean call_init_start(gpointer data)
 											OFONO_VC_INTERFACE);
 
 	if (!voice_call_manager) {
-		LOG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -527,7 +527,7 @@ static gboolean call_init_start(gpointer data)
 	}
 	
 	if(!check_call_count(state, 0)) {
-		LOG("Previous calls left in system! - test failed\n");
+		BLTS_DEBUG("Previous calls left in system! - test failed\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -546,7 +546,7 @@ static struct multipart_call_case_state *call_state_init(my_ofono_data *data)
 	struct multipart_call_case_state *state;
 	state = malloc(sizeof *state);
 	if (!state) {
-		LOG("OOM\n");
+		BLTS_DEBUG("OOM\n");
 		return 0;
 	}
 	memset(state, 0, sizeof *state);
@@ -561,11 +561,11 @@ static int call_case_run(struct multipart_call_case_state *state)
 
 	ret = my_ofono_get_modem(state->ofono_data);
 	if (ret) {
-		LOG("Failed getting modem.\n");
+		BLTS_DEBUG("Failed getting modem.\n");
 		goto done;
 	}
 	if (state->ofono_data->number_modems < 1) {
-		LOG("No modems available.\n");
+		BLTS_DEBUG("No modems available.\n");
 		ret = -1;
 		goto done;
 	}
@@ -600,7 +600,7 @@ done:
 
 void pointer_array_foreach(gpointer data,  __attribute__((unused))gpointer user_data)
 {
-	LOG("\t%s\n", (char *)data);
+	BLTS_DEBUG("\t%s\n", (char *)data);
 	return;
 }
 
@@ -636,7 +636,7 @@ void multiparty_stage_add_call(struct multipart_call_case_state* state, gchar* p
 	}
 		
 	state->voice_call_path[state->number_voice_calls++] = g_strdup(path);
-	LOG("Calls in system now: %i\n", state->number_voice_calls);
+	BLTS_DEBUG("Calls in system now: %i\n", state->number_voice_calls);
 }
 
 void multiparty_stage_remove_call(struct multipart_call_case_state* state)
@@ -656,7 +656,7 @@ void multiparty_stage_remove_call(struct multipart_call_case_state* state)
 	}	
 	
 	state->number_voice_calls--;
-	LOG("Calls in system now: %i\n", state->number_voice_calls);
+	BLTS_DEBUG("Calls in system now: %i\n", state->number_voice_calls);
 }
 
 void on_voice_call_manager_create_multiparty_reply(__attribute__((unused))DBusGProxy *proxy, GPtrArray *calls, GError *error, void *data)
@@ -672,7 +672,7 @@ void on_voice_call_manager_create_multiparty_reply(__attribute__((unused))DBusGP
 		return;		
 	}
 
-	LOG("Calls in multiparty call:\n");
+	BLTS_DEBUG("Calls in multiparty call:\n");
 	g_ptr_array_foreach(calls, pointer_array_foreach, NULL);
 	g_ptr_array_free(calls, TRUE);
 
@@ -698,7 +698,7 @@ void on_voice_call_manager_private_chat_reply (__attribute__((unused))DBusGProxy
 		return;		
 	}	
 	
-	LOG("Calls left in multiparty call:\n");
+	BLTS_DEBUG("Calls left in multiparty call:\n");
 	g_ptr_array_foreach(calls, pointer_array_foreach, NULL);
 	g_ptr_array_free(calls, TRUE);
 	
@@ -722,14 +722,14 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 		/* Create multiparty when we have 2 calls in */
 		if(!check_call_count(state, 2))
 			goto error;
-		LOG("%s: Creating multiparty call\n", stage_str);		
+		BLTS_DEBUG("%s: Creating multiparty call\n", stage_str);		
 		org_ofono_VoiceCallManager_create_multiparty_async (state->voice_call_manager, 
 		on_voice_call_manager_create_multiparty_reply, state);
 	}
 	else if(state->number_voice_calls == 2 && state->test_stage == MP_MULTIPARTY_WITH_TWO_CREATED)
 	{
 		/* Hang up multiparty */
-		LOG("%s: Hang up multiparty call\n", stage_str);
+		BLTS_DEBUG("%s: Hang up multiparty call\n", stage_str);
 		if(!check_call_count(state, 2))
 			goto error;
 		if (state->call_hangup_method)
@@ -747,7 +747,7 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 	}	
 	else
 	{
-		LOG("%s: Waiting for two calls...\nCalls currently in system: %i\n", 
+		BLTS_DEBUG("%s: Waiting for two calls...\nCalls currently in system: %i\n", 
 		stage_str, state->number_voice_calls);
 	}
 
@@ -776,7 +776,7 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	if(state->number_voice_calls == 2 && state->test_stage == MP_INIT)
 	{
 		/* Create multiparty when we have 2 calls in */
-		LOG("%s: Creating multiparty call phase 1\n", stage_str);
+		BLTS_DEBUG("%s: Creating multiparty call phase 1\n", stage_str);
 		if(!check_call_count(state, 2))
 			goto error;		
 		org_ofono_VoiceCallManager_create_multiparty_async (state->voice_call_manager, 
@@ -786,7 +786,7 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	else if(state->number_voice_calls == 3 && state->test_stage == MP_MULTIPARTY_WITH_TWO_CREATED)
 	{
 		/* Create multiparty with 3rd call */
-		LOG("%s: Creating multiparty call phase 2\n", stage_str);
+		BLTS_DEBUG("%s: Creating multiparty call phase 2\n", stage_str);
 		if(!check_call_count(state, 3))
 			goto error;	
 		org_ofono_VoiceCallManager_create_multiparty_async (state->voice_call_manager, 
@@ -796,7 +796,7 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	else if(state->number_voice_calls == 3 && state->test_stage == MP_MULTIPARTY_WITH_THREE_CREATED)
 	{
 		/* Create private chat */
-		LOG("%s: Creating private chat with first call\n", stage_str);
+		BLTS_DEBUG("%s: Creating private chat with first call\n", stage_str);
 		if(!check_call_count(state, 3))
 			goto error;
 		org_ofono_VoiceCallManager_private_chat_async (state->voice_call_manager, 
@@ -807,7 +807,7 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	else if(state->number_voice_calls == 3 && MP_PRIVATE_CHAT)
 	{
 		/* Hang up all calls */
-		LOG("%s: Hang up all after private chat has been established\n", stage_str);
+		BLTS_DEBUG("%s: Hang up all after private chat has been established\n", stage_str);
 		if(!check_call_count(state, 3))
 			goto error;
 		if (state->call_hangup_method)
@@ -825,7 +825,7 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	}
 	else
 	{
-		LOG("%s: Waiting for three calls...\nCalls currently in system: %i\n", 
+		BLTS_DEBUG("%s: Waiting for three calls...\nCalls currently in system: %i\n", 
 		stage_str, state->number_voice_calls);	
 	}
 

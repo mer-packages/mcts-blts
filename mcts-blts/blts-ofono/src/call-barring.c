@@ -69,7 +69,7 @@ ofono_call_barring_disable_all(void* user_ptr, char* modem_path)
 
 	if (!data->old_pin)
 	{
-		LOG("No PIN number set on configuration\n");
+		BLTS_DEBUG("No PIN number set on configuration\n");
 		return -1;
 	}
 
@@ -79,7 +79,7 @@ ofono_call_barring_disable_all(void* user_ptr, char* modem_path)
 	    OFONO_CALL_BARRING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
 		return -1;
 	}
 
@@ -105,7 +105,7 @@ ofono_call_barring_disable_all_incoming(void* user_ptr, char* modem_path)
 
 	if (!data->old_pin)
 	{
-		LOG("No PIN number set on configuration\n");
+		BLTS_DEBUG("No PIN number set on configuration\n");
 		return -1;
 	}
 
@@ -115,7 +115,7 @@ ofono_call_barring_disable_all_incoming(void* user_ptr, char* modem_path)
 	    OFONO_CALL_BARRING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
 		return -1;
 	}
 
@@ -143,7 +143,7 @@ ofono_call_barring_disable_all_outgoing(void* user_ptr, char* modem_path)
 
 	if (!data->old_pin)
 	{
-		LOG("No PIN number set on configuration\n");
+		BLTS_DEBUG("No PIN number set on configuration\n");
 		return -1;
 	}
 
@@ -153,7 +153,7 @@ ofono_call_barring_disable_all_outgoing(void* user_ptr, char* modem_path)
 	    OFONO_CALL_BARRING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
 		return -1;
 	}
 
@@ -186,7 +186,7 @@ ofono_call_barring_properties(void* user_ptr, char* modem_path)
 	    OFONO_CALL_BARRING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
 		return -1;
 	}
 
@@ -218,7 +218,7 @@ ofono_call_barring_change_password(void* user_ptr, char* modem_path)
 
 	if (!data->old_pin || !data->new_pin)
 	{
-		LOG("No PIN numbers set on configuration\n");
+		BLTS_DEBUG("No PIN numbers set on configuration\n");
 		return -1;
 	}
 
@@ -226,7 +226,7 @@ ofono_call_barring_change_password(void* user_ptr, char* modem_path)
 	    OFONO_CALL_BARRING_INTERFACE);
 	if (!proxy)
 	{
-		LOG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
+		BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
 		return -1;
 	}
 
@@ -263,7 +263,7 @@ ofono_call_barring_set(void* user_ptr, char *arg, GValue *value)
 
 	if (!state->ofono_data->old_pin)
 	{
-		LOG("No PIN numbers set on configuration\n");
+		BLTS_DEBUG("No PIN numbers set on configuration\n");
 		return -1;
 	}
 
@@ -312,7 +312,7 @@ ofono_call_barring_test(void* user_ptr, __attribute__((unused)) int test_num)
 		    data->modem[i], OFONO_CALL_BARRING_INTERFACE);
 		if (!state.proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_CALL_BARRING_INTERFACE "\n");
 			return -1;
 		}
 
@@ -322,23 +322,23 @@ ofono_call_barring_test(void* user_ptr, __attribute__((unused)) int test_num)
 		g_value_init(&val, G_TYPE_STRING);
 
 		g_value_set_string(&val, BARRING_OUT_ALL);
-		LOG("Testing to barr all outgoing\n");
+		BLTS_DEBUG("Testing to barr all outgoing\n");
 		retval += ofono_call_barring_set((void *) &state, BARRING_OUTCALL, &val);
 
 		g_value_set_string(&val, BARRING_OUT_INT);
-		LOG("Testing to barr international outgoing\n");
+		BLTS_DEBUG("Testing to barr international outgoing\n");
 		retval += ofono_call_barring_set((void *) &state, BARRING_OUTCALL, &val);
 
 		g_value_set_string(&val, BARRING_OUT_INT_NOT_HOME);
-		LOG("Testing to barr international not home outgoing\n");
+		BLTS_DEBUG("Testing to barr international not home outgoing\n");
 		retval += ofono_call_barring_set((void *) &state, BARRING_OUTCALL, &val);
 
 		g_value_set_string(&val, BARRING_IN_ROAMING);
-		LOG("Testing to barr incoming when roaming\n");
+		BLTS_DEBUG("Testing to barr incoming when roaming\n");
 		retval += ofono_call_barring_set((void *) &state, BARRING_INCALL, &val);
 
 		g_value_set_string(&val, BARRING_IN_ALWAYS);
-		LOG("Testing to barr incoming calls\n");
+		BLTS_DEBUG("Testing to barr incoming calls\n");
 		retval += ofono_call_barring_set((void *) &state, BARRING_INCALL, &val);
 
 		remove_signal_callbacks(&state);
@@ -394,7 +394,7 @@ call_barring_timeout(gpointer user_data)
 	struct call_barring_state* state = (struct call_barring_state*) user_data;
 	state->result = -1;
 
-	LOG("Timeout while waiting for signal\n");
+	BLTS_DEBUG("Timeout while waiting for signal\n");
 
 	g_main_loop_quit(state->ofono_data->mainloop);
 
@@ -413,13 +413,13 @@ on_call_barring_property_changed(__attribute__((unused))DBusGProxy *proxy, char 
 	if (strcmp(key, state->expected_key) != 0 || strcmp(value_str, expected_str)
 	    != 0)
 	{
-		LOG("Expected key '%s' value '%s' for property, got key '%s' value '%s'\n",
+		BLTS_DEBUG("Expected key '%s' value '%s' for property, got key '%s' value '%s'\n",
 		    state->expected_key, expected_str, key, value_str);
 		state->result = -1;
 	}
 	else
 	{
-		LOG("Call barring property '%s' changed to '%s'\n", key, value_str);
+		BLTS_DEBUG("Call barring property '%s' changed to '%s'\n", key, value_str);
 		state->result = 0;
 	}
 
@@ -432,7 +432,7 @@ on_call_barring_incoming_barring_in_effect(__attribute__((unused))DBusGProxy * p
 {
 	/* NOTE: This signal was never received while testing. Either oFono does
 	 not send it yet, or we have wrong expectations about its delivery. */
-	LOG("Incoming barring in effect\n");
+	BLTS_DEBUG("Incoming barring in effect\n");
 }
 
 static void
@@ -441,7 +441,7 @@ on_call_barring_outgoing_barring_in_effect(__attribute__((unused))DBusGProxy * p
 {
 	/* NOTE: This signal was never received while testing. Either oFono does
 	 not send it yet, or we have wrong expectations about its delivery. */
-	LOG("Outgoing barring in effect\n");
+	BLTS_DEBUG("Outgoing barring in effect\n");
 }
 
 //variable data seeds

@@ -54,7 +54,7 @@ blts_ofono_case_modems_online (void *user_data, __attribute__((unused)) int test
 		gboolean    online     = FALSE;
 		GValue     *variant    = NULL;
 
-		LOG ("{Testing modem %s}\n", data->modem[i]);
+		BLTS_DEBUG ("{Testing modem %s}\n", data->modem[i]);
 
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 						   OFONO_BUS,
@@ -94,7 +94,7 @@ blts_ofono_case_modems_online (void *user_data, __attribute__((unused)) int test
 		online = g_value_get_boolean (variant);
 
 		if (online == TRUE) {
-			LOG ("{Modem %s already online, skipping}\n", data->modem[i]);
+			BLTS_DEBUG ("{Modem %s already online, skipping}\n", data->modem[i]);
 			g_object_unref (proxy);
 			proxy = NULL;
 			g_hash_table_destroy (properties);
@@ -159,7 +159,7 @@ blts_ofono_case_modems_online (void *user_data, __attribute__((unused)) int test
 			continue;
 		}
 
-		LOG ("{Modem %s success}\n", data->modem[i]);
+		BLTS_DEBUG ("{Modem %s success}\n", data->modem[i]);
 
 		g_object_unref (proxy);
 		proxy = NULL;
@@ -195,7 +195,7 @@ blts_ofono_case_modems_offline (void *user_data, int testnum)
 		gboolean    online     = FALSE;
 		GValue     *variant    = NULL;
 
-		LOG ("{Testing modem %s}\n", data->modem[i]);
+		BLTS_DEBUG ("{Testing modem %s}\n", data->modem[i]);
 
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 						   OFONO_BUS,
@@ -235,7 +235,7 @@ blts_ofono_case_modems_offline (void *user_data, int testnum)
 		online = g_value_get_boolean (variant);
 
 		if (online == FALSE) {
-			LOG ("{Modem %s already offline, skipping}\n", data->modem[i]);
+			BLTS_DEBUG ("{Modem %s already offline, skipping}\n", data->modem[i]);
 			g_object_unref (proxy);
 			proxy = NULL;
 			g_hash_table_destroy (properties);
@@ -300,7 +300,7 @@ blts_ofono_case_modems_offline (void *user_data, int testnum)
 			continue;
 		}
 
-		LOG ("{Modem %s success}\n", data->modem[i]);
+		BLTS_DEBUG ("{Modem %s success}\n", data->modem[i]);
 
 		g_object_unref (proxy);
 		proxy = NULL;

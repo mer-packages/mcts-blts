@@ -607,14 +607,14 @@ static int my_ofono_case_query(void* user_ptr, __attribute__((unused))int test_n
 	for(i=0; i<data->number_modems; i++)
 	{
 		// testing modem
-		LOG("{Testing modem %s}\n", data->modem[i])
+		BLTS_DEBUG("{Testing modem %s}\n", data->modem[i])
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 											OFONO_BUS,
 											data->modem[i],
 											OFONO_MODEM_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
 			return -1;
 		}
 
@@ -634,14 +634,14 @@ static int my_ofono_case_query(void* user_ptr, __attribute__((unused))int test_n
 		properties = NULL;
 
 		// testing network interface
-		LOG("Testing network...\n");
+		BLTS_DEBUG("Testing network...\n");
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 											OFONO_BUS,
 											data->modem[i],
 											OFONO_NW_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
 			return -1;
 		}
 
@@ -659,14 +659,14 @@ static int my_ofono_case_query(void* user_ptr, __attribute__((unused))int test_n
 		g_object_unref (proxy);
 		proxy = NULL;
 		// testing phonebook interface
-		LOG("Testing phonebook\n");
+		BLTS_DEBUG("Testing phonebook\n");
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 											OFONO_BUS,
 											data->modem[i],
 											OFONO_PB_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_PB_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_PB_INTERFACE "\n");
 			return -1;
 		}
 
@@ -678,7 +678,7 @@ static int my_ofono_case_query(void* user_ptr, __attribute__((unused))int test_n
 			retval = -1;
 		}
 
-		LOG("Answer from PB: %s\n", contacts);
+		BLTS_DEBUG("Answer from PB: %s\n", contacts);
 		free(contacts);
 		g_object_unref (proxy);
 		proxy=NULL;
@@ -686,7 +686,7 @@ static int my_ofono_case_query(void* user_ptr, __attribute__((unused))int test_n
 	}
 
 	if(retval == -1)
-		LOG("One or more modems failed test\n");
+		BLTS_DEBUG("One or more modems failed test\n");
 
 	return retval;
 }
@@ -694,8 +694,8 @@ static int my_ofono_case_query(void* user_ptr, __attribute__((unused))int test_n
 
 void prop_hash_table_foreach(gpointer key, GValue* val, __attribute__((unused)) gpointer user_data)
 {
-	LOG("\t\t%s = ", key);
-	LOG("%s\n", g_strdup_value_contents (val));
+	BLTS_DEBUG("\t\t%s = ", key);
+	BLTS_DEBUG("%s\n", g_strdup_value_contents (val));
 }
 
 static void interface_properties(char *interface, gpointer user_data)
@@ -705,14 +705,14 @@ static void interface_properties(char *interface, gpointer user_data)
 	GError *error = NULL;
 	GHashTable* properties=NULL;
 	//my_ofono_data* data = (my_ofono_data*)user_data;
-	LOG("\t[%s]\n", (char*)interface);
+	BLTS_DEBUG("\t[%s]\n", (char*)interface);
 	proxy = dbus_g_proxy_new_for_name (data->connection,
 										OFONO_BUS,
 										data->current_modem,
 										interface);
 	if(!proxy)
 	{
-		LOG ("Failed to open proxy for %s\n", interface);
+		BLTS_DEBUG ("Failed to open proxy for %s\n", interface);
 		return;
 	}
 	if(!dbus_g_proxy_call (proxy, "GetProperties", &error,
@@ -735,8 +735,8 @@ static void interface_properties(char *interface, gpointer user_data)
 void modem_properties_foreach(gpointer key, GValue* val, gpointer user_data)
 {
 	my_ofono_data* data = (my_ofono_data*)user_data;
-	LOG("[ %s ]\n", key);
-	LOG("\t%s\n", g_strdup_value_contents (val));
+	BLTS_DEBUG("[ %s ]\n", key);
+	BLTS_DEBUG("\t%s\n", g_strdup_value_contents (val));
 
 	if(!strcmp(key, "Interfaces"))
 	{
@@ -767,14 +767,14 @@ static int ofono_list_modems(void* user_ptr, __attribute__((unused))int test_num
 	{
 		// testing modem
 		data->current_modem=data->modem[i];
-		LOG("{Testing modem %s}\n", data->modem[i])
+		BLTS_DEBUG("{Testing modem %s}\n", data->modem[i])
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 											OFONO_BUS,
 											data->modem[i],
 											OFONO_MODEM_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
 			return -1;
 		}
 
@@ -794,7 +794,7 @@ static int ofono_list_modems(void* user_ptr, __attribute__((unused))int test_num
 	}
 
 	if(retval == -1)
-		LOG("One or more modems failed test\n");
+		BLTS_DEBUG("One or more modems failed test\n");
 
 	return retval;
 }
@@ -820,7 +820,7 @@ static int my_ofono_case_regnetwork(void* user_ptr, __attribute__((unused))int t
 											OFONO_NW_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
 			return -1;
 		}
 
@@ -859,7 +859,7 @@ static int my_ofono_case_deregnetwork(void* user_ptr, __attribute__((unused))int
 											OFONO_NW_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
 			return -1;
 		}
 
@@ -899,14 +899,14 @@ static int my_ofono_case_enable_modems(void* user_ptr, __attribute__((unused))in
 	for(i=0; i<data->number_modems; i++)
 	{
 		// testing modem
-		LOG("{Powering up modem %s}\n", data->modem[i]);
+		BLTS_DEBUG("{Powering up modem %s}\n", data->modem[i]);
 		proxy = dbus_g_proxy_new_for_name (data->connection,
 											OFONO_BUS,
 											data->modem[i],
 											OFONO_MODEM_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_MODEM_INTERFACE "\n");
 			return -1;
 		}
 
@@ -931,15 +931,15 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 
 	if(!data->forward_address && test_num != BLTS_OFONO_DISABLE_FORWARDINGS)
 	{
-		LOG("forward adress: %s\n", data->forward_address);
-		LOG("-f switch missing or forward number missing!\n");
+		BLTS_DEBUG("forward adress: %s\n", data->forward_address);
+		BLTS_DEBUG("-f switch missing or forward number missing!\n");
 		FUNC_LEAVE()
 		return -1;
 	}
 
 	if(my_ofono_get_modem(data))
 	{
-		LOGERR("No modems, found. Cannot proceed testing.\n");
+		BLTS_DEBUG("No modems, found. Cannot proceed testing.\n");
 		FUNC_LEAVE()
 		return -1;
 	}
@@ -953,37 +953,37 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 			if(data->forward_address)
 				retval = ofono_call_forwarding_set_busy((void *)data, data->modem[0], data->forward_address);
 			else
-				LOG("-f switch missing or forward number missing!\n");
+				BLTS_DEBUG("-f switch missing or forward number missing!\n");
 			if(!retval)
 			{
-				LOG("Calls are forwarded to '%s'\n", data->forward_address);
+				BLTS_DEBUG("Calls are forwarded to '%s'\n", data->forward_address);
 			}
 			retval = ofono_call_forwarding_check_settings("VoiceBusy", data->forward_address, (void *)data, data->modem[i]);
 			if(retval)
 			{
-				LOG("Call forwarding state could not be confirmed with oFono\n");
+				BLTS_DEBUG("Call forwarding state could not be confirmed with oFono\n");
 			}
 			break;
 		case BLTS_OFONO_DISABLE_FORWARDINGS:
 			retval = ofono_call_forwarding_disable_all((void *)data, data->modem[i], NULL);
 			if(retval)
 			{
-				LOG("Call forwarding state could not be confirmed with oFono\n");
+				BLTS_DEBUG("Call forwarding state could not be confirmed with oFono\n");
 			}
 			break;
 		case BLTS_OFONO_UNCONDITIONAL_FORWARDING:
 			if(data->forward_address)
 				retval = ofono_call_forwarding_set_unconditional((void *)data, data->modem[i], data->forward_address);
 			else
-				LOG("No remote address given, no forwarding made\n");
+				BLTS_DEBUG("No remote address given, no forwarding made\n");
 			if(!retval)
 			{
-				LOG("Calls are forwarded to '%s'\n", data->forward_address);
+				BLTS_DEBUG("Calls are forwarded to '%s'\n", data->forward_address);
 			}
 			retval = ofono_call_forwarding_check_settings("VoiceUnconditional", data->forward_address, (void *)data, data->modem[i]);
 			if(retval)
 			{
-				LOG("Call forwarding could not be confirmed with oFono\n");
+				BLTS_DEBUG("Call forwarding could not be confirmed with oFono\n");
 			}
 
 			break;
@@ -991,15 +991,15 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 			if(data->forward_address)
 				retval = ofono_call_forwarding_set_no_reply((void *)data, data->modem[i], data->forward_address);
 			else
-				LOG("No remote address given, no forwarding made\n");
+				BLTS_DEBUG("No remote address given, no forwarding made\n");
 			if(!retval)
 			{
-				LOG("Calls are forwarded to '%s'\n", data->forward_address);
+				BLTS_DEBUG("Calls are forwarded to '%s'\n", data->forward_address);
 			}
 			retval = ofono_call_forwarding_check_settings("VoiceNoReply", data->forward_address, (void *)data, data->modem[i]);
 			if(retval)
 			{
-				LOG("Call forwarding could not be confirmed with oFono\n");
+				BLTS_DEBUG("Call forwarding could not be confirmed with oFono\n");
 			}
 
 			break;
@@ -1007,15 +1007,15 @@ static int my_ofono_case_forwardings(void* user_ptr, int test_num)
 			if(data->forward_address)
 				retval = ofono_call_forwarding_set_not_reachable((void *)data, data->modem[i], data->forward_address);
 			else
-				LOG("No remote address given, no forwarding made\n");
+				BLTS_DEBUG("No remote address given, no forwarding made\n");
 			if(!retval)
 			{
-				LOG("Calls are forwarded to '%s'\n", data->forward_address);
+				BLTS_DEBUG("Calls are forwarded to '%s'\n", data->forward_address);
 			}
 			retval = ofono_call_forwarding_check_settings("VoiceNotReachable", data->forward_address, (void *)data, data->modem[i]);
 			if(retval)
 			{
-				LOG("Call forwarding could not be confirmed with oFono\n");
+				BLTS_DEBUG("Call forwarding could not be confirmed with oFono\n");
 			}
 
 			break;
@@ -1055,7 +1055,7 @@ static int ofono_barring_properties(void* user_ptr, int test_num)
 			retval = ofono_call_barring_change_password((void *)data, data->modem[i]);
 			break;
 		default:
-			LOG("Test case set internal error\n");
+			BLTS_DEBUG("Test case set internal error\n");
 			retval = -1;
 			break;
 		}
@@ -1095,7 +1095,7 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 											OFONO_NW_INTERFACE);
 		if(!proxy)
 		{
-			LOG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
+			BLTS_DEBUG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
 			return -1;
 		}
 		/* Run network operator scan to discover available operators */
@@ -1109,17 +1109,17 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 		{
 			if(!networks)
 			{
-				LOG("No networks found on scan\n");
+				BLTS_DEBUG("No networks found on scan\n");
 				goto error;
 			}
 		}		
-		LOG("\n--Networks found on scan--\n");
+		BLTS_DEBUG("\n--Networks found on scan--\n");
 		for (j = 0; j < (int) networks->len; j++)
 		{
 			GValueArray *operator = g_ptr_array_index (networks, j);
 			char *operator_name = g_value_get_boxed (g_value_array_get_nth (operator, 0));
 			GHashTable *properties = g_value_get_boxed (g_value_array_get_nth (operator, 1));			
-			LOG("\n%s\n", operator_name);
+			BLTS_DEBUG("\n%s\n", operator_name);
 			g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 		}
 
@@ -1134,18 +1134,18 @@ static int ofono_propose_scan(void *user_ptr, __attribute__((unused))int test_nu
 		{
 			if(!cached_networks)
 			{
-				LOG("No networks found from cache\n");
+				BLTS_DEBUG("No networks found from cache\n");
 				goto error;
 			}
 		}
 		
-		LOG("\n--Networks found from cache--\n");
+		BLTS_DEBUG("\n--Networks found from cache--\n");
 		for (j = 0; j < (int) cached_networks->len; j++)
 		{
 			GValueArray *operator = g_ptr_array_index (cached_networks, j);
 			char *operator_name = g_value_get_boxed (g_value_array_get_nth (operator, 0));
 			GHashTable *properties = g_value_get_boxed (g_value_array_get_nth (operator, 1));			
-			LOG("\n%s\n", operator_name);
+			BLTS_DEBUG("\n%s\n", operator_name);
 			g_hash_table_foreach(properties, (GHFunc)hash_entry_gvalue_print, NULL);
 		}
 		

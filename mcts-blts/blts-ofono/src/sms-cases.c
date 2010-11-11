@@ -118,7 +118,7 @@ static gboolean restore_original_smsc(struct sms_case_state *state)
 		
 	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", state->orig_smsc, &error))
 	{
-		LOG("Cannot restore original SMSC number");
+		BLTS_DEBUG("Cannot restore original SMSC number");
 		display_dbus_glib_error(error);
 		g_error_free (error);
 		return FALSE;
@@ -165,7 +165,7 @@ static gboolean sms_timeout(gpointer data)
 
 	state->result = -1;
 
-	log_print("Timeout reached, failing test.\n");
+	BLTS_DEBUG("Timeout reached, failing test.\n");
 
 	g_main_loop_quit(state->mainloop);
 	return FALSE;
@@ -180,12 +180,12 @@ static void sms_init_complete(__attribute__((unused)) DBusGProxy *proxy, GError 
 	struct sms_case_state *state = (struct sms_case_state *) data;
 
 	if (error) {
-		log_print("Init failure (while setting SMSC number): %s\n", error->message);
+		BLTS_DEBUG("Init failure (while setting SMSC number): %s\n", error->message);
 		state->result=-1;
 		g_main_loop_quit(state->mainloop);
 	}
 
-	log_print("SMSC is %s\n", g_value_get_string(state->smsc));
+	BLTS_DEBUG("SMSC is %s\n", g_value_get_string(state->smsc));
 
 	if (state->signalcb_MessageManager_PropertyChanged) {
 		dbus_g_proxy_add_signal(state->msg_manager, "PropertyChanged",
@@ -246,7 +246,7 @@ static gboolean sms_init_start(gpointer data)
 		OFONO_BUS, state->ofono_data->modem[0], OFONO_MESSAGE_INTERFACE);
 
 	if (!msg_manager) {
-		log_print("Cannot get proxy for " OFONO_MESSAGE_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_MESSAGE_INTERFACE "\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -320,7 +320,7 @@ static void sms_generic_property_changed_cb(__attribute__((unused)) DBusGProxy *
 {
 	FUNC_ENTER();
 	char *val = g_strdup_value_contents(value);
-	log_print("MessageManager PropertyChanged: '%s' -> '%s'\n", key, val);
+	BLTS_DEBUG("MessageManager PropertyChanged: '%s' -> '%s'\n", key, val);
 	free(val);
 	FUNC_LEAVE();
 }
@@ -331,7 +331,7 @@ static void sms_smsc_property_changed_cb(__attribute__((unused)) DBusGProxy *pro
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
 	const gchar *value_str = g_value_get_string(value);
-	log_print("MessageManager PropertyChanged: '%s' -> '%s'\n", key, value_str);
+	BLTS_DEBUG("MessageManager PropertyChanged: '%s' -> '%s'\n", key, value_str);
 	
 	if(!strcmp(key, "ServiceCenterAddress"))
 	{
@@ -348,11 +348,11 @@ static void debug_print_asv_value(gpointer key, gpointer value,
 	__attribute__((unused)) gpointer data)
 {
 	if (!G_IS_VALUE(value)) {
-		log_print("Not a value !?!??\n");
+		BLTS_DEBUG("Not a value !?!??\n");
 		return;
 	}
 	char *val = g_strdup_value_contents((GValue *) value);
-	log_print("  %s = %s\n", (char *) key, val);
+	BLTS_DEBUG("  %s = %s\n", (char *) key, val);
 	free(val);
 }
 
@@ -361,16 +361,20 @@ static void sms_generic_incoming_message_cb(__attribute__((unused)) DBusGProxy *
 {
 	unsigned len;
 	FUNC_ENTER();
- 	log_print("MessageManager IncomingMessage / ImmediateMessage:\n");
-	log_print("+ Message contents:\n");
- 	log_print("--------\n");
+ 	BLTS_DEBUG("MessageManager IncomingMessage / ImmediateMessage:\n");
+	BLTS_DEBUG("+ Message contents:\n");
+ 	BLTS_DEBUG("--------\n");
 	len = strlen((char*)msg);
 	if (len < 320)
-		log_print("%s\n",msg);
+	{
+		BLTS_DEBUG("%s\n",msg);
+	}
 	else
-		log_print("%.40s...\n(total %d chars)\n", (char*)msg, len);
- 	log_print("--------\n");
- 	log_print("+ Properties:\n");
+	{
+		BLTS_DEBUG("%.40s...\n(total %d chars)\n", (char*)msg, len);
+	}
+	BLTS_DEBUG("--------\n");
+	BLTS_DEBUG("+ Properties:\n");
 	g_hash_table_foreach(properties, debug_print_asv_value, 0);
 	FUNC_LEAVE();
 }
@@ -472,19 +476,23 @@ static void sms_receive_test_incoming_message_cb(__attribute__((unused)) DBusGPr
 	FUNC_ENTER();
 	struct sms_case_state *state = (struct sms_case_state *) data;
 
- 	log_print("Incoming message:\n");
-	log_print("+ Message contents:\n");
- 	log_print("--------\n");
+ 	BLTS_DEBUG("Incoming message:\n");
+	BLTS_DEBUG("+ Message contents:\n");
+ 	BLTS_DEBUG("--------\n");
 	len = strlen((char*)msg);
 	if (len < 320)
-		log_print("%s\n",msg);
+	{
+		BLTS_DEBUG("%s\n",msg);
+	}
 	else
-		log_print("%.40s...\n(total %d chars)\n", (char*)msg, len);
- 	log_print("--------\n");
- 	log_print("+ Properties:\n");
+	{
+		BLTS_DEBUG("%.40s...\n(total %d chars)\n", (char*)msg, len);
+	}
+	BLTS_DEBUG("--------\n");
+	BLTS_DEBUG("+ Properties:\n");
 	g_hash_table_foreach(properties, debug_print_asv_value, 0);
 
-	log_print("\nReceive test complete.\n");
+	BLTS_DEBUG("\nReceive test complete.\n");
 	state->result = 0;
 	g_main_loop_quit(state->mainloop);
 	FUNC_LEAVE();
@@ -498,10 +506,10 @@ static void sms_send_complete(__attribute__((unused)) DBusGProxy *proxy, char *m
 
 	if (error) {
 		state->result = 1;
-		log_print("SMS Send failure: %s\n", error->message);
+		BLTS_DEBUG("SMS Send failure: %s\n", error->message);
 	} else {
 		state->result = 0;
-		log_print("SMS Send call successful\n");
+		BLTS_DEBUG("SMS Send call successful\n");
 		BLTS_TRACE("Message path is %s\n", message_path);
 		
 		state->message_path = g_strdup(message_path);
@@ -541,14 +549,18 @@ static gboolean sms_send_start(gpointer data)
 	org_ofono_MessageManager_send_message_async(state->msg_manager,
 		state->address, state->message, sms_send_complete, state);
 
-	log_print("Starting send to %s, message content:\n", state->address);
-	log_print("--------\n");
+	BLTS_DEBUG("Starting send to %s, message content:\n", state->address);
+	BLTS_DEBUG("--------\n");
 	len = strlen(state->message);
 	if (len < 320)
-		log_print("%s\n",state->message);
+	{
+		BLTS_DEBUG("%s\n",state->message);
+	}
 	else
-		log_print("%.40s...\n(total %d chars)\n", state->message, len);
-	log_print("--------\n");
+	{
+		BLTS_DEBUG("%.40s...\n(total %d chars)\n", state->message, len);
+	}
+	BLTS_DEBUG("--------\n");
 	FUNC_LEAVE();
 	return FALSE;
 }
@@ -559,7 +571,7 @@ static gboolean sms_receive_start(__attribute__((unused)) gpointer data)
 	FUNC_ENTER();
 /* 	struct sms_case_state *state = (struct sms_case_state *) data; */
 
-	log_print("Waiting for message...\n");
+	BLTS_DEBUG("Waiting for message...\n");
 	FUNC_LEAVE();
 	return FALSE;
 }
@@ -586,17 +598,17 @@ static gboolean smsc_do_negative_test(gpointer data, const char* invalid_smsc)
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, invalid_smsc);
 
-	log_print("Changing SMSC number to %s (length %d)...\n", invalid_smsc, len);
+	BLTS_DEBUG("Changing SMSC number to %s (length %d)...\n", invalid_smsc, len);
 	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", smsc, &error))
 	{
-		LOG("Not changed to too long SMSC, test ok\n");
+		BLTS_DEBUG("Not changed to too long SMSC, test ok\n");
 		g_error_free (error);
 		error=NULL;
 		ret = TRUE;
 	}
 	else
 	{
-		LOG("Changed to too long SMSC");
+		BLTS_DEBUG("Changed to too long SMSC");
 		ret = FALSE;
 	}
 	
@@ -622,10 +634,10 @@ static gboolean smsc_change_start(gpointer data)
 		!smsc_do_negative_test(data, "123456789012345678901"))
 		goto error;
 
-	log_print("Changing SMSC number to %s (length %d)...\n", tst_smsc, tst_len);
+	BLTS_DEBUG("Changing SMSC number to %s (length %d)...\n", tst_smsc, tst_len);
 	if(!org_ofono_MessageManager_set_property(state->msg_manager, "ServiceCenterAddress", state->smsc, &error))
 	{
-		LOG("Can't change SMSC number\n");
+		BLTS_DEBUG("Can't change SMSC number\n");
 		display_dbus_glib_error(error);
 		g_error_free (error);
 		state->result = -1;
@@ -646,7 +658,7 @@ static struct sms_case_state *sms_state_init(my_ofono_data *data)
 	struct sms_case_state *state;
 	state = malloc(sizeof *state);
 	if (!state) {
-		log_print("OOM\n");
+		BLTS_DEBUG("OOM\n");
 		return 0;
 	}
 	memset(state, 0, sizeof *state);
@@ -662,11 +674,11 @@ static int sms_case_run(struct sms_case_state *state)
 
 	ret = my_ofono_get_modem(state->ofono_data);
 	if (ret) {
-		log_print("Failed getting modem.\n");
+		BLTS_DEBUG("Failed getting modem.\n");
 		goto done;
 	}
 	if (state->ofono_data->number_modems < 1) {
-		log_print("No modems available.\n");
+		BLTS_DEBUG("No modems available.\n");
 		ret = -1;
 		goto done;
 	}
