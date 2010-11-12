@@ -196,8 +196,8 @@
         <file>/var/log/tests/oFono%20-%20Change%20password%20for%20barrings.log</file>
         <file>/var/log/tests/oFono%20-%20Call%20barrings%20test.log</file>
         <file>/var/log/tests/oFono%20-%20List%20all%20properties.log</file>
-        <file>/var/log/tests/oFono%20%20 SMSC%20number%20test.log</file>
-        <file>/var/log/tests/oFono%20%20 SMSC%20number%20test.log</file>
+        <file>/var/log/tests/oFono%20-%20Propose%20scan.log</file>
+        <file>/var/log/tests/oFono%20-%20SMSC%20number%20test.log</file>
         <file>/var/log/tests/oFono%20-%20Multiparty%20call%20test.log</file>
         <file>/var/log/tests/"oFono%20-%20Private%20call%20test.log</file>
         
