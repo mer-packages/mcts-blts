@@ -1,3 +1,11 @@
+blts-usb-tests (0.0.14) unstable; urgency=low
+
+  [ Mika Niinistö, Kimmo Myllyvirta ]
+  * Packaging script updated.
+  * Logging updated to new common library standard.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 16 Nov 2010 17:54:28 +0200
+
 blts-usb-tests (0.0.13) unstable; urgency=low
 
   [ Jussi Saavalainen ]
