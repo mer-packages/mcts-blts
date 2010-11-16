@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tests.xml - Test case descriptions for automation tools.
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<testdefinition version="1.0">
+  <suite name="blts-wlan-core-tests" domain="Core">
+    <set name="wlan-core-tests" feature="BT and WLAN drivers">
+      <case name="Core-WLAN-Enumerate%20hardware">
+        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Enumerate_hardware.log -e 1</step>
+      </case>
+      <case name="Core-WLAN-Enumerate%20supported%20features">
+        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Enumerate_supported_features.log -e 2</step>
+      </case>
+      <case name="Core-WLAN-Scan%20for%20specific%20AP">
+        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Scan_for_specific_AP.log -e 3</step>
+      </case>
+      <case name="Core-WLAN-Associate%20with%20open%20AP">
+        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Associate_with_open_AP.log -e 4</step>
+      </case>
+      <case name="Core-WLAN-Associate%20with%20WEP%20encryption">
+        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Associate_with_WEP_encryption.log -e 5</step>
+      </case>
+      <case name="Core-WLAN-Scan%20and%20associate%20on%20max%20power%20save">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Scan_and_associate_on_max_power_save.log -e 6</step>
+      </case>
+      <case name="Core-WLAN-Associate%20with%20WPA2-PSK%20AP">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Associate_with_WPA2-PSK_AP.log -e 7</step>
+      </case>
+      <case name="Core-WLAN-Disconnect%20with%20deauthenticate">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_with_deauthenticate.log -e 8</step>
+      </case>
+      <case name="Core-WLAN-Disconnect%20with%20disassociate">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_with_disassociate.log -e 9</step>
+      </case>
+      <case name="Core-WLAN-Disconnect%20with%20AP%20loss">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_with_AP_loss.log -e 10</step>
+      </case>
+      <case name="Core-WLAN-Disconnect%20from%20adhoc%20network">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_from_adhoc_network.log -e 11</step>
+      </case>
+      <get>
+	<file>/var/log/tests/Core-WLAN-Enumerate_hardware.log</file>
+	<file>/var/log/tests/Core-WLAN-Enumerate_supported_features.log</file>
+	<file>/var/log/tests/Core-WLAN-Scan_for_specific_AP.log</file>
+	<file>/var/log/tests/Core-WLAN-Associate_with_open_AP.log</file>
+	<file>/var/log/tests/Core-WLAN-Associate_with_WEP_encryption.log</file>
+	<file>/var/log/tests/Core-WLAN-Scan_and_associate_on_max_power_save.log</file>
+	<file>/var/log/tests/Core-WLAN-Associate_with_WPA2-PSK_AP.log</file>
+	<file>/var/log/tests/Core-WLAN-Disconnect_with_deauthenticate.log</file>
+	<file>/var/log/tests/Core-WLAN-Disconnect_with_disassociate.log</file>
+	<file>/var/log/tests/Core-WLAN-Disconnect_with_AP_loss.log</file>
+	<file>/var/log/tests/Core-WLAN-Disconnect_from_adhoc_network.log</file>
+      </get>
+    </set>
+  </suite>
+</testdefinition>

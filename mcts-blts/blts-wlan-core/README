@@ -1,0 +1,167 @@
+Overview
+
+This package contains functional tests for WLAN core
+
+Requirements
+
+Running the tests in the package requires
+  * linux >= 2.6.15 with nl80211-using WLAN driver
+  * GNU libc >= 2.3
+  * libnl
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use the Debian packaging tools for the build; these
+will run Autotools for configuration and makefile generation.
+
+The package builds (from the source tree root) with
+
+ $ dpkg-buildpackage
+
+( you may need some combination of '-rfakeroot', '-uc', '-us', etc, depending
+  on your system configuration )
+
+Alternatively, the packaging can be skipped by just running with Autotools:
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+Installation
+
+Login as root and install the package (dpkg -i [package name] if Debian
+package).
+
+Required hardware for testing over the air:
+
+    * DUT, running the test asset
+    * WLAN access point, for AP-using tests
+    * A second DUT or other supported device for "ad-hoc" (IBSS) tests.
+
+Multiple access points with different static configurations can be used
+instead of changing the AP configuration directly.
+
+Access point SSID parameters in configuration file (default:
+/etc/blts/blts-wlan-core-tests.cnf).
+
+    * open_ssid - SSID for an existing open AP
+    * wep_ssid - SSID for an existing WEP-encrypted AP
+    * wpa_ssid - SSID for an existing WPA-encrypted AP
+    * adhoc_ssid - SSID for an existing open adhoc network
+
+The access point used must support DHCP discovery, either by itself or via a
+suitable network arrangement. SSIDs, keys and passphrases used must be
+entered in the test configuration file.
+
+Requirements for individual test cases:
+
+    * Test "Core-WLAN-Enumerate hardware": No special
+      requirements. Configuration parameter expected_phys is space separated
+      list of expected physical layer devices to check e.g. "phy0 phy1 phy2"
+
+    * Test "Core-WLAN-Enumerate supported features" No special
+      requirements. Configuration parameter wlan_device is used to define
+      the device where commands and parameters are enumerated e.g "wlan0"
+
+    * Tests "Core-WLAN-Scan for specific AP", "Core-WLAN-Associate with open
+      AP", "Core-WLAN-Scan and associate on max power save",
+      "Core-WLAN-Disconnect with deauthenticate", "Core-WLAN-Disconnect with
+      disassociate" and "Core-WLAN-Disconnect with AP loss": Existing open
+      AP is required, Configuration parameter wlan_device is used to define
+      the wlan device to use and configuration parameter open_ssid is used
+      to define the SSID of the existing open AP.
+
+    * Test "Core-WLAN-Associate with WEP encryption": Access point must be
+      set to WEP mode, Configuration parameters affected: wep_ssid is the
+      access point SSID, wep_keys are WEP encryption keys and wep_tx_keyidx
+      is the default key to transmit.
+
+    * Test "Core-WLAN-Disconnect from adhoc network": Existing adhoc network
+      where DUT can be joined or optionally wlan station that supports adhoc
+      connections. Configuration parameter wlan_device is used to define the
+      wlan device to use and configuration parameter adhoc_ssid is used to
+      define the SSID of the existing open AP.
+
+    * Test "Core-WLAN-Associate with WPA2-PSK AP": Access point must be set
+      to WPA2 mode, with pre-shared key authentication. Configuration
+      parameters affected: wpa_ssid is the access point SSID, wpa_passphrase
+      is the passphrase used.
+
+
+Running the tests
+
+Run all tests:
+blts-wlan-core-tests
+
+Show cases:
+blts-wlan-core-tests -s
+
+Use config file:
+blts-wlan-core-tests -C <config file>
+
+NOTE: Example configuration file is installed to /etc/blts/ , and is used
+as default.
+
+Run single case like nro 1:
+blts-wlan-core-tests -e 1
+
+Run a single case with its name (note quotes when there are spaces in the name):
+blts-wlan-core-tests -en "Test case name"
+
+Test cases
+
+* Core-WLAN-Enumerate hardware
+	Check that expected PHYs are found, then dump all PHYs, interfaces,
+	and available configuration data
+
+* Core-WLAN-Enumerate supported features
+	Dump commands and parameters that are supported by device/driver
+
+* Core-WLAN-Scan for specific AP
+ 	Trigger a new scan with a given ssid and verify that AP is actually
+ 	found
+
+* Core-WLAN-Associate with open AP
+	Scan for open AP with a given ssid, after that do authentication and
+	association requests, finally disconnect
+
+* Core-WLAN-Associate with WEP encryption
+	Scan for AP with a given ssid, after that set WEP encryption keys
+	and do connection request, send DHCP discover and finally disconnect
+
+* Core-WLAN-Scan and associate on max power save
+	Set max power save on and scan for open AP with a given ssid, after
+	that connect and finally disconnect. NOTE: overrides command line
+	parameter -S (power save)
+
+* Core-WLAN-Associate with WPA2-PSK AP
+	Scan for AP with a given SSID, and associate. Perform WPA2 key
+	exchange using pre-shared key. Verify connection using DHCP discover
+	and finally disconnect.
+
+* Core-WLAN-Disconnect with deauthenticate
+	Scan for open AP with a given ssid, after that do connection
+	request, send DHCP discover and finally disconnect using
+	deauthenticate command while waiting until disconnect event is
+	received.
+
+* Core-WLAN-Disconnect with disassociate
+	Scan for open AP with a given ssid, after that do connection
+	request, send DHCP discover and finally disconnect using
+	disassociate command while waiting until disconnect event is
+	received.
+
+* Core-WLAN-Disconnect with AP loss
+	Scan for open AP with a given ssid, after that do connection
+	request, send DHCP discover and start waiting until disconnect event
+	is received. NOTE: Manual test where AP must be turned off in about
+	60 seconds before test case can be continued.
+
+* Core-WLAN-Disconnect from adhoc network
+	Scan for open adhoc network with a given ssid, after that join a
+	IBSS and verify connection by sending test data and using scan
+	request, after that leave IBSS and verify that device is properly
+	disconnected from adhoc network. NOTE: The requirement for this test
+	case is existing adhoc network where DUT can be joined or optionally
+	wlan station that supports adhoc connections.

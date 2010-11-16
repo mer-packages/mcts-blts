@@ -1,0 +1,119 @@
+# Parameter configuration for blts-wlan-core
+# This configuration should work with most hardware, but access point SSIDs and
+# encryption keys need to be changed to match the test environment.
+
+# expected phys for HW. (space separated) e.g. "phy0 phy1 phy2"
+[parameter]
+	name expected_phys
+	const "phy0"
+[end_parameter]
+
+# Valid wlan devices for HW.
+[parameter]
+	name wlan_device
+	const "wlan0"
+[end_parameter]
+
+# SSID for an existing open AP (change this to match your environment)
+[parameter]
+	name open_ssid
+	const "test-open"
+[end_parameter]
+
+# SSID for an existing WEP-encrypted AP (change this to match your environment)
+[parameter]
+	name wep_ssid
+	const "test-WEP"
+[end_parameter]
+
+# SSID for an existing WPA-encrypted AP (change this to match your environment)
+[parameter]
+	name wpa_ssid
+	const "test-WPA"
+[end_parameter]
+
+# SSID for an existing open adhoc network (change this to match your environment)
+[parameter]
+	name adhoc_ssid
+	const "test-adhoc"
+[end_parameter]
+
+# WEP keys - wep key format "i:t:key", space separated
+# i = index (0 - 3)
+# t = type (a: = ASCII wep key / h: HEX wep key)
+# e.g.
+# first 0 index ascii wep key abcdef ->  0:a:abcdef
+[parameter]
+	name wep_keys
+	const "0:a:abcde"	"0:h:1234567890"
+[end_parameter]
+
+# WEP key index (0 - 3) - default key to transmit
+[parameter]
+	name wep_tx_keyidx
+	const 0
+[end_parameter]
+
+# Passphrase for WPA2-PSK test
+[parameter]
+	name wpa_passphrase
+	const "abcdefgh"
+[end_parameter]
+
+
+# Tests
+
+[test]
+	name "Core-WLAN-Enumerate hardware"
+	params expected_phys
+[end_test]
+
+[test]
+	name "Core-WLAN-Enumerate supported features"
+	params wlan_device
+[end_test]
+
+[test]
+	name "Core-WLAN-Scan for specific AP"
+	params wlan_device open_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Associate with open AP"
+	params wlan_device open_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Associate with WEP encryption"
+	params wlan_device wep_ssid wep_keys wep_tx_keyidx
+[end_test]
+
+[test]
+	name "Core-WLAN-Scan and associate on max power save"
+	params wlan_device open_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Disconnect with deauthenticate"
+	params wlan_device open_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Disconnect with disassociate"
+	params wlan_device open_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Disconnect with AP loss"
+	params wlan_device open_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Disconnect from adhoc network"
+	params wlan_device adhoc_ssid
+[end_test]
+
+[test]
+	name "Core-WLAN-Associate with WPA2-PSK AP"
+	params wlan_device wpa_ssid wpa_passphrase
+[end_test]

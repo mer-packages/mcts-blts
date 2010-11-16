@@ -1,0 +1,9 @@
+* Tue 28 Sep 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.2
+- Add associate with WPA2-PSK AP test.
+
+* Fri 20 Aug 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.1
+- Add associate with WEP AP test.
+- Updates to scan for specific AP and associate with open AP tests.
+
+* Mon 05 Jul 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.0
+- Created package
