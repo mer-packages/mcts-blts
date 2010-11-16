@@ -1,3 +1,13 @@
+blts-alsa-core-tests (0.0.8) unstable; urgency=low
+
+  * Fix timer_select_specific to select correct timer
+  * Use correct logging macros and funcs
+  * Remove -v argument, blts-common provides it
+  * Add simple linear volume setting into config file
+  * Packaging scripts updated.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 16 Nov 2010 15:17:11 +0200
+
 blts-alsa-core-tests (0.0.7) unstable; urgency=low
 
   [ Mika Niinistö, Kimmo Myllyvirta ]

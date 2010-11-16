@@ -1,3 +1,10 @@
+* Tue 16 Nov 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.8
+- Fix timer_select_specific to select correct timer
+- Use correct logging macros and funcs
+- Remove -v argument, blts-common provides it
+- Add simple linear volume setting into config file
+- Packaging scripts updated.
+
 * Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
 - Add RPM packaging
 - Binary name changed to "blts-alsa-core-tests"
