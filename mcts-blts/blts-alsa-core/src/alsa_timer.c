@@ -231,8 +231,7 @@ static int timer_select_specific(timer_device *hw, int card, int device)
 				&& sel.id.card == card
 				&& sel.id.device == device)
 				return 0;
-		}
-		if(info.card == card && sel.id.card == card)
+		} else if(info.card == card && sel.id.card == card)
 			return 0;
 	}
 
