@@ -721,3 +721,20 @@ void *volume_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 
 	return data;
 }
+
+void *volume_muted_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	/* These are already non-zero, if set on command line */
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}

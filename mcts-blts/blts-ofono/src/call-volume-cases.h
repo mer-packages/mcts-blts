@@ -26,5 +26,6 @@ int blts_ofono_set_speaker_volume(void*,int);
 int blts_ofono_set_muted(void*,int);
 
 void *volume_variant_set_arg_processor(struct boxed_value *, void *);
+void *volume_muted_variant_set_arg_processor(struct boxed_value *, void *);
 
 #endif /* CALL_VOLUME_CASES_H */

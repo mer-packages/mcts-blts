@@ -177,8 +177,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		return NULL;
 
 	ret = blts_config_declare_variable_test("oFono - Set muted",
-		volume_variant_set_arg_processor,
-		CONFIG_PARAM_STRING, "volume", "null",
+		volume_muted_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "call_volume_timeout", "60000",
 		CONFIG_PARAM_NONE);
 	if (ret)
