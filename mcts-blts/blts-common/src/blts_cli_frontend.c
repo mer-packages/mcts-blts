@@ -537,6 +537,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	char *bin_fname = NULL;
 	char *xml_result_file = NULL;
 	int xml_append_results = 0;
+	int config_file_given = 0;
 
 	timout_override = 0;
 
@@ -660,6 +661,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 				goto cleanup;
 			}
 			used_config_file = strdup (argv[t]);
+			config_file_given = 1;
 		}
 		else if(strcmp(argv[t], "-xml") == 0)
 		{
@@ -741,7 +743,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 
 	if (result == -ENOENT)
 	{
-		if (!used_config_file)
+		if (!config_file_given)
 		{
 			BLTS_WARNING ("No default configuration found. "
 				      "Running with inbuilt parameters.\n");
