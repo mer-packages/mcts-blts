@@ -1,3 +1,12 @@
+* Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.4.0
+- Packaging script updated.
+- Added results.xml output from any test case; adds libXML dependency
+- API change for logging functions; old versions deprecated (compiler warns)
+- Global log level reorganizing; pretty output with -auto (not default yet)
+- Test variants now printed when -s given
+- Examples for parameter variation with proper logging included
+- RPM source package name changed
+
 * Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.8
 - Add RPM packaging
 - Use default configuration file if -C argument is not given
