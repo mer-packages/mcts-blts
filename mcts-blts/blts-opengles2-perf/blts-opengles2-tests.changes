@@ -1,3 +1,7 @@
+* Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.12
+- Packaging script updated.
+- Logging updated to new common library standard.
+
 * Thu, 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.11
 - Add RPM packaging
 - Binary and debian package name changed to "blts-opengles2-tests"
