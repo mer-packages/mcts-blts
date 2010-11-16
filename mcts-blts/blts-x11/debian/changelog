@@ -1,3 +1,11 @@
+blts-x11-tests (0.0.14) unstable; urgency=low
+
+  [ Mika Niinistö, Kimmo Myllyvirta ]
+  * Packaging script updated.
+  * Logging updated to new common library standard.
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Tue, 16 Nov 2010 18:10:15 +0200
+
 blts-x11-tests (0.0.13) unstable; urgency=low
 
   [ Kimmo Myllyvirta ]
