@@ -1,6 +1,6 @@
 Summary: BLTS V4L2 test set
 Name: blts-v4l2-tests
-Version: 0.3.6
+Version: 0.3.7
 Release: 1
 License: GPLv2
 Group: Development/Testing
