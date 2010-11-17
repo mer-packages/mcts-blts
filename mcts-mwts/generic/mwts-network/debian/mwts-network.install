@@ -1,0 +1,3 @@
+usr/lib/*.so*
+/usr/lib/tests/NetworkTest.conf
+usr/lib/min/*.so*

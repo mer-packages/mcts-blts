@@ -1,0 +1,60 @@
+mwts-network
+-----------
+Introduction
+ 
+   Mwts-network test asset is created for testing the wireless LAN and Packed switched data connections and data transfers.
+
+   Mwts-network uses Qt Bearer Management provided by Qt Mobility which takes care of connecting to given access point and notifies state changes in active access points. 
+   Test asset is used for measuring the performance and reliability of wireless LAN and packet switched data transfers.
+
+   The package is currently intended only for MeeGo? , Maemo devices. In Meego platform bearer management works on top of connman.
+
+   Questions: MWTSSupport@nokia.com
+
+Function descriptions
+
+These are MIN interface function used in cases.
+
+   Scan 	                 Scan wireless LAN access points
+   Connect <access point> 	 Connect to given access point
+   ConnectToDefault 	         Connect to default access point
+   Disconnect 	                 Disconnect current session
+   Downloadfile <filename>     	 Download file from ftp-server
+   UploadFile <filename>          Upload file to ftp-server
+   DownloadfileHttp <filename> 	 Download file via http
+   ServerStartIperf <time> 	 Start iperf upload measurement while given time
+   ServerStartDownload <time> 	 Start iperf download measurement while given time
+   Idle <time> 	                 Idle given time
+
+Usage
+
+Source code and compiling
+
+   mwts-multimedia compiles on a typical red hat/linux distributions by executing sh rpmbuild.sh if you have missing dependencies, add them with 'zypper install'
+
+   if you need to search after a package you can do that with 'zypper search'
+
+   and get more info with 'zypper info'
+
+   on non-debian/red-hat based linux system you can compile and install by (no dependency check)	
+   qmake
+   make
+   make install (as root)
+
+Requirements for environment
+
+   For troughput measurements, Iperf 2.0.2 must be installed in device and server. With never versions (2.0.4) problems with troughput measurements might appear. 
+   In order to execute all tests on mwts-  network, you need to map access point names in the NetworkTest? .cfg (/usr/lib/NetworkTest.cfg)
+
+Executing tests
+
+   MWTS-Network test execution is performed normally. Check the "General MWTS testing guide".
+
+Test results
+
+   Test results can be found from device in directory /var/log/tests/. Results are named as test cases, test_case_name.result file contains overall information about test run and measured values.
+
+Known Issues
+
+   It should be noted that in Meego platform Bearer Management works on top of connman. In case of trouble user should verify that connman-daemon (connmand) is running. 
+   In /usr/lib/connman/test/ is a bunch of python scripts to directly use the connman dbus-interface. In example 'python test-connman services' lists available wlan/psd access points.

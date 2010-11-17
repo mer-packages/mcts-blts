@@ -1,0 +1,31 @@
+#!/bin/sh
+#DEBHELPER#
+
+set -e
+
+FILE_PATH=/root
+KB100=$FILEPATH/0100k.bin
+MB25=$FILEPATH/2.5MB.bin
+MB10=$FILEPATH/10MB.bin
+
+if [ ! -L KB100 ]
+then
+	dd if=/dev/zero of=/root/0100k.bin bs=1024 count=100	
+fi
+
+if [ ! -L MB1 ]
+then
+	dd if=/dev/zero of=/root/1MB.bin bs=1024 count=1000
+fi
+
+if [ ! -L MB25 ]
+then
+	dd if=/dev/zero of=/root/2.5MB.bin bs=1024 count=2500
+fi
+
+if [ ! -L MB10 ]
+then
+	dd if=/dev/zero of=/root/10MB.bin bs=1024 count=10000
+fi
+
+

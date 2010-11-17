@@ -1,0 +1,3 @@
+etc/min.d/mwts-network.min.conf
+usr/share/mwts-network-tests/tests.xml
+usr/lib/min/*.cfg

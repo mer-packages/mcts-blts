@@ -1,0 +1,6 @@
+mwts-network-tests (0.0.7) unstable; urgency=low
+  * ap configurations (encrypted ap passwords) now added via connman-service-api
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Mon, 8 Oct 2010 09:00:00 +0300
+
+
+

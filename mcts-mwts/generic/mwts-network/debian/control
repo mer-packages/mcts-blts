@@ -1,0 +1,25 @@
+Source: mwts-network-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev (>=0.2.0), min-dev 
+Maintainer: Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-network
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0), min
+Aegis-Manifest: included 
+Description: MWTS network
+ Template for creating MiddleWare Test Suite packages
+ c++ interface
+
+Package: mwts-network-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-network, iperf
+Description: Test cases for MWTS-network
+ MIN test cases for measuring performance and reliability
+
+
+
