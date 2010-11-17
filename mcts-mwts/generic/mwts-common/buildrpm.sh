@@ -1,5 +1,7 @@
 #! /bin/sh
 
+RPM_ARCH="i586"
+
 CUR=`pwd`
 NAME=`cat debian/changelog | awk '{print $1; exit}'`
 TMP=rpm/tmp/
@@ -20,6 +22,7 @@ rm -fr /var/tmp/$SRCPKGNAME
 
 #Build RPM
 echo "Building RPM packages..."
+#rpmbuild -v --target i586 -bb --clean $NAME.spec --define "version $VERSION" --define "_topdir $CUR/rpm" --define "name $NAME"
 rpmbuild -v -bb --clean $NAME.spec --define "version $VERSION" --define "_topdir $CUR/rpm" --define "name $NAME"
 
 echo "=========================================="

@@ -11,8 +11,8 @@ Version:                %{version}
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
-BuildRequires:          qt-devel, min-devel, min
-Requires:               qt-x11, min
+BuildRequires:          qt-devel, min-devel, min, gcc-c++
+Requires:               libqtcore4, libqtgui4, min
 Source:                 %{name}-%{version}.tar.gz
 
 %description
@@ -30,7 +30,7 @@ Development headers and libraries for mwts-common
 Summary:                Mwts-common MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, qt4, mwts-common
+Requires:               min, mwts-common
 %description            tests
 MIN test cases for mwts-common
 
