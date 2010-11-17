@@ -1718,7 +1718,7 @@ bool TelepathyTest::EnsureTextChat(	const QString& contactIdentifier,
 		MWTS_LEAVE;
 		return false;
 	}
-<
+
 	MWTS_DEBUG( QString( "Reading from file %1" ).arg( g_pConfig->fileName() ) );
 	MWTS_DEBUG( QString( "Reading from group %1" ).arg( contactIdentifier ) );
 

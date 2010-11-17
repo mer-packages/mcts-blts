@@ -1,25 +1,20 @@
-/*
- * This file is part of MCTS
- *
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
- *
- * Contact: Tommi Toropainen; tommi.toropainen@nokia.com;
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * version 2.1 as published by the Free Software Foundation.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA
- *
- */
+/* functions.cpp -- Methods for mwts-telepathy min module.
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
 
 /**
  *  @addtogroup    MwtsTelepathyTests mwts-telepathy-tests
@@ -146,6 +141,7 @@ LOCAL int CallTo( MinItemParser * item )
 	
 	char *arg = NULL;
 	char *number = NULL;
+    char *speaker = NULL;
 	int iret = ENOERR;
 	
 	while(mip_get_next_string(item, &arg) == ENOERR)
@@ -156,11 +152,29 @@ LOCAL int CallTo( MinItemParser * item )
 			if(iret != ENOERR)
 				return iret;
 		}
+		else if(strcmp(arg, "speaker") == 0)
+        {
+                iret = mip_get_next_string(item, &speaker);
+                if(iret != ENOERR)
+                        return iret;
+        }
 	}
+
+    bool UsesSpeaker = false;
+    if( speaker != NULL )
+    {
+    	if ( strcmp( "true", speaker ) == 0 || strcmp( "TRUE", speaker ) == 0 )
+    	{
+            UsesSpeaker = true;
+    	}
+    }
+
+    qDebug() << "Uses speaker == " << UsesSpeaker;
 	
 	bool bret = false;
 	QStringList names;
 	names.append( number );
+	// bret = telepathyTest.RequestContacts( names );
 	bret = telepathyTest.ContactsForIdentifiers( names );
 	if ( bret ) bret = telepathyTest.EnsureMediaCall( number,
 													  QDateTime::currentDateTime(),
@@ -183,6 +197,7 @@ LOCAL int CallToContact( MinItemParser * item )
 	
 	char *arg = NULL;
 	char *contact = NULL;
+    char *speaker = NULL;
 	int iret = ENOERR;
 	
 	while(mip_get_next_string(item, &arg) == ENOERR)
@@ -193,11 +208,29 @@ LOCAL int CallToContact( MinItemParser * item )
 			if(iret != ENOERR)
 				return iret;
 		}
+		else if(strcmp(arg, "speaker") == 0)
+        {
+                iret = mip_get_next_string(item, &speaker);
+                if(iret != ENOERR)
+                        return iret;
+        }
 	}
+
+    bool UsesSpeaker = false;
+    if( speaker != NULL )
+    {
+    	if ( strcmp( "true", speaker ) == 0 || strcmp( "TRUE", speaker ) == 0 )
+    	{
+            UsesSpeaker = true;
+    	}
+    }
+
+    qDebug() << "Uses speaker == " << UsesSpeaker;
 	
 	bool bret = false;
 	QStringList contacts;
 	contacts.append( contact );
+	// bret = telepathyTest.GetContacts( contacts );
 	bret = telepathyTest.ContactsForIdentifiers( contacts );
 	if ( bret ) bret = telepathyTest.EnsureMediaCall( contact,
 													  QDateTime::currentDateTime(),
@@ -409,7 +442,27 @@ LOCAL int AcceptCall(MinItemParser * item )
 {
         MWTS_DEBUG("AcceptCall\n");
 
-        bool bret = telepathyTest.AcceptCall();
+        char *arg = NULL;
+        char *speaker = NULL;
+        int iret = ENOERR;
+
+        while(mip_get_next_string(item, &arg) == ENOERR)
+        {
+                if(strcmp(arg, "speaker") == 0)
+                {
+                        iret = mip_get_next_string(item, &speaker);
+                        if(iret != ENOERR)
+                                return iret;
+                }
+        }
+
+        bool UsesSpeaker = false;
+        if(speaker != NULL)
+            UsesSpeaker = (strcmp("true",speaker) == 0 || strcmp("TRUE",speaker) == 0)?(true):(false);
+
+        qDebug() << "Uses speaker == " << UsesSpeaker;
+
+        bool bret = telepathyTest.AcceptCall();		//UsesSpeaker
 	g_pResult->StepPassed( __FUNCTION__, bret );
 	return ENOERR;
 }

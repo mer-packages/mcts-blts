@@ -232,7 +232,7 @@ class TelepathyTest : public MwtsTest
 		 *  @brief Accept a call from previously received incoming streamed media channel.
 		 *  @return True, if successfull. False otherwise.
 		 */
-        bool AcceptCall();
+        	bool AcceptCall();
 		
 		/**
 		 *  @fn bool HoldCall()
