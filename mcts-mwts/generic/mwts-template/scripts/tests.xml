@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-template-scripts" domain="System">
+
+    <set name="Template_Functional" description="Template functional test cases" feature="Settings" type="Functional" >
+      <case name="FUTE-Template-Test_1" subfeature="Test" timeout="30" description=
+        "Purpose
+        Template test case, purpose is to demonstrate how to use MIN interface
+        Method
+        How the test case is implemented
+        Pre-/Post-Conditions
+        Root/User, what test data is needed, master-slave setup, etc.
+        Pass/Fail Criteria
+        When the test case is failed, where to check logs /var/log/tests
+        ">
+        <step>min -c -t 'FUTE-Template-Test_1'</step>
+      </case>
+    </set>
+    
+    <set name="Template_Iterative" description="Template iterative test cases" feature="Settings" type="Iterative" >
+      <case name="NFT-Template-Test_1-ITER" subfeature="Test" timeout="60" description=
+        "Purpose
+        Template test case, purpose is to demonstrate how to use MIN interface in iterative tests
+        Method
+        How the test case is implemented, this test is executed 10 times
+        Pre-/Post-Conditions
+        Root/User, what test data is needed, master-slave setup, etc.
+        Pass/Fail Criteria
+        When the test case is failed, where to check logs /var/log/tests
+        ">
+        <step>min -c -t 'NFT-Template-Test_1-ITER'</step>
+      </case>
+    </set>
+    
+    <set name="Template_Low-resource" description="Template low-resource test cases" feature="Settings" type="Low-resource" >
+      <case name="NFT-Template-Test_1-LOWR" subfeature="Test" timeout="60" description=
+        "Purpose
+        Template test case, purpose is to demonstrate how to use MIN interface in low-resource tests
+        Method
+        How the test case is implemented, this test uses 50% CPU load during the test execution
+        Pre-/Post-Conditions
+        Root/User, what test data is needed, master-slave setup, etc.
+        Pass/Fail Criteria
+        When the test case is failed, where to check logs /var/log/tests
+        ">
+        <step>min -c -t 'NFT-Template-Test_1-LOWR'</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>

@@ -1,0 +1,21 @@
+Source: mwts-template-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev
+Maintainer: Tuomo Pelkonen <ext-tuomo.1.pelkonen@nokia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-template
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0)
+Description: MWTS-Template libraries
+ Template for creating MiddleWare Test Suite packages
+ c++ interface
+
+Package: mwts-template-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-template, min
+Description: MWTS-Template Test cases
+ Min interface and test cases
