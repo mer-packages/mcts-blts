@@ -31,6 +31,7 @@
 #include "test_module_api.h"
 
 #include <stdlib.h>
+#include <QDir>
 
 /** Constructs the test object and all needed dependencies*/
 MwtsTest::MwtsTest(QObject* pParent, QString platform/*=""*/)
@@ -146,9 +147,18 @@ void MwtsTest::Initialize()
 	MWTS_ENTER;
 
 	MwtsMonitor::instance()->Start();
-
-	QString path="/var/log/tests/"+CaseName()+".log";
-	g_pLog->Open(path);
+	QString testpath="/var/log/tests/";
+	QDir testdir(testpath);
+	if(!testdir.exists())
+	{
+		if(!testdir.mkpath(testpath))
+		{
+			qCritical() << "Unable to create test log dir: " << testpath;
+		}
+	}
+	
+	QString logpath=testpath+CaseName()+".log";
+	g_pLog->Open(logpath);
 	g_pResult->Open(CaseName());
 
 	qDebug()<<"Creating config";

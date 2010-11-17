@@ -48,8 +48,16 @@ int getErrPipe() { return errpipe[0]; }
 
 void MwtsMsgHanler( QtMsgType type, const char *msg )
 {
+
 	if(!g_pLog)
+	{
+		// In critical cases print it to screen what ever happens
+		if(type==QtCriticalMsg || type==QtFatalMsg)
+		{
+			printf("FATAL: %s", msg);
+		}
 		return;
+	}
 
 	switch ( type )
 	{
@@ -113,38 +121,42 @@ void MwtsLog::RedirectStd()
 {
 	int result, flags;
 
-	// Enable stdout redirection to log only if
+	// Enable stdout and stderr redirection to log only if
 	// log print is not enabled. We don't want to redirect
-	// logs to stdout and back to log
-	if(! m_bLogPrintEnabled)
+	// logs to stdout and back to log and want stderr and stdout
+ 	// immediately on screen.
+	if(m_bLogPrintEnabled)
 	{
-		int flags = fcntl(1, F_GETFL, 0);
-		fcntl(1, F_SETFL, flags | O_NONBLOCK);
-
-		oldstdout = dup(1);
-		if(oldstdout==-1)
-		{
-			qCritical()<<"Could not duplicate stdout";
-			return;
-		}
-		result = pipe(outpipe);
-		if(result!=0)
-		{
-			qCritical()<<"Could not create stdout pipe";
-			return;
-		}
-
-		result = dup2(outpipe[1], 1);
-		if(result==-1)
-		{
-			qCritical()<<"Could not duplicate stdout pipe";
-			return;
-		}
-
-		flags = fcntl(getOutPipe(), F_GETFL, 0);
-		fcntl(getOutPipe(), F_SETFL, flags | O_NONBLOCK);
-
+		return;
 	}
+
+
+	flags = fcntl(1, F_GETFL, 0);
+	fcntl(1, F_SETFL, flags | O_NONBLOCK);
+
+	oldstdout = dup(1);
+	if(oldstdout==-1)
+	{
+		qCritical()<<"Could not duplicate stdout";
+		return;
+	}
+	result = pipe(outpipe);
+	if(result!=0)
+	{
+		qCritical()<<"Could not create stdout pipe";
+		return;
+	}
+
+	result = dup2(outpipe[1], 1);
+	if(result==-1)
+	{
+		qCritical()<<"Could not duplicate stdout pipe";
+		return;
+	}
+
+	flags = fcntl(getOutPipe(), F_GETFL, 0);
+	fcntl(getOutPipe(), F_SETFL, flags | O_NONBLOCK);
+
 
 	flags = fcntl(2, F_GETFL, 0);
 	fcntl(2, F_SETFL, flags | O_NONBLOCK);
@@ -186,7 +198,10 @@ void MwtsLog::Open(QString sFilename)
 		delete m_pLogFile;
 	}
 	m_pLogFile = new QFile(sFilename);
-	m_pLogFile->open(QIODevice::WriteOnly | /* QIODevice::Truncate*/  QIODevice::Append);
+	if(! m_pLogFile->open(QIODevice::WriteOnly | /* QIODevice::Truncate*/  QIODevice::Append))
+	{
+		qCritical() << "Opening log file"<< sFilename <<"failed!";
+	}
 	time.start();
 }
 
