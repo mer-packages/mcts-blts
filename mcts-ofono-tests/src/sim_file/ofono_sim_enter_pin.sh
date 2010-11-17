@@ -38,10 +38,14 @@ sleep 3
 
 ./test-modem poweron
 
+
 sleep 3
 
 ./test-sim enterpin 2468
 
+sleep 3
+
+./test-modem online
 
 if [ $? -ne 0 ]; then
 	echo "error in inputing pin code"

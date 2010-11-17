@@ -42,6 +42,10 @@ sleep 9
 
 ./test-sim resetpin 13243546 2468
 
+sleep 3
+
+./test-modem online
+
 if [ $? -ne 0 ]; then
 	#this only for test automation
 	grep -n "PINNAME" $pathto | head -n 1 |awk -F: '{print $1}' \

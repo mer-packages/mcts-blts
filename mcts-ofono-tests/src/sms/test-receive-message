@@ -34,6 +34,7 @@ def cb_receive_EmergencyBroadcast(content, infor):
 		print " Need pop up menu!"
 
 def cb_receive_IncomingBroadcast(content, infor):
+        print "ok"
 	print "Cell boradcast content is: '%s' " % (content)
 
 def receive_immediate_message(number, content):
@@ -41,6 +42,7 @@ def receive_immediate_message(number, content):
 		(number, content['Sender'], content['LocalSentTime'])
 
 def receive_incoming_message(content, infor):
+        print "oksms"
 	print "short message is: '%s', sender is: '%s', senttime is '%s'" %\
 	 (content, infor['Sender'], infor['SentTime'])
 
@@ -56,13 +58,19 @@ if __name__ == "__main__":
 	manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 							'org.ofono.Manager')
 
-	modems = manager.GetProperties()['Modems']
+	
+	modems = manager.GetModems()
+	path=modems[0][0]
+	sms = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.MessageManager')
 
-	sms = dbus.Interface(bus.get_object('org.ofono', modems[0]),
-						'org.ofono.SmsManager')
+	#cb = dbus.Interface(bus.get_object('org.ofono', path),
+        #                                        'org.ofono.CbsManager')
+	
+	cb = dbus.Interface(bus.get_object('org.ofono', path),
+                                                'org.ofono.CellBroadcast')
 
-	cb = dbus.Interface(bus.get_object('org.ofono', modems[0]),
-						'org.ofono.CellBroadcast')
+        cb.SetProperty("Powered",dbus.Boolean(1));
 
 	sms.connect_to_signal("IncomingMessage", receive_incoming_message)
 	sms.connect_to_signal("ImmediateMessage", receive_immediate_message)

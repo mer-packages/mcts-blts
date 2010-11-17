@@ -25,7 +25,7 @@ cd ${BASE_DIR}
 
 rm -rf /tmp/network
 
-./test-network operatorinfo | grep "MobileNetworkCode\|MobileCountryCode"
+./test-network operatorinfor | grep "MobileNetworkCode\|MobileCountryCode"
 
 if [ $? -ne 0 ]; then
 	echo "error in network MCC and MNC"

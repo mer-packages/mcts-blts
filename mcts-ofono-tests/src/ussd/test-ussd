@@ -1,0 +1,87 @@
+#!/usr/bin/python
+#
+## Copyright (C) 2008-2010, Intel Corporation.
+## DESCR: oFono ussd test script
+## TIMEOUT:60
+## This program is free software; you can redistribute it and/or modify it
+## under the terms and conditions of the GNU General Public License,
+## version 2, as published by the Free Software Foundation.
+##
+## This program is distributed in the hope it will be useful, but WITHOUT
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+## for more details.
+##
+## You should have received a copy of the GNU General Public License along with
+## this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+## Place - Suite 330, Boston, MA 02111-1307 USA.
+##
+## Authors:
+##       Li,Zhigang  <zhigang.li@intel.com>
+##
+##
+#
+
+import sys
+import dbus
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+					'org.ofono.Manager')
+
+modems = manager.GetModems()
+
+path = modems[0][0]
+
+ss = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.SupplementaryServices')
+
+if len(sys.argv) < 2:
+	print """Usage: %s <command>
+	send
+	respond <char>
+	cancel
+	properties
+	""" % sys.argv[0]
+	sys.exit(1)
+
+if sys.argv[1] == "send":
+	try:
+		print ss.Initiate(sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send ussd %s" % e
+		sys.exit(1)
+	
+if sys.argv[1] == "respond":
+	if len(sys.argv) < 3:
+		print"please input respond char"
+		sys.exit(1)
+	try:
+		print ss.Respond(sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to respond ussd request %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "cancel":
+	try:
+		print ss.Cancel()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to cancel ussd request %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "properties":
+	try:
+		properties = ss.GetProperties()
+	except dbus.DBusException, e:
+		print "Unable to get properties" % e
+		sys.exit(1)
+	for key in properties.keys():
+			print "  %s = %s" % (key, properties[key])
+	sys.exit(0)
+
+print "Unknown command"
+sys.exit(1)

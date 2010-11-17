@@ -19,7 +19,6 @@
 #       Li,Zhigang  <zhigang.li@intel.com>
 #
 
-
 import sys
 import dbus
 
@@ -27,36 +26,42 @@ bus = dbus.SystemBus()
 
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 						'org.ofono.Manager')
-modems = manager.GetProperties()['Modems']
-net = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+modems = manager.GetModems()
+
+net = dbus.Interface(bus.get_object('org.ofono', modems[0][0]),
 			'org.ofono.NetworkRegistration')
 
 properties = net.GetProperties()
 
 if len(sys.argv) < 2:
 	print """Usage: %s <command>
-	operatorinfo
 	register [path]
-	networkinfo
+	networkinfor
 	unregister
 	scan
+	getoperator
+	operatorinfor
 	""" % sys.argv[0]
 	sys.exit(1)
 
-if sys.argv[1] == "operatorinfo":
-	for path in properties['Operators']:
+if sys.argv[1] == "getoperator":
+	try:
+		list = net.GetOperators()
+		path = list[0][0]
+		print "current operator: %s" % path
 		op = dbus.Interface(bus.get_object('org.ofono', path),
 					'org.ofono.NetworkOperator')
-		try:
-			prop = op.GetProperties()
-			for key in prop.keys():
-				print "  %s = %s" % (key, prop[key])
- 		except dbus.DBusException, e:
-			print "Unable to get operators infor: ", e
-			sys.exit(1)
-		if prop.has_key('AdditionalInformation'):
-			print "Sim addtional information: '%s'" %\
-			 (prop['AdditionalInformation'])
+	except dbus.DBusException, e:
+		print "Unable to get operators infor: ", e
+		sys.exit(1)
+	try:
+		prop = op.GetProperties()
+		for key in prop.keys():
+			print "  %s = %s" % (key, prop[key])
+ 	except dbus.DBusException, e:
+		print "Unable to get operators infor: ", e
+		sys.exit(1)
+	
 	sys.exit(0)
 
 if sys.argv[1] == "register":
@@ -77,38 +82,25 @@ if sys.argv[1] == "register":
 			print "Unable to register the operator: ", e
 			sys.exit(1)
 
-if sys.argv[1] == "networkinfo":
+if sys.argv[1] == "networkinfor":
 	try:
 		properties = net.GetProperties()
 	except dbus.DBusException, e:
 		print "Unable to get the network property: ", e
 		sys.exit(1)
-
 	for key in properties.keys():
-			print "  %s = %s" % (key, properties[key])
+		print "  %s = %s" % (key, properties[key])
 
-	print "all operators list:"
-	if properties.has_key('Operators'):
-		l = properties['Operators']
-		var = int(len(l))
-		for p in range(var):
-	       		op = dbus.Interface(bus.get_object('org.ofono', properties['Operators'][p]),
-								'org.ofono.NetworkOperator')
-			prop = op.GetProperties()
-			if prop['Status'] == "available":
-				print "Avaliable Operator list: '%s' " %\
-				 properties['Operators'][p]
-			elif prop['Status'] == "current":
-				print "Current Operator list: '%s' " %\
-				 properties['Operators'][p]
-			elif prop['Status'] == "forbidden":
-				print "Forbiden Operator list: '%s' " %\
-				 properties['Operators'][p]
-			else:
-				print"error"
-				sys.exit(1)
-
+	list = net.GetOperators()
+       	for p in list:
+               	path = p[0]
+                op = dbus.Interface(bus.get_object('org.ofono', path),
+                                         'org.ofono.NetworkOperator')
+                prop = op.GetProperties()
+		if prop['Status'] == "available":
+			print "Avaliable list: '%s' " % p[0]
 	sys.exit(0)
+
 if sys.argv[1] == 'unregister':
 	try:
 		net.Deregister()
@@ -119,11 +111,29 @@ if sys.argv[1] == 'unregister':
 
 if sys.argv[1] == 'scan':
 	try:
-		print net.ProposeScan()
+		list =  net.Scan()
+		for op in list:
+			print "[ %s ]" % (op[0])
 		sys.exit(0)
 	except dbus.DBusException, e:
-		print "Unable to deregister: ", e
+		print "Unable to get operators: ", e
 		sys.exit(1)
+
+if sys.argv[1] == "operatorinfor":
+	try:
+                list = net.GetOperators()
+		for p in list:
+                	path = p[0]
+        		print path 
+	       		op = dbus.Interface(bus.get_object('org.ofono', path),
+                        	                'org.ofono.NetworkOperator')
+               		prop = op.GetProperties()
+               		for key in prop.keys():
+                       		print "  %s = %s" % (key, prop[key])
+		sys.exit(0)
+        except dbus.DBusException, e:
+                print "Unable to get operators infor: ", e
+                sys.exit(1)
 
 print "Unknown command:"
 sys.exit(1)

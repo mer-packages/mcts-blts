@@ -27,7 +27,7 @@ ofono_gsm_cb_baoc.sh ofono_gsm_cf_busy.sh ofono_gsm_clip_int.sh \
 test-ss-gsm-cb ofono_gsm_cb_all_out.sh ofono_gsm_cb_baoiceh.sh \
 ofono_gsm_cf_nrc.sh ofono_gsm_clir_int.sh test-ss-gsm-string \
 ofono_gsm_cb_all.sh ofono_gsm_cb_baoic.sh ofono_gsm_cf_nry.sh \
-ofono_gsm_colp_int.sh
+ofono_gsm_colp_int.sh test-ss-negtive
 ofonodir = /opt/$(PACKAGE)
 EXTRA_DIST = $(ofono_SCRIPTS)
 

@@ -1,0 +1,242 @@
+#!/usr/bin/python
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: Telephony network test
+# TIMEOUT:60
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+#
+
+
+import sys
+import dbus
+
+bus = dbus.SystemBus()
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+						'org.ofono.Manager')
+modems = manager.GetModems()
+
+dm = dbus.Interface(bus.get_object('org.ofono', modems[0][0]),
+                                        'org.ofono.ConnectionManager')
+
+properties = dm.GetProperties()
+
+if len(sys.argv) < 2:
+
+	print """Usage: %s <command>
+
+	createcontext
+	activecontext
+	deactivateall
+	removecontext
+	setapn <APN name>
+	setpassword <pwd>
+	setusername <username>
+	settype <internet,mms,wap>
+	setname <context name>
+	setroamingallowed <true,false>
+	setprotocol <ip,ipv6>
+	properties
+	detach
+	attach
+	deactivatecontext
+	""" % sys.argv[0]
+	sys.exit(1)
+
+if sys.argv[1] == "properties":
+
+	for key in properties.keys():
+		val = str(properties[key])
+		print "	%s = %s" % (key, val)
+
+	sys.exit(0)
+
+if sys.argv[1] == "createcontext":
+	try:
+		ctx = dm.GetContexts()
+	except dbus.DBusException, e:
+		print "Unable to get context: ", e
+		sys.exit(1)
+	if (len(ctx) == 0):
+		try:
+			obj = dm.AddContext("internet")
+		except dbus.DBusException, e:
+			print "unable to add context: ",e
+			sys.exit(1)
+	else:
+		obj  = ctx[0][0]
+	
+	print obj
+	sys.exit(0)
+
+if sys.argv[1] == "deactivateall":
+	try:
+		dm.DeactivateAll()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to deactivate context: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "detach":
+	try:
+		dm.SetProperty("Powered", dbus.Boolean(0))
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to detach gprs: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "attach":
+	try:
+		dm.SetProperty("Powered", dbus.Boolean(1))
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to attach gprs: ", e
+		sys.exit(1)
+
+ctx = dm.GetContexts()
+
+if (len(ctx) == 0):
+	print"No context avalibe, create one first please"
+	sys.exit(1)
+else:
+	path = ctx[0][0]
+
+context = dbus.Interface(bus.get_object('org.ofono', path),
+			'org.ofono.ConnectionContext')
+
+property = context.GetProperties()
+
+if sys.argv[1] == "activecontext":
+	try:
+		context.SetProperty("Active", dbus.Boolean(1))
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to active context: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "deactivatecontext":
+	try:
+		context.SetProperty("Active", dbus.Boolean(0))
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to deactivate context: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "removecontext":
+	try:
+		dm.RemoveContext(path)
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to remove context: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "setapn":
+	if len(sys.argv) < 3:
+		print" you have to input APN name"
+		sys.exit(1)
+	else:
+		try:
+			context.SetProperty("AccessPointName", sys.argv[2])
+			print "Setting APN of %s to %s" % (path, sys.argv[2])
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to set apn: ", e
+			sys.exit(1)
+
+if sys.argv[1] == "setpassword":
+	if len(sys.argv) < 3:
+		print" you have to input password "
+		sys.exit(1)
+	else:
+		try:
+			context.SetProperty("Password", sys.argv[2])
+			print "Setting password of %s to %s" % (path, sys.argv[2])
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to set password: ", e
+			sys.exit(1)
+
+if sys.argv[1] == "setusername":
+	if len(sys.argv) < 3:
+		print" you have to input user name "
+		sys.exit(1)
+	else:
+		try:
+			context.SetProperty("Username", sys.argv[2])
+			print "Setting username of %s to %s" % (path, sys.argv[2])
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to set username: ", e
+			sys.exit(1)
+
+if sys.argv[1] == "settype":
+	if len(sys.argv) < 3:
+		print" you have to input usage type "
+		sys.exit(1)
+	else:
+		try:
+			context.SetProperty("Type", sys.argv[2])
+			print "Setting type of %s to %s" % (path, sys.argv[2])
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to set type: ", e
+			sys.exit(1)
+
+if sys.argv[1] == "setname":
+	if len(sys.argv) < 3:
+		print" you have to input context name "
+		sys.exit(1)
+	else:
+		try:
+			context.SetProperty("Name", sys.argv[2])
+			print "Setting context name of %s to %s" % (path, sys.argv[2])
+			sys.exit(0)
+		except dbus.DBusException, e:
+			print "Unable to set context name: ", e
+			sys.exit(1)
+
+if sys.argv[1] == "setprotocol":
+	if len(sys.argv) < 3:
+		print" you have to input the value"
+		sys.exit(1)
+	try:
+		context.SetProperty("Protocol", sys.argv[2])
+		print "Setting context protocol of %s to %s" % (path, sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to set context protocol: ", e
+		sys.exit(1)
+
+if sys.argv[1] == "setroamingallowed":
+	if len(sys.argv) < 3:
+		print" you have to input true or false"
+		sys.exit(1)
+	
+	if sys.argv[2] == "true":
+		sys.argv[2] = dbus.Boolean(1)
+	else:
+		sys.argv[2] = dbus.Boolean(0) 
+	try:
+		dm.SetProperty("RoamingAllowed", sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to set roaming allowed: ", e
+		sys.exit(1)
+
+print "Unkown command"
+sys.exit(1)
+

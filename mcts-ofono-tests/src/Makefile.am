@@ -22,4 +22,4 @@
 #	Modified from sample Makefile
 
 SUBDIRS=aoc gsm_string modem networking simple_call ss_setting voicemail \
-call_volume multi_call sim_file sms system
+call_volume multi_call sim_file sms system emergency_call radio_setting

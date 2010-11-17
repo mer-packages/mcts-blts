@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 2008-2010, Intel Corporation.
+# Copyright (C) 2008, Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -16,16 +16,20 @@
 #
 # Authors:
 #       Li,Zhigang  <zhigang.li@intel.com>
-# 
-
+#
+#
 
 BASE_DIR=`dirname $0`
 cd ${BASE_DIR}
 
-./test-network operatorinfor | grep Technologies
+./test-sms enable-report
+
+sleep 1
+
+./test-sms properties |grep DeliveryReport
 
 if [ $? -ne 0 ]; then
-	echo "can not get operator technology information"
+	echo "error when enable delivery report"
 	exit 1
 else
 	exit 0
