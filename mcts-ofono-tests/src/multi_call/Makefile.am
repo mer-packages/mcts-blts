@@ -21,7 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-ofono_SCRIPTS = ofono_ect.sh ofono_emergency_list.sh ofono_private_chat_3.sh \
+ofono_SCRIPTS = ofono_ect.sh ofono_private_chat_3.sh \
 test-multi-voicecall ofono_add_one_party.sh ofono_hold_and_answer.sh \
 ofono_private_chat_4.sh test-simple-voicecall ofono_call_deflect.sh \
 ofono_hungup_multiparty.sh ofono_release_and_answer.sh \

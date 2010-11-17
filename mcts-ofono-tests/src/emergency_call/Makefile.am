@@ -21,7 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-ofono_SCRIPTS = ofono_call_sos.sh  ofono_emergency_list.sh  \
+ofono_SCRIPTS = ofono_call_sos.sh  ofono_emergency_list.sh  
 ofonodir = /opt/$(PACKAGE)
 EXTRA_DIST = $(ofono_SCRIPTS)
 

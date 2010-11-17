@@ -29,6 +29,9 @@ AC_PROG_CC
 AC_CONFIG_FILES([Makefile  
 src/Makefile 
 src/aoc/Makefile 
+src/emergency_call/Makefile 
+src/ussd/Makefile 
+src/gprs/Makefile 
 src/gsm_string/Makefile 
 src/multi_call/Makefile 
 src/sim_file/Makefile 
@@ -37,6 +40,7 @@ src/system/Makefile
 src/call_volume/Makefile 
 src/modem/Makefile 
 src/networking/Makefile 
+src/radio_setting/Makefile 
 src/simple_call/Makefile 
 src/ss_setting/Makefile 
 src/voicemail/Makefile])
