@@ -1,0 +1,7 @@
+
+ver 1.0.0-2 
+	add manual cases into tests.xml
+	update test scripts to align with APIs change
+
+ver 1.0.0-1:
+	Initial public release
