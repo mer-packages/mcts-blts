@@ -1,0 +1,21 @@
+Source: mwts-multimedia-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, libqtm-dev, mwts-common-dev(>=0.2.0)
+Maintainer: Balazs Sipos <balazs.sipos@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-multimedia
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, libqt4-gui, libqt4-opengl, libqtm-multimedia, mwts-common(>=0.2.0)
+Description: Test libraries for Template
+ C++ and MIN test modules
+
+Package: mwts-multimedia-tests
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-multimedia, min
+Description: Test cases for multimedia
+ Min test cases for testing reliability of QT libraries
+
