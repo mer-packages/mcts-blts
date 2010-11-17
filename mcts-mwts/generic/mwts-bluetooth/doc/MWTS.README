@@ -1,0 +1,141 @@
+General MWTS Testing Guide
+
+Table of contents
+
+  Introduction
+  Source code and compiling
+  Installation of test cases
+  Installation of test data
+  Master-slave setup between PC and device
+  Master-slave setup between two devices
+  Executing tests
+  Test results
+  Known Issues
+
+Introduction
+
+  General test asset architecture and role of MIN
+  		
+  MWTS test assets uses Min test framework. It provides command line interface,
+  easy-to-use UI for manual testing and also interface for automated test running.
+  It also provides results, but there is additional log and result files
+  produced by mwts test assets themselves.
+
+  The using of Min is done as user friendly as possible. In normal situation, 
+  just install Min and test package and then start testing with Min. Situations
+  requiring special attention are listed in this document and in test assets README.
+
+  Test cases are scripted by Min scripts and interpreted by the min frameworks 
+  script interface. This provides API for using actual test libraries. 
+  Each test asset provides test scripts, and user may create new cases 
+  simply by writing more cases according to examples.
+
+
+Source code compiling and installation
+
+  Deb-packages
+     * Download sources from Git repository. Other option is to get data
+       with specially delivered test asset package.
+     * Compile with command 'dpkg-buildpackage -rfakeroot'
+        * If you get an error about missing dependencies, install them by 
+          apt-get install <package name>
+     * After compiling, packages can be found from one folder up
+     * Install compiled packages with command 'dpkg -i <package>.deb'
+
+  RPM-packages:
+     * Download sources from Git repository. Other option is to get data
+       with specially delivered test asset package.
+     * Compile with command 'rpmbuild -bb --clean <.spec>'
+        * If you get an error about missing dependencies, install them by
+          yum install <package name>
+     * After compiling, packages can be found from one folder up
+     * Install compiled packages with command 'rpm -i <package>.rpm'
+
+        
+Installation of test data
+
+  Different test assets use different test data and all are not mandatory to 
+  be installed.
+
+  Test data location will be defined later.
+
+
+Master-slave setup between PC and device
+
+  Requirements: Working SSH connection to the device
+
+  Master-slave test cases means that test case will command another 
+  device/PC to do something. One device/PC is the master and another
+  device/PC is the slave.
+
+  On the slave MIN daemon must be on. 
+     * To check that Min daemon is running by: 
+       ps aux | grep mind
+     * To start MIN daemon use: 
+       /etc/init.d/min start 
+       (on the PC you need to use sudo /etc/init.d/min start).
+
+  On the master MIN must be started with extra parameter: min -s <ip>
+     * If the PC is master and the device slave, min -s 192.168.2.15
+     * If the device is master and the PC slave, min -s 192.168.2.14
+
+Master-slave setup between two devices
+
+  Requirements: Two test devices and a serial-console connection to one of devices
+
+  If you have only one serial-console connection, use that device as slave. 
+  Both devices are connect to one desktop PC.
+
+  Master is using IP 192.168.2.15 and slave 192.168.3.15.
+
+  Enable IP forwarding in the desktop PC by editing file /etc/sysctl.conf:
+     * Remove comment '#' from the line: net.ipv4.ip_forward=1
+     * Apply settings by: sudo sysctl -p
+
+  First device connection
+     * Plug power and USB cable to the first device and turn the device on
+     * Setup first device normally to use IP 192.168.2.15 (see installation caption above).
+     * Log in to the device as root and setup route tables by: 
+       route add 192.168.3.15 gw 192.168.2.14 usb0
+
+  Second device connection
+     * Plug power and USB cable to the second device and turn the device on
+     * Use serial-console to log in as root and set new IP for the USB interface by: 
+       ifconfig usb0 192.168.3.15
+     * In the desktop set IP for new USB interface by: 
+       sudo ifconfig usb1 192.168.3.14
+     * Log in to the device as root (root@192.168.3.15) and setup route tables by: 
+       route add 192.168.2.15 gw 192.168.3.14 usb0
+
+  Test connection between the devices by ping
+     * On the first device: ping 192.168.3.15
+     * On the second device: ping 192.168.2.15
+
+  On the slave device (the second device) start min daemon
+     * /etc/init.d/mind start
+
+  On the server device (the first device) start min with slave option
+     * min -s 192.168.3.15
+
+
+Executing tests
+
+  Start 'min' in the shell of the device.  Select a case, observe device, 
+  and check the test result from min and the log files.
+
+  Or use command line format 'min -c -t <test case name>'.
+  
+  If you want set debug logging on, give in shell where you will run the tests
+  export MWTS_DEBUG=1
+
+
+Test results
+
+  All MWTS test assets writes log and result files to /var/log/tests/.
+  Results are named as 'exact_test_case_name.result' and contains overall information 
+  about test run and measured values. If debug logging is on, you may check 'exact_test_case_name.log'.
+
+
+Known Issues
+   
+   None

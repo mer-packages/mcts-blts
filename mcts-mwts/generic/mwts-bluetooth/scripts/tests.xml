@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.2">
+  <suite name="mwts-bluetooth" domain="Local Connectivity">
+
+
+<!--This set contains test cases from mwts-bluetooth.cfg-->
+    <set name="Functional_Tests" description="Functional and Dataflow test cases for Bluetooth" feature="BT" type="Functional">
+      <case name="DATAFLOW-BT-Basic_lookup" subfeature="Scan" timeout="180" description=
+            "Purpose
+            Test basic scan functionality of Bluetooth device
+            Method
+            Test case uses libbluetooth3 library and DBUS-API
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Is able to run the scan uninterrupted. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'DATAFLOW-BT-Basic_lookup'</step>
+      </case>
+      <case name="DATAFLOW-BT-Basic_discoverability_device_is_visible-MS" subfeature="Scan" timeout="180" description=
+            "Purpose
+            Test basic scan discoverability of Bluetooth device
+            Method
+            Test case uses libbluetooth3 library and DBUS-API, 
+            master device goes discoverable mode and slave scan devices
+            Pre-/Post-Conditions
+            Master-slave environment is setup
+            Pass/Fail Criteria
+            Slave device must find master device, thus look from slave's /var/log/tests
+            ">
+        <step>min -c -t 'DATAFLOW-BT-Basic_discoverability_device_is_visible-MS'</step>
+      </case>
+      <case name="FUTE-BT-Power_off_and_on" subfeature="Power" timeout="180" description=
+            "Purpose
+            Test basic power on/off functionality of Bluetooth device
+            Method
+            Test case uses libbluetooth3 library and DBUS-API
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Device changes bluetooth power modes succesfully. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-Power_off_and_on'</step>
+      </case>
+      <case name="FUTE-BT-Change_scan_mode" subfeature="Scan" timeout="180" description=
+            "Purpose
+            Test basic scan modes of Bluetooth device
+            Method
+            Test case uses libbluetooth3 library and DBUS-API, 
+            sets scan mode invisible, discoverable and pairable
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Changes scan modes succesfully. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-Change_scan_mode'</step>
+      </case>
+      <case name="SMOKE-BT-L2CAP_Send_10MB" subfeature="Send" timeout="300" description=
+            "Purpose
+            Smoke test for L2CAP Send side throughput test
+            Method
+            Test case uses libbluetooth3 library and C-API, 
+            creates socket connection and uses L2CAP for throughput test
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            All data is sent. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'SMOKE-BT-L2CAP_Send_10MB'</step>
+      </case>
+      <case name="FUTE-BT-L2CAP_Send_10MB-MS" subfeature="Send" timeout="600" description=
+            "Purpose
+            Smoke test for L2CAP Send side throughput test, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, 
+            creates socket connection and uses L2CAP for throughput test
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-L2CAP_Send_10MB-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="FUTE-BT-L2CAP_Receive_10MB-MS" subfeature="Receive" timeout="300" description=
+            "Purpose
+            Smoke test for L2CAP Receive side throughput test, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, 
+            creates socket connection and uses L2CAP for throughput test
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-L2CAP_Receive_10MB-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="SMOKE-BT-L2CAP_Receive" subfeature="Receive" timeout="300" description=
+            "Purpose
+            Smoke test for L2CAP Receive side throughput test
+            Method
+            Test case uses libbluetooth3 library and C-API, 
+            creates socket connection and uses L2CAP for throughput test
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            All data is received. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'SMOKE-BT-L2CAP_Receive'</step>
+      </case>
+      <case name="SMOKE-BT-RfComm_Send_10MB" subfeature="Send" timeout="300" description=
+            "Purpose
+            Smoke test for RfComm Send side throughput test
+            Method
+            Test case uses libbluetooth3 library and C-API, 
+            creates socket connection and uses L2CAP for throughput test
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            All data is sent. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'SMOKE-BT-RfComm_Send_10MB'</step>
+      </case>
+      <case name="SMOKE-BT-RfComm_Receive" subfeature="Receive" timeout="300" description=
+            "Purpose
+            Smoke test for RfComm Receive side throughput test
+            Method
+            Test case uses libbluetooth3 library and C-API, 
+            creates socket connection and uses L2CAP for throughput test
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            All data is received. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'SMOKE-BT-RfComm_Receive'</step>
+      </case>
+      <case name="SMOKE-BT-Pairing" subfeature="Pairing" timeout="180" description=
+            "Purpose
+            Smoke test for Pairing between devices
+            Method
+            Test case uses libbluetooth3 library and DBUS-API.
+            Pre-/Post-Conditions
+            Both devices in pairable mode.
+            Pass/Fail Criteria
+            Devices connects, pairs, disconnects and removes succesfully. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'SMOKE-BT-Pairing'</step>
+      </case>
+      <case name="SMOKE-BT-Headset_Pairing" subfeature="Pairing" timeout="180" description=
+            "Purpose
+            Smoke test for Pairing between device and headset. Has audio routing features.
+            Method
+            Test case uses libbluetooth3 library and DBUS-API.
+            Pre-/Post-Conditions
+            Both devices in pairable mode.
+            Pass/Fail Criteria
+            Devices connects, pairs, routes audio, disconnects, and removes. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'SMOKE-BT-Headset_Pairing'</step>
+      </case>
+      <case name="SMOKE-BT-Obex_send_10MB" subfeature="Send" timeout="180" description=
+            "Purpose
+            Smoke test for transfering a file between two devices, using Obex protocol.
+            Method
+            Test case uses libbluetooth3 library, DBUS-API, openobex, and obexd.
+            Pre-/Post-Conditions
+            A prototype of transferrable file has to exist.
+            Pass/Fail Criteria
+            A file is transferred.
+            Test case result can be found from /var/log/tests
+            Transfered file can be found form /var/log/tests/data/
+            ">
+        <step>min -c -t 'SMOKE-BT-Obex_send_10MB'</step>      
+      </case>
+      <case name="SMOKE-BT-Obex_receive" subfeature="receive" timeout="180" description=
+            "Purpose
+            Smoke test for transfering a file between two devices, using Obex protocol.
+            Method
+            Test case uses libbluetooth3 library, DBUS-API, openobex, and obexd.
+            Pre-/Post-Conditions
+            A prototype of transferrable file has to exist.
+            Pass/Fail Criteria
+            A file is transferred.
+            Test case result can be found from /var/log/tests
+            Transfered file can be found form /var/log/tests/data/
+            ">
+        <step>min -c -t 'SMOKE-BT-Obex_receive'</step>  
+      </case>
+      <case name="FUTE-BT-Obex_send_10MB-MS" subfeature="Send" timeout="180" description=
+            "Purpose
+            Fute test for transfering a file between two devices, using Obex protocol.
+            Method
+            Test case uses libbluetooth3 library, DBUS-API, openobex, and obexd.
+            Pre-/Post-Conditions
+            A prototype of transferrable file has to exist.
+            Pass/Fail Criteria
+            A file is transferred.
+            Test case result can be found from /var/log/tests
+            Transfered file can be found form /var/log/tests/data/
+            ">
+        <step>min -c -t 'FUTE-BT-Obex_send_10MB-MS'</step>
+      </case>
+      <case name="FUTE-BT-Obex_receive-MS" subfeature="Receive" timeout="180" description=
+            "Purpose
+            Fute test for transfering a file between two devices, using Obex protocol.
+            Method
+            Test case uses libbluetooth3 library, DBUS-API, openobex, and obexd.
+            Pre-/Post-Conditions
+            A prototype of transferrable file has to exist.
+            Pass/Fail Criteria
+            A file is transferred.
+            Test case result can be found from /var/log/tests
+            Transfered file can be found form /var/log/tests/data/
+            ">
+        <step>min -c -t 'FUTE-BT-Obex_receive-MS'</step>
+      </case>
+    </set>
+
+<!--This set contains ITERATIVE test cases from mwts-bluetooth-nft.cfg-->
+    <set name="Iterative_Tests" description="Iterative test cases for Bluetooth" feature="BT" type="Iterative">
+      <case name="NFT-BT-Device_Scan_C-ITER" subfeature="Scan" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth scan reliability
+            Method
+            Test case uses libbluetooth3 library and C-API, scan is made 80 times.
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Is able to run the scan uninterrupted. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-Device_Scan_C-ITER'</step>
+      </case>
+      <case name="NFT-BT-Power_off_on_C-ITER" subfeature="Power" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth power on/off reliability
+            Method
+            Test case uses libbluetooth3 library and C-API, power change is made 50 times.
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Device changes bluetooth power modes succesfully. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-Power_off_on_C-ITER'</step>
+      </case>
+      <case name="NFT-BT-Device_Scan_Dbus-ITER" subfeature="Scan" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth scan reliability
+            Method
+            Test case uses libbluetooth3 library and DBUS-API, scan is made 80 times.
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Is able to run the scan uninterrupted. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-Device_Scan_Dbus-ITER'</step>
+      </case>
+      <case name="NFT-BT-Power_off_on_Dbus-ITER" subfeature="Power" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth power on/off reliability
+            Method
+            Test case uses libbluetooth3 library and DBUS-API, power change is made 50 times.
+            Pre-/Post-Conditions
+            None
+            Pass/Fail Criteria
+            Device changes bluetooth power modes succesfully. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-Power_off_on_Dbus-ITER'</step>
+      </case>
+      <case name="NFT-BT-L2CAP_Send_1MB-ITER-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Send side reliability, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 120 times.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred in all iterations. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Send_1MB-ITER-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Send_1MB-ITER-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Send side reliability, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 120 times.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred in all iterations. 
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Send_1MB-ITER-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-Device_Pairing-ITER" subfeature="Pairing" timeout="1800" description=
+            "Purpose
+            Test Pairing between any two bluetooth devices
+            Method
+            Test case uses libbluetooth3 library and DBUS-API, pairing is made 120 times.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            Devices connect, pair, disconnect and remove succesfully in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-Device_Pairing-ITER' -s 192.168.3.15</step>
+      </case>      
+      <case name="NFT-BT-Headset_Pairing-ITER" subfeature="Pairing" timeout="1800" description=
+            "Purpose
+            Test Pairing between device and headset. Audio routing enabled.
+            Method
+            Test case uses libbluetooth3 library and DBUS-API, pairing is made 120 times.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            Devices connect, pair, routes audio, disconnect and remove succesfully in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-Device_Pairing-ITER' -s 192.168.3.15</step>
+      </case>
+  </set>
+  
+<!--This set contains THROUGHPUT test cases from mwts-bluetooth-nft.cfg-->
+    <set name="Throughput_Tests" description="Throughput test cases for Bluetooth" feature="BT" type="Throughput">
+      <case name="NFT-BT-L2CAP_Send_10MB-THRO-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Send side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Send_10MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-L2CAP_Receive_10MB-THRO-MS" subfeature="Receive" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Receive side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, receiving is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Receive_10MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Send_10MB-THRO-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Send side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Send_10MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Receive_10MB-THRO-MS" subfeature="Receive" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Receive side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, receiving is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Receive_10MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-Obex_receive-THRO-MS" subfeature="Receive" timeout="180" description=
+            "Purpose
+            Throughput test for transfering a file between two devices, using Obex protocol.
+            Method
+            Test case uses libbluetooth3 library, DBUS-API, openobex, and obexd.
+            Pre-/Post-Conditions
+            A prototype of transferrable file has to exist.
+            Pass/Fail Criteria
+            A file is transferred.
+            Test case result can be found from /var/log/tests
+            Transfered file can be found form /var/log/tests/data/
+            ">
+        <step>min -c -t 'NFT-BT-Obex_receive-THRO-MS'</step>
+      </case>
+      <case name="NFT-BT-Obex_send_10MB-THRO-MS" subfeature="Send" timeout="180" description=
+            "Purpose
+            Throughput test for transfering a file between two devices, using Obex protocol.
+            Method
+            Test case uses libbluetooth3 library, DBUS-API, openobex, and obexd.
+            Pre-/Post-Conditions
+            A prototype of transferrable file has to exist.
+            Pass/Fail Criteria
+            A file is transferred.
+            Test case result can be found from /var/log/tests
+            Transfered file can be found form /var/log/tests/data/
+            ">
+        <step>min -c -t 'NFT-BT-Obex_send_10MB-THRO-MS'</step>
+      </case>
+  </set>
+<!--This set contains LONG-LASTING test cases from mwts-bluetooth-nft.cfg-->
+    <set name="Long_Lasting_Tests" description="Long-Lasting test cases for Bluetooth" feature="BT" type="Long-lasting">
+      <case name="NFT-BT-L2CAP_Send_2h-LOLA-MS" subfeature="Send" timeout="7800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Send side long-lasting reliability, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made continuously for 2 hours.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred for 2h.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Send_2h-LOLA-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Send_2h-LOLA-MS" subfeature="Send" timeout="7800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Send side long-lasting reliability, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made continuously for 2 hours.
+            Pre-/Post-Conditions
+            Master - Slave set up
+            Pass/Fail Criteria
+            All data is transferred for 2h.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Send_2h-LOLA-MS' -s 192.168.3.15</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>

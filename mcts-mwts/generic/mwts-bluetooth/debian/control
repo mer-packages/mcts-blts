@@ -1,0 +1,37 @@
+Source: mwts-bluetooth-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libbluetooth3-dev
+Maintainer: Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com> 
+Standards-Version: 3.8.0
+
+Package: mwts-bluetooth
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0), bluez, libbluetooth3,
+ libopenobex1, obexd | obexd-client, obexd | obexd-server
+Description: Test libraries for BlueZ and libbluetooth3
+ Bluetooth test asset for BlueZ and libbluetooth
+ C++ and MIN interface
+
+Package: mwts-bluetooth-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-bluetooth, min
+Description: Test cases for mwts-bluetooth
+ Min interface and test cases
+
+Package: mwts-bluetooth-cli
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-bluetooth
+Description: Command line interface
+ Command line interface for Bluetooth test asset
+
+Package: mwts-bluetooth-tools
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends},bluez, libbluetooth3, python, libopenobex1,
+ obexd | obexd-client, obexd | obexd-server
+Description: Bluetooth test tools
+ Set of test tools for bluetooth

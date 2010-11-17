@@ -1,0 +1,115 @@
+
+MWTS-BLUETOOTH
+-------------
+
+
+INTRODUCTION
+
+  mwts-bluetooth is a test package aimed for measuring Bluetooth
+  performance and reliability. 
+
+  Test cases are targeted for following areas:
+    - L2CAP
+    - RFCOMM
+    - OBeX
+    
+  Test asset also includes functionality for device pairing
+  and device scanning.
+     
+  The package is for Meego platform.
+
+  Questions: MWTSSupport@nokia.com
+
+  See document MWTS.README under doc directory for detailed general 
+  information about mwts test modules.
+  
+  
+SOURCE CODE AND COMPILING
+
+  mwts-bluetooth compiles on scratchbox by executing
+
+          dpkg-buildpackage -rfakeroot
+
+  if you have missing dependencies, add them with
+
+          apt-get install <package1> <package2> ..
+  
+
+ENVIRONMENT REQUIREMENTS
+
+  Part of test cases requires master-slave environment. These test
+  cases are using -MS suffix. Bluetooth device is required in the
+  hardware.  
+  
+  The master-slave environment setups are explained in the MWTS.README.
+
+
+EXECUTING TESTS
+
+  For local test cases you need to connect to device using ssh connection and
+  start MIN tool using command 'min'. 
+  
+
+TEST RESULTS
+
+  Test results can be found from device in directory /var/log/tests/
+  Result files are named according to test cases, <test_case_name>.result file contains
+  overall information about test run and measured values.
+
+
+MIN SCRIPT FILES
+
+  mwts-bluetooth.cfg 
+     Basic functionality test cases
+  mwts-bluetooth-nft.cfg
+     Non-functional test cases
+  mwts-bluetooth-slave.cfg 
+     Slave test cases for master-slave
+
+
+MIN SCRIPTER INTERFACE
+
+  How-to-read.
+  First is the method name then is the commands you can give to it. 
+  Commands are followed by parameters, marked as <parameter description>.
+  Not all commands needs a parameter. The command itself is sufficient.
+  Commands that cannot be in same method call are separated with | .
+
+
+  Scan
+     Scans for devices
+  PowerMode mode <off|on>
+     Sets Bluetooth device's power mode
+  Transfer role <client|server> bytes <count of bytes to send> socket-type <L2CAP|RfComm> 
+    buffsize <transfeer buffer size in bytes> time <time in seconds to transfer> host <host mac-address>
+    Measure data transfer throughput. Parameter time is optinal meant to be used with long lasting cases
+    where send is stated again until send has lasted given amount of seconds.
+    You can use also host parameter, but in practise it is more reasonable to change the value from
+    /usr/lib/tests/BluetoothTest.conf. This parameter means receiver devices Bluetooth MAC address.
+  ScanMode mode <off|discoverable|pairable>
+    Sets device discovery mode. eg. is device discoverable by others.
+  Device connect|disconnect|remove host <host mac address> pin <pin code for pairing> headset client|server
+    Dependent on the parameter, may connect (pairs also), disconnect or remove device.
+    remove deletes the linkkey which comes with the pairing, and thus devices are not in "trusted" status anymore.
+    Not availlable on C api.
+  GetAddress macaddress <name where mac is to be inserted>
+    Get your devices mac address and inserts it into a script value.
+  SetApi dbus|c
+    Makes the test case to use a specific api. C refers to hci and dbus to itself.
+    This has to be set before trying any method call.
+    Transfer method however can be run without this set.
+  FileTransfer role <server|client> filename <name of file to send> host <host mac address>
+    This transfers a concrete file between two devices. This uses Obex protocol.
+    Filename specified is the name used during the transfer. It will be created from
+    proto file declared in config. It will appear to /var/log/tests/data/ when transfer
+    complete.
+
+
+KNOWN ISSUES
+
+  Not supported yet
+  - SDP
+  
+  Device command not availlable on c-api
+  Some UI applications may block automation when receiving files.
+

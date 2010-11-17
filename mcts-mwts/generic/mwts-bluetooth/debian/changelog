@@ -1,0 +1,65 @@
+mwts-bluetooth-tests (0.1.0) unstable; urgency=low
+  * Bug causing crashing fixed.
+  * Folder architechture changed.
+  * Tools section/package created.
+  * Pairing server tool created.
+  * Obex server tool created.
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Thu, 21 Oct 2010 14:55:00 +0300
+ 
+mwts-bluetooth-tests (0.0.9) unstable; urgency=low
+  * Obex support added
+  * New test cases for Obex
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Wed, 13 Oct 2010 16:15:00 +0300
+
+mwts-bluetooth-tests (0.0.8) unstable; urgency=low
+  * Fixed bluetooth pairing bug
+  * LOLA scripts updated, to ensure that device is on
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Wed, 29 Sep 2010 14:55:00 +0300
+
+mwts-bluetooth-tests (0.0.7) unstable; urgency=low
+  * Added mac mac address configuration into .conf file
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Tue, 7 Sep 2010 10:15:00 +0300
+
+mwts-bluetooth-tests (0.0.6) unstable; urgency=low
+  * Pairing bug fixed
+  * 'method c' parameter now replaced with 'SetApi c/dbus'
+  * increased dbus functionality. ScanMode, PowerMode, Scan
+  * audio routing availlable
+  * new test cases availlable
+  * changed dbus as the primary Scan, Discovery and Power api, over hci
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Tue, 31 Aug 2010 09:57:00 +0300
+
+mwts-bluetooth-tests (0.0.5) unstable; urgency=low
+  * Pairing functionality added
+  * minimal DBus API support added
+  * Increased test result printing
+  * Data transfer & rfcomm bug fixed
+  * Result unit changed from MB/s to Mbit/s
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Tue, 10 Aug 2010 09:57:00 +0300
+
+mwts-bluetooth-tests (0.0.4) unstable; urgency=low
+  * Added support for RfComm protocol
+  * Checksum tests added
+  * Increased test result verification
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Tue, 13 Jul 2010 09:57:00 +0300
+
+mwts-bluetooth-tests (0.0.3) unstable; urgency=low
+  * Architechture made again, eg. asset recreated
+  * Implemented Throughput cases, FUTE, SMOKE, NFT, LOLA data transfer works
+  * Documentation updated
+  * Fixed alltests.xml and tests.xml
+  * Changed base package name
+  * Changed CI tags in control files
+ -- Antti Ruotsalainen <ext-antti.1.ruotsalainen@nokia.com>  Tue, 15 Jun 2010 09:57:00 +0300
+
+mwts-bluetooth (0.0.2) unstable; urgency=low
+  * Modified tests.xml and -tests package for ART testing
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Tue, 27 Apr 2010 10:00:00 +0300
+
+mwts-bluetooth (0.0.1) unstable; urgency=low
+  * Initial version
+  * Implemented Scanning, Power and Scan mode changes
+  * Documentation updated
+ -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Thu, 15 Apr 2010 13:47:00 +0300
+
+

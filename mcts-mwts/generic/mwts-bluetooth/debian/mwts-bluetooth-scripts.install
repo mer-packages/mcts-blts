@@ -1,0 +1,3 @@
+etc/min.d/mwts-bluetooth.min.conf
+usr/share/mwts-bluetooth-scripts/tests.xml
+usr/lib/min/*.cfg
