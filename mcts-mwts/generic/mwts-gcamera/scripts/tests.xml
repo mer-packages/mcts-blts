@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-gcamera" domain="Camera">
+  <!--This set contains test cases from mwts-gcamera.cfg-->
+    <set name="" description="" feature="" type="functional" >
+      <case name="" subfeature="" description=" " timeout="120">
+        <step>min -c -t ''</step>
+      </case>  
+    </set>
+  </suite>
+</testdefinition>
