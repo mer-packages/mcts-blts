@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# Copyright (C) 2008-2010, Intel Corporation.
+## Copyright (C) 2008-2010, Intel Corporation.
 # DESCR: oFono sms test script
-#
+# TIMEOUT:60
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
 # version 2, as published by the Free Software Foundation.
@@ -25,19 +25,29 @@ import dbus
 def print_useage(s):
 	print "Useage: %s <sc>  <value>" % (s)
 	print "Useage: %s <send> <number> <content>" % (s)
-
-if len(sys.argv) < 3:
-	print_useage(sys.argv[0])
+	print "Useage: %s <enable-reports> " % (s)
+	print "Useage: %s <disable-reports> " % (s)
+	print "Useage: %s <bearer> [cs-only,ps-only,cs-preferred,ps-preferred]" % (s)
+	print "Useage: %s properties " % (s)
 	sys.exit(1);
+
+if len(sys.argv) < 3 and len(sys.argv) != 2:
+	print_useage(sys.argv[0])
 
 bus = dbus.SystemBus()
 
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 		'org.ofono.Manager')
 
-modems = manager.GetProperties()['Modems']
-sms = dbus.Interface(bus.get_object('org.ofono', modems[0]),
-			'org.ofono.SmsManager')
+
+
+modems = manager.GetModems()
+path=modems[0][0]
+
+
+sms = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.MessageManager')
+
 
 if (sys.argv[1] == 'sc'):
 	print "set service center address"
@@ -48,6 +58,38 @@ if (sys.argv[1] == 'sc'):
 		sys.exit(0)
 	except dbus.DBusException, e:
 		print "Unable to set sms center address: ", e
+		sys.exit(1)
+
+if (sys.argv[1] == 'enable-reports'):
+	try:
+		sms.SetProperty("UseDeliveryReports", dbus.Boolean(1))
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to enable sms delivery reports: ", e
+		sys.exit(1)
+
+if (sys.argv[1] == 'disable-reports'):
+	try:
+		sms.SetProperty("UseDeliveryReports", dbus.Boolean(0))
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to disable sms delivery reports: ", e
+		sys.exit(1)
+
+if (sys.argv[1] == 'bearer'):
+	try:
+		sms.SetProperty("Bearer", sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to set bearer for sms: ", e
+		sys.exit(1)
+
+if (sys.argv[1] == 'properties'):
+	try:
+		print sms.GetProperties()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to get sms properties: ", e
 		sys.exit(1)
 
 if (sys.argv[1] == 'send'):

@@ -1,0 +1,86 @@
+#!/usr/bin/python
+#
+# Copyright (C) 2008-2009, Intel Corporation.
+# DESCR: Telephony Gsm string test
+# TIMEOUT:60
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2, as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307 USA.
+#
+# Authors:
+#       Li,Zhigang  <zhigang.li@intel.com>
+#
+#
+ 
+
+
+import sys
+import dbus
+import time
+bus = dbus.SystemBus()
+
+
+manager = dbus.Interface(bus.get_object('org.ofono', '/'),
+                                        'org.ofono.Manager')
+modems = manager.GetModems()
+
+path = modems[0][0]
+cw = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.CallWaiting')
+
+ss = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.SupplementaryServices')
+cf = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.CallForwarding')
+cs = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.CallSettings')
+
+
+if len(sys.argv) < 2:
+        print """Usage: %s <command>
+
+	ss-invalid-*
+        ss-invalid-#
+	ss-invalid-*#
+	ss-cb-invalid*
+	ss-cb-invalid#
+	ss-invalid
+        """ % sys.argv[0]
+        sys.exit(1)
+
+
+if sys.argv[1] == "ss-invalid-*":
+	print ss.Initiate("*43#123456*")
+	sys.exit(0)
+
+if sys.argv[1] == "ss-invalid-*#":
+	print ss.Initiate("*43*1234*4*#")
+	sys.exit(0)
+
+if sys.argv[1] == "ss-cb-invalid*":
+        print ss.Initiate("*330*1234*")
+	sys.exit(0)
+
+if sys.argv[1] == "ss-cb-invalid#":
+        print ss.Initiate("*330*1234#")
+        sys.exit(0)
+
+if sys.argv[1] == "ss-invalid-#":
+        print ss.Initiate("*43*1234*4#")
+        sys.exit(0)
+
+if sys.argv[1] == "ss-invalid":
+        print ss.Initiate("*43#123456")
+        sys.exit(0)
+
+print "unknown command"
+sys.exit(1)

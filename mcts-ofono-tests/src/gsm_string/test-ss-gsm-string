@@ -29,9 +29,11 @@ bus = dbus.SystemBus()
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 					'org.ofono.Manager')
 
-modems = manager.GetProperties()['Modems']
+modems = manager.GetModems()
 
-ss = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+path = modems[0][0]
+
+ss = dbus.Interface(bus.get_object('org.ofono', path),
 					'org.ofono.SupplementaryServices')
 if len(sys.argv) < 2:
 	print """Usage: %s <command>

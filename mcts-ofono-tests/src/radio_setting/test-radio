@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # Copyright (C) 2008-2010, Intel Corporation.
-# DESCR: oFono Modem test script
+# DESCR: oFono radio setting test script
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -18,21 +18,17 @@
 # Authors:
 #       Li,Zhigang  <zhigang.li@intel.com>
 #
-#
 
 import sys
 import dbus
 
 def print_useage(s):
-	print "Useage: %s poweron [number]" % (s)
-	print "Useage: %s poweroff [number]" % (s)
-	print "Useage: %s online" % (s)
-	print "Useage: %s offline" % (s)
+	print "Useage: %s <set>  <value>" % (s)
 	print "Useage: %s properties" % (s)
 
 if len(sys.argv) < 2:
 	print_useage(sys.argv[0])
-	sys.exit(1)
+	sys.exit(1);
 
 bus = dbus.SystemBus()
 
@@ -40,58 +36,27 @@ manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 		'org.ofono.Manager')
 
 modems = manager.GetModems()
+radio = dbus.Interface(bus.get_object('org.ofono', modems[0][0]),
+			'org.ofono.RadioSettings')
 
-p = 0
-if len(sys.argv) == 3:
-	p = int(sys.argv[2])
-
-modem = dbus.Interface(bus.get_object('org.ofono', modems[p][0]),
-						'org.ofono.Modem')
+if (sys.argv[1] == 'set'):
+	if len(sys.argv) < 3:
+		print"you have to input the value:gsm,lte,umts or any"
+		sys.exit(1)
+	try:
+		radio.SetProperty("TechnologyPreference", sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to set radio properties: ", e
+		sys.exit(1)
 
 if (sys.argv[1] == 'properties'):
-
 	try:
-		properties = modem.GetProperties()
-	except dbus.DBusException, e:
-		print "Unable to get the property: ", e
-		sys.exit(1)
-
-	for key in properties.keys():
-			print "  %s = %s" % (key, properties[key])
-	sys.exit(0)
-
-if (sys.argv[1] == 'poweron'):
-	try:
-		modem.SetProperty("Powered",True)
+		print radio.GetProperties()
 		sys.exit(0)
 	except dbus.DBusException, e:
-		print "Unable to set the property: ", e
+		print "Unable to get radio properties: ", e
 		sys.exit(1)
 
-if (sys.argv[1] == 'poweroff'):
-	try:
-		modem.SetProperty("Powered",False)
-		sys.exit(0)
-	except dbus.DBusException, e:
-		print "Unable to set the property: ", e
-		sys.exit(1)
-
-if (sys.argv[1] == 'online'):
-	try:
-		modem.SetProperty("Online",True)
-		sys.exit(0)
-	except dbus.DBusException, e:
-		print "Unable to set the property: ", e
-		sys.exit(1)
-
-if (sys.argv[1] == 'offline'):
-	try:
-		modem.SetProperty("Online",False)
-		sys.exit(0)
-	except dbus.DBusException, e:
-		print "Unable to set the property: ", e
-		sys.exit(1)
-
-print "Unknown command"
+print "Unkonown command:"
 sys.exit(1)
-

@@ -23,7 +23,7 @@
 BASE_DIR=`dirname $0`
 cd ${BASE_DIR}
 
-./test-network operatorinfo | grep Name 
+./test-network operatorinfor | grep Name 
 
 if [ $? -ne 0 ]; then
 	echo "error in operater name of network"

@@ -23,14 +23,16 @@
 BASE_DIR=`dirname $0`
 cd ${BASE_DIR}
 
-./test-network networkinfo > /tmp/network
+./test-network networkinfor > /tmp/network
 
-mode=`cat /tmp/network | awk '/Avaliable/{print $4}'`
+mode=`cat /tmp/network | awk '/Avaliable/{print $3}'`
 
 value=`echo "$mode"|sed -n '1p'`
 
 value=${value#\'}
 value=${value%\'}
+
+echo $value
 
 ./test-network register $value
 

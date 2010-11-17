@@ -1,7 +1,8 @@
 #!/usr/bin/python
-# Copyright (C) 2008-2010, Intel Corporation.
-# DESCR: oFono call volume test script
 #
+# Copyright (C) 2008-2010, Intel Corporation.
+# DESCR: oFono ussd test script
+# TIMEOUT:60
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
 # version 2, as published by the Free Software Foundation.
@@ -18,7 +19,8 @@
 # Authors:
 #       Li,Zhigang  <zhigang.li@intel.com>
 #
-
+#
+#
 
 import sys
 import dbus
@@ -26,48 +28,60 @@ import dbus
 bus = dbus.SystemBus()
 
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
-						'org.ofono.Manager')
+					'org.ofono.Manager')
+
 modems = manager.GetModems()
 
 path = modems[0][0]
 
-volume = dbus.Interface(bus.get_object('org.ofono', path),
-			'org.ofono.CallVolume')
+ss = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.SupplementaryServices')
 
 if len(sys.argv) < 2:
 	print """Usage: %s <command>
+	send
+	respond <char>
+	cancel
 	properties
-	set <SpeakerVolume,Mute> <value>
-	"MicrophoneVolume not support yet"
 	""" % sys.argv[0]
 	sys.exit(1)
 
+if sys.argv[1] == "send":
+	try:
+		print ss.Initiate(sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to send ussd %s" % e
+		sys.exit(1)
+	
+if sys.argv[1] == "respond":
+	if len(sys.argv) < 3:
+		print"please input respond char"
+		sys.exit(1)
+	try:
+		print ss.Respond(sys.argv[2])
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to respond ussd request %s" % e
+		sys.exit(1)
+
+if sys.argv[1] == "cancel":
+	try:
+		print ss.Cancel()
+		sys.exit(0)
+	except dbus.DBusException, e:
+		print "Unable to cancel ussd request %s" % e
+		sys.exit(1)
+
 if sys.argv[1] == "properties":
 	try:
-		properties = volume.GetProperties()
+		properties = ss.GetProperties()
 	except dbus.DBusException, e:
-		print "Unable to get the property: ", e
+		print "Unable to get properties" % e
 		sys.exit(1)
-
-       	print "	Microphone value =  '%d'" % (properties['MicrophoneVolume'])
-	print "	Speaker value =  '%d'" % (properties['SpeakerVolume'])
-	if properties['Muted']:
-		print "	Mute is on'"
-	else:
-		print "	Mute is off"
+	for key in properties.keys():
+			print "  %s = %s" % (key, properties[key])
 	sys.exit(0)
 
-if sys.argv[1] == "set":
-	try:
-		if sys.argv[2] == "Mute":
-			volume.SetProperty("Muted",True)
-			sys.exit(0)
-		else:
-			volume.SetProperty(sys.argv[2], dbus.Byte(int(sys.argv[3])))
-			sys.exit(0)
-	except dbus.DBusException, e:
-		print "Unable to set the property: ", e
-		sys.exit(1)
-
-print "Unknown command:"
+print "Unknown command"
 sys.exit(1)

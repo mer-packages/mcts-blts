@@ -16,17 +16,17 @@
 #
 # Authors:
 #       Li,Zhigang  <zhigang.li@intel.com>
-# 
-
+#
 
 BASE_DIR=`dirname $0`
 cd ${BASE_DIR}
 
-./test-network operatorinfor | grep Technologies
+./test-simple-voicecall dial 112
 
 if [ $? -ne 0 ]; then
-	echo "can not get operator technology information"
+	echo "error in dialing sos call"
 	exit 1
 else
+	./test-simple-voicecall hangup
 	exit 0
 fi

@@ -28,7 +28,7 @@ if [ -f $file ]; then
 	rm -rf /tmp/network
 fi
 
-./test-network networkinfo > $file
+./test-network networkinfor > $file
 
 mode=`cat /tmp/network | grep Mode | awk '{print $3}'`
 

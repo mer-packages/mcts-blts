@@ -26,10 +26,18 @@ bus = dbus.SystemBus()
 
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 					'org.ofono.Manager')
+					
+modems = manager.GetModems()	
 
-modems = manager.GetProperties()['Modems']
-voicecall = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+for path, properties in modems:
+	
+
+	if "org.ofono.VoiceCallManager" not in properties["Interfaces"]:
+		continue
+
+	voicecall = dbus.Interface(bus.get_object('org.ofono', path),
 					'org.ofono.VoiceCallManager')
+
 
 if len(sys.argv) < 2:
 	print """Usage: %s <command>
@@ -76,45 +84,69 @@ if sys.argv[1] == "multipartycall":
 		sys.exit(1)
 
 if sys.argv[1] == "getproperties":
+        
+	for path, properties in modems:
+		  
+	  for interface in properties["Interfaces"]:
+		object = dbus.Interface(bus.get_object('org.ofono', path),
+								interface)
+
+		try:
+			properties = object.GetProperties()
+		except:
+			continue
+	        for key in properties.keys():	 
+	          		
+		  if key in ["EmergencyNumbers"]:
+		    val = str(properties[key])
+		    print " EmergencyNumber is %s" %val	  
+	
+	
+	
 	try:
-		propertie = voicecall.GetProperties()
+		
+		propertie = voicecall.GetCalls()
 	except dbus.DBusException, e:
 		print "Unable to get properties of call: ", e
 		sys.exit(1)
 
-	for p in  propertie['Calls']:
 
-		call = dbus.Interface(bus.get_object('org.ofono', p),
-						    'org.ofono.VoiceCall')
-		properties = call.GetProperties()
-		print "Call %s, Status: %s, LineId: %s" %\
-		 (p, properties['State'], properties['LineIdentification'])
+	for path, properties in propertie:
+		print "    [ %s ]" % (path)
+		call = dbus.Interface(bus.get_object('org.ofono', path),
+                                                   'org.ofono.VoiceCall')
+               	properties = call.GetProperties()
+               	print "Call %s, Status: %s, LineId: %s" % (path, properties['State'], properties['LineIdentification'])
 
+		for key in properties.keys():
+	 		val = str(properties[key])
+			print "        %s = %s" % (key, val)
+			print
+			
 		if properties.has_key('StartTime'):
-			print " Time is: %s" % (properties['StartTime'])
-	for n in propertie['EmergencyNumbers']:
-		print "EmergencyNumber is %s" % n
+			print " Time is: %s" % (properties['StartTime'])	
+		
+
 
 	sys.exit(0)
 
 if sys.argv[1] == "privatechat":
-	propertie = voicecall.GetProperties()
-	p=0
-	if len(sys.argv) > 2:
-		p = int(sys.argv[2])
+
 	try:
-		private = voicecall.PrivateChat(propertie['Calls'][p])
+	        manager = dbus.Interface(bus.get_object('org.ofono', path),
+						'org.ofono.VoiceCallManager')
+
+		mpty = manager.PrivateChat(sys.argv[2])
+		
 	except dbus.DBusException, e:
 		print "Unable to private chat with the call: ", e
 		sys.exit(1)
+	
+	
+	sys.exit(0)			   
+						   
 
-	for key in  propertie['Calls']:
-		call = dbus.Interface(bus.get_object('org.ofono', key),
-						    'org.ofono.VoiceCall')
-		properties = call.GetProperties()
-		print "Call %s, Status: %s, LineId: %s" %\
-		 (key, properties['State'], properties['LineIdentification'])
-	sys.exit(0)
+
 
 if sys.argv[1] == "hangupmultiparty":
 	try:
@@ -126,5 +158,4 @@ if sys.argv[1] == "hangupmultiparty":
 
 print "Unknown command"
 sys.exit(1)
-
 

@@ -27,10 +27,21 @@ bus = dbus.SystemBus()
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 					'org.ofono.Manager')
 
-modems = manager.GetProperties()['Modems']
+#modems = manager.GetProperties()['Modems']
+modems = manager.GetModems()
 
-vcmanager = dbus.Interface(bus.get_object('org.ofono', modems[0]),
-					'org.ofono.VoiceCallManager')
+for path, properties in modems:
+	
+
+	if "org.ofono.VoiceCallManager" not in properties["Interfaces"]:
+		continue
+
+	vcmanager = dbus.Interface(bus.get_object('org.ofono', path),
+					'org.ofono.VoiceCallManager')	
+
+
+#vcmanager = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+#					'org.ofono.VoiceCallManager')
 
 if len(sys.argv) < 2:
 	print """Usage: %s <command>
@@ -88,11 +99,36 @@ if sys.argv[1] == "answer":
 	if len(sys.argv) > 2:
 		p = int(sys.argv[2])
 
-	calls = vcmanager.GetProperties()['Calls']
+#	calls = vcmanager.GetProperties()['Calls']
 
-	call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
-					       'org.ofono.VoiceCall')
-	properties = call.GetProperties()
+#	call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
+#					       'org.ofono.VoiceCall')
+        calls = vcmanager.GetCalls()
+	
+	print calls, p
+	
+
+
+	
+	if (len(calls) == 0):
+		print "No calls available"
+	else:
+		for path, properties in calls:
+		        
+			print "    [ %s ]" % (path)
+
+			for key in properties.keys():
+				val = str(properties[key])
+				print "        %s = %s" % (key, val)
+			print
+
+
+
+	call = dbus.Interface(bus.get_object('org.ofono', path),
+						'org.ofono.VoiceCall')
+
+
+	#properties = call.GetProperties()
 	if properties['State'] == 'incoming' and sys.argv[1] == "answer" :
 		try:
 			call.Answer()
@@ -115,13 +151,33 @@ if sys.argv[1] == "deflect":
 		sys.exit(1)
 
 if sys.argv[1] == "hangup":
-	calls = vcmanager.GetProperties()['Calls']
-	p = 0
-	if len(sys.argv) > 2:
-		p = int(sys.argv[2])
+	#calls = vcmanager.GetProperties()['Calls']
+	#p = 0
+	#if len(sys.argv) > 2:
+	#	p = int(sys.argv[2])
 
-	call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
-					       'org.ofono.VoiceCall')
+	#call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
+	#				       'org.ofono.VoiceCall')
+	calls = vcmanager.GetCalls()
+	p = 0
+        #if len(sys.argv) > 2:
+        #        p = int(sys.argv[2])
+	
+	if (len(calls) == 0):
+		print "No calls available"
+	else:
+		for path, properties in calls:
+		        print " key information" 
+			print "    [ %s ]" % (path)
+
+			for key in properties.keys():
+				val = str(properties[key])
+				print "        %s = %s" % (key, val)
+			print
+
+        call = dbus.Interface(bus.get_object('org.ofono', path),
+                                               'org.ofono.VoiceCall')
+	
 	try:
 		call.Hangup()
 		sys.exit(0)
