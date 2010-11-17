@@ -33,13 +33,14 @@
 #define DEV_ROOT		1
 #define DEV_TMP			2
 #define DEV_EMMC_FAT	3
-#define DEV_EMMC_EXT	4
-#define DEV_MMC			5
-#define DEV_USBMSD_MMC	6
-#define DEV_USBMSD_EMMC	7
-#define DEV_UBI			8
-#define DEV_SECURITY	9
-#define DEV_LAST		9
+#define DEV_EMMC_EXT3	4
+#define DEV_EMMC_EXT4	5
+#define DEV_MMC			6
+#define DEV_USBMSD_MMC	7
+#define DEV_USBMSD_EMMC	8
+#define DEV_UBI			9
+#define DEV_SECURITY	10
+#define DEV_LAST		10
 
 #define FS_MAX_BLOCK_SIZE 65536
 

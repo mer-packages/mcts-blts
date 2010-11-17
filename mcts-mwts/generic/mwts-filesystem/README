@@ -14,7 +14,7 @@ INTRODUCTION
     - root filesystem (ext4,ext3,ubifs)
     - temp filesystem (ext4,ext3,tmpfs)
     - eMMC (fat) (embedded memorycard)
-    - eMMC (ext3)
+    - eMMC (ext3,ext4)
     - USB mass storage
       
   In different test cases you can test for example for each device:
@@ -85,9 +85,9 @@ TEST RESULTS
 
 MIN SCRIPTER INTERFACE
 
-  SelectTarget UBI|TMP|EMMC_FAT|EMMC_EXT|USBMSD_MMC|USBMSD_EMMC
+  SelectTarget UBI|TMP|EMMC_FAT|EMMC_EXT3|EMMC_EXT4|USBMSD_MMC|USBMSD_EMMC
      selects target where testing is done
-  SelectSource UBI|TMP|EMMC_FAT|EMMC_EXT|USBMSD_MMC|USBMSD_EMMC
+  SelectSource UBI|TMP|EMMC_FAT|EMMC_EXT3||EMMC_EXT4|USBMSD_MMC|USBMSD_EMMC
      selects source in copy tests
   SetIterationCount <count>
      set number of iterations to be run for latency cases

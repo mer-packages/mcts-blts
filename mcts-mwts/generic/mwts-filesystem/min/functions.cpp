@@ -51,8 +51,10 @@ int get_device_from_param(MinItemParser * item)
 		device=DEV_TMP;
 	else if(0==strcmp(string, "EMMC_FAT"))
 		device=DEV_EMMC_FAT;
-	else if(0==strcmp(string, "EMMC_EXT"))
-		device=DEV_EMMC_EXT;
+	else if(0==strcmp(string, "EMMC_EXT3"))
+		device=DEV_EMMC_EXT3;
+	else if(0==strcmp(string, "EMMC_EXT4"))
+		device=DEV_EMMC_EXT4;
 	else if(0==strcmp(string, "MMC"))
 		device=DEV_MMC;
 	else if(0==strcmp(string, "USBMSD_MMC"))

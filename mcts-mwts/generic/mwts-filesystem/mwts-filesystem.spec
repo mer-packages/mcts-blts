@@ -30,7 +30,7 @@ Development headers and libraries for mwts-filesystem
 Summary:                mwts-filesystem MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, qt4, mwts-filesystem
+Requires:               min, mwts-filesystem
 %description            scripts
 MIN test cases for mwts-filesystem
 
@@ -38,7 +38,7 @@ MIN test cases for mwts-filesystem
 Summary:                mwts-filesystem command line tool
 Prefix:                 /usr/bin
 Group:                  Development/Tools
-Requires:               qt4, mwts-filesystem
+Requires:               mwts-filesystem
 %description            cli
 mwts-filesystem command line tool
 
@@ -84,11 +84,6 @@ make install INSTALL_ROOT=%{buildroot}
 %doc doc/MWTS.README
 /usr/bin/mwts-filesystem-cli
 
-
-
-%post
-mkdir -p /var/log/tests
-chmod 777 /var/log/tests
 
 %postun
 ldconfig

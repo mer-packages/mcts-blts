@@ -171,7 +171,8 @@ bool FilesystemTest::IsMountable(int nDevice)
 	case DEV_EMMC_FAT:
 		return false;
 		break;
-	case DEV_EMMC_EXT:
+	case DEV_EMMC_EXT3:
+	case DEV_EMMC_EXT4:
 		return false;
 		break;
 	case DEV_MMC:
@@ -194,9 +195,13 @@ bool FilesystemTest::MountDevice(int device)
 		devicename = g_pConfig->value("emmc_fat_device").toString();
 		devicetype = "vfat";
 		break;
-	case DEV_EMMC_EXT:
-		devicename = g_pConfig->value("emmc_ext_device").toString();
+	case DEV_EMMC_EXT3:
+		devicename = g_pConfig->value("emmc_ext3_device").toString();
 		devicetype = "ext3";
+		break;
+	case DEV_EMMC_EXT4:
+		devicename = g_pConfig->value("emmc_ext4_device").toString();
+		devicetype = "ext4";
 		break;
 	case DEV_MMC:
 		devicename = g_pConfig->value("mmc_device").toString();
@@ -230,9 +235,8 @@ bool FilesystemTest::UnmountDevice(int device)
 	switch(device)
 	{
 	case DEV_EMMC_FAT:
-		break;
-	case DEV_EMMC_EXT:
-		break;
+	case DEV_EMMC_EXT3:
+	case DEV_EMMC_EXT4:
 	case DEV_MMC:
 		break;
 	default:
@@ -318,8 +322,10 @@ QString FilesystemTest::GetDeviceDir(int device)
 		return g_pConfig->value("tmp_dir").toString();
 	case DEV_EMMC_FAT:
 		return g_pConfig->value("emmc_fat_dir").toString();
-	case DEV_EMMC_EXT:
-		return g_pConfig->value("emmc_ext_dir").toString();
+	case DEV_EMMC_EXT3:
+		return g_pConfig->value("emmc_ext3_dir").toString();
+	case DEV_EMMC_EXT4:
+		return g_pConfig->value("emmc_ext4_dir").toString();
 	case DEV_MMC:
 		return g_pConfig->value("mmc_dir").toString();
 	case DEV_USBMSD_MMC:

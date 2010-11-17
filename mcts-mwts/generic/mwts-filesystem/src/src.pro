@@ -31,7 +31,6 @@ INSTALLS += ASSET_CONFIG
 
 HEADERS.version = Versions
 HEADERS.files = FilesystemTest.h
-#HEADERS.path = /usr/include/MwtsFilesystem 
 HEADERS.path = /usr/include
 INSTALLS += HEADERS
 
