@@ -1,0 +1,3 @@
+etc/min.d/mwts-messaging-tests.min.conf
+usr/share/mwts-messaging-tests/tests.xml
+usr/lib/min/mwts-messaging-tests.cfg
