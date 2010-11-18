@@ -1,0 +1,12 @@
+ver 1.0.0-2:
+	Enhance test suites including:
+	+ Remove Device interface
+	+ Signal cases: Trigger signal in a thread
+	+ Flight cases: Set manager online after testing done
+	+ Fix bugs in test cases, for example, 7172, 7173
+	+ Other issues like enhance apset, IPv4 change, detect wifi security etc
+	+ Put all manual and auto cases in tests.xml.
+
+ver 1.0.0:
+	Initial public release.
+

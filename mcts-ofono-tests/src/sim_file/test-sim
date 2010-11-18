@@ -34,9 +34,9 @@ bus = dbus.SystemBus()
 
 manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 						'org.ofono.Manager')
-modems = manager.GetProperties()['Modems']
+modems = manager.GetModems()
 
-sim = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+sim = dbus.Interface(bus.get_object('org.ofono', modems[0][0]),
 			'org.ofono.SimManager')
 
 if len(sys.argv) < 2:
@@ -51,12 +51,19 @@ if sys.argv[1] == 'properties':
 		sys.exit(1)
 
 	for key in properties.keys():
-			print "  %s = %s" % (key, properties[key])
+		if key in ["PreferredLanguages","SubscriberNumbers"]:
+			value = ""
+			for i in properties[key]:
+				value += i + " "
+			print "%s = %s" % (key, value)
+		elif key in ['ServiceNumbers']:
+			for p in properties['ServiceNumbers']:
+				print "Service name is %s and number: %s" %\
+				(p, properties['ServiceNumbers'][p])
+		else:
+			value = str(properties[key])
+			print "%s = %s" % (key, value)
 
-	if properties.has_key('ServiceNumbers'):
-		for p in properties['ServiceNumbers']:
-			print "sdn name is %s and sdn number: %s" %\
-			 (p, properties['ServiceNumbers'][p])
 	sys.exit(0)
 
 if sys.argv[1] == 'resetpin':

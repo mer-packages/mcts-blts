@@ -609,64 +609,46 @@ class Service:
 
 class Device:
 
-    def __init__(self, service, nth):
+    def __init__(self, name, nth):
         self.device = None
-        print 'Getting a %s device ... ' % service
         for path in manager.properties['Technologies']:
             technology = manager.GetSubObject(path, 'Technology')
             properties = technology.GetProperties()
-            if properties['Name'] != service:
+            if properties['Name'] != name:
                 continue
             i = 1
-            for path in properties['Devices']:
-                if i < nth:
-                    continue
-                device = \
-                    dbus.Interface(manager.bus.get_object('org.moblin.connman'
-                                   , path), 'org.moblin.connman.Device')
-                self.device = device
-                self.device_path = path
-                self.manager = manager
-                self.tech = technology
-                print 'Got it: %s' % path
-                return
+            self.manager = manager
+            self.tech = technology
+            self.name = name
+            self.type = properties['Type']
+            print 'Got it: %s' % path
+            return
         print 'No such device!'
 
-    def ExitIfNotAvail(self):
-        props = manager.GetProperties()
-        availtechs = props['AvailableTechnologies']
-        props = self.tech.GetProperties()
-        type = props['Type']
-        for t in availtechs:
-            if t == type:
-                return
-        print 'Technology %s is not available now' % type
-        EXIT(False)
-
     def GetProperties(self):
-        return self.device.GetProperties()
+        return self.tech.GetProperties()
 
     def SetProperty(self, name, value):
         print 'Set Device property %s = %s' % (name, value)
-        self.device.SetProperty(name, value)
+        self.tech.SetProperty(name, value)
 
-    def ProposeScan(self):
-        print 'Trigger a scan for the device'
-        self.device.ProposeScan()
-
-    def GetService(self):
-        dev_path = self.device_path.split('/')
+    def GetService(self, servicename=None):
         properties = self.manager.GetProperties()
-
         for path in properties['Services']:
-            if path.find(dev_path[5]) > 0:
-                service = \
-                    dbus.Interface(self.manager.bus.get_object('org.moblin.connman'
+            service = dbus.Interface(self.manager.bus.get_object('org.moblin.connman'
                                    , path), 'org.moblin.connman.Service'
                                    )
-                svc = Service(service)
-                print 'Service %s found' % path
-                return svc
+            properties = service.GetProperties()
+            if "Name" in properties.keys() and servicename!=None:
+                if servicename != properties["Name"]:
+                    continue
+            else:
+                if self.type != properties["Type"]:
+                    continue
+            svc = Service(service)
+            print 'Service %s found' % path
+            return svc
+        
         print 'Service not found'
         return None
 
@@ -674,7 +656,8 @@ class Device:
         return self.tech
 
     def GetInterface(self):
-        props = self.GetProperties()
+        svc = self.GetService()
+        props = svc.GetProperties()
         print props
         key = 'Interface'
         if key in props.keys():
@@ -708,8 +691,10 @@ class Device:
 
     def PoweredOff(self):
         '''Powered off device'''
-
-        self.device.SetProperty('Powered', dbus.Boolean(0))
+        props = self.GetProperties()
+        type = props['Type']
+        print "Disable %s" % type
+        manager.DisableTechnology(type)
         time.sleep(1)
 
     def Disable(self):
@@ -718,27 +703,30 @@ class Device:
     def PoweredOn(self):
         '''Powered on device'''
 
-        self.device.SetProperty('Powered', dbus.Boolean(1))
+        props = self.GetProperties()
+        type = props['Type']
+        print "Enable %s" % type
+        manager.EnableTechnology(type)
         time.sleep(1)
 
     def Enable(self):
         self.PoweredOn()
 
     def IsPoweredOff(self):
-        properties = self.device.GetProperties()
-        print 'Device Powered state is %s' % properties['Powered']
-        return properties['Powered'] == dbus.Boolean(0)
+        properties = self.tech.GetProperties()
+        print 'Device Powered state is %s' % properties['State']
+        return properties['State'] in ["offline", "available", "blocked"]
 
     def IsDisabled(self):
         return self.IsPoweredOff()
 
     def IsExist(self):
-        return self.device != None
+        return self.tech != None
 
     def IsPoweredOn(self):
-        properties = self.device.GetProperties()
-        print 'Device Powered state is %s' % properties['Powered']
-        return properties['Powered'] == dbus.Boolean(1)
+        properties = self.tech.GetProperties()
+        print 'Device Powered state is %s' % properties['State']
+        return properties['State'] in ["enabled", "connected"]
 
     def IsEnabled(self):
         return self.IsPoweredOn()
@@ -790,9 +778,10 @@ class WiFiDevice(Device):
 
     def __init__(self):
         Device.__init__(self, 'WiFi', 1)
+        self.ssid=None
 
     def GetService(self):
-        service = Device.GetService(self)
+        service = Device.GetService(self, self.ssid)
         if service == None:
             return service
         properties = service.GetProperties()
@@ -808,8 +797,8 @@ class WiFiDevice(Device):
         passphrase='',
         security='none',
         ):
-
-        service = Device.GetService(self)
+        self.ssid = ssid
+        service = self.GetService()
         if service:
             properties = service.GetProperties()
             if ssid == properties['Name']:
@@ -819,7 +808,8 @@ class WiFiDevice(Device):
                     return True
         device_path = manager.ConnectService(ssid)
         time.sleep(10)
-        service = Device.GetService(self)
+        #service = Device.GetService(self, ssid)
+        service = self.GetService()
         properties = service.GetProperties()
         if properties['State'] in ['ready', 'online', 'login']:
             print 'state is %s' % properties['State']

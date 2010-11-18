@@ -57,6 +57,12 @@ def cb_property_changed(property, value):
 	print "CallBarring property: '%s' changed to '%s'" % (property, str(value))
 	print_properties(cb)
 
+def cb_outgoing_effect():
+	print "Outgoing Barring is effect now"
+
+def cb_incoming_effect():
+	print "Incoming Barring is effect now"
+
 def voicecalls_property_changed(property, value):
 	if len(value) == 0:
 		print "No calls in systems"
@@ -108,6 +114,24 @@ def ss_request_received(name):
 def ss_notification_received(name):
 	print "Network ussd notification: '%s'" % (name)
 
+def radio_property_changed(name, value):
+	print "Radiosettings property '%s' is changed to '%s'" % (name, value)
+
+def audio_property_changed(name, value):
+	print "Audiosettings property '%s' is changed to '%s'" % (name, value)
+
+def gprs_property_changed(name, value):
+	print "Gprs property '%s' is changed to '%s'" % (name, value)
+
+def gprs_context_added(obj, value):
+	print obj
+
+def gprs_context_removed(obj):
+	print obj
+
+def context_property_changed(name, value):
+        print "Gprs context property '%s' is changed to '%s'" % (name, value)
+
 if __name__ == "__main__":
 	global cf, cm, cw, ss, cs, cb
 
@@ -118,43 +142,44 @@ if __name__ == "__main__":
 	manager = dbus.Interface(bus.get_object('org.ofono', '/'),
 							'org.ofono.Manager')
 
-	modems = manager.GetProperties()['Modems']
+	modems = manager.GetModems()
+	path = modems[0][0]
 
-	modem = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	modem = dbus.Interface(bus.get_object('org.ofono', path),
 							'org.ofono.Modem')
 	properties = modem.GetProperties()
 
-	sms = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	sms = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.SmsManager')
 
-	volume = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	volume = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.CallVolume')
 
-	vcmanager = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	vcmanager = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.VoiceCallManager')
 
-	cf = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	cf = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.CallForwarding')
 
-	cm = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	cm = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.CallMeter')
 
-	cw = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	cw = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.CallWaiting')
 
-	ss = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	ss = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.SupplementaryServices')
 
-	cs = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	cs = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.CallSettings')
 
-	cb = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	cb = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.CallBarring')
 
-	sim = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	sim = dbus.Interface(bus.get_object('org.ofono', path),
 						'org.ofono.SimManager')
 
- 	modem.connect_to_signal("PropertyChange", modem_property_changed)
+ 	modem.connect_to_signal("PropertyChanged", modem_property_changed)
 
 	vcmanager.connect_to_signal("PropertyChanged", voicecalls_property_changed)
 
@@ -170,10 +195,35 @@ if __name__ == "__main__":
 			dbus_interface = "org.ofono.NetworkRegistration",
 					signal_name = "PropertyChanged")
 
-	netreg = dbus.Interface(bus.get_object('org.ofono', modems[0]),
-					'org.ofono.NetworkRegistration')
+	bus.add_signal_receiver(operator_property_changed,
+			dbus_interface = "org.ofono.NetworkOperator",
+					signal_name = "PropertyChanged")
 
-	message = dbus.Interface(bus.get_object('org.ofono', modems[0]),
+	bus.add_signal_receiver(radio_property_changed,
+			dbus_interface = "org.ofono.RadioSettings",
+				signal_name = "PropertyChanged")
+	
+	bus.add_signal_receiver(audio_property_changed,
+			dbus_interface = "org.ofono.AudioSettings",
+				signal_name = "PropertyChanged")
+
+	bus.add_signal_receiver(gprs_property_changed,
+			dbus_interface = "org.ofono.ConnectionManager",
+				signal_name = "PropertyChanged")
+
+	bus.add_signal_receiver(gprs_context_added,
+			dbus_interface = "org.ofono.ConnectionManager",
+				signal_name = "ContextAdded")
+
+	bus.add_signal_receiver(gprs_context_removed,
+			dbus_interface = "org.ofono.ConnectionManager",
+				signal_name = "ContextRemoved")
+
+	bus.add_signal_receiver(context_property_changed,
+			dbus_interface = "org.ofono.ConnectionContext",
+				signal_name = "PropertyChanged")
+
+	message = dbus.Interface(bus.get_object('org.ofono', path),
 				'org.ofono.MessageWaiting')
 
 	cf.connect_to_signal("PropertyChanged", cf_property_changed)
@@ -188,6 +238,8 @@ if __name__ == "__main__":
 	ss.connect_to_signal("RequestReceived", ss_request_received)
 
 	cb.connect_to_signal("PropertyChanged", cb_property_changed)
+	cb.connect_to_signal("IncomingBarringInEffect",cb_incoming_effect)
+	cb.connect_to_signal("OutgoingBarringInEffect",cb_outgoing_effect)
 
 	sim.connect_to_signal("PropertyChanged",sim_property_changed )
 

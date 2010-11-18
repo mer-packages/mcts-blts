@@ -2,11 +2,14 @@
 
 Summary: Template meego core test suite
 Name: mcts-connman-tests
-Version: 1.0.3
-Release: 1
+Version: 1.0.0
+Release: 2
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz
+Requires: connman
+Requires: connman-test
+Requires: pygobject2
 #BuildRoot: %_topdir/%name-%version-buildroot
 
 %description

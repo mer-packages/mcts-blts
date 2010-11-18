@@ -1,5 +1,6 @@
-#!/bin/sh
-# Copyright (C) 2008-2010, Intel Corporation.
+#
+#
+# Copyright (C) 2010, Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -8,25 +9,19 @@
 # This program is distributed in the hope it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-# for more details.  
+# for more details.
 #
 # You should have received a copy of the GNU General Public License along with
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place - Suite 330, Boston, MA 02111-1307 USA.
 #
 # Authors:
-#       Li,Zhigang  <zhigang.li@intel.com>
-# 
+#       Elva Fu	<elva.fu@intel.com>
+#
+# Date Created: 07-07-2010
+#	Modified from sample Makefile
 
+ofono_SCRIPTS = ofono_call_sos.sh  ofono_emergency_list.sh  
+ofonodir = /opt/$(PACKAGE)
+EXTRA_DIST = $(ofono_SCRIPTS)
 
-BASE_DIR=`dirname $0`
-cd ${BASE_DIR}
-
-./test-network operatorinfor | grep Technologies
-
-if [ $? -ne 0 ]; then
-	echo "can not get operator technology information"
-	exit 1
-else
-	exit 0
-fi
