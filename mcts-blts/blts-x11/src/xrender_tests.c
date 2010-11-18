@@ -30,35 +30,35 @@ int xrender_draw_rectangle(double execution_time)
 	Picture drawingarea = 0;
 	Pixmap background = 0;
 	XRenderColor white = { 0xffff, 0xffff, 0xffff, 0xffff };
-	
+
 	if(create_window(&params, "Test Window"))
 	{
 		ret = -1;
 		goto cleanup;
 	}
-	
+
 	if(!XRenderQueryExtension(params.display, &event_base, &error_base))
 	{
-		LOGERR("XRecordQueryVersion failed\n");
+		BLTS_ERROR("XRecordQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if(!XRenderQueryVersion(params.display, &ver, &rev))
 	{
-		LOGERR("XRenderQueryVersion failed\n");
+		BLTS_ERROR("XRenderQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
-	
-	LOG("XRender Extension version %i.%i\n", ver, rev);
 
-	background = XCreatePixmap(params.display, params.window, 
-		params.window_attributes.width, params.window_attributes.height, 
+	BLTS_DEBUG("XRender Extension version %i.%i\n", ver, rev);
+
+	background = XCreatePixmap(params.display, params.window,
+		params.window_attributes.width, params.window_attributes.height,
 		params.window_attributes.depth);
 	if(!background)
 	{
-		LOGERR("XCreatePixmap failed\n");
+		BLTS_ERROR("XCreatePixmap failed\n");
 		ret = -1;
 		goto cleanup;
 	}
@@ -66,37 +66,37 @@ int xrender_draw_rectangle(double execution_time)
 	fmt = XRenderFindVisualFormat(params.display, params.visual);
 	if(!fmt)
 	{
-		LOGERR("XRenderFindVisualFormat failed\n");
+		BLTS_ERROR("XRenderFindVisualFormat failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	pict_attr.poly_edge = PolyEdgeSmooth;
 	pict_attr.poly_mode = PolyModeImprecise;
-	drawingarea = XRenderCreatePicture(params.display, background, fmt, 
+	drawingarea = XRenderCreatePicture(params.display, background, fmt,
 		CPPolyEdge|CPPolyMode, &pict_attr);
 
 	if(!drawingarea)
 	{
-		LOGERR("XRenderCreatePicture failed\n");
+		BLTS_ERROR("XRenderCreatePicture failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	XSetWindowBackgroundPixmap(params.display, params.window, background);
 	XFlush(params.display);
-	
+
 	timing_start();
-	for(t = 0; t < X_MIN(params.window_attributes.width / 2, 
+	for(t = 0; t < X_MIN(params.window_attributes.width / 2,
 		params.window_attributes.height / 2); t++)
 	{
 		XRenderFillRectangle(params.display, PictOpOver, drawingarea, &white,
-			params.window_attributes.width / 2 - t, 
-			params.window_attributes.height / 2 - t, 
+			params.window_attributes.width / 2 - t,
+			params.window_attributes.height / 2 - t,
 			t * 2, t * 2);
 
-		XClearArea(params.display, params.window, 0, 0, 
-			params.window_attributes.width, 
+		XClearArea(params.display, params.window, 0, 0,
+			params.window_attributes.width,
 			params.window_attributes.height, 0);
 		XFlush(params.display);
 		if(timing_elapsed() > execution_time)
@@ -105,7 +105,7 @@ int xrender_draw_rectangle(double execution_time)
 		}
 	}
 	timing_stop();
-	
+
 cleanup:
 
 	if(drawingarea)
@@ -113,7 +113,7 @@ cleanup:
 		XRenderFreePicture(params.display, drawingarea);
 	}
 
-	close_window(&params);	
+	close_window(&params);
 	return ret;
 }
 

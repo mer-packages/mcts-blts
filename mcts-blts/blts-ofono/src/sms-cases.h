@@ -26,7 +26,9 @@ int blts_ofono_receive_sms_default(void*,int);
 int ofono_sms_center_number(void*,int);
 
 //variable parameters
-void *sms_variant_set_arg_processor(struct boxed_value *, void *);
+void *sms_send_variant_set_arg_processor(struct boxed_value *, void *);
+void *sms_smsc_variant_set_arg_processor(struct boxed_value *, void *);
+void *sms_recv_variant_set_arg_processor(struct boxed_value *, void *);
 struct boxed_value *sms_variant_message_generator(struct boxed_value *);
 
 #endif /* SMS_CASES_H */

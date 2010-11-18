@@ -294,7 +294,6 @@ static blts_cli xvideo_cli =
 
 int main(int argc, char **argv)
 {
-	log_set_level(LEVEL_DEBUG);
 	return blts_cli_main(&xvideo_cli, argc, argv);
 }
 

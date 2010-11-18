@@ -53,7 +53,7 @@ static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	/* san check */
 	if(ctx->test_timeout.tv_sec > 3600)
 	{
-		log_print("Timeout too long\n");
+		BLTS_DEBUG("Timeout too long\n");
 		return -EINVAL;
 	}
 
@@ -65,21 +65,21 @@ static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	FD_ZERO(&read_fds);
 	FD_SET(sock, &read_fds);
 
-	log_print("Waiting...");
+	BLTS_DEBUG("Waiting...");
 	ready = pselect(sock+1, &read_fds, (void*) 0, (void*) 0, &(ctx->test_timeout), (void*) 0);
 
 	if(ready < 0)
 	{
-		logged_perror("pselect() failure");
+		BLTS_LOGGED_PERROR("pselect() failure");
 		return -errno;
 	}
 	else if(!ready)
 	{
-		log_print("No connections, timing out.\n");
+		BLTS_DEBUG("No connections, timing out.\n");
 		return -ETIMEDOUT;
 	}
 
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	/* Ok, something is happening */
 
@@ -88,20 +88,20 @@ static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	socklen_t sa_in_len = sizeof(sa_in);
 	memset(&sa_in, 0, sa_in_len);
 
-	log_print("Accepting connection...");
+	BLTS_DEBUG("Accepting connection...");
 	if((sock_in = accept(sock, (void*)&sa_in, &sa_in_len)) < 0)
 	{
-		logged_perror("accept() failure");
+		BLTS_LOGGED_PERROR("accept() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	int result = generic_server_handle_echo(sock_in);
 
 	errno=0;
 	if(close(sock_in) < 0)
 	{
-		logged_perror("Incoming socket close() failure");
+		BLTS_LOGGED_PERROR("Incoming socket close() failure");
 	}
 	return result?result:-errno;
 }
@@ -121,15 +121,15 @@ int rfcomm_echo_server_oneshot(struct bt_ctx *ctx)
 {
 	if(!ctx) return -EINVAL;
 
-	log_print("Server socket...");
+	BLTS_DEBUG("Server socket...");
 	int sock;
 
 	if((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) < 0)
 	{
-		logged_perror("Server socket() failure");
+		BLTS_LOGGED_PERROR("Server socket() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	struct sockaddr_rc local_sa;
 	memset(&local_sa, 0, sizeof(local_sa));
@@ -137,33 +137,33 @@ int rfcomm_echo_server_oneshot(struct bt_ctx *ctx)
 	local_sa.rc_bdaddr = ctx->local_mac;
 	local_sa.rc_channel = htobs(ctx->local_port);
 
-	log_print("Bind socket...");
+	BLTS_DEBUG("Bind socket...");
 	if(bind(sock, (void*)&local_sa, sizeof(local_sa)) < 0)
 	{
-		logged_perror("Server bind() failure");
+		BLTS_LOGGED_PERROR("Server bind() failure");
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Listen...");
+	BLTS_DEBUG("Listen...");
 	if(listen(sock, 1) < 0)
 	{
-		logged_perror("Server listen() failure");
+		BLTS_LOGGED_PERROR("Server listen() failure");
 		close(sock);
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
-	log_print("Now waiting for connections.\n");
+	BLTS_DEBUG("Now waiting for connections.\n");
 	int result = rfcomm_echo_server_wait_handle_one(ctx, sock);
 
 	errno=0;
 	if(close(sock)<0)
 	{
-		logged_perror("close() failure for server socket");
+		BLTS_LOGGED_PERROR("close() failure for server socket");
 	}
-	log_print("Server stopped.\n");
+	BLTS_DEBUG("Server stopped.\n");
 
 	return result?result:-errno;
 }
@@ -177,15 +177,15 @@ int rfcomm_echo_test_client(struct bt_ctx *ctx, int want_transfer_test)
 {
 	if(!ctx) return -EINVAL;
 
-	log_print("Client socket...");
+	BLTS_DEBUG("Client socket...");
 	int sock;
 
 	if((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) < 0)
 	{
-		logged_perror("socket() failure");
+		BLTS_LOGGED_PERROR("socket() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	struct sockaddr_rc sa;
 	memset(&sa, 0, sizeof(sa));
@@ -193,25 +193,25 @@ int rfcomm_echo_test_client(struct bt_ctx *ctx, int want_transfer_test)
 	sa.rc_channel = htobs(ctx->remote_port);
 	sa.rc_bdaddr = ctx->remote_mac;
 
-	log_print("Connect...");
+	BLTS_DEBUG("Connect...");
 	if(connect(sock, (void*)&sa, sizeof(sa)) < 0)
 	{
-		logged_perror("connect() failure");
+		BLTS_LOGGED_PERROR("connect() failure");
 		return -errno;
 	}
-	log_print("ok.\n");
+	BLTS_DEBUG("ok.\n");
 
 	int result = 0;
 	if(want_transfer_test)
 	{
-		log_print("Connection test start.\n");
+		BLTS_DEBUG("Connection test start.\n");
 		result = generic_client_test_echo(sock);
-		log_print("Connection test finished.\n");
+		BLTS_DEBUG("Connection test finished.\n");
 	}
 	errno=0;
 	if(close(sock) < 0)
 	{
-		logged_perror("Socket close() failure");
+		BLTS_LOGGED_PERROR("Socket close() failure");
 	}
 	return result?result:-errno;
 }

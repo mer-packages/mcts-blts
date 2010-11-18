@@ -14,9 +14,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AM_CFLAGS = -O2 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. $(BLTSCOMMON_CFLAGS) -fno-builtin-sscanf
+AM_CFLAGS = \
+	-O2 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. \
+	$(PACKAGE_CFLAGS) -fno-builtin-sscanf
 
-requiredlibs = -lm -lrt -lbluetooth $(BLTSCOMMON_LIBS)
+requiredlibs = -lm -lrt $(PACKAGE_LIBS)
 
 if WANT_MIN
 min_libs = -lminutils -lmintmapi -lminevent
@@ -58,8 +60,8 @@ libbltsbluetooth_la_LDFLAGS = $(AM_LDFLAGS) -shared -module
 
 endif
 
-bin_PROGRAMS = blts_bluetooth_test
+bin_PROGRAMS = blts-bluetooth-tests
 
-blts_bluetooth_test_SOURCES = $(h_sources) $(c_sources) bt_fute_cli.c
-blts_bluetooth_test_CFLAGS = $(AM_CFLAGS)
-blts_bluetooth_test_LDADD = $(requiredlibs)
+blts_bluetooth_tests_SOURCES = $(h_sources) $(c_sources) bt_fute_cli.c
+blts_bluetooth_tests_CFLAGS = $(AM_CFLAGS)
+blts_bluetooth_tests_LDADD = $(requiredlibs)

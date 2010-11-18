@@ -138,7 +138,7 @@ int bits_per_sample(snd_pcm_format_t format)
 
 int generate_sine(unsigned char* samples, int count, double *_phase,
 	unsigned int channels, unsigned int samplerate, unsigned int freq,
-	snd_pcm_format_t format, unsigned int frame_bits)
+	snd_pcm_format_t format, unsigned int frame_bits, unsigned int volume)
 {
 	static double max_phase = 2. * M_PI;
 	double phase = *_phase;
@@ -147,7 +147,7 @@ int generate_sine(unsigned char* samples, int count, double *_phase,
 	unsigned int t, i;
 	unsigned int bps = bits_per_sample(format);
 	unsigned int leftover_bits = frame_bits / channels - bps;
-	unsigned int maxval = (1 << (bps - 1)) - 1;
+	unsigned int maxval = ((1 << (bps - 1)) - 1) / 100 * volume;
 
 	if(!samples || !_phase || bps < 1)
 		return -EINVAL;

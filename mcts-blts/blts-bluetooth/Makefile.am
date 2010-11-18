@@ -18,3 +18,7 @@ SUBDIRS = src . data
 
 pkgdata_DATA = tests.xml
 
+EXTRA_DIST = \
+	$(pkgdata_DATA) \
+	blts-bluetooth-tests.changes \
+	autogen.sh

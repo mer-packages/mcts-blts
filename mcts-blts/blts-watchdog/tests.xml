@@ -20,13 +20,13 @@
   <suite name="blts-watchdog-tests" domain="Core">
     <set name="watchdog-tests" feature="Linux Kernel">
       <case name="Core-Watchdog%20presence%20check">
-        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Watchdog_presence_check.log</step>
+        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Watchdog_presence_check.log -e 1</step>
       </case>
       <case name="Core-Open%20and%20close%20watchdog">
-        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Open_and_close_watchdog.log</step>
+        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Open_and_close_watchdog.log -e 2</step>
       </case>
       <case name="Core-Send%20keepalive%20messages">
-        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Send_keepalive_messages.log</step>
+        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Send_keepalive_messages.log -e 3</step>
       </case>
 	  <get>
 		<file>/var/log/tests/Core-Watchdog_presence_check.log</file>

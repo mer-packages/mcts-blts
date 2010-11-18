@@ -36,7 +36,7 @@ int xinput_list_devices()
 	display = open_display();
 	if(!display)
 	{
-		LOGERR("XOpenDisplay failed\n");
+		BLTS_ERROR("XOpenDisplay failed\n");
 		ret = -1;
 		goto cleanup;
 	}
@@ -45,98 +45,98 @@ int xinput_list_devices()
 	version = XGetExtensionVersion(display, INAME);
 	if(!version || !version->present)
 	{
-		LOGERR("XGetExtensionVersion failed\n");
+		BLTS_ERROR("XGetExtensionVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
-	LOG("XInput Extension version %i.%i\n", version->major_version, 
+	BLTS_DEBUG("XInput Extension version %i.%i\n", version->major_version,
 		version->minor_version);
 
 	devices = XListInputDevices(display, &ndevices);
 	if(!devices)
 	{
-		LOGERR("XListInputDevices failed\n");
+		BLTS_ERROR("XListInputDevices failed\n");
 		ret = -1;
 		goto cleanup;
 	}
-	
+
 	if(ndevices == 0)
 	{
-		LOGERR("No input devices found\n");
+		BLTS_ERROR("No input devices found\n");
 		ret = -1;
 		goto cleanup;
 	}
-	
-	LOG("Found %d input devices\n", ndevices);
+
+	BLTS_DEBUG("Found %d input devices\n", ndevices);
 	for(t = 0; t < ndevices; t++)
 	{
-		LOG("id: %d\n", devices[t].id);
-		LOG("\tname: %s\n", devices[t].name);
+		BLTS_DEBUG("id: %d\n", devices[t].id);
+		BLTS_DEBUG("\tname: %s\n", devices[t].name);
 		if(devices[t].use == IsXKeyboard)
 		{
-			LOG("\tuse: keyboard\n");
+			BLTS_DEBUG("\tuse: keyboard\n");
 		}
 		else if(devices[t].use == IsXPointer)
 		{
-			LOG("\tuse: pointer\n");
+			BLTS_DEBUG("\tuse: pointer\n");
 		}
 		else if(devices[t].use == IsXExtensionKeyboard)
 		{
-			LOG("\tuse: extension keyboard\n");
+			BLTS_DEBUG("\tuse: extension keyboard\n");
 		}
 		else if(devices[t].use == IsXExtensionPointer)
 		{
-			LOG("\tuse: extension pointer\n");
+			BLTS_DEBUG("\tuse: extension pointer\n");
 		}
 		else
 		{
-			LOG("\tuse: extension device\n");
+			BLTS_DEBUG("\tuse: extension device\n");
 		}
 
 		any_class = (XAnyClassPtr)(devices[t].inputclassinfo);
 		for(i = 0; i < devices[t].num_classes; i++)
 		{
-			LOG("\tInput class %d:\n", i);
+			BLTS_DEBUG("\tInput class %d:\n", i);
 			switch (any_class->class)
 			{
 			case KeyClass:
-				LOG("\t num_keys: %d\n", 
+				BLTS_DEBUG("\t num_keys: %d\n",
 					((XKeyInfoPtr)devices[t].inputclassinfo)->num_keys);
-				LOG("\t min_keycode: %d\n",
+				BLTS_DEBUG("\t min_keycode: %d\n",
 					((XKeyInfoPtr)devices[t].inputclassinfo)->min_keycode);
-				LOG("\t max_keycode: %d\n",
+				BLTS_DEBUG("\t max_keycode: %d\n",
 					((XKeyInfoPtr)devices[t].inputclassinfo)->max_keycode);
 				break;
 
 			case ButtonClass:
-				LOG("\t num_buttons: %d\n",
+				BLTS_DEBUG("\t num_buttons: %d\n",
 					((XButtonInfoPtr)any_class)->num_buttons);
 				break;
 
 			case ValuatorClass:
-				LOG("\t num_axes: %d\n", 
+				BLTS_DEBUG("\t num_axes: %d\n",
 					((XValuatorInfoPtr)any_class)->num_axes);
-				LOG("\t mode: %s\n", 
+				BLTS_DEBUG("\t mode: %s\n",
 					(((XValuatorInfoPtr)any_class)->mode == Absolute) ?
 						"absolute" : "relative");
-				LOG("\t motion_buffer: %ld\n",
+				BLTS_DEBUG("\t motion_buffer: %ld\n",
 					((XValuatorInfoPtr)any_class)->motion_buffer);
 
 				axis_info = (XAxisInfoPtr)((char *)((XValuatorInfoPtr)any_class)
 					+ sizeof(XValuatorInfo));
-				
+
 				for(j = 0; j < ((XValuatorInfoPtr)any_class)->num_axes; j++)
 				{
-					LOG("\t axis %d:\n", j);
-					LOG("\t min_value: %d\n", axis_info->min_value);
-					LOG("\t max_value: %d\n", axis_info->max_value);
-					LOG("\t resolution: %d\n", axis_info->resolution);
+					BLTS_DEBUG("\t axis %d:\n", j);
+					BLTS_DEBUG("\t min_value: %d\n", axis_info->min_value);
+					BLTS_DEBUG("\t max_value: %d\n", axis_info->max_value);
+					BLTS_DEBUG("\t resolution: %d\n", axis_info->resolution);
 					axis_info++;
 				}
 				break;
 
 			default:
-				LOG("\t unknown class\n");
+				BLTS_DEBUG("\t unknown class\n");
 				break;
 			}
 			any_class = (XAnyClassPtr)((char*)any_class + any_class->length);

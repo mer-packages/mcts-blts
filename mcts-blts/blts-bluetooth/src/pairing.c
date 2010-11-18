@@ -130,7 +130,7 @@ static int ll_bt_init(int devnum, int master)
 
 	dd = hci_open_dev(devnum);
 	if (!dd) {
-		log_print("Failure in adapter device open - %s\n", strerror(errno));
+		BLTS_DEBUG("Failure in adapter device open - %s\n", strerror(errno));
 		ret = -errno;
 		goto done;
 	}
@@ -159,37 +159,37 @@ static int ll_bt_init(int devnum, int master)
 	ioctl(dd, HCIDEVUP, devnum);
 
 	if (hci_devinfo(devnum, &di) < 0) {
-		log_print("Adapter init failed.\n");
+		BLTS_DEBUG("Adapter init failed.\n");
 		ret = -errno;
 		goto done;
 	}
 
 	if (hci_test_bit(HCI_RAW, &di.flags)) {
-		log_print("Warning: adapter in raw mode.\n");
+		BLTS_DEBUG("Warning: adapter in raw mode.\n");
 	}
 
 	if (hci_write_local_name(dd, master ? "bttest" : "bttest-cli", 1000) < 0)
-		log_print("Warning: failed to set local name\n");
+		BLTS_DEBUG("Warning: failed to set local name\n");
 
 	if (hci_write_class_of_dev(dd, 0x010204, 1000) < 0)
-		log_print("Warning: failed to set local device class\n");
+		BLTS_DEBUG("Warning: failed to set local device class\n");
 
 	/* Clean stored keys if any */
 	if (hci_delete_stored_link_key(dd, BDADDR_ANY, 1, 1000) < 0) {
-		log_print("Warning: failed to clear stored link keys\n");
+		BLTS_DEBUG("Warning: failed to clear stored link keys\n");
 	}
 
 
 	/* Go visible */
 	if (hci_write_current_iac_lap(dd, 1, lap, 1000) < 0) {
-		log_print("Fatal: WRITE_CURRENT_IAC_LAP failed\n");
+		BLTS_DEBUG("Fatal: WRITE_CURRENT_IAC_LAP failed\n");
 		ret = -errno;
 		goto done;
 	}
 
 	scan_page = master ? SCAN_PAGE : SCAN_INQUIRY | SCAN_PAGE;
 	if (hci_send_cmd(dd, OGF_HOST_CTL, OCF_WRITE_SCAN_ENABLE, 1, &scan_page) < 0) {
-		log_print("Fatal: WRITE_SCAN_ENABLE failed\n");
+		BLTS_DEBUG("Fatal: WRITE_SCAN_ENABLE failed\n");
 		ret = -errno;
 		goto done;
 	}
@@ -343,7 +343,7 @@ static int wait_until_event(int dd, uint8_t event, int timeout)
 	int buf_len, ret = 0;
 	hci_event_hdr *hdr;
 
-	log_print("Waiting for event 0x%.2x (\"%s\")\n", event, event_str[event]);
+	BLTS_DEBUG("Waiting for event 0x%.2x (\"%s\")\n", event, event_str[event]);
 
 	set_default_event_filter(&nf);
 
@@ -357,14 +357,14 @@ static int wait_until_event(int dd, uint8_t event, int timeout)
 			buf = 0;
 		}
 		if (wait_for_events(dd, &nf, &buf, &buf_len, timeout) < 0) {
-			log_print("Failed waiting for event\n");
+			BLTS_DEBUG("Failed waiting for event\n");
 			ret = errno?-errno:-1;
 			break;
 		}
 		gettimeofday(&tv, 0);
 		t_diff = t_end - tv.tv_sec - 1E-6 * tv.tv_usec;
 		if (t_diff <= 0) {
-			log_print("Timed out waiting for event\n");
+			BLTS_DEBUG("Timed out waiting for event\n");
 			ret = -ETIMEDOUT;
 			break;
 		}
@@ -372,7 +372,7 @@ static int wait_until_event(int dd, uint8_t event, int timeout)
 		timeout = t_diff * 1E3;
 
 		hdr = (void *) (buf + 1);
-		log_print("> Event 0x%.2x (\"%s\") (%lf s)\n",hdr->evt,
+		BLTS_DEBUG("> Event 0x%.2x (\"%s\") (%lf s)\n",hdr->evt,
 			event_str[hdr->evt], t_end - t_diff - t_start);
 		if (hdr->evt == event) {
 			if (event == EVT_CONN_COMPLETE) {
@@ -397,20 +397,20 @@ static int do_pin_exchange(int dd, pin_code_reply_cp *reply, int timeout)
 
 	ret = wait_until_event(dd, EVT_PIN_CODE_REQ, timeout);
 	if (ret) {
-		log_print("Pin code not requested\n");
+		BLTS_DEBUG("Pin code not requested\n");
 		return ret;
 	}
 
-	log_print("Sending PIN_CODE_REPLY\n");
+	BLTS_DEBUG("Sending PIN_CODE_REPLY\n");
 	if (hci_send_cmd(dd, OGF_LINK_CTL, OCF_PIN_CODE_REPLY,
 		PIN_CODE_REPLY_CP_SIZE, reply) < 0) {
-		log_print("PIN_CODE_REPLY failed\n");
+		BLTS_DEBUG("PIN_CODE_REPLY failed\n");
 		return errno ? -errno : -1;
 	}
 
 	ret = wait_until_event(dd, EVT_LINK_KEY_NOTIFY, timeout);
 	if (ret) {
-		log_print("No LINK_KEY_NOTIFY after pin entry.\n");
+		BLTS_DEBUG("No LINK_KEY_NOTIFY after pin entry.\n");
 		return ret;
 	}
 
@@ -451,38 +451,38 @@ static int do_pairing_master(struct bt_ctx *ctx)
 		.bdaddr = ctx->remote_mac,
 	};
 
-	log_print("Connecting to remote.\n");
+	BLTS_DEBUG("Connecting to remote.\n");
 	if (hci_connect_remote(ctx) < 0) {
-		log_print("Initial connect failed\n");
+		BLTS_DEBUG("Initial connect failed\n");
 		return -1;
 	}
 	dd = ctx->hci_fd;
 	auth_param.handle = ctx->conn_handle;
 
-	log_print("Sending AUTH_REQUESTED\n");
+	BLTS_DEBUG("Sending AUTH_REQUESTED\n");
 	if (hci_send_cmd(dd, OGF_LINK_CTL, OCF_AUTH_REQUESTED,
 		AUTH_REQUESTED_CP_SIZE, &auth_param) < 0) {
-		log_print("AUTH_REQUESTED failed\n");
+		BLTS_DEBUG("AUTH_REQUESTED failed\n");
 		ret = errno ? -errno : -1;
 		goto done;
 	}
 
 	ret = wait_until_event(dd, EVT_LINK_KEY_REQ, timeout);
 	if (ret) {
-		log_print("No link key request.\n");
+		BLTS_DEBUG("No link key request.\n");
 		goto done;
 	}
 
-	log_print("Sending LINK_KEY_NEG_REPLY\n");
+	BLTS_DEBUG("Sending LINK_KEY_NEG_REPLY\n");
 	if (hci_send_cmd(dd, OGF_LINK_CTL, OCF_LINK_KEY_NEG_REPLY, 6, &neg_reply) < 0) {
-		log_print("LINK_KEY_NEG_REPLY failed\n");
+		BLTS_DEBUG("LINK_KEY_NEG_REPLY failed\n");
 		ret = errno ? -errno : -1;
 		goto done;
 	}
 
 	ret = do_pin_exchange(dd, &pin_reply, timeout);
 	if (ret) {
-		log_print("Pairing failed.\n");
+		BLTS_DEBUG("Pairing failed.\n");
 		goto done;
 	}
 
@@ -490,10 +490,10 @@ static int do_pairing_master(struct bt_ctx *ctx)
 	   so we don't fail here, just log what happens. */
  	wait_until_event(dd, EVT_AUTH_COMPLETE, timeout);
 /* 	if (ret) { */
-/* 		log_print("No AUTH_COMPLETE.\n"); */
+/* 		BLTS_DEBUG("No AUTH_COMPLETE.\n"); */
 /* 		goto done; */
 /* 	} */
-	log_print("Pairing complete.\n");
+	BLTS_DEBUG("Pairing complete.\n");
 
 done:
 	hci_close_dev(dd);
@@ -517,18 +517,18 @@ static int do_pairing_slave(struct bt_ctx *ctx)
 
 	dd = hci_open_dev(ctx->dev_id);
 	if (dd < 0) {
-		logged_perror("Failed to open device");
+		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
 
 	ret = wait_until_event(dd, EVT_CONN_COMPLETE, timeout);
 	if (ret) {
-		log_print("No connection arrived, check master\n");
+		BLTS_DEBUG("No connection arrived, check master\n");
 		goto done;
 	}
 
 	ba2str(&glob_connected_ba, addr);
-	log_print("Incoming connection from %s\n", addr);
+	BLTS_DEBUG("Incoming connection from %s\n", addr);
 	pin_code_reply_cp pin_reply = {
 		.bdaddr = glob_connected_ba,
 		.pin_len = 4,
@@ -541,9 +541,9 @@ static int do_pairing_slave(struct bt_ctx *ctx)
 	/* now, wait for the pin query*/
 	ret = do_pin_exchange(dd, &pin_reply, timeout);
 	if (ret)
-		log_print("Pairing failed.\n");
+		BLTS_DEBUG("Pairing failed.\n")
 	else
-		log_print("Pairing complete.\n");
+		BLTS_DEBUG("Pairing complete.\n")
 
 done:
 	hci_close_dev(dd);
@@ -566,7 +566,7 @@ int pairing_no_btd(struct bt_ctx *ctx, int master)
 		return -EINVAL;
 
 	if (ll_bt_init(ctx->dev_id, master) < 0) {
-		log_print("Device init failed.\n");
+		BLTS_DEBUG("Device init failed.\n");
 		return errno ? -errno : -1;
 	}
 

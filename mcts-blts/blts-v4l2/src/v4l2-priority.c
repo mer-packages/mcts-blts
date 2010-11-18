@@ -53,13 +53,13 @@ v4l2_case_priority (v4l2_data *user_data, int test_num)
         BLTS_DEBUG ("Test number %i:\n", test_num);
 
         if (!open_device (user_data->device)) {
-                LOG ("Couldn't open device %s\n", user_data->device->dev_name);
+                BLTS_DEBUG("Couldn't open device %s\n", user_data->device->dev_name);
                 goto ERROR;
         }
 
 	user_data->device->use_streaming = 1;
         if (!init_device (user_data->device, SCREEN_WIDTH, SCREEN_HEIGHT)) {
-                LOG ("Couldn't init device %s\n", user_data->device->dev_name);
+                BLTS_DEBUG("Couldn't init device %s\n", user_data->device->dev_name);
                 goto ERROR;
         }
 
@@ -68,14 +68,14 @@ v4l2_case_priority (v4l2_data *user_data, int test_num)
         xvideo_init (w, h, 0);
 
         if (!start_capturing (user_data->device)) {
-                LOG ("Failed to capture from device\n");
+                BLTS_DEBUG("Failed to capture from device\n");
                 ret = -1;
                 goto ERROR;
         }
 
         if (!stream_image_xv (user_data->device, 50)) {
                 ret = -1;
-                LOG ("Failed to stream image\n");
+                BLTS_DEBUG("Failed to stream image\n");
                 goto ERROR;
         }
 
@@ -85,14 +85,14 @@ v4l2_case_priority (v4l2_data *user_data, int test_num)
         stop_capturing (user_data->device);
 
         if (ret < 0) {
-                LOG ("Failed to get priority: %i\n", ret);
+                BLTS_DEBUG("Failed to get priority: %i\n", ret);
                 goto ERROR;
         }
 
-        LOG ("Priority: %i\n", priority);
+        BLTS_DEBUG("Priority: %i\n", priority);
 
         if (priority == V4L2_PRIORITY_UNSET) {
-                LOG ("Priority is still unset\n");
+                BLTS_DEBUG("Priority is still unset\n");
                 ret = -1;
                 goto ERROR;
         }

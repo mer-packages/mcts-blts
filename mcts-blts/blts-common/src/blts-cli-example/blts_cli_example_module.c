@@ -23,12 +23,15 @@
 #include <blts_log.h>
 #include <getopt.h>
 #include <blts_cli_frontend.h>
+#include <blts_params.h>
 
 typedef struct
 {
 	int q_set;
 	int w_set;
 	int p_set;
+	int var_arg1;
+	int var_arg2;
 } my_example_data;
 
 static void my_example_help(const char* help_msg_base)
@@ -37,9 +40,9 @@ static void my_example_help(const char* help_msg_base)
 		/* What is displayed on the first 'USAGE' line */
 		"[-q] [-w] [-p]",
 		/* Description of the arguments */
-		"-q: Some argument\n"
-		"-w: Some argument\n"
-		"-p: Some argument\n");
+		"  -q: Example argument q\n"
+		"  -w: Example argument w\n"
+		"  -p: Example argument p\n");
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */
@@ -52,10 +55,24 @@ static const struct option long_opts[] =
 	{0,0,0,0}
 };
 
+static void *my_example_variable_parser(struct boxed_value *args, void *user_ptr)
+{
+	my_example_data *data = (my_example_data *)user_ptr;
+	if (!data)
+		return NULL;
+
+	data->var_arg1 = blts_config_boxed_value_get_int(args);
+	args = args->next;
+	data->var_arg2 = blts_config_boxed_value_get_int(args);
+	args = args->next;
+
+	return data;
+}
+
 /* Return NULL in case of an error */
 static void* my_example_argument_processor(int argc, char **argv)
 {
-	int c;
+	int c, ret;
 	my_example_data* my_data = malloc(sizeof(my_example_data));
 	memset(my_data, 0, sizeof(my_example_data));
 
@@ -67,15 +84,15 @@ static void* my_example_argument_processor(int argc, char **argv)
 			/* getopt_long() flag */
 			break;
 		case 'q':
-			LOG("Argument 'q' given\n");
+			BLTS_TRACE("Argument 'q' given\n");
 			my_data->q_set = 1;
 			break;
 		case 'w':
-			LOG("Argument 'w' given\n");
+			BLTS_TRACE("Argument 'w' given\n");
 			my_data->w_set = 1;
 			break;
 		case 'p':
-			LOG("Argument 'p' given\n");
+			BLTS_TRACE("Argument 'p' given\n");
 			my_data->p_set = 1;
 			break;
 		default:
@@ -84,7 +101,29 @@ static void* my_example_argument_processor(int argc, char **argv)
 		}
 	}
 
+	ret = blts_config_declare_variable_test(
+		"My example variant test A",
+		my_example_variable_parser,
+		CONFIG_PARAM_INT, "variable1", 0,
+		CONFIG_PARAM_INT, "variable2", 0,
+		CONFIG_PARAM_NONE);
+	if (ret)
+		goto error_exit;
+
+	ret = blts_config_declare_variable_test(
+		"My example variant test B",
+		my_example_variable_parser,
+		CONFIG_PARAM_INT, "variable1", 0,
+		CONFIG_PARAM_INT, "variable2", 0,
+		CONFIG_PARAM_NONE);
+	if (ret)
+		goto error_exit;
+
 	return my_data;
+
+error_exit:
+	free(my_data);
+	return NULL;
 }
 
 /* user_ptr is what you returned from my_example_argument_processor */
@@ -103,9 +142,9 @@ static int my_example_case_1(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
 
-	LOG("in my_example_case_1\n");
-	if(data->q_set) LOG("q is set\n");
-	LOG("This is test #%d\n", test_num);
+	BLTS_DEBUG("in my_example_case_1\n");
+	if(data->q_set) BLTS_DEBUG("q is set\n");
+	BLTS_DEBUG("This is test #%d\n", test_num);
 
 	return 0;
 }
@@ -114,10 +153,10 @@ static int my_example_case_2(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
 
-	LOG("in my_example_case_2\n");
-	if(data->w_set) LOG("w is set\n");
-	LOG("This is test #%d\n", test_num);
-	LOG("This should not timeout...\n", test_num);
+	BLTS_DEBUG("in my_example_case_2\n");
+	if(data->w_set) BLTS_DEBUG("w is set\n");
+	BLTS_DEBUG("This is test #%d\n", test_num);
+	BLTS_DEBUG("This should not timeout...\n", test_num);
 	sleep(5);
 
 	return 0;
@@ -127,11 +166,11 @@ static int my_example_case_3(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
 	int *ptr = NULL;
-	LOG("in my_example_case_3\n");
+	BLTS_DEBUG("in my_example_case_3\n");
 
-	LOG("this will crash\n");
+	BLTS_DEBUG("this will crash\n");
 	*ptr = data->p_set;
-	LOG("you should not see this\n");
+	BLTS_ERROR("you should not see this\n");
 
 	return 0;
 }
@@ -139,10 +178,10 @@ static int my_example_case_3(void* user_ptr, int test_num)
 static int my_example_case_4(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
-	LOG("in my_example_case_4\n");
+	BLTS_DEBUG("in my_example_case_4\n");
 
-	if(data->p_set) LOG("p is set\n");
-	LOG("this case should fail cleanly\n");
+	if(data->p_set) BLTS_DEBUG("p is set\n");
+	BLTS_DEBUG("this case should fail cleanly\n");
 
 	return -1;
 }
@@ -150,14 +189,34 @@ static int my_example_case_4(void* user_ptr, int test_num)
 static int my_example_case_5(void* user_ptr, int test_num)
 {
 	my_example_data* data = (my_example_data*)user_ptr;
-	LOG("in my_example_case_5\n");
+	BLTS_DEBUG("in my_example_case_5\n");
 
-	if(data->p_set) LOG("p is set\n");
-	LOG("this case should should timeout\n");
+	if(data->p_set) BLTS_DEBUG("p is set\n");
+	BLTS_DEBUG("this case should should timeout\n");
 	sleep(5);
-	LOG("you should not see me\n");
+	BLTS_ERROR("you should not see me\n");
 
 	return -1;
+}
+
+static int my_example_case_6(void* user_ptr, int test_num)
+{
+	BLTS_DEBUG("in my_example_case_6\n");
+	BLTS_DEBUG("all the variants of this test case should pass\n");
+	return 0;
+}
+
+static int my_example_case_7(void* user_ptr, int test_num)
+{
+	my_example_data* data = (my_example_data*)user_ptr;
+	BLTS_DEBUG("in my_example_case_7\n");
+	if (data->var_arg2 == 1) {
+		BLTS_DEBUG("This should fail\n");
+		return -1;
+	} else {
+		BLTS_DEBUG("This should pass\n");
+		return 0;
+	}
 }
 
 /* Your test definitions */
@@ -172,6 +231,8 @@ static blts_cli_testcase my_example_cases[] =
 	{ "My example C", my_example_case_3, 5000 },
 	{ "My example D", my_example_case_4, 5000 },
 	{ "My example E", my_example_case_5, 2000 },
+	{ "My example variant test A", my_example_case_6, 2000 },
+	{ "My example variant test B", my_example_case_7, 2000 },
 	BLTS_CLI_END_OF_LIST
 };
 

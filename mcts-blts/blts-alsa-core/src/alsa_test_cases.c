@@ -586,13 +586,13 @@ int alsa_play_rec_pcm(void* user_ptr, int test_num)
 
 	/* apply default settings... */
 	err = setup_ctl_settings(testcase->def_control_ref,
-		params->flags&CLI_FLAG_VERBOSE_LOG);
+		(blts_log_get_level() == LEVEL_TRACE));
 	if(err)
 		goto cleanup;
 
 	/* ...and testcase specific settings */
 	err = setup_ctl_settings(testcase->control_ref,
-		params->flags&CLI_FLAG_VERBOSE_LOG);
+		(blts_log_get_level() == LEVEL_TRACE));
 	if(err)
 		goto cleanup;
 
@@ -611,7 +611,7 @@ int alsa_play_rec_pcm(void* user_ptr, int test_num)
 		sizeof(struct pcm_thread_params));
 	if(!threads)
 	{
-		logged_perror("calloc failed");
+		BLTS_LOGGED_PERROR("calloc failed");
 		goto cleanup;
 	}
 
@@ -699,7 +699,7 @@ cleanup:
 
 	/* (try to) apply default settings */
 	if(setup_ctl_settings(testcase->def_control_ref,
-		params->flags&CLI_FLAG_VERBOSE_LOG))
+		(blts_log_get_level() == LEVEL_TRACE)))
 		err = -1;
 
 	ioctl_print_profiling_data();

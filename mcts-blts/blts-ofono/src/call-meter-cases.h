@@ -27,6 +27,7 @@ int blts_ofono_set_call_meter_data(void*,int);
 int blts_ofono_reset_call_meter_data(void*,int);
 int blts_ofono_test_near_max_warning(void*, int);
 
+void *call_meter_variant_read_arg_processor(struct boxed_value *, void *);
 void *call_meter_variant_set_arg_processor(struct boxed_value *, void *);
 void *call_meter_variant_reset_arg_processor(struct boxed_value*, void*);
 

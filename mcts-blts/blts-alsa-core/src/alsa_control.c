@@ -106,7 +106,7 @@ ctl_device* control_open(int card)
 	hw = calloc(1, sizeof(ctl_device));
 	if(!hw)
 	{
-		logged_perror("Failed to allocate ctl_device structure");
+		BLTS_LOGGED_PERROR("Failed to allocate ctl_device structure");
 		return NULL;
 	}
 
@@ -158,7 +158,7 @@ ctl_element* control_read_by_id(ctl_device* hw, unsigned int id)
 	element = calloc(1, sizeof(ctl_element));
 	if(!element)
 	{
-		logged_perror("Failed to allocate control element");
+		BLTS_LOGGED_PERROR("Failed to allocate control element");
 		goto error_exit;
 	}
 
@@ -175,7 +175,7 @@ ctl_element* control_read_by_id(ctl_device* hw, unsigned int id)
 	list.pids = calloc(count, sizeof(struct snd_ctl_elem_id));
 	if(!list.pids)
 	{
-		logged_perror("Failed to allocate control element ids");
+		BLTS_LOGGED_PERROR("Failed to allocate control element ids");
 		goto error_exit;
 	}
 
@@ -223,7 +223,7 @@ ctl_element* control_read(ctl_device* hw, const char* name)
 	element = calloc(1, sizeof(ctl_element));
 	if(!element)
 	{
-		logged_perror("Failed to allocate control element");
+		BLTS_LOGGED_PERROR("Failed to allocate control element");
 		goto error_exit;
 	}
 
@@ -240,7 +240,7 @@ ctl_element* control_read(ctl_device* hw, const char* name)
 	list.pids = calloc(count, sizeof(struct snd_ctl_elem_id));
 	if(!list.pids)
 	{
-		logged_perror("Failed to allocate control element ids");
+		BLTS_LOGGED_PERROR("Failed to allocate control element ids");
 		goto error_exit;
 	}
 
@@ -407,7 +407,7 @@ int control_print_card_info(ctl_device* hw)
 {
 	int err;
 	snd_ctl_card_info_t info;
-	
+
 	err = ioctl_ctl_hw_card_info(hw, &info);
 	if(err)
 		return err;
@@ -447,14 +447,14 @@ int control_print_element_value(ctl_device* hw, ctl_element* element)
 				element->value.value.integer.value[i]?"on":"off");
 			break;
 		case SNDRV_CTL_ELEM_TYPE_INTEGER:
-			BLTS_DEBUG("      %d (%d...%d, step %d)\n", 
+			BLTS_DEBUG("      %d (%d...%d, step %d)\n",
 				element->value.value.integer.value[i],
-				element->info.value.integer.min, 
+				element->info.value.integer.min,
 				element->info.value.integer.max,
 				element->info.value.integer.step);
 			break;
 		case SNDRV_CTL_ELEM_TYPE_INTEGER64:
-			BLTS_DEBUG("      %ld (%ld...%ld, step %d)\n", 
+			BLTS_DEBUG("      %ld (%ld...%ld, step %d)\n",
 				element->value.value.integer64.value[i],
 				element->info.value.integer64.min,
 				element->info.value.integer64.max,
@@ -507,7 +507,7 @@ int control_print_element_list(ctl_device* hw)
 	list.pids = calloc(count, sizeof(struct snd_ctl_elem_id));
 	if(!list.pids)
 	{
-		logged_perror("Failed to allocate control element ids");
+		BLTS_LOGGED_PERROR("Failed to allocate control element ids");
 		err = -ENOMEM;
 		goto cleanup;
 	}
@@ -565,7 +565,7 @@ int control_enumerate_devices(ctl_device* hw)
 	struct snd_hwdep_info hwdep_info;
 	struct snd_pcm_info pcm_info;
 	struct snd_rawmidi_info rawmidi_info;
-	
+
 	BLTS_DEBUG("\n");
 	dev = -1;
 	while(1)
@@ -575,7 +575,7 @@ int control_enumerate_devices(ctl_device* hw)
 			return err;
 		if(dev == -1)
 			break;
-		
+
 		err = ioctl_ctl_pcm_info(hw, dev, 0, 0, &pcm_info);
 		if(err)
 			return err;
@@ -597,7 +597,7 @@ int control_enumerate_devices(ctl_device* hw)
 			break; /* hwdep is optional */
 		if(dev == -1)
 			break;
-		
+
 		err = ioctl_ctl_hwdep_info(hw, dev, &hwdep_info);
 		if(err)
 			return err;

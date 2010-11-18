@@ -1,0 +1,32 @@
+* Tue 16 Nov 2010 Aki Nyman <aki.nyman@digia.com> - 0.2.9
+- Use correct logging macros and funcs
+- Packaging script updates
+- Some bug fixes according to review comments (wake up other DUT code
+- modified, xml fixed, memset 0 for info compare case)
+- HCI controller info test case fixed, sends/receives END -mark when
+- verification is done
+- Connected link info sending (non-thread version) and AFH map verification
+- modified, and some timeouts fixed
+- Some testcase timeouts changed
+- Handle short timestamps from hcidump
+
+* Wed 6 Oct 2010 Aki Nyman <aki.nyman@digia.com> - 0.2.8
+- Test cases modified to use common library functions
+- Add configuration file support
+
+* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.2.7
+- Add RPM packaging
+- Binary name changed to "blts-bluetooth-tests"
+
+* Tue 31 Aug 2010 Kari Laakso <kari.laakso@digia.com> - 0.2.6
+- Initial upload for Meego (changelog summarized)
+- Pairing test.
+- Connection information exchange test.
+- HCI Change/Verify Name and HCI Change/Verify Class tests.
+- HCI Reset Connection test.
+- Incoming connection sequence audit.
+- HCI Transfer/Receive ACL data packet tests.
+- Driver and Bluez userspace check.
+- RFComm connect and ping-pong tests.
+- HCI link-only connect test.
+- L2CAP connect and ping-pong tests.

@@ -1,3 +1,35 @@
+blts-bluetooth-tests (0.2.9) unstable; urgency=low
+
+  [ Mika Niinistö, Aki Nyman, Kimmo Myllyvirta ]
+  * Use correct logging macros and funcs
+  * Packaging script updates
+  * Some bug fixes according to review comments (wake up other DUT code
+    modified, xml fixed, memset 0 for info compare case)
+  * HCI controller info test case fixed, sends/receives END -mark when
+    verification is done
+  * Connected link info sending (non-thread version) and AFH map verification
+    modified, and some timeouts fixed
+  * Some testcase timeouts changed
+  * Handle short timestamps from hcidump
+
+ -- Aki Nyman <aki.nyman@digia.com>  Tue, 16 Nov 2010 16:55:43 +0200
+
+blts-bluetooth-tests (0.2.8) unstable; urgency=low
+
+  [ Aki Nyman ]
+  * Test cases modified to use common library functions
+  * Add configuration file support
+
+ -- Aki Nyman <aki.nyman@digia.com>  Wed, 6 Oct 2010 15:00:44 +0300
+
+blts-bluetooth-tests (0.2.7) unstable; urgency=low
+
+  [ Mika Niinistö ]
+  * Add RPM packaging
+  * Binary name changed to "blts-bluetooth-tests"
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 30 Sep 2010 13:56:44 +0300
+
 blts-bluetooth-tests (0.2.6) unstable; urgency=low
 
   [ Jussi Saavalainen & Aki Nyman ]

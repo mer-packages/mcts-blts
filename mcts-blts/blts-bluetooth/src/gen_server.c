@@ -53,7 +53,7 @@ int generic_server_handle_echo(int sock)
 		{
 			if((bytes_out = send(sock, buf + bytes_in - bytes_left, bytes_left, 0)) < 0)
 			{
-				logged_perror("send() failure");
+				BLTS_LOGGED_PERROR("send() failure");
 				retval = -errno;
 				goto cleanup;
 			}
@@ -64,7 +64,7 @@ int generic_server_handle_echo(int sock)
 	/* we expect the client to quit at any time (except when actively rx'ing) */
 	if((bytes_in < 0) && (errno!=ECONNRESET))
 	{
-		logged_perror("recv() failure");
+		BLTS_LOGGED_PERROR("recv() failure");
 		retval = -errno;
 	}
 

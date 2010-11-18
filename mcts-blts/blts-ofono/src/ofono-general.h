@@ -73,31 +73,29 @@ enum BLTSoFonoCases {
 	BLTS_OFONO_CALL_BARRINGS_TEST,
 	BLTS_OFONO_LIST_ALL_PROPERTIES,
 	BLTS_OFONO_PROPOSE_SCAN,
+	BLTS_OFONO_SMSC_NUMBER_TEST,
 	BLTS_OFONO_MULTIPARTY_CALL,
 	BLTS_OFONO_MULTIPARTY_CALL_PRIVATE,
 };
 
 #define G_VALUE_INIT {0,{{0}}}
 
-#define	DEFAULT_MODEM			"/isimodem0"	//obsolete, modems are found through oFono
+#define	DEFAULT_MODEM		"/isimodem0"	//obsolete, modems are found through oFono
 
 /* oFono interfaces and default paths */
-#define OFONO_BUS				"org.ofono"
-#define OFONO_MNGR_PATH			"/"
+#define OFONO_BUS		"org.ofono"
+#define OFONO_MNGR_PATH		"/"
 #define OFONO_MNGR_INTERFACE	"org.ofono.Manager"
 #define OFONO_MODEM_INTERFACE	"org.ofono.Modem"
-#define OFONO_PB_INTERFACE		"org.ofono.Phonebook"
-#define OFONO_NW_INTERFACE 		"org.ofono.NetworkRegistration"
-#define OFONO_VC_INTERFACE 		"org.ofono.VoiceCallManager"
-#define OFONO_SMS_INTERFACE		"org.ofono.MessageManager"
+#define OFONO_PB_INTERFACE	"org.ofono.Phonebook"
+#define OFONO_NW_INTERFACE 	"org.ofono.NetworkRegistration"
+#define OFONO_VC_INTERFACE 	"org.ofono.VoiceCallManager"
+#define OFONO_MESSAGE_INTERFACE	"org.ofono.MessageManager"
 #define OFONO_CALL_INTERFACE	"org.ofono.VoiceCall"
-#define OFONO_SIM_INTERFACE		"org.ofono.SimManager"
-#define OFONO_CV_INTERFACE		"org.ofono.CallVolume"
+#define OFONO_SIM_INTERFACE	"org.ofono.SimManager"
+#define OFONO_CV_INTERFACE	"org.ofono.CallVolume"
 #define OFONO_METER_INTERFACE	"org.ofono.CallMeter"
 
-#define MAX_MODEMS				10				// maximum number of modems in system (hopefully, if more needed just increase)
-
-#define SMS_SMSC_ADDRESS  "+000123456789"
-
+#define MAX_MODEMS		10	// maximum number of modems in system (hopefully, if more needed just increase)
 
 #endif /* OFONO_GENERAL_H */

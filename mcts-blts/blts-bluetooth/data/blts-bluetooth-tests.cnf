@@ -1,0 +1,23 @@
+# Parameter configuration for blts-bluetooth
+
+# MAC address - used in test cases where another BT device is needed
+# NOTE: command line parameter -m (mac_address) overrides this parameter
+# List of test cases that require mac_address (<-> pair)
+#
+# connect with L2CAP						(<-> receive L2CAP connection)
+# ping-pong transfer with L2CAP				(<-> receive L2CAP connection)
+# connect with RFCOMM 						(<-> receive RFCOMM connection)
+# ping-pong transfer with RFCOMM			(<-> receive RFCOMM connection)
+# connect with HCI 							(<-> e.g. audit incoming HCI connection)
+# transfer ACL data with HCI 				(<-> HCI receive ACL data package)
+# verify name with remote HCI 				(<-> Change name with HCI)
+# verify class with remote HCI				(<-> Change class with HCI)
+# reset connection with HCI					(<-> e.g. audit incoming HCI connection)
+# Read HCI controller information remote	(<-> Read HCI controller information local)
+# Read connected link information remote 	(<-> Read connected link information local)
+# authentication with pairing as master 	(<-> authentication with pairing as slave)
+
+[globals]
+	mac_address "00:00:00:00:00:00"
+[end_globals]
+

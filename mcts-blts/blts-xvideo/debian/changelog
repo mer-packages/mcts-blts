@@ -1,3 +1,11 @@
+blts-xvideo-tests (0.0.7) unstable; urgency=low
+
+  [ Mika Niinistö, Kimmo Myllyvirta ]
+  * Packaging script updated.
+  * Logging updated to new common library standard.
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Tue, 16 Nov 2010 18:15:28 +0200
+
 blts-xvideo-tests (0.0.6) unstable; urgency=low
 
   [ Kimmo Myllyvirta ]

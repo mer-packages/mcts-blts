@@ -49,14 +49,14 @@ static int generate_cos_sin_tables(glesh_context* context)
 	context->cos_table = malloc(sizeof(float) * GLESH_COS_SIN_TABLE_SIZE);
 	if(!context->cos_table)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		return 0;
 	}
 
 	context->sin_table = malloc(sizeof(float) * GLESH_COS_SIN_TABLE_SIZE);
 	if(!context->sin_table)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		return 0;
 	}
 
@@ -110,7 +110,7 @@ const char* glesh_egl_error_to_string(EGLint err)
 void glesh_report_eglerror(const char* location)
 {
 	EGLint err = eglGetError();
-	LOGERR("%s failed (%d, %s).\n", location, err,
+	BLTS_ERROR("%s failed (%d, %s).\n", location, err,
 		glesh_egl_error_to_string(err));
 }
 
@@ -122,7 +122,7 @@ int glesh_load_shader(GLenum type, const char *source)
 	shader = glCreateShader(type);
 	if(!shader)
 	{
-		LOGERR("glCreateShader failed\n");
+		BLTS_ERROR("glCreateShader failed\n");
 		return 0;
 	}
 
@@ -141,17 +141,17 @@ int glesh_load_shader(GLenum type, const char *source)
 			if(info_log)
 			{
 				glGetShaderInfoLog(shader, info_len, NULL, info_log);
-				LOGERR("Error compiling shader:\n%s\n", info_log);
+				BLTS_ERROR("Error compiling shader:\n%s\n", info_log);
 				free (info_log);
 			}
 			else
 			{
-				LOGERR("Error compiling shader\n");
+				BLTS_ERROR("Error compiling shader\n");
 			}
 		}
 		else
 		{
-			LOGERR("Error compiling shader\n");
+			BLTS_ERROR("Error compiling shader\n");
 		}
 
 		glDeleteShader(shader);
@@ -186,7 +186,7 @@ int glesh_load_program(const char *vertex_shader_src,
 	program_object = glCreateProgram();
 	if(!program_object)
 	{
-		LOGERR("glCreateProgram failed\n");
+		BLTS_ERROR("glCreateProgram failed\n");
 		glDeleteShader(fragment_shader);
 		glDeleteShader(vertex_shader);
 		return 0;
@@ -209,17 +209,17 @@ int glesh_load_program(const char *vertex_shader_src,
 			if(info_log)
 			{
 				glGetProgramInfoLog(program_object, info_len, NULL, info_log);
-				LOGERR("Error linking shader program:\n%s\n", info_log);
+				BLTS_ERROR("Error linking shader program:\n%s\n", info_log);
 				free (info_log);
 			}
 			else
 			{
-				LOGERR("Error linking shader program\n");
+				BLTS_ERROR("Error linking shader program\n");
 			}
 		}
 		else
 		{
-			LOGERR("Error linking shader program\n");
+			BLTS_ERROR("Error linking shader program\n");
 		}
 
 		glDeleteProgram(program_object);
@@ -259,7 +259,7 @@ int glesh_create_context(glesh_context* context,
 	context->x11_display = XOpenDisplay(":0");
 	if (!context->x11_display)
 	{
-		LOGERR("Error: Unable to open X display\n");
+		BLTS_ERROR("Error: Unable to open X display\n");
 		glesh_destroy_context(context);
 		return 0;
 	}
@@ -279,7 +279,7 @@ int glesh_create_context(glesh_context* context,
 	if(!XMatchVisualInfo( context->x11_display, x11_screen,
 		depth, TrueColor, &x11_visual))
 	{
-		LOGERR("Error: XMatchVisualInfo failed\n");
+		BLTS_ERROR("Error: XMatchVisualInfo failed\n");
 		glesh_destroy_context(context);
 		return 0;
 	}
@@ -352,7 +352,7 @@ int glesh_create_context(glesh_context* context,
 	configs = malloc(sizeof(EGLConfig) * 20);
 	if(!configs)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		glesh_destroy_context(context);
 		return 0;
 	}
@@ -419,7 +419,7 @@ int glesh_create_context(glesh_context* context,
 
 	glGenTextures(GLESH_MAX_TEXTURES, context->texture_pool);
 
-	LOG("Surface: %d x %d x %d\n",
+	BLTS_DEBUG("Surface: %d x %d x %d\n",
 		context->width, context->height, context->depth);
 
 	return 1;
@@ -523,7 +523,7 @@ int glesh_execute_main_loop(glesh_context* context,
 		if(fscanf(fp, "%s %lu %lu %lu %lu", tmp, &start_user_load,
 			&start_nice_load, &start_sys_load, &start_idle) != 5)
 		{
-			LOGERR("Failed to read /proc/stat\n");
+			BLTS_ERROR("Failed to read /proc/stat\n");
 		}
 		fclose(fp);
 	}
@@ -539,7 +539,7 @@ int glesh_execute_main_loop(glesh_context* context,
 		prev_time = cur_time;
 		if(!drawFunc(context, user_ptr))
 		{
-			LOGERR("Failed to draw frame %d\n",
+			BLTS_ERROR("Failed to draw frame %d\n",
 				context->perf_data.frames_rendered);
 			return 0;
 		}
@@ -599,7 +599,7 @@ int glesh_execute_main_loop(glesh_context* context,
 		}
 		else
 		{
-			LOGERR("Failed to read /proc/stat\n");
+			BLTS_ERROR("Failed to read /proc/stat\n");
 		}
 
 		fclose(fp);
@@ -610,19 +610,19 @@ int glesh_execute_main_loop(glesh_context* context,
 	context->perf_data.cpu_usage = 100.0 * used_time /
 		context->perf_data.total_time_elapsed;
 
-	LOG("Frames rendered: %d\n", context->perf_data.frames_rendered);
-	LOG("Total render time: %lf\n", context->perf_data.total_time_elapsed);
-	LOG("Frames per second: %lf\n", context->perf_data.fps);
-	LOG("Polygons in scene: %d\n", glesh_context_triangle_count(context));
-	LOG("CPU usage (this process): %lf %%\n", context->perf_data.cpu_usage);
+	BLTS_DEBUG("Frames rendered: %d\n", context->perf_data.frames_rendered);
+	BLTS_DEBUG("Total render time: %lf\n", context->perf_data.total_time_elapsed);
+	BLTS_DEBUG("Frames per second: %lf\n", context->perf_data.fps);
+	BLTS_DEBUG("Polygons in scene: %d\n", glesh_context_triangle_count(context));
+	BLTS_DEBUG("CPU usage (this process): %lf %%\n", context->perf_data.cpu_usage);
 	if(context->perf_data.total_load > 0.0f)
 	{
-		LOG("CPU usage (all processes, all CPUs): %lf %%\n",
+		BLTS_DEBUG("CPU usage (all processes, all CPUs): %lf %%\n",
 			context->perf_data.total_load);
 	}
 	else
 	{
-		LOG("CPU usage (all processes, all CPUs): N/A\n");
+		BLTS_DEBUG("CPU usage (all processes, all CPUs): N/A\n");
 	}
 
 	return 1;
@@ -632,7 +632,7 @@ glesh_object* glesh_add_object(glesh_context* context, glesh_object* object)
 {
 	if(context->num_objects >= GLESH_MAX_OBJECTS)
 	{
-		LOGERR("glesh_add_object: Maximum number of objects reached\n");
+		BLTS_ERROR("glesh_add_object: Maximum number of objects reached\n");
 		return NULL;
 	}
 
@@ -674,7 +674,7 @@ glesh_texture* glesh_bitmap_to_texture(glesh_context* context,
 
 	if(context->num_textures >= GLESH_MAX_TEXTURES)
 	{
-		LOGERR("glesh_bitmap_to_texture: Maximum number of textures reached\n");
+		BLTS_ERROR("glesh_bitmap_to_texture: Maximum number of textures reached\n");
 		return NULL;
 	}
 
@@ -688,7 +688,7 @@ glesh_texture* glesh_bitmap_to_texture(glesh_context* context,
 	}
 	else
 	{
-		LOGERR("Unsupported pixel format (%d).\n", format);
+		BLTS_ERROR("Unsupported pixel format (%d).\n", format);
 		return NULL;
 	}
 
@@ -696,7 +696,7 @@ glesh_texture* glesh_bitmap_to_texture(glesh_context* context,
 		element_size);
 	if(!buffer)
 	{
-		LOGERR("Error allocating buffer for texture.\n");
+		BLTS_ERROR("Error allocating buffer for texture.\n");
 		return NULL;
 	}
 
@@ -767,13 +767,13 @@ glesh_texture* glesh_texture_from_bmp_file(glesh_context* context,
 	}
 	else
 	{
-		LOGERR("Unsupported pixel format\n");
+		BLTS_ERROR("Unsupported pixel format\n");
 		return NULL;
 	}
 
 	if(!data)
 	{
-		LOGERR("Failed to read file %s\n", filename);
+		BLTS_ERROR("Failed to read file %s\n", filename);
 		return NULL;
 	}
 
@@ -798,14 +798,14 @@ unsigned char* glesh_generate_pattern(const int width, const int height,
 	}
 	else
 	{
-		LOGERR("Unsupported pixel format (%d).\n", format);
+		BLTS_ERROR("Unsupported pixel format (%d).\n", format);
 		return NULL;
 	}
 
 	buffer = (unsigned char*)malloc(width * height * element_size);
 	if(!buffer)
 	{
-		LOGERR("Error allocating buffer for texture.\n");
+		BLTS_ERROR("Error allocating buffer for texture.\n");
 		return NULL;
 	}
 
@@ -849,14 +849,14 @@ glesh_texture* glesh_generate_texture(glesh_context* context,
 
 	if(context->num_textures >= GLESH_MAX_TEXTURES)
 	{
-		LOGERR("glesh_generate_texture: Maximum number of textures reached\n");
+		BLTS_ERROR("glesh_generate_texture: Maximum number of textures reached\n");
 		return NULL;
 	}
 
 	buffer = glesh_generate_pattern(width, height, 0, format);
 	if(!buffer)
 	{
-		LOGERR("Error allocating buffer for texture.\n");
+		BLTS_ERROR("Error allocating buffer for texture.\n");
 		return NULL;
 	}
 
@@ -902,25 +902,25 @@ int glesh_generate_sphere(int numSlices, float radius, glesh_object* object)
 	object->vertices = malloc ( sizeof(GLfloat) * 3 * num_vertices );
 	if(!object->vertices)
 	{
-		LOGERR("Failed to allocate vertices\n");
+		BLTS_ERROR("Failed to allocate vertices\n");
 		return 0;
 	}
 	object->normals = malloc ( sizeof(GLfloat) * 3 * num_vertices );
 	if(!object->normals)
 	{
-		LOGERR("Failed to allocate normals\n");
+		BLTS_ERROR("Failed to allocate normals\n");
 		return 0;
 	}
 	object->texcoords = malloc ( sizeof(GLfloat) * 2 * num_vertices );
 	if(!object->texcoords)
 	{
-		LOGERR("Failed to allocate texture coordinates\n");
+		BLTS_ERROR("Failed to allocate texture coordinates\n");
 		return 0;
 	}
 	object->indices = malloc ( sizeof(GLuint) * num_indices );
 	if(!object->indices)
 	{
-		LOGERR("Failed to allocate indices\n");
+		BLTS_ERROR("Failed to allocate indices\n");
 		return 0;
 	}
 
@@ -1061,7 +1061,7 @@ int glesh_generate_cube(float scale, glesh_object* object)
 	object->vertices = malloc ( sizeof(GLfloat) * 3 * num_vertices );
 	if(!object->vertices)
 	{
-		LOGERR("Failed to allocate vertices\n");
+		BLTS_ERROR("Failed to allocate vertices\n");
 		return 0;
 	}
 	memcpy(object->vertices, cubeVerts, sizeof( cubeVerts ));
@@ -1073,7 +1073,7 @@ int glesh_generate_cube(float scale, glesh_object* object)
 	object->normals = malloc ( sizeof(GLfloat) * 3 * num_vertices );
 	if(!object->normals)
 	{
-		LOGERR("Failed to allocate normals\n");
+		BLTS_ERROR("Failed to allocate normals\n");
 		return 0;
 	}
 	memcpy( object->normals, cubeNormals, sizeof( cubeNormals ) );
@@ -1081,7 +1081,7 @@ int glesh_generate_cube(float scale, glesh_object* object)
 	object->texcoords = malloc ( sizeof(GLfloat) * 2 * num_vertices );
 	if(!object->texcoords)
 	{
-		LOGERR("Failed to allocate texture coordinates\n");
+		BLTS_ERROR("Failed to allocate texture coordinates\n");
 		return 0;
 	}
 	memcpy( object->texcoords, cubeTex, sizeof( cubeTex ) ) ;
@@ -1105,7 +1105,7 @@ int glesh_generate_cube(float scale, glesh_object* object)
 	object->indices = malloc ( sizeof(GLuint) * num_indices );
 	if(!object->indices)
 	{
-		LOGERR("Failed to allocate indices\n");
+		BLTS_ERROR("Failed to allocate indices\n");
 		return 0;
 	}
 	memcpy( object->indices, cube_indices, sizeof( cube_indices ) );
@@ -1145,7 +1145,7 @@ int glesh_generate_triangle_strip(float scale, glesh_object* object)
 	object->vertices = malloc(sizeof(GLfloat) * 3 * num_vertices);
 	if(!object->vertices)
 	{
-		LOGERR("Failed to allocate vertices\n");
+		BLTS_ERROR("Failed to allocate vertices\n");
 		return 0;
 	}
 	memcpy(object->vertices, triVerts, sizeof(triVerts));
@@ -1157,7 +1157,7 @@ int glesh_generate_triangle_strip(float scale, glesh_object* object)
 	object->normals = malloc(sizeof(GLfloat) * 3 * num_vertices);
 	if(!object->normals)
 	{
-		LOGERR("Failed to allocate normals\n");
+		BLTS_ERROR("Failed to allocate normals\n");
 		return 0;
 	}
 	memcpy(object->normals, triNormals, sizeof(triNormals));
@@ -1165,7 +1165,7 @@ int glesh_generate_triangle_strip(float scale, glesh_object* object)
 	object->texcoords = malloc(sizeof(GLfloat) * 2 * num_vertices);
 	if(!object->texcoords)
 	{
-		LOGERR("Failed to allocate texture coordinates\n");
+		BLTS_ERROR("Failed to allocate texture coordinates\n");
 		return 0;
 	}
 	memcpy(object->texcoords, triTex, sizeof(triTex)) ;
@@ -1178,7 +1178,7 @@ int glesh_generate_triangle_strip(float scale, glesh_object* object)
 	object->indices = malloc ( sizeof(GLuint) * num_indices );
 	if(!object->indices)
 	{
-		LOGERR("Failed to allocate indices\n");
+		BLTS_ERROR("Failed to allocate indices\n");
 		return 0;
 	}
 	memcpy( object->indices, tri_indices, sizeof( tri_indices ) );
@@ -1222,7 +1222,7 @@ int glesh_generate_rectangle_strip(float scalex, float scaley,
 	object->vertices = malloc(sizeof(GLfloat) * 3 * num_vertices);
 	if(!object->vertices)
 	{
-		LOGERR("Failed to allocate vertices\n");
+		BLTS_ERROR("Failed to allocate vertices\n");
 		return 0;
 	}
 	memcpy(object->vertices, quadVerts, sizeof(quadVerts));
@@ -1236,7 +1236,7 @@ int glesh_generate_rectangle_strip(float scalex, float scaley,
 	object->normals = malloc(sizeof(GLfloat) * 3 * num_vertices);
 	if(!object->normals)
 	{
-		LOGERR("Failed to allocate normals\n");
+		BLTS_ERROR("Failed to allocate normals\n");
 		return 0;
 	}
 	memcpy(object->normals, quadNormals, sizeof(quadNormals));
@@ -1244,7 +1244,7 @@ int glesh_generate_rectangle_strip(float scalex, float scaley,
 	object->texcoords = malloc(sizeof(GLfloat) * 2 * num_vertices);
 	if(!object->texcoords)
 	{
-		LOGERR("Failed to allocate texture coordinates\n");
+		BLTS_ERROR("Failed to allocate texture coordinates\n");
 		return 0;
 	}
 	memcpy(object->texcoords, quadTex, sizeof(quadTex)) ;
@@ -1257,7 +1257,7 @@ int glesh_generate_rectangle_strip(float scalex, float scaley,
 	object->indices = malloc ( sizeof(GLuint) * num_indices );
 	if(!object->indices)
 	{
-		LOGERR("Failed to allocate indices\n");
+		BLTS_ERROR("Failed to allocate indices\n");
 		return 0;
 	}
 	memcpy( object->indices, quad_indices, sizeof( quad_indices ) );
@@ -1278,25 +1278,25 @@ int glesh_generate_plane(float scale, int numSlices, glesh_object* object)
 	object->vertices = malloc ( sizeof(GLfloat) * 3 * num_vertices );
 	if(!object->vertices)
 	{
-		LOGERR("Failed to allocate vertices\n");
+		BLTS_ERROR("Failed to allocate vertices\n");
 		return 0;
 	}
 	object->normals = malloc ( sizeof(GLfloat) * 3 * num_vertices );
 	if(!object->normals)
 	{
-		LOGERR("Failed to allocate normals\n");
+		BLTS_ERROR("Failed to allocate normals\n");
 		return 0;
 	}
 	object->texcoords = malloc ( sizeof(GLfloat) * 2 * num_vertices );
 	if(!object->texcoords)
 	{
-		LOGERR("Failed to allocate texture coordinates\n");
+		BLTS_ERROR("Failed to allocate texture coordinates\n");
 		return 0;
 	}
 	object->indices = malloc ( sizeof(GLuint) * num_indices );
 	if(!object->indices)
 	{
-		LOGERR("Failed to allocate indices\n");
+		BLTS_ERROR("Failed to allocate indices\n");
 		return 0;
 	}
 
@@ -1585,7 +1585,7 @@ unsigned char* glesh_read_bitmap(const char* filename,
 	FILE* fp = fopen(filename, "rb");
 	if(!fp)
 	{
-		logged_perror("fopen");
+		BLTS_LOGGED_PERROR("fopen");
 		return NULL;
 	}
 
@@ -1593,7 +1593,7 @@ unsigned char* glesh_read_bitmap(const char* filename,
 	int offset = 0;
 	if(fread(&offset, 1, 4, fp) != 4)
 	{
-		LOGERR("Failed to read bitmap header offset from file %s\n", filename);
+		BLTS_ERROR("Failed to read bitmap header offset from file %s\n", filename);
 		fclose(fp);
 		return NULL;
 	}
@@ -1601,7 +1601,7 @@ unsigned char* glesh_read_bitmap(const char* filename,
 	if(fread(header, 1, sizeof(glesh_bitmap_header), fp) !=
 		sizeof(glesh_bitmap_header))
 	{
-		LOGERR("Failed to read bitmap header from file %s\n", filename);
+		BLTS_ERROR("Failed to read bitmap header from file %s\n", filename);
 		fclose(fp);
 		return NULL;
 	}
@@ -1630,7 +1630,7 @@ unsigned char* glesh_read_bitmap(const char* filename,
 		image_height * 4);
 	if(!p_data)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		fclose(fp);
 		return NULL;
 	}
@@ -1646,14 +1646,14 @@ unsigned char* glesh_read_bitmap(const char* filename,
 	unsigned char* p_temp = (unsigned char *) malloc( filedatalen );
 	if(!p_temp)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		fclose(fp);
 		return NULL;
 	}
 
 	if(fread(p_temp, 1, filedatalen, fp) != filedatalen)
 	{
-		LOGERR("Failed to read bitmap data from file %s\n", filename);
+		BLTS_ERROR("Failed to read bitmap data from file %s\n", filename);
 		fclose(fp);
 		free(p_data);
 		return NULL;

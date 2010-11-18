@@ -298,7 +298,7 @@ static int test_noise(sensors_data* data)
     int* min = NULL;
     int* max = NULL;
 
-    LOG("Measuring sensor input noise for %d seconds\n", data->duration);
+    BLTS_DEBUG("Measuring sensor input noise for %d seconds\n", data->duration);
 
     ret = measure_input_min_max(data, &min, &max);
     if (ret == 0)
@@ -431,11 +431,11 @@ static int test_axis(sensors_data* data)
 
     sensor_values = malloc(var_spec->num_values * sizeof(struct boxed_value));
 
-    LOG("Prepare the DUT for %c axis rotation/range test\n", 'X' + data->axis_index);
+    BLTS_DEBUG("Prepare the DUT for %c axis rotation/range test\n", 'X' + data->axis_index);
 
     sleep(5);
 
-    LOG("Rotate the %c axis 180 degrees\n", 'X' + data->axis_index);
+    BLTS_DEBUG("Rotate the %c axis 180 degrees\n", 'X' + data->axis_index);
 
     timelimit = time(NULL) + data->duration;
     while (time(NULL) < timelimit)
@@ -468,7 +468,7 @@ static int test_axis(sensors_data* data)
     {
         if (max_delta > data->axis_rotation_threshold)
         {
-            LOG("Rotation complete\n");
+            BLTS_DEBUG("Rotation complete\n");
         }
         else
         {
@@ -497,7 +497,7 @@ static int test_range(sensors_data* data)
     int* min = NULL;
     int* max = NULL;
 
-    LOG("Measuring sensor input range for %d seconds\n", data->duration);
+    BLTS_DEBUG("Measuring sensor input range for %d seconds\n", data->duration);
 
     ret = measure_input_min_max(data, &min, &max);
     if (ret == 0)
@@ -571,7 +571,7 @@ static int test_rate(sensors_data* data)
     }
 
     observed_rate = num_updates / data->duration;
-    LOG("Observed update rate %d Hz, sensor rate %d Hz\n", observed_rate, sensor_rate.int_val);
+    BLTS_DEBUG("Observed update rate %d Hz, sensor rate %d Hz\n", observed_rate, sensor_rate.int_val);
     if (sensor_rate.int_val == 0)
     {
         // Special check for zero rate
@@ -585,7 +585,7 @@ static int test_rate(sensors_data* data)
     else
     {
         int rate_difference_pct = abs(sensor_rate.int_val - observed_rate) * 100 / sensor_rate.int_val;
-        LOG("Observed difference %d%%, max %d%%\n", rate_difference_pct, data->max_rate_difference_pct);
+        BLTS_DEBUG("Observed difference %d%%, max %d%%\n", rate_difference_pct, data->max_rate_difference_pct);
         if (rate_difference_pct > data->max_rate_difference_pct)
         {
             BLTS_ERROR("Observed update rate differs from sensor rate by %d %%, maximum allowed difference is %d %%\n",
@@ -717,8 +717,8 @@ static int sensors_run_case(void* user_ptr, int test_num)
     if (plugin_init_plugin(data->plugin_private_data) == -1)
         return -1;
 
-    LOG("Running test case %d\n", test_num);
-//    LOG("Config: test type %d input name %s duration %d\n",
+    BLTS_DEBUG("Running test case %d\n", test_num);
+//    BLTS_DEBUG("Config: test type %d input name %s duration %d\n",
 //        data->test_type, data->sensor_input_name, data->duration);
     switch (data->test_type)
     {
@@ -836,8 +836,9 @@ int main(int argc, char **argv)
     /* blts_cli_main opens log file, but we need logging before it is called.
      * Open the log file temporarily here.
      */
-    log_open(sensors_cli.log_file, 1);
-    log_set_level(LEVEL_DEBUG);
+    blts_log_open(sensors_cli.log_file,
+	BLTS_LOG_FLAG_FILE | BLTS_LOG_FLAG_STDOUT);
+    blts_log_set_level(LEVEL_DEBUG);
 
     my_data = malloc(sizeof(*my_data));
     memset(my_data, 0, sizeof(*my_data));
@@ -873,7 +874,7 @@ int main(int argc, char **argv)
             sensors_cli.test_cases[i++].case_func = sensors_run_case;
     }
 
-    log_close();
+    blts_log_close();
 
     return blts_cli_main(&sensors_cli, argc, argv);
 }

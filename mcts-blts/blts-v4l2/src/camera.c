@@ -34,7 +34,7 @@
 
 #define CAPABILITY(from, what) { \
 		if(from & what) { \
-			 LOG("\tCapability %s is available\n", #what); \
+			 BLTS_DEBUG("\tCapability %s is available\n", #what); \
 		}\
 	}
 
@@ -96,14 +96,14 @@ void print_aspect_ratio(int w, int h)
 	char * aspect_ratio;
 	if(NULL!= (aspect_ratio = get_aspect_ratio(w,h)))
 	{
-		LOG("%s,", aspect_ratio);
-		LOG("aspect ratio:%s\n", aspect_ratio);
+		BLTS_DEBUG("%s,", aspect_ratio);
+		BLTS_DEBUG("aspect ratio:%s\n", aspect_ratio);
 		free(aspect_ratio);
 	}
 	else
 	{
-		LOG("%s,", "N/A");
-		LOG("aspect ratio not available\n");
+		BLTS_DEBUG("%s,", "N/A");
+		BLTS_DEBUG("aspect ratio not available\n");
 	}
 	FUNC_LEAVE()
 }
@@ -115,7 +115,7 @@ void print_aspect_ratio(int w, int h)
 void print_errno(const char * s)
 {
 	FUNC_ENTER()
-	LOGERR ("%s error %d, %s\n",
+	BLTS_ERROR("%s error %d, %s\n",
 		s, errno, strerror (errno));
 	FUNC_LEAVE()
 }
@@ -127,7 +127,7 @@ void print_errno(const char * s)
 void errno_continue(const char * s)
 {
 	FUNC_ENTER()
-	LOGERR ("%s error %d, %s\n",
+	BLTS_ERROR("%s error %d, %s\n",
 		s, errno, strerror (errno));
 	FUNC_LEAVE()
 }
@@ -146,11 +146,11 @@ int query_capabilites(v4l2_dev_data *dev)
 
 	if (0 == ioctl_VIDIOC_QUERYCAP (dev->dev_fd, &capabilities, 0))
 	{
-		LOG("Driver capabilities:\n");
-		LOG("\t.driver = %s\n", capabilities.driver);
-		LOG("\t.card = %s\n", capabilities.card);
-		LOG("\t.bus_info = %s\n", capabilities.bus_info);
-		LOG("\t.version = %u.%u.%u\n",
+		BLTS_DEBUG("Driver capabilities:\n");
+		BLTS_DEBUG("\t.driver = %s\n", capabilities.driver);
+		BLTS_DEBUG("\t.card = %s\n", capabilities.card);
+		BLTS_DEBUG("\t.bus_info = %s\n", capabilities.bus_info);
+		BLTS_DEBUG("\t.version = %u.%u.%u\n",
 			(capabilities.version >> 16) & 0xFF,
 			(capabilities.version >> 8) & 0xFF,
 			capabilities.version & 0xFF);
@@ -195,7 +195,7 @@ int enumerate_menu (v4l2_dev_data *dev, struct v4l2_queryctrl queryctrl)
 	{
 		if (0 == ioctl_VIDIOC_QUERYMENU (dev->dev_fd, &querymenu, 0))
 		{
-			LOG("\t%s\n", querymenu.name);
+			BLTS_DEBUG("\t%s\n", querymenu.name);
 		}
 		else
 		{
@@ -228,7 +228,7 @@ int enum_controls(v4l2_dev_data *dev)
 			if (queryctrl.flags & V4L2_CTRL_FLAG_DISABLED)
 				continue;
 
-			LOG("Control %s\n", queryctrl.name);
+			BLTS_DEBUG("Control %s\n", queryctrl.name);
 
 			if (queryctrl.type == V4L2_CTRL_TYPE_MENU)
 				enumerate_menu (dev, queryctrl);
@@ -251,7 +251,7 @@ int enum_controls(v4l2_dev_data *dev)
 		{
 			if (queryctrl.flags & V4L2_CTRL_FLAG_DISABLED)
 				continue;
-			LOG("Control %s\n", queryctrl.name);
+			BLTS_DEBUG("Control %s\n", queryctrl.name);
 
 			if (queryctrl.type == V4L2_CTRL_TYPE_MENU)
 				enumerate_menu (dev, queryctrl);
@@ -274,7 +274,7 @@ int enum_controls(v4l2_dev_data *dev)
 	{
 		if (queryctrl.flags & V4L2_CTRL_FLAG_DISABLED)
 			continue;
-		LOG("Extended control %s\n", queryctrl.name);
+		BLTS_DEBUG("Extended control %s\n", queryctrl.name);
 		if (queryctrl.type == V4L2_CTRL_TYPE_MENU)
 			enumerate_menu (dev, queryctrl);
 		queryctrl.id |= V4L2_CTRL_FLAG_NEXT_CTRL;
@@ -355,7 +355,7 @@ int enum_formats(v4l2_dev_data *dev)
 	memset (&argp, 0, sizeof (argp));
 
 	/* go through all buffer types (V4L2) */
-	LOG("Supported formats:\n");
+	BLTS_DEBUG("Supported formats:\n");
 	for ( buftype = 1; buftype < 4; buftype++)
 	{
 		/* go through all formats (V4L2) */
@@ -374,7 +374,7 @@ int enum_formats(v4l2_dev_data *dev)
 					{
 						cmpr=1;
 					}
-					LOG("V4L2_BUF_TYPE_VIDEO_CAPTURE;%s;%c%c%c%c;%i\n",
+					BLTS_DEBUG("V4L2_BUF_TYPE_VIDEO_CAPTURE;%s;%c%c%c%c;%i\n",
 						argp.description,
 						(argp.pixelformat >> 0) & 0xFF,
 						(argp.pixelformat >> 8) & 0xFF,
@@ -392,10 +392,10 @@ int enum_formats(v4l2_dev_data *dev)
 				case(2):
 					if (argp.flags & V4L2_FMT_FLAG_COMPRESSED)
 					{
-						LOG("buffer type V4L2_BUF_TYPE_VIDEO_OUTPUT: this format is compressed\n");
+						BLTS_DEBUG("buffer type V4L2_BUF_TYPE_VIDEO_OUTPUT: this format is compressed\n");
 						cmpr=1;
 					}
-					LOG("V4L2_BUF_TYPE_VIDEO_OUTPUT;%s;%c%c%c%c;%i\n",
+					BLTS_DEBUG("V4L2_BUF_TYPE_VIDEO_OUTPUT;%s;%c%c%c%c;%i\n",
 						argp.description,
 						(argp.pixelformat >> 0) & 0xFF,
 						(argp.pixelformat >> 8) & 0xFF,
@@ -409,7 +409,7 @@ int enum_formats(v4l2_dev_data *dev)
 				case(3):
 					if (argp.flags & V4L2_FMT_FLAG_COMPRESSED)
 					{
-						LOG("buffer type V4L2_BUF_TYPE_VIDEO_OVERLAY: this format is compressed\n");
+						BLTS_DEBUG("buffer type V4L2_BUF_TYPE_VIDEO_OVERLAY: this format is compressed\n");
 						cmpr=1;
 					}
 
@@ -428,7 +428,7 @@ int enum_formats(v4l2_dev_data *dev)
 						cmpr=1;
 					}
 
-					LOG("buffer enum:%i;%s;%c%c%c%c;%i\n",
+					BLTS_DEBUG("buffer enum:%i;%s;%c%c%c%c;%i\n",
 						argp.index,
 						argp.description,
 						(argp.pixelformat >> 0) & 0xFF,
@@ -580,17 +580,17 @@ void process_native_jpeg_file(v4l2_dev_data *dev, const void * p, char *filename
 		data_counter++;
 		if(data_counter > dev->format.fmt.pix.width*dev->format.fmt.pix.height)
 		{
-			LOGERR("JPEG image in buffer probably corrupted. Check image consistency.\n");
-			LOGERR("JPEG image in buffer probably corrupted. Check image consistency.\n");
-			LOGERR("\tData counter %i \n", data_counter);
-			LOGERR("\tWas more than %i \n", dev->format.fmt.pix.width*dev->format.fmt.pix.height);
+			BLTS_ERROR("JPEG image in buffer probably corrupted. Check image consistency.\n");
+			BLTS_ERROR("JPEG image in buffer probably corrupted. Check image consistency.\n");
+			BLTS_ERROR("\tData counter %i \n", data_counter);
+			BLTS_ERROR("\tWas more than %i \n", dev->format.fmt.pix.width*dev->format.fmt.pix.height);
 			break;
 		}
 	} while((*word_to_write) != 0xFF9D);
 	// write EOI to file
 	fwrite(word_to_write, sizeof(__u16), 1, outfile);
 	fclose(outfile);
-	LOG("Created file %s\n", filename);
+	BLTS_DEBUG("Created file %s\n", filename);
 }
 
 /**
@@ -618,7 +618,7 @@ void process_image_file(v4l2_dev_data *dev, const void * p, char *filename)
 	int res = convert_buffer(w, h, p, dev->format.fmt.pix.pixelformat, &rgbbuffer, V4L2_PIX_FMT_RGB24);
 	if (res < 0)
 	{
-		LOGERR("Failed to convert buffer, result %d\n", res);
+		BLTS_ERROR("Failed to convert buffer, result %d\n", res);
 		return;
 	}
 
@@ -628,7 +628,7 @@ void process_image_file(v4l2_dev_data *dev, const void * p, char *filename)
 	jpeg_create_compress(&cinfo);
 
 	if ((outfile = fopen(filename, "wb")) == NULL) {
-		LOGERR("can't open '%s' for writing\n", filename);
+		BLTS_ERROR("can't open '%s' for writing\n", filename);
 		free(rgbbuffer);
 		return;
 	}
@@ -655,7 +655,7 @@ void process_image_file(v4l2_dev_data *dev, const void * p, char *filename)
 	jpeg_finish_compress(&cinfo);
 	jpeg_destroy_compress(&cinfo);
 	fclose(outfile);
-	LOG("Created file %s\n", filename);
+	BLTS_DEBUG("Created file %s\n", filename);
 	free(rgbbuffer);
 }
 
@@ -673,7 +673,7 @@ int read_jpeg_image(char *filename)
 
 	if ( !infile )
 	{
-		printf("Error opening jpeg file %s\n!", filename );
+		BLTS_ERROR("Error opening jpeg file %s\n!", filename );
 		return -1;
 	}
 	cinfo.err = jpeg_std_error( &jerr );
@@ -682,10 +682,10 @@ int read_jpeg_image(char *filename)
 	jpeg_stdio_src( &cinfo, infile );
 	jpeg_read_header( &cinfo, TRUE );
 
-	LOG("JPEG File Information \n");
-	LOG("\tImage width and height: %d pixels and %d pixels.\n", cinfo.image_width, cinfo.image_height);
-	LOG("\tColor components per pixel: %d.\n", cinfo.num_components);
-	LOG("\tColor space: %d.\n", cinfo.jpeg_color_space);
+	BLTS_DEBUG("JPEG File Information \n");
+	BLTS_DEBUG("\tImage width and height: %d pixels and %d pixels.\n", cinfo.image_width, cinfo.image_height);
+	BLTS_DEBUG("\tColor components per pixel: %d.\n", cinfo.num_components);
+	BLTS_DEBUG("\tColor space: %d.\n", cinfo.jpeg_color_space);
 
 	jpeg_start_decompress( &cinfo );
 	row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*cinfo.num_components );
@@ -706,11 +706,11 @@ void dump_buffer_info(unsigned loglevel, v4l2_dev_data *dev, struct v4l2_buffer 
 	int i;
 	assert(dev);
 	assert(buf);
-	log_print_level(loglevel, "Buffer state:\n");
-	log_print_level(loglevel, "  Returned buffer:\n");
-	log_print_level(loglevel, "\tindex=%u type=%u bytesused=%u flags=%u field=%u\n",
+	blts_log_print_level(loglevel, "Buffer state:\n");
+	blts_log_print_level(loglevel, "  Returned buffer:\n");
+	blts_log_print_level(loglevel, "\tindex=%u type=%u bytesused=%u flags=%u field=%u\n",
 		buf->index, buf->type, buf->bytesused, buf->flags, buf->field);
-	log_print_level(loglevel, "\ttimestamp=%u:%u timecode=%u:%u:%u:%u:%u:%u:%u:%u:%u:%u sequence=%u\n",
+	blts_log_print_level(loglevel, "\ttimestamp=%u:%u timecode=%u:%u:%u:%u:%u:%u:%u:%u:%u:%u sequence=%u\n",
 		buf->timestamp.tv_sec, buf->timestamp.tv_usec,
 		buf->timecode.type, buf->timecode.flags, buf->timecode.frames,
 		buf->timecode.seconds, buf->timecode.minutes, buf->timecode.hours,
@@ -718,21 +718,21 @@ void dump_buffer_info(unsigned loglevel, v4l2_dev_data *dev, struct v4l2_buffer 
 		buf->timecode.userbits[2], buf->timecode.userbits[3], buf->sequence);
 	switch (buf->memory) {
 	case V4L2_MEMORY_MMAP:
-		log_print_level(loglevel, "\tmemory=MMAP offset=%u\n", buf->m.offset);
+		blts_log_print_level(loglevel, "\tmemory=MMAP offset=%u\n", buf->m.offset);
 		break;
 	case V4L2_MEMORY_USERPTR:
-		log_print_level(loglevel, "\tmemory=USERPTR userptr=%p\n",(void*) buf->m.userptr);
+		blts_log_print_level(loglevel, "\tmemory=USERPTR userptr=%p\n",(void*) buf->m.userptr);
 		break;
 	case V4L2_MEMORY_OVERLAY:
-		log_print_level(loglevel, "\tmemory=OVERLAY\n");
+		blts_log_print_level(loglevel, "\tmemory=OVERLAY\n");
 		break;
 	}
-	log_print_level(loglevel, "\tlength=%u input=%u reserved=%u\n",buf->length, buf->input, buf->reserved);
-	log_print_level(loglevel, "  Our buffers:\n");
+	blts_log_print_level(loglevel, "\tlength=%u input=%u reserved=%u\n",buf->length, buf->input, buf->reserved);
+	blts_log_print_level(loglevel, "  Our buffers:\n");
 	for (i = 0; i < dev->n_buffers; ++i)
-		log_print_level(loglevel, "\t%p (length %u)\n",
+		blts_log_print_level(loglevel, "\t%p (length %u)\n",
 			dev->buffers[i].start, dev->buffers[i].length);
-	log_print_level(loglevel, "\n");
+	blts_log_print_level(loglevel, "\n");
 }
 
 static int validate_dequeued_buffer(v4l2_dev_data *dev, struct v4l2_buffer *buf)
@@ -810,7 +810,7 @@ int read_frame(v4l2_dev_data *dev)
 	switch (dev->io_method)
 	{
 	case IO_METHOD_NONE:
-		LOGERR("No IO method selected");
+		BLTS_ERROR("No IO method selected");
 		FUNC_LEAVE()
 		return FALSE;
 		break;
@@ -828,7 +828,7 @@ int read_frame(v4l2_dev_data *dev)
 				/* fall through */
 
 			default:
-				LOGERR ("read");
+				BLTS_ERROR("read");
 				FUNC_LEAVE()
 				return FALSE;
 			}
@@ -940,7 +940,7 @@ int read_frame_to_file(v4l2_dev_data *dev, char *filename)
 	switch (dev->io_method)
 	{
 	case IO_METHOD_NONE:
-		LOGERR("No IO method selected");
+		BLTS_ERROR("No IO method selected");
 		FUNC_LEAVE()
 		return FALSE;
 		break;
@@ -950,7 +950,7 @@ int read_frame_to_file(v4l2_dev_data *dev, char *filename)
 		{
 			switch (errno)
 			{
-			LOG("processing image..");
+			BLTS_DEBUG("processing image..");
 			fflush(stdout);
 
 			case EAGAIN:
@@ -963,7 +963,7 @@ int read_frame_to_file(v4l2_dev_data *dev, char *filename)
 				/* fall through */
 
 			default:
-				LOGERR ("read");
+				BLTS_ERROR("read");
 				FUNC_LEAVE()
 				return FALSE;
 			}
@@ -1103,15 +1103,14 @@ boolean mainloop(v4l2_dev_data *dev, int loops)
 					if (EINTR == errno)
 						continue;
 					if(dev->use_progress)
-						LOGERR ("select");
+						BLTS_ERROR("select");
 					return FALSE;
 				}
 
 				if (0 == r)
 				{
-					//log_close();
 					if(dev->use_progress)
-						LOGERR ("Select timeout\n");
+						BLTS_ERROR("Select timeout\n");
 					return FALSE;
 				}
 			}
@@ -1127,9 +1126,9 @@ boolean mainloop(v4l2_dev_data *dev, int loops)
 		}
 	}
 	elapsed = timing_elapsed();
-	LOG("\n%i frames read in %.2f seconds\n", loops, elapsed);
+	BLTS_DEBUG("\n%i frames read in %.2f seconds\n", loops, elapsed);
 	dev->calculated_frame_rate = ((float)loops / elapsed);
-	LOG("Frames per second: %.2f\n", dev->calculated_frame_rate);
+	BLTS_DEBUG("Frames per second: %.2f\n", dev->calculated_frame_rate);
 	timing_stop();
 	return TRUE;
 }
@@ -1172,8 +1171,7 @@ boolean mainloop_stream(v4l2_dev_data *dev,int loops, int sx, int sy, void *fb)
 
 			if (0 == r)
 			{
-				log_close();
-				LOGERR("select timeout\n");
+				BLTS_ERROR("select timeout\n");
 				return FALSE;
 			}
 			if (read_frame(dev))
@@ -1186,9 +1184,9 @@ boolean mainloop_stream(v4l2_dev_data *dev,int loops, int sx, int sy, void *fb)
 	}
 
 	elapsed = timing_elapsed();
-	LOG("\n%i frames read in %.2f seconds\n", loops, elapsed);
+	BLTS_DEBUG("\n%i frames read in %.2f seconds\n", loops, elapsed);
 	dev->calculated_frame_rate = ((float)loops / elapsed);
-	LOG("Frames per second: %.2f\n", dev->calculated_frame_rate);
+	BLTS_DEBUG("Frames per second: %.2f\n", dev->calculated_frame_rate);
 	timing_stop();
 
 	return TRUE;
@@ -1221,13 +1219,13 @@ boolean do_snapshot(v4l2_dev_data *dev, char * filename)
 			if (EINTR == errno)
 				continue;
 
-			LOGERR("select");
+			BLTS_ERROR("select");
 			return FALSE;
 		}
 
 		if (0 == r)
 		{
-			LOGERR ("select timeout\n");
+			BLTS_ERROR("select timeout\n");
 			return FALSE;
 		}
 
@@ -1435,7 +1433,7 @@ boolean init_read (v4l2_dev_data *dev, unsigned int buffer_size)
 
 	if (!dev->buffers)
 	{
-		LOGERR("Out of memory\n");
+		BLTS_ERROR("Out of memory\n");
 		return FALSE;
 	}
 
@@ -1445,7 +1443,7 @@ boolean init_read (v4l2_dev_data *dev, unsigned int buffer_size)
 
 	if (!dev->buffers[0].start)
 	{
-		LOGERR ("Out of memory\n");
+		BLTS_ERROR("Out of memory\n");
 		return FALSE;
 	}
 	return TRUE;
@@ -1471,7 +1469,7 @@ boolean init_mmap(v4l2_dev_data *dev)
 	{
 		if (EINVAL == errno)
 		{
-			LOGERR ("%s does not support "
+			BLTS_ERROR("%s does not support "
 					 "memory mapping\n", dev->dev_name);
 			FUNC_LEAVE()
 			return FALSE;
@@ -1486,7 +1484,7 @@ boolean init_mmap(v4l2_dev_data *dev)
 
 	if (req.count < 2)
 	{
-		LOGERR ("Insufficient buffer memory on %s\n",
+		BLTS_ERROR("Insufficient buffer memory on %s\n",
 				 dev->dev_name);
 		FUNC_LEAVE()
 		return FALSE;
@@ -1495,7 +1493,7 @@ boolean init_mmap(v4l2_dev_data *dev)
 	dev->buffers = calloc (req.count, sizeof (*dev->buffers));
 	if (!dev->buffers)
 	{
-		LOGERR("Out of memory\n");
+		BLTS_ERROR("Out of memory\n");
 		FUNC_LEAVE()
 		return FALSE;
 	}
@@ -1528,7 +1526,7 @@ boolean init_mmap(v4l2_dev_data *dev)
 
 		if (MAP_FAILED == dev->buffers[dev->n_buffers].start)
 		{
-			LOGERR ("mmap error");
+			BLTS_ERROR("mmap error");
 			FUNC_LEAVE()
 			return FALSE;
 		}
@@ -1558,7 +1556,7 @@ boolean init_userp(v4l2_dev_data *dev, unsigned int buffer_size)
 	{
 		if (EINVAL == errno)
 		{
-			LOGERR ("%s does not support "
+			BLTS_ERROR("%s does not support "
 					 "user pointer i/o\n", dev->dev_name);
 			return FALSE;
 		}
@@ -1573,7 +1571,7 @@ boolean init_userp(v4l2_dev_data *dev, unsigned int buffer_size)
 
 	if (!dev->buffers)
 	{
-		LOGERR("Out of memory\n");
+		BLTS_ERROR("Out of memory\n");
 		return FALSE;
 	}
 	memset(dev->buffers, 0, req.count * sizeof (*dev->buffers));
@@ -1586,7 +1584,7 @@ boolean init_userp(v4l2_dev_data *dev, unsigned int buffer_size)
 
 		if (!dev->buffers[dev->n_buffers].start)
 		{
-			LOGERR ("Out of memory\n");
+			BLTS_ERROR("Out of memory\n");
 			return FALSE;
 		}
 	}
@@ -1607,14 +1605,14 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 	{
 		if (EINVAL == errno)
 		{
-			LOGERR("%s is no V4L2 device\n",
+			BLTS_ERROR("%s is no V4L2 device\n",
 					 dev->dev_name);
 			FUNC_LEAVE();
 			return FALSE;
 		}
 		else
 		{
-			LOG("VIDIOC_QUERYCAP error\n");
+			BLTS_DEBUG("VIDIOC_QUERYCAP error\n");
 			FUNC_LEAVE();
 			return FALSE;
 		}
@@ -1622,7 +1620,7 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 
 	if (!(dev->capability.capabilities & V4L2_CAP_VIDEO_CAPTURE))
 	{
-		LOGERR ("%s is no video capture device\n",
+		BLTS_ERROR("%s is no video capture device\n",
 				 dev->dev_name);
 		FUNC_LEAVE();
 		return FALSE;
@@ -1635,7 +1633,7 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 	case IO_METHOD_READ:
 		if (!(dev->capability.capabilities & V4L2_CAP_READWRITE))
 		{
-			LOGERR("%s does not support read i/o\n",
+			BLTS_ERROR("%s does not support read i/o\n",
 					 dev->dev_name);
 			FUNC_LEAVE();
 			return FALSE;
@@ -1647,7 +1645,7 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 	case IO_METHOD_USERPTR:
 		if (!(dev->capability.capabilities & V4L2_CAP_STREAMING))
 		{
-			LOGERR("%s does not support streaming i/o\n",
+			BLTS_ERROR("%s does not support streaming i/o\n",
 					 dev->dev_name);
 			FUNC_LEAVE();
 			return FALSE;
@@ -1673,7 +1671,7 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 			switch (errno)
 			{
 			case EINVAL:
-				LOGERR("Cropping not supported\n");
+				BLTS_ERROR("Cropping not supported\n");
 				/* Cropping not supported. */
 				break;
 			default:
@@ -1697,12 +1695,12 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 
 
 	/* Note: may change width and height. */
-	/* LOG("%c %c %c %c\n", dev->fmt_a,dev->fmt_b,dev->fmt_c,dev->fmt_d); */
+	/* BLTS_DEBUG("%c %c %c %c\n", dev->fmt_a,dev->fmt_b,dev->fmt_c,dev->fmt_d); */
 
 	if (dev->requested_format.fmt.pix.pixelformat)
 		if (try_format(dev, dev->requested_format.fmt.pix.pixelformat) == FALSE)
 		{
-			LOGERR("Try requested pixelformat failed!\n");
+			BLTS_ERROR("Try requested pixelformat failed!\n");
 			return FALSE;
 		}
 
@@ -1716,7 +1714,7 @@ boolean init_device (v4l2_dev_data *dev, int req_cam_width, int req_cam_height)
 	/* JPEG format speciality */
 	if(dev->format.fmt.pix.pixelformat == v4l2_fourcc('J','P','E','G'))
 	{
-		LOG("Trying to get and set compression options\n");
+		BLTS_DEBUG("Trying to get and set compression options\n");
 		// let device process the image by itself, just add our "watermark"
 		struct v4l2_jpegcompression compression;
 		CLEAR (compression);
@@ -1777,7 +1775,7 @@ boolean close_device (v4l2_dev_data *dev)
 		FUNC_LEAVE();
 		return FALSE;
 	}
-	LOG("Device closed.\n");
+	BLTS_DEBUG("Device closed.\n");
 	dev->dev_fd = -1;
 
 	FUNC_LEAVE();
@@ -1792,7 +1790,7 @@ boolean open_device (v4l2_dev_data *dev)
 
 	if (-1 == stat (dev->dev_name, &st))
 	{
-		LOGERR("Cannot identify '%s': %d, %s\n",
+		BLTS_ERROR("Cannot identify '%s': %d, %s\n",
 				 dev->dev_name, errno, strerror (errno));
 		FUNC_LEAVE();
 		return FALSE;
@@ -1800,7 +1798,7 @@ boolean open_device (v4l2_dev_data *dev)
 
 	if (!S_ISCHR (st.st_mode))
 	{
-		LOGERR ("%s is no device\n", dev->dev_name);
+		BLTS_ERROR("%s is no device\n", dev->dev_name);
 		FUNC_LEAVE();
 		return FALSE;
 	}
@@ -1809,12 +1807,12 @@ boolean open_device (v4l2_dev_data *dev)
 
 	if (-1 == dev->dev_fd)
 	{
-		LOGERR("Cannot open '%s': %d, %s\n",
+		BLTS_ERROR("Cannot open '%s': %d, %s\n",
 			 dev->dev_name, errno, strerror (errno));
 		FUNC_LEAVE();
 		return FALSE;
 	}
-	LOG("Device %s opened\n", dev->dev_name);
+	BLTS_DEBUG("Device %s opened\n", dev->dev_name);
 
 	FUNC_LEAVE();
 	return TRUE;
@@ -1827,11 +1825,11 @@ boolean device_enumeration(v4l2_dev_data *dev)
 
 	if(!open_device (dev))
 	{
-		LOG("Can't open device %s\n", dev->dev_name);
+		BLTS_DEBUG("Can't open device %s\n", dev->dev_name);
 		return FALSE;
 	}
 
-	LOG("Video inputs on \"%s\":\n", dev->dev_name);
+	BLTS_DEBUG("Video inputs on \"%s\":\n", dev->dev_name);
 	for (i = 0, ret = 0; ret == 0; ++i)
 	{
 		struct v4l2_input input;
@@ -1842,21 +1840,21 @@ boolean device_enumeration(v4l2_dev_data *dev)
 		if (!ret)
 		{
 			struct v4l2_standard standard;
-			LOG("Current input \"%s\" supports:\n", input.name);
+			BLTS_DEBUG("Current input \"%s\" supports:\n", input.name);
 			memset (&standard, 0, sizeof (standard));
 			standard.index = 0;
 
 			while (0 == ioctl_VIDIOC_ENUMSTD(dev->dev_fd, &standard, 0))
 			{
 				if (standard.id & input.std)
-						LOG("%s\n", standard.name);
+						BLTS_DEBUG("%s\n", standard.name);
 				standard.index++;
 			}
 		}
 	}
 
 
-	LOG("Video outputs on \"%s\":\n", dev->dev_name);
+	BLTS_DEBUG("Video outputs on \"%s\":\n", dev->dev_name);
 	for (i = 0, ret = 0; ret == 0; ++i)
 	{
 		struct v4l2_output output;
@@ -1865,14 +1863,14 @@ boolean device_enumeration(v4l2_dev_data *dev)
 		if (!ret)
 		{
 			struct v4l2_standard standard;
-			LOG("Current output \"%s\" supports:\n", output.name);
+			BLTS_DEBUG("Current output \"%s\" supports:\n", output.name);
 			memset (&standard, 0, sizeof (standard));
 			standard.index = 0;
 
 			while (0 == ioctl_VIDIOC_ENUMSTD(dev->dev_fd, &standard, 0))
 			{
 				if (standard.id & output.std)
-					LOG("%s\n", standard.name);
+					BLTS_DEBUG("%s\n", standard.name);
 				standard.index++;
 			}
 		}
@@ -1924,19 +1922,19 @@ void print_crop_data(v4l2_dev_data *dev)
 		ret = ioctl_VIDIOC_G_CROP(dev->dev_fd, &crop, 0);
 		if(ret)
 		{
-			perror("VIDIOC_G_CROP\n");
+			BLTS_LOGGED_PERROR("VIDIOC_G_CROP");
 			return;
 		}
 		else
 		{
-			LOG("VIDIOC_G_CROP successful\n");
+			BLTS_DEBUG("VIDIOC_G_CROP successful\n");
 		}
 
-		LOG("crop: top = %d, left = %d, width = %d, height = %d\n",crop.c.top, crop.c.left,
+		BLTS_DEBUG("crop: top = %d, left = %d, width = %d, height = %d\n",crop.c.top, crop.c.left,
 			crop.c.width, crop.c.height);
-		LOG("cropcap.bounds: top = %d, left = %d, width = %d, height = %d\n", cropcap.bounds.top,
+		BLTS_DEBUG("cropcap.bounds: top = %d, left = %d, width = %d, height = %d\n", cropcap.bounds.top,
 			cropcap.bounds.left, cropcap.bounds.width, cropcap.bounds.height);
-		LOG("cropcap.defrect: top = %d, left = %d, width = %d, height = %d\n",
+		BLTS_DEBUG("cropcap.defrect: top = %d, left = %d, width = %d, height = %d\n",
 			cropcap.defrect.left, cropcap.defrect.top, cropcap.defrect.width, cropcap.defrect.height);
 	}
 }
@@ -1951,34 +1949,34 @@ int do_set_crop(v4l2_dev_data *dev, unsigned int set_crop, struct v4l2_rect *vcr
 	{
 		if (set_crop & CROP_WIDTH)
 		{
-			LOG("Set width:%d\n",vcrop->width);
+			BLTS_DEBUG("Set width:%d\n",vcrop->width);
 			in_crop.c.width = vcrop->width;
 		}
 		if (set_crop & CROP_HEIGHT)
 		{
-			LOG("Set height:%d\n", vcrop->height);
+			BLTS_DEBUG("Set height:%d\n", vcrop->height);
 			in_crop.c.height = vcrop->height;
 		}
 		if (set_crop & CROP_LEFT)
 		{
-			LOG("Set left:%d\n", vcrop->left);
+			BLTS_DEBUG("Set left:%d\n", vcrop->left);
 			in_crop.c.left = vcrop->left;
 		}
 		if (set_crop & CROP_TOP)
 		{
-			LOG("Set top:%d\n",vcrop->top);
+			BLTS_DEBUG("Set top:%d\n",vcrop->top);
 				in_crop.c.top = vcrop->top;
 		}
 
 		if(ioctl_VIDIOC_S_CROP(dev->dev_fd, &in_crop, 0)!=0)
 		{
-			LOG("error setting cropping info\n");
+			BLTS_DEBUG("error setting cropping info\n");
 			return FALSE;
 		}
 	}
 	else
 	{
-		LOG("error getting cropping info\n");
+		BLTS_DEBUG("error getting cropping info\n");
 		return FALSE;
 	}
 
@@ -2017,7 +2015,7 @@ boolean mainloop_xvideo_stream(v4l2_dev_data *dev, int loops)
 
 			if (0 == r)
 			{
-				LOGERR("select timeout\n");
+				BLTS_ERROR("select timeout\n");
 				return FALSE;
 			}
 
@@ -2040,11 +2038,11 @@ int crop_corners(v4l2_dev_data *dev, int loops)
 
 	if (-1 == ioctl_VIDIOC_CROPCAP(dev->dev_fd, &cropcap, 0))
 	{
-		perror ("VIDIOC_CROPCAP");
+		BLTS_LOGGED_PERROR("VIDIOC_CROPCAP");
 		return FALSE;
 	}
 
-	LOG("Loops / cropping area :%d\n", loops);
+	BLTS_DEBUG("Loops / cropping area :%d\n", loops);
 
 	//+-----+
 	//|x |  |
@@ -2173,7 +2171,7 @@ int get_framerate(v4l2_dev_data *dev, int *numerator, int *denominator, float* f
 	*denominator = parm.parm.capture.timeperframe.denominator;
 	*fps = (float)parm.parm.capture.timeperframe.denominator / (float)parm.parm.capture.timeperframe.numerator;
 
-	LOG("Current frame rate: %u/%u (%g fps)\n",
+	BLTS_DEBUG("Current frame rate: %u/%u (%g fps)\n",
 		parm.parm.capture.timeperframe.numerator,
 		parm.parm.capture.timeperframe.denominator,
 		*fps);
@@ -2191,23 +2189,23 @@ int set_framerate_fps(v4l2_dev_data *dev, float* fps)
 
 	float_to_fraction(*fps, &n, &d);
 
-	LOG("\nfps=%lf, n=%d, d=%d\n", *fps, n, d);
+	BLTS_DEBUG("\nfps=%lf, n=%d, d=%d\n", *fps, n, d);
 
 	ret = set_framerate(dev, d, n, &cfps);
 
 	if(ret != 0)
 	{
-		LOG("Unable to set frame rate!\n");
+		BLTS_DEBUG("Unable to set frame rate!\n");
 		return ret;
 	}
 
 	if (cfps != (float)n / (float)d)
 	{
-		LOG("Frame rate: %g fps (requested %g fps not supported)\n", cfps, *fps);
+		BLTS_DEBUG("Frame rate: %g fps (requested %g fps not supported)\n", cfps, *fps);
 	}
 	else
 	{
-		LOG("Frame rate: %g fps\n", cfps);
+		BLTS_DEBUG("Frame rate: %g fps\n", cfps);
 	}
 	*fps = cfps;
 
@@ -2229,7 +2227,7 @@ int set_framerate(v4l2_dev_data *dev, int numerator, int denominator, float* fps
 		return ret;
 	}
 
-	LOG("Current frame rate: %u/%u\n",
+	BLTS_DEBUG("Current frame rate: %u/%u\n",
 		parm.parm.capture.timeperframe.numerator,
 		parm.parm.capture.timeperframe.denominator);
 
@@ -2252,7 +2250,7 @@ int set_framerate(v4l2_dev_data *dev, int numerator, int denominator, float* fps
 
 	*fps = (float)parm.parm.capture.timeperframe.denominator / (float)parm.parm.capture.timeperframe.numerator;
 
-	LOG("Frame rate set: %u/%u (%g fps)\n",
+	BLTS_DEBUG("Frame rate set: %u/%u (%g fps)\n",
 		parm.parm.capture.timeperframe.numerator,
 		parm.parm.capture.timeperframe.denominator,
 		*fps);
@@ -2283,7 +2281,7 @@ int has_output(v4l2_dev_data *dev, int index)
 	ret = ioctl_VIDIOC_ENUMOUTPUT(dev->dev_fd, &output, 0);
 	if (!ret)
 	{
-		LOG("Output \"%s\" available\n", output.name);
+		BLTS_DEBUG("Output \"%s\" available\n", output.name);
 	}
 	FUNC_LEAVE();
 	return ret;
@@ -2299,7 +2297,7 @@ int has_input(v4l2_dev_data *dev, int index)
 	ret = ioctl_VIDIOC_ENUMINPUT(dev->dev_fd, &input, 0);
 	if (!ret)
 	{
-		LOG("Input \"%s\" available\n", input.name);
+		BLTS_DEBUG("Input \"%s\" available\n", input.name);
 	}
 	FUNC_LEAVE();
 	return ret;
@@ -2352,14 +2350,14 @@ boolean do_get_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 	get_ret = ioctl_VIDIOC_G_STD(dev->dev_fd, &std_id, 0);
 	get_errno = errno;
 
-	LOG("\t\tGet standard %llx - ret %d - errno %d\n", std_id, get_ret, get_errno);
+	BLTS_DEBUG("\t\tGet standard %llx - ret %d - errno %d\n", std_id, get_ret, get_errno);
 
 	if (check_ret == 0)
 	{
 		/* Driver shall set the std field of struct v4l2_input to zero when standards not available */
 		if (!input->std)
 		{
-			LOG("\n\nCannot get standard IDs from HW\n");
+			BLTS_DEBUG("\n\nCannot get standard IDs from HW\n");
 			return TRUE;
 		}
 		else
@@ -2380,7 +2378,7 @@ boolean do_get_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 	/* EINVAL is expected value here */
 	if(check_ret != -1 || check_errno != EINVAL)
 	{
-		LOGERR("unexpected error values %d %d!\n", check_ret, check_errno);
+		BLTS_ERROR("unexpected error values %d %d!\n", check_ret, check_errno);
 		return FALSE;
 	}
 
@@ -2400,21 +2398,21 @@ boolean set_video_standard(v4l2_dev_data *dev, v4l2_std_id id, const int check_r
 	errno = 0;
 	set_ret = ioctl_VIDIOC_S_STD(dev->dev_fd, &std_id, 0);
 	set_errno = errno;
-	LOG("\t\tSet standard %llx - ret %d - errno %d\n", std_id, set_ret, set_errno);
+	BLTS_DEBUG("\t\tSet standard %llx - ret %d - errno %d\n", std_id, set_ret, set_errno);
 
 	/* Get current standard ID */
 	errno = 0;
 	memset(&std_id, 0, sizeof(std_id));
 	get_ret = ioctl_VIDIOC_G_STD(dev->dev_fd, &std_id, 0);
 	get_errno = errno;
-	LOG("\t\tGet standard %llx - ret %d - errno %d\n", std_id, get_ret, get_errno);
+	BLTS_DEBUG("\t\tGet standard %llx - ret %d - errno %d\n", std_id, get_ret, get_errno);
 
 	if (check_ret == 0)
 	{
 		/* Driver shall set the std field of struct v4l2_input to zero when standards not available */
 		if (!input->std)
 		{
-			LOG("\t\tCannot get standard IDs from HW\n");
+			BLTS_DEBUG("\t\tCannot get standard IDs from HW\n");
 			return TRUE;
 		}
 		else
@@ -2435,7 +2433,7 @@ boolean set_video_standard(v4l2_dev_data *dev, v4l2_std_id id, const int check_r
 	/* EINVAL is expected value here */
 	if(check_ret != -1 || check_errno != EINVAL)
 	{
-		LOGERR("unexpected error values %d %d!\n", check_ret, check_errno);
+		BLTS_ERROR("unexpected error values %d %d!\n", check_ret, check_errno);
 		return FALSE;
 	}
 
@@ -2462,7 +2460,7 @@ boolean do_set_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 	 * supports this, but do not fail the test case here */
 	if (!ioctl_VIDIOC_QUERYSTD(dev->dev_fd, &sensed_id, 0))
 	{
-		LOG("\tSensed standard from device driver %llx\n", sensed_id);
+		BLTS_DEBUG("\tSensed standard from device driver %llx\n", sensed_id);
 	}
 
 	/* Save the original standard if possible */
@@ -2470,7 +2468,7 @@ boolean do_set_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 	orig_ret = ioctl_VIDIOC_G_STD(dev->dev_fd, &original_id, 0);
 	orig_errno = errno;
 
-	LOG("\tGet original standard %llx - ret %d - errno %d\n", original_id, orig_ret, orig_errno);
+	BLTS_DEBUG("\tGet original standard %llx - ret %d - errno %d\n", original_id, orig_ret, orig_errno);
 	do
 	{
 		errno = 0;
@@ -2479,13 +2477,13 @@ boolean do_set_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 		enum_ret = ioctl_VIDIOC_ENUMSTD(dev->dev_fd, &std, 0);
 		enum_errno = errno;
 
-		LOG("\tEnum standard index %d - ret %d - errno %d\n", index, enum_ret, enum_errno);
+		BLTS_DEBUG("\tEnum standard index %d - ret %d - errno %d\n", index, enum_ret, enum_errno);
 
 		if (enum_ret == 0)
 		{
 			if(!set_video_standard(dev, std.id, check_ret, check_errno, input))
 			{
-				LOGERR("Failed to set video standard: %llx\n", std.id);
+				BLTS_ERROR("Failed to set video standard: %llx\n", std.id);
 				failed++;
 			}
 		}
@@ -2501,17 +2499,17 @@ boolean do_set_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 		{
 			if(!set_video_standard(dev, original_id, check_ret, check_errno, input))
 			{
-				LOGERR("Failed to restore original standard: %llx\n", original_id);
+				BLTS_ERROR("Failed to restore original standard: %llx\n", original_id);
 				failed++;
 			}
 			else
 			{
-				LOG("\tOriginal standard %llx restored\n", original_id);
+				BLTS_DEBUG("\tOriginal standard %llx restored\n", original_id);
 			}
 		}
 		else
 		{
-			LOG("\tNo Original standard ID from HW available\n");
+			BLTS_DEBUG("\tNo Original standard ID from HW available\n");
 		}
 	}
 	else
@@ -2519,14 +2517,14 @@ boolean do_set_standards(v4l2_dev_data *dev, const int check_ret, const int chec
 		/* EINVAL is expected value here */
 		if(orig_ret != -1 || orig_errno != EINVAL)
 		{
-			LOGERR("Unexpected error values %d %d!\n", orig_ret, orig_errno);
+			BLTS_ERROR("Unexpected error values %d %d!\n", orig_ret, orig_errno);
 			failed++;
 		}
 	}
 
 	if(failed > 0)
 	{
-		LOGERR("Test failed (%d failures)\n", failed);
+		BLTS_ERROR("Test failed (%d failures)\n", failed);
 		FUNC_LEAVE()
 		return FALSE;
 	}
@@ -2552,12 +2550,12 @@ boolean loop_through_video_inputs(v4l2_dev_data *dev, V4L2VideoInputFunc fp)
 	/* Save the original input index */
 	if (-1 == ioctl_VIDIOC_G_INPUT(dev->dev_fd, &original_index, 0) )
 	{
-		LOGERR("Save the original input index failed!\n");
+		BLTS_ERROR("Save the original input index failed!\n");
 		FUNC_LEAVE()
 		return FALSE;
 	}
 
-	LOG("Original input index %d\n", original_index);
+	BLTS_DEBUG("Original input index %d\n", original_index);
 
 	do
 	{
@@ -2568,17 +2566,17 @@ boolean loop_through_video_inputs(v4l2_dev_data *dev, V4L2VideoInputFunc fp)
 		enum_ret = ioctl_VIDIOC_ENUMINPUT(dev->dev_fd, &input, 0);
 		enum_errno = errno;
 
-		LOG("\tEnum input index %d - ret %d - errno %d\n", index, enum_ret, enum_errno);
+		BLTS_DEBUG("\tEnum input index %d - ret %d - errno %d\n", index, enum_ret, enum_errno);
 
 		if (enum_ret == 0)
 		{
 			if (-1 == ioctl_VIDIOC_S_INPUT(dev->dev_fd, (int*) &input.index, 0) )
 			{
-				LOGERR("\tSet input index %d failed!\n", input.index);
+				BLTS_ERROR("\tSet input index %d failed!\n", input.index);
 				failed++;
 				goto cleanup;
 			}
-			LOG("\tTest input index %d\n", input.index);
+			BLTS_DEBUG("\tTest input index %d\n", input.index);
 		}
 
 		/* Test get/set standard ioctl at least once */
@@ -2598,17 +2596,17 @@ cleanup:
 	/* Restore the original input index */
 	if (-1 == ioctl_VIDIOC_S_INPUT(dev->dev_fd, &original_index, 0) )
 	{
-		LOGERR("Failed to restore original input\n");
+		BLTS_ERROR("Failed to restore original input\n");
 		failed++;
 	}
 	else
 	{
-		LOG("Original input index %d restored\n", original_index);
+		BLTS_DEBUG("Original input index %d restored\n", original_index);
 	}
 
 	if(failed > 0)
 	{
-		LOGERR("Test failed (%d failures)\n", failed);
+		BLTS_ERROR("Test failed (%d failures)\n", failed);
 		FUNC_LEAVE()
 		return FALSE;
 	}

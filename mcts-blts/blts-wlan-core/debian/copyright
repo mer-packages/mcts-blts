@@ -1,0 +1,57 @@
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+On Debian systems, the complete text of the GNU General Public
+License, version 2, can be found in /usr/share/common-licenses/GPL-2.
+
+
+This software incorporates an adaptation of code from "iw", a nl80211
+configuration tool for Linux. It is currently maintained at
+http://git.sipsolutions.net/iw.git/ . License:
+
+Copyright (c) 2007, 2008        Johannes Berg
+Copyright (c) 2007              Andy Lutomirski
+Copyright (c) 2007              Mike Kershaw
+Copyright (c) 2008-2009         Luis R. Rodriguez
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+This software incorporates an adaptation of code from "hostapd" and
+"wpa_supplicant", software for setting up and connecting to WLAN access
+points. They are currently maintained at http://w1.fi/ . The software is:
+
+Copyright (c) 2002-2010, Jouni Malinen <j@w1.fi> and contributors
+All Rights Reserved
+
+and is dual-licenced under GPL version 2 and BSD licenses.
+
+
+This software incorporates an adaptation of code from "udhcp", a DHCP
+client/server implementation.  It is currently part of Busybox, at
+http://www.busybox.net/ . The adapted version is copyright:
+
+Russ Dill <Russ.Dill@asu.edu> July 2001
+
+and is licensed under GPL version 2.

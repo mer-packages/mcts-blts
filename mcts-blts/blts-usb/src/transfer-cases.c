@@ -105,13 +105,13 @@ static void *log_thread_function(void *ptr)
 	ptr = ptr; /* unused */
 	fdw = open("hostdrv_log.txt", O_WRONLY|O_CREAT|O_APPEND, 00644);
 	if (fdw < 0) {
-		logged_perror("log output open");
+		BLTS_LOGGED_PERROR("log output open");
 		return NULL;
 	}
 
 	fdp.fd = open("/sys/module/blts_usb_host/logging/log", O_RDWR);
 	if (fdp.fd < 0) {
-		logged_perror("sysfs log open");
+		BLTS_LOGGED_PERROR("sysfs log open");
 		close(fdw);
 		return NULL;
 	}
@@ -122,19 +122,19 @@ static void *log_thread_function(void *ptr)
 	while (1) {
 		ret = poll(&fdp, 1, 10000);
 		if (ret < 0) {
-			logged_perror("log poll");
+			BLTS_LOGGED_PERROR("log poll");
 			break;
 		} else if (ret > 0) {
 			memset(buf, 0, sizeof(buf));
 			lseek(fdp.fd, SEEK_SET, 0);
 			ret = read(fdp.fd, buf, 4096);
 			if (ret < 0) {
-				logged_perror("log read");
+				BLTS_LOGGED_PERROR("log read");
 				break;
 			}
 			ret = write(fdw, buf, ret);
 			if (ret < 0) {
-				logged_perror("log write");
+				BLTS_LOGGED_PERROR("log write");
 				break;
 			}
 		}
@@ -151,7 +151,7 @@ static struct usb_case_state *usb_state_init(my_usb_data *data, dev_t dev)
 	struct usb_case_state *state;
 	state = malloc(sizeof *state);
 	if (!state) {
-		log_print("OOM\n");
+		BLTS_DEBUG("OOM\n");
 		return 0;
 	}
 	memset(state, 0, sizeof *state);
@@ -164,13 +164,13 @@ static struct usb_case_state *usb_state_init(my_usb_data *data, dev_t dev)
 		ret = mknodat(AT_FDCWD, node_names[t], S_IFCHR | 0600,
 			makedev(major(dev), t));
 		if (ret)
-			log_print("mknodat (%s) failed.\n", node_names[t]);
+			BLTS_DEBUG("mknodat (%s) failed.\n", node_names[t]);
 	}
 
 
 	ret = pthread_create(&logthread_id, NULL, log_thread_function, NULL);
 	if (ret)
-		log_print("Failed to create log reader thread (%d)!\n", ret);
+		BLTS_DEBUG("Failed to create log reader thread (%d)!\n", ret);
 
 	return state;
 }
@@ -186,7 +186,7 @@ dev_t find_dev(void* user_ptr)
 	FILE *f = fopen("/proc/devices", "r");
 
 	if (!f) {
-		log_print("Can't open devices.\n");
+		BLTS_DEBUG("Can't open devices.\n");
 		goto done;
 	}
 	while ((read_len = getline(&line, &line_sz, f)) != -1)
@@ -194,7 +194,7 @@ dev_t find_dev(void* user_ptr)
 		if (strstr(line, data->host_driver))
 		{
 			if (sscanf(line, "%u", &dev) != 1)
-				log_print("Can't get devnum.\n");
+				BLTS_DEBUG("Can't get devnum.\n");
 			break;
 		}
 	}
@@ -211,13 +211,13 @@ int buf_ch_size(int fd, unsigned ep, unsigned newsize)
 {
 	if (ioctl(fd, HOSTDRV_IOCGCONF, &config) < 0)
 	{
-		logged_perror("ioctl (get conf)");
+		BLTS_LOGGED_PERROR("ioctl (get conf)");
 		return -errno;
 	}
 	config.transfer_size[ep] = newsize;
 	if (ioctl(fd, HOSTDRV_IOCSCONF, &config) < 0)
 	{
-		logged_perror("ioctl (set conf)");
+		BLTS_LOGGED_PERROR("ioctl (set conf)");
 		return -errno;
 	}
 	return 0;
@@ -240,7 +240,7 @@ static int test_read_real(char *node_name, unsigned size)
 
 	fdr = open(node_name, O_RDONLY);
 	if (fdr < 0) {
-		logged_perror("open");
+		BLTS_LOGGED_PERROR("open");
 		free(buf);
 		return -errno;
 	}
@@ -254,14 +254,14 @@ static int test_read_real(char *node_name, unsigned size)
 		ret = read(fdr, buf, size);
 		if (ret < 0)
 		{
-			logged_perror("read");
+			BLTS_LOGGED_PERROR("read");
 			break;
 		}
 		for (i = 0; i < size; i++) {
 			if (buf[i] == i % 63)
 				continue;
-			log_print("Data consistency error\n \tData[%i] = '%02X'\n \tShould be '%02X'\n", i, buf[i], i%63);
-			log_print("Current transfer of data is therefore corrupted, data frame size %i bytes\n", size);
+			BLTS_DEBUG("Data consistency error\n \tData[%i] = '%02X'\n \tShould be '%02X'\n", i, buf[i], i%63);
+			BLTS_DEBUG("Current transfer of data is therefore corrupted, data frame size %i bytes\n", size);
 			break;
 		}
 		d_tot += ret;
@@ -273,10 +273,10 @@ static int test_read_real(char *node_name, unsigned size)
 		if (t_tot > MAX_TEST_T)
 			break;
 	}
-	log_print("%s: read %ld B in %.3lf s (%.3lf bytes/sec)\n", node_name, d_tot, t_tot, d_tot/t_tot);
+	BLTS_DEBUG("%s: read %ld B in %.3lf s (%.3lf bytes/sec)\n", node_name, d_tot, t_tot, d_tot/t_tot);
 	if (!ret || d_tot == 0)
 	{
-		log_print("No data transfer detected, transfer failed.\n");
+		BLTS_DEBUG("No data transfer detected, transfer failed.\n");
 		ret = -EIO;
 	}
 
@@ -305,7 +305,7 @@ static int test_write_real(char *node_name, unsigned size)
 
 	fdw = open(node_name, O_WRONLY);
 	if (fdw < 0) {
-		logged_perror("open test_write()");
+		BLTS_LOGGED_PERROR("open test_write()");
 		free(buf);
 		return -errno;
 	}
@@ -318,10 +318,10 @@ static int test_write_real(char *node_name, unsigned size)
 		ret = write(fdw, buf, size);
 		if (ret < 0) {
 			if (errno == EOVERFLOW) {
-				log_print("Write: Overflow.\n");
+				BLTS_DEBUG("Write: Overflow.\n");
 				 //Try to continue
 			} else {
-				logged_perror("write");
+				BLTS_LOGGED_PERROR("write");
 				break;
 			}
 		}
@@ -334,10 +334,10 @@ static int test_write_real(char *node_name, unsigned size)
 		if (t_tot > MAX_TEST_T)
 			break;
 	}
-	log_print("%s: wrote %ld B in %.3lf s (%.3lf bytes/sec)\n", node_name, d_tot, t_tot, d_tot/t_tot);
+	BLTS_DEBUG("%s: wrote %ld B in %.3lf s (%.3lf bytes/sec)\n", node_name, d_tot, t_tot, d_tot/t_tot);
 	if (!ret || d_tot == 0)
 	{
-		log_print("No data transfer detected, transfer failed.\n");
+		BLTS_DEBUG("No data transfer detected, transfer failed.\n");
 		ret = -EIO;
 	}
 	free(buf);
@@ -365,19 +365,19 @@ void print_ep_type(int type)
 	switch (type)
 	{
 		case USBDRV_EP_TYPE_BULK:
-			log_print("\tBulk endpoint\n");
+			BLTS_DEBUG("\tBulk endpoint\n");
 			break;
 		case USBDRV_EP_TYPE_CONTROL:
-			log_print("\tControl endpoint\n");
+			BLTS_DEBUG("\tControl endpoint\n");
 			break;
 		case USBDRV_EP_TYPE_INT:
-			log_print("\tInterrupt endpoint\n");
+			BLTS_DEBUG("\tInterrupt endpoint\n");
 			break;
 		case USBDRV_EP_TYPE_ISOC:
-			log_print("\tIsochronous endpoint\n");
+			BLTS_DEBUG("\tIsochronous endpoint\n");
 			break;
 		default:
-			log_print("\tUnknown endpoint type\n");
+			BLTS_DEBUG("\tUnknown endpoint type\n");
 			break;
 	}
 }
@@ -395,7 +395,7 @@ int test_read(unsigned buf_new_size)
 	fd = open(node_names[0], O_RDONLY);
 	if (fd < 0)
 	{
-		logged_perror("error on open");
+		BLTS_LOGGED_PERROR("error on open");
 		return -errno;
 	}
 
@@ -408,7 +408,7 @@ int test_read(unsigned buf_new_size)
 
 	if (ioctl(fd, HOSTDRV_IOCGCONF, &conf) < 0)
 	{
-		logged_perror("ioctl (get conf)");
+		BLTS_LOGGED_PERROR("ioctl (get conf)");
 		return -errno;
 	}
 
@@ -422,20 +422,20 @@ int test_read(unsigned buf_new_size)
 
 			if (conf.endpoint_state[i] == USBDRV_EP_IN)
 			{
-				log_print("Starting read thread for ep %d...\n", i);
+				BLTS_DEBUG("Starting read thread for ep %d...\n", i);
 				print_ep_type(conf.endpoint_type[i]);
-				log_print("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
+				BLTS_DEBUG("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
 				nodes_found++;
 				ret = pthread_create(&thread_data[i].id, NULL,
 					read_thread_function, &thread_data[i]);
 				if (ret) {
-					log_print("Failed to create read thread "\
+					BLTS_DEBUG("Failed to create read thread "\
 						"(%d)!\n", ret);
 					goto cleanup;
 				}
 			} else {
 				// just read test
-				log_print("NOT Starting write thread for ep %d...\n", i);
+				BLTS_DEBUG("NOT Starting write thread for ep %d...\n", i);
 				}
 			}
 		}
@@ -455,7 +455,7 @@ cleanup:
 			pthread_cancel(thread_data[i].id);
 	if(nodes_found == 0)
 	{
-		log_print("No endpoints found for read testing\n");
+		BLTS_DEBUG("No endpoints found for read testing\n");
 		ret = -1;
 	}
 	return ret;
@@ -474,7 +474,7 @@ int test_write(unsigned buf_new_size)
 	fd = open(node_names[0], O_RDONLY);
 	if (fd < 0)
 	{
-		logged_perror("open");
+		BLTS_LOGGED_PERROR("open");
 		return -errno;
 	}
 
@@ -487,7 +487,7 @@ int test_write(unsigned buf_new_size)
 
 	if (ioctl(fd, HOSTDRV_IOCGCONF, &conf) < 0)
 	{
-		logged_perror("ioctl (get conf)");
+		BLTS_LOGGED_PERROR("ioctl (get conf)");
 		return -errno;
 	}
 
@@ -501,19 +501,19 @@ int test_write(unsigned buf_new_size)
 
 			if (conf.endpoint_state[i] == USBDRV_EP_OUT)
 			{
-				log_print("Starting write thread for ep %d...\n", i);
+				BLTS_DEBUG("Starting write thread for ep %d...\n", i);
 				print_ep_type(conf.endpoint_type[i]);
-				log_print("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
+				BLTS_DEBUG("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
 				nodes_found++;
 				ret = pthread_create(&thread_data[i].id, NULL,
 					write_thread_function, &thread_data[i]);
 				if (ret) {
-					log_print("failed to create write thread "\
+					BLTS_DEBUG("failed to create write thread "\
 						"(%d)!\n", ret);
 					goto cleanup;
 			} else {
 				// just write test
-				log_print("NOT Starting read thread for ep %d...\n", i);
+				BLTS_DEBUG("NOT Starting read thread for ep %d...\n", i);
 				}
 			}
 		}
@@ -532,7 +532,7 @@ cleanup:
 			pthread_cancel(thread_data[i].id);
 	if(nodes_found == 0)
 	{
-		log_print("No endpoints found for write testing\n");
+		BLTS_DEBUG("No endpoints found for write testing\n");
 		ret = -1;
 	}
 
@@ -552,11 +552,11 @@ int blts_data_read(void* user_ptr, __attribute__((unused)) int testnum)
 		return -EINVAL;
 
 	dev_t dev = find_dev(data);
-	log_print("Driver:: dev = %u:%u\n", major(dev), minor(dev));
+	BLTS_DEBUG("Driver:: dev = %u:%u\n", major(dev), minor(dev));
 
 	if (!major(dev))
 	{
-		log_print("Bad major, aborting test.\n");
+		BLTS_DEBUG("Bad major, aborting test.\n");
 		goto done;
 	}
 
@@ -565,7 +565,7 @@ int blts_data_read(void* user_ptr, __attribute__((unused)) int testnum)
 	if (!test)
 		return ret;
 
-	log_print("Running... ");
+	BLTS_DEBUG("Running... ");
 	ret = test_read(data->endpoint_transfer_size);
 
 done:
@@ -585,11 +585,11 @@ int blts_data_write(void* user_ptr, __attribute__((unused)) int testnum)
 		return -EINVAL;
 
 	dev_t dev = find_dev(data);
-	log_print("Driver:: dev = %u:%u\n", major(dev), minor(dev));
+	BLTS_DEBUG("Driver:: dev = %u:%u\n", major(dev), minor(dev));
 
 	if (!major(dev))
 	{
-		log_print("Bad major, aborting test.\n");
+		BLTS_DEBUG("Bad major, aborting test.\n");
 		goto done;
 	}
 
@@ -598,7 +598,7 @@ int blts_data_write(void* user_ptr, __attribute__((unused)) int testnum)
 	if (!test)
 		return ret;
 
-	log_print("Running... \n");
+	BLTS_DEBUG("Running... \n");
 	ret = test_write(data->endpoint_transfer_size);
 
 done:
@@ -617,7 +617,7 @@ int blts_setup_host_driver(void* user_ptr, __attribute__((unused)) int testnum)
 	if (!data)
 		return -EINVAL;
 
-	log_print("Setup host driver: %s%s.ko\n", data->host_driver_path, data->host_driver);
+	BLTS_DEBUG("Setup host driver: %s%s.ko\n", data->host_driver_path, data->host_driver);
 
 	ret = asprintf(&command, "insmod %s%s.ko", data->host_driver_path, data->host_driver);
 	if (ret<0)

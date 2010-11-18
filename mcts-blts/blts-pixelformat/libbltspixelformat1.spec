@@ -1,10 +1,10 @@
 Name: libbltspixelformat1
 Summary: BLTS pixel format conversion library
-Version: 0.1.3
+Version: 0.1.4
 Release: 1
 License: GPLv2
 Group: Development/Testing
-Source0: blts-pixelformat-%{version}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
 Requires: libbltscommon1
@@ -20,7 +20,7 @@ Pixel format conversion functions for the BLTS test assets. Based on ffmpeg libs
 This package contains libbltspixelformat1 development files
 
 %prep
-%setup -q -n blts-pixelformat-%{version}
+%setup -q -n %{name}-%{version}
 
 %build
 ./autogen.sh

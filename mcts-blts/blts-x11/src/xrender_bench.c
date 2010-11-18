@@ -24,8 +24,8 @@
 #include <X11/extensions/Xrender.h>
 #include "blts_x11_util.h"
 
-#undef LOGTRACE
-#define LOGTRACE(...)
+/* TODO: Modify this bin to use common cli frontend, or merge these tests with
+ * blts-x11-tests */
 
 static const char* data_path = "/usr/share/blts-x11-tests/images/";
 
@@ -152,7 +152,7 @@ static unsigned char* read_bitmap(const char* filename, bitmap_header* header)
 	FILE* fp = fopen(filename, "rb");
 	if(!fp)
 	{
-		logged_perror("fopen");
+		BLTS_LOGGED_PERROR("fopen");
 		return NULL;
 	}
 
@@ -160,14 +160,14 @@ static unsigned char* read_bitmap(const char* filename, bitmap_header* header)
 	int offset = 0;
 	if(fread(&offset, 1, 4, fp) != 4)
 	{
-		LOGERR("Failed to read bitmap header offset from file %s\n", filename);
+		BLTS_ERROR("Failed to read bitmap header offset from file %s\n", filename);
 		fclose(fp);
 		return NULL;
 	}
 
 	if(fread(header, 1, sizeof(bitmap_header), fp) != sizeof(bitmap_header))
 	{
-		LOGERR("Failed to read bitmap header from file %s\n", filename);
+		BLTS_ERROR("Failed to read bitmap header from file %s\n", filename);
 		fclose(fp);
 		return NULL;
 	}
@@ -178,7 +178,7 @@ static unsigned char* read_bitmap(const char* filename, bitmap_header* header)
 		header->biHeight * 4);
 	if(!p_data)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		fclose(fp);
 		return NULL;
 	}
@@ -188,14 +188,14 @@ static unsigned char* read_bitmap(const char* filename, bitmap_header* header)
 	unsigned char* p_temp = (unsigned char *) malloc( filedatalen );
 	if(!p_temp)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		fclose(fp);
 		return NULL;
 	}
 
 	if(fread(p_temp, 1, filedatalen, fp) != filedatalen)
 	{
-		LOGERR("Failed to read bitmap data from file %s\n", filename);
+		BLTS_ERROR("Failed to read bitmap data from file %s\n", filename);
 		fclose(fp);
 		free(p_data);
 		return NULL;
@@ -243,11 +243,11 @@ static int surface_from_file(xrender_surf* rs, const char* file,
 	data = read_bitmap(full_name, &header);
 	if(!data)
 	{
-		LOGERR("Failed to load bmp %s\n", full_name);
+		BLTS_ERROR("Failed to load bmp %s\n", full_name);
 		return -1;
 	}
 
-	LOGTRACE("%s, %d, %d, %d\n", full_name, header.biWidth,
+	BLTS_TRACE("%s, %d, %d, %d\n", full_name, header.biWidth,
 		header.biHeight, header.biBitCount);
 
 	gc = XCreateGC(ws.display, rs->draw, 0, &gcv);
@@ -296,7 +296,7 @@ static test_scenario* create_test_scenarios(int w, int h)
 	scenarios = (test_scenario*)malloc(sizeof(test_scenario) * 4);
 	if(!scenarios)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		return NULL;
 	}
 
@@ -366,7 +366,7 @@ static int time_test(test_scenario* test_s, render_test *op)
 	snprintf(buf, 40, "%s.............................................",
 		test_s->name);
 
-	LOG("\t %s", buf);
+	BLTS_DEBUG("\t %s", buf);
 	ret = timing_start();
 	if(ret) return ret;
 	for (i = 0; i < iterations; ++i)
@@ -379,7 +379,7 @@ static int time_test(test_scenario* test_s, render_test *op)
 	XSync(ws.display, False);
 	ret = timing_stop();
 	if(ret) return ret;
-	LOG(" %.3f s\n", timing_elapsed());
+	BLTS_DEBUG(" %.3f s\n", timing_elapsed());
 
 	return 0;
 }
@@ -413,11 +413,11 @@ static int main_loop(int num_tests, int* test_list)
 
 	if(!XRenderQueryVersion(ws.display, &i, &j))
 	{
-		LOGERR("XRenderQueryVersion failed\n");
+		BLTS_ERROR("XRenderQueryVersion failed\n");
 		return -1;
 	}
 
-	LOG("Xrender version: %d.%d\n", i, j);
+	BLTS_DEBUG("Xrender version: %d.%d\n", i, j);
 
 	bg_pic = create_background_pic(ws.display);
 
@@ -441,7 +441,7 @@ static int main_loop(int num_tests, int* test_list)
 				break;
 			}
 			current_op = all_render_tests[test_list[i] - 1];
-			LOG("Starting test %d: %s\n", test_list[i++], current_op.name);
+			BLTS_DEBUG("Starting test %d: %s\n", test_list[i++], current_op.name);
 		}
 		else
 		{
@@ -450,17 +450,17 @@ static int main_loop(int num_tests, int* test_list)
 			{
 				break;
 			}
-			LOG("Starting test %d: %s\n", i, current_op.name);
+			BLTS_DEBUG("Starting test %d: %s\n", i, current_op.name);
 		}
 
 		j = execute_test(&current_op, scenarios, bg_pic);
 		if(j)
 		{
-			LOGERR("Test failed (%d).\n", j);
+			BLTS_ERROR("Test failed (%d).\n", j);
 		}
 		else
 		{
-			LOG("Test passed.\n");
+			BLTS_DEBUG("Test passed.\n");
 		}
 	}
 	return 0;

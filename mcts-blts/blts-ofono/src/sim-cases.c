@@ -28,7 +28,7 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 	   !data->old_pin ||
 	   !data->new_pin)
 	{
-		LOG("usage: -y <pin,pin2,...> -o <old pin> -n <new pin>\n");
+		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <old pin> -n <new pin>\n");
 		return -1;
 	}
 
@@ -42,7 +42,7 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 												OFONO_SIM_INTERFACE);
 			if(!proxy)
 			{
-				LOG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
+				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
@@ -58,7 +58,7 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 	}
 	else
 	{
-		LOG("No modems found!\n");
+		BLTS_DEBUG("No modems found!\n");
 		retval = -1;
 	}
 
@@ -77,7 +77,7 @@ int ofono_enter_pin(void* user_ptr, int __attribute__((unused))test_num)
 	if(!data->pin_type ||
 	   !data->old_pin)
 	{
-		LOG("usage: -y <pin,pin2,...> -o <pin> \n");
+		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <pin> \n");
 		return -1;
 	}
 
@@ -92,7 +92,7 @@ int ofono_enter_pin(void* user_ptr, int __attribute__((unused))test_num)
 												OFONO_SIM_INTERFACE);
 			if(!proxy)
 			{
-				LOG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
+				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
@@ -108,7 +108,7 @@ int ofono_enter_pin(void* user_ptr, int __attribute__((unused))test_num)
 	}
 	else
 	{
-		LOG("No modems found!\n");
+		BLTS_DEBUG("No modems found!\n");
 		retval = -1;
 	}
 
@@ -127,7 +127,7 @@ int ofono_reset_pin(void* user_ptr, __attribute__((unused))int test_num)
 	   !data->old_pin ||
 	   !data->new_pin)
 	{
-		LOG("usage: -y <pin,pin2,...> -o <puk> -n <pin>\n");
+		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <puk> -n <pin>\n");
 		return -1;
 	}
 
@@ -142,7 +142,7 @@ int ofono_reset_pin(void* user_ptr, __attribute__((unused))int test_num)
 												OFONO_SIM_INTERFACE);
 			if(!proxy)
 			{
-				LOG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
+				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
@@ -158,7 +158,7 @@ int ofono_reset_pin(void* user_ptr, __attribute__((unused))int test_num)
 	}
 	else
 	{
-		LOG("No modems found!\n");
+		BLTS_DEBUG("No modems found!\n");
 		retval = -1;
 	}
 
@@ -175,7 +175,7 @@ int ofono_lock_pin(void* user_ptr, __attribute__((unused))int test_num)
 	if(!data->pin_type ||
 	   !data->old_pin)
 	{
-		LOG("usage: -y <pin,pin2,...> -o <pin> \n");
+		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <pin> \n");
 		return -1;
 	}
 
@@ -189,7 +189,7 @@ int ofono_lock_pin(void* user_ptr, __attribute__((unused))int test_num)
 												OFONO_SIM_INTERFACE);
 			if(!proxy)
 			{
-				LOG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
+				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
@@ -205,7 +205,7 @@ int ofono_lock_pin(void* user_ptr, __attribute__((unused))int test_num)
 	}
 	else
 	{
-		LOG("No modems found!\n");
+		BLTS_DEBUG("No modems found!\n");
 		retval = -1;
 	}
 
@@ -222,7 +222,7 @@ int ofono_unlock_pin(void* user_ptr, __attribute__((unused))int test_num)
 	if(!data->pin_type ||
 	   !data->old_pin)
 	{
-		LOG("usage: -y <pin,pin2,...> -o <pin> \n");
+		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <pin> \n");
 		return -1;
 	}
 
@@ -237,7 +237,7 @@ int ofono_unlock_pin(void* user_ptr, __attribute__((unused))int test_num)
 												OFONO_SIM_INTERFACE);
 			if(!proxy)
 			{
-				LOG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
+				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
@@ -253,7 +253,7 @@ int ofono_unlock_pin(void* user_ptr, __attribute__((unused))int test_num)
 	}
 	else
 	{
-		LOG("No modems found!\n");
+		BLTS_DEBUG("No modems found!\n");
 		retval = -1;
 	}
 
@@ -279,7 +279,7 @@ int ofono_sim_properties(void* user_ptr, __attribute__((unused))int test_num)
 												OFONO_SIM_INTERFACE);
 			if(!proxy)
 			{
-				LOG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
+				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
@@ -298,7 +298,7 @@ int ofono_sim_properties(void* user_ptr, __attribute__((unused))int test_num)
 	}
 	else
 	{
-		LOG("No modems found!\n");
+		BLTS_DEBUG("No modems found!\n");
 		retval = -1;
 	}
 	return retval;

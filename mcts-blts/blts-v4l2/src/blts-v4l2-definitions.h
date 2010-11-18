@@ -62,7 +62,6 @@ typedef struct
 } v4l2_data;
 
 #define CLI_FLAG_PROFILING 1
-#define CLI_FLAG_VERBOSE_LOG 2
-#define CLI_FLAG_IMGSAVE 4
+#define CLI_FLAG_IMGSAVE 2
 
 #endif /* BLTS_V4L2_DEFINITIONSL_H */

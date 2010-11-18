@@ -28,7 +28,6 @@ Alternatively, the packagin can be skipped by just running with Autotools:
  $ ./configure
  $ make
 
-
 Running the tests
 
 blts-ofono-tests
@@ -201,9 +200,6 @@ Call barrings:
 
   * oFono - Change password for barrings
      Change password
-     Extra command line parameters:
-	       -n <code> : New PIN
-	       -o <code> : Old PIN
 
   * oFono - Call barrings test
   	Sets different call barrings.
@@ -291,5 +287,5 @@ General:
  * oFono - Set modems offline
         Sets modems offline (turns on flight mode)
 
- * oFono - Propse scan
+ * oFono - Propose scan
     Scans possible networks

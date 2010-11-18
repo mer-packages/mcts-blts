@@ -1,6 +1,6 @@
 Summary: BLTS Sensor test front-end module
 Name: blts-sensors-frontend
-Version: 0.1.3
+Version: 0.1.4
 Release: 1
 License: GPLv2
 Group: Development/Testing

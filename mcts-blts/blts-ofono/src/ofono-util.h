@@ -30,9 +30,11 @@ typedef struct
 	DBusGConnection *connection;
 	GMainLoop *mainloop;
 	DBusGProxy *proxy_to_use;
+	long timeout;
 
 	char *remote_address;
 	char *smsc_address;
+	char *bearer;
 	char *sms_generated_message;
 	char *forward_address;
 
@@ -55,6 +57,7 @@ typedef struct
 
 } my_ofono_data;
 
+gboolean check_state(gpointer key, gpointer value, gpointer user_data);
 void get_modem_list(char* data, gpointer user_data);
 //void find_modem(char *key, GValue* value, gpointer user_data);
 void find_modem(gpointer modem,  gpointer user_data);
@@ -63,6 +66,8 @@ void hash_entry_gvalue_print(gpointer key, GValue* val, __attribute__((unused)) 
 
 int ensure_calls_cleared(my_ofono_data *data);
 int reset_supplementary_services(my_ofono_data* data);
+int set_modems_power_on(my_ofono_data *data);
+int set_modems_online(my_ofono_data *data);
 
 void display_dbus_glib_error(GError *error);
 

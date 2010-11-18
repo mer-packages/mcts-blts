@@ -56,48 +56,48 @@ int xvideo_init_test(double execution_time)
 	if(XvQueryExtension(params.display, &ver, &rev, &reqB, &eventB,
 		&errorB) != Success)
 	{
-		LOGERR("X-Video extension not found\n");
+		BLTS_ERROR("X-Video extension not found\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG("XVideo Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG("XVideo Extension version %i.%i\n", ver, rev);
 
 	nscreens = ScreenCount(params.display);
 
 	for(i = 0; i < nscreens; i++)
 	{
-		LOG("screen #%i\n", i);
+		BLTS_DEBUG("screen #%i\n", i);
 		XvQueryAdaptors(params.display, RootWindow(params.display, i),
 			&nadaptors, &ainfo);
 
 		if(!nadaptors)
 		{
-			LOG(" no adaptors present\n");
+			BLTS_DEBUG(" no adaptors present\n");
 			continue;
 		}
 
 		for(j = 0; j < nadaptors; j++)
 		{
-			LOG("  Adaptor #%i: \"%s\"\n", j, ainfo[j].name);
-			LOG("    number of ports: %li\n", ainfo[j].num_ports);
-			LOG("    port base: %li\n", ainfo[j].base_id);
-			LOG("    operations supported: ");
+			BLTS_DEBUG("  Adaptor #%i: \"%s\"\n", j, ainfo[j].name);
+			BLTS_DEBUG("    number of ports: %li\n", ainfo[j].num_ports);
+			BLTS_DEBUG("    port base: %li\n", ainfo[j].base_id);
+			BLTS_DEBUG("    operations supported: ");
 
 			switch(ainfo[j].type & (XvInputMask | XvOutputMask))
 			{
 				case XvInputMask:
 					if(ainfo[j].type & XvVideoMask)
 					{
-						LOG("PutVideo ");
+						BLTS_DEBUG("PutVideo ");
 					}
 					if(ainfo[j].type & XvStillMask)
 					{
-						LOG("PutStill ");
+						BLTS_DEBUG("PutStill ");
 					}
 					if(ainfo[j].type & XvImageMask)
 					{
-						LOG("PutImage ");
+						BLTS_DEBUG("PutImage ");
 						/* Use the first found adaptor with PutImage capability
 						for XvShmPutImage test */
 						if(xv_port == -1 && i == (unsigned int)params.screen)
@@ -110,19 +110,19 @@ int xvideo_init_test(double execution_time)
 				case XvOutputMask:
 					if(ainfo[j].type & XvVideoMask)
 					{
-						LOG("GetVideo ");
+						BLTS_DEBUG("GetVideo ");
 					}
 					if(ainfo[j].type & XvStillMask)
 					{
-						LOG("GetStill ");
+						BLTS_DEBUG("GetStill ");
 					}
 					break;
 
 				default:
-					LOG("none ");
+					BLTS_DEBUG("none ");
 					break;
 			}
-			LOG("\n");
+			BLTS_DEBUG("\n");
 
 			format = ainfo[j].formats;
 			attributes = XvQueryPortAttributes(params.display,
@@ -147,17 +147,17 @@ int xvideo_init_test(double execution_time)
 
 			if(nencode - image_encodings)
 			{
-				LOG("    number of encodings: %i\n", nencode - image_encodings);
+				BLTS_DEBUG("    number of encodings: %i\n", nencode - image_encodings);
 
 				for(n = 0; n < nencode; n++)
 				{
 					if(strcmp(encodings[n].name, "XV_IMAGE"))
 					{
-						LOG("      encoding ID #%li: \"%s\"\n",
+						BLTS_DEBUG("      encoding ID #%li: \"%s\"\n",
 							encodings[n].encoding_id, encodings[n].name);
-						LOG("        size: %li x %li\n", encodings[n].width,
+						BLTS_DEBUG("        size: %li x %li\n", encodings[n].width,
 							encodings[n].height);
-						LOG("        rate: %f\n",
+						BLTS_DEBUG("        rate: %f\n",
 							(float)encodings[n].rate.numerator /
 							(float)encodings[n].rate.denominator);
 					}
@@ -172,7 +172,7 @@ int xvideo_init_test(double execution_time)
 				{
 					if(!strcmp(encodings[n].name, "XV_IMAGE"))
 					{
-						LOG("    maximum XvImage size: %li x %li\n",
+						BLTS_DEBUG("    maximum XvImage size: %li x %li\n",
 							encodings[n].width, encodings[n].height);
 						break;
 					}
@@ -180,7 +180,7 @@ int xvideo_init_test(double execution_time)
 
 				formats = XvListImageFormats(params.display,
 					ainfo[j].base_id, &nimages);
-				LOG("    Number of image formats: %i\n", nimages);
+				BLTS_DEBUG("    Number of image formats: %i\n", nimages);
 
 				for(n = 0; n < (unsigned int)nimages; n++)
 				{
@@ -188,7 +188,7 @@ int xvideo_init_test(double execution_time)
 						(formats[n].id >> 8) & 0xff,
 						(formats[n].id >> 16) & 0xff,
 						(formats[n].id >> 24) & 0xff);
-					LOG("      id: 0x%x", formats[n].id);
+					BLTS_DEBUG("      id: 0x%x", formats[n].id);
 					/* Use the first found format for XvShmPutImage test */
 					if(!guid && i == (unsigned int)params.screen)
 					{
@@ -198,14 +198,14 @@ int xvideo_init_test(double execution_time)
 					if(isprint(imageName[0]) && isprint(imageName[1]) &&
 						isprint(imageName[2]) && isprint(imageName[3]))
 					{
-						LOG(" (%s)\n", imageName);
+						BLTS_DEBUG(" (%s)\n", imageName);
 					}
 					else
 					{
-						LOG("\n");
+						BLTS_DEBUG("\n");
 					}
-					LOG("        guid: ");
-					LOG("%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%08x\n",
+					BLTS_DEBUG("        guid: ");
+					BLTS_DEBUG("%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%08x\n",
 						(unsigned char)formats[n].guid[0],
 						(unsigned char)formats[n].guid[1],
 						(unsigned char)formats[n].guid[2],
@@ -222,19 +222,19 @@ int xvideo_init_test(double execution_time)
 						(unsigned char)formats[n].guid[13],
 						(unsigned char)formats[n].guid[14],
 						(unsigned char)formats[n].guid[15]);
-					LOG("        bits per pixel: %i\n",
+					BLTS_DEBUG("        bits per pixel: %i\n",
 						formats[n].bits_per_pixel);
-					LOG("        number of planes: %i\n",
+					BLTS_DEBUG("        number of planes: %i\n",
 						formats[n].num_planes);
-					LOG("        type: %s (%s)\n",
+					BLTS_DEBUG("        type: %s (%s)\n",
 						(formats[n].type == XvRGB) ? "RGB" : "YUV",
 						(formats[n].format == XvPacked) ? "packed" : "planar");
 
 					if(formats[n].type == XvRGB)
 					{
-						LOG("        depth: %i\n", formats[n].depth);
+						BLTS_DEBUG("        depth: %i\n", formats[n].depth);
 
-						LOG("        red, green, blue masks: 0x%x, 0x%x, 0x%x\n",
+						BLTS_DEBUG("        red, green, blue masks: 0x%x, 0x%x, 0x%x\n",
 							formats[n].red_mask,
 							formats[n].green_mask,
 							formats[n].blue_mask);
@@ -269,7 +269,7 @@ int xvideo_init_test(double execution_time)
 
 		if(!XShmAttach(params.display, &yuv_shminfo))
 		{
-			LOGERR("XShmAttach failed!\n");
+			BLTS_ERROR("XShmAttach failed!\n");
 			ret = -1;
 			goto cleanup;
 		}
@@ -299,7 +299,7 @@ int xvideo_init_test(double execution_time)
 	}
 	else
 	{
-		LOG("No suitable adaptor with PutImage operation found.\n");
+		BLTS_DEBUG("No suitable adaptor with PutImage operation found.\n");
 	}
 
 cleanup:

@@ -16,7 +16,7 @@
 
 */
 
-/* XVideo headers */ 
+/* XVideo headers */
 #include <ctype.h>
 #include <X11/X.h>
 #include <X11/Xutil.h>
@@ -44,6 +44,8 @@
 #include <sys/ioctl.h>
 #include <sys/shm.h>
 
+#include <blts_log.h>
+
 #include "v4l2-xvideo.h"
 
 #define FOURCC_YUV2 0x32595559  /* YUV2   YUV422 */
@@ -64,14 +66,14 @@ Display* open_display()
 	if(!display)
 	{
 		/* DISPLAY environment variable may not exist on non-posix-conformant systems */
-		printf("XOpenDisplay(NULL) failed, DISPLAY environment variable missing? Trying display :0.\n");
+		BLTS_DEBUG("XOpenDisplay(NULL) failed, DISPLAY environment variable missing? Trying display :0.\n");
 		display = XOpenDisplay(":0");
 		if(!display)
 		{
 			return NULL;
 		}
 	}
-	
+
 	return display;
 }
 
@@ -85,18 +87,18 @@ int close_window(window_struct* params)
 			XUnmapWindow(params->display, params->window);
 			XDestroyWindow(params->display, params->window);
 		}
-		
+
 		if(params->gc)
 		{
 			XFreeGC(params->display, params->gc);
 		}
-		
+
 		XFlush(params->display);
 		XCloseDisplay(params->display);
 	}
 
 	memset(params, 0, sizeof(window_struct));
-	
+
 	return 0;
 }
 
@@ -115,7 +117,7 @@ int create_window_ex(window_struct* params, const char* window_name, int width, 
 	params->display = open_display();
 	if(!params->display)
 	{
-		printf("XOpenDisplay failed\n");
+		BLTS_ERROR("XOpenDisplay failed\n");
 		goto cleanup;
 	}
 
@@ -123,19 +125,19 @@ int create_window_ex(window_struct* params, const char* window_name, int width, 
 	params->root_window = RootWindow(params->display, params->screen);
 	if(!params->root_window)
 	{
-		printf("No root window\n");
+		BLTS_ERROR("No root window\n");
 		goto cleanup;
 	}
-	
+
 	params->visual = DefaultVisual(params->display, params->screen);
-	
-	if(!XGetWindowAttributes(params->display, params->root_window, 
+
+	if(!XGetWindowAttributes(params->display, params->root_window,
 		&params->root_window_attributes))
 	{
-		printf("XGetWindowAttributes failed\n");
+		BLTS_ERROR("XGetWindowAttributes failed\n");
 		goto cleanup;
 	}
-	
+
 	if(width)
 	{
 		params->width = width;
@@ -163,48 +165,48 @@ int create_window_ex(window_struct* params, const char* window_name, int width, 
 		);
 	if(!params->window)
 	{
-		printf("XCreateSimpleWindow failed\n");
+		BLTS_ERROR("XCreateSimpleWindow failed\n");
 		goto cleanup;
 	}
 
 	if(!XGetWindowAttributes(params->display, params->root_window,
 		&params->window_attributes))
 	{
-		printf("XGetWindowAttributes failed\n");
+		BLTS_ERROR("XGetWindowAttributes failed\n");
 		goto cleanup;
 	}
 
 	if(!XMapWindow(params->display, params->window))
 	{
-		printf("XMapWindow failed\n");
+		BLTS_ERROR("XMapWindow failed\n");
 		goto cleanup;
 	}
-	
+
 	if(!XRaiseWindow(params->display, params->window))
 	{
-		printf("XRaiseWindow failed\n");
+		BLTS_ERROR("XRaiseWindow failed\n");
 		goto cleanup;
 	}
-	
-	if(!XStoreName(params->display, params->window, 
+
+	if(!XStoreName(params->display, params->window,
 		window_name))
 	{
-		printf("XStoreName failed\n");
+		BLTS_ERROR("XStoreName failed\n");
 		goto cleanup;
 	}
-	
+
 	values.foreground = BlackPixel(params->display, params->screen);
 	params->gc = XCreateGC(params->display, params->window, GCForeground, &values);
 	if(!params->gc)
 	{
-		printf("XCreateGC failed\n");
+		BLTS_ERROR("XCreateGC failed\n");
 		goto cleanup;
 	}
-	
+
 	XFlush(params->display);
-	
+
 	return 0;
-	
+
 cleanup:
 	close_window(params);
 	return -1;
@@ -214,26 +216,26 @@ cleanup:
 void xvideo_init(int cam_width, int cam_height, int img_format)
 
 {
-	int guid;	
+	int guid;
 	unsigned int nadaptors;
 	Window root_ret;
 	int x_ret, y_ret;
 
 	if(create_window(&params, "Test Window"))
 	{
-		printf("Create window failed\n");
+		BLTS_ERROR("Create window failed\n");
 		exit (EXIT_FAILURE);
 	}
 
-	if(XvQueryAdaptors(params.display, RootWindow(params.display, 0), &nadaptors, &ainfo) != Success) 
+	if(XvQueryAdaptors(params.display, RootWindow(params.display, 0), &nadaptors, &ainfo) != Success)
 	{
-		printf("Unable to query for Xvideo adaptors\n");
+		BLTS_ERROR("Unable to query for Xvideo adaptors\n");
 		exit (EXIT_FAILURE);
 	}
 
-	if(nadaptors == 0) 
+	if(nadaptors == 0)
 	{
-		printf("No Xvideo adaptors\n");
+		BLTS_ERROR("No Xvideo adaptors\n");
 		exit (EXIT_FAILURE);
 	}
 
@@ -243,22 +245,22 @@ void xvideo_init(int cam_width, int cam_height, int img_format)
 		guid = FOURCC_YUV2;
 	else
 		guid = img_format;
-	
-	yuv_image = (XvImage*)XvShmCreateImage(params.display, xv_port, 
+
+	yuv_image = (XvImage*)XvShmCreateImage(params.display, xv_port,
 		guid, 0, cam_width, cam_height, &yuv_shminfo);
 
-	yuv_shminfo.shmid = shmget(IPC_PRIVATE, yuv_image->data_size, 
+	yuv_shminfo.shmid = shmget(IPC_PRIVATE, yuv_image->data_size,
 		IPC_CREAT | 0777);
 	yuv_shminfo.shmaddr = yuv_image->data = shmat(yuv_shminfo.shmid, 0, 0);
 	yuv_shminfo.readOnly = False;
 
 	if(!XShmAttach(params.display, &yuv_shminfo))
 	{
-		printf("XShmAttach failed!\n");
+		BLTS_ERROR("XShmAttach failed!\n");
 		exit (EXIT_FAILURE);
 	}
 
-	XGetGeometry(params.display, params.window, &root_ret, &x_ret, 
+	XGetGeometry(params.display, params.window, &root_ret, &x_ret,
 		&y_ret, &w_ret, &h_ret, &bw_ret, &depth_ret);
 }
 
@@ -268,7 +270,7 @@ void xvideo_deinit()
 	{
 		XvFreeAdaptorInfo(ainfo);
 	}
-	
+
 	if(yuv_image)
 	{
 		XFree(yuv_image);
@@ -284,7 +286,7 @@ void xvideo_process_image(const void *p)
 
 	memcpy(yuv_image->data, p, yuv_image->data_size);
 
-	XvShmPutImage(params.display, xv_port, params.window, params.gc, 
+	XvShmPutImage(params.display, xv_port, params.window, params.gc,
 				yuv_image,
 				0, 0, yuv_image->width, yuv_image->height,
 				0, 0, w_ret, h_ret, True);

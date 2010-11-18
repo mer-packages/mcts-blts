@@ -68,10 +68,10 @@ void ioctl_print_profiling_data()
 	if(!profiling_enabled)
 		return;
 
-	LOG("\nProfiling data:\n");
+	BLTS_DEBUG("\nProfiling data:\n");
 	while(ioctl_calls[t].str)
 	{
-		LOG("%s: %d\n", ioctl_calls[t].str, ioctl_calls[t].value);
+		BLTS_DEBUG("%s: %d\n", ioctl_calls[t].str, ioctl_calls[t].value);
 		t++;
 	}
 }
@@ -81,10 +81,10 @@ void ioctl_profile(const char* name)
 	int t = 0;
 
 	pthread_mutex_lock(&prof_mutex);
-	
+
 	if(!profiling_enabled)
 		goto cleanup;
-		
+
 	while(ioctl_calls[t].str)
 	{
 		if(!strcmp(ioctl_calls[t].str, name))
@@ -97,10 +97,10 @@ void ioctl_profile(const char* name)
 
 	if(t >= MAX_PROFILED_IOCTLS)
 	{
-		LOG("MAX_PROFILED_IOCTLS reached - ioctl %s omitted!\n", name);
+		BLTS_DEBUG("MAX_PROFILED_IOCTLS reached - ioctl %s omitted!\n", name);
 		goto cleanup;
 	}
-	
+
 	ioctl_calls[t].str = strdup(name);
 	ioctl_calls[t].value++;
 

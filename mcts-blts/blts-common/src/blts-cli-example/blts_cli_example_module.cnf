@@ -1,0 +1,19 @@
+[parameter]
+	name variable1
+	const 0 1 2
+[end_parameter]
+
+[parameter]
+	name variable2
+	const 0 1
+[end_parameter]
+
+[test]
+	name "My example variant test A"
+	params variable1 variable2
+[end_test]
+
+[test]
+	name "My example variant test B"
+	params variable1 variable2
+[end_test]

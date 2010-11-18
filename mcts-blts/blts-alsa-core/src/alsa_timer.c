@@ -35,7 +35,7 @@ timer_device* timer_open()
 	hw = calloc(1, sizeof(timer_device));
 	if(!hw)
 	{
-		logged_perror("Failed to allocate timer_device structure");
+		BLTS_LOGGED_PERROR("Failed to allocate timer_device structure");
 		return NULL;
 	}
 
@@ -176,13 +176,13 @@ static int timer_print_status_real(timer_device* hw, int level)
 		return ret;
 	}
 
-	log_print_level(level, "Timer '%s' status:\n", info.name);
-	log_print_level(level, "\ttstamp = { %ld, %ld }\n", status.tstamp.tv_sec,
+	blts_log_print_level(level, "Timer '%s' status:\n", info.name);
+	blts_log_print_level(level, "\ttstamp = { %ld, %ld }\n", status.tstamp.tv_sec,
 		status.tstamp.tv_nsec);
-	log_print_level(level, "\tresolution = %u\n", status.resolution);
-	log_print_level(level, "\tlost = %u\n", status.lost);
-	log_print_level(level, "\toverrun = %u\n", status.overrun);
-	log_print_level(level, "\tqueue = %u\n", status.queue);
+	blts_log_print_level(level, "\tresolution = %u\n", status.resolution);
+	blts_log_print_level(level, "\tlost = %u\n", status.lost);
+	blts_log_print_level(level, "\toverrun = %u\n", status.overrun);
+	blts_log_print_level(level, "\tqueue = %u\n", status.queue);
 
 	return 0;
 }
@@ -231,8 +231,7 @@ static int timer_select_specific(timer_device *hw, int card, int device)
 				&& sel.id.card == card
 				&& sel.id.device == device)
 				return 0;
-		}
-		if(info.card == card && sel.id.card == card)
+		} else if(info.card == card && sel.id.card == card)
 			return 0;
 	}
 

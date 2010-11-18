@@ -51,7 +51,6 @@ struct call_volume_case_state {
 
 	my_ofono_data *ofono_data;
 
-	GCallback signalcb_VoiceCallManager_PropertyChanged;
 	GCallback signalcb_CallVolume_PropertyChanged;
 
 	int result;
@@ -88,21 +87,21 @@ get_initial_value (gpointer key, gpointer value, gpointer data)
 	if(strcmp(key, "MicrophoneVolume") == 0)
 	{
 		state->initial_microphone_volume = g_strdup_value_contents (value);
-		LOG("Save initial MicrophoneVolume %s (%s)\n", state->initial_microphone_volume, G_VALUE_TYPE_NAME(value));
+		BLTS_DEBUG("Save initial MicrophoneVolume %s (%s)\n", state->initial_microphone_volume, G_VALUE_TYPE_NAME(value));
 	}
 	else if (strcmp(key, "SpeakerVolume") == 0)
 	{
 		state->initial_speaker_volume = g_strdup_value_contents (value);
-		LOG("Save initial SpeakerVolume %s (%s)\n", state->initial_speaker_volume, G_VALUE_TYPE_NAME(value));
+		BLTS_DEBUG("Save initial SpeakerVolume %s (%s)\n", state->initial_speaker_volume, G_VALUE_TYPE_NAME(value));
 	}
 	else if (strcmp(key, "Muted") == 0)
 	{
 		state->initial_mute_state =  g_strdup_value_contents (value);
-		LOG("Save initial Muted %s (%s)\n", state->initial_mute_state, G_VALUE_TYPE_NAME(value));
+		BLTS_DEBUG("Save initial Muted %s (%s)\n", state->initial_mute_state, G_VALUE_TYPE_NAME(value));
 	}
 	else
 	{
-		LOG("new property?\n");
+		BLTS_DEBUG("new property?\n");
 	}
 }
 
@@ -116,8 +115,9 @@ static void on_call_volume_property_changed(__attribute__((unused))DBusGProxy *p
 	gboolean restored = TRUE;
 	GError *error = NULL;
 	struct call_volume_case_state *state = (struct call_volume_case_state *) user_data;
-
-	LOG("CallVolume property: %s changed to %s\n ", key, g_strdup_value_contents (value));
+	gchar *value_str = g_strdup_value_contents (value);
+	
+	BLTS_DEBUG("CallVolume property: %s changed to %s\n ", key, value_str);
 
 	if (state->signalcb_CallVolume_PropertyChanged)
 	{
@@ -130,7 +130,7 @@ static void on_call_volume_property_changed(__attribute__((unused))DBusGProxy *p
 
 	if(!restore_initial_value(state, key))
 	{
-		LOG("Restore initial value failed!\n");
+		BLTS_DEBUG("Restore initial value failed!\n");
 		restored = FALSE;
 	}
 
@@ -148,6 +148,7 @@ static void on_call_volume_property_changed(__attribute__((unused))DBusGProxy *p
 			state->result = -1;
 	}
 
+	g_free(value_str);
 	g_main_loop_quit(state->mainloop);
 }
 
@@ -166,13 +167,13 @@ static void call_volume_state_finalize(struct call_volume_case_state *state)
 		free(state->address);
 
 	if (state->initial_microphone_volume)
-		free(state->initial_microphone_volume);
+		g_free(state->initial_microphone_volume);
 
 	if (state->initial_speaker_volume)
-		free(state->initial_speaker_volume);
+		g_free(state->initial_speaker_volume);
 
 	if (state->initial_mute_state)
-		free(state->initial_mute_state);
+		g_free(state->initial_mute_state);
 
 	free(state);
 }
@@ -184,7 +185,7 @@ static gboolean call_master_timeout(gpointer data)
 
 	state->result = -1;
 
-	LOG("Timeout reached, failing test.\n");
+	BLTS_DEBUG("Timeout reached, failing test.\n");
 
 	g_main_loop_quit(state->mainloop);
 	return FALSE;
@@ -204,7 +205,7 @@ static gboolean call_volume_init_start(gpointer data)
 											OFONO_VC_INTERFACE);
 
 	if (!voice_call_manager){
-		LOG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -217,20 +218,13 @@ static gboolean call_volume_init_start(gpointer data)
 											OFONO_CV_INTERFACE);
 
 	if (!call_volume) {
-		LOG("Cannot get proxy for " OFONO_CV_INTERFACE "\n");
+		BLTS_DEBUG("Cannot get proxy for " OFONO_CV_INTERFACE "\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
 	}
 
 	state->call_volume = call_volume;
-
-	if (state->signalcb_VoiceCallManager_PropertyChanged) {
-			dbus_g_proxy_add_signal(state->voice_call_manager, "PropertyChanged",
-					G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-			dbus_g_proxy_connect_signal(state->voice_call_manager, "PropertyChanged",
-				state->signalcb_VoiceCallManager_PropertyChanged, data, 0);
-		}
 
 	if (state->signalcb_CallVolume_PropertyChanged) {
 				dbus_g_proxy_add_signal(state->call_volume, "PropertyChanged",
@@ -252,14 +246,14 @@ static void set_microphone_volume_complete(__attribute__((unused)) DBusGProxy *p
 	struct call_volume_case_state *state = (struct call_volume_case_state *) data;
 
 	if (error) {
-		log_print("Set MicrophoneVolume failure:  %s\n", error->message);
+		BLTS_DEBUG("Set MicrophoneVolume failure:  %s\n", error->message);
 		state->result=-1;
 		g_main_loop_quit(state->mainloop);
 	}
 
 	if(strcmp(state->initial_microphone_volume, state->new_microphone_volume) == 0 )
 	{
-		log_print("Initial value is equal with new value\n");
+		BLTS_DEBUG("Initial value is equal with new value\n");
 		state->result=0;
 		g_main_loop_quit(state->mainloop);
 	}
@@ -273,14 +267,14 @@ static void set_speaker_volume_complete(__attribute__((unused)) DBusGProxy *prox
 	struct call_volume_case_state *state = (struct call_volume_case_state *) data;
 
 	if (error) {
-		log_print("Set SpeakerVolume failure:  %s\n", error->message);
+		BLTS_DEBUG("Set SpeakerVolume failure:  %s\n", error->message);
 		state->result=-1;
 		g_main_loop_quit(state->mainloop);
 	}
 
 	if(strcmp(state->initial_speaker_volume, state->new_speaker_volume) == 0 )
 	{
-		log_print("Initial value is equal with new value\n");
+		BLTS_DEBUG("Initial value is equal with new value\n");
 		state->result=0;
 		g_main_loop_quit(state->mainloop);
 	}
@@ -294,7 +288,7 @@ static void toggle_mute_state_complete(__attribute__((unused)) DBusGProxy *proxy
 	struct call_volume_case_state *state = (struct call_volume_case_state *) data;
 
 	if (error) {
-		log_print("Toggle Muted failure:  %s\n", error->message);
+		BLTS_DEBUG("Toggle Muted failure:  %s\n", error->message);
 		state->result=-1;
 		g_main_loop_quit(state->mainloop);
 	}
@@ -315,7 +309,7 @@ static gboolean save_initial_values(struct call_volume_case_state *state)
 	if(!properties)
 		return FALSE;
 
-	LOG("Get initial values\n");
+	BLTS_DEBUG("Get initial values\n");
 	g_hash_table_foreach(properties, (GHFunc)get_initial_value, state);
 
 	g_hash_table_destroy(properties);
@@ -337,7 +331,7 @@ static gboolean restore_initial_value(struct call_volume_case_state *state, char
 
 	if(strcmp(key, "MicrophoneVolume") == 0)
 	{
-		LOG("Restore initial MicrophoneVolume %s\n", state->initial_microphone_volume);
+		BLTS_DEBUG("Restore initial MicrophoneVolume %s\n", state->initial_microphone_volume);
 		g_value_init(initial_value, G_TYPE_UCHAR);
 		g_value_set_uchar(initial_value, atoi(state->initial_microphone_volume));
 
@@ -346,7 +340,7 @@ static gboolean restore_initial_value(struct call_volume_case_state *state, char
 	}
 	else if (strcmp(key, "SpeakerVolume") == 0)
 	{
-		LOG("Restore initial SpeakerVolume %s\n", state->initial_speaker_volume);
+		BLTS_DEBUG("Restore initial SpeakerVolume %s\n", state->initial_speaker_volume);
 		g_value_init(initial_value, G_TYPE_UCHAR);
 		g_value_set_uchar(initial_value, atoi(state->initial_speaker_volume));
 
@@ -355,7 +349,7 @@ static gboolean restore_initial_value(struct call_volume_case_state *state, char
 	}
 	else if (strcmp(key, "Muted") == 0)
 	{
-		LOG("Restore initial Muted %s\n", state->initial_mute_state);
+		BLTS_DEBUG("Restore initial Muted %s\n", state->initial_mute_state);
 		gboolean restored_state;
 		if (strcmp(state->initial_mute_state, "TRUE") == 0)
 			restored_state = TRUE;
@@ -371,7 +365,7 @@ static gboolean restore_initial_value(struct call_volume_case_state *state, char
 	}
 	else
 	{
-			LOG("new property?\n");
+			BLTS_DEBUG("new property?\n");
 			return FALSE;
 	}
 
@@ -387,7 +381,7 @@ static void microphone_volume_call_complete(__attribute__((unused)) DBusGProxy *
 	struct call_volume_case_state *state = (struct call_volume_case_state *) data;
 
 	if (error) {
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -405,7 +399,7 @@ static void microphone_volume_call_complete(__attribute__((unused)) DBusGProxy *
 	{
 		int initial = atoi(state->initial_microphone_volume);
 
-		LOG("initial value: %d\n", initial);
+		BLTS_DEBUG("initial value: %d\n", initial);
 
 		if(initial < 50)
 			changed_value=75;
@@ -420,7 +414,7 @@ static void microphone_volume_call_complete(__attribute__((unused)) DBusGProxy *
 		g_value_set_uchar(new_value, changed_value);
 	}
 
-	LOG("changed value: %d\n", changed_value);
+	BLTS_DEBUG("changed value: %d\n", changed_value);
 	org_ofono_CallVolume_set_property_async (state->call_volume,
 			"MicrophoneVolume", new_value, set_microphone_volume_complete, state);
 
@@ -434,7 +428,7 @@ static void speaker_volume_call_complete(__attribute__((unused)) DBusGProxy *pro
 	struct call_volume_case_state *state = (struct call_volume_case_state *) data;
 
 	if (error) {
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -452,7 +446,7 @@ static void speaker_volume_call_complete(__attribute__((unused)) DBusGProxy *pro
 	{
 		int initial = atoi(state->initial_speaker_volume);
 
-		LOG("initial value: %d\n", initial);
+		BLTS_DEBUG("initial value: %d\n", initial);
 
 		if(initial < 50)
 			changed_value=75;
@@ -467,7 +461,7 @@ static void speaker_volume_call_complete(__attribute__((unused)) DBusGProxy *pro
 		g_value_set_uchar(new_value, changed_value);
 	}
 
-	LOG("changed value: %d\n", changed_value);
+	BLTS_DEBUG("changed value: %d\n", changed_value);
 
 	org_ofono_CallVolume_set_property_async (state->call_volume,
 			"SpeakerVolume", new_value, set_speaker_volume_complete, state);
@@ -485,7 +479,7 @@ static void mute_state_call_complete(__attribute__((unused)) DBusGProxy *proxy, 
 	struct call_volume_case_state *state = (struct call_volume_case_state *) data;
 
 	if (error) {
-		LOG("Call failure: %s\n", error->message);
+		BLTS_DEBUG("Call failure: %s\n", error->message);
 		state->result = 1;
 		g_main_loop_quit(state->mainloop);
 		return;
@@ -502,7 +496,7 @@ static void mute_state_call_complete(__attribute__((unused)) DBusGProxy *proxy, 
 
 	g_value_set_boolean(new_value, new_state);
 
-	LOG("new state %d\n", new_state);
+	BLTS_DEBUG("new state %d\n", new_state);
 
 	org_ofono_CallVolume_set_property_async (state->call_volume,
 			"Muted", new_value, toggle_mute_state_complete, state);
@@ -519,7 +513,7 @@ static gboolean set_microphone_volume_start(gpointer data)
 
 	if(!save_initial_values(state))
 	{
-		LOG("Save initial values failed!\n");
+		BLTS_DEBUG("Save initial values failed!\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -528,7 +522,7 @@ static gboolean set_microphone_volume_start(gpointer data)
 	org_ofono_VoiceCallManager_dial_async(state->voice_call_manager,
 		state->address, "", microphone_volume_call_complete, state);
 
-	LOG("Starting call to %s\n", state->address);
+	BLTS_DEBUG("Starting call to %s\n", state->address);
 
 	FUNC_LEAVE();
 	return FALSE;
@@ -541,7 +535,7 @@ static gboolean set_speaker_volume_start(gpointer data)
 
 	if(!save_initial_values(state))
 	{
-		LOG("Save initial values failed!\n");
+		BLTS_DEBUG("Save initial values failed!\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -550,7 +544,7 @@ static gboolean set_speaker_volume_start(gpointer data)
 	org_ofono_VoiceCallManager_dial_async(state->voice_call_manager,
 		state->address, "", speaker_volume_call_complete, state);
 
-	LOG("Starting call to %s\n", state->address);
+	BLTS_DEBUG("Starting call to %s\n", state->address);
 
 	FUNC_LEAVE();
 	return FALSE;
@@ -563,7 +557,7 @@ static gboolean toggle_mute_state_start(gpointer data)
 
 	if(!save_initial_values(state))
 	{
-		LOG("Save initial values failed!\n");
+		BLTS_DEBUG("Save initial values failed!\n");
 		state->result = -1;
 		g_main_loop_quit(state->mainloop);
 		return FALSE;
@@ -581,7 +575,7 @@ static struct call_volume_case_state *call_volume_state_init(my_ofono_data *data
 	struct call_volume_case_state *state;
 	state = malloc(sizeof *state);
 	if (!state) {
-		log_print("OOM\n");
+		BLTS_DEBUG("OOM\n");
 		return 0;
 	}
 	memset(state, 0, sizeof *state);
@@ -597,11 +591,11 @@ static int call_volume_case_run(struct call_volume_case_state *state)
 
 	ret = my_ofono_get_modem(state->ofono_data);
 	if (ret) {
-		LOG("Failed getting modem.\n");
+		BLTS_DEBUG("Failed getting modem.\n");
 		goto done;
 	}
 	if (state->ofono_data->number_modems < 1) {
-		LOG("No modems available.\n");
+		BLTS_DEBUG("No modems available.\n");
 		ret = -1;
 		goto done;
 	}
@@ -611,7 +605,7 @@ static int call_volume_case_run(struct call_volume_case_state *state)
 	state->call_volume = NULL;
 	state->voice_call_manager = NULL;
 
-	g_timeout_add(60000, (GSourceFunc) call_master_timeout, state);
+	g_timeout_add(state->ofono_data->timeout, (GSourceFunc) call_master_timeout, state);
 
 	g_idle_add(call_volume_init_start, state);
 
@@ -645,7 +639,6 @@ int blts_ofono_set_microphone_volume(void* user_ptr, __attribute__((unused)) int
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->new_microphone_volume = strdup((data->volume) ? (data->volume) : "null");
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_CallVolume_PropertyChanged =
 		G_CALLBACK(on_call_volume_property_changed);
 
@@ -671,7 +664,6 @@ int blts_ofono_set_speaker_volume(void* user_ptr, __attribute__((unused)) int te
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
 	test->new_speaker_volume = strdup((data->volume) ? (data->volume) : "null");
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_CallVolume_PropertyChanged =
 		G_CALLBACK(on_call_volume_property_changed);
 
@@ -695,7 +687,6 @@ int blts_ofono_set_muted(void* user_ptr, __attribute__((unused)) int testnum)
 		return -1;
 
 	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
-	test->signalcb_VoiceCallManager_PropertyChanged = NULL;
 	test->signalcb_CallVolume_PropertyChanged =
 		G_CALLBACK(on_call_volume_property_changed);
 
@@ -709,11 +700,14 @@ int blts_ofono_set_muted(void* user_ptr, __attribute__((unused)) int testnum)
 void *volume_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *volume = 0;
+	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
 	volume = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	timeout = atol(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -721,6 +715,26 @@ void *volume_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 		free(volume);
 	else
 		data->volume = volume;
+
+	if (!data->timeout)
+		data->timeout = timeout;
+
+	return data;
+}
+
+void *volume_muted_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
+{
+	long timeout = 0;
+	my_ofono_data *data = ((my_ofono_data *) user_ptr);
+	if (!data)
+		return 0;
+
+	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	/* These are already non-zero, if set on command line */
+
+	if (!data->timeout)
+		data->timeout = timeout;
 
 	return data;
 }

@@ -31,8 +31,7 @@ const char* default_config = BLTS_CONFIG_DIR "/blts-alsa-core-tests.cnf";
 static void blts_alsa_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
-		"[-v] [-p]",
-		"  -v: Verbose logging\n"
+		"[-p]",
 		"  -p: Enables profiling of ioctl calls\n"
 		);
 }
@@ -99,6 +98,7 @@ static int generate_pcm_params(alsa_pcm_settings* pcms, pcm_params* params)
 							params[cnt].link_card = pcms->link_card;
 							params[cnt].link_device = pcms->link_device;
 							params[cnt].period_size = pcms->period_size;
+							params[cnt].volume = pcms->volume;
 						}
 						cnt++;
 					}
@@ -193,7 +193,7 @@ static testcase_params* generate_pcm_testcase_list(alsa_configuration* conf)
 			case_name = malloc(256 * conf->testsets[t]->num_pcms);
 			if(!case_name)
 			{
-				logged_perror("malloc failed");
+				BLTS_LOGGED_PERROR("malloc failed");
 				goto error_exit;
 			}
 
@@ -311,12 +311,6 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	/* blts_cli_main opens log file, but we need to read conf file before
-	 * calling it. Open the log file temporarily here to get output from
-	 * conf file parser. */
-	log_open(alsa_cli.log_file, 1);
-	log_set_level(LEVEL_DEBUG);
-
 	for(t = 1; t < argc; t++)
 	{
 		if(!strcmp(argv[t], "-C"))
@@ -324,18 +318,13 @@ int main(int argc, char **argv)
 			if(++t < argc)
 				config_file = argv[t];
 		}
-		else if(!strcmp(argv[t], "-v"))
-		{
-			log_set_level(LEVEL_TRACE);
-			cli_params->flags |= CLI_FLAG_VERBOSE_LOG;
-		}
 		else if(!strcmp(argv[t], "-p"))
 		{
 			cli_params->flags |= CLI_FLAG_PROFILING;
 		}
 	}
 
-        BLTS_DEBUG ("Using config file %s\n", config_file);
+	BLTS_DEBUG ("Using config file %s\n", config_file);
 
 	if(alsa_read_config(config_file, &cli_params->config))
 	{
@@ -345,8 +334,6 @@ int main(int argc, char **argv)
 	}
 
 	cli_params->testcases = generate_pcm_testcase_list(&cli_params->config);
-
-	log_close();
 
 	err =  blts_cli_main(&alsa_cli, argc, argv);
 

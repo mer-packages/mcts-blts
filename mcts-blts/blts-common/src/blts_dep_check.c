@@ -33,7 +33,7 @@
 
 /** helper to sort out what to log */
 #define llog(level, severity, s...)					\
-	{ if((level)>=(severity)) log_print(s); }
+	{ if((level)>=(severity)) BLTS_DEBUG(s); }
 
 /** find first line in file matching '.*str.*' , return it (free() yourself) or null */
 static char* grep_line(FILE* f, char* str)
@@ -49,7 +49,7 @@ static char* grep_line(FILE* f, char* str)
 		{
 			if(asprintf(&found,"%s",buf) < 0)
 			{
-				logged_perror("malloc");
+				BLTS_LOGGED_PERROR("malloc");
 				return 0;
 			}
 			break;
@@ -89,7 +89,7 @@ static int check_kmod(char* name, int loglevel)
 	char* moddep=0;
 	if(asprintf(&moddep,"/lib/modules/%s/modules.dep",uname_buf.release) < 0)
 	{
-		logged_perror("malloc");
+		BLTS_LOGGED_PERROR("malloc");
 		return -1;
 	}
 
@@ -105,7 +105,7 @@ static int check_kmod(char* name, int loglevel)
 	{
 		if(errno != ENOENT)
 		{
-			logged_perror("Cannot determine /lib/modules layout");
+			BLTS_LOGGED_PERROR("Cannot determine /lib/modules layout");
 			retval=-1;
 			goto cleanup;
 		}
@@ -113,7 +113,7 @@ static int check_kmod(char* name, int loglevel)
 		/* We'll continue with that assumption in this branch */
 		if(asprintf(&mod_full_path,"/lib/modules/%s/%s.ko",uname_buf.release,name)<0)
 		{
-			logged_perror("malloc");
+			BLTS_LOGGED_PERROR("malloc");
 			retval=-1;
 			goto cleanup;
 		}
@@ -157,7 +157,7 @@ static int check_kmod(char* name, int loglevel)
 			/* relative path */
 			if(asprintf(&mod_full_path,"/lib/modules/%s/%s",uname_buf.release,mod_dep_path)<0)
 			{
-				logged_perror("malloc");
+				BLTS_LOGGED_PERROR("malloc");
 				retval=-1;
 				goto cleanup;
 			}
@@ -167,7 +167,7 @@ static int check_kmod(char* name, int loglevel)
 			/* absolute path */
 			if(asprintf(&mod_full_path,"%s",mod_dep_path)<0)
 			{
-				logged_perror("malloc");
+				BLTS_LOGGED_PERROR("malloc");
 				retval=-1;
 				goto cleanup;
 			}
@@ -204,7 +204,7 @@ static int check_lib(char* name, int loglevel)
 		dirname=valid_dirs[i];
 		if(asprintf(&fullpath_glob,"%s/%s*",dirname,name)<0)
 		{
-			logged_perror("malloc");
+			BLTS_LOGGED_PERROR("malloc");
 			return -1;
 		}
 		if(!glob(fullpath_glob,0,0,&gbuf))
@@ -247,7 +247,7 @@ static int check_bin(char* name, int loglevel)
 		dirname=valid_exe_dirs[i];
 		if(asprintf(&fullpath,"%s/%s",dirname,name)<0)
 		{
-			logged_perror("malloc");
+			BLTS_LOGGED_PERROR("malloc");
 			return -1;
 		}
 		if(!access(fullpath,X_OK))
@@ -311,7 +311,7 @@ int depcheck(char *rulesfile, int loglevel)
 
 		if(asprintf(&work_start,"%s",linebuf)<0)
 		{
-			logged_perror("malloc");
+			BLTS_LOGGED_PERROR("malloc");
 			break;
 		}
 		work_s = work_start;

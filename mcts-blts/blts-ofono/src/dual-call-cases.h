@@ -19,10 +19,15 @@
 #ifndef DUAL_CALL_CASES_H
 #define DUAL_CALL_CASES_H
 
+#include <blts_params.h>
+
 int blts_ofono_case_dual_call_transfer(void* user_ptr, int test_num);
 int blts_ofono_case_dual_call_swap(void* user_ptr, int test_num);
 int blts_ofono_case_dual_call_release_and_answer(void* user_ptr, int test_num);
 int blts_ofono_case_dual_call_hold_and_answer(void* user_ptr, int test_num);
 
+//variable parameters processing
+void *
+dual_call_case_variant_set_arg_processor(struct boxed_value *, void *);
 
 #endif /* DUAL_CALL_CASES_H */

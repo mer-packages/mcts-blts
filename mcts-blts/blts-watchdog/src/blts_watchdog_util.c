@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <linux/watchdog.h>
 #include <sys/ioctl.h>
+#include <blts_dep_check.h>
 #include "blts_watchdog_util.h"
 
 #define DEP_RULES "/usr/lib/tests/blts-watchdog-tests/blts-watchdog-req_files.cfg"
@@ -37,11 +38,11 @@ static int wdt_open()
 	{
 		if(errno == EBUSY)
 		{
-			LOG("\n/dev/watchdog seems to exist, but is in use by some other process.\n"
+			BLTS_DEBUG("\n/dev/watchdog seems to exist, but is in use by some other process.\n"
 			"Close that process and run this test again.\n"
 			"Use 'lsof /dev/watchdog' to find out who is using watchdog.\n\n");
 		}
-		logged_perror("watchdog open");
+		BLTS_LOGGED_PERROR("watchdog open");
 		return -1;
 	}
 
@@ -59,11 +60,11 @@ static int wdt_get_timeout(int fd)
 
 	if(ioctl(fd, WDIOC_GETTIMEOUT, &timeout))
 	{
-		logged_perror("WDIOC_GETTIMEOUT");
+		BLTS_LOGGED_PERROR("WDIOC_GETTIMEOUT");
 		return -1;
 	}
 
-	LOG("Current watchdog timeout: %d seconds\n", timeout);
+	BLTS_DEBUG("Current watchdog timeout: %d seconds\n", timeout);
 	return timeout;
 }
 
@@ -71,11 +72,11 @@ static int wdt_set_timeout(int fd, int timeout)
 {
 	if(ioctl(fd, WDIOC_SETTIMEOUT, &timeout))
 	{
-		logged_perror("WDIOC_SETTIMEOUT");
+		BLTS_LOGGED_PERROR("WDIOC_SETTIMEOUT");
 		return -1;
 	}
 
-	LOG("Current watchdog timeout: %d seconds\n", timeout);
+	BLTS_DEBUG("Current watchdog timeout: %d seconds\n", timeout);
 	return 0;
 }
 
@@ -86,44 +87,44 @@ static int wdt_get_info(int fd)
 
 	if(ioctl(fd, WDIOC_GETSUPPORT, &wdt_info))
 	{
-		logged_perror("WDIOC_GETSUPPORT");
+		BLTS_LOGGED_PERROR("WDIOC_GETSUPPORT");
 		return -1;
 	}
 
-	LOG("Watchdog module: %s\n", (char *)wdt_info.identity);
-	LOG("Firmware revision: %d\n", wdt_info.firmware_version);
+	BLTS_DEBUG("Watchdog module: %s\n", (char *)wdt_info.identity);
+	BLTS_DEBUG("Firmware revision: %d\n", wdt_info.firmware_version);
 
-	LOG("Supported options:\n");
+	BLTS_DEBUG("Supported options:\n");
 	if(0 == wdt_info.options)
-		LOG("\tnone\n");
+		BLTS_DEBUG("\tnone\n");
 	if(WDIOF_OVERHEAT & wdt_info.options)
-		LOG("\tOVERHEAT\n");
+		BLTS_DEBUG("\tOVERHEAT\n");
 	if(WDIOF_FANFAULT & wdt_info.options)
-		LOG("\tFANFAULT\n");
+		BLTS_DEBUG("\tFANFAULT\n");
 	if(WDIOF_EXTERN1 & wdt_info.options)
-		LOG("\tEXTERN1\n");
+		BLTS_DEBUG("\tEXTERN1\n");
 	if(WDIOF_EXTERN2 & wdt_info.options)
-		LOG("\tEXTERN2\n");
+		BLTS_DEBUG("\tEXTERN2\n");
 	if(WDIOF_POWERUNDER & wdt_info.options)
-		LOG("\tPOWERUNDER \n");
+		BLTS_DEBUG("\tPOWERUNDER \n");
 	if(WDIOF_CARDRESET & wdt_info.options)
-		LOG("\tCARDRESET\n");
+		BLTS_DEBUG("\tCARDRESET\n");
 	if(WDIOF_POWEROVER & wdt_info.options)
-		LOG("\tPOWEROVER\n");
+		BLTS_DEBUG("\tPOWEROVER\n");
 	if(WDIOF_SETTIMEOUT & wdt_info.options)
-		LOG("\tSETTIMEOUT\n");
+		BLTS_DEBUG("\tSETTIMEOUT\n");
 	if(WDIOF_KEEPALIVEPING & wdt_info.options)
-		LOG("\tKEEPALIVEPING\n");
+		BLTS_DEBUG("\tKEEPALIVEPING\n");
 
 	if(ioctl(fd, WDIOC_GETBOOTSTATUS, &boot_status))
 	{
-		logged_perror("WDIOC_GETBOOTSTATUS");
+		BLTS_LOGGED_PERROR("WDIOC_GETBOOTSTATUS");
 		return -1;
 	}
 
-	LOG("Last reboot was %sinitiated by watchdog timer.\n",
+	BLTS_DEBUG("Last reboot was %sinitiated by watchdog timer.\n",
 		(boot_status & WDIOF_CARDRESET) ? "" : "not ");
-	
+
 	return 0;
 }
 
@@ -131,10 +132,10 @@ static int wdt_keepalive(int fd)
 {
 	if(ioctl(fd, WDIOC_KEEPALIVE, 0))
 	{
-		logged_perror("WDIOC_KEEPALIVE");
+		BLTS_LOGGED_PERROR("WDIOC_KEEPALIVE");
 		return -1;
 	}
-	
+
 	return 0;
 }
 
@@ -143,23 +144,23 @@ int wdt_open_close()
 {
 	int fd = 0;
 	int ret = 0;
-	
-	LOG("Opening /dev/watchdog...\n");
+
+	BLTS_DEBUG("Opening /dev/watchdog...\n");
 	if((fd = wdt_open()) < 0)
 	{
 		ret = -1;
 		goto cleanup;
 	}
-	
+
 	if(wdt_get_info(fd))
 	{
 		ret = -1;
 		goto cleanup;
 	}
-	
+
 cleanup:
 	wdt_close(fd);
-	
+
 	return ret;
 }
 
@@ -169,17 +170,17 @@ int wdt_send_keepalive(double execution_time)
 	int fd = 0;
 	int ret = 0;
 	int timeout;
-	
-	LOG("Opening /dev/watchdog...\n");
+
+	BLTS_DEBUG("Opening /dev/watchdog...\n");
 	if((fd = wdt_open()) < 0)
 	{
 		ret = -1;
 		goto cleanup;
 	}
-	
+
 	if((timeout = wdt_get_timeout(fd)) < 0)
 	{
-		LOGERR("Failed to get current timeout value\n");
+		BLTS_ERROR("Failed to get current timeout value\n");
 		ret = -1;
 		goto cleanup;
 	}
@@ -188,7 +189,7 @@ int wdt_send_keepalive(double execution_time)
 	timeout = 10;
 	if(wdt_set_timeout(fd, timeout))
 	{
-		LOGERR("Failed to set timeout value\n");
+		BLTS_ERROR("Failed to set timeout value\n");
 		ret = -1;
 		goto cleanup;
 	}
@@ -199,22 +200,22 @@ int wdt_send_keepalive(double execution_time)
 		if(wdt_keepalive(fd))
 		{
 			ret = -1;
-			LOGERR("Failed to send keepalive msg\n");
+			BLTS_ERROR("Failed to send keepalive msg\n");
 			break;
 		}
 		sleep(1);
 	}
 	timing_stop();
-	
+
 cleanup:
 	wdt_close(fd);
-	
+
 	return ret;
 }
 
 int wdt_dep_check()
 {
-	LOG("Checking required components...\n");
+	BLTS_DEBUG("Checking required components...\n");
 
 	return depcheck(DEP_RULES,1);
 }

@@ -22,7 +22,7 @@
 #include <X11/Xatom.h>
 #include <X11/Xlibint.h>
 
-#include <X11/extensions/Xrandr.h> 
+#include <X11/extensions/Xrandr.h>
 #include "xrandr_tests.h"
 #include "blts_x11_util.h"
 
@@ -45,102 +45,102 @@ int xrandr_rotate_screen(double execution_time)
 		ret = -1;
 		goto cleanup;
 	}
-	
+
 	if(!XRRQueryExtension(params.display, &event_base, &error_base))
 	{
-		LOGERR("XRRQueryExtension failed\n");
+		BLTS_ERROR("XRRQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if(!XRRQueryVersion(params.display, &ver, &rev))
 	{
-		LOGERR("XRRQueryVersion failed\n");
+		BLTS_ERROR("XRRQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
-	
-	LOG("XRandR Extension version %i.%i\n", ver, rev);
+
+	BLTS_DEBUG("XRandR Extension version %i.%i\n", ver, rev);
 
 	conf = XRRGetScreenInfo(params.display, params.root_window);
 	original_rate = XRRConfigCurrentRate(conf);
 	original_size_id = XRRConfigCurrentConfiguration(conf, &original_rotation);
 	rotations = XRRConfigRotations(conf, &original_rotation);
-	
+
 	if(rotations & RR_Rotate_0)
 	{
-		LOG("Rotation 0 degrees\n");
+		BLTS_DEBUG("Rotation 0 degrees\n");
 		err = XRRSetScreenConfigAndRate(params.display, conf, params.root_window,
 			original_size_id, RR_Rotate_0, original_rate, CurrentTime);
 		if(err != Success)
 		{
-			LOGERR("XRRSetScreenConfigAndRate failed (%d)\n", err);
+			BLTS_ERROR("XRRSetScreenConfigAndRate failed (%d)\n", err);
 			ret = -err;
 		}
 		sleep(2);
 	}
 	else
 	{
-		LOG("RR_Rotate_0 not supported\n");
+		BLTS_DEBUG("RR_Rotate_0 not supported\n");
 	}
 
 	if(rotations & RR_Rotate_90)
 	{
-		LOG("Rotation 90 degrees\n");
+		BLTS_DEBUG("Rotation 90 degrees\n");
 		err = XRRSetScreenConfigAndRate(params.display, conf, params.root_window,
 			original_size_id, RR_Rotate_90, original_rate, CurrentTime);
 		if(err != Success)
 		{
-			LOGERR("XRRSetScreenConfigAndRate failed (%d)\n", err);
+			BLTS_ERROR("XRRSetScreenConfigAndRate failed (%d)\n", err);
 			ret = -err;
 		}
 		sleep(2);
 	}
 	else
 	{
-		LOG("RR_Rotate_90 not supported\n");
+		BLTS_DEBUG("RR_Rotate_90 not supported\n");
 	}
 
 	if(rotations & RR_Rotate_180)
 	{
-		LOG("Rotation 180 degrees\n");
+		BLTS_DEBUG("Rotation 180 degrees\n");
 		err = XRRSetScreenConfigAndRate(params.display, conf, params.root_window,
 			original_size_id, RR_Rotate_180, original_rate, CurrentTime);
 		if(err != Success)
 		{
-			LOGERR("XRRSetScreenConfigAndRate failed (%d)\n", err);
+			BLTS_ERROR("XRRSetScreenConfigAndRate failed (%d)\n", err);
 			ret = -err;
 		}
 		sleep(2);
 	}
 	else
 	{
-		LOG("RR_Rotate_180 not supported\n");
+		BLTS_DEBUG("RR_Rotate_180 not supported\n");
 	}
 
 	if(rotations & RR_Rotate_270)
 	{
-		LOG("Rotation 270 degrees\n");
+		BLTS_DEBUG("Rotation 270 degrees\n");
 		err = XRRSetScreenConfigAndRate(params.display, conf, params.root_window,
 			original_size_id, RR_Rotate_270, original_rate, CurrentTime);
 		if(err != Success)
 		{
-			LOGERR("XRRSetScreenConfigAndRate failed (%d)\n", err);
+			BLTS_ERROR("XRRSetScreenConfigAndRate failed (%d)\n", err);
 			ret = -err;
 		}
 		sleep(2);
 	}
 	else
 	{
-		LOG("RR_Rotate_270 not supported\n");
+		BLTS_DEBUG("RR_Rotate_270 not supported\n");
 	}
 
-	LOG("Restore original configuration\n");
+	BLTS_DEBUG("Restore original configuration\n");
 	err = XRRSetScreenConfigAndRate(params.display, conf, params.root_window,
 		original_size_id, original_rotation, original_rate, CurrentTime);
 	if(err != Success)
 	{
-		LOGERR("XRRSetScreenConfigAndRate failed (%d)\n", err);
+		BLTS_ERROR("XRRSetScreenConfigAndRate failed (%d)\n", err);
 		ret = -err;
 	}
 
@@ -149,7 +149,7 @@ cleanup:
 	{
 		XRRFreeScreenConfigInfo(conf);
 	}
-	close_window(&params);	
+	close_window(&params);
 	return ret;
 }
 

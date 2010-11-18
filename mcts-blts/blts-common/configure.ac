@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.61)
-AC_INIT([blts-common],[0.3.8],[jussi.saavalainen@digia.com])
+AC_INIT([blts-common],[0.4.0],[jussi.saavalainen@digia.com])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([src/blts_log.c])
 AM_INIT_AUTOMAKE
@@ -35,6 +35,10 @@ else
         configdir="${sysconfdir}/blts"
 fi
 AC_SUBST(configdir)
+
+PKG_CHECK_MODULES(XML, libxml-2.0)
+AC_SUBST(XML_CFLAGS)
+AC_SUBST(XML_LIBS)
 
 AC_PROG_CC
 AC_PROG_LIBTOOL

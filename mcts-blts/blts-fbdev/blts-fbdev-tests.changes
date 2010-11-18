@@ -1,3 +1,7 @@
+* Tue 16 Nov 2010 Mika Niinistö <mika.niinisto@digia.com> - 0.0.7
+- Packaging script updated.
+- Logging updated to new common library standard.
+
 * Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.6
 - Initial upload for Meego (changelog summarized)
 - Add RPM packaging

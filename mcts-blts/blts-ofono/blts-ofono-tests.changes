@@ -1,3 +1,19 @@
+* Thu 11 Nov 2010 Kari Laakso <kari.laakso@digia.com> - 0.1.14
+- [ Aki Nyman ] Dual call cases (transfer, swap, release & answer, hold & answer) updated to work with oFono 0.33 API
+- [ Aki Nyman ]  Incoming call cases (hangup, hangup all, remote hangup, deflect and cancel) updated to work with oFono 0.33 API
+- [ Aki Nyman ]  Multiparty call case and private chat call case updated to work with oFono 0.33 API
+- [ Aki Nyman ]  Deprecated property changed callback functions removed from call volume and call meter test cases
+- [ Aki Nyman ]  Propose scan test case updated to work with oFono 0.33 API
+- [ Aki Nyman ]  SMSC number test fixed to save and restore original SMSC number and read test values from configuration file
+- [ Pasi Matilainen ] Fixed SMS tests and added bearer support for oFono 0.33
+- [ Kari Laakso ] Added support for test case timeout handling via configuration file
+- [ Kari Laakso ] Support blts-common 0.4.0
+
+* Thu 28 Oct 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.1.13
+- Fixed call forwarding tests for oFono 0.31
+- Fixed call barring tests for oFono 0.31
+- Added modem power on and online checks to test case inits  
+
 * Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.1.12
 - Add RPM packaging
 - Fixed segfault in microphone volume test case

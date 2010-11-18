@@ -54,7 +54,7 @@ static int init(glesh_context* context, s_test_data* data)
 	data->shader_program = glesh_load_program(vertex_shader, frag_shader);
 	if(!data->shader_program)
 	{
-		LOGERR("Failed to load shader program\n");
+		BLTS_ERROR("Failed to load shader program\n");
 		return 0;
 	}
 
@@ -68,7 +68,7 @@ static int init(glesh_context* context, s_test_data* data)
 	tex = glesh_generate_texture(context, GL_RGBA, 1024, 1024, "test");
 	if(!tex)
 	{
-		LOGERR("Failed to generate texture\n");
+		BLTS_ERROR("Failed to generate texture\n");
 		return 0;
 	}
 
@@ -122,22 +122,22 @@ int test_texels(test_execution_params* params)
 
 	if(!glesh_create_context(&context, NULL, params->w, params->h, params->d))
 	{
-		LOGERR("glesh_create_context failed!\n");
+		BLTS_ERROR("glesh_create_context failed!\n");
 		return -1;
 	}
 
 	if(!init(&context, &data))
 	{
-		LOGERR("init failed!\n");
+		BLTS_ERROR("init failed!\n");
 		return -1;
 	}
 
 	if(!glesh_execute_main_loop(&context, draw, &data, params->execution_time))
 	{
-		LOGERR("glesh_execute_main_loop failed!\n");
+		BLTS_ERROR("glesh_execute_main_loop failed!\n");
 	}
 
-	LOG("Texels per second: %lf\n", context.width * context.height *
+	BLTS_DEBUG("Texels per second: %lf\n", context.width * context.height *
 		context.perf_data.frames_rendered /
 		context.perf_data.total_time_elapsed);
 

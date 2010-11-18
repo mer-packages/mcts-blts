@@ -2,7 +2,11 @@ Source: blts-bluetooth-tests
 Section: devel
 Priority: extra
 Maintainer: Jussi Saavalainen <jussi.saavalainen@digia.com>
-Build-Depends: debhelper (>= 5), libbluetooth-dev (>= 4.12) | libbluetooth3-dev (>= 4.12), libbltscommon-dev (>= 0.2.0)
+Build-Depends:
+        debhelper (>= 5),
+        cdbs,
+        libbluetooth-dev (>= 4.12) | libbluetooth3-dev (>= 4.12),
+        libbltscommon-dev (>= 0.3.8)
 Standards-Version: 3.8.0
 
 Package: blts-bluetooth-tests
@@ -11,4 +15,3 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12), bluez-hcidump
 Recommends: min | min-all
 Description: BLTS Bluetooth functional tests
  This package contains functional tests for the Bluez bluetooth stack.
-

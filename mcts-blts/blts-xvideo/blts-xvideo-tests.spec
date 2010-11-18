@@ -1,6 +1,6 @@
 Summary: BLTS XVideo test set
 Name: blts-xvideo-tests
-Version: 0.0.6
+Version: 0.0.7
 Release: 1
 License: GPLv2
 Group: Development/Testing

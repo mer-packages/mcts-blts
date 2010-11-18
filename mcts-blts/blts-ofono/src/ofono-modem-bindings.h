@@ -740,6 +740,45 @@ org_ofono_VoiceCallManager_send_tones_async (DBusGProxy *proxy, const char * IN_
   stuff->userdata = userdata;
   return dbus_g_proxy_begin_call (proxy, "SendTones", org_ofono_VoiceCallManager_send_tones_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_STRING, IN_arg0, G_TYPE_INVALID);
 }
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+gboolean
+org_ofono_VoiceCallManager_get_calls (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
+
+{
+  return dbus_g_proxy_call (proxy, "GetCalls", error, G_TYPE_INVALID, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), OUT_arg0, G_TYPE_INVALID);
+}
+
+typedef void (*org_ofono_VoiceCallManager_get_calls_reply) (DBusGProxy *proxy, GPtrArray *OUT_arg0, GError *error, gpointer userdata);
+
+static void
+org_ofono_VoiceCallManager_get_calls_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+{
+  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
+  GError *error = NULL;
+  GPtrArray* OUT_arg0;
+  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), &OUT_arg0, G_TYPE_INVALID);
+  (*(org_ofono_VoiceCallManager_get_calls_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  return;
+}
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+DBusGProxyCall*
+org_ofono_VoiceCallManager_get_calls_async (DBusGProxy *proxy, org_ofono_VoiceCallManager_get_calls_reply callback, gpointer userdata)
+
+{
+  DBusGAsyncData *stuff;
+  stuff = g_slice_new (DBusGAsyncData);
+  stuff->cb = G_CALLBACK (callback);
+  stuff->userdata = userdata;
+  return dbus_g_proxy_begin_call (proxy, "GetCalls", org_ofono_VoiceCallManager_get_calls_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+}
 #endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_VoiceCallManager */
 
 #ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_MessageManager
@@ -1061,22 +1100,22 @@ static
 inline
 #endif
 gboolean
-org_ofono_NetworkRegistration_propose_scan (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
+org_ofono_NetworkRegistration_get_operators (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
 
 {
-  return dbus_g_proxy_call (proxy, "ProposeScan", error, G_TYPE_INVALID, dbus_g_type_get_collection ("GPtrArray", DBUS_TYPE_G_OBJECT_PATH), OUT_arg0, G_TYPE_INVALID);
+  return dbus_g_proxy_call (proxy, "GetOperators", error, G_TYPE_INVALID, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), OUT_arg0, G_TYPE_INVALID);
 }
 
-typedef void (*org_ofono_NetworkRegistration_propose_scan_reply) (DBusGProxy *proxy, GPtrArray *OUT_arg0, GError *error, gpointer userdata);
+typedef void (*org_ofono_NetworkRegistration_get_operators_reply) (DBusGProxy *proxy, GPtrArray *OUT_arg0, GError *error, gpointer userdata);
 
 static void
-org_ofono_NetworkRegistration_propose_scan_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+org_ofono_NetworkRegistration_get_operators_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
 {
   DBusGAsyncData *data = (DBusGAsyncData*) user_data;
   GError *error = NULL;
   GPtrArray* OUT_arg0;
-  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_collection ("GPtrArray", DBUS_TYPE_G_OBJECT_PATH), &OUT_arg0, G_TYPE_INVALID);
-  (*(org_ofono_NetworkRegistration_propose_scan_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), &OUT_arg0, G_TYPE_INVALID);
+  (*(org_ofono_NetworkRegistration_get_operators_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
   return;
 }
 
@@ -1085,14 +1124,52 @@ static
 inline
 #endif
 DBusGProxyCall*
-org_ofono_NetworkRegistration_propose_scan_async (DBusGProxy *proxy, org_ofono_NetworkRegistration_propose_scan_reply callback, gpointer userdata)
+org_ofono_NetworkRegistration_get_operators_async (DBusGProxy *proxy, org_ofono_NetworkRegistration_get_operators_reply callback, gpointer userdata)
 
 {
   DBusGAsyncData *stuff;
   stuff = g_slice_new (DBusGAsyncData);
   stuff->cb = G_CALLBACK (callback);
   stuff->userdata = userdata;
-  return dbus_g_proxy_begin_call (proxy, "ProposeScan", org_ofono_NetworkRegistration_propose_scan_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+  return dbus_g_proxy_begin_call (proxy, "GetOperators", org_ofono_NetworkRegistration_get_operators_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+}
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+gboolean
+org_ofono_NetworkRegistration_scan (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
+
+{
+  return dbus_g_proxy_call (proxy, "Scan", error, G_TYPE_INVALID, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), OUT_arg0, G_TYPE_INVALID);
+}
+
+typedef void (*org_ofono_NetworkRegistration_scan_reply) (DBusGProxy *proxy, GPtrArray *OUT_arg0, GError *error, gpointer userdata);
+
+static void
+org_ofono_NetworkRegistration_scan_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+{
+  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
+  GError *error = NULL;
+  GPtrArray* OUT_arg0;
+  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_collection ("GPtrArray", dbus_g_type_get_struct ("GValueArray", DBUS_TYPE_G_OBJECT_PATH, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), G_TYPE_INVALID)), &OUT_arg0, G_TYPE_INVALID);
+  (*(org_ofono_NetworkRegistration_scan_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  return;
+}
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+DBusGProxyCall*
+org_ofono_NetworkRegistration_scan_async (DBusGProxy *proxy, org_ofono_NetworkRegistration_scan_reply callback, gpointer userdata)
+
+{
+  DBusGAsyncData *stuff;
+  stuff = g_slice_new (DBusGAsyncData);
+  stuff->cb = G_CALLBACK (callback);
+  stuff->userdata = userdata;
+  return dbus_g_proxy_begin_call (proxy, "Scan", org_ofono_NetworkRegistration_scan_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
 }
 #endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_NetworkRegistration */
 

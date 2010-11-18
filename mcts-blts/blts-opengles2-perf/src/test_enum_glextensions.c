@@ -68,34 +68,34 @@ int test_enum_glextensions(test_execution_params* params)
 
 	if(!glesh_create_context(&context, NULL, params->w, params->h, params->d))
 	{
-		LOGERR("glesh_create_context failed!\n");
+		BLTS_ERROR("glesh_create_context failed!\n");
 		return -1;
 	}
 
 	query_str = (char*)glGetString(GL_VERSION);
 	if(!query_str)
 	{
-		LOGERR("Failed to get GL_VERSION\n");
+		BLTS_ERROR("Failed to get GL_VERSION\n");
 		return -1;
 	}
-	LOG("GL_VERSION: %s\n", query_str);
+	BLTS_DEBUG("GL_VERSION: %s\n", query_str);
 
 	query_str = (char*)glGetString(GL_RENDERER);
 	if(!query_str)
 	{
-		LOGERR("Failed to get GL_RENDERER\n");
+		BLTS_ERROR("Failed to get GL_RENDERER\n");
 		return -1;
 	}
-	LOG("GL_RENDERER: %s\n", query_str);
+	BLTS_DEBUG("GL_RENDERER: %s\n", query_str);
 
 	query_str = (char*)glGetString(GL_EXTENSIONS);
 	if(!query_str)
 	{
-		LOGERR("Failed to get list of GL extensions\n");
+		BLTS_ERROR("Failed to get list of GL extensions\n");
 		return -1;
 	}
 
-	LOG("List of found extensions:\n");
+	BLTS_DEBUG("List of found extensions:\n");
 
 	end = query_str + strlen(query_str);
 	p = query_str;
@@ -106,27 +106,27 @@ int test_enum_glextensions(test_execution_params* params)
 		{
 			memcpy(ext_name, p, n);
 			ext_name[n] = 0;
-			LOG("%s\n", ext_name);
+			BLTS_DEBUG("%s\n", ext_name);
 		}
 
 		p += (n + 1);
 	}
 
-	LOG("end of list\n");
+	BLTS_DEBUG("end of list\n");
 
 	t = 0;
 	while(gl_ext_list[t])
 	{
 		if(check_extensions(query_str, gl_ext_list[t]))
 		{
-			LOGERR("Required extension '%s' missing.\n", gl_ext_list[t]);
+			BLTS_ERROR("Required extension '%s' missing.\n", gl_ext_list[t]);
 			missing_extensions++;
 		}
 		t++;
 	}
 	if(!missing_extensions)
 	{
-		LOG("All required extensions found.\n");
+		BLTS_DEBUG("All required extensions found.\n");
 		ret = 0;
 	}
 

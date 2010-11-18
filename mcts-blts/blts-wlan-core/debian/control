@@ -1,0 +1,28 @@
+Source: blts-wlan-core-tests
+Section: devel
+Priority: extra
+Maintainer: Jussi Saavalainen <jussi.saavalainen@digia.com>
+Build-Depends:
+	 debhelper (>= 5.0.0),
+	 cdbs,
+	 libbltscommon-dev (>= 0.3.7),
+	 libnl-dev (>= 1.1)
+Standards-Version: 3.8.0
+Homepage: http://wiki.meego.com/Quality/TestSuite/MCTS
+
+Package: blts-wlan-core-tests
+Architecture: any
+Priority: optional
+Section: testing
+Depends: ${shlibs:Depends}, ${misc:Depends}, blts-wlan-core-tests-config
+Description: WLAN baselayer test
+ This package contains functional tests for WLAN core.
+
+Package: blts-wlan-core-tests-config-example
+Architecture: any
+Priority: optional
+Section: testing
+Provides: blts-wlan-core-tests-config
+Description: BLTS WLAN core test configuration example
+ This package contains examples for creating a working configuration for
+ BLTS WLAN core functional tests.

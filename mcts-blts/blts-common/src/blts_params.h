@@ -54,6 +54,7 @@ struct boxed_value {
 
 /* Linked list for storing generated parameter variations */
 struct variant_list {
+	unsigned index;
 	struct variant_list *next;
 	struct boxed_value *values; /* Linked list of parameter values for this variation */
 };
@@ -88,6 +89,8 @@ int blts_config_test_is_variable(char* name);
 int blts_config_debug_dump_variants(char * test, int style);
 struct variant_list *blts_config_generate_test_variations(char *testname, int variation_style);
 
+struct boxed_value *blts_config_get_test_param_names(char *variant_test_name);
+
 /* Configuration reading ([global] variables) */
 int blts_config_get_value_int(char *key, int *value);
 int blts_config_get_value_long(char *key, long *value);
@@ -120,5 +123,7 @@ struct boxed_value *blts_config_boxed_value_list_dup(struct boxed_value *v);
 
 void blts_config_dump_boxed_value_list_on_loglevel(struct boxed_value *v, int loglevel);
 void blts_config_dump_boxed_value_list_on_log(struct boxed_value *v);
+void blts_config_dump_labeled_value_list_on_log(struct boxed_value *labels, struct boxed_value *v);
+char *blts_config_dump_labeled_value_list_to_str(struct boxed_value *labels, struct boxed_value *v);
 
 #endif

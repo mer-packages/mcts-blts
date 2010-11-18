@@ -19,119 +19,68 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <blts_log.h>
+#include <getopt.h>
+#include <blts_cli_frontend.h>
+#include <blts_params.h>
 
 #include "blts_watchdog_util.h"
 
-#define EXECUTE_TEST(a, b)\
-{\
-	int ret;\
-	LOG("\nStarting test '%s'...\n", a);\
-	ret = b;\
-	if(ret)\
-	{\
-		LOGERR("Test failed (%d).\n", ret);\
-	}\
-	else\
-	{\
-		LOG("Test passed.\n");\
-	}\
-}\
-
-static void show_help()
+static void watchdog_cli_help(const char* help_msg_base)
 {
-	fprintf(stdout, "USAGE: blts-watchdog-tests [-a] [-l logfile] [-t execution_time_in_seconds]\n");
-	fprintf(stdout, "-a: Run all tests (default: run only smoke test set)\n");
-	fprintf(stdout, "-l: Used logfile (default: ./blts_watchdog.txt)\n");
-	fprintf(stdout, "-t: Maximum execution time of each test in seconds (default: 10s for smoke test, 30 s for full test)\n");
+	fprintf(stdout, help_msg_base,
+		"",
+		"");
+}
+static void* watchdog_argument_processor(int argc, char **argv)
+{
+	BLTS_UNUSED_PARAM(argc)
+	BLTS_UNUSED_PARAM(argv)
+	return (void*)1;
 }
 
-static void invalid_params()
+static void watchdog_teardown(void *user_ptr)
 {
-	fprintf(stderr, "Invalid parameters\n");
-	show_help();
+	BLTS_UNUSED_PARAM(user_ptr)
 }
 
-static void smoke_test(double execution_time)
+static int run_tests(void* user_ptr, int test_num)
 {
-	EXECUTE_TEST("Core-Watchdog presence check", wdt_dep_check());
-	EXECUTE_TEST("Core-Open and close watchdog", wdt_open_close());
-	EXECUTE_TEST("Core-Send keepalive messages", wdt_send_keepalive(execution_time));
+	BLTS_UNUSED_PARAM(user_ptr)
+
+	switch(test_num) {
+	case 1:
+		return wdt_dep_check();
+	case 2:
+		return wdt_open_close();
+	case 3:
+		return wdt_send_keepalive(20);
+	default:
+		 BLTS_ERROR("Unknown test case %d!\n", test_num);
+		 return -EINVAL;
+	}
 }
 
-static void full_test(double execution_time)
+static blts_cli_testcase watchdog_cases[] =
 {
-	// TODO: Add tests here
-}
+	{ "Core-Watchdog presence check", run_tests, 60000 },
+	{ "Core-Open and close watchdog", run_tests, 60000 },
+	{ "Core-Send keepalive messages", run_tests, 60000 },
+	BLTS_CLI_END_OF_LIST
+};
 
-int main(int argc, char *argv[])
+static blts_cli watchdog_cli =
 {
-	int t;
-	double execution_time = -1;
-	int all_tests = 0;
-	char* logfile = "blts_watchdog.txt";
+	.test_cases = watchdog_cases,
+	.log_file = "blts_watchdog.txt",
+	.blts_cli_help = watchdog_cli_help,
+	.blts_cli_process_arguments = watchdog_argument_processor,
+	.blts_cli_teardown = watchdog_teardown
+};
 
-	for(t = 1; t < argc; t++)
-	{
-		if(strcmp(argv[t], "-a") == 0)
-		{
-			all_tests = 1;
-		}
-		else if(strcmp(argv[t], "-l") == 0)
-		{
-			if(++t >= argc)
-			{
-				invalid_params();
-				return 1;
-			}
-			logfile = argv[t];
-		}
-		else if(strcmp(argv[t], "-t") == 0)
-		{
-			if(++t >= argc)
-			{
-				invalid_params();
-				return 1;
-			}
-			execution_time = (double)atoi(argv[t]);
-		}
-		else if(strcmp(argv[t], "-h") == 0)
-		{
-			show_help();
-			return 0;
-		}
-		else
-		{
-			invalid_params();
-			return 1;
-		}
-	}
-
-	if(execution_time == -1)
-	{
-		if(all_tests)
-		{
-			execution_time = 30.0;
-		}
-		else
-		{
-			execution_time = 10.0;
-		}
-	}
-
-	log_open(logfile, 1);
-
-	if(all_tests)
-	{
-		smoke_test(execution_time);
-		full_test(execution_time);
-	}
-	else
-	{
-		smoke_test(execution_time);
-	}
-
-	log_close(logfile);
-
-	return 0;
+int main(int argc, char **argv)
+{
+	return blts_cli_main(&watchdog_cli, argc, argv);
 }
 

@@ -262,7 +262,6 @@ static blts_cli input_cli =
 
 int main(int argc, char **argv)
 {
-	log_set_level(LEVEL_DEBUG);
 	return blts_cli_main(&input_cli, argc, argv);
 }
 
