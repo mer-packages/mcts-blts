@@ -1,0 +1,64 @@
+Overview
+
+This package contains several OpenGL ES 2.0 performance measurements for generic
+Linux-y mobile platforms.
+
+
+Requirements
+
+Running the tests in the package requires
+  * linux >= 2.6.15
+  * GNU libc >= 2.1
+  * libbltscommon >= 0.2.4
+  * GLESv2
+  * EGL
+
+Building the package
+
+The package should build cleanly with GCC 4.x with the mentioned libraries.
+The preferred way is to use Autotools for configuration and makefile generation.
+You'll also need the Check test framework (v. 0.9+) to run the unit tests
+and use the provided Autoconf scripts.
+
+The package builds (from the source tree root) with
+
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+
+To generate debian package
+
+ $ dpkg-buildpackage -rfakeroot
+
+
+Running the tests
+
+Run as root:
+
+ $ blts-opengles2-tests
+
+To see other options for blts-opengles2-tests
+
+ $ blts-opengles2-tests -?
+USAGE: ./blts-opengles2-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
+[-s] [-?] [-nc] [-t execution_time_in_seconds] [-w window_width]
+[-h window_height][-d depth] [-c]
+-l: Used log file, default blts_gles2_perf.txt
+-e: Execute single or multiple selected tests, for example -e 1,4,5.
+-en: Execute test by name, for example -en "My test X"
+-s: Show list of all tests
+-?: This message
+-nc: Do not output log to terminal
+-t: Maximum execution time of each test in seconds (default: 10s)
+-w: Used window width. If 0 uses desktop width. (default: 0)
+-h: Used window height. If 0 uses desktop height. (default: 0)
+-d: Used window depth. 16, 24 or 32. If 0 uses desktop depth. (default: 0)
+-c: Run the tests with minimal compositor
+
+You can also run the tests using min
+
+ $ min
+
+Execute the tests without window manager. Composite window managers, such as
+Compiz, slow down execution considerably.
+

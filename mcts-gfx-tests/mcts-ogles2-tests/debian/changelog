@@ -1,0 +1,25 @@
+blts-opengles2-tests (0.0.12) unstable; urgency=low
+
+  [ Mika Niinistö, Kimmo Myllyvirta ]
+  * Packaging script updated.
+  * Logging updated to new common library standard.
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Tue, 16 Nov 2010 17:32:58 +0200
+
+blts-opengles2-tests (0.0.11) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Add RPM packaging
+  * Binary and debian package name changed to "blts-opengles2-tests"
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 30 Sep 2010 15:21:59 +0300
+
+blts-opengles2-tests (0.0.10) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Initial upload for Meego (changelog summarized)
+  * Generic, configurable, convolution filter test.
+  * Minimal composite manager (blts_minimal_compositor)
+  * Graphics benchmarks.
+
+ -- Kari Laakso <kari.laakso@digia.com>  Thu, 09 Sep 2010 14:35:38 +0300
