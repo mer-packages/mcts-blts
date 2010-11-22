@@ -292,7 +292,7 @@ void MwtsLog::Write(QString sText)
 	}
 
 	QString sTime;
-	sTime.sprintf("%4.3lf", time.elapsed()/1000.0);
+	sTime.sprintf("%4.3lf", (double)(time.elapsed()/1000.0));
 	QString str= sTime+":"+sText+"\n";
 
 	m_pLogFile->write(str.toLatin1());
