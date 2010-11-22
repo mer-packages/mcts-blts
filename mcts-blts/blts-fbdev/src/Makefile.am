@@ -25,13 +25,13 @@ h_sources = \
 	blts-fbdev-utils.h \
 	blts-fbdev-blanking.h \
 	blts-fbdev-backlight.h \
-	fbdev_fute.h
+	blts-fbdev-fute.h
 
 c_sources = \
 	blts-fbdev-utils.c \
 	blts-fbdev-blanking.c \
 	blts-fbdev-backlight.c \
-	fbdev_fute.c
+	blts-fbdev-fute.c
 
 bin_PROGRAMS = blts-fbdev-tests
 

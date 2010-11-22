@@ -36,7 +36,7 @@
 #include "blts-fbdev-defs.h"
 
 /* Test cases */
-#include "fbdev_fute.h"
+#include "blts-fbdev-fute.h"
 #include "blts-fbdev-blanking.h"
 #include "blts-fbdev-backlight.h"
 
@@ -265,9 +265,6 @@ blts_fbdev_cli_run_case (void *user_data, int test_num)
         BLTS_TRACE ("Running test case %d\n", test_num);
 
         switch (test_num) {
-        case BLTS_FBDEV_CASE_OPEN_CLOSE:
-                ret = fute_fb_open_fetch_info_close (data);
-                break;
         case BLTS_FBDEV_CASE_BLANKING:
                 ret = blts_fbdev_case_blanking (data);
                 break;
@@ -296,7 +293,7 @@ static blts_cli_testcase blts_fbdev_cases[] = {
 	 * Zero timeout = infinity
          */
         { "Core-Read frame buffer information with ioctl",
-          blts_fbdev_cli_run_case, 30000 },
+          blts_fbdev_case_fetch_info, 30000 },
         { "Core-Set blanking levels", blts_fbdev_cli_run_case, 60000 },
         { "Core-Verify backlight levels", blts_fbdev_cli_run_case, 60000 },
         { "Core-Linear backlight level changes", blts_fbdev_cli_run_case, 0 },

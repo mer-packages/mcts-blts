@@ -1,6 +1,6 @@
 /* -*- mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
-/* fbdev_fute.c -- Frame buffer functional tests
+/* blts-fbdev-fute.c -- Frame buffer functional tests
 
    Copyright (C) 2000-2010, Nokia Corporation.
 
@@ -39,14 +39,15 @@
 #include <blts_log.h>
 
 /* Own includes */
-#include "fbdev_fute.h"
+#include "blts-fbdev-fute.h"
 #include "blts-fbdev-defs.h"
 #include "blts-fbdev-utils.h"
 
-struct fb_fix_screeninfo glob_fb_fix_info;
 struct fb_var_screeninfo glob_fb_var_info;
 
-/* Return pointer to shared buffer with updated variable frame buffer information. Don't free. */
+/* Return pointer to shared buffer with updated variable frame buffer
+ * information. Don't free.
+ */
 struct fb_var_screeninfo *
 fetch_fb_var_screeninfo (int fb_fd)
 {
@@ -157,8 +158,10 @@ void log_print_fb_var_screeninfo(struct fb_var_screeninfo *vsi)
 
 /* Open frame buffer device, fetch & print info, and close the device */
 int
-fute_fb_open_fetch_info_close (blts_fbdev_data *data)
+blts_fbdev_case_fetch_info (void *test_data, int test_num)
 {
+        blts_fbdev_data *data = test_data;
+
         FUNC_ENTER();
 
         if (!data || !data->device) {
