@@ -39,13 +39,4 @@ typedef struct {
         int     maximum_light;
 } blts_fbdev_data;
 
-/* Test case list */
-enum {
-        BLTS_FBDEV_CASE_OPEN_CLOSE = 1,
-        BLTS_FBDEV_CASE_BLANKING,
-        BLTS_FBDEV_CASE_BACKLIGHT_LIMITS,
-        BLTS_FBDEV_CASE_BACKLIGHT_LINEAR,
-        BLTS_FBDEV_CASE_BACKLIGHT_LOGARITHMIC,
-};
-
 #endif /* BLTS_FBDEV_DEFS_H_ */

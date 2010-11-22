@@ -250,42 +250,6 @@ blts_fbdev_cli_teardown (void *user_data)
         free (data);
 }
 
-/* Run a test case */
-static int
-blts_fbdev_cli_run_case (void *user_data, int test_num)
-{
-        int ret = 0;
-        blts_fbdev_data *data = user_data;
-
-        if (!data) {
-                BLTS_ERROR ("Error: No user data!\n");
-                return -1;
-        }
-
-        BLTS_TRACE ("Running test case %d\n", test_num);
-
-        switch (test_num) {
-        case BLTS_FBDEV_CASE_BLANKING:
-                ret = blts_fbdev_case_blanking (data);
-                break;
-        case BLTS_FBDEV_CASE_BACKLIGHT_LIMITS:
-                ret = blts_fbdev_case_backlight_verify (data);
-                break;
-        case BLTS_FBDEV_CASE_BACKLIGHT_LINEAR:
-                ret = blts_fbdev_case_backlight_linear (data);
-                break;
-        case BLTS_FBDEV_CASE_BACKLIGHT_LOGARITHMIC:
-                ret = blts_fbdev_case_backlight_logarithmic (data);
-                break;
-        default:
-                /* assert not reached? */
-                BLTS_ERROR ("Error: No such case!\n");
-                return -1;
-        }
-
-        return ret;
-}
-
 /* Test case definitions */
 static blts_cli_testcase blts_fbdev_cases[] = {
 	/* Test case name, test case function, timeout in ms
@@ -294,11 +258,14 @@ static blts_cli_testcase blts_fbdev_cases[] = {
          */
         { "Core-Read frame buffer information with ioctl",
           blts_fbdev_case_fetch_info, 30000 },
-        { "Core-Set blanking levels", blts_fbdev_cli_run_case, 60000 },
-        { "Core-Verify backlight levels", blts_fbdev_cli_run_case, 60000 },
-        { "Core-Linear backlight level changes", blts_fbdev_cli_run_case, 0 },
-        { "Core-Logarithmic backlight level changes", blts_fbdev_cli_run_case,
-          0 },
+        { "Core-Set blanking levels",
+          blts_fbdev_case_blanking, 60000 },
+        { "Core-Verify backlight levels",
+          blts_fbdev_case_backlight_verify, 60000 },
+        { "Core-Linear backlight level changes",
+          blts_fbdev_case_backlight_linear, 0 },
+        { "Core-Logarithmic backlight level changes",
+          blts_fbdev_case_backlight_logarithmic, 0 },
 	BLTS_CLI_END_OF_LIST
 };
 

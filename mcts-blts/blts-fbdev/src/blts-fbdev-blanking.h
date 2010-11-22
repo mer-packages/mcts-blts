@@ -21,11 +21,8 @@
 #ifndef BLTS_FBDEV_BLANKING_H_
 #define BLTS_FBDEV_BLANKING_H_
 
-/* Own includes */
-#include "blts-fbdev-defs.h"
-
 /* Tests blanking on different values */
 int
-blts_fbdev_case_blanking (blts_fbdev_data *data);
+blts_fbdev_case_blanking (void *test_data, int test_num);
 
 #endif /* BLTS_FBDEV_BLANKING_H_ */

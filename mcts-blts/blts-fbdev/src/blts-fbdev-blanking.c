@@ -28,13 +28,15 @@
 #include <blts_log.h>
 
 /* Own includes */
+#include "blts-fbdev-defs.h"
 #include "blts-fbdev-blanking.h"
 #include "blts-fbdev-utils.h"
 
 /* Tests blanking on different values */
 int
-blts_fbdev_case_blanking (blts_fbdev_data *data)
+blts_fbdev_case_blanking (void *test_data, int test_num)
 {
+        blts_fbdev_data *data = test_data;
         int blank_level;
 
         FUNC_ENTER();
