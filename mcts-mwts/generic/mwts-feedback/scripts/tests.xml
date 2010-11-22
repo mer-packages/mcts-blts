@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-feedback-scripts" domain="Feedback" level="Feature">
+    <set name="Feedback-FuTe" description="Feedback functional test cases" feature="Feedback" type="Functional">
+      <case name="SMOKE-Feedback-StartEffect" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if effect feature (vibration in mobile devices) works
+        Method
+        Start effect with simple settings (no attack or fade).
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when state of effect switchs to 'Running' and no error occurs.
+        ">
+        <step>min -c -t 'SMOKE-Feedback-StartEffect'</step>
+      </case>
+      <case name="SMOKE-Feedback-PauseEffect" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if effect feature (vibration in mobile devices) works
+        Method
+        Starts effect with simple settings (no attack or fade), and then pauses it.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when state of effect switchs to 'Paused' and no error occurs.
+        ">
+        <step>min -c -t 'SMOKE-Feedback-PauseEffect'</step>
+      </case>
+      <case name="SMOKE-Feedback-StopEffect" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if effect feature (vibration in mobile devices) works
+        Method
+        Start effect with simple settings (no attack or fade), and then stops it.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when state of effect switchs to 'Stopped' and no error occurs.
+        ">
+        <step>min -c -t 'SMOKE-Feedback-StopEffect'</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>

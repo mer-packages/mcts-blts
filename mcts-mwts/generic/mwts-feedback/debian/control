@@ -1,0 +1,28 @@
+Source: mwts-feedback
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libqtm-dev
+Maintainer: Jan Grela <jan.grela@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-feedback
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0)
+Description: MWTS-Feedback libraries
+ Feedback for creating MiddleWare Test Suite packages
+ c++ interface
+
+Package: mwts-feedback-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-feedback, min
+Description: MWTS-Feedback Test cases
+ Min interface and test cases
+
+Package: mwts-feedback-cli
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-feedback 
+Description: MWTS Feedback command line interface
+ Command line interface for mwts-feedback
