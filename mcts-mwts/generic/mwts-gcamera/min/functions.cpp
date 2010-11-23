@@ -28,6 +28,7 @@
 #include <MwtsCommon>
 #include <glib-object.h>
 #include <gst/gst.h>
+#include <gstreamer-0.10/gst/interfaces/photography.h>
 
 // MIN's module information
 const char *module_date = __DATE__;
@@ -46,6 +47,15 @@ if (param == INITPTR) {param = default;}
 
 // Camera test class
 GCameraTest Test;
+
+LOCAL gint SetPipeline(__attribute__((unused)) MinItemParser *item)
+{
+    MWTS_ENTER;
+    Test.setup_pipeline();
+    g_pResult->StepPassed(__FUNCTION__, TRUE);
+    MWTS_LEAVE;
+    return ENOERR;
+}
 
 LOCAL gint TakePicture(MinItemParser *item)
 {
@@ -176,9 +186,9 @@ LOCAL gint SetZoom(MinItemParser *item)
     }
 }
 
-/*LOCAL gint SetAllInOneWithPicture(__attribute__((unused)) MinItemParser *item)
+LOCAL gint SetAllInOneWithPicture(__attribute__((unused)) MinItemParser *item)
 {
-    MWTS_ENTER;
+/*    MWTS_ENTER;
     if(Test.all_in_one_with_picture())
     {
         g_pResult->StepPassed(__FUNCTION__, TRUE);
@@ -190,9 +200,9 @@ LOCAL gint SetZoom(MinItemParser *item)
         g_pResult->StepPassed(__FUNCTION__, FALSE);
         MWTS_LEAVE;
         return EINVAL;
-    }
+    }*/
 }
-*/
+
 
 LOCAL gint IncreaseZoom(MinItemParser *item)
 {
@@ -374,11 +384,11 @@ LOCAL gint SetPostProcessing(MinItemParser *item)
 }
 
 LOCAL gint SetFlashMode(MinItemParser *item)
-{/*
+{
     //Off | On | FillIn | RedEye
 
     gchar *mode = NULL;
-    guint enum_mode = 0;
+    gint enum_mode = 0;
     if(ENOERR != mip_get_next_string(item, &mode))
     {
         MWTS_ERROR("mode value expected");
@@ -403,7 +413,7 @@ LOCAL gint SetFlashMode(MinItemParser *item)
 
     g_free(mode);
 
-    if(Test.set_flashmode(enum_mode))
+    if(Test.set_flashmode((GstFlashMode)enum_mode))
     {
         g_pResult->StepPassed(__FUNCTION__, TRUE);
         MWTS_LEAVE;
@@ -414,7 +424,7 @@ LOCAL gint SetFlashMode(MinItemParser *item)
         g_pResult->StepPassed(__FUNCTION__, FALSE);
         MWTS_LEAVE;
         return EINVAL;
-    }*/
+    }
 }
 
 
@@ -432,7 +442,7 @@ LOCAL gint SetFlashMode(MinItemParser *item)
  */
 LOCAL gint SetTone(MinItemParser *item)
 {
-   /* gchar *mode = NULL;
+    gchar *mode = NULL;
     guint enum_mode = 0;
     if(ENOERR != mip_get_next_string(item, &mode))
     {
@@ -465,7 +475,7 @@ LOCAL gint SetTone(MinItemParser *item)
         enum_mode = 0;
     }
     g_free(mode);
-    if(Test.set_tone_mode(enum_mode))
+    if(Test.set_tone_mode((GstColourToneMode)enum_mode))
     {
         g_pResult->StepPassed(__FUNCTION__, TRUE);
         MWTS_LEAVE;
@@ -476,8 +486,7 @@ LOCAL gint SetTone(MinItemParser *item)
         g_pResult->StepPassed(__FUNCTION__, FALSE);
         MWTS_LEAVE;
         return EINVAL;
-    }
-    */
+    }   
 }
 
 /*
@@ -490,7 +499,7 @@ LOCAL gint SetTone(MinItemParser *item)
  */
 LOCAL gint SetWhitebalance(MinItemParser *item)
 {
-/*    gchar *mode = NULL;
+    gchar *mode = NULL;
     guint enum_mode = 0;
     if(ENOERR != mip_get_next_string(item, &mode))
     {
@@ -520,7 +529,7 @@ LOCAL gint SetWhitebalance(MinItemParser *item)
 
     g_free(mode);
 
-    if(Test.set_wb_mode(enum_mode))
+    if(Test.set_wb_mode((GstWhiteBalanceMode)enum_mode))
     {
         g_pResult->StepPassed(__FUNCTION__, TRUE);
         MWTS_LEAVE;
@@ -532,12 +541,60 @@ LOCAL gint SetWhitebalance(MinItemParser *item)
         MWTS_LEAVE;
         return EINVAL;
     }
-*/
+}
+
+/*
+ *                                                       (0x00000001): source-resize - Enable source crop and scale
+ * GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION     - (0x00000002): source-colorspace-conversion - Enable colorspace conversion for video source
+ * GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION - (0x00000004): viewfinder-colorspace-conversion - Enable colorspace conversion for viewfinder
+ *                                                       (0x00000008): viewfinder-scale - Enable scale for viewfinder
+ *                                                       (0x00000010): audio-conversion - Enable audio conversion for video capture
+ *                                                       (0x00000020): disable-audio    - Disable audio elements for video capture
+ *                                                       (0x00000040): image-colorspace-conversion - Enable colorspace conversion for still image
+ */
+
+LOCAL gint SetFlags(MinItemParser *item)
+{
+    gchar *mode = NULL;
+    gint enum_mode = 0;
+
+    if(ENOERR != mip_get_next_string(item, &mode))
+    {
+        MWTS_ERROR("camerabin flags value expected");
+        g_pResult->StepPassed(__FUNCTION__, FALSE);
+        MWTS_LEAVE;
+        return EINVAL;
+    }
+
+    if(strcmp(mode, "Source_Colorspace_Conversion") == 0)
+        enum_mode = GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION;
+    else if(strcmp(mode, "Viewfinder_Colorspace_Conversion") == 0)
+        enum_mode = GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION;
+    else
+    {
+        MWTS_ERROR("Could not parse correct flags, returning with default.");
+        enum_mode = 0;
+    }
+
+    g_free(mode);
+
+    if(Test.set_flags((GstCameraBinFlags)enum_mode))
+    {
+        g_pResult->StepPassed(__FUNCTION__, TRUE);
+        MWTS_LEAVE;
+        return ENOERR;
+    }
+    else
+    {
+        g_pResult->StepPassed(__FUNCTION__, FALSE);
+        MWTS_LEAVE;
+        return EINVAL;
+    }
 }
 
 LOCAL gint SetAperture(MinItemParser *item)
 {
-  /*  gint amount = 0;
+    gint amount = 0;
     if(ENOERR != mip_get_next_int(item, &amount))
     {
         MWTS_ERROR("value expected");
@@ -555,11 +612,11 @@ LOCAL gint SetAperture(MinItemParser *item)
         g_pResult->StepPassed(__FUNCTION__, FALSE);
         MWTS_LEAVE;
         return EINVAL;
-    }*/
+    }
 }
 
 LOCAL gint SetExposure(MinItemParser *item)
-{/*
+{
     gint amount = 0;
     if(ENOERR != mip_get_next_int(item, &amount))
     {
@@ -578,7 +635,7 @@ LOCAL gint SetExposure(MinItemParser *item)
         g_pResult->StepPassed(__FUNCTION__, FALSE);
         MWTS_LEAVE;
         return EINVAL;
-    }*/
+    }
 }
 
 
@@ -591,11 +648,14 @@ gint ts_get_test_cases( DLList** list )
     // declare common functions like Init, Close..
     MwtsMin::DeclareFunctions(list);
 
+    ENTRYTC(*list,"SetVideoCodecs", SetVideoCodecs);
+    ENTRYTC(*list,"SetPipeline", SetPipeline);
+    ENTRYTC(*list,"SetFlags", SetFlags);
+
     ENTRYTC(*list,"TakePicture", TakePicture);
     ENTRYTC(*list,"TakeVideo", TakeVideo);
 
-    ENTRYTC(*list,"SetResolution", SetResolution);
-    ENTRYTC(*list,"SetVideoCodecs", SetVideoCodecs);
+    ENTRYTC(*list,"SetResolution", SetResolution);    
     ENTRYTC(*list,"SetFPSMeasure", SetFPSMeasure);
     ENTRYTC(*list,"SetPostProcessing", SetPostProcessing);    	
 
@@ -605,7 +665,7 @@ gint ts_get_test_cases( DLList** list )
      * interfaces/photography
      * This is not part of MeeGo SDK, implementation is commented out in .cpp
      */
-    /*ENTRYTC(*list,"SetAutoFocus", SetAutoFocus);
+    ENTRYTC(*list,"SetAutoFocus", SetAutoFocus);
     ENTRYTC(*list,"SetIsoSpeed", SetIsoSpeed);
     ENTRYTC(*list,"SetZoom", SetZoom);
     ENTRYTC(*list,"IncreaseZoom", IncreaseZoom);
@@ -614,8 +674,8 @@ gint ts_get_test_cases( DLList** list )
     ENTRYTC(*list,"SetExposure", SetExposure);
     ENTRYTC(*list,"SetFlashMode", SetFlashMode);
     ENTRYTC(*list,"SetTone", SetTone);
-    ENTRYTC(*list,"SetWhitebalance", SetWhitebalance);
-    ENTRYTC(*list,"SetAllInOneWithPicture", SetAllInOneWithPicture);*/
+    ENTRYTC(*list,"SetWhitebalance", SetWhitebalance);    
+    //ENTRYTC(*list,"SetAllInOneWithPicture", SetAllInOneWithPicture);
 
     return ENOERR;
 

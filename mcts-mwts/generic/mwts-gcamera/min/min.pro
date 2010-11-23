@@ -19,10 +19,10 @@ CONFIG += link_pkgconfig
 PKGCONFIG += \
 	glib-2.0 \
 	dbus-1 \
-	gstreamer-0.10
+    gstreamer-0.10
 
 LIBS+= -L../src
-LIBS += -lminutils -lmintmapi -lminevent -lmwts-common -lmwts-gcamera
+LIBS += -lminutils -lmintmapi -lminevent -lmwts-common -lgstphotography-0.10 -lmwts-gcamera
 
 target.path = /usr/lib/min
 INSTALLS += target
