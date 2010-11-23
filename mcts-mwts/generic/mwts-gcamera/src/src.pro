@@ -15,7 +15,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += \
 	glib-2.0 \
 	dbus-1 \
-	gstreamer-0.10
+    gstreamer-0.10
 
 SOURCES += \
     GCameraTest.cpp
@@ -23,8 +23,7 @@ SOURCES += \
 HEADERS += \
     GCameraTest.h
 
-
-LIBS += -lmwts-common
+LIBS += -lgstphotography-0.10 -lmwts-common
 	
 target.path = /usr/lib
 INSTALLS += target

@@ -26,6 +26,8 @@
 #define _INCLUDED_G_CAMERA_TEST_H
 
 #include <MwtsCommon>
+#include <QDir>
+
 #include <glib-2.0/glib-object.h>
 #include <dbus-1.0/dbus/dbus-glib.h>
 #include <dbus-1.0/dbus/dbus-glib-lowlevel.h>
@@ -40,7 +42,9 @@
 #include <gstreamer-0.10/gst/interfaces/colorbalance.h>
 
 #define GST_USE_UNSTABLE_API
-#include <gstreamer-0.10/gst/interfaces/photography.h>
+#include <gst/interfaces/photography.h>
+#include <gst/interfaces/xoverlay.h>
+#include <gst/interfaces/colorbalance.h>
 
 /*Output dir/file settings*/
 #define BASE_DIR		 "/home/user/"
@@ -66,7 +70,7 @@
 
 #define IMG_CAPTURE_TIMEOUT		60
 #define CAPTURE_START_AFTER		10
-#define CAMERA_FILTER_CAPS "video/x-raw-yuv"
+#define CAMERA_FILTER_CAPS "video/x-raw-yuv, format=(fourcc)I420"
 
 #define DEFAULT_VF_CAPS \
 "video/x-raw-yuv, width = (int) 320, height = (int) 240, framerate = (fraction) 1496/100;" \
@@ -182,6 +186,7 @@ public:
      * @return success / failure
      */
     gboolean take_video(guint video_length);
+
 
     /**
      * Set image Post Processing on
@@ -366,10 +371,36 @@ public:
      */
     void set_autofocus();
 
+    gboolean set_flags (GstCameraBinFlags flags);
+
+private:
+    /**
+    * Generates an incremental filename????, which helps to avoid overwriting
+    * previously saved video/image filenames.
+    * @return next available filename
+    * @example 1. video0000.ogg, after this functin call 2. video0001.ogg...
+    */
+    QString next_output_filename(QString recordingPath, QString recordingFilename, QString recordingExtension);
+
 public:
     /* states:
     (image) <---> (video_stopped) <---> (video_recording)
     */
+
+    /* Main objects for video/image recording */
+    GstElement *gst_camera_bin;
+    GstElement *gst_videosrc;
+    GMainLoop* local_mainloop;
+    gint local_bus_watch_source;
+
+
+    /* Variables for customization */
+    GList *video_caps_list;
+    GString *capture_resolution;
+    guint flag_capture_done;
+    guint flag_fps_on;
+    guint flag_picture_done;
+    guint flag_autofocus;
     typedef enum _tag_CaptureState
     {
         CAP_STATE_IMAGE,
@@ -377,8 +408,6 @@ public:
         CAP_STATE_VIDEO_PAUSED,
         CAP_STATE_VIDEO_RECORDING,
     } CaptureState;
-
-
     struct
     {
         guint width;
@@ -387,25 +416,16 @@ public:
         guint fps_l;
     } current_resolution;
 
-
-    guint flag_picture_done;
-    guint flag_autofocus;
-
-    GstElement *gst_camera_bin;
-    GstElement *gst_videosrc;
-
-    GList *video_caps_list;
-    GString *capture_filename;
-    GString *capture_filename_extension;
-    guint file_nro;
-    GString *capture_resolution;
-
-    guint flag_capture_done;
-    guint flag_fps_on;
-
-    GMainLoop* local_mainloop;
-
-    gint local_bus_watch_source;
+    /* Output recording variables */
+    //String holds recording directory's path
+    QString recordingVideoDir;
+    QString recordingImageDir;
+    //String holds recording file's name
+    //for example: "recorded_audio????", the question marks mean the sequence number
+    QString recordingVideoFilename;
+    QString recordingImageFilename;
+    QString recordingFileExtension;    
+    GString *capture_filename_extension;    
 };
 
 #endif //#ifndef _INCLUDED_G_CAMERA_TEST_H
