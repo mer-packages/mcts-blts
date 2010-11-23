@@ -29,10 +29,8 @@ SOURCES += \
 
 INCLUDEPATH += ../src
 
-
 LIBS+= -L../src
-LIBS += -lminutils -lmintmapi -lmwts-common -lmwts-gcamera
-
+LIBS += -lminutils -lmintmapi -lmwts-common -lgstphotography-0.10 -lmwts-gcamera
 
 target.path = /usr/bin
 INSTALLS += target

@@ -30,23 +30,35 @@
 
 /**
  * Main binary to test functionality of camera easily
- * Just compile, upload, install and run ltap-camera
+ * Just compile, upload, install and run mwts-gcamera
  *
  */
 
 gint main(int argc, char *argv[])
 {
 
-    GOptionContext *context;
-    GError *error = NULL;
-
     GCameraTest *test= new GCameraTest;
+    gst_init (NULL, NULL);
 
     test->SetCaseName("mwts-gcamera");
     test->Initialize();
-    test->setup_codecs("theoraenc", "oggmux", "pulsesrc", "vorbisenc", "ogg");
-    test->take_video(3);
-    test->Uninitialize();
+    //test->OnInitialize();
+    //test->setup_codecs("theoraenc", "oggmux", "pulsesrc", "vorbisenc", ".ogg");
+    test->set_flags(GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION);
+    test->setup_pipeline();
+    //test->set_fps();
+    /*for (int i=0; i<10;i++)
+    {
+        test->take_video(2);
+    }*/
+    //test->take_video(5);
+    //test->take_video(2);
+    test->increase_zoom(500);
+    test->take_picture(TRUE);
 
+    test->Uninitialize();
+    //test->OnUninitialize();
+    delete test;
+    test=NULL;
     return 0;
 }
