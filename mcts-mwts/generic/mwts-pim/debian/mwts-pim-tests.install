@@ -1,3 +1,2 @@
-etc/min.d/mwts-pim-tests.min.conf
 usr/share/mwts-pim-tests/tests.xml
-usr/lib/min/mwts-pim-tests.cfg
+

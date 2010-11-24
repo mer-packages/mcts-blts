@@ -1,3 +1,2 @@
 etc/min.d/mwts-pim.min.conf
-usr/share/mwts-pim-scripts/alltests.xml
 usr/lib/min/*.cfg
