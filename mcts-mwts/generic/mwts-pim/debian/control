@@ -1,0 +1,28 @@
+Source: mwts-pim-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev
+Maintainer: Tuomo Pelkonen <ext-tuomo.1.pelkonen@nokia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-pim
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core(>= 4.7.0), mwts-common(>=0.2.0)
+Description: MWTS-Pim libraries
+ Template for creating MiddleWare Test Suite packages
+ c++ interface
+
+Package: mwts-pim-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-pim, min
+Description: MWTS-Template Test cases
+ Min interface and test cases
+
+Package: mwts-pim-tests
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ci-testing, mwts-pim, min, ci-testing
+Description: MWTS template for CITA
+ Template for creating for CITA test cases

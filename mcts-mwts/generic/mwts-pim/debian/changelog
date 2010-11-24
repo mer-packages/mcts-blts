@@ -1,0 +1,11 @@
+mwts-pim-tests (0.0.3) unstable; urgency=low
+  * Removed ci-packages
+ -- Tuomo Pelkonen <ext-tuomo.1.pelkonen@nokia.com>  Fri, 15 Oct 2010 08:41:00 +0200
+
+mwts-pim-tests (0.0.2) unstable; urgency=low
+  * Changed name of the source package to mwts-pim-tests
+ -- Tuomo Pelkonen <ext-tuomo.1.pelkonen@nokia.com>  Mon, 14 Jun 2010 12:39:00 +0200
+
+mwts-pim (0.0.1) unstable; urgency=low
+  * Initial version
+ -- Tommi Toropainen <tommi.toropainen@nokia.com>  Tue, 11 Aug 2009 15:11:00 +0200

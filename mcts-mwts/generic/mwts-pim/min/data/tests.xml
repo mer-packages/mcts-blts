@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-pim-scripts" domain="System">
+
+    <set name="Pim_CITA" description="Pim test cases for CITA" feature="Settings" type="Functional" >
+      <case name="FUTE-Pim-Test_2" subfeature="Test" timeout="30" description=
+      		"Purpose
+            Pim test case, purpose is to demonstrate how to use MIN interface
+            Method
+            How the test case is implemented
+            Pre-/Post-Conditions
+            Root/User, what test data is needed, master-slave setup, etc.
+            Pass/Fail Criteria
+            When the test case is failed, where to check logs /var/log/tests
+            ">
+      <step>min 'FUTE-Pim-Test_2'</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>
