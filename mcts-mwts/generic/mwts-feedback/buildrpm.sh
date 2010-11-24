@@ -1,7 +1,7 @@
 #! /bin/sh
 
 CUR=`pwd`
-NAME=mwts-template
+NAME=mwts-feedback
 TMP=rpm/tmp/
 BUILD=rpm/BUILD
 SOURCE=rpm/SOURCES
