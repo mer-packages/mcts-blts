@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Resource object code
 **
-** Created: Wed Nov 24 09:46:33 2010
+** Created: Wed Nov 24 12:39:46 2010
 **      by: The Resource Compiler for Qt version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost!
@@ -10,7 +10,7 @@
 #include <QtCore/qglobal.h>
 
 static const unsigned char qt_resource_data[] = {
-  // /home/arkataja/projects/mwts_git/artokas-mcts/mcts-mwts/generic/mwts-pim/src/qt.png
+  // /home/arkataja/projects/mwts_git/mcts-mwts-dev/mcts-mwts/generic/mwts-pim/src/qt.png
   0x0,0x0,0xe,0x61,
   0x89,
   0x50,0x4e,0x47,0xd,0xa,0x1a,0xa,0x0,0x0,0x0,0xd,0x49,0x48,0x44,0x52,0x0,

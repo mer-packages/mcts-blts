@@ -22,7 +22,7 @@
 #include <MwtsCommon>
 #include <qmobilityglobal.h>
 #include <QOrganizerItem>
-#include <QOrganizerItemManager>
+#include <QOrganizerManager>
 #include <QOrganizerEvent>
 #include <QOrganizerEventOccurrence>
 #include <QOrganizerJournal>
@@ -39,7 +39,7 @@ QTM_USE_NAMESPACE
   */
 class PimItem {
 public:
-    PimItem(QOrganizerItemLocalId iId=-1, QContactLocalId cId=-1, QString name="default", int iType=-1)
+    PimItem(QOrganizerItemId iId=QOrganizerItemId(), QContactLocalId cId=-1, QString name="default", int iType=-1)
     {
         itemLocalId = iId;
         contactLocalId = cId;
@@ -49,7 +49,7 @@ public:
 public: // data
     int itemType;
     QString dataStoreName;
-    QOrganizerItemLocalId itemLocalId;
+    QOrganizerItemId itemLocalId;
     QContactLocalId contactLocalId;
 };
 
@@ -58,7 +58,7 @@ public: // data
   */
 class PimDataStore {
 public:
-    PimDataStore(QOrganizerItemManager *mngr=0, QContactManager *cntcMngr=0 ,QString name="default")
+    PimDataStore(QOrganizerManager *mngr=0, QContactManager *cntcMngr=0 ,QString name="default")
     {
         dataStoreName = name;
         calendarManager = mngr;
@@ -66,7 +66,7 @@ public:
     }
 public: // data
     QString dataStoreName;
-    QOrganizerItemManager *calendarManager;
+    QOrganizerManager *calendarManager;
     QContactManager *contactManager;
 };
 
@@ -240,7 +240,7 @@ private:
         /*
          * Finds datastores based on name.
          */
-        QOrganizerItemManager* FindCalendarDataStore();
+        QOrganizerManager* FindCalendarDataStore();
         QContactManager* FindContactDataStore();
 
         /*
@@ -257,21 +257,21 @@ private:
         /*
          * Calendar item creation functions, each item have specific fields to fill
          */
-        bool CreateEventItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem);
-        bool CreateEventOccurrenceItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem);
-        bool CreateJournalItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem);
-        bool CreateNoteItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem);
+        bool CreateEventItem(QOrganizerManager *manager, QOrganizerItemId &createdItem);
+        bool CreateEventOccurrenceItem(QOrganizerManager *manager, QOrganizerItemId &createdItem);
+        bool CreateJournalItem(QOrganizerManager *manager, QOrganizerItemId &createdItem);
+        bool CreateNoteItem(QOrganizerManager *manager, QOrganizerItemId &createdItem);
         // createdItem contains pointer to newly created item
-        bool CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem );
-        bool CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem);
+        bool CreateTodoItem(QOrganizerManager *manager, QOrganizerItemId &createdItem );
+        bool CreateTodoOccurrenceItem(QOrganizerManager *manager, QOrganizerItemId &createdItem);
 
         /*
          * Calendar item modification functions, each item have specific fields to fill
          */
-        bool ModifyEventItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager);
-        bool ModifyEventOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager);
-        bool ModifyTodoItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager);
-        bool ModifyTodoOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager);
+        bool ModifyEventItem(QOrganizerItemId itemId, QOrganizerManager *manager);
+        bool ModifyEventOccurrenceItem(QOrganizerItemId itemId, QOrganizerManager *manager);
+        bool ModifyTodoItem(QOrganizerItemId itemId, QOrganizerManager *manager);
+        bool ModifyTodoOccurrenceItem(QOrganizerItemId itemId, QOrganizerManager *manager);
 
         /*
          * Data addition functions
@@ -321,8 +321,8 @@ private:    // data
     int m_progress;
     QDateTime m_dateTime;
     QDateTime m_finishedDate;
-    QList<QDate> m_dates;
-    QList<QDate> m_exceptionDates;
+    QSet<QDate> m_dates;
+    QSet<QDate> m_exceptionDates;
     QOrganizerItemPriority::Priority m_priority;
     QOrganizerTodoProgress::Status m_status;
     QString m_locationAddress;
@@ -331,7 +331,7 @@ private:    // data
     QString m_comment;
     QString m_description;
     QString m_label;
-    QOrganizerItemLocalId m_parentId;
+    QOrganizerItemId m_parentId;
     // vCard data
     QByteArray m_inputVCard;
 };

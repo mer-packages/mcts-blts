@@ -157,7 +157,7 @@ void PimTest::CreateAvailableCalendarDatastores()
         qDebug()<<"Fetching available calendar datastores";
 
         bool success=true;
-        QStringList list = QOrganizerItemManager::availableManagers();
+        QStringList list = QOrganizerManager::availableManagers();
 
         qDebug()<<"Found datastores:";
 
@@ -174,8 +174,8 @@ void PimTest::CreateAvailableCalendarDatastores()
             QString parseName;
             QMap<QString,QString> parameters;
             QMap<QString,QString> parseParameters;
-            QOrganizerItemManager *manager = 0;
-            QOrganizerItemManager *uriManager = 0;
+            QOrganizerManager *manager = 0;
+            QOrganizerManager *uriManager = 0;
             qDebug()<<"Creating found datastores";
 
             for(int i=0;i<count;++i) {
@@ -183,7 +183,7 @@ void PimTest::CreateAvailableCalendarDatastores()
                name = list[i].toLower();
                qDebug()<<"----------------";
                qDebug()<<i<<": Datastore name: "<<name;
-               manager = new QOrganizerItemManager(name);
+               manager = new QOrganizerManager(name);
 
                if(manager) {
 
@@ -196,7 +196,7 @@ void PimTest::CreateAvailableCalendarDatastores()
                    }
 
 
-                   qDebug()<<"Supported data types: "<<manager->supportedDataTypes();
+                   //Not found anymore in new version qDebug()<<"Supported data types: "<<manager->supportedDataTypes();
                    qDebug()<<"Supported item types: "<<manager->supportedItemTypes();
 
                    // get datastore parameters
@@ -208,7 +208,7 @@ void PimTest::CreateAvailableCalendarDatastores()
                    qDebug()<<"Build uri: "<<uri;
 
                    // validate uri
-                   bool parseOk = QOrganizerItemManager::parseUri(uri, &parseName, &parseParameters);
+                   bool parseOk = QOrganizerManager::parseUri(uri, &parseName, &parseParameters);
                    if(!parseOk ||
                       parseName != name ||
                       parseParameters != parameters) {
@@ -222,7 +222,7 @@ void PimTest::CreateAvailableCalendarDatastores()
                    qDebug()<<"Version: "<<version;
 
                    qDebug()<<"Create manager again from uri: "<<uri;
-                   uriManager = QOrganizerItemManager::fromUri(uri);
+                   uriManager = QOrganizerManager::fromUri(uri);
                    if(!uriManager) {
                        qDebug()<<"Manager is NULL";
                        success = false;
@@ -450,7 +450,7 @@ void PimTest::TestItemSearching()
     bool result = CreateCalendarDatastore();
     if(result) {
 
-        QOrganizerItemManager *manager = FindCalendarDataStore();
+        QOrganizerManager *manager = FindCalendarDataStore();
         const int count = 6;
         // first create some items (check CalendarItemTypes form PimTest.h)
         for(int i=0;i<count;++i) {
@@ -471,10 +471,11 @@ void PimTest::TestItemSearching()
         QList<QOrganizerItemFilter> filterList;
         filterList.append(QOrganizerItemChangeLogFilter());
 
-        QOrganizerItemDateTimePeriodFilter a;
-        a.setStartPeriod(time);
-        a.setEndPeriod(time.addDays(1));
-        filterList.append(a);
+        // Not found anymore in new version
+        //QOrganizerItemDateTimePeriodFilter a;
+        //a.setStartPeriod(time);
+        //a.setEndPeriod(time.addDays(1));
+        //filterList.append(a);
 
         QOrganizerItemDetailFilter b;
         b.setDetailDefinitionName(QOrganizerItemDisplayLabel::DefinitionName);
@@ -492,14 +493,14 @@ void PimTest::TestItemSearching()
         QOrganizerItemInvalidFilter e;
         filterList.append(e);
 
-        QOrganizerItemLocalIdFilter f;
+        QOrganizerItemIdFilter f;
         f.insert(m_items[0].itemLocalId);
         f.insert(m_items[1].itemLocalId);
         filterList.append(f);
 
         QOrganizerItemFilter filter;
 
-        QList<QOrganizerItemLocalId> list;
+        QList<QOrganizerItemId> list;
         const int filterCount = filterList.count();
         for(int i=0;i<filterCount;++i) {
 
@@ -508,7 +509,7 @@ void PimTest::TestItemSearching()
             if(manager->isFilterSupported(filter)) {
                 list = manager->itemIds(filter);
                 // if the searching fails
-                if(manager->error()!=QOrganizerItemManager::NoError) {
+                if(manager->error()!=QOrganizerManager::NoError) {
                     qDebug()<<"Search filter: "<<filter.type()<<" failed";
                     result = false;
                     break;
@@ -780,15 +781,15 @@ bool PimTest::CreateCalendarDatastore()
     MWTS_ENTER;
 
     int err = 0;
-    QOrganizerItemManager *manager = 0;
+    QOrganizerManager *manager = 0;
     if(m_calendarStore == "default") {
         qDebug()<<"Creating default store";
         // create default datastore
-        manager = new QOrganizerItemManager();
+        manager = new QOrganizerManager();
         err = manager->error();
     } else {
         qDebug()<<"Creating store: "<<m_calendarStore;
-        manager = new QOrganizerItemManager(m_calendarStore);
+        manager = new QOrganizerManager(m_calendarStore);
         err = manager->error();
     }
 
@@ -839,7 +840,7 @@ bool PimTest::CreateContacts()
          qDebug()<<"Contact no. "<<(i+1)<<" saving succeeded";
 
          // add to cache
-         m_items.append(PimItem(0,contact.localId(),m_contactStore));
+         m_items.append(PimItem(QOrganizerItemId(),contact.localId(),m_contactStore));
     }
     qDebug()<<m_items.count()<<" contacts created";
     return result;
@@ -1132,10 +1133,10 @@ bool PimTest::CreateCalendarItems()
     MWTS_ENTER;
 
     bool success = true;
-    QOrganizerItemLocalId createdId; // <- not used in this
+    QOrganizerItemId createdId; // <- not used in this
 
     // find manager
-    QOrganizerItemManager *manager = FindCalendarDataStore();
+    QOrganizerManager *manager = FindCalendarDataStore();
 
     // number of items
     for(int i=0;i<m_numberOfItems;++i) {
@@ -1192,7 +1193,7 @@ bool PimTest::ModifyCalendarItems()
     PimItem pimCalItem;
 
     // find datastore. If store is not in the dataStores list, it is created there.
-    QOrganizerItemManager *manager = FindCalendarDataStore();
+    QOrganizerManager *manager = FindCalendarDataStore();
 
     // modify only items that this asset has added
     const int count = m_items.count();
@@ -1291,7 +1292,7 @@ bool PimTest::RemoveCreatedItemsFromCalendar()
     bool removeSuccess;
 
     // find manager
-    QOrganizerItemManager *manager = FindCalendarDataStore();
+    QOrganizerManager *manager = FindCalendarDataStore();
     if(!manager) {
         qDebug()<<"Calendar store not created";
         return false;
@@ -1302,7 +1303,7 @@ bool PimTest::RemoveCreatedItemsFromCalendar()
     for(int i=0;i<count;++i) {
         if(m_calendarStore==m_items[i].dataStoreName) {
             removeSuccess = manager->removeItem(m_items[i].itemLocalId);
-            if(!removeSuccess || manager->error()!=QOrganizerItemManager::NoError) {
+            if(!removeSuccess || manager->error()!=QOrganizerManager::NoError) {
                 qDebug()<<"Item removing failed from: "<<m_calendarStore<<" error: "<<manager->error();
                 result = false;
             }
@@ -1339,13 +1340,13 @@ void PimTest::ClearManagers()
 /**
  * FindDataStore function
  */
-QOrganizerItemManager* PimTest::FindCalendarDataStore()
+QOrganizerManager* PimTest::FindCalendarDataStore()
 {
     MWTS_ENTER;
 
     qDebug()<<"Finding calendar store: "<<m_calendarStore;
 
-    QOrganizerItemManager *manager = 0;
+    QOrganizerManager *manager = 0;
     const int count = m_dataStores.count();
     for(int i=0;i<count;++i) {
         if(m_dataStores[i].dataStoreName==m_calendarStore) {
@@ -1441,7 +1442,7 @@ bool PimTest::VerifyOrganizerItemData(QOrganizerItem *item)
  * exception rules, recurrrence rules, set exception rules, set recurrence rules,
  *
  */
-bool PimTest::CreateEventItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem)
+bool PimTest::CreateEventItem(QOrganizerManager *manager, QOrganizerItemId &createdItem)
 {
     MWTS_ENTER;
 
@@ -1464,10 +1465,16 @@ bool PimTest::CreateEventItem(QOrganizerItemManager *manager, QOrganizerItemLoca
         // Event specific data
         m_dateTime = m_dateTime.currentDateTime();
         m_finishedDate = m_finishedDate.currentDateTime().addSecs(60*30); // add 30 minutes to end time
+        /*
         m_dates.append(m_dateTime.date());
         m_dates.append(m_dateTime.addDays(1).date());
         m_dates.append(m_dateTime.addDays(2).date());
         m_exceptionDates.append(m_dateTime.addDays(1).date());
+        */
+        m_dates += m_dateTime.date();
+        m_dates += m_dateTime.addDays(1).date();
+        m_dates += m_dateTime.addDays(2).date();
+        m_exceptionDates += m_dateTime.addDays(1).date();
         m_priority = QOrganizerItemPriority::ExtremelyHighPriority;
         m_locationAddress = "test street 12a4";
         m_locationName = "Test house";
@@ -1495,7 +1502,7 @@ bool PimTest::CreateEventItem(QOrganizerItemManager *manager, QOrganizerItemLoca
 
         // try to save the item
         result = manager->saveItem(&item);
-        if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+        if(!result || manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item saving failed, error: "<<manager->error();
             return false;
         }
@@ -1503,8 +1510,8 @@ bool PimTest::CreateEventItem(QOrganizerItemManager *manager, QOrganizerItemLoca
         qDebug()<<"Event item saving succeeded";
 
         // saving succeeded, fetch item and verify data
-        QOrganizerItem tmp = manager->item(item.localId());
-        if(manager->error()!=QOrganizerItemManager::NoError) {
+        QOrganizerItem tmp = manager->item(item.id());
+        if(manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Modified item fetching failed. error: "<<manager->error();
             return false;
         }
@@ -1521,15 +1528,15 @@ bool PimTest::CreateEventItem(QOrganizerItemManager *manager, QOrganizerItemLoca
        return false;
     }
     // add item to cache
-    m_items.append(PimItem(item.localId(),0,m_calendarStore,0));
-    createdItem = item.localId();
+    m_items.append(PimItem(item.id(),0,m_calendarStore,0));
+    createdItem = item.id();
     return true;
 }
 
 /**
  * Modifes specific calendar item and verifies modification from the database
  */
-bool PimTest::ModifyEventItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager)
+bool PimTest::ModifyEventItem(QOrganizerItemId itemId, QOrganizerManager *manager)
 {
     MWTS_ENTER;
 
@@ -1537,7 +1544,7 @@ bool PimTest::ModifyEventItem(QOrganizerItemLocalId itemId, QOrganizerItemManage
 
     // fetch the item
     QOrganizerItem tmp = manager->item(itemId);
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -1547,10 +1554,18 @@ bool PimTest::ModifyEventItem(QOrganizerItemLocalId itemId, QOrganizerItemManage
     // add modified data
     m_dateTime = m_dateTime.currentDateTime();
     m_finishedDate = m_finishedDate.currentDateTime().addSecs(60*60); // add 60 minutes to end time
+    /*
     m_dates.append(m_dateTime.date().addDays(2));
     m_dates.append(m_dateTime.addDays(3).date());
     m_dates.append(m_dateTime.addDays(4).date());
     m_exceptionDates.append(m_dateTime.addDays(3).date());
+    */
+    m_dates += m_dateTime.date().addDays(2);
+    m_dates += m_dateTime.addDays(3).date();
+    m_dates += m_dateTime.addDays(4).date();
+    m_exceptionDates += m_dateTime.addDays(3).date();
+
+
     m_priority = QOrganizerItemPriority::VeryLowPriority;
     m_locationAddress = "modificated test street 12a4";
     m_locationName = "modificated Test house";
@@ -1570,14 +1585,14 @@ bool PimTest::ModifyEventItem(QOrganizerItemLocalId itemId, QOrganizerItemManage
 
     // try to save the event
     result = manager->saveItem(&event);
-    if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+    if(!result || manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item saving failed, error: "<<manager->error();
         return false;
     }
 
     // saving succeeded, fetch item and verify data
-    tmp = manager->item(event.localId());
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    tmp = manager->item(event.id());
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Modified item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -1599,11 +1614,8 @@ bool PimTest::ModifyEventItem(QOrganizerItemLocalId itemId, QOrganizerItemManage
 /**
  * Creates a specific calendar item
  *
- * NOT TESTED YET
- * parentlocal id
- * set parent local id
  */
-bool PimTest::CreateEventOccurrenceItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem)
+bool PimTest::CreateEventOccurrenceItem(QOrganizerManager *manager, QOrganizerItemId &createdItem)
 {
     MWTS_ENTER;
 
@@ -1633,7 +1645,7 @@ bool PimTest::CreateEventOccurrenceItem(QOrganizerItemManager *manager, QOrganiz
 
         qDebug()<<"Creating parent item for the event occurrance";
 
-        QOrganizerItemLocalId parentId;
+        QOrganizerItemId parentId;
         // parent item needs to be created for the occurrence
         result = CreateEventItem(manager,parentId);
         if(!result) {
@@ -1665,7 +1677,7 @@ bool PimTest::CreateEventOccurrenceItem(QOrganizerItemManager *manager, QOrganiz
 
         // try to save the event
         result = manager->saveItem(&item);
-        if(!result || manager->error()!=QOrganizerItemManager::NoError ) {
+        if(!result || manager->error()!=QOrganizerManager::NoError ) {
             qDebug()<<"Item saving failed, error: "<<manager->error();
             return false;
         }
@@ -1673,7 +1685,7 @@ bool PimTest::CreateEventOccurrenceItem(QOrganizerItemManager *manager, QOrganiz
         qDebug()<<"Event occurrence saving succeeded";
 
         // saving succeeded, fetch item and verify data
-        QOrganizerItem tmp = manager->item(item.localId());
+        QOrganizerItem tmp = manager->item(item.id());
         QOrganizerEventOccurrence fetchedItem = static_cast<QOrganizerEventOccurrence>(tmp);
         result = VerifyEventOccurrenceItemData(&fetchedItem);
         if(!result) {
@@ -1685,15 +1697,15 @@ bool PimTest::CreateEventOccurrenceItem(QOrganizerItemManager *manager, QOrganiz
         return false;
     }
     // add item to cache
-    m_items.append(PimItem(item.localId(), 0, m_calendarStore,1));
-    createdItem = item.localId();
+    m_items.append(PimItem(item.id(), 0, m_calendarStore,1));
+    createdItem = item.id();
     return true;
 }
 
 /**
  * Modifes specific calendar item and verifies modification from the database
  */
-bool PimTest::ModifyEventOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager)
+bool PimTest::ModifyEventOccurrenceItem(QOrganizerItemId itemId, QOrganizerManager *manager)
 {
     MWTS_ENTER;
 
@@ -1701,7 +1713,7 @@ bool PimTest::ModifyEventOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizer
 
     // fetch the item
     QOrganizerItem tmp = manager->item(itemId);
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -1715,7 +1727,7 @@ bool PimTest::ModifyEventOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizer
     m_locationAddress = "modified test street 12a4";
     m_locationName = "modified Test house";
     m_locCoordinates = "60.750274;142.499852";
-    m_parentId = event.parentLocalId();
+    m_parentId = event.parentId();
 
     // add data to the item
     AddEventOccurrenceItemData(event);
@@ -1729,14 +1741,14 @@ bool PimTest::ModifyEventOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizer
 
     // try to save the event
     result = manager->saveItem(&event);
-    if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+    if(!result || manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item saving failed, error: "<<manager->error();
         return false;
     }
 
     // saving succeeded, fetch item and verify data
-    tmp = manager->item(event.localId());
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    tmp = manager->item(event.id());
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -1757,7 +1769,7 @@ bool PimTest::ModifyEventOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizer
 /**
  * Creates a specific calendar item
  */
-bool PimTest::CreateJournalItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem)
+bool PimTest::CreateJournalItem(QOrganizerManager *manager, QOrganizerItemId &createdItem)
 {
     MWTS_ENTER;
 
@@ -1789,7 +1801,7 @@ bool PimTest::CreateJournalItem(QOrganizerItemManager *manager, QOrganizerItemLo
 
         // try to save the event
         result = manager->saveItem(&item);
-        if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+        if(!result || manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item saving failed, error: "<<manager->error();
             return false;
         }
@@ -1797,8 +1809,8 @@ bool PimTest::CreateJournalItem(QOrganizerItemManager *manager, QOrganizerItemLo
         qDebug()<<"Journal item saving succeeded";
 
         // saving succeeded, fetch item and verify data
-        QOrganizerItem tmp = manager->item(item.localId());
-        if(manager->error()!=QOrganizerItemManager::NoError) {
+        QOrganizerItem tmp = manager->item(item.id());
+        if(manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item fetching failed. Error: "<<manager->error();
             return false;
         }
@@ -1814,15 +1826,15 @@ bool PimTest::CreateJournalItem(QOrganizerItemManager *manager, QOrganizerItemLo
         return false;
     }
     // add item to cache
-    m_items.append(PimItem(item.localId(), 0, m_calendarStore,2));
-    createdItem = item.localId();
+    m_items.append(PimItem(item.id(), 0, m_calendarStore,2));
+    createdItem = item.id();
     return true;
 }
 
 /**
  * Creates a specific calendar item
  */
-bool PimTest::CreateNoteItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem)
+bool PimTest::CreateNoteItem(QOrganizerManager *manager, QOrganizerItemId &createdItem)
 {
     MWTS_ENTER;
 
@@ -1852,7 +1864,7 @@ bool PimTest::CreateNoteItem(QOrganizerItemManager *manager, QOrganizerItemLocal
 
         // try to save the event
         result = manager->saveItem(&item);
-        if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+        if(!result || manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item saving failed, error: "<<manager->error();
             return false;
         }
@@ -1860,8 +1872,8 @@ bool PimTest::CreateNoteItem(QOrganizerItemManager *manager, QOrganizerItemLocal
         qDebug()<<"Note item saving succeeded";
 
         // saving succeeded, fetch item and verify data
-        QOrganizerItem tmp = manager->item(item.localId());
-        if(manager->error()!=QOrganizerItemManager::NoError) {
+        QOrganizerItem tmp = manager->item(item.id());
+        if(manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item fetching failed. Error: "<<manager->error();
             return false;
         }
@@ -1877,8 +1889,8 @@ bool PimTest::CreateNoteItem(QOrganizerItemManager *manager, QOrganizerItemLocal
         return false;
     }
     // add item to cache
-    m_items.append(PimItem(item.localId(), 0, m_calendarStore,3));
-    createdItem = item.localId();
+    m_items.append(PimItem(item.id(), 0, m_calendarStore,3));
+    createdItem = item.id();
     return true;
 }
 
@@ -1889,7 +1901,7 @@ bool PimTest::CreateNoteItem(QOrganizerItemManager *manager, QOrganizerItemLocal
  * expception rules, recurrence rules
  * set exept rules,  set recurrence rules,
  */
-bool PimTest::CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem)
+bool PimTest::CreateTodoItem(QOrganizerManager *manager, QOrganizerItemId &createdItem)
 {
     MWTS_ENTER;
 
@@ -1912,10 +1924,18 @@ bool PimTest::CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocal
         // Add QOrganizerTodo specific data
         m_finishedDate = m_finishedDate.currentDateTime().addDays(2);
         m_dateTime = m_dateTime.currentDateTime();
+        /*
         m_dates.append(m_dateTime.date());
         m_dates.append(m_dateTime.addDays(1).date());
         m_dates.append(m_dateTime.addDays(2).date());
         m_exceptionDates.append(m_dateTime.addDays(1).date());
+        */
+
+        m_dates += m_dateTime.date();
+        m_dates += m_dateTime.addDays(1).date();
+        m_dates += m_dateTime.addDays(2).date();
+        m_exceptionDates += m_dateTime.addDays(1).date();
+
         m_priority = QOrganizerItemPriority::HighPriority;
         m_progress = 50;
         m_status = QOrganizerTodoProgress::StatusInProgress;
@@ -1939,7 +1959,7 @@ bool PimTest::CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocal
 
         // try to save the event
         result = manager->saveItem(&item);
-        if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+        if(!result || manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item saving failed, error: "<<manager->error();
             return false;
         }
@@ -1947,7 +1967,7 @@ bool PimTest::CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocal
         qDebug()<<"Todo item saving succeeded";
 
         // saving succeeded, fetch item and verify data
-        QOrganizerItem tmp = manager->item(item.localId());
+        QOrganizerItem tmp = manager->item(item.id());
         QOrganizerTodo fetchedItem = static_cast<QOrganizerTodo>(tmp);
         bool result = VerifyTodoItemData(&fetchedItem);
         if(!result) {
@@ -1960,8 +1980,8 @@ bool PimTest::CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocal
         return false;
     }
     // add item to cache
-    m_items.append(PimItem(item.localId(),0 ,m_calendarStore,4));
-    createdItem = item.localId();
+    m_items.append(PimItem(item.id(),0 ,m_calendarStore,4));
+    createdItem = item.id();
     return true;
 }
 
@@ -1969,7 +1989,7 @@ bool PimTest::CreateTodoItem(QOrganizerItemManager *manager, QOrganizerItemLocal
 /**
  * Modifes specific calendar item and verifies modification from the database
  */
-bool PimTest::ModifyTodoItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager)
+bool PimTest::ModifyTodoItem(QOrganizerItemId itemId, QOrganizerManager *manager)
 {
     MWTS_ENTER;
 
@@ -1977,7 +1997,7 @@ bool PimTest::ModifyTodoItem(QOrganizerItemLocalId itemId, QOrganizerItemManager
 
     // fetch the item
     QOrganizerItem tmp = manager->item(itemId);
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"ModifyTodoItem: item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -1988,10 +2008,18 @@ bool PimTest::ModifyTodoItem(QOrganizerItemLocalId itemId, QOrganizerItemManager
     // Add modified QOrganizerTodo data
     m_finishedDate = m_finishedDate.currentDateTime().addDays(3);
     m_dateTime = m_dateTime.currentDateTime();
+    /*
     m_dates.append(m_dateTime.date().addDays(2));
     m_dates.append(m_dateTime.addDays(3).date());
     m_dates.append(m_dateTime.addDays(4).date());
     m_exceptionDates.append(m_dateTime.addDays(3).date());
+    */
+
+    m_dates += m_dateTime.date().addDays(2);
+    m_dates += m_dateTime.addDays(3).date();
+    m_dates += m_dateTime.addDays(4).date();
+    m_exceptionDates += m_dateTime.addDays(3).date();
+
     m_priority = QOrganizerItemPriority::HighestPriority;
     m_progress = 10;
     m_status = QOrganizerTodoProgress::StatusNotStarted;
@@ -2008,14 +2036,14 @@ bool PimTest::ModifyTodoItem(QOrganizerItemLocalId itemId, QOrganizerItemManager
 
     // try to save the event
     result = manager->saveItem(&event);
-    if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+    if(!result || manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item saving failed, error: "<<manager->error();
         return false;
     }
 
     // saving succeeded, fetch item and verify data
-    tmp = manager->item(event.localId());
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    tmp = manager->item(event.id());
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -2037,7 +2065,7 @@ bool PimTest::ModifyTodoItem(QOrganizerItemLocalId itemId, QOrganizerItemManager
  * parent local id
  * set parent local id
  */
-bool PimTest::CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganizerItemLocalId &createdItem)
+bool PimTest::CreateTodoOccurrenceItem(QOrganizerManager *manager, QOrganizerItemId &createdItem)
 {
     MWTS_ENTER;
 
@@ -2065,7 +2093,7 @@ bool PimTest::CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganize
 
         qDebug()<<"Creating parent item for the todo occurrance";
 
-        QOrganizerItemLocalId parentId;
+        QOrganizerItemId parentId;
         // parent item needs to be created for the occurrence
         result = CreateTodoItem(manager,parentId);
         if(!result) {
@@ -2093,7 +2121,7 @@ bool PimTest::CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganize
 
         // try to save the event
         result = manager->saveItem(&item);
-        if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+        if(!result || manager->error()!=QOrganizerManager::NoError) {
             qDebug()<<"Item saving failed, error: "<<manager->error();
             return false;
         }
@@ -2101,7 +2129,7 @@ bool PimTest::CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganize
         qDebug()<<"Todo occurrance item saving succeeded";
 
         // saving succeeded, fetch item and verify data
-        QOrganizerItem tmp = manager->item(item.localId());
+        QOrganizerItem tmp = manager->item(item.id());
         QOrganizerTodoOccurrence fetchedItem = static_cast<QOrganizerTodoOccurrence>(tmp);
         bool result = VerifyTodoOccurrenceItemData(&fetchedItem);
         if(!result) {
@@ -2113,8 +2141,8 @@ bool PimTest::CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganize
         return false;
     }
     // add item to cache
-    m_items.append(PimItem(item.localId(),0,m_calendarStore,5));
-    createdItem = item.localId();
+    m_items.append(PimItem(item.id(),0,m_calendarStore,5));
+    createdItem = item.id();
     return true;
 }
 
@@ -2124,7 +2152,7 @@ bool PimTest::CreateTodoOccurrenceItem(QOrganizerItemManager *manager, QOrganize
 /**
  * Modifes specific calendar item and verifies modification from the database
  */
-bool PimTest::ModifyTodoOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerItemManager *manager)
+bool PimTest::ModifyTodoOccurrenceItem(QOrganizerItemId itemId, QOrganizerManager *manager)
 {
     MWTS_ENTER;
 
@@ -2132,7 +2160,7 @@ bool PimTest::ModifyTodoOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerI
 
     // fetch the item
     QOrganizerItem tmp = manager->item(itemId);
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -2144,7 +2172,7 @@ bool PimTest::ModifyTodoOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerI
     m_finishedDate = m_dateTime.addDays(4);
     m_status = QOrganizerTodoProgress::StatusNotStarted;
     m_priority = QOrganizerItemPriority::LowestPriority;
-    m_parentId = event.parentLocalId();
+    m_parentId = event.parentId();
 
     // add item data
     AddTodoOccurrenceItemData(event);
@@ -2158,14 +2186,14 @@ bool PimTest::ModifyTodoOccurrenceItem(QOrganizerItemLocalId itemId, QOrganizerI
 
     // try to save the event
     result = manager->saveItem(&event);
-    if(!result || manager->error()!=QOrganizerItemManager::NoError) {
+    if(!result || manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item saving failed, error: "<<manager->error();
         return false;
     }
 
     // saving succeeded, fetch item and verify data
-    tmp = manager->item(event.localId());
-    if(manager->error()!=QOrganizerItemManager::NoError) {
+    tmp = manager->item(event.id());
+    if(manager->error()!=QOrganizerManager::NoError) {
         qDebug()<<"Item fetching failed. Error: "<<manager->error();
         return false;
     }
@@ -2188,7 +2216,7 @@ bool PimTest::VerifyEventItemData(QOrganizerEvent *item)
 {
     MWTS_ENTER;
 
-    QList<QDate> tmpDates;
+    QSet<QDate> tmpDates;
 
     // verify start time
     if(item->startDateTime()!=m_dateTime) {
@@ -2203,14 +2231,16 @@ bool PimTest::VerifyEventItemData(QOrganizerEvent *item)
     }
 
     // verify recurrence dates
+
     tmpDates = item->recurrenceDates();
     if(m_dates.count()!=tmpDates.count()) {
         qDebug()<<"Recurrence date addition failed";
         return false;
     } else {
-        if(m_dates[0] != tmpDates[0] ||
+        if(m_dates!=tmpDates) {
+        /*if(m_dates[0] != tmpDates[0] ||
            m_dates[1] != tmpDates[1] ||
-           m_dates[2] != tmpDates[2] ) {
+           m_dates[2] != tmpDates[2] ) {*/
             qDebug()<<"Recurrence date addition failed";
             return false;
         }
@@ -2223,7 +2253,7 @@ bool PimTest::VerifyEventItemData(QOrganizerEvent *item)
         qDebug()<<"Exception date addition failed";
         return false;
     } else {
-        if(m_exceptionDates[0] != tmpDates[0] ) {
+        if( /*m_exceptionDates[0] != tmpDates[0]*/m_exceptionDates!=tmpDates ) {
             qDebug()<<"eException date addition failed";
             return false;
         }
@@ -2235,6 +2265,7 @@ bool PimTest::VerifyEventItemData(QOrganizerEvent *item)
         return false;
     }
 
+    /* Not found from new version
     // verify location address
     if(item->locationAddress()!=m_locationAddress) {
         qDebug()<<"Location address addition failed";
@@ -2249,6 +2280,12 @@ bool PimTest::VerifyEventItemData(QOrganizerEvent *item)
 
     // verify location coordinates
     if(item->locationGeoCoordinates()!=m_locCoordinates) {
+        qDebug()<<"Geocoordinate addition failed";
+        return false;
+    }
+    */
+    // verify location coordinates
+    if(item->location()!=m_locCoordinates) {
         qDebug()<<"Geocoordinate addition failed";
         return false;
     }
@@ -2276,11 +2313,12 @@ void PimTest::AddEventItemData(QOrganizerEvent &item)
     // set priority
     item.setPriority(m_priority);
     // set location address
-    item.setLocationAddress(m_locationAddress);
+    //item.setLocationAddress(m_locationAddress);
     // set alocation name
-    item.setLocationName(m_locationName);
+    //item.setLocationName(m_locationName);
     // set and verify location geocoordinates
-    item.setLocationGeoCoordinates(m_locCoordinates);
+    //item.setLocationGeoCoordinates(m_locCoordinates);
+    item.setLocation(m_locCoordinates);
 }
 
 
@@ -2292,7 +2330,7 @@ bool PimTest::VerifyEventOccurrenceItemData(QOrganizerEventOccurrence *item)
     MWTS_ENTER;
 
     // verify parent id
-    if(item->parentLocalId()!=m_parentId) {
+    if(item->parentId()!=m_parentId) {
         qDebug()<<"Parent id addition failed";
         return false;
     }
@@ -2315,6 +2353,7 @@ bool PimTest::VerifyEventOccurrenceItemData(QOrganizerEventOccurrence *item)
         return false;
     }
 
+    /* Not found from current version
     // verify location address
     if(item->locationAddress()!=m_locationAddress) {
         qDebug()<<"Location address addition failed";
@@ -2332,6 +2371,13 @@ bool PimTest::VerifyEventOccurrenceItemData(QOrganizerEventOccurrence *item)
         qDebug()<<"Geocoordinate addition failed";
         return false;
     }
+    */
+    // verify location coordinates
+    if(item->location()!=m_locCoordinates) {
+        qDebug()<<"Geocoordinate addition failed";
+        return false;
+    }
+
     qDebug()<<"QOrganizerEventOccurrence Data verified";
     return true;
 }
@@ -2345,7 +2391,7 @@ void PimTest::AddEventOccurrenceItemData(QOrganizerEventOccurrence &item)
     MWTS_ENTER;
 
     // add parent id
-    item.setParentLocalId(m_parentId);
+    item.setParentId(m_parentId);
     // Add original date
     item.setOriginalDate(m_dateTime.date());
     // add  end time
@@ -2353,11 +2399,13 @@ void PimTest::AddEventOccurrenceItemData(QOrganizerEventOccurrence &item)
     // set priority
     item.setPriority(m_priority);
     // set and verify location address
-    item.setLocationAddress(m_locationAddress);
+    //item.setLocationAddress(m_locationAddress);
     // set and verify location name
-    item.setLocationName(m_locationName);
+    //item.setLocationName(m_locationName);
     // set and verify location geocoordinates
-    item.setLocationGeoCoordinates(m_locCoordinates);
+    //item.setLocationGeoCoordinates(m_locCoordinates);
+    item.setLocation(m_locCoordinates);
+
     // Print start date time
     qDebug()<<"Start date time: "<<item.startDateTime();
 }
@@ -2370,7 +2418,7 @@ bool PimTest::VerifyTodoItemData(QOrganizerTodo *item)
 {
     MWTS_ENTER;
 
-    QList<QDate> tmpDates;
+    QSet<QDate> tmpDates;
 
     // verify due date time
     if(item->dueDateTime()!=m_finishedDate) {
@@ -2384,9 +2432,10 @@ bool PimTest::VerifyTodoItemData(QOrganizerTodo *item)
         qDebug()<<"Recurrence date addition failed";
         return false;
     } else {
-        if(m_dates[0] != tmpDates[0] ||
+        if(m_dates!=tmpDates) {
+        /*if(m_dates[0] != tmpDates[0] ||
            m_dates[1] != tmpDates[1] ||
-           m_dates[2] != tmpDates[2] ) {
+           m_dates[2] != tmpDates[2] ) {*/
             qDebug()<<"Recurrence date addition failed";
             return false;
         }
@@ -2398,7 +2447,7 @@ bool PimTest::VerifyTodoItemData(QOrganizerTodo *item)
         qDebug()<<"Exception date addition failed";
         return false;
     } else {
-        if(m_dates[0] != tmpDates[0] ) {
+        if(/*m_dates[0] != tmpDates[0]*/m_dates!=tmpDates) {
             qDebug()<<"Exception date addition failed";
             return false;
         }
@@ -2466,7 +2515,7 @@ bool PimTest::VerifyTodoOccurrenceItemData(QOrganizerTodoOccurrence *item)
     MWTS_ENTER;
 
     // verify parent local id
-    if(item->parentLocalId()!=m_parentId) {
+    if(item->parentId()!=m_parentId) {
         qDebug()<<"Parent id setting failed";
         return false;
     }
@@ -2513,7 +2562,7 @@ void PimTest::AddTodoOccurrenceItemData(QOrganizerTodoOccurrence &item)
     MWTS_ENTER;
 
     // set parent id for this occurrence
-    item.setParentLocalId(m_parentId);
+    item.setParentId(m_parentId);
     // Test and verify due date
     item.setDueDateTime(m_finishedDate);
     // Print start date
