@@ -22,13 +22,22 @@
 4. Test attack (fade in) of an effect
 	tests if attack intensity is set
 
-5. Test fade (fade out) of an effect
+5. Test setting intesity of an effect
+        tests if intensity is set 
+
+6. Test setting duration of an effect
+        tests if duration is set 
+
+7. Test attack (fade in) intensity of an effect
+        tests if attack intensity is set 
+
+8. Test fade (fade out) intensity of an effect
         tests if fade intensity is set
 
-6. Test support for theme effects
+9. Test support for theme effects
 	tests if device supports theme effects
 
-Before every test duration and intensity should be set.
+Before running every test duration and intensity should be set (might be default values)
 
 
 /*----------------------------------------------------------------
