@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-feedback-scripts" domain="Feedback" level="Feature">
     <set name="Feedback-FuTe" description="Feedback functional test cases" feature="Feedback" type="Functional">
-      <case name="SMOKE-Feedback-StartEffect" subfeature="Vibra" timeout="30" description=
+      <case name="FUTE-Feedback-StartEffect" subfeature="Vibra" timeout="30" description=
         "Purpose
         Test if effect feature (vibration in mobile devices) works
         Method
@@ -12,9 +12,9 @@
         Pass/Fail Criteria
         Test case is successfull, when state of effect switchs to 'Running' and no error occurs.
         ">
-        <step>min -c -t 'SMOKE-Feedback-StartEffect'</step>
+        <step>min -c -t 'FUTE-Feedback-StartEffect'</step>
       </case>
-      <case name="SMOKE-Feedback-PauseEffect" subfeature="Vibra" timeout="30" description=
+      <case name="FUTE-Feedback-PauseEffect" subfeature="Vibra" timeout="30" description=
         "Purpose
         Test if effect feature (vibration in mobile devices) works
         Method
@@ -24,9 +24,9 @@
         Pass/Fail Criteria
         Test case is successfull, when state of effect switchs to 'Paused' and no error occurs.
         ">
-        <step>min -c -t 'SMOKE-Feedback-PauseEffect'</step>
+        <step>min -c -t 'FUTE-Feedback-PauseEffect'</step>
       </case>
-      <case name="SMOKE-Feedback-StopEffect" subfeature="Vibra" timeout="30" description=
+      <case name="FUTE-Feedback-StopEffect" subfeature="Vibra" timeout="30" description=
         "Purpose
         Test if effect feature (vibration in mobile devices) works
         Method
@@ -36,7 +36,79 @@
         Pass/Fail Criteria
         Test case is successfull, when state of effect switchs to 'Stopped' and no error occurs.
         ">
-        <step>min -c -t 'SMOKE-Feedback-StopEffect'</step>
+        <step>min -c -t 'FUTE-Feedback-StopEffect'</step>
+      </case>
+      <case name="FUTE-Feedback-SetEffectDuration_2000" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if setting duration of effect works.
+        Method
+        Simple test of setting duration.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when duration of effect is set to given value.
+        ">
+        <step>min -c -t 'FUTE-Feedback-SetEffectDuration_2000'</step>
+      </case>
+      <case name="FUTE-Feedback-SetEffectIntensity_0.5" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if effect setting intensity of effect works.
+        Method
+        Simple test of setting intensity.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when intensity of effect is set to given value.
+        ">
+        <step>min -c -t 'FUTE-Feedback-SetEffectIntensity_0.5'</step>
+      </case>
+      <case name="FUTE-Feedback-SetEffectAttackTime_300" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if setting attack (fade in) time of effect works.
+        Method
+        Simple test of setting attack time.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when attack time of effect is set to given value.
+        ">
+        <step>min -c -t 'FUTE-Feedback-SetEffectAttackTime_300'</step>
+      </case>
+      <case name="FUTE-Feedback-SetEffectAttackIntensity_0.2" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if effect setting attack (fade in) intensity of effect works.
+        Method
+        Simple test of setting attack intensity.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when attack intensity of effect is set to given value.
+        ">
+        <step>min -c -t 'FUTE-Feedback-SetEffectAttackIntensity_0.2'</step>
+      </case>
+      <case name="FUTE-Feedback-SetEffectFadeTime_600" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if setting fade time of effect works.
+        Method
+        Simple test of setting fade tim.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when fade time of effect is set to given value.
+        ">
+        <step>min -c -t 'FUTE-Feedback-SetEffectFadeTime_600'</step>
+      </case>
+      <case name="FUTE-Feedback-SetEffectFadeIntensity_0.1" subfeature="Vibra" timeout="30" description=
+        "Purpose
+        Test if effect setting fade intensity of effect works.
+        Method
+        Simple test of setting fade intensity.
+        Pre-/Post-Conditions
+        Test on device, DBUS must be running.
+        Pass/Fail Criteria
+        Test case is successfull, when fade intensity of effect is set to given value.
+        ">
+        <step>min -c -t 'FUTE-Feedback-SetEffectFadeIntensity_0.1'</step>
       </case>
     </set>
   </suite>
