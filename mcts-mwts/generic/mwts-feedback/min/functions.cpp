@@ -80,13 +80,12 @@ LOCAL int PauseEffect (MinItemParser * item)
  * @param item	MIN scripter parameters
  * @return ENOERR or 1 if error ocuurs / state is nat changes to 'Stopped'
  */
-LOCAL int StopEffect (MinItemParser * item)
-{
+LOCAL int StopEffect (MinItemParser * item) {
         MWTS_ENTER;
         //effect should be stopped just after creation
-        //if (Test.EffectState() != QFeedbackEffect::Stopped) {
-        //	return 1;
-        //}
+        if (Test.EffectState() != QFeedbackEffect::Stopped) {
+                return 1;
+        }
         Test.StartEffect();
         Test.StopEffect();
         if (Test.ErrorIndicator()) {
@@ -98,20 +97,154 @@ LOCAL int StopEffect (MinItemParser * item)
         return ENOERR;
 }
 
+/**
+ * Set duration
+ * @param item	MIN scripter parameters
+ * @return ENOERR or 1 if item can't be read
+ */
+LOCAL int SetDuration (MinItemParser * item) {
+        MWTS_ENTER;
+        int duration=0;
+        if (mip_get_next_int( item, &duration) != ENOERR ) {
+                qCritical() << "No duration value given";
+                return 1;
+        }
+        Test.SetDuration(duration);
+        if (Test.Effect()->duration() != duration) {
+            return 1;
+        }
+
+        return ENOERR;
+}
+
+/**
+ * Set intensity
+ * @param item	MIN scripter parameters
+ * @return ENOERR or 1 if item can't be read
+ */
+LOCAL int SetIntensity (MinItemParser * item) {
+
+        MWTS_ENTER;
+        double intensity=0.0;
+        char* string = NULL;
+        if (mip_get_next_char( item, string) != ENOERR ) {
+                intensity = atof(string);
+                qCritical() << "No intensity value given";
+                return 1;
+        }
+        Test.SetIntensity(intensity);
+        if (Test.Effect()->intensity() != intensity) {
+            return 1;
+        }
+
+        return ENOERR;
+}
+
+/**
+ * Set attack duration
+ * @param item	MIN scripter parameters
+ * @return ENOERR or 1 if item can't be read
+ */
+LOCAL int SetAttackTime (MinItemParser * item) {
+        MWTS_ENTER;
+        int duration=0;
+        if (mip_get_next_int( item, &duration) != ENOERR ) {
+                qCritical() << "No time value given";
+                return 1;
+        }
+        Test.SetAttackTime(duration);
+        if (Test.Effect()->attackTime() != duration) {
+            return 1;
+        }
+
+        return ENOERR;
+}
+
+/**
+ * Set attack intensity
+ * @param item	MIN scripter parameters
+ * @return ENOERR or 1 if item can't be read
+ */
+LOCAL int SetAttackIntensity (MinItemParser * item) {
+
+        MWTS_ENTER;
+        double intensity=0.0;
+        char* string = NULL;
+        if (mip_get_next_char( item, string) != ENOERR ) {
+                intensity = atof(string);
+                qCritical() << "No intensity value given";
+                return 1;
+        }
+        Test.SetAttackIntensity(intensity);
+        if (Test.Effect()->attackIntensity() != intensity) {
+            return 1;
+        }
+
+        return ENOERR;
+}
+
+/**
+ * Set fade duration
+ * @param item	MIN scripter parameters
+ * @return ENOERR or 1 if item can't be read
+ */
+LOCAL int SetFadeTime (MinItemParser * item) {
+        MWTS_ENTER;
+        int duration=0;
+        if (mip_get_next_int( item, &duration) != ENOERR ) {
+                qCritical() << "No time value given";
+                return 1;
+        }
+        Test.SetFadeTime(duration);
+        if (Test.Effect()->fadeTime() != duration) {
+            return 1;
+        }
+
+        return ENOERR;
+}
+
+/**
+ * Set fade intensity
+ * @param item	MIN scripter parameters
+ * @return ENOERR or 1 if item can't be read
+ */
+LOCAL int SetFadeIntensity (MinItemParser * item) {
+
+        MWTS_ENTER;
+        double intensity=0.0;
+        char* string = NULL;
+        if (mip_get_next_char( item, string) != ENOERR ) {
+                intensity = atof(string);
+                qCritical() << "No intensity value given";
+                return 1;
+        }
+        Test.SetFadeIntensity(intensity);
+        if (Test.Effect()->fadeIntensity() != intensity) {
+            return 1;
+        }
+
+        return ENOERR;
+}
+
 
 /**
  * Function for MIN to gather our test case functions.
  * @param list	Functio pointer list, out
  * @return		ENOERR
  */
-int ts_get_test_cases (DLList ** list)
-{
+int ts_get_test_cases (DLList ** list) {
 	// declare common functions like Init, Close, SetTestTimeout ...
 	MwtsMin::DeclareFunctions(list);
 
         ENTRYTC (*list, "StartEffect", StartEffect);
         ENTRYTC (*list, "PauseEffect", PauseEffect);
         ENTRYTC (*list, "StopEffect", StopEffect);
+        ENTRYTC (*list, "SetDuration", SetDuration);
+        ENTRYTC (*list, "SetIntensity", SetIntensity);
+        ENTRYTC (*list, "SetAttackTime", SetAttackTime);
+        ENTRYTC (*list, "SetAttackIntensity", SetAttackIntensity);
+        ENTRYTC (*list, "SetFadeTime", SetFadeTime);
+        ENTRYTC (*list, "SetFadeIntensity", SetFadeIntensity);
 	return ENOERR;
 }
 

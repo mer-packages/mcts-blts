@@ -45,6 +45,7 @@ class FeedbackTest : public MwtsTest {
                  * Contructor
                  */
                 FeedbackTest();
+                //FeedbackTest(int _duration = 1000, qreal _intensity = 1.0);
 
                 /**
                  * Destructor
@@ -92,6 +93,55 @@ class FeedbackTest : public MwtsTest {
                  */
                 bool ErrorIndicator() const;
 
+
+                /**
+                 *  Sets duration of object pointed by mEffect
+                 *  @param miliseconds duration time
+                 */
+                void SetDuration(int miliseconds);
+
+                /**
+                 *  Sets intensity of object pointed by mEffect
+                 *  @param intensity value between 0 and 1
+                 */
+                void SetIntensity(qreal intensity);
+
+                /**
+                 *  Gets tested effect
+                 *  @returns pointer to tested effect
+                 */
+                QFeedbackHapticsEffect* Effect() const;
+
+                /**
+                 *  Sets attack duration of object pointed by mEffect
+                 *  @param miliseconds
+                 */
+                void SetAttackTime(int miliseconds);
+
+                /**
+                 *  Sets attack intensity of object pointed by mEffect
+                 *  @param
+                 */
+                void SetAttackIntensity(qreal intensity);
+
+                /**
+                 *  Sets fade duration of object pointed by mEffect
+                 *  @param miliseconds
+                 */
+                void SetFadeTime(int miliseconds);
+
+                /**
+                 *  Sets fade intensity of object pointed by mEffect
+                 *  @param
+                 */
+                void SetFadeIntensity(qreal intensity);
+
+
+
+
+
+
+
                 //methods to implement - some ideas, what to test
                 //
 
@@ -101,14 +151,14 @@ class FeedbackTest : public MwtsTest {
 
 
         private:
-                QFeedbackHapticsEffect* effect;
+                QFeedbackHapticsEffect* mEffect;
                 //int duration; //int miniseconds
                 //qreal intensity;
 //		int attackTime;
 //		qreal attackIntensity;
 //		int fadeTime;
 //		qreal fadeIntesity;
-                //bool errorIndicator; //true if error has occured
+                bool mErrorIndicator; //true if error has occured
 
 
 
