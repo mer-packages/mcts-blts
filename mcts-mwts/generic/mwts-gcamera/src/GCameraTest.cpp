@@ -25,7 +25,9 @@
 #include "stable.h"
 #include "GCameraTest.h"
 
-#define MWTS_GSTREAMER_CONF_DEBUG
+#define MWTS_GCAMERA_CONF_DEBUG
+// for avoiding fails in NFT video captures, thanks theoraenc
+#define MWTS_GCAMERA_ENCODER_WORKAROUND
 
 static GCameraTest* global_gcamera= NULL;
 
@@ -36,7 +38,6 @@ static guint capture_start_timeout_source;
 
 static guint sourcepad_probe;
 static GstPad* sourcepad;
-
 
 static GTimer* latency_timer;
 static GTimer* fps_timer;
@@ -49,9 +50,7 @@ static double fps_elapsed_time;
 
 static guint burst_mode;
 
-static guint my_zoom;
-
-/* Wrappers to enable access to callbacks outside of GCameraTest class */
+/* Callback wrappers to enable access to callbacks outside of GCameraTest class */
 gboolean GCameraTest_image_capture_done_cb_wrapper(GstElement * camera, GString * fname, gpointer user_data)
 {
     return global_gcamera->image_capture_done(camera, fname, user_data);
@@ -92,15 +91,17 @@ GCameraTest::GCameraTest()
 
     gst_camera_bin              = NULL;
     gst_videosrc                = NULL;
+    gst_filtercaps              = NULL;
     video_caps_list             = NULL;    
     capture_resolution          = NULL;
     capture_filename_extension  = NULL;    
 
-    local_mainloop              =NULL;
-    fail_timeout                =0;
-    video_done_timeout_source   =0;
-    fps_timeout_source          =0;
-    capture_start_timeout_source=0;
+    local_mainloop              = NULL;
+    local_bus                   = NULL;
+    fail_timeout                = 0;
+    video_done_timeout_source   = 0;
+    fps_timeout_source          = 0;
+    capture_start_timeout_source= 0;
 
     sourcepad_probe             = 0;
     sourcepad                   = NULL;
@@ -110,13 +111,11 @@ GCameraTest::GCameraTest()
     fps_frame_count             = 0;
     average_last_frames         = 0;
 
-    min_frame_interval          =100000;
-    max_frame_interval          =0;
-    fps_elapsed_time            =0;
+    min_frame_interval          = 100000;
+    max_frame_interval          = 0;
+    fps_elapsed_time            = 0;
 
-    burst_mode                  =0;
-
-    my_zoom                     =100;
+    burst_mode                  = 0;
 
     MWTS_LEAVE;
 }
@@ -136,7 +135,7 @@ void GCameraTest::OnInitialize()
     recordingImageFilename = g_pConfig->value("OUTPUT/image_filename").toString();
     recordingVideoDir = g_pConfig->value("OUTPUT/video_dir").toString();
     recordingImageDir = g_pConfig->value("OUTPUT/image_dir").toString();
-    #ifdef MWTS_GSTREAMER_CONF_DEBUG
+    #ifdef MWTS_GCAMERA_CONF_DEBUG
         //taking recording output setting from the .conf file
         MWTS_DEBUG("Conf filename location:" + g_pConfig->fileName());
         MWTS_DEBUG("Recording video filename: " + recordingVideoFilename);
@@ -198,16 +197,16 @@ void GCameraTest::OnUninitialize()
 
 
 /**
- * helper function to write current action to latency file
+ * helper function to write latency to result file
  * calculates time to action
- * @param gchar action 		action what has happened as a pointer
+ * @param gchar action what has happened as a pointer
  * @return void
  */
 void GCameraTest::latency(gchar* action)
 {
     double elapsed;
     elapsed = g_timer_elapsed(latency_timer, NULL);
-    //ldx_test_measure(action, elapsed, "seconds");
+    g_pResult->AddMeasure(action, elapsed, "seconds");
 }
 
 
@@ -272,8 +271,8 @@ gboolean GCameraTest::source_buffer_cb(GstPad *pad, GstBuffer *buffer, gpointer 
     }
 
     fps_frame_count++;
-
     MWTS_LEAVE;
+
     return TRUE;
 }
 
@@ -289,6 +288,7 @@ gboolean GCameraTest::fail_timeout_cb()
     // stop playback
     gst_element_set_state (gst_camera_bin, GST_STATE_NULL);
     g_main_loop_quit(local_mainloop);
+
     return FALSE;
 }
 
@@ -296,6 +296,7 @@ gboolean GCameraTest::photo_capture_start_cb()
 {
     g_timer_start(latency_timer);
     g_signal_emit_by_name (gst_camera_bin, "capture-start", 0);
+
     if(!burst_mode)
     {
         // in single shot mode capture-stop should be emitted at once.
@@ -321,9 +322,15 @@ gboolean GCameraTest::video_done_timeout_cb()
     qDebug("Video taken! Hooray!");
     g_signal_emit_by_name (gst_camera_bin, "capture-stop", 0);
     gst_element_set_state (gst_camera_bin, GST_STATE_PAUSED);
+
+    #ifdef MWTS_GCAMERA_ENCODER_WORKAROUND
+        gst_element_set_state (gst_camera_bin, GST_STATE_NULL);
+    #endif
+
     g_main_loop_quit(local_mainloop);
     flag_capture_done = 1;
     MWTS_LEAVE;
+
     return FALSE;
 }
 
@@ -351,9 +358,12 @@ void GCameraTest::cleanup_pipeline ()
             latency_timer = NULL;
         }
 
+        gst_object_unref (local_bus);
+        local_bus=NULL;
 
         g_main_loop_unref (local_mainloop);
         local_mainloop = NULL;
+
         if(sourcepad_probe)
         {
             gst_pad_remove_data_probe(sourcepad, sourcepad_probe);
@@ -364,12 +374,20 @@ void GCameraTest::cleanup_pipeline ()
             g_string_free(capture_filename_extension, TRUE);
         if(capture_resolution)
             g_string_free(capture_resolution, TRUE);
+
         gst_object_unref (gst_camera_bin);
         gst_camera_bin = NULL;
 
         g_list_foreach (video_caps_list, (GFunc) gst_caps_unref, NULL);
         g_list_free (video_caps_list);
         video_caps_list = NULL;
+
+        ////
+      /*gst_element_set_state (local_pipeline, GST_STATE_NULL);
+        gst_object_unref (local_pipeline);
+        local_pipeline=NULL;
+
+        remove_timeouts();*/
     }
 
     MWTS_LEAVE;
@@ -513,35 +531,29 @@ void GCameraTest::set_metadata (void)
 gboolean GCameraTest::setup_pipeline ()
 {
     MWTS_ENTER;
-    GstBus *bus;
-    GstCaps *gst_filtercaps;
     latency_timer = g_timer_new();
 
-    //setup_codecs("theoraenc", "oggmux", "pulsesrc", "vorbisenc", "ogg");
-////////////////////////////////////
     /* create main loop */
     local_mainloop = g_main_loop_new (NULL, FALSE);
     /*connect image-done to image_capture*/
     g_signal_connect(gst_camera_bin, "image-done", (GCallback) GCameraTest_image_capture_done_cb_wrapper, NULL);
     /*get bus from pipeline*/
-    bus = gst_pipeline_get_bus (GST_PIPELINE (gst_camera_bin));
+    local_bus = gst_pipeline_get_bus (GST_PIPELINE (gst_camera_bin));
     /*adding watch to bus*/
-    local_bus_watch_source = gst_bus_add_watch (bus, GstreamerTest_bus_cb_wrapper, NULL);
+    local_bus_watch_source = gst_bus_add_watch (local_bus, GstreamerTest_bus_cb_wrapper, NULL);
     if(!local_bus_watch_source)
     {
         qCritical("Failed to add gst bus watch");
         return FALSE;
     }
 
-    //gst_bus_set_sync_handler (bus, bus_sync_callback, NULL);
-    gst_object_unref (bus);
+    //gst_bus_set_sync_handler (local_bus, bus_sync_callback, NULL);
+    //gst_object_unref (local_bus);
 
-//////////////////set basic properties ///////////////////
     /* create video source GstElement  */
     gst_videosrc = gst_element_factory_make ((const char*)g_pConfig->value("OUTPUT/video_src").toString().toLatin1(), "source");
-    //gst_videosrc = gst_element_factory_make ("v4l2src", "source");
 
-        /*check NULL, then give the CAMERA_APP_VIDEOSRC value to video-src*/
+    /*check NULL, then give the CAMERA_APP_VIDEOSRC value to video-src*/
     if (gst_videosrc)
     {        
         //g_object_set (G_OBJECT (gst_videosrc), "device", MAIN_CAMERA, NULL);
@@ -555,9 +567,7 @@ gboolean GCameraTest::setup_pipeline ()
             qDebug() << "gst_videosrc is NULL";
     }
 
-////
-    /* create filter caps GstCaps  */
-    //gst_filtercaps = gst_element_factory_make (CAMERA_FILTER_CAPS, NULL);
+    /* create filter caps GstCaps  */    
     gst_filtercaps = gst_caps_from_string (CAMERA_FILTER_CAPS);
 
     /*check NULL, then give the CAMERA_FILTER_CAPS value to filter-caps*/
@@ -572,8 +582,7 @@ gboolean GCameraTest::setup_pipeline ()
         if (!gst_filtercaps)
             qDebug() << "gst_filtercaps is NULL";
     }
-
-////////////////////////////////////
+    /* STATES */
 
     if (GST_STATE_CHANGE_FAILURE ==
         gst_element_set_state (gst_camera_bin, GST_STATE_READY))
@@ -633,6 +642,7 @@ gboolean GCameraTest::set_pp()
     }
     MWTS_ERROR("Could not create post processing element");
     MWTS_LEAVE;
+
     return FALSE;
 }
 
@@ -667,6 +677,7 @@ gboolean GCameraTest::set_fps()
         flag_fps_on = 1;
         qDebug ("Flag_fps switched on");
     }
+
     return TRUE;
 }
 
@@ -687,10 +698,6 @@ void GCameraTest::set_resolution(gint x, gint y, gint fps_h, gint fps_l)
         qDebug("setting resolution to h=%i and l=%i, fps_h=%i, fps_l=%i, fps=%.2f", x, y, fps_h, fps_l, (float)(fps_h/fps_l));
     else
         qDebug("setting resolution to h=%i and l=%i", x, y);
-    /*g_signal_emit_by_name (gst_camera_bin, "set-video-resolution-fps",
-                            image_resolution_label_map[i].width,
-                            image_resolution_label_map[i].height, 0);*/
-    //or
 
     g_signal_emit_by_name(gst_camera_bin, "set-video-resolution-fps", x, y, fps_h, fps_l);
 
@@ -724,18 +731,6 @@ gboolean GCameraTest::take_picture(gboolean consecutive)
 
     flag_capture_done = 0;
 
-    ////video file operations
-    /*GString * actual_filename = NULL;
-    qDebug("creating filename");
-    actual_filename=g_string_new("");
-    g_string_printf (actual_filename, "%simage_%s_%04u.jpg",
-                                    IMAGE_DIR,
-                                    capture_resolution->str,
-                                    file_nro);
-    qDebug("Actual filename is... %s", actual_filename->str);
-    file_nro++;
-    qDebug("writing file as %s", actual_filename->str);
-    */
     QString f = next_output_filename(recordingImageDir,
                                      recordingImageFilename,
                                      ".jpg");
@@ -761,8 +756,8 @@ gboolean GCameraTest::take_picture(gboolean consecutive)
         capture_start_timeout_source=0;
     }
 
-
     MWTS_LEAVE;
+
     if(flag_capture_done)
         return TRUE;
     else
@@ -784,6 +779,12 @@ gboolean GCameraTest::take_video(guint video_length)
     fps_frame_count=0;
 
     MWTS_ENTER;
+
+    #ifdef MWTS_GCAMERA_ENCODER_WORKAROUND
+        //has to be reset again, because the GST_STATE_NULL, reset the filter-caps property
+        g_object_set (G_OBJECT (gst_camera_bin), "filter-caps", gst_filtercaps, NULL);
+    #endif
+
     gst_element_set_state (gst_camera_bin, GST_STATE_PLAYING);
     flag_capture_done = 0;    
     QString f = next_output_filename(recordingVideoDir,
@@ -817,27 +818,20 @@ gboolean GCameraTest::take_video(guint video_length)
             fps_timeout_source = 0;
         }
 
-        /* elapsed time is measured between first and last frame
-         so frame count is actually framecount-1 */
-
-        qDebug("FrameRate ", (double)(fps_frame_count-1)/(double)fps_elapsed_time, "FPS");
-        qDebug("MaxFrameInterval ", max_frame_interval*1000.0, "ms");
-        qDebug("MinFrameInterval ", min_frame_interval*1000.0, "ms");
-
+        qDebug() << "MaxFrameInterval " << max_frame_interval*1000.0 << "ms";
+        qDebug() << "MinFrameInterval " << min_frame_interval*1000.0 << "ms";
+        /* elapsed time is measured between first and last frame so frame count is actually framecount-1 */
+        g_pResult->AddMeasure("FrameRate ", (double)(fps_frame_count-1)/(double)fps_elapsed_time, "FPS");
     }
 
     MWTS_LEAVE;
-    if(flag_capture_done)
-    {
-        //gst_object_unref(gst_filename);
-        return TRUE;
-    }
-    else
-    {
-        //gst_object_unref(gst_filename);
-        return FALSE;
-    }
 
+    if(!flag_capture_done)
+    {        
+        return FALSE;
+    }    
+
+    return TRUE;
 }
 
 QString GCameraTest::next_output_filename(QString recordingPath, QString recordingFilename, QString recordingExtension)
@@ -886,6 +880,7 @@ QString GCameraTest::next_output_filename(QString recordingPath, QString recordi
             }
         }
         qDebug() << __PRETTY_FUNCTION__ << "result:" << (recordingPath+prefix + r + postfix + recordingExtension);
+
         return recordingPath+prefix + r + postfix + recordingExtension;
     }
 }
@@ -910,7 +905,6 @@ gboolean GCameraTest::setup_codecs(gchar *videocodec, gchar *muxer, gchar *audio
     GstElement* audioencoder_element = gst_element_factory_make (audiocodec, NULL);
     GstElement* videomuxer_element = gst_element_factory_make (muxer, NULL);
     GstElement* audiosrc_element = gst_element_factory_make (audiosrc, NULL);    
-
 
     qDebug("elements: videoenc %d / audioenc %d / muxer %d / audiosrc %d",
             videoencoder_element,
@@ -942,13 +936,10 @@ gboolean GCameraTest::setup_codecs(gchar *videocodec, gchar *muxer, gchar *audio
         return false;
     }
 
-
     g_object_set (G_OBJECT (gst_camera_bin), "video-encoder", videoencoder_element, NULL);
     g_object_set (G_OBJECT (gst_camera_bin), "audio-encoder", audioencoder_element, NULL);
     g_object_set (G_OBJECT (gst_camera_bin), "video-muxer", videomuxer_element, NULL);
     g_object_set (G_OBJECT (gst_camera_bin), "audio-source", audiosrc_element, NULL);
-
-
 
     if(capture_filename_extension != NULL)
     {
@@ -957,9 +948,15 @@ gboolean GCameraTest::setup_codecs(gchar *videocodec, gchar *muxer, gchar *audio
     }
     capture_filename_extension = g_string_new (extension);
     MWTS_LEAVE;
+
     return TRUE;
 }
-
+/**
+ * GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION
+ * v4l2src does not have the format what the video-encoder
+ * supports on netbook, colorspace conversion is needed
+ * GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION
+ */
 gboolean GCameraTest::set_flags(GstCameraBinFlags flags)
 {
     MWTS_ENTER;
@@ -967,21 +964,15 @@ gboolean GCameraTest::set_flags(GstCameraBinFlags flags)
     {
         gint def_flags;
         g_object_get(G_OBJECT (gst_camera_bin), "flags", &def_flags, NULL);
-        qDebug() << "DEFAULT FLAGS:" << def_flags;
-        /* v4l2 does not have the format what the theoraenc video-encoder
-        supports, colorspace conversion is needed */
+        qDebug() << "DEFAULT FLAGS:" << def_flags;        
         def_flags |= flags;
-        //flags |= GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION;
         g_object_set (G_OBJECT (gst_camera_bin), "flags", flags, NULL);
-        qDebug() << "CHANGED FLAGS:" << flags;
-        //g_pResult->StepPassed(__PRETTY_FUNCTION__, TRUE);
+        qDebug() << "CHANGED FLAGS:" << flags;     
         MWTS_LEAVE;
         return TRUE;
     }
     else
-    {
-        qCritical("The given parameter is not okay.");
-        //g_pResult->StepPassed(__PRETTY_FUNCTION__, FALSE);
+    {                
         MWTS_LEAVE;
         return FALSE;
     }
@@ -1008,34 +999,66 @@ void GCameraTest::set_autofocus(void)
  */
 gboolean GCameraTest::set_zoom(guint zoom)
 {
-    qDebug("setting zoom=%d", zoom);
-//	return gst_photography_set_zoom(GST_PHOTOGRAPHY(gst_camera_bin), zoom);
-    gboolean ret = gst_photography_set_zoom(GST_PHOTOGRAPHY(gst_videosrc), zoom);
-    qDebug("setting zoom=%d returned %d", zoom, ret);
-    my_zoom=zoom;			// remember zoom factor
-    return ret;
+    guint check_zoom;
+
+    qDebug("Setting zoom=%d", zoom);
+    g_object_set (G_OBJECT(gst_camera_bin), "zoom", zoom, NULL);
+    //check if the zoom is set well
+    g_object_get(G_OBJECT (gst_camera_bin), "zoom", &check_zoom, NULL);
+
+    if (check_zoom==zoom)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 gboolean GCameraTest::increase_zoom(guint zoom)
-{
-    qDebug("increase zoom=%d", zoom);
-    zoom += my_zoom;
-//	return gst_photography_set_zoom(GST_PHOTOGRAPHY(gst_camera_bin), zoom);
-    gboolean ret = gst_photography_set_zoom(GST_PHOTOGRAPHY(gst_videosrc), zoom);
-    qDebug("setting zoom=%d returned %d", zoom, ret);
-    my_zoom=zoom;			// remember zoom factor
-    return ret;
+{    
+    guint check1_zoom;
+    guint check2_zoom;
+
+    g_object_get(G_OBJECT (gst_camera_bin), "zoom", &check1_zoom, NULL);
+    qDebug("Setting zoom=%d", check1_zoom+zoom);
+    g_object_set (G_OBJECT(gst_camera_bin), "zoom", check1_zoom+zoom, NULL);
+    g_object_get(G_OBJECT (gst_camera_bin), "zoom", &check2_zoom, NULL);
+
+    if (check2_zoom==check1_zoom+zoom)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 gboolean GCameraTest::decrease_zoom(guint zoom)
 {
-    qDebug("decrease zoom=%d", zoom);
-    zoom = my_zoom - zoom;
-//	return gst_photography_set_zoom(GST_PHOTOGRAPHY(gst_camera_bin), zoom);
-    gboolean ret = gst_photography_set_zoom(GST_PHOTOGRAPHY(gst_videosrc), zoom);
-    qDebug("setting zoom=%d returned %d", zoom, ret);
-    my_zoom=zoom;			// remember zoom factor
-    return ret;
+    guint check1_zoom;
+    guint check2_zoom;
+
+    g_object_get(G_OBJECT (gst_camera_bin), "zoom", &check1_zoom, NULL);
+    qDebug("Setting zoom=%d", check1_zoom-zoom);
+    g_object_set (G_OBJECT(gst_camera_bin), "zoom", check1_zoom-zoom, NULL);
+    g_object_get(G_OBJECT (gst_camera_bin), "zoom", &check2_zoom, NULL);
+
+    if (check2_zoom==check1_zoom-zoom)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+
 }
 /**
  * Set flash mode
@@ -1115,98 +1138,3 @@ gboolean GCameraTest::set_aperture(guint aperture)
 {
     return  gst_photography_set_aperture (GST_PHOTOGRAPHY(gst_videosrc), aperture);
 }
-
-/**
- * all in one with picture (still images)
- *
- * Camera white balance mode
- * GST_PHOTOGRAPHY_WB_MODE_AUTO = 0,
- * GST_PHOTOGRAPHY_WB_MODE_DAYLIGHT,
- * GST_PHOTOGRAPHY_WB_MODE_CLOUDY,
- * GST_PHOTOGRAPHY_WB_MODE_SUNSET,
- * GST_PHOTOGRAPHY_WB_MODE_TUNGSTEN,
- * GST_PHOTOGRAPHY_WB_MODE_FLUORESCENT
- *
- * set tone from selection of
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NORMAL = 0,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_SEPIA,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NEGATIVE,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_GRAYSCALE,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NATURAL,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_VIVID,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_COLORSWAP,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_SOLARIZE,
- * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_OUT_OF_FOCUS
- *
- * Set flash mode
- * GST_PHOTOGRAPHY_FLASH_MODE_AUTO = 0,
- * GST_PHOTOGRAPHY_FLASH_MODE_OFF,
- * GST_PHOTOGRAPHY_FLASH_MODE_ON,
- * GST_PHOTOGRAPHY_FLASH_MODE_FILL_IN,
- * GST_PHOTOGRAPHY_FLASH_MODE_RED_EYE
- */
-gboolean GCameraTest::all_in_one_with_picture()
-{
-// SetResolution 1280 960
-// SetResolution 2048 1536
-// SetResolution 2592 1944
- /*   gboolean ret = FALSE;
-    int i_resolution_cases = 0;
-    for (i_resolution_cases = 0; i_resolution_cases < 3; i_resolution_cases++)
-    {
-        ret = TRUE;
-        switch (i_resolution_cases)
-        {
-            case 0:
-                set_resolution(1280, 960, 0, 0);
-                break;
-            case 1:
-                set_resolution(2048, 1536, 0, 0);
-                break;
-            case 2:
-                set_resolution(2592, 1944, 0, 0);
-                break;
-            default:
-                ret = FALSE;
-        }
-        if (!ret)
-            return ret;
-
-
-        int i_whitebalence_cases = 0;
-        for (i_whitebalence_cases = 0; i_whitebalence_cases < 6; i_whitebalence_cases++)
-        {
-            ret = set_wb_mode(i_whitebalence_cases);
-            if (!ret)
-                return ret;
-
-
-            int i_tone_cases = 0;
-            for (i_tone_cases = 0; i_tone_cases < 9; i_tone_cases++)
-            {
-                ret = set_tone_mode(i_tone_cases);
-                if (!ret)
-                    return ret;
-
-                int i_flash_cases = 0;
-                for (i_flash_cases = 0; i_flash_cases < 5; i_flash_cases++)
-                {
-                    ret = set_flashmode(i_flash_cases);
-                    if (!ret)
-                        return ret;
-
-                    int i_zoom_cases = 0;
-                    for (i_zoom_cases = 100; i_zoom_cases < 300; i_zoom_cases+=30)
-                    {
-                        ret = set_flashmode(i_zoom_cases);
-                        if (!ret)
-                            return ret;
-                        // TODO here we can take pictures
-                        take_picture(FALSE);
-                    }
-                }
-            }
-        }
-    }*/
-}
-
