@@ -45,7 +45,6 @@ class FeedbackTest : public MwtsTest {
                  * Contructor
                  */
                 FeedbackTest();
-                //FeedbackTest(int _duration = 1000, qreal _intensity = 1.0);
 
                 /**
                  * Destructor
@@ -138,10 +137,6 @@ class FeedbackTest : public MwtsTest {
 
 
 
-
-
-
-
                 //methods to implement - some ideas, what to test
                 //
 
@@ -152,12 +147,7 @@ class FeedbackTest : public MwtsTest {
 
         private:
                 QFeedbackHapticsEffect* mEffect;
-                //int duration; //int miniseconds
-                //qreal intensity;
-//		int attackTime;
-//		qreal attackIntensity;
-//		int fadeTime;
-//		qreal fadeIntesity;
+
                 bool mErrorIndicator; //true if error has occured
 
 

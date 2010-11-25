@@ -127,11 +127,11 @@ LOCAL int SetIntensity (MinItemParser * item) {
         MWTS_ENTER;
         double intensity=0.0;
         char* string = NULL;
-        if (mip_get_next_char( item, string) != ENOERR ) {
-                intensity = atof(string);
+        if (mip_get_next_string( item, &string) != ENOERR ) {
                 qCritical() << "No intensity value given";
                 return 1;
         }
+        intensity = atof(string);
         Test.SetIntensity(intensity);
         if (Test.Effect()->intensity() != intensity) {
             return 1;
@@ -170,11 +170,11 @@ LOCAL int SetAttackIntensity (MinItemParser * item) {
         MWTS_ENTER;
         double intensity=0.0;
         char* string = NULL;
-        if (mip_get_next_char( item, string) != ENOERR ) {
-                intensity = atof(string);
+        if (mip_get_next_string( item, &string) != ENOERR ) {
                 qCritical() << "No intensity value given";
                 return 1;
         }
+        intensity = atof(string);
         Test.SetAttackIntensity(intensity);
         if (Test.Effect()->attackIntensity() != intensity) {
             return 1;
@@ -213,11 +213,11 @@ LOCAL int SetFadeIntensity (MinItemParser * item) {
         MWTS_ENTER;
         double intensity=0.0;
         char* string = NULL;
-        if (mip_get_next_char( item, string) != ENOERR ) {
-                intensity = atof(string);
+        if (mip_get_next_string( item, &string) != ENOERR ) {
                 qCritical() << "No intensity value given";
                 return 1;
         }
+        intensity = atof(string);
         Test.SetFadeIntensity(intensity);
         if (Test.Effect()->fadeIntensity() != intensity) {
             return 1;

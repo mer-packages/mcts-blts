@@ -80,6 +80,7 @@ void FeedbackTest::OnInitialize() {
         qDebug() << "| fade time " << mEffect->fadeTime();
         qDebug() << "| fade intensity " << mEffect->fadeIntensity();
 
+
         connect(mEffect, SIGNAL(error(QFeedbackEffect::ErrorType)), this, SLOT( onErrorOccurs(QFeedbackEffect::ErrorType)));
         //connect(effect, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
 
@@ -139,9 +140,9 @@ void FeedbackTest::PauseEffect() {
 
         MWTS_ENTER;
 
-        //if (effect) {
-        //        mEffect->pause();
-        //}
+        if (mEffect) {
+                mEffect->pause();
+        }
 
         MWTS_LEAVE;
 }
@@ -150,9 +151,9 @@ void FeedbackTest::StopEffect() {
 
         MWTS_ENTER;
 
-        //if (effect) {
-        //        mEffect->stop();
-        //}
+        if (mEffect) {
+                mEffect->stop();
+        }
 
         MWTS_LEAVE;
 }
