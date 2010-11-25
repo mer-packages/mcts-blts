@@ -27,14 +27,14 @@
 
 #include <MwtsCommon>
 #include <QDir>
+#include <string.h>
 
+/* GLib includes */
+#include <glib.h>
 #include <glib-2.0/glib-object.h>
+#include <glib/gstdio.h>
 #include <dbus-1.0/dbus/dbus-glib.h>
 #include <dbus-1.0/dbus/dbus-glib-lowlevel.h>
-///////////////////////////
-#include <glib.h>
-#include <glib/gstdio.h>
-#include <string.h>
 
 /* Gstreamer includes */
 #include <gstreamer-0.10/gst/gst.h>
@@ -46,30 +46,12 @@
 #include <gst/interfaces/xoverlay.h>
 #include <gst/interfaces/colorbalance.h>
 
-/*Output dir/file settings*/
-#define BASE_DIR		 "/home/user/"
-#define DEFAULT_IMAGEDIR "/MyDocs/.images/"
-#define DEFAULT_VIDEODIR "/MyDocs/.videos/"
-
-#define VIDEO_DIR "/home/user/MyDocs/.videos/"
-#define IMAGE_DIR "/home/user/MyDocs/.images/"
-
-#define FPS_FILE "/var/log/tests/camera-fps.csv"
-#define LATENCY_FILE "/var/log/tests/camera-latency.csv"
-
 /* Names of default elements */
-//#define CAMERA_APP_VIDEOSRC "v4l2camsrc"
-//#define CAMERA_APP_VIDEOSRC "v4l2newcamsrc"
-#define CAMERA_APP_VIDEOSRC "v4l2src"
 #define CAMERA_APP_IMAGE_POSTPROC "ipp"
 
-/* Device names */
-//only option on netbook
-#define MAIN_CAMERA "/dev/video0"
-#define FRONTAL_CAMERA "/dev/video1"
-
 #define IMG_CAPTURE_TIMEOUT		60
-#define CAPTURE_START_AFTER		10
+#define CAPTURE_START_AFTER		1
+
 #define CAMERA_FILTER_CAPS "video/x-raw-yuv, format=(fourcc)I420"
 
 #define DEFAULT_VF_CAPS \
@@ -80,16 +62,16 @@
 "video/x-raw-yuv, width = (int) 800, height = (int) 480, framerate = (fraction) 1494/100;" \
 "video/x-raw-yuv, width = (int) 720, height = (int) 480, framerate = (fraction) 1494/100"
 
-#define PREVIEW_CAPS \
-"video/x-raw-rgb, width = (int) 640, height = (int) 480"
-
 typedef enum
 {
+    GST_CAMERABIN_FLAG_SOURCE_RESIZE = 0x00000001,
     GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION  = 0x00000002,
-    GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION = 0x00000004
+    GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION = 0x00000004,
+    GST_CAMERABIN_FLAG_VIEWFINDER_SCALE = 0x00000008,
+    GST_CAMERABIN_FLAG_AUDIO_CONVERSION = 0x00000010,
+    GST_CAMERABIN_FLAG_DISABLE_AUDIO = 0x00000020,
+    GST_CAMERABIN_IMAGE_COLORSPACE_CONVERSION = 0x00000040
 } GstCameraBinFlags;
-
-
 
 
 /**
@@ -308,37 +290,6 @@ public:
     gboolean set_wb_mode(GstWhiteBalanceMode mode);
 
     /**
-     * all in one with picture (still images)
-     *
-     * Camera white balance mode
-     * GST_PHOTOGRAPHY_WB_MODE_AUTO = 0,
-     * GST_PHOTOGRAPHY_WB_MODE_DAYLIGHT,
-     * GST_PHOTOGRAPHY_WB_MODE_CLOUDY,
-     * GST_PHOTOGRAPHY_WB_MODE_SUNSET,
-     * GST_PHOTOGRAPHY_WB_MODE_TUNGSTEN,
-     * GST_PHOTOGRAPHY_WB_MODE_FLUORESCENT
-     *
-     * set tone from selection of
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NORMAL = 0,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_SEPIA,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NEGATIVE,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_GRAYSCALE,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NATURAL,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_VIVID,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_COLORSWAP,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_SOLARIZE,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_OUT_OF_FOCUS
-     *
-     * Set flash mode
-     * GST_PHOTOGRAPHY_FLASH_MODE_AUTO = 0,
-     * GST_PHOTOGRAPHY_FLASH_MODE_OFF,
-     * GST_PHOTOGRAPHY_FLASH_MODE_ON,
-     * GST_PHOTOGRAPHY_FLASH_MODE_FILL_IN,
-     * GST_PHOTOGRAPHY_FLASH_MODE_RED_EYE
-     */
-    gboolean all_in_one_with_picture();
-
-    /**
      * Set amount of zoom
      * zoom value can be from 100 to 1000
      *
@@ -387,9 +338,11 @@ public:
     (image) <---> (video_stopped) <---> (video_recording)
     */
 
-    /* Main objects for video/image recording */
+    /* Main objects for video/image capture*/
     GstElement *gst_camera_bin;
-    GstElement *gst_videosrc;
+    GstElement *gst_videosrc;   
+    GstCaps *gst_filtercaps;
+    GstBus *local_bus;
     GMainLoop* local_mainloop;
     gint local_bus_watch_source;
 

@@ -1,19 +1,122 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-pim-scripts" domain="System">
+  <suite name="mwts-pim-scripts" domain="PIM">
 
-    <set name="Pim_CITA" description="Pim test cases for CITA" feature="Settings" type="Functional" >
-      <case name="FUTE-Pim-Test_2" subfeature="Test" timeout="30" description=
-      		"Purpose
-            Pim test case, purpose is to demonstrate how to use MIN interface
-            Method
-            How the test case is implemented
-            Pre-/Post-Conditions
-            Root/User, what test data is needed, master-slave setup, etc.
-            Pass/Fail Criteria
-            When the test case is failed, where to check logs /var/log/tests
-            ">
-      <step>min 'FUTE-Pim-Test_2'</step>
+    <set name="FUTE" description="PIM functional test cases" feature="Settings" type="Functional" >
+      <case name="FUTE-PIM-Check_calendar_datastore_availability" subfeature="Test" timeout="10" description=
+      		"Purpose: Testing listing and creation of available data stores in the device
+		 Method: Tests lists available data stores and creates them separately
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Found data stores can be created, and data store information fetched without crashing
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Check_calendar_datastore_availability'</step>
+      </case>
+      <case name="FUTE-PIM-Check_contact_datastore_availability" subfeature="Test" timeout="10" description=
+      		"Purpose: Testing listing and creation of available data stores in the device
+		 Method: Tests lists available data stores and creates them separately
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Found data stores can be created, and data store information fetched without crashing
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Check_contact_datastore_availability'</step>
+      </case>
+      <case name="FUTE-PIM-Import_contact_from_vcard" subfeature="Test" timeout="15" description=
+      		"Purpose: Tests importing contact from vCard
+		 Method: Test creates contact from vCard and saves the contact to data store. Contact is then removed.
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contact can be created from vCard and saved to contact datastore without crashing
+	         ">
+      	<step>min -c -t 'FUTE-PIM-Import_contact_from_vcard'</step>
+      </case>
+      <case name="FUTE-PIM-Export_contact_to_vcard" subfeature="Test" timeout="15" description=
+      		"Purpose: Tests exporting contact to vCard
+		 Method: Tests creates contact and exports it to vCard
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contact is created and exported to valid vCard without crashing
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Export_contact_to_vcard'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_contact" subfeature="Test" timeout="15" description=
+      		"Purpose: Tests creating a new contact to contact data store
+		 Method: Creates a new contact to contact data store and deletes it.
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contact can be created and saved to datastore and contact can be removed and deleted
+		 without crashing
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_contact'</step>
+      </case>
+      <case name="FUTE-PIM-Modify_contact_details" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation, modifying and deleting 10 contacts
+		 Method: Creates 10 new contacts, modifies contact data and saves all. Modification is verified from data store.
+		 Contacts are then removed.
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contacts can be created, modified, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Modify_contact_details'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_event" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation and deletion of event in the calendar data store
+		 Method: Creates a new event to calendar data store and then removes it
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar event can be created, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_event'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_event_occurrence" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation and deletion of event occurrence in the calendar data store
+		 Method: Creates a new event occurrence to calendar data store and then removes it
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar event occurrence can be created, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_event_occurrence'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_journal" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation and deletion of journal in the calendar data store
+		 Method: Creates a new event occurrence to calendar data store and then removes it
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar journal can be created, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_journal'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_note" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation and deletion of note in the calendar data store
+		 Method: Creates a new event occurrence to calendar data store and then removes it
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar note can be created, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_note'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_todo" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation and deletion of todo in the calendar data store
+		 Method: Creates a new event occurrence to calendar data store and then removes it
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calenda todo can be created, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_todo'</step>
+      </case>
+      <case name="FUTE-PIM-Create_and_delete_todo_occurrence" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing creation and deletion of todo occurrence in the calendar data store
+		 Method: Creates a new event occurrence to calendar data store and then removes it
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar todo occurrence can be created, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_todo_occurrence'</step>
+      </case>
+      <case name="FUTE-PIM-Modify_created_calendar_items" subfeature="Test" timeout="20" description=
+      		"Purpose: Testing creation, modifying and deleting 10 calendar items
+		 Method: Creates 10 new calendar items, modifies item data and saves all. Modification is 
+                 verified from data store. Calendar items are then removed.
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar items can be created, modified, saved and deleted without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Modify_created_calendar_items'</step>
+      </case>
+      <case name="FUTE-PIM-Search_calendar_items" subfeature="Test" timeout="15" description=
+      		"Purpose: Testing searching calendar items from data store by using different search filters
+		 Method: Creates all default calendar items and then tries to search them by using different search filters
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar items can be searched with supported filters
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Search_calendar_items'</step>
       </case>
     </set>
   </suite>
