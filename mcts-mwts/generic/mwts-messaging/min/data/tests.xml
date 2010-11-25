@@ -42,6 +42,18 @@
         ">
         <step>min -c -t 'SMOKE-Messaging-Receive_SMS'</step>
       </case>
+      <case name="FUTE-Messaging-Send_SMS_to_self_0" subfeature="SMS" timeout="30" description=
+        "Purpose
+        Test sending SMS to self.
+        Method
+        Send SMS with 0 characters to self, wait for incoming message and verify content.
+        Pre-/Post-Conditions
+        DUT must have SIM card inserted and registered to network.
+        Pass/Fail Criteria
+        Test case is successfull, when message is received and content verified.
+        ">
+        <step>min -c -t 'FUTE-Messaging-Send_SMS_to_self_0'</step>
+      </case>
       <case name="FUTE-Messaging-Send_SMS_to_self_140" subfeature="SMS" timeout="30" description=
         "Purpose
         Test sending SMS to self.
