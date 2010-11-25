@@ -27,6 +27,49 @@
 #include "alsa_control.h"
 #include "alsa_ioctl.h"
 
+static const char *stream_to_str(int stream)
+{
+	if (stream == SNDRV_PCM_STREAM_PLAYBACK)
+		return "playback";
+	else if (stream == SNDRV_PCM_STREAM_CAPTURE)
+		return "capture";
+
+	return "UNKNOWN";
+}
+
+static const char *pcm_class_to_str(int class)
+{
+	switch(class) {
+	case SNDRV_PCM_CLASS_GENERIC:
+		/* standard mono or stereo device */
+		return "SNDRV_PCM_CLASS_GENERIC";
+	case SNDRV_PCM_CLASS_MULTI:
+		/* multichannel device */
+		return "SNDRV_PCM_CLASS_MULTI";
+	case SNDRV_PCM_CLASS_MODEM:
+		/* software modem class */
+		return "SNDRV_PCM_CLASS_MODEM";
+	case SNDRV_PCM_CLASS_DIGITIZER:
+		/* digitizer class */
+		return "SNDRV_PCM_CLASS_DIGITIZER";
+	}
+
+	return "UNKNOWN";
+}
+
+static const char *pcm_sub_class_to_str(int class)
+{
+	if (class == SNDRV_PCM_SUBCLASS_GENERIC_MIX) {
+		/* mono or stereo subdevices are mixed together */
+		return "SNDRV_PCM_SUBCLASS_GENERIC_MIX";
+	} else if(class == SNDRV_PCM_SUBCLASS_MULTI_MIX) {
+		/* multichannel subdevices are mixed together */
+		return "SNDRV_PCM_SUBCLASS_MULTI_MIX";
+	}
+
+	return "UNKNOWN";
+}
+
 static const char* element_type_to_string(snd_ctl_elem_type_t type)
 {
 	switch(type)
@@ -560,8 +603,7 @@ int control_close(ctl_device* hw)
 
 int control_enumerate_devices(ctl_device* hw)
 {
-	int err;
-	int dev;
+	int err, dev, stream;
 	struct snd_hwdep_info hwdep_info;
 	struct snd_pcm_info pcm_info;
 	struct snd_rawmidi_info rawmidi_info;
@@ -576,16 +618,33 @@ int control_enumerate_devices(ctl_device* hw)
 		if(dev == -1)
 			break;
 
-		err = ioctl_ctl_pcm_info(hw, dev, 0, 0, &pcm_info);
-		if(err)
-			return err;
+		/* See sound/core/pcm.c, snd_pcm_control_ioctl. stream 0 = out, 1 = in
+		 * and return value will be -ENOENT if in and/or out stream does not
+		 * exist
+		 */
+		for (stream = 0; stream <= 1; stream++) {
+			BLTS_DEBUG("Checking %s stream\n", stream_to_str(stream));
+			err = ioctl_ctl_pcm_info(hw, dev, 0, stream, &pcm_info);
+			if (err == -ENOENT) {
+				BLTS_DEBUG("No %s substreams\n", stream_to_str(stream));
+				continue;
+			} else if (err)
+				return err;
 
-		BLTS_DEBUG("PCM '%s':\n", pcm_info.name);
-		BLTS_DEBUG("\tcard: %d\n", pcm_info.card);
-		BLTS_DEBUG("\tdevice: %d\n", pcm_info.device);
-		BLTS_DEBUG("\tid: %s\n", pcm_info.id);
-		BLTS_DEBUG("\tsubname: %s\n", pcm_info.subname);
-		BLTS_DEBUG("\tsubdevice count: %d\n", pcm_info.subdevices_count);
+			BLTS_DEBUG("PCM '%s':\n", pcm_info.name);
+			BLTS_DEBUG("\tcard: %d\n", pcm_info.card);
+			BLTS_DEBUG("\tdevice: %d\n", pcm_info.device);
+			BLTS_DEBUG("\tsubstream: %s (%d)\n", stream_to_str(stream), stream);
+			BLTS_DEBUG("\tid: %s\n", pcm_info.id);
+			BLTS_DEBUG("\tclass: %s (%d)\n",
+				pcm_class_to_str(pcm_info.dev_class), pcm_info.dev_class);
+			BLTS_DEBUG("\tsubclass: %s (%d)\n",
+				pcm_sub_class_to_str(pcm_info.dev_subclass),
+				pcm_info.dev_subclass);
+			BLTS_DEBUG("\tsubname: %s\n", pcm_info.subname);
+			BLTS_DEBUG("\tsubdevice count: %d\n", pcm_info.subdevices_count);
+			BLTS_DEBUG("\tsubdevices avail: %d\n", pcm_info.subdevices_avail);
+		}
 	}
 
 	BLTS_DEBUG("\n");
