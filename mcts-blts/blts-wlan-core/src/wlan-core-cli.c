@@ -34,6 +34,7 @@
 #include "wlan-core-scan.h"
 #include "wlan-core-connect.h"
 #include "wlan-core-wpa.h"
+#include "wlan-core-adhoc.h"
 
 static void app_deinitialize(void * user_ptr);
 static void app_init_once(wlan_core_data *data);
@@ -215,6 +216,37 @@ static void *variant_args_dev_ssid_and_wpapsk(struct boxed_value *args, void *us
 	return data;
 }
 
+static void *variant_args_dev_ssid_and_channel(struct boxed_value *args, void *user_ptr)
+{
+	wlan_core_data* data = variant_args_dev_and_ssid(args, user_ptr);
+
+	if (!data) {
+		return NULL;
+	}
+
+	args = args->next; /* skip dev */
+	if (!args) {
+		BLTS_ERROR("Error: No arguments left to process in %s:%s\n",__FILE__,__func__);
+		return NULL;
+	}
+
+	args = args->next; /* skip ssid */
+	if (!args) {
+		BLTS_ERROR("Error: No arguments left to process in %s:%s\n",__FILE__,__func__);
+		return NULL;
+	}
+
+	if (args->type != CONFIG_PARAM_INT && args->type != CONFIG_PARAM_LONG) {
+		BLTS_ERROR("Error: Type mismatch in %s:%s\n",__FILE__,__func__);
+		return NULL;
+	}
+
+	data->cmd->channel = blts_config_boxed_value_get_int(args);
+
+	return data;
+}
+
+
 /* Return NULL in case of an error */
 static void* wlan_core_argument_processor(int argc, char **argv)
 {
@@ -335,6 +367,15 @@ static void* wlan_core_argument_processor(int argc, char **argv)
 		variant_args_dev_and_ssid,
 		CONFIG_PARAM_STRING, "wlan_device", "wlan0",
 		CONFIG_PARAM_STRING, "adhoc_ssid", "test-adhoc",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("Core-WLAN-Establish new adhoc network",
+		variant_args_dev_ssid_and_channel,
+		CONFIG_PARAM_STRING, "wlan_device", "wlan0",
+		CONFIG_PARAM_STRING, "adhoc_ssid2", "test-adhoc2",
+		CONFIG_PARAM_INT, "adhoc_channel", 1,
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -507,6 +548,19 @@ static int wlan_core_case_disconnect_from_adhoc_network(void* user_ptr, int test
 	return ret;
 }
 
+static int wlan_core_case_establish_new_adhoc_network(void* user_ptr, int test_num)
+{
+	int ret;
+
+	wlan_core_data* data = (wlan_core_data*)user_ptr;
+	BLTS_DEBUG("Test number %i:\n", test_num);
+
+	ret = create_open_adhoc_network(data);
+
+	return ret;
+	
+}
+
 static void app_deinitialize(void * user_ptr)
 {
 	wlan_core_data* data = (wlan_core_data*)user_ptr;
@@ -576,6 +630,7 @@ static int wlan_core_run_case(void* user_ptr, int test_num)
 		case CORE_DISCONNECT_WITH_DISASSOCIATE: ret = wlan_core_case_disconnect_with_disassociate(user_ptr, test_num); break;
 		case CORE_DISCONNECT_WITH_AP_LOSS: ret = wlan_core_case_disconnect_with_ap_loss(user_ptr, test_num); break;
 		case CORE_DISCONNECT_FROM_ADHOC_NETWORK: ret = wlan_core_case_disconnect_from_adhoc_network(user_ptr, test_num); break;
+		case CORE_ESTABLISH_NEW_ADHOC_NETWORK: ret = wlan_core_case_establish_new_adhoc_network(user_ptr, test_num); break;
 		default: BLTS_DEBUG("Not supported case number%d\n", test_num);
 	}
 
@@ -608,6 +663,7 @@ static blts_cli_testcase wlan_core_cases[] =
 	{ "Core-WLAN-Disconnect with disassociate", wlan_core_run_case, 60000 },
 	{ "Core-WLAN-Disconnect with AP loss", wlan_core_run_case, 60000 },
 	{ "Core-WLAN-Disconnect from adhoc network", wlan_core_run_case, 60000 },
+	{ "Core-WLAN-Establish new adhoc network", wlan_core_run_case, 60000 },
 	BLTS_CLI_END_OF_LIST
 };
 

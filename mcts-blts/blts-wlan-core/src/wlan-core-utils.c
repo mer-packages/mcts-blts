@@ -382,7 +382,8 @@ int nl80211_finish_device_init(wlan_core_data* data, int test_num)
 	BLTS_DEBUG("Finishing device:%s initialization before testing...\n", data->cmd->ifname);
 	data->cmd->ifindex = if_nametoindex(data->cmd->ifname);
 
-	if(test_num == CORE_DISCONNECT_FROM_ADHOC_NETWORK)
+	if(test_num == CORE_DISCONNECT_FROM_ADHOC_NETWORK || 
+		test_num == CORE_ESTABLISH_NEW_ADHOC_NETWORK)
 		mode = 1;
 	else
 		mode = 0;

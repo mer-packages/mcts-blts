@@ -164,4 +164,14 @@ Test cases
 	request, after that leave IBSS and verify that device is properly
 	disconnected from adhoc network. NOTE: The requirement for this test
 	case is existing adhoc network where DUT can be joined or optionally
-	wlan station that supports adhoc connections.
+	wlan station that supports adhoc connections. NOTE2: if there is no 
+	existing adhoc network in the test environment "Core-WLAN-Establish 
+	new adhoc network" can be also used as a counterpart for this test case.
+
+* Core-WLAN-Establish new adhoc network
+	Estabish new IBSS with no encryption, after that start receiving test 
+	data packets and compare payload with expected data. This test case
+	fails if adhoc network with same SSID already exists. NOTE: This test 
+	case requires either "Core-WLAN-Join established adhoc network" or 
+	optionally "Core-WLAN-Disconnect from adhoc network" as a counterpart  
+	and must be run first.

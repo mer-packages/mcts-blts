@@ -30,7 +30,7 @@
 #include <linux/if_ether.h>
 #include <net/ethernet.h>
 #include <arpa/inet.h>
-
+#include <signal.h>
 
 #include <sys/ioctl.h>
 
@@ -154,6 +154,11 @@ out:
 	return res;
 }
 
+static void timeout_signal(int s)
+{
+	BLTS_DEBUG("timeout signal received!\n");        
+}
+
 static int receive_test_data(wlan_core_data* data, struct associate_params *params, char* exp_data, int count)
 {
 	int i;
@@ -172,6 +177,10 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 	unsigned char src_mac[6] =
 	{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+	struct sigaction action;
+    action.sa_handler = timeout_signal;
+    action.sa_flags = 0;
+
 	if (!count)
 		tries = ADHOC_RETRIES;
 
@@ -182,6 +191,10 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 		BLTS_ERROR("Open raw socket failed!\n");
 		return -1;
 	}
+
+    sigemptyset(&(action.sa_mask));
+    sigaction(SIGALRM,&action,NULL);
+	alarm(ADHOC_TIMEOUT);
 
 	buffer = (void*)malloc(ETHER_MAX_LEN);
 	eth_head = buffer;
@@ -195,11 +208,19 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 
 		if (i == -1)
 		{
-			BLTS_LOGGED_PERROR("receive_test_data recvfrom():");
-			res = -1;
-			goto out;
-		}
-
+			if(errno==EINTR)
+			{
+                BLTS_ERROR("timeout occured!\n");
+                res = -1;
+                goto out;
+			}		
+			else
+			{
+				BLTS_LOGGED_PERROR("receive_test_data recvfrom():");
+				res = -1;
+				goto out;
+			}
+		}			
 		if(eh->h_proto == ntohs(ADHOC_ETH_TYPE))
 		{
 			BLTS_DEBUG("Received packet from: %02X:%02X:%02X:%02X:%02X:%02X\n",
@@ -229,6 +250,7 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 		sleep(1); /* sleep before next packet is handled */
 	}
 out:
+	alarm(0);
 	close(raw);
 	free(buffer);
 	return res;
@@ -328,7 +350,7 @@ int create_open_adhoc_network(wlan_core_data* data)
 	as_params.bssid = 0;
 	as_params.ssid = ssid;
 	as_params.ssid_len = strlen((const char *)ssid);
-	as_params.freq = ieee80211_channel_to_frequency(1); //TODO make configurable?
+	as_params.freq = ieee80211_channel_to_frequency(data->cmd->channel);
 	as_params.auth_alg = WPA_AUTH_ALG_OPEN;
 
 	if(nl80211_join_ibss(data, &as_params))
