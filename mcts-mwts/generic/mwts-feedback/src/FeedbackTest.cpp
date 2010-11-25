@@ -32,13 +32,9 @@ QTM_USE_NAMESPACE
 /**
  * Constructor for Feedback test class
  */
-//FeedbackTest::FeedbackTest(int _duration, qreal _intensity) : effect(0), duration(_duration), intensity(_intensity)
 FeedbackTest::FeedbackTest() : mEffect(0) {
 
         MWTS_ENTER;
-        qDebug() << "in constructor ";
-	std::cout << "i'm in constructor" << std::endl;
-
         MWTS_LEAVE;
 }
 
@@ -48,9 +44,6 @@ FeedbackTest::FeedbackTest() : mEffect(0) {
 FeedbackTest::~FeedbackTest() {
 
         MWTS_ENTER;
-
-	qDebug() << "in destructor";
-
         MWTS_LEAVE;
 }
 
@@ -121,13 +114,6 @@ void FeedbackTest::StartEffect() {
 
         MWTS_ENTER;
 
-	qDebug() << "in starteffect";
-        //if (mEffect) {
-        //    qDebug() << "duration " << mEffect->duration();
-        //    qDebug() << "intensity " << mEffect->intensity();
-        //}
-
-
         if (mEffect) {
             qDebug() << "starting the effect";
             mEffect->start();
@@ -191,10 +177,8 @@ QFeedbackEffect::State FeedbackTest::EffectState() const {
 
 bool FeedbackTest::ErrorIndicator() const {
         MWTS_ENTER;
-        //return mErrorIndicator;
         MWTS_LEAVE;
         return mErrorIndicator;
-        //return false;
 }
 
 

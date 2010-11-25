@@ -28,6 +28,7 @@
 #include "FeedbackTest.h"
 
 #include <MwtsCommon>
+#include <iostream>
 
 // MIN's module information
 const char *module_date = __DATE__;
@@ -132,8 +133,14 @@ LOCAL int SetIntensity (MinItemParser * item) {
                 return 1;
         }
         intensity = atof(string);
+
         Test.SetIntensity(intensity);
+
+        qDebug() << "given value" << intensity;
+        qDebug() << "set value" << Test.Effect()->intensity();
+
         if (Test.Effect()->intensity() != intensity) {
+            qCritical() << "Intensity has been set wrong";
             return 1;
         }
 
@@ -176,7 +183,12 @@ LOCAL int SetAttackIntensity (MinItemParser * item) {
         }
         intensity = atof(string);
         Test.SetAttackIntensity(intensity);
+
+        qDebug() << "given value" << intensity;
+        qDebug() << "set value" << Test.Effect()->attackIntensity();
+
         if (Test.Effect()->attackIntensity() != intensity) {
+            qCritical() << "Attack intensity has been set wrong";
             return 1;
         }
 
@@ -219,7 +231,12 @@ LOCAL int SetFadeIntensity (MinItemParser * item) {
         }
         intensity = atof(string);
         Test.SetFadeIntensity(intensity);
+
+        qDebug() << "given value" << intensity;
+        qDebug() << "set value" << Test.Effect()->fadeIntensity();
+
         if (Test.Effect()->fadeIntensity() != intensity) {
+            qCritical() << "Fade intensity has been set wrong";
             return 1;
         }
 
