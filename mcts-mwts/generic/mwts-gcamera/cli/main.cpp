@@ -43,25 +43,30 @@ gint main(int argc, char *argv[])
     test->SetCaseName("mwts-gcamera");
     test->Initialize();    
     test->set_flags(GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION);
-    //test->set_flags(GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION);
-    test->setup_codecs("theoraenc", "oggmux", "pulsesrc", "vorbisenc", ".ogg");s
-    //test->setup_codecs("smokeenc", "oggmux", "pulsesrc", "vorbisenc", ".ogg");
-
+    //test->set_flags(GST_CAMERABIN_FLAG_SOURCE_RESIZE);
     test->setup_pipeline();
-    test->set_fps();
-    for (int i=0; i<5;i++)
+    //test->set_fps();
+    /*for (int i=0; i<5;i++)
     {
         test->take_video(3);
     }
+     */
+
     //test->take_video(5);
     //test->take_video(2);
     //test->increase_zoom(700);
-    //test->take_picture(FALSE);
-    //test->set_zoom(500);
-    //test->decrease_zoom(100);
+
+//    test->set_resolution(320, 240, 0, 0);
+    //test->set_pp();
+    //test->set_autofocus();
+    //test->set_zoom(100);
+    //test->set_zoom(300);
+    //test->set_pp();
+    test->set_image_resolution(320, 240);
+
+    test->take_picture(FALSE);
 
     test->Uninitialize();
-
     delete test;
     test=NULL;
     return 0;

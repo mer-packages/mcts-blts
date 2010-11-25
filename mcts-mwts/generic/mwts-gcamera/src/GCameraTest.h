@@ -47,12 +47,14 @@
 #include <gst/interfaces/colorbalance.h>
 
 /* Names of default elements */
-#define CAMERA_APP_IMAGE_POSTPROC "ipp"
+
+//the identity does nothing, but demonstrate the postprocessing
+#define CAMERA_APP_IMAGE_POSTPROC "identity"
 
 #define IMG_CAPTURE_TIMEOUT		60
 #define CAPTURE_START_AFTER		1
-
-#define CAMERA_FILTER_CAPS "video/x-raw-yuv, format=(fourcc)I420"
+//important to set fourcc for the sake v4l2src on netbook
+#define CAMERA_FILTER_CAPS "video/x-raw-yuv, format=(fourcc)I420, width = (int) 320, height = (int) 240"
 
 #define DEFAULT_VF_CAPS \
 "video/x-raw-yuv, width = (int) 320, height = (int) 240, framerate = (fraction) 1496/100;" \
@@ -65,6 +67,8 @@
 typedef enum
 {
     GST_CAMERABIN_FLAG_SOURCE_RESIZE = 0x00000001,
+    //when video format of the driver and the camerabin do not match, it has to be set
+    //it is expensive regarding the CPU cost
     GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION  = 0x00000002,
     GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION = 0x00000004,
     GST_CAMERABIN_FLAG_VIEWFINDER_SCALE = 0x00000008,
@@ -130,16 +134,24 @@ public:
     void set_metadata ();
 
     /**
-     * Set image and/video resolution
-     * if video mode then also setup fps_h and fps_l
+     * Set video resolution
+     * it can also setup fps_h and fps_l
      * real fps = fps_h / fps_l
      *
-     * @param x		image width
-     * @param y		image height
+     * @param x		video width
+     * @param y		video height
      * @param fps_h fps 'high' value
      * @param fps_l fps 'low' value
      */
-    void set_resolution(gint x, gint y, gint fps_h, gint fps_l);
+    void set_video_resolution(gint x, gint y, gint fps_h, gint fps_l);
+
+    /**
+     * Set image resolution
+     *
+     * @param x		image width
+     * @param y		image height
+     */
+    void set_image_resolution(gint x, gint y);
 
 
     /**
@@ -151,7 +163,7 @@ public:
      * @param ghcar * extension		extension of file
      * @return success/failure
      */
-    gboolean setup_codecs(gchar *videocodec, gchar *muxer, gchar *audiosrc, gchar *audiocodec, gchar *extension);
+    gboolean setup_codecs(const gchar *videocodec, const gchar *muxer, const gchar *audiosrc, const gchar *audiocodec, const gchar *extension);
 
     /**
      * Take picture
@@ -250,8 +262,7 @@ public:
     /************************************************************
      *
      * GStreamer photography interface
-     * interfaces/photography
-     * This is not part of MeeGo SDK, implementation is commented out in .cpp
+     * interfaces/photography     
      */
 
     /**
@@ -333,11 +344,7 @@ private:
     */
     QString next_output_filename(QString recordingPath, QString recordingFilename, QString recordingExtension);
 
-public:
-    /* states:
-    (image) <---> (video_stopped) <---> (video_recording)
-    */
-
+public:    
     /* Main objects for video/image capture*/
     GstElement *gst_camera_bin;
     GstElement *gst_videosrc;   
@@ -350,17 +357,13 @@ public:
     /* Variables for customization */
     GList *video_caps_list;
     GString *capture_resolution;
+
     guint flag_capture_done;
     guint flag_fps_on;
     guint flag_picture_done;
     guint flag_autofocus;
-    typedef enum _tag_CaptureState
-    {
-        CAP_STATE_IMAGE,
-        CAP_STATE_VIDEO_STOPPED,
-        CAP_STATE_VIDEO_PAUSED,
-        CAP_STATE_VIDEO_RECORDING,
-    } CaptureState;
+    bool  flag_take_video;
+
     struct
     {
         guint width;
@@ -379,6 +382,7 @@ public:
     QString recordingImageFilename;
     QString recordingFileExtension;    
     GString *capture_filename_extension;    
+    QString model;
 };
 
 #endif //#ifndef _INCLUDED_G_CAMERA_TEST_H
