@@ -175,3 +175,9 @@ Test cases
 	case requires either "Core-WLAN-Join established adhoc network" or 
 	optionally "Core-WLAN-Disconnect from adhoc network" as a counterpart  
 	and must be run first.
+
+* Core-WLAN-Join established adhoc network
+	Scan for open adhoc network with a given ssid, after that join a
+	IBSS and verify connection by sending test data that is verified in
+	the other DUT. NOTE: This test case requires "Core-WLAN-Establish 
+	new adhoc network" as a counterpart and must be run after it.

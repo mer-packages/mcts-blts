@@ -1512,7 +1512,8 @@ int disconnect_from_open_adhoc_network(wlan_core_data* data)
 	int res = 0;
 	int joined = 0;
 	const u8 *ssid = (const u8 *) data->cmd->ssid;
-
+	int retries = ADHOC_RETRIES;
+	struct scan_res* bss = NULL;
 	struct associate_params as_params;
 	memset(&as_params, 0, sizeof(as_params));
 
@@ -1521,18 +1522,26 @@ int disconnect_from_open_adhoc_network(wlan_core_data* data)
 	if(!ssid)
 		return -1;
 
-	if(nl80211_scan_oneshot(data, ssid, strlen((const char *)ssid)))
+	/* it takes some time to establish adhoc network, so keep trying... */ 
+	while(retries--)
 	{
-		BLTS_ERROR("\nERROR wlan scanning failed!\n");
-		return -1;
-	}
+		if(nl80211_scan_oneshot(data, ssid, strlen((const char *)ssid)))
+		{
+				BLTS_ERROR("\nERROR wlan scanning failed!\n");
+				return -1;
+		}
+	
+		bss = get_bss_by_ssid(data, (u8*)ssid, strlen((const char *)ssid));
 
-	struct scan_res* bss = get_bss_by_ssid(data, (u8*)ssid, strlen((const char *)ssid));
+		if (bss)
+			break;
 
-	if (!bss)
-	{
 		BLTS_ERROR("ERROR cannot find SSID: %s\n", ssid);
-		return -1;
+			
+		if(!retries)
+			return -1;
+
+		sleep(2); /* sleep before next scanning */
 	}
 
 	ie = (u8*)scan_get_ie(bss, WLAN_EID_SSID);

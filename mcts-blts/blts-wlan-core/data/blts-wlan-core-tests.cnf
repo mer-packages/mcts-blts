@@ -137,3 +137,8 @@
 	name "Core-WLAN-Establish new adhoc network"
 	params wlan_device adhoc_ssid2 adhoc_channel
 [end_test]
+
+[test]
+	name "Core-WLAN-Join established adhoc network"
+	params wlan_device adhoc_ssid2
+[end_test]
