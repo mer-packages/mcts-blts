@@ -1,20 +1,82 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-pim-scripts" domain="System">
+  <suite name="mwts-pim-tests" domain="System">
 
-    <set name="Pim_CITA" description="Pim test cases for CITA" feature="Settings" type="Functional" >
-      <case name="FUTE-Pim-Test_2" subfeature="Test" timeout="30" description=
+    <set name="FUTE" description="Pim test functional test cases" feature="Settings" type="Functional" >
+      <case name="FUTE-PIM-Check_calendar_datastore_availability" subfeature="Test" timeout="10" description=
       		"Purpose
-            Pim test case, purpose is to demonstrate how to use MIN interface
-            Method
-            How the test case is implemented
-            Pre-/Post-Conditions
-            Root/User, what test data is needed, master-slave setup, etc.
-            Pass/Fail Criteria
-            When the test case is failed, where to check logs /var/log/tests
-            ">
-      <step>min 'FUTE-Pim-Test_2'</step>
+           		Test lists and creates all available calendar data stores in the device
+		    Method
+		    Tests lists available data stores and creates them separately
+		    Pre-/Post-Conditions
+		    Test asset is installed to the device.
+		    Pass/Fail Criteria
+		    Test case returns passed and successfully created data store is logged into /var/log/tests
+		    ">
+      	<step>min -c -t 'FUTE-PIM-Check_calendar_datastore_availability'</step>
       </case>
+      <case name="FUTE-PIM-Check_contact_datastore_availability" subfeature="Test" timeout="10" description=
+      		"Purpose
+           		Test lists and creates all available contact data stores in the device
+		    Method
+		    Tests lists available data stores and creates them separately
+		    Pre-/Post-Conditions
+		    Test asset is installed to the device.
+		    Pass/Fail Criteria
+		    Test case returns passed and successfully created data store is logged into /var/log/tests
+		    ">
+      	<step>min -c -t 'FUTE-PIM-Check_contact_datastore_availability'</step>
+      </case>
+      <case name="FUTE-PIM-Import_contact_from_vcard" subfeature="Test" timeout="10" description=
+      		"Purpose
+           		Tests importing contact from pre-defined vCard
+		    Method
+		    Test creates contact from vCard and saves the contact to data store. Contact is then removed.
+		    Pre-/Post-Conditions
+		    Test asset is installed to the device.
+		    Pass/Fail Criteria
+		    Test case returns passed and successfully imported and created contact is logged into /var/log/tests
+		    ">
+      	<step>min -c -t 'FUTE-PIM-Import_contact_from_vcard'</step>
+      </case>
+      <case name="FUTE-PIM-Export_contact_to_vcard" subfeature="Test" timeout="10" description=
+      		"Purpose
+           		Tests exporting contact to vCard
+		    Method
+		    Tests creates contact and exports it to vCard
+		    Pre-/Post-Conditions
+		    Test asset is installed to the device.
+		    Pass/Fail Criteria
+		    Test case returns passed and successfully exported contact is logged into /var/log/tests
+		    ">
+      	<step>min -c -t 'FUTE-PIM-Export_contact_to_vcard'</step>
+      </case>
+     <case name="FUTE-PIM-Create_and_delete_contact" subfeature="Test" timeout="10" description=
+      		"Purpose
+           		Tests creating a new contact to contact data store
+		    Method
+		    Creates a new contact to contact data store and deletes it.
+		    Pre-/Post-Conditions
+		    Test asset is installed to the device.
+		    Pass/Fail Criteria
+		    Test case returns passed and successfully created, saved and removed contact is logged into /var/log/tests
+		    ">
+      	<step>min -c -t 'FUTE-PIM-Create_and_delete_contact'</step>
+	<case name="FUTE-PIM-Modify_contact_details" subfeature="Test" timeout="10" description=
+      		"Purpose
+           		Tests creating 10 contacts, modifying those and then deleting those
+		    Method
+		    Creates 10 new contacts, modifies contact data and saves all. Modification is verified from data store.
+		    Contacts are then removed.
+		    Pre-/Post-Conditions
+		    Test asset is installed to the device.
+		    Pass/Fail Criteria
+		    Test case returns passed and successfully created, modified, saved and removed contact
+ 		    is logged into /var/log/tests
+		    ">
+      	<step>min -c -t 'FUTE-PIM-Modify_contact_details'</step>
+      </case>
+
     </set>
   </suite>
 </testdefinition>
