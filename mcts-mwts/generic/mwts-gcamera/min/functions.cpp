@@ -186,24 +186,6 @@ LOCAL gint SetZoom(MinItemParser *item)
     }
 }
 
-LOCAL gint SetAllInOneWithPicture(__attribute__((unused)) MinItemParser *item)
-{
-/*    MWTS_ENTER;
-    if(Test.all_in_one_with_picture())
-    {
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        MWTS_LEAVE;
-        return ENOERR;
-    }
-    else
-    {
-        g_pResult->StepPassed(__FUNCTION__, FALSE);
-        MWTS_LEAVE;
-        return EINVAL;
-    }*/
-}
-
-
 LOCAL gint IncreaseZoom(MinItemParser *item)
 {
     MWTS_ENTER;
@@ -544,13 +526,13 @@ LOCAL gint SetWhitebalance(MinItemParser *item)
 }
 
 /*
- *                                                       (0x00000001): source-resize - Enable source crop and scale
+ * GST_CAMERABIN_FLAG_SOURCE_RESIZE                    - (0x00000001): source-resize - Enable source crop and scale
  * GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION     - (0x00000002): source-colorspace-conversion - Enable colorspace conversion for video source
  * GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION - (0x00000004): viewfinder-colorspace-conversion - Enable colorspace conversion for viewfinder
- *                                                       (0x00000008): viewfinder-scale - Enable scale for viewfinder
- *                                                       (0x00000010): audio-conversion - Enable audio conversion for video capture
- *                                                       (0x00000020): disable-audio    - Disable audio elements for video capture
- *                                                       (0x00000040): image-colorspace-conversion - Enable colorspace conversion for still image
+ * GST_CAMERABIN_FLAG_VIEWFINDER_SCALE                 - (0x00000008): viewfinder-scale - Enable scale for viewfinder
+ * GST_CAMERABIN_FLAG_AUDIO_CONVERSION                 - (0x00000010): audio-conversion - Enable audio conversion for video capture
+ * GST_CAMERABIN_FLAG_DISABLE_AUDIO                    - (0x00000020): disable-audio    - Disable audio elements for video capture
+ * GST_CAMERABIN_IMAGE_COLORSPACE_CONVERSION           - (0x00000040): image-colorspace-conversion - Enable colorspace conversion for still image
  */
 
 LOCAL gint SetFlags(MinItemParser *item)
@@ -585,8 +567,9 @@ LOCAL gint SetFlags(MinItemParser *item)
         return ENOERR;
     }
     else
-    {
+    {        
         g_pResult->StepPassed(__FUNCTION__, FALSE);
+        MWTS_ERROR("The given parameter is not okay.");
         MWTS_LEAVE;
         return EINVAL;
     }
@@ -663,7 +646,6 @@ gint ts_get_test_cases( DLList** list )
      *
      * GStreamer photography interface
      * interfaces/photography
-     * This is not part of MeeGo SDK, implementation is commented out in .cpp
      */
     ENTRYTC(*list,"SetAutoFocus", SetAutoFocus);
     ENTRYTC(*list,"SetIsoSpeed", SetIsoSpeed);
@@ -675,7 +657,6 @@ gint ts_get_test_cases( DLList** list )
     ENTRYTC(*list,"SetFlashMode", SetFlashMode);
     ENTRYTC(*list,"SetTone", SetTone);
     ENTRYTC(*list,"SetWhitebalance", SetWhitebalance);    
-    //ENTRYTC(*list,"SetAllInOneWithPicture", SetAllInOneWithPicture);
 
     return ENOERR;
 

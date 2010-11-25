@@ -1,10 +1,10 @@
-# spec file for mwts-template
+# spec file for mwts-feedback
 
 %define buildroot	%{_topdir}/%{name}-%{version}-root
 
 BuildRoot:      %{buildroot}
-Name:           mwts-template
-Summary:        Template test asset
+Name:           mwts-feedback
+Summary:        Feedback test asset
 License:        LGPL
 Version:        %{version}
 Release:        0
@@ -15,32 +15,31 @@ Requires:       mwts-common
 Source:         %{name}-%{version}.tar.gz
 
 %description
-Template test asset.
+Feedback test asset.
             
-%package        scripts-generic
-Summary:        MIN test case scripts for mwts-template
-Requires:       mwts-template
-%description    scripts-generic
-MIN test case scripts for mwts-template
+%package        scripts
+Summary:        MIN test case scripts for mwts-feedback
+Prefix:         /usr/bin
+Group:          Development/Tools
+Requires:       min, mwts-feedback
+%description    scripts
+MIN test case scripts for mwts-feedback
 
-%package        config-generic
-Summary:        Generic configuration file for mwts-template
-Requires:       mwts-template
-%description    config-generic
-Generic configuration file for mwts-template
 
-%package	all-generic
-Summary:	meta package containing everything for mwts-template (generic)
-Requires:	mwts-template, mwts-template-scripts-generic, mwts-template-config-generic
-%description	all-generic
-Meta package for installing all needed packages for generic version of mwts-template
+%package                cli
+Summary:                mwts-feedback command line tool
+Prefix:                 /usr/bin
+Group:                  Development/Tools
+Requires:               mwts-feedback
+%description            cli
+mwts-feedback command line tool
 
 
 %prep
 %setup -q
 
 %build
-qmake "CONFIG+=plugin"
+qmake
 make
 
 %install
@@ -48,17 +47,29 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files 
 %doc README
+%doc COPYING
+%doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/libmwts-template*
-/usr/lib/min/*.so*
+/usr/lib/libmwts-feedback*
+/usr/lib/tests/FeedbackTest.conf
 
-
-%files scripts-generic
+%files scripts
+%doc README
+%doc COPYING
+%doc DEPENDENCIES.png
+%doc doc/MWTS.README
 /etc/min.d/*.min.conf
-/usr/share/mwts-template-scripts/tests.xml
 /usr/lib/min/*.cfg
+/usr/lib/min/libmin-mwts-feedback.*
+/usr/share/mwts-feedback-scripts/tests.xml
 
-%files config-generic
-/usr/lib/tests/*
+%files cli
+%doc README
+%doc COPYING
+%doc DEPENDENCIES.png
+%doc doc/MWTS.README
+/usr/bin/mwts-feedback-cli
 
-%files all-generic
+
+%postun
+ldconfig
