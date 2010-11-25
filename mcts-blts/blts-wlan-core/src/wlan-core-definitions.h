@@ -141,6 +141,14 @@ typedef struct
 	unsigned monitor_alternate_in_use:1; /* When set, we're using alternate socket for raw frames */
 } wlan_core_data;
 
+
+/* Definitions for AD-HOC test cases */
+  
+#define ADHOC_ETH_TYPE 	0x8000			/* test protocol number for packets to pass to raw socket */
+#define ADHOC_RETRIES 	5				/* retry value for adhoc network scanning/sending/receiving  */
+#define ADHOC_TESTDATA 	"ADHOC-TEST"	/* test data to send/receive/verify */
+
+
 #define CLI_FLAG_PROFILING 1
 #define CLI_FLAG_VERBOSE_LOG 2
 #define CLI_FLAG_POWER_SAVE 4

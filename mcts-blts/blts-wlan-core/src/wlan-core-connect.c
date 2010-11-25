@@ -1004,7 +1004,7 @@ retry:
 
 	hexdump_ascii("  * SSID\n", params->ssid, params->ssid_len);
 	NLA_PUT(msg, NL80211_ATTR_SSID, params->ssid_len, params->ssid);
-	memcpy(data->cmd->ssid, params->ssid, params->ssid_len);
+	memmove(data->cmd->ssid, params->ssid, params->ssid_len);
 
 	if(params->freq)
 	{
@@ -1565,7 +1565,7 @@ int disconnect_from_open_adhoc_network(wlan_core_data* data)
 
 	if (nl80211_leave_ibss(data))
 	{
-		BLTS_ERROR("Leave from %s failed!\n", as_params.ssid);
+		hexdump_ascii("Leave failed!", as_params.ssid, as_params.ssid_len);
 		goto error;
 	}
 

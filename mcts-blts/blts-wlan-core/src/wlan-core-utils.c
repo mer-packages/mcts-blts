@@ -431,6 +431,7 @@ int nl80211_finish_device_init(wlan_core_data* data, int test_num)
 int nl80211_init(wlan_core_data* data)
 {
 	int err;
+	int flags = 0;
 
 	if (data == NULL)
 		return -1;
@@ -518,6 +519,11 @@ int nl80211_init(wlan_core_data* data)
 		BLTS_ERROR("socket(PF_INET,SOCK_DGRAM) failed\n");
 		err = -ENOENT;
 		goto out_cache_free;
+	}
+
+	if (nl80211_get_ifflags(data, &flags) == 0)
+	{
+		nl80211_set_ifflags(data, flags & ~IFF_UP);
 	}
 
 	return 0;

@@ -28,6 +28,7 @@
 
 #include "wlan-core-cmdqueue.h"
 #include "wlan-core-utils.h"
+#include "wlan-core-debug.h"
 
 struct cmd_que_item {
 	struct cmd_que_item *next;
