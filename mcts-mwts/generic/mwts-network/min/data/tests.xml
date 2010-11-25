@@ -75,6 +75,42 @@
       Required test data: None.">
         <step>min -c -t 'FUTE-WLAN-Disconnect"'</step>
       </case>
+      <case name="FUTE-WLAN-Download_100k_file"  timeout="300" description=
+      "Purpose: Test downloading file via wlan and ftp
+      Method: Bring up wlan interface, download 100k file from ftp server  
+      Pre- /Post-conditions: 
+      Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Download_100k_file"'</step>
+      </case>
+      <case name="FUTE-WLAN-Upload_100k_file"  timeout="300" description=
+      "Purpose: Test uploading file via wlan to ftp
+      Method: Bring up wlan interface, upload 100k file to ftp server
+      Pre- /Post-conditions: 
+      Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Upload_100k_file"'</step>
+      </case>
+      <case name="FUTE-WLAN-Download_10MB_file"  timeout="300" description=
+      "Purpose: Test downloading file via wlan and ftp
+      Method: Bring up wlan interface, download 10MB file from ftp server  
+      Pre- /Post-conditions: 
+      Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Download_10MB_file"'</step>
+      </case>
+      <case name="FUTE-WLAN-Upload_10MB_file"  timeout="300" description=
+      "Purpose: Test uploading file via wlan to ftp
+      Method: Bring up wlan interface, upload 10MB file to ftp server
+      Pre- /Post-conditions: 
+      Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Upload_10MB_file"'</step>
+      </case>
    </set>
    <set name="FUTE-PSD" description="Networking functionality" feature="(E)GPRS" type="Functional">
       <case name="FUTE-PSD-Connect"  timeout="10" description=
@@ -150,44 +186,6 @@
       References: 
       Required test data: None.">
         <step>min -c -t 'DATAFLOW-PSD-3g_Upload_10M_file"'</step>
-      </case>
-   </set>
-   <set name="DATAFLOW-WLAN" description="Networking functionality" feature="WLAN" type="Functional">
-      <case name="DATAFLOW-WLAN-Scan"  timeout="10" description=
-      "Purpose: Test wlan scan
-      Method: Bring up wlan interface and do a wlan ap scan 
-      Pre- /Post-conditions: 
-      Pass- /Fail Criteria: scan is made, test does not crash 
-      References: 
-      Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Scan"'</step>
-      </case>
-      <case name="DATAFLOW-WLAN-Connect"  timeout="10" description=
-      "Purpose: Test connecting to a wlan ap
-      Method: Bring up wlan interface and create connection to access point 
-      Pre- /Post-conditions: 
-      Pass- /Fail Criteria: connection to a ap is created, test does not crash 
-      References: 
-      Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Connect"'</step>
-      </case>
-      <case name="DATAFLOW-WLAN-Download_100k_file"  timeout="300" description=
-      "Purpose: Test downloading file via wlan and ftp
-      Method: Bring up wlan interface, download 100k file from ftp server  
-      Pre- /Post-conditions: 
-      Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
-      References: 
-      Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Download_100k_file"'</step>
-      </case>
-      <case name="DATAFLOW-WLAN-Upload_100k_file"  timeout="300" description=
-      "Purpose: Test uploading file via wlan to ftp
-      Method: Bring up wlan interface, upload 100k file to ftp server
-      Pre- /Post-conditions: 
-      Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
-      References: 
-      Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Upload_100k_file"'</step>
       </case>
    </set>
    
