@@ -304,9 +304,25 @@ LOCAL gint SetFPSMeasure(__attribute__((unused)) MinItemParser *item)
     return ENOERR;
 }
 
-LOCAL gint SetPostProcessing(MinItemParser *item)
+LOCAL gint SetImagePostProcessing(__attribute__((unused)) MinItemParser *item)
 {
-    if(Test.set_pp())
+    if(Test.set_image_pp())
+    {
+        g_pResult->StepPassed(__FUNCTION__, TRUE);
+        MWTS_LEAVE;
+        return ENOERR;
+    }
+    else
+    {
+        g_pResult->StepPassed(__FUNCTION__, FALSE);
+        MWTS_LEAVE;
+        return EINVAL;
+    }
+}
+
+LOCAL gint SetVideoPostProcessing(__attribute__((unused)) MinItemParser *item)
+{
+    if(Test.set_video_pp())
     {
         g_pResult->StepPassed(__FUNCTION__, TRUE);
         MWTS_LEAVE;
@@ -507,7 +523,7 @@ LOCAL gint SetFlags(MinItemParser *item)
 
     if(strcmp(mode, "SourceResize") == 0)
         enum_mode = GST_CAMERABIN_FLAG_SOURCE_RESIZE;
-    else if(strcmp(mode, "SourceColorspaceConversion") == 0)
+        else if(strcmp(mode, "SourceColorspaceConversion") == 0)
         enum_mode = GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION;
     else if(strcmp(mode, "ViewfinderColorspaceConversion") == 0)
         enum_mode = GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION;    
@@ -599,7 +615,8 @@ gint ts_get_test_cases( DLList** list )
     ENTRYTC(*list,"SetImageResolution", SetImageResolution);
     ENTRYTC(*list,"SetVideoResolution", SetVideoResolution);
     ENTRYTC(*list,"SetFPSMeasure", SetFPSMeasure);
-    ENTRYTC(*list,"SetPostProcessing", SetPostProcessing);    	
+    ENTRYTC(*list,"SetImagePostProcessing", SetImagePostProcessing);
+    ENTRYTC(*list,"SetVideoPostProcessing", SetVideoPostProcessing);
 
     /************************************************************
      *

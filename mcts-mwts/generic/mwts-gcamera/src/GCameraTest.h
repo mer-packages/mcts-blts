@@ -50,6 +50,7 @@
 
 //the identity does nothing, but demonstrate the postprocessing
 #define CAMERA_APP_IMAGE_POSTPROC "identity"
+#define CAMERA_APP_VIDEO_POSTPROC "identity"
 
 #define IMG_CAPTURE_TIMEOUT		60
 #define CAPTURE_START_AFTER		1
@@ -187,7 +188,14 @@ public:
      * @return gboolean success/failure
      *
      */
-    gboolean set_pp();
+    gboolean set_image_pp();
+
+    /**
+     * Set video Post Processing on
+     * @return gboolean success/failure
+     *
+     */
+    gboolean set_video_pp();
 
 
     /**

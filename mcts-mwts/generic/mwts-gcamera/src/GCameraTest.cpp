@@ -631,7 +631,7 @@ fail:
  * @return gboolean success/failure
  *
  */
-gboolean GCameraTest::set_pp()
+gboolean GCameraTest::set_image_pp()
 {
     MWTS_ENTER;
     /* Use  identity postprocessing element for demonstrating the functionality*/
@@ -640,6 +640,29 @@ gboolean GCameraTest::set_pp()
     if (pp)
     {
         g_object_set (G_OBJECT (gst_camera_bin), "image-post-processing", pp, NULL);
+        MWTS_LEAVE;
+        return TRUE;
+    }
+    MWTS_ERROR("Could not create post processing element");
+    MWTS_LEAVE;
+
+    return FALSE;
+}
+
+/**
+ * Set video Post Processing on
+ * @return gboolean success/failure
+ *
+ */
+gboolean GCameraTest::set_video_pp()
+{
+    MWTS_ENTER;
+    /* Use  identity postprocessing element for demonstrating the functionality*/
+    GstElement *pp = gst_element_factory_make (CAMERA_APP_VIDEO_POSTPROC, NULL);
+
+    if (pp)
+    {
+        g_object_set (G_OBJECT (gst_camera_bin), "video-post-processing", pp, NULL);
         MWTS_LEAVE;
         return TRUE;
     }
@@ -697,21 +720,13 @@ gboolean GCameraTest::set_fps()
 void GCameraTest::set_video_resolution(gint x, gint y, gint fps_h, gint fps_l)
 {
     MWTS_ENTER;
-    if(fps_l != 0)
-        qDebug("setting resolution to h=%i and l=%i, fps_h=%i, fps_l=%i, fps=%.2f", x, y, fps_h, fps_l, (float)(fps_h/fps_l));
+    if(fps_h!=0 && fps_l != 0)
+        qDebug("setting video resolution and fps to h=%i and l=%i, fps_h=%i, fps_l=%i, fps=%.2f", x, y, fps_h, fps_l, (float)(fps_h/fps_l));
     else
-        qDebug("setting resolution to h=%i and l=%i", x, y);
+        qDebug("setting video resolution to h=%i and l=%i", x, y);
 
     g_signal_emit_by_name(gst_camera_bin, "set-video-resolution-fps", x, y, fps_h, fps_l);
 
-    if(capture_resolution != NULL)
-    {
-        g_string_free(capture_resolution, TRUE);
-        capture_resolution = NULL;
-    }
-    capture_resolution = g_string_new("");
-    g_string_printf(capture_resolution, "%ix%i", x, y);
-    qDebug("capture resolution set as %s", capture_resolution->str);
     MWTS_LEAVE;
 }
 
@@ -725,16 +740,9 @@ void GCameraTest::set_image_resolution(gint x, gint y)
 {
     MWTS_ENTER;
 
+    qDebug("setting image resolution to  h=%i l=%i", x, y);
     g_signal_emit_by_name(gst_camera_bin, "set-image-resolution", x, y);
 
-    if(capture_resolution != NULL)
-    {
-        g_string_free(capture_resolution, TRUE);
-        capture_resolution = NULL;
-    }
-    capture_resolution = g_string_new("");
-    g_string_printf(capture_resolution, "%ix%i", x, y);
-    qDebug("capture resolution set as %s", capture_resolution->str);
     MWTS_LEAVE;
 }
 

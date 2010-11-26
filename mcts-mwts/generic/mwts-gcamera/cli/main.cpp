@@ -52,19 +52,18 @@ gint main(int argc, char *argv[])
     }
      */
 
-    //test->take_video(5);
+    test->take_video(5);
     //test->take_video(2);
     //test->increase_zoom(700);
 
 //    test->set_resolution(320, 240, 0, 0);
-    //test->set_pp();
+    //test->set_image_pp();
     //test->set_autofocus();
     //test->set_zoom(100);
     //test->set_zoom(300);
-    //test->set_pp();
-    test->set_image_resolution(320, 240);
+    //test->set_image_resolution(320, 240);
 
-    test->take_picture(FALSE);
+    //test->take_picture(FALSE);
 
     test->Uninitialize();
     delete test;

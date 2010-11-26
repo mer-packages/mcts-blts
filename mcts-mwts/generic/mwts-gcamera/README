@@ -7,7 +7,8 @@ INTRODUCTION
 The mwts-gcamera tests camera features of gstreamer.
 
 Test are done to:       
-  
+MeeGo with netbook (Asus EEE PC 1005 HA). see more at Known Issues.
+
 Test scenarios include:
 
 Questions: MWTSSupport@nokia.com
@@ -45,6 +46,12 @@ information about test run and measured values.
 
 TEST CASES
 
+FUTE-Take_picture
+FUTE-Take_picture_zoom
+FUTE-Take_VGA_picture
+FUTE-Take_picture_post_processing
+FUTE-Take_video
+
 MIN SCRIPT FILES
 
 mwts-gcamera.cfg
@@ -54,27 +61,28 @@ MIN SCRIPTER INTERFACE
 
   SetFlags <SourceColorspaceConversion | SourceResize>
     It has to be the first call before SetPipeline, if it is needed. In case of capturing on netbook
-    the v4l2src does not support those formats what the camerabin does. Hence colorspace conversion is needed.
-    This might be expensive from the CPU point of view. (see more at Known Issues). It is also needed, if now
-    optical zoom is avaiable so digital zoom has to be in use -> SourceResize
+    the v4l2src does not support those formats what the camerabin does -> SourceColorspaceConversion
+    is needed. This might be expensive from the CPU point of view. (see more at Known Issues).
+    In order to activate the digital zoom -> SourceResize
 
   SetPipeline
-    It has to be the first call before after the test asset initialization. Everything has to be set beforhand
+    It has to be the first call before after the test asset initialization. If SetFlag is needed, that has to be
+    set beforehand.
 
   TakeVideo <seconds>
     Start recording a video with given duration in seconds. Everything has to be set beforhand.
 
   TakePicture
-    Takes a picture, it can be called once or more times if needed. SetPipeline has to be called before this.
+    Takes a picture, it can be called once or more times if needed. Everything has to be set beforhand.
 
-  SetFPSMeasure 
-    Measure framerate when doing video result
+  SetFPSMeasure
+    Measure framerate when and output to the results
   	
   SetZoom <size>
    Set the zoom 100 < size < 1000. If not optical camera available, it can
    digital zoom (SetFlag SourceResize)
 
-  SetImageResolution <x> <y> [fps] [fpsdivide]
+  SetVideoResolution <x> <y> [fps] [fpsdivide]
 	Set resolution and frame rate as optional. If video is being taken, 
     then the frame rate be given. Real frames per second = FPS / FPSDIVIDE      
   
@@ -97,39 +105,49 @@ MIN SCRIPTER INTERFACE
             5Mpix (2592x1968), 2592, 1944
             5Mpix wide (2592x1458), 2592, 1458
         
-    SetImagePostProcessing
-     Use picture post prosessing, default postprocessing element is the "identity", it
-     does nothing, but proves the funcionality
-  
-    SetVideoCodecs <video> <mux> <audiosrc> <audiocodec> <extension>
-     Add codec handlers to pipeline. Order of arguments must be VIDEO, MUXER, AUDIOSOURCE
-     , AUDIOCODEC, FILE_EXTENSION. VIDEO: theorenc MUXER: oggmux AUDIOSOURCE: pulsesrc
-     (cpu expensive, depending on the test purpose), audiotestsrc (static generated sound
-     is recorded, cheap) AUDIOCODEC: vorbisenc
- 	    
+  SetImagePostProcessing
+    Use picture post processing, default postprocessing element is the "identity", it
+    does nothing, but proves the funcionality
+
+  SetVideoPostProcessing
+    Use video post processing, default postprocessing element is the "identity", it
+    does nothing, but proves the funcionality
+
 	
 TRACING
 
 Log file can be found in /var/log/tests if the environment variable MWTS_DEBUG has been set to 1.
-    Command: export MWTS_DEBUG=1
-
+    Command: export MWTS_DEBUG=1             
 
 KNOWN ISSUES
 
-The still image capture does not work without hack, because currently (24 Nov 2010) the MeeGo gst-plugins-bad-free package does
-not have metadata muxer plugin (/usr/lib/gstreamer0.10/libmetadata.so), what is in default usage by the camerabin
-http://bugs.meego.com/show_bug.cgi?id=10304.
+- The still image capture does not work without workaround, because currently (24 Nov 2010) the MeeGo gst-plugins-bad-free package does
+  not have metadata muxer plugin (/usr/lib/gstreamer0.10/libmetadata.so), what is in default usage by the camerabin
+  http://bugs.meego.com/show_bug.cgi?id=10304.
+  Workaround:
+  This can be solved downloading the source gst-plugins-bad-free which has ext/metadata directory and compile the sources there
+  then copy the libmetadata.so to the /usr/lib/gstreamer-0.10.
+  The upstream gstreamer already does not use metadatamuxer but jifmux,
+  hence another solution to get the upstream gst-plugins-bad-free code and apply the following patch
+  http://cgit.freedesktop.org/gstreamer/gst-plugins-bad/commit/?id=9ae921f8889c662ddc95f8daba9a36a4801ebf66.
+  The following packages should be installed for building: libiptcdata-devel, exempi-devel
 
-This can be solved downloading the source gst-plugins-bad-free which has ext/metadata directory and compile the sources there
-then copy the libmetadata.so to the /usr/lib/gstreamer-0.10.
+- The camera does not have optical zoom, therefore SetFlag SourceResize flag had to be set up.
+- The camerabin does not implement the photography interface, but has zoom and resolution setting
+  option.
 
-The upstream gstreamer already does not use metadatamuxer but jifmux,
-hence another solution to get the upstream gst-plugins-bad-free code and apply the following patch
-http://cgit.freedesktop.org/gstreamer/gst-plugins-bad/commit/?id=9ae921f8889c662ddc95f8daba9a36a4801ebf66.
+- The vl2newcamsrc implements the photograpy interface, but cannot work together with camerabin.
 
-The following packages should be installed for building: libiptcdata-devel, exempi-devel
+- The only video codec what could have been place into the pipeline was the theorenc and work with the
+  other elements.
 
+- Unfortunately, v4l2src and camerabin requires colorspace conversion for the sake of
+  format difference, which is very CPU costly. When the SourceColorspaceConversion is activated on a device with
+  low CPU capabilty (as on EEE PC), some frame can be lost on weak device. So the playback of the
+  result video files the playback might require a player which is capable to recalculate the lost
+  frames, like vlc, and so on..
 
+TOOLS
 There are several available gstreamer tools from command line. For instance:
 gst-inspect-0.10
 gst-launch-0.10
