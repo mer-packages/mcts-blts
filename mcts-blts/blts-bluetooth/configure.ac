@@ -41,13 +41,8 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-AC_CHECK_LIB([minevent], [min_event_create])
-AC_CHECK_LIB([mintmapi], [tm_printf])
-AC_CHECK_LIB([minutils], [mip_get_uint])
 
 PKG_CHECK_MODULES([PACKAGE],[bluez bltscommon])
-
-AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Checks for header files.
 AC_HEADER_STDC

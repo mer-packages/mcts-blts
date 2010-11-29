@@ -20,12 +20,6 @@ AM_CFLAGS = \
 
 requiredlibs = -lm -lrt $(PACKAGE_LIBS)
 
-if WANT_MIN
-min_libs = -lminutils -lmintmapi -lminevent
-else
-min_libs =
-endif
-
 h_sources = \
 	bt_fute.h \
 	bt_ctx.h \
@@ -49,16 +43,6 @@ c_sources = \
 	ext_tools.c \
 	pairing.c \
 	info.c
-
-if WANT_MIN
-
-lib_LTLIBRARIES = libbltsbluetooth.la
-libbltsbluetooth_la_SOURCES = $(h_sources) $(c_sources) min_scripter_mod.c
-libbltsbluetooth_la_CFLAGS = $(AM_CFLAGS) -fPIC
-libbltsbluetooth_la_LIBADD = $(requiredlibs) $(min_libs)
-libbltsbluetooth_la_LDFLAGS = $(AM_LDFLAGS) -shared -module
-
-endif
 
 bin_PROGRAMS = blts-bluetooth-tests
 
