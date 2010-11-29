@@ -39,15 +39,9 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-AC_CHECK_LIB([minevent], [min_event_create])
-AC_CHECK_LIB([mintmapi], [tm_printf])
-AC_CHECK_LIB([minutils], [mip_get_uint])
 #AC_CHECK_LIB([GLESv2], [glClear],,AC_MSG_ERROR(cannot find GLESv2 libraries))
 #AC_CHECK_LIB([EGL], [eglGetError],,AC_MSG_ERROR(cannot find EGL libraries))
 AC_CHECK_LIB([bltscommon], [log_open],,[AC_MSG_ERROR([cannot find libbltscommon])])
-
-AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
-AM_CONDITIONAL([LINK_GLSLC], [test "x$ac_cv_build" == "xarm-unknown-linux-gnueabi"])
 
 # Library configs
 BLTS_COMMON_CFLAGS=`pkg-config --cflags bltscommon`
