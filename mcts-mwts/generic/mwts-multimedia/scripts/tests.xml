@@ -70,8 +70,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            https://projects.maemo.org/svn/testdata/media/Image/JPEG/JPEG_2304x1296(3MPix)_24BPP_BigBuckBunny_1.2MB.jpg" timeout="360">
+            Required test data (JPEG files)
+            " timeout="360">
             <step>min -c -t 'NFT-Imageviewing-Show_1MB_JPG_image-ITER'</step>
       </case>
       <case name="NFT-Imageviewing-Show_various_size_JPG_images-ITER" subfeature="Show" description=
@@ -84,8 +84,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            Contents of https://projects.maemo.org/svn/testdata/media/Image/JPEG/" timeout="120">
+            Required test data (JPEG files)
+            " timeout="120">
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_JPG_images-ITER'</step>
       </case>
       <case name="NFT-Imageviewing-Show_various_size_BMP_images-ITER" subfeature="Show" description=
@@ -98,8 +98,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            Contents of https://projects.maemo.org/svn/testdata/media/Image/BMP/" timeout="360">
+            Required test data (BMP files)
+            " timeout="360">
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_BMP_images-ITER'</step>
       </case>
       <case name="NFT-Imageviewing-Show_various_size_PNG_images-ITER" subfeature="Show" description=
@@ -112,8 +112,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            Contents of https://projects.maemo.org/svn/testdata/media/Image/PNG/" timeout="360">
+            Required test data (PNG files)
+            " timeout="360">
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_PNG_images-ITER'</step>
       </case>
     </set>
