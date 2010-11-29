@@ -17,7 +17,6 @@ Architecture: any
 Priority: optional
 Section: testing
 Depends: ${shlibs:Depends}, ${misc:Depends}, blts-alsa-core-tests-config
-Recommends: min | min-all
 Description: BLTS ALSA core test set
  This package contains functional tests for ALSA core.
 
