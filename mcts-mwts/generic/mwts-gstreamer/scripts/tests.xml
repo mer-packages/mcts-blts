@@ -692,38 +692,6 @@
     </set>
 
 <!-- Audio streaming playback FUTE test cases from file mwts-gstreamer-audio-streaming.cfg -->
-        <set name="Audio_Streaming_functional" description="Audio streaming functional tests" feature="Audio Playback" type="Functional">
-          <case name="FUTE-GStreamer-Stream_HTTP_MP4_MP3_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
-            "Purpose
-            Test gstreamer media playing.
-            Method
-            Stream MP3 file using HTTP method.
-            Pre-/Post-conditions
-            Audio file available in streaming server in address http://192.168.1.1/media/Audio/MP3/MP3_16bit_Stereo_44.1KHz_192Kbps_60s(1.4Mb).mp4
-            Sound is played.
-            References
-            Required test data
-            Audio/MP3/MP3_16bit_Stereo_44.1KHz_192Kbps_60s(1.4Mb).mp4" timeout="70">
-            <step>min -c -t 'FUTE-GStreamer-Stream_HTTP_MP4_MP3_44.1_kHz_192kbs_stereo'</step>
-          </case>
-          <case name="FUTE-GStreamer-Stream_RTSP_MP4_AAC_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
-            "Purpose
-            Test gstreamer media playing.
-            Method
-            Stream AAC file using RTSP method.
-            Pre-/Post-conditions
-            Audio file available in streaming server in address rtsp://192.168.1.1/Audio/AAC/AAC-LC_16bit_Mono_8KHz_64Kbps_2min23sec(0.8Mb)_AKM(hinted).mp4
-            Pass/Fail Criteria
-            Sound is played.
-            References
-            Required test data
-            Audio/AAC/AAC-LC_16bit_Mono_8KHz_64Kbps_2min23sec(0.8Mb)_AKM(hinted).mp4" timeout="153">
-            <step>min -c -t 'FUTE-GStreamer-Stream_RTSP_MP4_AAC_44.1_kHz_192kbs_stereo'</step>
-          </case>
-        </set>
-  </suite>
-
-<!-- Audio streaming playback FUTE test cases from file mwts-gstreamer-audio-streaming.cfg -->
     <set name="Audio_Streaming_functional" description="Audio streaming functional tests" feature="Audio Playback" type="Functional">
       <case name="FUTE-GStreamer-Stream_HTTP_MP4_MP3_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
         "Purpose
@@ -755,38 +723,38 @@
     </set>
   </suite>
 
-<!-- Video local playback functional test cases from file mwts-gstreamer-video-local.cfg -->
-<suite name="mwts-gstreamer-scripts-video" domain="Visual">
-  <set name="Functional Video playback" feature="Video playback" type="Functional">
-    <case name="FUTE-Gstreamer-Video_MP4_H264_AAC" description="">
-      <step>min -c -t "FUTE-Gstreamer-Video_MP4_H264_AAC"</step>
-    </case>
-    <case name="FUTE-Gstreamer-Video_Vorbis_high-FPS" description="">
-      <step>min -c -t "FUTE-Gstreamer-Video_Vorbis_high-FPS"</step>
-    </case>
-    <case name="FUTE-Gstreamer-Video_Vorbis_low-FPS" description="">
-      <step>min -c -t "FUTE-Gstreamer-Video_Vorbis_low-FPS"</step>
-    </case>
-    <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps" description="">
-      <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps"</step>
-    </case>
-    <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Stop" description="">
-      <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Stop"</step>
-    </case>
-    <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Pause" description="">
-      <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Pause"</step>
-    </case>
-    <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Forward" description="">
-      <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Forward"</step>
-    </case>
-    <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Backward" description="">
-      <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Backward"</step>
-    </case>
-  </set>
-</suite>
 
-<!-- Video local playback ITERATIVE test cases from file mwts-gstreamer-video-local-nft.cfg -->
   <suite name="mwts-gstreamer-scripts-video" domain="Visual">
+
+    <!-- Video local playback functional test cases from file mwts-gstreamer-video-local.cfg -->
+    <set name="Functional Video playback" feature="Video playback" type="Functional">
+        <case name="FUTE-Gstreamer-Video_MP4_H264_AAC" description="">
+          <step>min -c -t "FUTE-Gstreamer-Video_MP4_H264_AAC"</step>
+        </case>
+        <case name="FUTE-Gstreamer-Video_Vorbis_high-FPS" description="">
+          <step>min -c -t "FUTE-Gstreamer-Video_Vorbis_high-FPS"</step>
+        </case>
+        <case name="FUTE-Gstreamer-Video_Vorbis_low-FPS" description="">
+          <step>min -c -t "FUTE-Gstreamer-Video_Vorbis_low-FPS"</step>
+        </case>
+        <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps" description="">
+          <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps"</step>
+        </case>
+        <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Stop" description="">
+          <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Stop"</step>
+        </case>
+        <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Pause" description="">
+          <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Pause"</step>
+        </case>
+        <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Forward" description="">
+          <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Forward"</step>
+        </case>
+        <case name="FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Backward" description="">
+          <step>min -c -t "FUTE-GstLocalPlayback-Video_Theora_30FPS_VGA_2321Kbps_Vorbis_44.1KHz_192Kbps_Play_Seek_Backward"</step>
+        </case>
+    </set>
+
+    <!-- Video local playback ITERATIVE test cases from file mwts-gstreamer-video-local-nft.cfg -->
     <set name="Video_local_playback_iterative" description="Video local playback iterative tests" feature="Video Playback" type="Iterative" >
       <case name="NFT-GstLocalPlayback-Video_3GP_h263_QCIF_AAC-ITER" subfeature="Playback" description=
         "Purpose
