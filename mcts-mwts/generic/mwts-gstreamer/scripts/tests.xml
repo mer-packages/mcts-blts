@@ -4,337 +4,337 @@
 
 <!-- Audio local playback test cases from file mwts-multimedia-audio-local.cfg -->
      <set name="Functional Audio playback" feature="Audio playback" type="Functional">
-        <case name="FUTE-Gstreamer-Audio_PCM_8KHz_MONO" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_8KHz_MONO" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_8KHz_MONO"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_PCM_16KHz_STEREO" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_16KHz_STEREO" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_16KHz_STEREO"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_PCM_44.1KHz_STEREO" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_44.1KHz_STEREO" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_44.1KHz_STEREO"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_PCM_48KHz_STEREO" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_48KHz_STEREO" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_48KHz_STEREO"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_PCM_44.1KHz_STEREO_Pause_Resume" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_44.1KHz_STEREO_Pause_Resume" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_44.1KHz_STEREO_Pause_Resume"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_PCM_48KHz_STEREO_Twise" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_48KHz_STEREO_Twise" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_48KHz_STEREO_Twise"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_AAC-LC_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_AAC-LC_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_AAC-LC_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_AAC-LC_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AAC-LC_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_AAC-LC_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_AAC_16bit_Stereo_44.1KHz_264Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_AAC_16bit_Stereo_44.1KHz_264Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_AAC_16bit_Stereo_44.1KHz_264Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_AAC_16bit_Stereo_44.1KHz_264Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AAC_16bit_Stereo_44.1KHz_264Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_AAC_16bit_Stereo_44.1KHz_264Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA9-Voice_16bit_Mono_22KHz_20Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA9-Voice_16bit_Mono_22KHz_20Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA9-Voice_16bit_Mono_22KHz_20Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA9-Voice_16bit_Mono_22KHz_20Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA9-Voice_16bit_Mono_22KHz_20Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA9-Voice_16bit_Mono_22KHz_20Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA10Pro_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA10Pro_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA10Pro_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA10Pro_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA10Pro_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA10Pro_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA10Pro_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_LPCM_24bit_Stereo_48KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_LPCM_24bit_Stereo_48KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_LPCM_24bit_Stereo_48KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_LPCM_24bit_Stereo_48KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_LPCM_24bit_Stereo_48KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_LPCM_24bit_Stereo_48KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_LPCM_24bit_Stereo_48KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_LPCM_24bit_Stereo_48KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_LPCM_24bit_Stereo_48KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_LPCM_24bit_Stereo_48KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_LPCM_24bit_Stereo_48KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_LPCM_24bit_Stereo_48KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_LPCM_24bit_Stereo_48KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_LPCM_24bit_Stereo_48KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_LPCM_24bit_Stereo_48KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_AAC+_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_AAC+_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_AAC+_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_AAC+_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AAC+_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_AAC+_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_eAAC+_16bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_eAAC+_16bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_eAAC+_16bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_eAAC+_16bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_eAAC+_16bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_eAAC+_16bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_AMR-NB_16bit_mono_7.4Khz_8Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_AMR-NB_16bit_mono_7.4Khz_8Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_AMR-NB_16bit_mono_7.4Khz_8Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_AMR-NB_16bit_mono_7.4Khz_8Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AMR-NB_16bit_mono_7.4Khz_8Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_AMR-NB_16bit_mono_7.4Khz_8Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_AMR-WB_14bit_Mono_16KHz_18.25" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_AMR-WB_14bit_Mono_16KHz_18.25" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_AMR-WB_14bit_Mono_16KHz_18.25"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_AMR-WB_14bit_Mono_16KHz_18.25" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_AMR-WB_14bit_Mono_16KHz_18.25" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_AMR-WB_14bit_Mono_16KHz_18.25"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_AMR-WB_14bit_Mono_16KHz_18.25" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_AMR-WB_14bit_Mono_16KHz_18.25" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_AMR-WB_14bit_Mono_16KHz_18.25"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AMR-WB_14bit_Mono_16KHz_18.25" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_AMR-WB_14bit_Mono_16KHz_18.25" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_AMR-WB_14bit_Mono_16KHz_18.25"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AMR-WB_14bit_Mono_16KHz_18.25" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_AMR-WB_14bit_Mono_16KHz_18.25" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_AMR-WB_14bit_Mono_16KHz_18.25"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_MP3(Lame)_16bit_Stereo_44.1KHz_128Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_MP3_16bit_Stereo_44.1KHz_256Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_MP3_16bit_Stereo_44.1KHz_256Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_MP3_16bit_Stereo_44.1KHz_256Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_MP3_16bit_Stereo_44.1KHz_256Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_MP3_16bit_Stereo_44.1KHz_256Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_MP3_16bit_Stereo_44.1KHz_256Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA-Lossless_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA-Lossless_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA-Lossless_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA-Lossless_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA-Lossless_24bit_Stereo_44.1KHz_VBR" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA-Lossless_24bit_Stereo_44.1KHz_VBR"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA-Lossless_24bit_Stereo_44KHz_VBR100"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA-Lossless_24bit_Stereo_44KHz_VBR100"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA-Lossless_24bit_Stereo_44KHz_VBR100"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA-Lossless_24bit_Stereo_44KHz_VBR100"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA-Lossless_24bit_Stereo_44KHz_VBR100" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA-Lossless_24bit_Stereo_44KHz_VBR100"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_IMAADPCM_4bit_Stereo_32KHz_514Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_IMAADPCM_4bit_Stereo_32KHz_514Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_IMAADPCM_4bit_Stereo_32KHz_514Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_IMAADPCM_4bit_Stereo_32KHz_514Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_IMAADPCM_4bit_Stereo_32KHz_514Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_IMAADPCM_4bit_Stereo_32KHz_514Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA9.2_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA9.2_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA9.2_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA9.2_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA9.2_16bit_Stereo_44.1KHz_192Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA9.2_16bit_Stereo_44.1KHz_192Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_WMA9.2_16bit_Stereo_48Khz_330kbps(VBR)"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_16bit_Stereo_44.1KHz_1412.2Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_PCM_16bit_Stereo_44.1KHz_1412.2Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_PCM_16bit_Stereo_44.1KHz_1412.2Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_PCM_16bit_Stereo_44.1KHz_1412.2Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_PCM_16bit_Stereo_44.1KHz_1412.2Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_PCM_16bit_Stereo_44.1KHz_1412.2Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_a-LAW_8bit_Stereo_44.1KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_a-LAW_8bit_Stereo_44.1KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_a-LAW_8bit_Stereo_44.1KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_a-LAW_8bit_Stereo_44.1KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_a-LAW_8bit_Stereo_44.1KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_a-LAW_8bit_Stereo_44.1KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_a-LAW_8bit_Stereo_44.1KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_a-LAW_8bit_Stereo_44.1KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_a-LAW_8bit_Stereo_44.1KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_a-LAW_8bit_Stereo_44.1KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_a-LAW_8bit_Stereo_44.1KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_a-LAW_8bit_Stereo_44.1KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_a-LAW_8bit_Stereo_44.1KHz" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_a-LAW_8bit_Stereo_44.1KHz" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_a-LAW_8bit_Stereo_44.1KHz"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_u-Law_8bit_Stereo_48KHz_768Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_u-Law_8bit_Stereo_48KHz_768Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_u-Law_8bit_Stereo_48KHz_768Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Pause_u-Law_8bit_Stereo_48KHz_768Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Pause_u-Law_8bit_Stereo_48KHz_768Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Pause_u-Law_8bit_Stereo_48KHz_768Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Stop_u-Law_8bit_Stereo_48KHz_768Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Stop_u-Law_8bit_Stereo_48KHz_768Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Stop_u-Law_8bit_Stereo_48KHz_768Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Forward_u-Law_8bit_Stereo_48KHz_768Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Forward_u-Law_8bit_Stereo_48KHz_768Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Forward_u-Law_8bit_Stereo_48KHz_768Kbps"</step>
         </case>
-        <case name="FUTE-Gstreamer-Audio_Seek_Backward_u-Law_8bit_Stereo_48KHz_768Kbps" description="" state="ready">
+        <case name="FUTE-Gstreamer-Audio_Seek_Backward_u-Law_8bit_Stereo_48KHz_768Kbps" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_Seek_Backward_u-Law_8bit_Stereo_48KHz_768Kbps"</step>
         </case>
-        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps" description="" state="ready">
+        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps" description="" >
                 <step>min -c -t "FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps"</step>
         </case>
-        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Stop" description="" state="ready">
+        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Stop" description="" >
                 <step>min -c -t "FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Stop"</step>
         </case>
-        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Pause" description="" state="ready">
+        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Pause" description="" >
                 <step>min -c -t "FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Pause"</step>
         </case>
-        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Seek_Forward" description="" state="ready">
+        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Seek_Forward" description="" >
                 <step>min -c -t "FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Seek_Forward"</step>
         </case>
-        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Seek_Backward" description="" state="ready">
+        <case name="FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Seek_Backward" description="" >
                 <step>min -c -t "FUTE-GstLocalPlayback-Audio_PCM_16bit_44.1KHz_1412.2Kbps_Play_Seek_Backward"</step>
         </case>
     </set>
@@ -690,8 +690,8 @@
         <step>min -c -t 'NFT-GstStreaming-Audio_MP3_HTTP-LOLA'</step>
       </case>
     </set>
-<<<<<<< HEAD
-  <!-- Audio streaming playback FUTE test cases from file mwts-gstreamer-audio-streaming.cfg -->
+
+<!-- Audio streaming playback FUTE test cases from file mwts-gstreamer-audio-streaming.cfg -->
         <set name="Audio_Streaming_functional" description="Audio streaming functional tests" feature="Audio Playback" type="Functional">
           <case name="FUTE-GStreamer-Stream_HTTP_MP4_MP3_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
             "Purpose
@@ -722,8 +722,6 @@
           </case>
         </set>
   </suite>
-
-=======
 
 <!-- Audio streaming playback FUTE test cases from file mwts-gstreamer-audio-streaming.cfg -->
     <set name="Audio_Streaming_functional" description="Audio streaming functional tests" feature="Audio Playback" type="Functional">
@@ -787,7 +785,6 @@
   </set>
 </suite>
 
->>>>>>> 236edc9f2a7b1e96be3b3371aef82aa0940cfd25
 <!-- Video local playback ITERATIVE test cases from file mwts-gstreamer-video-local-nft.cfg -->
   <suite name="mwts-gstreamer-scripts-video" domain="Visual">
     <set name="Video_local_playback_iterative" description="Video local playback iterative tests" feature="Video Playback" type="Iterative" >
