@@ -82,9 +82,8 @@ KNOWN ISSUES
 
   Certain testcases do not work on MeeGo regard to the lack of codecs (currently
   available: vorbix, speech, PCM), instead the rehearsal took place on Fremantle.
-  Using the server locally (192.168.1.1) got a couple of testdata files got injected
-  from https://projects.maemo.org/svn/testdata/media/Audio. The test cases using
-  rtsp protocol needs 'hinted' audio files due to the media server's requirement.
+  Using the server locally (192.168.1.1). The test cases use rtsp protocol needs
+  'hinted' audio files due to the media server's requirement.
 
 
   
