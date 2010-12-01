@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tests.xml - Test case descriptions for automation tools.
+
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+   For OpenVG test suite:
+	Zheng Kui <kui.zheng@intel.com>
+-->
+<testdefinition version="1.0">
+  <suite name="mcts-openvg-tests" domain="Graphics">
+    <set name="openvg-function and perf" feature="OpenVG">
+      <case name="OpenVG-Enumerate%20EGL%20extensions">
+	<!-- description="Lists all EGL extensions" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Enumerate_EGL_extensions.log" -en "OpenVG - Enumerate EGL extensions"</step>
+      </case>
+      <case name="OpenVG-Enumerate%20EGL%20configs">
+	<!-- description="Lists all EGL configurations" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Enumerate_EGL_configs.log" -en "OpenVG - Enumerate EGL configs"</step>
+      </case>
+      <case name="OpenVG-Transformation%20perf">
+	<!-- description="Transformation function and perf testing" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Transformation_testing.log" -en "OpenVG - Transformation testing"</step>
+      </case>
+      <case name="OpenVG-Stroking%20perf">
+	<!-- description="Stroking function and perf testing" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Stroking_Path_testing.log" -en "OpenVG - Stroking Path testing"</step>
+      </case>
+      <case name="OpenVG-Filling%20perf">
+	<!-- description="Filling function and perf test with two models (VG_NON_ZERO/VG_EVEN_ODD)." -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Filling_Path_testing.log" -en "OpenVG - Filling Path testing"</step>
+      </case>
+      <case name="OpenVG-Clearing%20perf">
+	<!-- description="Fast clearing test" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Clearing_testing.log" -en "OpenVG - Clearing testing"</step>
+      </case>
+      <case name="OpenVG-Linear%20Gradient%20perf">
+	<!-- description="Linear Gradient function and perf Testing with thtree SPREAD models (PAD/REPEAT/REFLECT)" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Linear_Gradients_testing.log" -en "OpenVG - Linear Gradients testing"</step>
+      </case>
+      <case name="OpenVG-Radial%20Gradient%20perf">
+	<!-- description="Radial Gradient function and perf Testing with thtree SPREAD models (PAD/REPEAT/REFLECT)" -->
+        <step>/usr/bin/blts-openvg-tests -l "/var/log/tests/blts-openvg-tests/OpenVG-Radial_Gradients_testing.log" -en "OpenVG - Radial Gradients testing"</step>
+      </case>
+      <get>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Enumerate_EGL_extensions.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Enumerate_EGL_configs.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Transformation_testing.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Stroking_Path_testing.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Filling_Path_testing.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Clearing_testing.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Linear_Gradients_testing.log"</file>
+	<file>"/var/log/tests/blts-openvg-tests/OpenVG-Radial_Gradients_testin.log"</file>
+      </get>
+    </set>
+  </suite>
+</testdefinition>
+

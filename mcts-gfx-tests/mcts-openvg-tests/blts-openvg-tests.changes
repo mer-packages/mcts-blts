@@ -1,0 +1,8 @@
+* 01 Dec 2010 Zheng Kui <kui.zheng@intel.com> - 0.0.11
+- Add RPM packaging
+- Add tests.xml for testrunner framework
+
+* 23 Nov 2010 Zheng Kui <kui.zheng@intel.com> - 0.0.10
+- Initial upload for MCTS
+- Function and performance testing for Transformation/Stroking/Filling/Clearing/Linear Gradients/Radial Gradients.
+
