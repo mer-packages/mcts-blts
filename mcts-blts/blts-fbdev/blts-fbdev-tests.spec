@@ -38,7 +38,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %doc README COPYING
 /usr/bin/*
-/usr/lib/tests/%{name}/*
 
 %files config-example
 /etc/blts/blts-fbdev-tests.cnf

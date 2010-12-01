@@ -14,7 +14,7 @@ Architecture: any
 Priority: optional
 Section: testing
 Depends: ${shlibs:Depends}, ${misc:Depends}, blts-fbdev-tests-config
-Recommends: fbset, min | min-all
+Recommends: fbset
 Description: BLTS FbDev functional tests
  This package contains functional tests for the frame buffer device.
 

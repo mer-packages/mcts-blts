@@ -35,11 +35,6 @@ AC_CONFIG_MACRO_DIR([m4])
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-AC_CHECK_LIB([minevent], [min_event_create])
-AC_CHECK_LIB([mintmapi], [tm_printf])
-AC_CHECK_LIB([minutils], [mip_get_uint])
-
-AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -68,6 +63,5 @@ AC_SUBST(configdir)
 AC_OUTPUT([
 	Makefile
 	src/Makefile
-	min-scripts/Makefile
 	data/Makefile
 ])
