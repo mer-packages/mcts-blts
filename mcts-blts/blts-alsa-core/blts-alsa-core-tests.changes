@@ -1,3 +1,6 @@
+* Wed 01 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.9
+- Handle playback and capture streams properly in enumerate test
+
 * Tue 16 Nov 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.8
 - Fix timer_select_specific to select correct timer
 - Use correct logging macros and funcs
