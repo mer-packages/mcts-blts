@@ -1,3 +1,11 @@
+blts-opengles2-tests (0.0.13) unstable; urgency=low
+
+  [ zhengkui ]
+  * Fix vertex scale issue of glesh_generate_cube().
+  * Fixes: BMC#10543
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Wed, 01 Dec 2010 17:07:11 +0200
+
 blts-opengles2-tests (0.0.12) unstable; urgency=low
 
   [ Mika Niinistö, Kimmo Myllyvirta ]
