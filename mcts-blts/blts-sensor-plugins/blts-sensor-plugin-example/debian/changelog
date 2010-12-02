@@ -1,3 +1,13 @@
+libbltssensorplugin-example (0.1.4) UNRELEASED; urgency=low
+
+  * Package name in configure.ac and debian/control changed to
+    libbltssensorplugin-example so that source package name matches binary
+    packages
+  * Preparation for MeeGo OBS: LDFLAGS changed to produce only unversioned .so,
+    spec file updated to avoid rpmlint warnings in MeeGo OBS
+
+ -- Pasi Matilainen <pasi.matilainen@digia.com>  Thu, 02 Dec 2010 09:48:31 +0200
+
 blts-sensor-plugin-example (0.1.3) UNRELEASED; urgency=low
 
   [ Mika Niinistö, Kimmo Myllyvirta ]
