@@ -32,13 +32,9 @@ QTM_USE_NAMESPACE
 /**
  * Constructor for Feedback test class
  */
-//FeedbackTest::FeedbackTest(int _duration, qreal _intensity) : effect(0), duration(_duration), intensity(_intensity)
 FeedbackTest::FeedbackTest() : mEffect(0) {
 
         MWTS_ENTER;
-        qDebug() << "in constructor ";
-	std::cout << "i'm in constructor" << std::endl;
-
         MWTS_LEAVE;
 }
 
@@ -48,9 +44,6 @@ FeedbackTest::FeedbackTest() : mEffect(0) {
 FeedbackTest::~FeedbackTest() {
 
         MWTS_ENTER;
-
-	qDebug() << "in destructor";
-
         MWTS_LEAVE;
 }
 
@@ -79,6 +72,7 @@ void FeedbackTest::OnInitialize() {
         qDebug() << "| intensity " << mEffect->intensity();
         qDebug() << "| fade time " << mEffect->fadeTime();
         qDebug() << "| fade intensity " << mEffect->fadeIntensity();
+
 
         connect(mEffect, SIGNAL(error(QFeedbackEffect::ErrorType)), this, SLOT( onErrorOccurs(QFeedbackEffect::ErrorType)));
         //connect(effect, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
@@ -120,13 +114,6 @@ void FeedbackTest::StartEffect() {
 
         MWTS_ENTER;
 
-	qDebug() << "in starteffect";
-        //if (mEffect) {
-        //    qDebug() << "duration " << mEffect->duration();
-        //    qDebug() << "intensity " << mEffect->intensity();
-        //}
-
-
         if (mEffect) {
             qDebug() << "starting the effect";
             mEffect->start();
@@ -139,9 +126,9 @@ void FeedbackTest::PauseEffect() {
 
         MWTS_ENTER;
 
-        //if (effect) {
-        //        mEffect->pause();
-        //}
+        if (mEffect) {
+                mEffect->pause();
+        }
 
         MWTS_LEAVE;
 }
@@ -150,9 +137,9 @@ void FeedbackTest::StopEffect() {
 
         MWTS_ENTER;
 
-        //if (effect) {
-        //        mEffect->stop();
-        //}
+        if (mEffect) {
+                mEffect->stop();
+        }
 
         MWTS_LEAVE;
 }
@@ -190,10 +177,8 @@ QFeedbackEffect::State FeedbackTest::EffectState() const {
 
 bool FeedbackTest::ErrorIndicator() const {
         MWTS_ENTER;
-        //return mErrorIndicator;
         MWTS_LEAVE;
         return mErrorIndicator;
-        //return false;
 }
 
 

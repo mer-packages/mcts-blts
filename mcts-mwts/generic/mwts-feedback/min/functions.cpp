@@ -28,6 +28,7 @@
 #include "FeedbackTest.h"
 
 #include <MwtsCommon>
+#include <iostream>
 
 // MIN's module information
 const char *module_date = __DATE__;
@@ -127,13 +128,19 @@ LOCAL int SetIntensity (MinItemParser * item) {
         MWTS_ENTER;
         double intensity=0.0;
         char* string = NULL;
-        if (mip_get_next_char( item, string) != ENOERR ) {
-                intensity = atof(string);
+        if (mip_get_next_string( item, &string) != ENOERR ) {
                 qCritical() << "No intensity value given";
                 return 1;
         }
+        intensity = atof(string);
+
         Test.SetIntensity(intensity);
+
+        qDebug() << "given value" << intensity;
+        qDebug() << "set value" << Test.Effect()->intensity();
+
         if (Test.Effect()->intensity() != intensity) {
+            qCritical() << "Intensity has been set wrong";
             return 1;
         }
 
@@ -170,13 +177,18 @@ LOCAL int SetAttackIntensity (MinItemParser * item) {
         MWTS_ENTER;
         double intensity=0.0;
         char* string = NULL;
-        if (mip_get_next_char( item, string) != ENOERR ) {
-                intensity = atof(string);
+        if (mip_get_next_string( item, &string) != ENOERR ) {
                 qCritical() << "No intensity value given";
                 return 1;
         }
+        intensity = atof(string);
         Test.SetAttackIntensity(intensity);
+
+        qDebug() << "given value" << intensity;
+        qDebug() << "set value" << Test.Effect()->attackIntensity();
+
         if (Test.Effect()->attackIntensity() != intensity) {
+            qCritical() << "Attack intensity has been set wrong";
             return 1;
         }
 
@@ -213,13 +225,18 @@ LOCAL int SetFadeIntensity (MinItemParser * item) {
         MWTS_ENTER;
         double intensity=0.0;
         char* string = NULL;
-        if (mip_get_next_char( item, string) != ENOERR ) {
-                intensity = atof(string);
+        if (mip_get_next_string( item, &string) != ENOERR ) {
                 qCritical() << "No intensity value given";
                 return 1;
         }
+        intensity = atof(string);
         Test.SetFadeIntensity(intensity);
+
+        qDebug() << "given value" << intensity;
+        qDebug() << "set value" << Test.Effect()->fadeIntensity();
+
         if (Test.Effect()->fadeIntensity() != intensity) {
+            qCritical() << "Fade intensity has been set wrong";
             return 1;
         }
 

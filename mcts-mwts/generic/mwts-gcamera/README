@@ -7,7 +7,8 @@ INTRODUCTION
 The mwts-gcamera tests camera features of gstreamer.
 
 Test are done to:       
-  
+MeeGo with netbook (Asus EEE PC 1005 HA). see more at Known Issues.
+
 Test scenarios include:
 
 Questions: MWTSSupport@nokia.com
@@ -43,6 +44,13 @@ TEST RESULTS
 Test results can be found from device in directory /var/log/tests/ Result files are named according to test cases, .result file contains overall
 information about test run and measured values.
 
+TEST CASES
+
+FUTE-Take_picture
+FUTE-Take_picture_zoom
+FUTE-Take_VGA_picture
+FUTE-Take_picture_post_processing
+FUTE-Take_video
 
 MIN SCRIPT FILES
 
@@ -51,78 +59,107 @@ mwts-gcamera.cfg
 
 MIN SCRIPTER INTERFACE
 
-  TakeVideo <duration>
-    Start recording a video with given duration. Everything needs to be set up before this is called. 
+  SetFlags <SourceColorspaceConversion | SourceResize>
+    It has to be the first call before SetPipeline, if it is needed. In case of capturing on netbook
+    the v4l2src does not support those formats what the camerabin does -> SourceColorspaceConversion
+    is needed. This might be expensive from the CPU point of view. (see more at Known Issues).
+    In order to activate the digital zoom -> SourceResize
 
-  TakePicture [Burst]
-    Takes a picture, it caan be called once or more times if needed. Use Burst variable.
-	Everything needs to be set up beforehand.
+  SetPipeline
+    It has to be the first call before after the test asset initialization. If SetFlag is needed, that has to be
+    set beforehand.
 
-  SetIsoSpeed 100 | 200 | 400 
-    Change ISO mode of camera  	
-  	
-  SetAutoFocus
-    Try to focus camera. Similiar of pressing snapshot button halfway
-  	
-  SetFPSMeasure 
-    Measure framerate when doing video result is saved as 
-    /var/log/tests/camera-fps.csv and is overwritten each 
-    time when test is restarted
+  TakeVideo <seconds>
+    Start recording a video with given duration in seconds. Everything has to be set beforhand.
+
+  TakePicture
+    Takes a picture, it can be called once or more times if needed. Everything has to be set beforhand.
+
+  SetFPSMeasure
+    Measure framerate when and output to the results
   	
   SetZoom <size>
-   Set the zoom 100 < size < 1000
-         
-  SetFlashMode Off | On | FillIn | RedEye
-    Set flash mode	
-        
-  SetTone Normal | Sepia | Negative | Grayscale | Natural | Vivid | Colorswap | Solarize | OutOfFocus
-    Set tone of picture to be taken
+   Set the zoom 100 < size < 1000. If not optical camera available, it can
+   digital zoom (SetFlag SourceResize)
 
-  SetResolution <x> <y> [fps] [fpsdivide]
+  SetVideoResolution <x> <y> [fps] [fpsdivide]
 	Set resolution and frame rate as optional. If video is being taken, 
     then the frame rate be given. Real frames per second = FPS / FPSDIVIDE      
   
   	Known image sizes and video rates:
-        Image: Name, x, y 
-        VGA, 640, 480
-        1,3Mpix (1280x960), 1280, 960
-        3Mpix (2048x1536), 2048, 1536
-        3,5Mpix 16:9 (2592x1456), 2592, 1458
-        5Mpix (2592x1968), 2592, 1944
-        5Mpix wide (2592x1458), 2592, 1458
+    Video: Name, x, y, fps, fpsdivide
+            QVGA,
+            VGA, 640, 480, 25, 1
+            CIF, 352, 288, 2997, 100
+            QCIF, 176, 144, 1499, 100
+            NTCS, 720, 486, 2999, 100
+            PAL, 720, 576, 25, 1
+            WCGA, 800, 480, 25, 1
+  SetImageResolution <x> <y>
+    Set resolution of the image.
+    Image: Name, x, y
+            VGA, 640, 480
+            1,3Mpix (1280x960), 1280, 960
+            3Mpix (2048x1536), 2048, 1536
+            3,5Mpix 16:9 (2592x1456), 2592, 1458
+            5Mpix (2592x1968), 2592, 1944
+            5Mpix wide (2592x1458), 2592, 1458
         
-		Video: Name, x, y, fps, fpsdivide
-        QVGA, 320, 240, 1496, 100
-        VGA, 640, 480, 25, 1
-        CIF, 352, 288, 2997, 100
-        QCIF, 176, 144, 1499, 100       
-        NTCS, 720, 486, 2999, 100
- 	    PAL, 720, 576, 25, 1
-        WCGA, 800, 480, 25, 1
-        
-    SetPostProcessing 
-     Use picture post prosessing
-  
-    SetVideoCodecs <video> <mux> <audiosrc> <audiocodec> <extension>
-	 Add codec handlers to pipeline. Order of arguments must be VIDEO, MUXER,
-     AUDIOSOURCE, AUDIOCODEC, FILE_EXTENSION
- 	
-    SetWhitebalance Auto | Cloudy | Sunset | Tungsten | Fluorscent
-      Choose whitebalance mode 
+  SetImagePostProcessing
+    Use picture post processing, default postprocessing element is the "identity", it
+    does nothing, but proves the funcionality
 
-    SetExposure <amount>
-      Set amount of exposure
-   
-    SetAperture <amount>
-      Set aperture amount
+  SetVideoPostProcessing
+    Use video post processing, default postprocessing element is the "identity", it
+    does nothing, but proves the funcionality
+
 	
 TRACING
 
 Log file can be found in /var/log/tests if the environment variable MWTS_DEBUG has been set to 1.
-    Command: export MWTS_DEBUG=1
-
+    Command: export MWTS_DEBUG=1             
 
 KNOWN ISSUES
+
+- The still image capture does not work without workaround, because currently (24 Nov 2010) the MeeGo gst-plugins-bad-free package does
+  not have metadata muxer plugin (/usr/lib/gstreamer0.10/libmetadata.so), what is in default usage by the camerabin
+  http://bugs.meego.com/show_bug.cgi?id=10304.
+  Workaround:
+  This can be solved downloading the source gst-plugins-bad-free which has ext/metadata directory and compile the sources there
+  then copy the libmetadata.so to the /usr/lib/gstreamer-0.10.
+  The upstream gstreamer already does not use metadatamuxer but jifmux,
+  hence another solution to get the upstream gst-plugins-bad-free code and apply the following patch
+  http://cgit.freedesktop.org/gstreamer/gst-plugins-bad/commit/?id=9ae921f8889c662ddc95f8daba9a36a4801ebf66.
+  The following packages should be installed for building: libiptcdata-devel, exempi-devel
+
+- The camera does not have optical zoom, therefore SetFlag SourceResize flag had to be set up.
+- The camerabin does not implement the photography interface, but has zoom and resolution setting
+  option.
+
+- The vl2newcamsrc implements the photograpy interface, but cannot work together with camerabin.
+
+- The only video codec what could have been place into the pipeline was the theorenc and work with the
+  other elements.
+
+- Unfortunately, v4l2src and camerabin requires colorspace conversion for the sake of
+  format difference, which is very CPU costly. When the SourceColorspaceConversion is activated on a device with
+  low CPU capabilty (as on EEE PC), some frame can be lost on weak device. So the playback of the
+  result video files the playback might require a player which is capable to recalculate the lost
+  frames, like vlc, and so on..
+
+TOOLS
+There are several available gstreamer tools from command line. For instance:
+gst-inspect-0.10
+gst-launch-0.10
+
+gstreamer-tools package should be installed to get these. The gst-inspect-0.10 gives information about a module given as parameter:
+gst-inspect-0.10 camerabin
+
+It is possible to check whether the camerabin functional or not:
+gst-launch-0.10 -v -m camerabin video-source=v4l2src viewfinder-sink=xvimagesink
+
+If the gst-plugins-bad-free on the device is not upstream, then the default filter-caps are different. Hence the following should be used:
+gst-launch-0.10 -v -m camerabin video-source=v4l2src filter-caps=video/x-raw-yuv viewfinder-sink=xvimagesink
 
 
 OTHER RESOURCES  
