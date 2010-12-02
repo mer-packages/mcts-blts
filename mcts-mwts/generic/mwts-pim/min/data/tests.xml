@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-pim-scripts" domain="PIM">
 
-    <set name="FUTE" description="PIM functional test cases" feature="Settings" type="Functional" >
+    <set name="PIM-FUTE" description="PIM functional test cases" feature="PIM" type="FUTE" >
       <case name="FUTE-PIM-Check_calendar_datastore_availability" subfeature="Test" timeout="10" description=
       		"Purpose: Testing listing and creation of available data stores in the device
 		 Method: Tests lists available data stores and creates them separately
@@ -118,6 +118,62 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Search_calendar_items'</step>
       </case>
+    </set>
+
+<!-- NFT tests -->
+
+    <set name="PIM-NFT-ITER" description="PIM non functional iteration test cases" feature="PIM" type="ITER" >	
+	<case name="NFT-PIM-Create_and_delete_contacts-ITER" subfeature="Test" timeout="60" description=
+      		"Purpose: Testing creation and deletion of contacts multiple times
+		 Method: Creates and deletes n contacts
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contacts are created and deleted without crashes
+		 ">
+      	<step>min -c -t 'NFT-PIM-Create_and_delete_contacts-ITER'</step>
+       </case>
+       <case name="NFT-PIM-Create_and_delete_calendar_items-ITER" subfeature="Test" timeout="60" description=
+      		"Purpose: Testing creation and deletion of calendar event items multiple times
+		 Method: Creates and deletes n calendar event items
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar events are created and deleted without crashes
+		 ">
+      	<step>min -c -t 'NFT-PIM-Create_and_delete_calendar_items-ITER'</step>
+       </case>
+    </set>
+
+    <set name="PIM-NFT-LATE" description="PIM non functional latency test cases" feature="PIM" type="LATE" >
+	<case name="NFT-PIM-Create_calendar_items-LATE " subfeature="Test" timeout="60" description=
+      		"Purpose: Measures creation time of calendar items
+		 Method: Creates n calendar events and measures each saving time to calendar data store
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar items are created without crashes
+		 ">
+      	 <step>min -c -t 'NFT-PIM-Create_calendar_items-LATE '</step>
+        </case>
+	<case name="NFT-PIM-Create_contacts-LATE " subfeature="Test" timeout="60" description=
+      		"Purpose: Measures creation time of contacts
+		 Method: Creates n contacts and measures each saving time to contact data store
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contacts are created without crashes
+		 ">
+      	 <step>min -c -t 'NFT-PIM-Create_contacts-LATE'</step>
+        </case>
+        <case name="NFT-PIM-Delete_calendar_items-LATE" subfeature="Test" timeout="60" description=
+      		"Purpose: Measures deletion time of calendar items
+		 Method: Creates n calendar events and measures each deleting time from calendar data store
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Calendar items are created and deleted without crashes
+		 ">
+      	 <step>min -c -t 'NFT-PIM-Delete_calendar_items-LATE'</step>
+        </case>
+        <case name="NFT-PIM-Delete_contacts-LATE" subfeature="Test" timeout="60" description=
+      		"Purpose: Measures deleting time of contacts
+		 Method: Creates n contacts and measures each deleting time from contact data store
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contacts are created and deleted without crashes
+		 ">
+      	 <step>min -c -t 'NFT-PIM-Delete_contacts-LATE'</step>
+        </case>
     </set>
   </suite>
 </testdefinition>
