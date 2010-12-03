@@ -21,6 +21,7 @@
 #ifndef BLTS_FBDEV_DEFS_H_
 #define BLTS_FBDEV_DEFS_H_
 
+#include <linux/types.h>
 #include <linux/fb.h>
 
 /* Device specific data */
@@ -28,6 +29,7 @@ typedef struct {
         char   *name;
         int     fd;
         struct  fb_fix_screeninfo fixed_info;
+        struct  fb_var_screeninfo variant_info;
         void   *buffer; /* Device buffer, mmaped and unmapped */
 } blts_fbdev_device;
 
@@ -37,6 +39,10 @@ typedef struct {
         char   *backlight_subsystem;
         int     minimum_light;
         int     maximum_light;
+
+        /* Frames and buffers for testing the device drawing */
+        __u32  *shuffle_lut;
+        char   *testframe[2];
 } blts_fbdev_data;
 
 #endif /* BLTS_FBDEV_DEFS_H_ */
