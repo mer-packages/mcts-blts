@@ -1,6 +1,6 @@
 Summary: BLTS FBdev test set
 Name: blts-fbdev-tests
-Version: 0.0.7
+Version: 0.0.8
 Release: 1
 License: GPLv2
 Group: Development/Testing
