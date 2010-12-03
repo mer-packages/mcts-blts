@@ -122,8 +122,6 @@ blts_fbdev_set_brightness (blts_fbdev_data *data, int brightness)
 
         FUNC_ENTER();
 
-        FUNC_ENTER();
-
         foo  = strlen (data->backlight_subsystem);
         foo2 = strlen (BLTS_FBDEV_BACKLIGHT_CURRENT);
         len  = foo + foo2 + 1;

@@ -151,7 +151,8 @@ ERROR:
 
         FUNC_LEAVE();
 
-        blts_fbdev_close (data->device);
+        if (data)
+                blts_fbdev_close (data->device);
 
         return -1;
 }
