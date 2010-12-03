@@ -23,19 +23,16 @@
 #include "wlan-core-connect.h"
 #include "wlan-core-scan.h"
 #include "wlan-core-utils.h"
+#include "wlan-core-debug.h"
 
 #include <linux/if.h>
 #include <linux/if_packet.h>
 #include <linux/if_ether.h>
 #include <net/ethernet.h>
 #include <arpa/inet.h>
-
+#include <signal.h>
 
 #include <sys/ioctl.h>
-
-#define ETH_TYPE 	0x8000
-#define RETRIES 	50
-#define TESTDATA 	"ADHOC-TEST"
 
 static int raw_socket_init(wlan_core_data* data, struct sockaddr_ll* socket_address, unsigned char* src_mac, unsigned char* bcast_mac)
 {
@@ -46,7 +43,7 @@ static int raw_socket_init(wlan_core_data* data, struct sockaddr_ll* socket_addr
 	if (!data || !data->cmd->ifname)
 		return -1;
 
-	if ((fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) < 0)
+	if ((fd = socket(PF_PACKET, SOCK_RAW, htons(ADHOC_ETH_TYPE))) < 0)
 	{
 		BLTS_ERROR("socket call failed\n");
 		return -1;
@@ -69,7 +66,7 @@ static int raw_socket_init(wlan_core_data* data, struct sockaddr_ll* socket_addr
 	}
 
 	socket_address->sll_family = PF_PACKET;
-	socket_address->sll_protocol = htons(ETH_TYPE);
+	socket_address->sll_protocol = htons(ADHOC_ETH_TYPE);
 	socket_address->sll_ifindex = data->cmd->ifindex;
 	socket_address->sll_pkttype = PACKET_BROADCAST;
 	socket_address->sll_halen = ETH_ALEN;
@@ -110,7 +107,7 @@ int send_test_data(wlan_core_data* data, struct associate_params *params, char* 
 	{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 	if (!count)
-		tries = RETRIES;
+		tries = ADHOC_RETRIES;
 
 	raw = raw_socket_init(data, &socket_address, src_mac, bcast_mac);
 
@@ -130,7 +127,7 @@ int send_test_data(wlan_core_data* data, struct associate_params *params, char* 
 	{
 		memcpy((void *) eh->h_dest, (void*) bcast_mac, ETH_ALEN);
 		memcpy((void *) eh->h_source, (void*) src_mac, ETH_ALEN);
-		eh->h_proto = htons(ETH_TYPE);
+		eh->h_proto = htons(ADHOC_ETH_TYPE);
 
 		int len = strlen(test_data);
 
@@ -157,6 +154,11 @@ out:
 	return res;
 }
 
+static void timeout_signal(int s)
+{
+	BLTS_DEBUG("timeout signal received!\n");        
+}
+
 static int receive_test_data(wlan_core_data* data, struct associate_params *params, char* exp_data, int count)
 {
 	int i;
@@ -175,8 +177,12 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 	unsigned char src_mac[6] =
 	{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+	struct sigaction action;
+    action.sa_handler = timeout_signal;
+    action.sa_flags = 0;
+
 	if (!count)
-		tries = RETRIES;
+		tries = ADHOC_RETRIES;
 
 	raw = raw_socket_init(data, &socket_address, src_mac, bcast_mac);
 
@@ -185,6 +191,10 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 		BLTS_ERROR("Open raw socket failed!\n");
 		return -1;
 	}
+
+    sigemptyset(&(action.sa_mask));
+    sigaction(SIGALRM,&action,NULL);
+	alarm(ADHOC_TIMEOUT);
 
 	buffer = (void*)malloc(ETHER_MAX_LEN);
 	eth_head = buffer;
@@ -198,12 +208,20 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 
 		if (i == -1)
 		{
-			BLTS_LOGGED_PERROR("receive_test_data recvfrom():");
-			res = -1;
-			goto out;
-		}
-
-		if(eh->h_proto == ntohs(ETH_TYPE))
+			if(errno==EINTR)
+			{
+                BLTS_ERROR("timeout occured!\n");
+                res = -1;
+                goto out;
+			}		
+			else
+			{
+				BLTS_LOGGED_PERROR("receive_test_data recvfrom():");
+				res = -1;
+				goto out;
+			}
+		}			
+		if(eh->h_proto == ntohs(ADHOC_ETH_TYPE))
 		{
 			BLTS_DEBUG("Received packet from: %02X:%02X:%02X:%02X:%02X:%02X\n",
 					eh->h_source[0], eh->h_source[1], eh->h_source[2], eh->h_source[3],
@@ -232,6 +250,7 @@ static int receive_test_data(wlan_core_data* data, struct associate_params *para
 		sleep(1); /* sleep before next packet is handled */
 	}
 out:
+	alarm(0);
 	close(raw);
 	free(buffer);
 	return res;
@@ -240,16 +259,16 @@ out:
 
 int do_test_data_sending(wlan_core_data* data, struct associate_params *params)
 {
-	return send_test_data(data, params, "ADHOC-PING", 10);
+	return send_test_data(data, params, ADHOC_TESTDATA, ADHOC_RETRIES);
 }
 
-
-int join_existing_open_adhoc_network(wlan_core_data* data)
+int join_established_open_adhoc_network(wlan_core_data* data)
 {
 	u8 *ie;
 	int res = 0;
 	const u8 *ssid = (const u8 *) data->cmd->ssid;
-
+	int retries = ADHOC_RETRIES;
+	struct scan_res* bss = NULL;
 	struct associate_params as_params;
 	memset(&as_params, 0, sizeof(as_params));
 
@@ -259,19 +278,26 @@ int join_existing_open_adhoc_network(wlan_core_data* data)
 	if(!ssid)
 		return -1;
 
-
-	if(nl80211_scan_oneshot(data, ssid, strlen((const char *)ssid)))
+	/* it takes some time to establish adhoc network, so keep trying... */ 
+	while(retries--)
 	{
-		BLTS_ERROR("\nERROR wlan scanning failed!\n");
-		return -1;
-	}
+		if(nl80211_scan_oneshot(data, ssid, strlen((const char *)ssid)))
+		{
+				BLTS_ERROR("\nERROR wlan scanning failed!\n");
+				return -1;
+		}
+	
+		bss = get_bss_by_ssid(data, (u8*)ssid, strlen((const char *)ssid));
 
-	struct scan_res* bss = get_bss_by_ssid(data, (u8*)ssid, strlen((const char *)ssid));
+		if (bss)
+			break;
 
-	if (!bss)
-	{
 		BLTS_ERROR("ERROR cannot find SSID: %s\n", ssid);
-		return -1;
+			
+		if(!retries)
+			return -1;
+
+		sleep(2); /* sleep before next scanning */
 	}
 
 	ie = (u8*)scan_get_ie(bss, WLAN_EID_SSID);
@@ -288,7 +314,7 @@ int join_existing_open_adhoc_network(wlan_core_data* data)
 		return -1;
 	}
 
-	if(send_test_data(data, &as_params, TESTDATA, RETRIES))
+	if(send_test_data(data, &as_params, ADHOC_TESTDATA, ADHOC_RETRIES))
 	{
 		BLTS_ERROR("Send test data failed!\n");
 		res = -1;
@@ -296,7 +322,7 @@ int join_existing_open_adhoc_network(wlan_core_data* data)
 
 	if (nl80211_leave_ibss(data))
 	{
-		BLTS_ERROR("Leave from %s failed!\n", as_params.ssid);
+		hexdump_ascii("Leave failed!", as_params.ssid, as_params.ssid_len);
 		res = -1;
 	}
 
@@ -329,10 +355,10 @@ int create_open_adhoc_network(wlan_core_data* data)
 		return -1;
 	}
 
-	as_params.bssid = "";
+	as_params.bssid = 0;
 	as_params.ssid = ssid;
 	as_params.ssid_len = strlen((const char *)ssid);
-	as_params.freq = ieee80211_channel_to_frequency(1); //TODO make configurable?
+	as_params.freq = ieee80211_channel_to_frequency(data->cmd->channel);
 	as_params.auth_alg = WPA_AUTH_ALG_OPEN;
 
 	if(nl80211_join_ibss(data, &as_params))
@@ -341,15 +367,15 @@ int create_open_adhoc_network(wlan_core_data* data)
 		return -1;
 	}
 
-	if(receive_test_data(data, &as_params, TESTDATA, RETRIES))
+	if(receive_test_data(data, &as_params, ADHOC_TESTDATA, ADHOC_RETRIES))
 	{
-		BLTS_ERROR("Send test data failed!\n");
+		BLTS_ERROR("Receive test data failed!\n");
 		res = -1;
 	}
 
 	if (nl80211_leave_ibss(data))
 	{
-		BLTS_ERROR("Leave from %s failed!\n", as_params.ssid);
+		hexdump_ascii("Leave failed!", as_params.ssid, as_params.ssid_len);
 		res = -1;
 	}
 	return res;

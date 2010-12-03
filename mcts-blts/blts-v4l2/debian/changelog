@@ -1,3 +1,10 @@
+blts-v4l2-tests (0.3.8) unstable; urgency=low
+
+  [ Jussi Saavalainen ]
+  * Rename duplicate set in tests.xml
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 01 Dec 2010 16:58:37 +0200
+
 blts-v4l2-tests (0.3.7) unstable; urgency=low
 
   [ Mika Niinistö, Kimmo Myllyvirta ]

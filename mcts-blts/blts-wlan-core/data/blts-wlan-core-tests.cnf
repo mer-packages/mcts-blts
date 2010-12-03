@@ -33,9 +33,24 @@
 [end_parameter]
 
 # SSID for an existing open adhoc network (change this to match your environment)
+#
+# NOTE: use here value from adhoc_ssid2 parameter if "Core-WLAN-Disconnect from adhoc network"
+# test case is executed against "Core-WLAN-Establish new adhoc network" test case
 [parameter]
 	name adhoc_ssid
-	const "test-adhoc"
+	const "exist-adhoc"
+[end_parameter]
+
+# SSID for established open adhoc network (adhoc network created during test runs)
+[parameter]
+	name adhoc_ssid2
+	const "estab-adhoc"
+[end_parameter]
+
+# Channel for an established open adhoc network (adhoc network created during test runs)
+[parameter]
+	name adhoc_channel
+	const 1
 [end_parameter]
 
 # WEP keys - wep key format "i:t:key", space separated
@@ -116,4 +131,14 @@
 [test]
 	name "Core-WLAN-Associate with WPA2-PSK AP"
 	params wlan_device wpa_ssid wpa_passphrase
+[end_test]
+
+[test]
+	name "Core-WLAN-Establish new adhoc network"
+	params wlan_device adhoc_ssid2 adhoc_channel
+[end_test]
+
+[test]
+	name "Core-WLAN-Join established adhoc network"
+	params wlan_device adhoc_ssid2
 [end_test]

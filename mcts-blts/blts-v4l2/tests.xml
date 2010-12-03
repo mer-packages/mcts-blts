@@ -19,7 +19,7 @@
 
 <testdefinition version="1.0">
   <suite name="blts-v4l2-tests" domain="Multimedia Adaptation">
-    <set name="camera-cases" feature="Camera Base">
+    <set name="camera-cases-basic" feature="Camera Base">
       <case name="Core-Camera-Open%20device">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Open_device.log -e 1</step>
       </case>
@@ -74,7 +74,7 @@
 	<file>/var/log/tests/Core-Camera-Test_input_device_standards.log</file>
       </get>
     </set>
-    <set name="camera-cases" feature="Imaging and Video Base">
+    <set name="camera-cases-imaging" feature="Imaging and Video Base">
       <case name="Core-Camera-Stream%20from%20device%20to%20screen">
 	<step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Stream_from_device_to_screen.log -e 7</step>
       </case>

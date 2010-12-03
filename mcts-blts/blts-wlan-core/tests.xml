@@ -52,6 +52,12 @@
       </case>
       <case name="Core-WLAN-Disconnect%20from%20adhoc%20network">
 	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_from_adhoc_network.log -e 11</step>
+      </case>      
+      <case name="Core-WLAN-Establish%20new%20adhoc%20network">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Establish_new_adhoc_network.log -e 12</step>
+      </case>      
+      <case name="Core-WLAN-Join%20established%20adhoc%20network">
+	<step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Join_established_adhoc_network.log -e 13</step>
       </case>
       <get>
 	<file>/var/log/tests/Core-WLAN-Enumerate_hardware.log</file>
@@ -65,6 +71,8 @@
 	<file>/var/log/tests/Core-WLAN-Disconnect_with_disassociate.log</file>
 	<file>/var/log/tests/Core-WLAN-Disconnect_with_AP_loss.log</file>
 	<file>/var/log/tests/Core-WLAN-Disconnect_from_adhoc_network.log</file>
+	<file>/var/log/tests/Core-WLAN-Establish_new_adhoc_network.log</file>
+	<file>/var/log/tests/Core-WLAN-Join_established_adhoc_network.log</file>
       </get>
     </set>
   </suite>
