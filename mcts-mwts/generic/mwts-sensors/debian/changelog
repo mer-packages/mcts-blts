@@ -1,3 +1,8 @@
+mwts-sensors (1.0.1) unstable; urgency=low
+  * Min script reorgasating as standard way to FUTE and NFT cases. Checked and updated documentation.
+    Fuctionality is not changed.
+ -- Reijo Korhonen  <reijo.korhonen@digia.com>  Fri, 3 Dec 2010 12:50:00 +0200
+
 mwts-sensors (1.0.0) unstable; urgency=low
   * Inital version
  -- Reijo Korhonen <reijo.korhonen@digia.com>  Wed, 23 Sep 2010 13:57:00 +0200

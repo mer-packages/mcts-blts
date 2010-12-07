@@ -1,6 +1,6 @@
 TARGET = min-mwts-pim
 TEMPLATE = lib
-VERSION = 0.0.1
+VERSION = 0.0.2
 
 CONFIG += dll
 CONFIG += warn_on

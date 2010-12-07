@@ -24,17 +24,17 @@
 
 #include "stable.h"
 #include "interface.h"
+#include "contactstest.h"
+#include "organizertest.h"
 #include "PimTest.h"
-
 #include <MwtsCommon>
 
 // MIN's module information
 const char *module_date = __DATE__;
 const char *module_time = __TIME__;
 
-// Test class
-PimTest Test;
-
+// Test classes
+PimTest test;
 
 
 /***** Min scripter functions *****/
@@ -49,16 +49,129 @@ LOCAL int SetNumberOfItems (MinItemParser *item)
 {
         MWTS_ENTER;
 
+        char* string=NULL;
         int count=0;
+
+        // get target
+        if(mip_get_next_string( item, &string) != ENOERR )
+        {
+                qCritical() << "No target given";
+                return ENOERR;
+        }
+
+        // get actual number of items
         if(mip_get_next_int( item, &count) != ENOERR )
         {
-                qCritical() << "No iteration count given";
-                return 1;
+                qCritical() << "No item count given";
+                return ENOERR;
         };
-        Test.SetNumberOfCreatedItems(count);
+
+        QString target(string);
+        if(target=="contacts")
+        {
+            test.ContactsTestImpl().SetNumberOfCreatedItems(count);
+        }
+        else if(target=="calendar")
+        {
+            test.OrganizerTestImpl().SetNumberOfCreatedItems(count);
+        }
+        else
+        {
+            qCritical()<<"Unknown target: "<<target;
+        }
+
         return ENOERR;
 }
 
+/**
+ * Pim SetIterationCount function.
+ * Sets number of iterations to be performed
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int SetIterationCount (MinItemParser *item)
+{
+    MWTS_ENTER;
+
+    char* string=NULL;
+    int count=0;
+
+    // get target
+    if(mip_get_next_string( item, &string) != ENOERR )
+    {
+            qCritical() << "No target given";
+            return ENOERR;
+    }
+
+    // get iteration count
+    if(mip_get_next_int( item, &count) != ENOERR )
+    {
+            qCritical() << "No iteration count given";
+            return ENOERR;
+    };
+
+    QString target(string);
+    if(target=="contacts")
+    {
+        test.ContactsTestImpl().SetIterationCount(count);
+    }
+    else if(target=="calendar")
+    {
+        test.OrganizerTestImpl().SetIterationCount(count);
+    }
+    else
+    {
+        qCritical()<<"Unknown target: "<<target;
+    }
+    return 0;
+}
+
+/**
+ * Pim SetMeasureState function.
+ * Sets measuring on/off
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int SetMeasureState (MinItemParser *item)
+{
+    MWTS_ENTER;
+
+    char* string=NULL;
+    char* state=NULL;
+
+    // get target
+    if(mip_get_next_string( item, &string) != ENOERR)
+    {
+            qCritical() << "No target given";
+            return ENOERR;
+    }
+
+    // get state
+    if(mip_get_next_string( item, &state) != ENOERR)
+    {
+            qCritical() << "No measure state given";
+            return ENOERR;
+    };
+
+    QString target(string);
+    QString mState(state);
+
+    // on / off
+    bool measureOn = mState=="on";
+    if(target=="contacts")
+    {
+        test.ContactsTestImpl().SetMeasureState(measureOn);
+    }
+    else if(target=="calendar")
+    {
+        test.OrganizerTestImpl().SetMeasureState(measureOn);
+    }
+    else
+    {
+        qCritical()<<"Unknown target: "<<target;
+    }
+    return 0;
+}
 
 /**
  * Pim SetCalendarItemType function.
@@ -73,42 +186,47 @@ LOCAL int SetCalendarItemType(MinItemParser *item)
         char* string=NULL;
         if(mip_get_next_string( item, &string) != ENOERR )
         {
-                MWTS_ERROR("Unable to get needed device parameter");
-                return 0;
+                qCritical() << "No calendar item type given";
+                return ENOERR;
         }
 
-        /*
-        Event = 0,
-        EventOccurrence = 1
-        Journal = 2
-        Note = 3
-        Todo = 4
-        TodoOccurrence = 5
-        */
         QString s(string);
-        if(s=="event") {
+        if(s=="event")
+        {
             qDebug()<<"Created calendar item type: event";
-            itemType = 0;
-        } else if(s=="eventoccurrence") {
-            qDebug()<<"Created calendar item type: event occurrence";
-            itemType = 1;
-        } else if(s=="journal") {
-            qDebug()<<"Created calendar item type: journal";
-            itemType = 2;
-        } else if(s=="note") {
-            qDebug()<<"Created calendar item type: note";
-            itemType = 3;
-        } else if(s=="todo") {
-            qDebug()<<"Created calendar item type: todo";
-            itemType = 4;
-        } else if(s=="todooccurrence") {
-            qDebug()<<"Created calendar item type: todo occurrence";
-            itemType = 5;
-        } else {
-            qCritical()<<"***************************************** Unknown calendar item type: "<<s<<"********************************************";
-            return 0;
+            itemType = OrganizerTest::CalEvent;
         }
-        Test.SetCalendarItemType(itemType);
+        else if(s=="eventoccurrence")
+        {
+            qDebug()<<"Created calendar item type: event occurrence";
+            itemType = OrganizerTest::CalEventOccurrence;
+        }
+        else if(s=="journal")
+        {
+            qDebug()<<"Created calendar item type: journal";
+            itemType = OrganizerTest::CalJournal;
+        }
+        else if(s=="note")
+        {
+            qDebug()<<"Created calendar item type: note";
+            itemType = OrganizerTest::CalNote;
+        }
+        else if(s=="todo")
+        {
+            qDebug()<<"Created calendar item type: todo";
+            itemType = OrganizerTest::CalTodo;
+        }
+        else if(s=="todooccurrence")
+        {
+            qDebug()<<"Created calendar item type: todo occurrence";
+            itemType = OrganizerTest::CalTodoOccurrence;
+        }
+        else
+        {
+            qCritical()<<"Unknown calendar item type: "<<s;
+            return ENOERR;
+        }
+        test.OrganizerTestImpl().SetCalendarItemType(itemType);
         return ENOERR;
 }
 
@@ -126,12 +244,11 @@ LOCAL int SetCalendarDataStore (MinItemParser *item)
         char* string=NULL;
         if(mip_get_next_string( item, &string) != ENOERR )
         {
-                MWTS_ERROR("Unable to get needed device parameter");
-                return 0;
+                qCritical() << "No calendar data store name given";
+                return ENOERR;
         }
         QString s(string);
-        qDebug()<<"Set calendar store: "<<s;
-        Test.SetCalendarDatastore(s);
+        test.OrganizerTestImpl().SetCalendarDatastore(s);
         return ENOERR;
 }
 
@@ -149,16 +266,40 @@ LOCAL int SetContactDataStore (MinItemParser *item)
         char* string=NULL;
         if(mip_get_next_string( item, &string) != ENOERR )
         {
-                MWTS_ERROR("Unable to get needed device parameter");
-                return 0;
+                qCritical() << "No contact data store name given";
+                return ENOERR;
         }
         QString s(string);
-        qDebug()<<"Set contact store: "<<s;
-        Test.SetContactDatastore(s);
+        test.ContactsTestImpl().SetContactDatastore(s);
+        return ENOERR;
+}
+
+/**
+ * Pim CreateCalendarDataStore function.
+ * Creates calendar data store based on name set in SetCalendarDataStore
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int CreateCalendarDataStore (MinItemParser */*item*/)
+{
+        MWTS_ENTER;
+        test.OrganizerTestImpl().CreateCalendarDatastore();
         return ENOERR;
 }
 
 
+/**
+ * Pim CreateContactDataStore function.
+ * Creates contact data store based on name set in SetContactDataStore
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int CreateContactDataStore (MinItemParser *item)
+{
+        MWTS_ENTER;
+        test.ContactsTestImpl().CreateContactDatastore();
+        return ENOERR;
+}
 
 /**
  * Pim CreateAvailableCalendarDatastores function.
@@ -169,8 +310,8 @@ LOCAL int SetContactDataStore (MinItemParser *item)
 LOCAL int CreateAvailableCalendarDatastores (MinItemParser * /*item*/)
 {
 	MWTS_ENTER;
-        Test.CreateAvailableCalendarDatastores();
-	return ENOERR;
+        test.OrganizerTestImpl().CreateAvailableCalendarDatastores();
+        return ENOERR;
 }
 
 /**
@@ -182,105 +323,133 @@ LOCAL int CreateAvailableCalendarDatastores (MinItemParser * /*item*/)
 LOCAL int CreateAvailableContactDatastores (MinItemParser * /*item*/)
 {
         MWTS_ENTER;
-        Test.CreateAvailableContactDatastores();
+        test.ContactsTestImpl().CreateAvailableContactDatastores();
         return ENOERR;
 }
 
 /**
- * Pim ExportContactFromVcard function.
+ * Pim ExportContactToVcard function.
  * Creates a new contact and exports vcard from it
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
-LOCAL int ExportContactFromVcard (MinItemParser * /*item*/)
+LOCAL int ExportContactToVcard (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestExportingVcardFromContact();
+    test.ContactsTestImpl().ExportContactToVcard();
     return ENOERR;
 }
 
 /**
- * Pim ImportVcardToContact function.
+ * Pim ImportContactFromVcard function.
  * Imports and saves contact from vcard
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
-LOCAL int ImportVcardToContact (MinItemParser * /*item*/)
+LOCAL int ImportContactFromVcard (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestImportingVcardToContact();
+    test.ContactsTestImpl().ImportContactFromVcard();
     return ENOERR;
 }
 
 /**
- * Pim CreateAndDeleteContact function.
- * Creates a new contact and deletes it. Amount of contacts is defined in SetNumberOfItems
+ * Pim CreateContacts function.
+ * Creates new contacts. Number of contacts is defined in SetNumberOfItems
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
-LOCAL int CreateAndDeleteContact (MinItemParser * /*item*/)
+LOCAL int CreateContacts (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestContactItemCreationDeleting();
+    test.ContactsTestImpl().CreateContacts();
     return ENOERR;
 }
 
 
 /**
- * Pim CreateModifyAndDeleteContacts function.
- * Creates a new contact, modifies it and deletes it. Amount of contacts is defined in SetNumberOfItems
+ * Pim ModifyContacts function.
+ * Modifies created contacts
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
-LOCAL int CreateModifyAndDeleteContacts (MinItemParser * /*item*/)
+LOCAL int ModifyContacts (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestContactItemCreationModifyingDeleting();
+    test.ContactsTestImpl().ModifyContacts();
     return ENOERR;
 }
 
 /**
- * Pim CreateAndDeleteCalendarItem function.
- * Creates a new calendar item and deletes it. Item type is defined in
- * SetCalendarItemType, datastore in SetCalendarDataStore, and amount in SetNumberOfItems
+ * Pim RemoveContacts function.
+ * Removes created contacts
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
-LOCAL int CreateAndDeleteCalendarItem (MinItemParser * /*item*/)
+LOCAL int RemoveContacts (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestCalendarItemCreationDeleting();
+    test.ContactsTestImpl().RemoveContacts();
     return ENOERR;
 }
 
 /**
- * Pim CreateModifyAndDeleteCalendarItem function.
- * Creates a new calendar item, modifies it and removes it. Item type is defined in
- * SetCalendarItemType, datastore in SetCalendarDataStore, and amount in SetNumberOfItems
+ * Pim CreateCalendarItems function.
+ * Creates new calendar items. Item type is defined in
+ * SetCalendarItemType. Used datastore is defined in SetCalendarDataStore,
+ * and number of created items in SetNumberOfItems
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
-LOCAL int CreateModifyAndDeleteCalendarItem (MinItemParser * /*item*/)
+LOCAL int CreateCalendarItems (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestCalendarItemCreationModifyingDeleting();
+    test.OrganizerTestImpl().CreateCalendarItems();
     return ENOERR;
 }
 
+/**
+ * Pim ModifyCalendarItems function.
+ * Modifies calendar items. Item type is defined in
+ * SetCalendarItemType. Used datastore is defined in SetCalendarDataStore,
+ * and number of created items in SetNumberOfItems
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int ModifyCalendarItems (MinItemParser * /*item*/)
+{
+    MWTS_ENTER;
+    test.OrganizerTestImpl().ModifyCalendarItems();
+    return ENOERR;
+}
+
+/**
+ * Pim RemoveCalendarItems function.
+ * Removes created items from data store
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int RemoveCalendarItems (MinItemParser * /*item*/)
+{
+    MWTS_ENTER;
+    test.OrganizerTestImpl().RemoveCalendarItems();
+    return ENOERR;
+}
 
 
 /**
  * Pim SearchDefaultCalendarItems function.
- * Creates default calendar items and searched them by using default filters
+ * Searched default calendar items by using default filters
  * @param item	MIN scripter parameters
  * @return		ENOERR
  */
 LOCAL int SearchDefaultCalendarItems (MinItemParser * /*item*/)
 {
     MWTS_ENTER;
-    Test.TestItemSearching();
+    test.OrganizerTestImpl().SearchDefaultCalendarItems();
     return ENOERR;
 }
+
 
 /**
  * Function for MIN to gather our test case functions.
@@ -289,23 +458,26 @@ LOCAL int SearchDefaultCalendarItems (MinItemParser * /*item*/)
  */
 int ts_get_test_cases (DLList ** list)
 {
-	// declare common functions like Init, Close, SetTestTimeout ...
-	MwtsMin::DeclareFunctions(list);
-
-        ENTRYTC (*list, "SetNumberOfItems", SetNumberOfItems);
-        ENTRYTC (*list, "SetCalendarItemType", SetCalendarItemType);
-        ENTRYTC (*list, "SetCalendarDataStore", SetCalendarDataStore);
-        ENTRYTC (*list, "SetContactDataStore", SetContactDataStore);
-        ENTRYTC (*list, "CreateAvailableCalendarDatastores", CreateAvailableCalendarDatastores);
-        ENTRYTC (*list, "CreateAvailableContactDatastores", CreateAvailableContactDatastores);
-        ENTRYTC (*list, "ExportContactFromVcard", ExportContactFromVcard);
-        ENTRYTC (*list, "ImportVcardToContact", ImportVcardToContact);
-        ENTRYTC (*list, "CreateAndDeleteContact", CreateAndDeleteContact);
-        ENTRYTC (*list, "CreateModifyAndDeleteContacts", CreateModifyAndDeleteContacts);
-        ENTRYTC (*list, "CreateAndDeleteCalendarItem", CreateAndDeleteCalendarItem);
-        ENTRYTC (*list, "CreateModifyAndDeleteCalendarItem", CreateModifyAndDeleteCalendarItem);
-        ENTRYTC (*list, "SearchDefaultCalendarItems", SearchDefaultCalendarItems);
-
-        return ENOERR;
+    MwtsMin::DeclareFunctions(list);
+    ENTRYTC (*list, "SetNumberOfItems", SetNumberOfItems);
+    ENTRYTC (*list, "SetIterationCount", SetIterationCount);
+    ENTRYTC (*list, "SetMeasureState", SetMeasureState);
+    ENTRYTC (*list, "SetCalendarItemType", SetCalendarItemType);
+    ENTRYTC (*list, "SetCalendarDataStore", SetCalendarDataStore);
+    ENTRYTC (*list, "SetContactDataStore", SetContactDataStore);
+    ENTRYTC (*list, "CreateCalendarDataStore", CreateCalendarDataStore);
+    ENTRYTC (*list, "CreateContactDataStore", CreateContactDataStore);
+    ENTRYTC (*list, "CreateAvailableCalendarDatastores", CreateAvailableCalendarDatastores);
+    ENTRYTC (*list, "CreateAvailableContactDatastores", CreateAvailableContactDatastores);
+    ENTRYTC (*list, "ExportContactToVcard", ExportContactToVcard);
+    ENTRYTC (*list, "ImportContactFromVcard", ImportContactFromVcard);
+    ENTRYTC (*list, "CreateContacts", CreateContacts);
+    ENTRYTC (*list, "ModifyContacts", ModifyContacts);
+    ENTRYTC (*list, "RemoveContacts", RemoveContacts);
+    ENTRYTC (*list, "CreateCalendarItems", CreateCalendarItems);
+    ENTRYTC (*list, "ModifyCalendarItems", ModifyCalendarItems);
+    ENTRYTC (*list, "RemoveCalendarItems", RemoveCalendarItems);
+    ENTRYTC (*list, "SearchDefaultCalendarItems", SearchDefaultCalendarItems);
+    return ENOERR;
 }
 

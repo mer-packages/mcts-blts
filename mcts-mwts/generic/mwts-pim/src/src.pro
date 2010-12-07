@@ -1,5 +1,5 @@
 TARGET = mwts-pim
-VERSION = 0.0.1
+VERSION = 0.0.2
 
 TEMPLATE = lib
 CONFIG += debug
@@ -14,10 +14,22 @@ OBJECTS_DIR = ../tmp
 PRECOMPILED_HEADER = stable.h
 
 SOURCES += \
-        PimTest.cpp
+        PimTest.cpp \
+        organizertest.cpp \
+        contactstest.cpp \
+        versit.cpp \
+        pimcontactdetailmanager.cpp \
+        pimorganizeritemmanager.cpp
 
 HEADERS += \
-        PimTest.h
+        PimTest.h \
+        organizertest.h \
+        contactstest.h \
+        versit.h \
+        PimItem.h \
+        PimDataStore.h \
+        pimcontactdetailmanager.h \
+        pimorganizeritemmanager.h
 
 LIBS += -lmwts-common
 	
