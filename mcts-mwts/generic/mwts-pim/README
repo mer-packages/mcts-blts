@@ -82,6 +82,9 @@ ADDITIONAL INFORMATION
    Calendar has 6 items by default: event, event occurrence, journal, note, todo, and todo occurrence. If a specific
    item needs to be created, use function "SetCalendarItemType <item name>" in file "min/data/mwts-pim.cfg".
 
+   In order to enable latency measurement for saving and deleting calendar items or contacts, modify parameter of
+   "SetMeasureState" in file "min/data/mwts-pim-nft.cfg".
+
    see MIN SCRIPTER INTERFACE below.
 
 TEST RESULTS
@@ -102,30 +105,42 @@ MIN SCRIPTER INTERFACE
 
   SetNumberOfItems <number>
      Selects number of items to be created
+  SetIterationCount <count>
+     Selects number of iterations to run
+  SetMeasureState
+     Sets latency measurement to be on when saving or deleting calendar items or contacts
   SetCalendarItemType event|eventoccurrence|journal|note|todo|todooccurrence
      Selects the calendar item type to be used
   SetCalendarDataStore <name>
      Selects the calendar data store to be used
   SetContactDataStore <name>
      Selects the contact data store to be used
+  CreateCalendarDataStore
+     Creates new calendar data store specified by the function "SetCalendarDataStore"
+  CreateContactDataStore
+     Creates new contact data store specified by the function "SetContactDataStore"
   CreateAvailableCalendarDatastores
      Lists all calendar data stores available and tests creating/deleting those
   CreateAvailableContactDatastores
      Lists all contact data stores available and tests creating/deleting those
-  ExportContactFromVcard
-     Exports vcard from contact
-  ImportVcardToContact
-     Imports vcard to contact
-  CreateAndDeleteContact
-     Creates a new contact, saves it to contact data store and then removes/deletes it
-  CreateModifyAndDeleteContacts
-     Creates several contacts to contact data store, modifies and verifies modifications and then removes/deletes those
-  CreateAndDeleteCalendarItem
-     Creates a new calender item, saves it to calendar data store and then removes/deletes it
-  CreateModifyAndDeleteCalendarItem
-     Creates several calendar items to calendar data store, modifies and verifies modifications and then removes/deletes those
+  ExportContactToVcard
+     Exports contact to vcard
+  ImportContactFromVcard
+     Imports contact from vcard
+  CreateContacts
+     Creates new contacts to data store specified in SetContactDataStore
+  ModifyContacts
+     Modifies contacts in data store specified in SetContactDataStore
+  RemoveContacts
+     Removes contacts from data store specified in SetContactDataStore
+  CreateCalendarItems
+     Creates new calendar items to data store specified in SetCalendarDataStore
+  ModifyCalendarItems 
+     Modifies calendar items from data store specified in SetCalendarDataStore
+  RemoveCalendarItems
+     Deletes calendar items from data store specified in SetCalendarDataStore
   SearchDefaultCalendarItems
-     Creates default calendar items, and searches those by using different search filters
+     Searches default calendar items by using different search filters
   
 KNOWN ISSUES
 

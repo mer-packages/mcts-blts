@@ -88,6 +88,7 @@ GCameraTest::GCameraTest()
     flag_capture_done           = 0;
     flag_autofocus              = 0;
     flag_fps_on                 = 0;
+    flag_take_video             = false;
 
     gst_camera_bin              = NULL;
     gst_videosrc                = NULL;
@@ -135,6 +136,7 @@ void GCameraTest::OnInitialize()
     recordingImageFilename = g_pConfig->value("OUTPUT/image_filename").toString();
     recordingVideoDir = g_pConfig->value("OUTPUT/video_dir").toString();
     recordingImageDir = g_pConfig->value("OUTPUT/image_dir").toString();
+    model = g_pConfig->value("DEVICE/model").toString();
     #ifdef MWTS_GCAMERA_CONF_DEBUG
         //taking recording output setting from the .conf file
         MWTS_DEBUG("Conf filename location:" + g_pConfig->fileName());
@@ -142,6 +144,7 @@ void GCameraTest::OnInitialize()
         MWTS_DEBUG("Recording image filename: " + recordingImageFilename);
         MWTS_DEBUG("Recording video dir: " + recordingVideoDir);
         MWTS_DEBUG("Recording image dir: " + recordingImageDir);
+        MWTS_DEBUG("[DEVICE/model] = " + model);
     #endif
     global_gcamera = this;
     qDebug("Initialized mwts-gcamera");
@@ -378,9 +381,9 @@ void GCameraTest::cleanup_pipeline ()
         gst_object_unref (gst_camera_bin);
         gst_camera_bin = NULL;
 
-        g_list_foreach (video_caps_list, (GFunc) gst_caps_unref, NULL);
-        g_list_free (video_caps_list);
-        video_caps_list = NULL;
+        //g_list_foreach (video_caps_list, (GFunc) gst_caps_unref, NULL);
+        //g_list_free (video_caps_list);
+        //video_caps_list = NULL;
 
         ////
       /*gst_element_set_state (local_pipeline, GST_STATE_NULL);
@@ -551,7 +554,7 @@ gboolean GCameraTest::setup_pipeline ()
     //gst_object_unref (local_bus);
 
     /* create video source GstElement  */
-    gst_videosrc = gst_element_factory_make ((const char*)g_pConfig->value("OUTPUT/video_src").toString().toLatin1(), "source");
+    gst_videosrc = gst_element_factory_make ((const char*)g_pConfig->value(model + "/video_source").toString().toLatin1(), "source");
 
     /*check NULL, then give the CAMERA_APP_VIDEOSRC value to video-src*/
     if (gst_videosrc)
@@ -628,15 +631,38 @@ fail:
  * @return gboolean success/failure
  *
  */
-gboolean GCameraTest::set_pp()
+gboolean GCameraTest::set_image_pp()
 {
     MWTS_ENTER;
-    /* Use  image postprocessing element */
-    GstElement *ipp = gst_element_factory_make (CAMERA_APP_IMAGE_POSTPROC, NULL);
+    /* Use  identity postprocessing element for demonstrating the functionality*/
+    GstElement *pp = gst_element_factory_make (CAMERA_APP_IMAGE_POSTPROC, NULL);
 
-    if (ipp)
+    if (pp)
     {
-        g_object_set (G_OBJECT (gst_camera_bin), "imagepp", ipp, NULL);
+        g_object_set (G_OBJECT (gst_camera_bin), "image-post-processing", pp, NULL);
+        MWTS_LEAVE;
+        return TRUE;
+    }
+    MWTS_ERROR("Could not create post processing element");
+    MWTS_LEAVE;
+
+    return FALSE;
+}
+
+/**
+ * Set video Post Processing on
+ * @return gboolean success/failure
+ *
+ */
+gboolean GCameraTest::set_video_pp()
+{
+    MWTS_ENTER;
+    /* Use  identity postprocessing element for demonstrating the functionality*/
+    GstElement *pp = gst_element_factory_make (CAMERA_APP_VIDEO_POSTPROC, NULL);
+
+    if (pp)
+    {
+        g_object_set (G_OBJECT (gst_camera_bin), "video-post-processing", pp, NULL);
         MWTS_LEAVE;
         return TRUE;
     }
@@ -682,33 +708,41 @@ gboolean GCameraTest::set_fps()
 }
 
 /**
- * Set image and/video resolution
- * if video mode then also setup fps_h and fps_l
+ * Set video resolution
+ * it can also setup fps_h and fps_l
  * real fps = fps_h / fps_l
  *
- * @param x		image width
- * @param y		image height
+ * @param x		video width
+ * @param y		video height
  * @param fps_h fps 'high' value
  * @param fps_l fps 'low' value
  */
-void GCameraTest::set_resolution(gint x, gint y, gint fps_h, gint fps_l)
+void GCameraTest::set_video_resolution(gint x, gint y, gint fps_h, gint fps_l)
 {
     MWTS_ENTER;
-    if(fps_l != 0)
-        qDebug("setting resolution to h=%i and l=%i, fps_h=%i, fps_l=%i, fps=%.2f", x, y, fps_h, fps_l, (float)(fps_h/fps_l));
+    if(fps_h!=0 && fps_l != 0)
+        qDebug("setting video resolution and fps to h=%i and l=%i, fps_h=%i, fps_l=%i, fps=%.2f", x, y, fps_h, fps_l, (float)(fps_h/fps_l));
     else
-        qDebug("setting resolution to h=%i and l=%i", x, y);
+        qDebug("setting video resolution to h=%i and l=%i", x, y);
 
     g_signal_emit_by_name(gst_camera_bin, "set-video-resolution-fps", x, y, fps_h, fps_l);
 
-    if(capture_resolution != NULL)
-    {
-        g_string_free(capture_resolution, TRUE);
-        capture_resolution = NULL;
-    }
-    capture_resolution = g_string_new("");
-    g_string_printf(capture_resolution, "%ix%i", x, y);
-    qDebug("capture resolution set as %s", capture_resolution->str);
+    MWTS_LEAVE;
+}
+
+/**
+ * Set image resolution
+ *
+ * @param x		image width
+ * @param y		image height
+  */
+void GCameraTest::set_image_resolution(gint x, gint y)
+{
+    MWTS_ENTER;
+
+    qDebug("setting image resolution to  h=%i l=%i", x, y);
+    g_signal_emit_by_name(gst_camera_bin, "set-image-resolution", x, y);
+
     MWTS_LEAVE;
 }
 
@@ -734,9 +768,10 @@ gboolean GCameraTest::take_picture(gboolean consecutive)
     QString f = next_output_filename(recordingImageDir,
                                      recordingImageFilename,
                                      ".jpg");
+
     g_object_set (G_OBJECT (gst_camera_bin), "filename", (const char*) f.toLatin1(), NULL);
     //choosing image recording mode
-    g_object_set (gst_camera_bin, "mode", 0, NULL);
+    g_object_set (G_OBJECT (gst_camera_bin), "mode", 0, NULL);
 
     capture_start_timeout_source = g_timeout_add_seconds(CAPTURE_START_AFTER, (gboolean(*)(void*))GCameraTest_photo_capture_start_cb_wrapper, NULL);
     fail_timeout_source = g_timeout_add_seconds(IMG_CAPTURE_TIMEOUT, (gboolean(*)(void*))GCameraTest_fail_timeout_cb_wrapper, NULL);
@@ -780,6 +815,17 @@ gboolean GCameraTest::take_video(guint video_length)
 
     MWTS_ENTER;
 
+    if (!flag_take_video)
+    {
+        this->setup_codecs((const char*)g_pConfig->value(model+ "/video_encoder").toString().toLatin1(),
+                           (const char*)g_pConfig->value(model+"/video_muxer").toString().toLatin1(),
+                           (const char*)g_pConfig->value(model+"/audio_source").toString().toLatin1(),
+                           (const char*)g_pConfig->value(model+"/audio_encoder").toString().toLatin1(),
+                           (const char*)g_pConfig->value(model+"/video_extension").toString().toLatin1());
+        flag_take_video=true;
+    }
+
+
     #ifdef MWTS_GCAMERA_ENCODER_WORKAROUND
         //has to be reset again, because the GST_STATE_NULL, reset the filter-caps property
         g_object_set (G_OBJECT (gst_camera_bin), "filter-caps", gst_filtercaps, NULL);
@@ -792,7 +838,7 @@ gboolean GCameraTest::take_video(guint video_length)
                                      QString().fromLatin1(capture_filename_extension->str));
     g_object_set (G_OBJECT (gst_camera_bin), "filename", (const char*) f.toLatin1(), NULL);
     //choosing video recording mode
-    g_object_set (gst_camera_bin, "mode", 1, NULL);
+    g_object_set (G_OBJECT (gst_camera_bin), "mode", 1, NULL);
     g_signal_emit_by_name (gst_camera_bin, "capture-start", 0);
 
     video_done_timeout_source = g_timeout_add_seconds(video_length, (gboolean(*)(void*))GCameraTest_video_done_timeout_cb_wrapper, NULL);
@@ -894,7 +940,7 @@ QString GCameraTest::next_output_filename(QString recordingPath, QString recordi
  * @param ghcar * extension		extension of file
  * @return success/failure
  */
-gboolean GCameraTest::setup_codecs(gchar *videocodec, gchar *muxer, gchar *audiosrc, gchar *audiocodec, gchar *extension)
+gboolean GCameraTest::setup_codecs(const gchar *videocodec, const gchar *muxer, const gchar *audiosrc, const gchar *audiocodec, const gchar *extension)
 {
     MWTS_ENTER;
 
@@ -960,13 +1006,13 @@ gboolean GCameraTest::setup_codecs(gchar *videocodec, gchar *muxer, gchar *audio
 gboolean GCameraTest::set_flags(GstCameraBinFlags flags)
 {
     MWTS_ENTER;
-    if (flags!=NULL || flags!=0)
+    if (flags!=NULL)
     {
         gint def_flags;
         g_object_get(G_OBJECT (gst_camera_bin), "flags", &def_flags, NULL);
         qDebug() << "DEFAULT FLAGS:" << def_flags;        
         def_flags |= flags;
-        g_object_set (G_OBJECT (gst_camera_bin), "flags", flags, NULL);
+        g_object_set (G_OBJECT (gst_camera_bin), "flags", def_flags, NULL);
         qDebug() << "CHANGED FLAGS:" << flags;     
         MWTS_LEAVE;
         return TRUE;

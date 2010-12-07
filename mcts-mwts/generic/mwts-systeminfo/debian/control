@@ -1,0 +1,21 @@
+Source: mwts-systeminfo-tests
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev
+Maintainer: Reijo Korhonen <reijo.korhonen@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-systeminfo
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0)
+Description: MWTS-Template libraries
+ Template for creating MiddleWare Test Suite packages
+ c++ interface
+
+Package: mwts-systeminfo-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-systeminfo, min
+Description: MWTS-Template Test cases
+ Min interface and test cases
