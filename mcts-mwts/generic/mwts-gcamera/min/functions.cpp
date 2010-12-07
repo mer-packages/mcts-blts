@@ -26,9 +26,6 @@
 #include "GCameraTest.h"
 
 #include <MwtsCommon>
-#include <glib-object.h>
-#include <gst/gst.h>
-#include <gstreamer-0.10/gst/interfaces/photography.h>
 
 // MIN's module information
 const char *module_date = __DATE__;
