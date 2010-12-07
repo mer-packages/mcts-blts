@@ -12,7 +12,7 @@ Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
 BuildRequires:	qt-devel, min-devel, mwts-common-devel, dbus-devel, dbus-glib-devel, gstreamer-devel, gst-plugins-bad-free-devel, gst-v4l2-camsrc-devel
-Requires:	mwts-common, glib2, dbus, dbus-glib, gst-plugins-bad-free, gstreamer, gst-v4l2-camsrc, gcamera
+Requires:	mwts-common, glib2, dbus, dbus-glib, gst-plugins-bad-free, gstreamer, gst-v4l2-camsrc
 Source: 	%{name}-%{version}.tar.gz
 %description
 Test cases for camera over gstreamer
