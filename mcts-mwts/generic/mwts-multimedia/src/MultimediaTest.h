@@ -29,6 +29,7 @@
 #include "AudioRecorderTest.h"
 #include "ImageViewerTest.h"
 #include "FMRadioTest.h"
+#include "AudioPlayerTest.h"
 
 class MultimediaTest : public MwtsTest
 {
@@ -60,6 +61,7 @@ public:
     ImageViewerTest *imageViewer;
     AudioRecorderTest *audioRecorder;
     FMRadioTest *fmRadio;
+    AudioPlayerTest* audioPlayer;
 };
 
 #endif //#ifndef _INCLUDED_MULTIMEDIA_TEST_H

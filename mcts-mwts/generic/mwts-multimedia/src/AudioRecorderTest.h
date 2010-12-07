@@ -83,6 +83,20 @@ public:
     bool SetCodec(QString codec);
 
     /**
+    * Sets the container of the recording audio
+    * @param container name
+    * @return true or false depends the container is available or not
+    */
+    bool SetContainer(QString container);
+
+    /**
+    * Sets the default container for given codec
+    * @param container name
+    * If codec is not supported constainer is set to an ampty string ""
+    */
+    void SetDefaultContainer(QString codec);
+
+    /**
      * Sets the used input device of the recording
      * @param device name
      * @return true or false depends the input device is available or not
@@ -133,6 +147,18 @@ public:
     */
     void PrintAvailableDevices();
 
+    /**
+     * Gets full path of recently recorded file
+     * @return fullRecordedFilePath
+     */
+    QString FullRecordedFilePath() const;
+
+    /**
+     * Shows supported codecs and containers
+     * @return
+     */
+    void ShowSupportedCodecsAndContainers() const;
+
 private:
 
     /**
@@ -150,6 +176,14 @@ private:
     * @example audio/vorbis codec --> .ogg
     */
     QString FileExtension(QString codec);
+
+    /**
+    * Gives a file container extension according to the container name
+    * @param container
+    * @return file extension
+    * @example matroska container --> .mkv
+    */
+    QString ContainerFileExtension(QString container);
 
 private slots:
 
@@ -185,6 +219,12 @@ private:
     //String holds recording file's extension is the return value of  FileExtension(codec) private method
     QString recordingExtension;
     int duration;
+    //full path to recorded audio file, example: /home/meego/recorded_audio0001.wav
+    QString fullRecordedFilePath;
+    //names of codecs and containers
+    QStringList codecs;
+    QStringList containers;
+
 };
 
 #endif //#ifndef _INCLUDED_AUDIO_RECORDER_TEST_H

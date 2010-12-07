@@ -77,6 +77,8 @@ MIN SCRIPTER INTERFACE
   #audio recorder
   SetRecordingDuration <milliseconds>
      Sets the duration of the recording
+  SetContainer <container>
+     Sets container for audio output. Use it if you don't want to use default container.
   SetCodec <codec>
      Sets the used audio codec name
   SetDevice <device>
@@ -113,6 +115,15 @@ MIN SCRIPTER INTERFACE
   PlayRadio
     Starts to play the radio on the set frequency for a certain time
 
+  #audio player
+  SetMedia <media path>
+    Sets path to audio media file to play
+  SetPlaybackVolume <volume>
+    Sets volume of audio media player. Value between  0 and 100.
+  Play
+    Playback set audio media file. It plays whole file. So duration can't be long.
+  PlayRecordedAudio
+    Plays recently recorder audio. Use after Record function.
 
 TRACING
 
@@ -128,6 +139,7 @@ KNOWN ISSUES
 OTHER RESOURCES
 
 The config/MultimediaTest.conf contains several DEFAULT settings to the audio recorder.
+Setting default codec and container from conf file is currently not available.
 
     #default audio recorder settings
     [RECORDER]
@@ -157,6 +169,12 @@ The fm radio has very basic settings .
     [FMRADIO]
     frequency=89900
     duration=3000
+    volume=70
+
+The audio player settings. So far only volume can be set in this conf file.
+
+    #default media player settings
+    [PLAYER]
     volume=70
 
 
