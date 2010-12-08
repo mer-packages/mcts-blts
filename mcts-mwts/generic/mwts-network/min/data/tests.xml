@@ -130,7 +130,7 @@
       Required test data: None.">
         <step>min -c -t 'FUTE-WLAN-Upload_file_10M_WEP'</step>
       </case>
-     <case name="FUTE-WLAN-Download_file_10M_WPA-TKIP'  timeout="10" description=
+     <case name="FUTE-WLAN-Download_file_10M_WPA-TKIP"  timeout="10" description=
       "Purpose: Test connecting to wpa tkip secured ap and download file from ftp server
       Method: Bring wlan interface up and create connection
       Pre- /Post-conditions: none
@@ -148,7 +148,7 @@
       Required test data: None.">
         <step>min -c -t 'FUTE-WLAN-Upload_file_10M_WPA-TKIP'</step>
       </case>
-     <case name="FUTE-WLAN-Download_file_10M_WPA2-AES'  timeout="10" description=
+     <case name="FUTE-WLAN-Download_file_10M_WPA2-AES"  timeout="10" description=
       "Purpose: Test connecting to wpa2 aes secured ap and download file from ftp server
       Method: Bring wlan interface up and create connection
       Pre- /Post-conditions: none
@@ -911,14 +911,14 @@
       Required test data: None." >
         <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WPA2aes-ITER"'</step>
       </case> 
-      <case name=" NFT-WLAN-Connect_idle_disconnect"  timeout="100" description=
+      <case name="NFT-WLAN-Connect_idle_disconnect-ITER"  timeout="100" description=
       "Purpose: Test connecting to access point and then idle given time
       Method: Bring up wlan interface, idle, disconnect   
       Pre- /Post-conditions: 
       Pass- /Fail Criteria: connection to ap is made, connection stays in idle, connection is disconnected, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_idle_disconnect-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_idle_disconnect-ITER'</step>
       </case> 
      </set>
      
@@ -1106,7 +1106,8 @@
         Required test data: None.">
         <step>min -c -t NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
       </case>
-     <case name="NFT-WLAN-Connect_WPA2-AES_saved-LATE""  timeout="10" description=
+     <case name="NFT-WLAN-Connect_WPA2-AES_saved-LATE"
+  timeout="10" description=
         "Purpose: tests connection creation latency with saved wpa2 aes secured ap
         Method: Connection is made, latency is measured
         Pre- /Post-conditions: 
