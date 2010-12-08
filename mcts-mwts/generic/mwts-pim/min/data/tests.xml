@@ -3,7 +3,7 @@
   <suite name="mwts-pim-scripts" domain="PIM">
 
     <set name="PIM-FUTE" description="PIM functional test cases" feature="PIM" type="FUTE" >
-      <case name="FUTE-PIM-Check_calendar_datastore_availability" subfeature="Test" timeout="10" description=
+      <case name="FUTE-PIM-Check_calendar_datastore_availability" subfeature="Test" timeout="20" description=
       		"Purpose: Testing listing and creation of available data stores in the device
 		 Method: Tests lists available data stores and creates them separately
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -11,7 +11,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Check_calendar_datastore_availability'</step>
       </case>
-      <case name="FUTE-PIM-Check_contact_datastore_availability" subfeature="Test" timeout="10" description=
+      <case name="FUTE-PIM-Check_contact_datastore_availability" subfeature="Test" timeout="20" description=
       		"Purpose: Testing listing and creation of available data stores in the device
 		 Method: Tests lists available data stores and creates them separately
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -19,7 +19,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Check_contact_datastore_availability'</step>
       </case>
-      <case name="FUTE-PIM-Import_contact_from_vcard" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Import_contact_from_vcard" subfeature="Test" timeout="20" description=
       		"Purpose: Tests importing contact from vCard
 		 Method: Test creates contact from vCard and saves the contact to data store. Contact is then removed.
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -27,7 +27,7 @@
 	         ">
       	<step>min -c -t 'FUTE-PIM-Import_contact_from_vcard'</step>
       </case>
-      <case name="FUTE-PIM-Export_contact_to_vcard" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Export_contact_to_vcard" subfeature="Test" timeout="20" description=
       		"Purpose: Tests exporting contact to vCard
 		 Method: Tests creates contact and exports it to vCard
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -35,7 +35,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Export_contact_to_vcard'</step>
       </case>
-      <case name="FUTE-PIM-Create_and_delete_contact" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Create_and_delete_contact" subfeature="Test" timeout="60" description=
       		"Purpose: Tests creating a new contact to contact data store
 		 Method: Creates a new contact to contact data store and deletes it.
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -44,7 +44,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_contact'</step>
       </case>
-      <case name="FUTE-PIM-Modify_contact_details" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Modify_contact_details" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation, modifying and deleting 10 contacts
 		 Method: Creates 10 new contacts, modifies contact data and saves all. Modification is verified from data store.
 		 Contacts are then removed.
@@ -52,6 +52,14 @@
 		 Pass/Fail Criteria: Contacts can be created, modified, saved and deleted without crashes
 		 ">
       	<step>min -c -t 'FUTE-PIM-Modify_contact_details'</step>
+      </case>
+      <case name="FUTE-PIM-Search_contacts" subfeature="Test" timeout="60" description=
+      		"Purpose: Testing searching of contacts with default search filters
+		 Method: Creates 6 new contacts and tries to search them by using different filters
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Contacts can be searched (if filter supported) without crashes
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Search_contacts'</step>
       </case>
       <case name="FUTE-PIM-Create_and_delete_event" subfeature="Test" timeout="15" description=
       		"Purpose: Testing creation and deletion of event in the calendar data store
@@ -61,7 +69,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_event'</step>
       </case>
-      <case name="FUTE-PIM-Create_and_delete_event_occurrence" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Create_and_delete_event_occurrence" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation and deletion of event occurrence in the calendar data store
 		 Method: Creates a new event occurrence to calendar data store and then removes it
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -69,7 +77,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_event_occurrence'</step>
       </case>
-      <case name="FUTE-PIM-Create_and_delete_journal" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Create_and_delete_journal" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation and deletion of journal in the calendar data store
 		 Method: Creates a new event occurrence to calendar data store and then removes it
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -77,7 +85,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_journal'</step>
       </case>
-      <case name="FUTE-PIM-Create_and_delete_note" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Create_and_delete_note" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation and deletion of note in the calendar data store
 		 Method: Creates a new event occurrence to calendar data store and then removes it
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -85,7 +93,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_note'</step>
       </case>
-      <case name="FUTE-PIM-Create_and_delete_todo" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Create_and_delete_todo" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation and deletion of todo in the calendar data store
 		 Method: Creates a new event occurrence to calendar data store and then removes it
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -93,7 +101,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_todo'</step>
       </case>
-      <case name="FUTE-PIM-Create_and_delete_todo_occurrence" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Create_and_delete_todo_occurrence" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation and deletion of todo occurrence in the calendar data store
 		 Method: Creates a new event occurrence to calendar data store and then removes it
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -101,7 +109,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Create_and_delete_todo_occurrence'</step>
       </case>
-      <case name="FUTE-PIM-Modify_created_calendar_items" subfeature="Test" timeout="20" description=
+      <case name="FUTE-PIM-Modify_created_calendar_items" subfeature="Test" timeout="120" description=
       		"Purpose: Testing creation, modifying and deleting 10 calendar items
 		 Method: Creates 10 new calendar items, modifies item data and saves all. Modification is 
                  verified from data store. Calendar items are then removed.
@@ -110,7 +118,7 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Modify_created_calendar_items'</step>
       </case>
-      <case name="FUTE-PIM-Search_calendar_items" subfeature="Test" timeout="15" description=
+      <case name="FUTE-PIM-Search_calendar_items" subfeature="Test" timeout="20" description=
       		"Purpose: Testing searching calendar items from data store by using different search filters
 		 Method: Creates all default calendar items and then tries to search them by using different search filters
 		 Pre-/Post-Conditions: Test asset is installed to the device.
@@ -142,15 +150,15 @@
     </set>
 
     <set name="PIM-NFT-LATE" description="PIM non functional latency test cases" feature="PIM" type="LATE" >
-	<case name="NFT-PIM-Create_calendar_items-LATE " subfeature="Test" timeout="60" description=
+	<case name="NFT-PIM-Create_calendar_items-LATE" subfeature="Test" timeout="60" description=
       		"Purpose: Measures creation time of calendar items
 		 Method: Creates n calendar events and measures each saving time to calendar data store
 		 Pre-/Post-Conditions: Test asset is installed to the device.
 		 Pass/Fail Criteria: Calendar items are created without crashes
 		 ">
-      	 <step>min -c -t 'NFT-PIM-Create_calendar_items-LATE '</step>
+      	 <step>min -c -t 'NFT-PIM-Create_calendar_items-LATE'</step>
         </case>
-	<case name="NFT-PIM-Create_contacts-LATE " subfeature="Test" timeout="60" description=
+	<case name="NFT-PIM-Create_contacts-LATE" subfeature="Test" timeout="60" description=
       		"Purpose: Measures creation time of contacts
 		 Method: Creates n contacts and measures each saving time to contact data store
 		 Pre-/Post-Conditions: Test asset is installed to the device.

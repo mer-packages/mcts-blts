@@ -1,3 +1,4 @@
 usr/lib/*.so*
 usr/lib/min/*.so*
+usr/lib/tests/*
 usr/lib/tests/mwts-pim/*.vcf
