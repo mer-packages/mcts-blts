@@ -1,7 +1,7 @@
 #! /bin/sh
 
 CUR=`pwd`
-NAME=mwts-systemInfo
+NAME=mwts-systeminfo
 TMP=rpm/tmp/
 BUILD=rpm/BUILD
 SOURCE=rpm/SOURCES
