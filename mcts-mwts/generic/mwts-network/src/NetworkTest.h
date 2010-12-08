@@ -69,10 +69,18 @@ public:
 	 */
 	bool ConnectToName(QString ap_name);
 
+	/*
+	*  Closes all active wlan sessions
+	*/ 
 	void CloseActiveSessions();	
 
 	bool AddApPassword(const QString ap_name);
 	bool AddApPasswords();
+
+	/*
+	* Turns wlan chip on/off
+	*/ 
+	bool SwitchWlan(const QString state);
 
 	/*
 	 * Create network session from target config

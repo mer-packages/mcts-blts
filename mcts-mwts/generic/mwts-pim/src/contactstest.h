@@ -32,6 +32,7 @@
 #include <qmobilityglobal.h>
 #include <QContact>
 #include <QContactManager>
+#include <QContactFilter>
 #include "PimItem.h"
 #include "PimDataStore.h"
 
@@ -88,10 +89,15 @@ public: // new functions
      void CreateContactDatastore();
 
      /**
-      * Functions lists all the found contact datastores
+      * Function lists all the found contact datastores
       * from the device and creates them by usin name and URI
       */
       void CreateAvailableContactDatastores();
+
+     /**
+      * Function searches contacts based on different QContactFilters
+      */
+      void SearchContacts();
 
      /**
       * Creates contact(s) with default details defined in QtM contacts

@@ -38,7 +38,7 @@
 // - compiling and installing ofono-qt from gitorious:
 //   git://gitorious.org/meego-cellular/ofono-qt.git
 // - uncomment following line, recompile and install mwts-common:
-#define OFONO_QT_EXISTS
+// #define OFONO_QT_EXISTS
 
 #ifdef OFONO_QT_EXISTS
 	#include <ofono-qt/ofonoradiosettings.h>

@@ -26,6 +26,15 @@
 #include "contactstest.h"
 
 // includes
+#include <QContactActionFilter>
+#include <QContactChangeLogFilter>
+#include <QContactDetailFilter>
+#include <QContactDetailRangeFilter>
+#include <QContactIntersectionFilter>
+#include <QContactInvalidFilter>
+#include <QContactLocalIdFilter>
+#include <QContactRelationshipFilter>
+#include <QContactUnionFilter>
 #include "versit.h"
 #include "pimcontactdetailmanager.h"
 
@@ -247,6 +256,125 @@ void ContactsTest::CreateAvailableContactDatastores()
             delete uriManager;
     }   // if count
 }
+
+/**
+ * SearchContacts function
+ *
+ * NOT TESTED
+ * QContactRelationshipFilter
+ */
+void ContactsTest::SearchContacts()
+{
+    MWTS_ENTER;
+
+    QContactManager *manager = FindContactDataStore();
+    if(!manager)
+    {
+        qCritical()<<"Contact store not created";
+        return;
+    }
+
+    // test default filters
+    QList<QContactFilter> filterList;
+
+    QDateTime time;
+    int day = m_dataFetcher.value("CONTACTDETAILS/day").toInt();
+    int month = m_dataFetcher.value("CONTACTDETAILS/month").toInt();
+    int year = m_dataFetcher.value("CONTACTDETAILS/year").toInt();
+    QDate tmp(year,month,day);
+    time.setDate(tmp);
+
+    QString actionName = m_dataFetcher.value("CONTACTSEARCH/action_name").toString();
+    QString defName = m_dataFetcher.value("CONTACTSEARCH/definition_name").toString();
+    QContactChangeLogFilter::EventType type = (QContactChangeLogFilter::EventType)m_dataFetcher.value("CONTACTSEARCH/event_type").toInt();
+    QContactFilter::MatchFlags flag = (QContactFilter::MatchFlags)m_dataFetcher.value("CONTACTSEARCH/match_flag").toInt();
+    int rMax = m_dataFetcher.value("CONTACTSEARCH/range_max").toInt();
+    int rMin = m_dataFetcher.value("CONTACTSEARCH/range_min").toInt();
+    QContactDetailRangeFilter::RangeFlag rflag = (QContactDetailRangeFilter::RangeFlag)m_dataFetcher.value("CONTACTSEARCH/range_flag").toInt();
+
+    qDebug()<<"Time : "<<time;
+    qDebug()<<"Action name: "<<actionName;
+    qDebug()<<"detail definition: "<<defName;
+    qDebug()<<"Event type: "<<type;
+    qDebug()<<"Match flag: "<<(int)flag;
+    qDebug()<<"Range min: "<<rMin;
+    qDebug()<<"Range max: "<<rMax;
+    qDebug()<<"Range flag: "<<(int)rflag;
+
+    // define filters
+    QContactActionFilter action;
+    action.setActionName(actionName);
+    filterList.append(action);
+
+    QContactChangeLogFilter changelog;
+    changelog.setEventType(type);
+    changelog.setSince(time);
+    filterList.append(changelog);
+
+    QContactDetailFilter detail;
+    detail.setDetailDefinitionName(defName);
+    detail.setMatchFlags(flag);
+    filterList.append(detail);
+
+    QContactDetailRangeFilter range;
+    range.setDetailDefinitionName(defName);
+    range.setMatchFlags(flag);
+    range.setRange(rMin, rMax, rflag);
+    filterList.append(range);
+
+    QContactIntersectionFilter intersect;
+    QList<QContactFilter> filters;
+    filters.append(detail);
+    filters.append(range);
+    intersect.setFilters(filters);
+    filterList.append(intersect);
+
+    QContactInvalidFilter invalid;
+    filterList.append(invalid);
+
+    QContactLocalIdFilter localId;
+    QList<QContactLocalId> ids;
+    if(m_items.count()>=2)
+    {
+        ids.append(m_items[0].contactLocalId);
+        ids.append(m_items[1].contactLocalId);
+    }
+    filterList.append(localId);
+
+    //QContactRelationshipFilter relation;
+    //filterList.append(relation);
+
+    QContactUnionFilter unionfilter;
+    unionfilter.setFilters(filters);
+    filterList.append(unionfilter);
+
+    QContactFilter filter;
+    QList<QContact> list;
+    const int filterCount = filterList.count();
+    for(int i=0;i<filterCount;++i)
+    {
+        filter = filterList[i];
+        // if filter is supported
+        if(manager->isFilterSupported(filter))
+        {
+            list = manager->contacts(filter);
+            // if the searching fails
+            if(manager->error()!=QContactManager::NoError)
+            {
+                qDebug()<<"Search filter: "<<filter.type()<<" failed, error: "<<manager->error();
+            }
+            else
+            {
+                qDebug()<<"Found: "<<list.count()<<" items with filter: "<<filter.type();
+            }
+        }
+        else
+        {
+            qDebug()<<"Filter "<<filter.type()<<" not supported by the datastore: "<<m_contactStore;
+        }
+    }
+}
+
 
 /**
  * CreateContacts function

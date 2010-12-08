@@ -280,24 +280,30 @@ bool PimOrganizerItemManager::VerifyOrganizerItemData(QOrganizerItem *item)
 {
     MWTS_ENTER;
 
+    // This is the only way to check whether the detail is found anymore. (details may be stripped when pruning)
+    QOrganizerItemComment comment;
+    QOrganizerItemDescription desc;
+    QOrganizerItemDisplayLabel label;
+    QList<QOrganizerItemDetail> details = item->details();
+
     // veridy comments
-    if(!item->comments().contains(m_comment))
+    if(!item->comments().contains(m_comment) && details.contains(comment))
     {
-        qCritical()<<"Comment addition failed";
+        qCritical()<<"Comment addition failed, added: "<<m_comment<<" got: "<<item->comments();
         return false;
     }
 
     // verify description
-    if(item->description()!=m_description)
+    if(item->description()!=m_description && details.contains(desc))
     {
-        qCritical()<<"Description addition failed";
+        qCritical()<<"Description addition failed, added: "<<m_description<<" got: "<<item->description();
         return false;
     }
 
     // verify label
-    if(item->displayLabel()!=m_label)
+    if(item->displayLabel()!=m_label && details.contains(label))
     {
-        qCritical()<<"Display label addition failed";
+        qCritical()<<"Display label addition failed, added: "<<m_label<<" got: "<<item->displayLabel();
         return false;
     }
     qDebug()<<"OrganizerItem Data verified (base class of all organizer items)";
@@ -341,7 +347,7 @@ bool PimOrganizerItemManager::CreateAndVerifyEventItem(QOrganizerManager *manage
             return false;
         }
 
-        qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+        qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
         qDebug()<<"Detail count before pruning: "<<item.details().count();
 
         item = manager->compatibleItem(item);
@@ -435,7 +441,7 @@ bool PimOrganizerItemManager::CreateAndVerifyEventOccurrenceItem(QOrganizerManag
             return false;
         }
 
-        qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+        qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
         qDebug()<<"Detail count before pruning: "<<item.details().count();
 
         item = manager->compatibleItem(item);
@@ -498,7 +504,7 @@ bool PimOrganizerItemManager::CreateAndVerifyJournalItem(QOrganizerManager *mana
 
         // test QOrganizerJournal specific functions. Journal has only one function
         qDebug()<<"Occurrence date: "<<item.dateTime();
-        qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+        qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
         qDebug()<<"Detail count before pruning: "<<item.details().count();
 
         item = manager->compatibleItem(item);
@@ -562,7 +568,7 @@ bool PimOrganizerItemManager::CreateAndVerifyNoteItem(QOrganizerManager *manager
             return false;
         }
 
-        qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+        qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
         qDebug()<<"Detail count before pruning: "<<item.details().count();
 
         item = manager->compatibleItem(item);
@@ -643,7 +649,7 @@ bool PimOrganizerItemManager::CreateAndVerifyTodoItem(QOrganizerManager *manager
             return false;
         }
 
-        qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+        qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
         qDebug()<<"Detail count before pruning: "<<item.details().count();
 
         item = manager->compatibleItem(item);
@@ -713,7 +719,7 @@ bool PimOrganizerItemManager::CreateAndVerifyTodoOccurrenceItem(QOrganizerManage
             return false;
         }
         // remove parent item from cache, event occurrence "owns" it
-        m_items.removeAt(m_items.count()-1);
+        m_items.removeLast();
         m_parentId = parentId;
 
         // occurrence specific
@@ -731,7 +737,7 @@ bool PimOrganizerItemManager::CreateAndVerifyTodoOccurrenceItem(QOrganizerManage
             return false;
         }
 
-        qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+        qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
         qDebug()<<"Detail count before pruning: "<<item.details().count();
 
         item = manager->compatibleItem(item);
@@ -795,7 +801,7 @@ bool PimOrganizerItemManager::ModifyAndVerifyEventItem(QOrganizerManager *manage
     // add data to item
     AddEventItemData(event);
 
-    qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+    qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
     qDebug()<<"Detail count before pruning: "<<event.details().count();
 
     event = manager->compatibleItem(event);
@@ -853,7 +859,7 @@ bool PimOrganizerItemManager::ModifyAndVerifyEventOccurrenceItem(QOrganizerManag
     // add data to the item
     AddEventOccurrenceItemData(event);
 
-    qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+    qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
     qDebug()<<"Detail count before pruning: "<<event.details().count();
 
     event = manager->compatibleItem(event);
@@ -914,7 +920,7 @@ bool PimOrganizerItemManager::ModifyAndVerifyTodoItem(QOrganizerManager *manager
     // add data
     AddTodoItemData(event);
 
-    qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+    qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
     qDebug()<<"Detail count before pruning: "<<event.details().count();
 
     event = manager->compatibleItem(event);
@@ -976,7 +982,7 @@ bool PimOrganizerItemManager::ModifyAndVerifyTodoOccurrenceItem(QOrganizerManage
     // add item data
     AddTodoOccurrenceItemData(event);
 
-    qDebug()<<"Make sure that contact is suitable for the manager by pruning";
+    qDebug()<<"Make sure that calendar item is suitable for the manager by pruning";
     qDebug()<<"Detail count before pruning: "<<event.details().count();
 
     event = manager->compatibleItem(event);
@@ -1011,8 +1017,6 @@ bool PimOrganizerItemManager::ModifyAndVerifyTodoOccurrenceItem(QOrganizerManage
     return true;
 }
 
-
-
 /**
  * Verifies event item data
  */
@@ -1022,42 +1026,48 @@ bool PimOrganizerItemManager::VerifyEventItemData(QOrganizerEvent *item)
 
     QSet<QDate> tmpDates;
 
+    // This is the only way to check whether the detail is found anymore. (details may be stripped when pruning)
+    QOrganizerEventTime startend;
+    QOrganizerItemLocation location;
+    QOrganizerItemPriority priority;
+    QOrganizerItemRecurrence recexp;
+    QList<QOrganizerItemDetail> details = item->details();
+
     // verify start time
-    if(item->startDateTime()!=m_dateTime)
+    if(item->startDateTime()!=m_dateTime && details.contains(startend))
     {
-        qCritical()<<"Start date addition failed";
+        qCritical()<<"Start date addition failed, added: "<<m_dateTime<<" got: "<<item->startDateTime();
         return false;
     }
 
     // verify end time
-    if(item->endDateTime()!=m_finishedDate)
+    if(item->endDateTime()!=m_finishedDate && details.contains(startend))
     {
-        qCritical()<<"End date addition failed";
+        qCritical()<<"End date addition failed, added: "<<m_finishedDate<<" got: "<<item->endDateTime();
         return false;
     }
 
     // verify recurrence dates
     tmpDates = item->recurrenceDates();
-    if(m_dates!=tmpDates)
+    if(m_dates!=tmpDates && details.contains(recexp))
     {
-        qCritical()<<"Recurrence date addition failed";
+        qCritical()<<"Recurrence date addition failed, added: "<<m_dates<<" got: "<<tmpDates;
         return false;
     }
 
     // verify exception dates
     tmpDates.clear();
     tmpDates = item->exceptionDates();
-    if( m_exceptionDates!=tmpDates )
+    if(m_exceptionDates!=tmpDates  && details.contains(recexp))
     {
-        qCritical()<<"Exception date addition failed";
+        qCritical()<<"Exception date addition failed, added: "<<m_exceptionDates<<" got: "<<tmpDates;
         return false;
     }
 
-
     // verify priority
-    if(item->priority()!=m_priority)
+    if(item->priority()!=m_priority  && details.contains(priority))
     {
-        qCritical()<<"Priority addition failed";
+        qCritical()<<"Priority addition failed, added: "<<m_priority<<" got: "<<item->priority();
         return false;
     }
 
@@ -1081,9 +1091,9 @@ bool PimOrganizerItemManager::VerifyEventItemData(QOrganizerEvent *item)
     }
     */
     // verify location coordinates
-    if(item->location()!=m_locCoordinates)
+    if(item->location()!=m_locCoordinates && details.contains(location))
     {
-        qCritical()<<"Geocoordinate addition failed";
+        qCritical()<<"Geocoordinate addition failed, added: "<<m_locCoordinates<<" got: "<<item->location();
         return false;
     }
 
@@ -1126,31 +1136,38 @@ bool PimOrganizerItemManager::VerifyEventOccurrenceItemData(QOrganizerEventOccur
 {
     MWTS_ENTER;
 
+    // This is the only way to check whether the detail is found anymore. (details may be stripped when pruning)
+    QOrganizerItemParent parentid;
+    QOrganizerEventTime startend;
+    QOrganizerItemPriority priority;
+    QOrganizerItemLocation location;
+    QList<QOrganizerItemDetail> details = item->details();
+
     // verify parent id
-    if(item->parentId()!=m_parentId)
+    if(item->parentId()!=m_parentId && details.contains(parentid))
     {
-        qCritical()<<"Parent id addition failed";
+        qCritical()<<"Parent id addition failed, added: "<<m_parentId<<" got: "<<item->parentId();
         return false;
     }
 
     // verify original date
-    if(item->originalDate()!=m_dateTime.date())
+    if(item->originalDate()!=m_dateTime.date() && details.contains(parentid))
     {
-        qCritical()<<"Original date addition failed";
+        qCritical()<<"Original date addition failed, added: "<<m_dateTime.date()<<" got: "<<item->originalDate();
         return false;
     }
 
     // verify end time
-    if(item->endDateTime()!=m_finishedDate)
+    if(item->endDateTime()!=m_finishedDate && details.contains(startend))
     {
-        qCritical()<<"End date addition failed";
+        qCritical()<<"End date addition failed, added: "<<m_finishedDate<<" got: "<<item->endDateTime();
         return false;
     }
 
     // verify priority
-    if(item->priority()!=m_priority)
+    if(item->priority()!=m_priority && details.contains(priority))
     {
-        qCritical()<<"Priority addition failed";
+        qCritical()<<"Priority addition failed, added: "<<m_priority<<" got: "<<item->priority();
         return false;
     }
 
@@ -1174,9 +1191,9 @@ bool PimOrganizerItemManager::VerifyEventOccurrenceItemData(QOrganizerEventOccur
     }
     */
     // verify location coordinates
-    if(item->location()!=m_locCoordinates)
+    if(item->location()!=m_locCoordinates && details.contains(location))
     {
-        qCritical()<<"Geocoordinate addition failed";
+        qCritical()<<"Geocoordinate addition failed, added: "<<m_locCoordinates<<" got: "<<item->location();
         return false;
     }
 
@@ -1222,54 +1239,61 @@ bool PimOrganizerItemManager::VerifyTodoItemData(QOrganizerTodo *item)
 
     QSet<QDate> tmpDates;
 
+    // This is the only way to check whether the detail is found anymore. (details may be stripped when pruning)
+    QOrganizerTodoTime todotime;
+    QOrganizerItemRecurrence recexp;
+    QOrganizerItemPriority priority;
+    QOrganizerTodoProgress progress;
+    QList<QOrganizerItemDetail> details = item->details();
+
     // verify due date time
-    if(item->dueDateTime()!=m_finishedDate)
+    if(item->dueDateTime()!=m_finishedDate && details.contains(todotime))
     {
-        qCritical()<<"Due date setting failed";
+        qCritical()<<"Due date setting failed, added: "<<m_finishedDate<<" got: "<<item->dueDateTime();
         return false;
     }
 
     // verify recurrence dates
     tmpDates = item->recurrenceDates();
-    if(m_dates!=tmpDates)
+    if(m_dates!=tmpDates && details.contains(recexp))
     {
-        qCritical()<<"Recurrence date addition failed";
+        qCritical()<<"Recurrence date addition failed, added: "<<m_dates<<" got: "<<tmpDates;
         return false;
     }
 
     // verify exception dates
     tmpDates = item->exceptionDates();
-    if(m_dates!=tmpDates)
+    if(m_dates!=tmpDates && details.contains(recexp))
     {
-        qCritical()<<"Exception date addition failed";
+        qCritical()<<"Exception date addition failed, added: "<<m_dates<<" got: "<<tmpDates;
         return false;
     }
 
     // verify priority
-    if(item->priority()!=m_priority)
+    if(item->priority()!=m_priority && details.contains(priority))
     {
-        qCritical()<<"Priority addition failed";
+        qCritical()<<"Priority addition failed, added: "<<m_priority<<" got: "<<item->priority();
         return false;
     }
 
     // verify finished date time
-    if(item->finishedDateTime()!=m_finishedDate)
+    if(item->finishedDateTime()!=m_finishedDate && details.contains(progress))
     {
-        qCritical()<<"Finished date addition failed";
+        qCritical()<<"Finished date addition failed, added: "<<m_finishedDate<<" got: "<<item->finishedDateTime();
         return false;
     }
 
     // verify progress percentage
-    if(item->progressPercentage()!=m_progress)
+    if(item->progressPercentage()!=m_progress && details.contains(progress))
     {
-        qCritical()<<"Progress percentage addition failed";
+        qCritical()<<"Progress percentage addition failed, added: "<<m_progress<<" got: "<<item->progressPercentage();
         return false;
     }
 
     // verify status
-    if(item->status()!=m_status)
+    if(item->status()!=m_status && details.contains(progress))
     {
-        qCritical()<<"Status addition failed";
+        qCritical()<<"Status addition failed, added: "<<m_status<<" got: "<<item->status();
         return false;
     }
     qDebug()<<"QOrganizerTodo Data verified";
@@ -1310,45 +1334,52 @@ bool PimOrganizerItemManager::VerifyTodoOccurrenceItemData(QOrganizerTodoOccurre
 {
     MWTS_ENTER;
 
-    // verify parent local id
-    if(item->parentId()!=m_parentId)
+    // This is the only way to check whether the detail is found anymore. (details may be stripped when pruning)
+    QOrganizerItemParent parentid;
+    QOrganizerTodoTime todotime;
+    QOrganizerTodoProgress progress;
+    QOrganizerItemPriority priority;
+    QList<QOrganizerItemDetail> details = item->details();
+
+     // verify parent local id
+    if(item->parentId()!=m_parentId && details.contains(parentid))
     {
-        qCritical()<<"Parent id setting failed";
+        qCritical()<<"Parent id setting failed, added: "<<m_parentId<<" got: "<<item->parentId();
         return false;
     }
 
     // verify due date time
-    if(item->dueDateTime()!=m_finishedDate)
+    if(item->dueDateTime()!=m_finishedDate && details.contains(todotime))
     {
-        qCritical()<<"Due date setting failed";
+        qCritical()<<"Due date setting failed, added: "<<m_finishedDate<<" got: "<<item->dueDateTime();
         return false;
     }
 
     // verify status
-    if(item->status()!=m_status)
+    if(item->status()!=m_status && details.contains(progress))
     {
-        qCritical()<<"Status addition failed";
+        qCritical()<<"Status addition failed, added: "<<m_status<<" got: "<<item->status();
         return false;
     }
 
     // verify finished date time
-    if(item->finishedDateTime()!=m_finishedDate)
+    if(item->finishedDateTime()!=m_finishedDate && details.contains(progress))
     {
-        qCritical()<<"Finished date addition failed";
+        qCritical()<<"Finished date addition failed, added: "<<m_finishedDate<<" got: "<<item->finishedDateTime();
         return false;
     }
 
     // verify original date
-    if(item->originalDate()!=m_dateTime.date())
+    if(item->originalDate()!=m_dateTime.date() && details.contains(parentid))
     {
-        qCritical()<<"Original date addition failed";
+        qCritical()<<"Original date addition failed, added: "<<m_dateTime.date()<<" got: "<<item->originalDate();
         return false;
     }
 
     // verify priority
-    if(item->priority()!=m_priority)
+    if(item->priority()!=m_priority && details.contains(priority))
     {
-        qCritical()<<"Priority addition failed";
+        qCritical()<<"Priority addition failed, added: "<<m_priority<<" got: "<<item->priority();
         return false;
     }
     qDebug()<<"QOrganizerTodoOccurrence Data verified";

@@ -1,4 +1,4 @@
-Source: mwts-pim-tests
+Source: mwts-pim
 Section: libs
 Priority: optional
 Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev
@@ -8,7 +8,7 @@ Standards-Version: 3.8.0
 Package: mwts-pim
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, libqt4-core(>= 4.7.0), mwts-common(>=0.2.0)
+Depends: ${shlibs:Depends}, libqt4-core(>= 4.7.0), libqtm-organizer(>=1.1.0), libqtm-versit(>=1.0.2), libqtm-contacts(>=1.0.2), mwts-common(>=0.2.0)
 Description: MWTS-Pim libraries
  
 Package: mwts-pim-scripts
@@ -18,9 +18,3 @@ Depends: ${shlibs:Depends}, mwts-pim, min
 Description: MWTS-PIM Test cases
  Min interface and test cases
 
-Package: mwts-pim-tests
-Section: libs
-Architecture: any
-Depends: ${shlibs:Depends}, ci-testing, mwts-pim, min, ci-testing
-Description: MWTS-PIM for CITA
- Template for creating for CITA test cases
