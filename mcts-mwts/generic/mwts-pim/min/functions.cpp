@@ -394,6 +394,21 @@ LOCAL int RemoveContacts (MinItemParser * /*item*/)
 }
 
 /**
+ * Pim SearchContacts function.
+ * Searched contacts based on various filters
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int SearchContacts (MinItemParser * /*item*/)
+{
+    MWTS_ENTER;
+    test.ContactsTestImpl().SearchContacts();
+    return ENOERR;
+}
+
+
+
+/**
  * Pim CreateCalendarItems function.
  * Creates new calendar items. Item type is defined in
  * SetCalendarItemType. Used datastore is defined in SetCalendarDataStore,
@@ -474,6 +489,7 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "CreateContacts", CreateContacts);
     ENTRYTC (*list, "ModifyContacts", ModifyContacts);
     ENTRYTC (*list, "RemoveContacts", RemoveContacts);
+    ENTRYTC (*list, "SearchContacts", SearchContacts);
     ENTRYTC (*list, "CreateCalendarItems", CreateCalendarItems);
     ENTRYTC (*list, "ModifyCalendarItems", ModifyCalendarItems);
     ENTRYTC (*list, "RemoveCalendarItems", RemoveCalendarItems);
