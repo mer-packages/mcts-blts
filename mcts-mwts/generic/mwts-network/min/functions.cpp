@@ -346,6 +346,30 @@ LOCAL int Idle (__attribute__((unused)) MinItemParser * item)
 	return 0;
 }
 
+/*
+* turns wlan chip on/off
+*/ 
+LOCAL int SwitchWlan( MinItemParser * item)
+{
+        MWTS_ENTER;
+
+        char* state = NULL;
+        if (ENOERR != mip_get_next_string(item, &state))
+        {
+                qCritical() << "Missing parameter: on/off";
+                MWTS_LEAVE;
+                return EINVAL;
+        }
+
+        bool success = Test.SwitchWlan(state);
+
+        g_pResult->StepPassed( __FUNCTION__, success );
+
+        return 0;
+}
+
+
+
 int ts_get_test_cases (DLList ** list)
 {
 	// declare common functions like Init, Close, SetTestTimeout ...
@@ -361,6 +385,7 @@ int ts_get_test_cases (DLList ** list)
 	ENTRYTC(*list, "ServerStartIperf", ServerStartIperf);
 	ENTRYTC(*list, "ServerStartDownload", ServerStartDownload);
 	ENTRYTC(*list, "Idle", Idle);
+        ENTRYTC(*list, "SwitchWlan", SwitchWlan);
 
 	return 0;
 }
