@@ -337,7 +337,7 @@ int SetRadioMode(MinItemParser* item)
 		return 1;
 	}
 
-	if(!MwtsRadio::ChangeMode(mode))
+	if(!MwtsRadio::instance()->ChangeMode(mode))
 	{
 		MWTS_ERROR("Changing radio access technology failed!");
 		return 1;

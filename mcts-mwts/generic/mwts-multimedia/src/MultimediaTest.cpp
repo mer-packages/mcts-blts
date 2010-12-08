@@ -32,6 +32,7 @@ MultimediaTest::MultimediaTest()
     audioRecorder = new AudioRecorderTest;
     imageViewer = new ImageViewerTest;
     fmRadio = new FMRadioTest;
+    audioPlayer = new AudioPlayerTest;
 
     MWTS_LEAVE;
 }
@@ -49,6 +50,7 @@ void MultimediaTest::OnInitialize()
     audioRecorder->OnInitialize();
     imageViewer->OnInitialize();
     fmRadio->OnInitialize();
+    audioPlayer->OnInitialize();
 
     MWTS_LEAVE;
 }
@@ -76,6 +78,13 @@ void MultimediaTest::OnUninitialize()
     {
         delete fmRadio;
         fmRadio = NULL;
+    }
+
+    audioPlayer->OnUninitialize();
+    if (audioPlayer)
+    {
+        delete audioPlayer;
+        audioPlayer = NULL;
     }
 
     MWTS_LEAVE;

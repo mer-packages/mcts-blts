@@ -43,6 +43,14 @@ AudioRecorderTest::~AudioRecorderTest()
 void AudioRecorderTest::OnInitialize()
 {
     MWTS_ENTER;
+
+    g_pConfig->beginGroup("CODEC");
+    codecs = g_pConfig->childKeys();
+    g_pConfig->endGroup();
+    g_pConfig->beginGroup("CONTAINER");
+    containers = g_pConfig->childKeys();
+    g_pConfig->endGroup();
+
     audioSource = new QAudioCaptureSource(this);
     audioSource->setAudioInput(g_pConfig->value("RECORDER/device").toString());
 
@@ -52,7 +60,9 @@ void AudioRecorderTest::OnInitialize()
     recordingFilename = g_pConfig->value("RECORDER/filename").toString();
     MWTS_DEBUG("Recording filename: " + recordingFilename);
     recordingPath = g_pConfig->value("RECORDER/path").toString();
-    this->SetCodec(g_pConfig->value("RECORDER/codec").toString());
+    //this->SetCodec(g_pConfig->value("RECORDER/codec").toString());
+    //this->SetContainer(g_pConfig->value("RECORDER/container").toString());
+    //this->SetDefaultContainer(g_pConfig->value("RECORDER/codec").toString());
 
     qDebug() << "Recording duration: " << duration;
 
@@ -118,6 +128,7 @@ bool AudioRecorderTest::Record()
     if (file.size()>0)
     {
         MWTS_DEBUG("Result recording succeeded");
+        fullRecordedFilePath = output;
         result = true;
     }
 
@@ -192,18 +203,29 @@ QString AudioRecorderTest::NextOutputFilename()
 
 QString AudioRecorderTest::FileExtension(QString codec)
 {
-    if(codec == "audio/PCM")
+    if (recorder->containerMimeType() != "")
     {
-        return ".wav";
-    }
-    else if(codec == "audio/vorbis")
-    {
-        return ".ogg";
+        return ContainerFileExtension(recorder->containerMimeType());
     }
     else
     {
-        return ".out";
+        foreach(QString c, codecs)
+        {
+            if (c == codec)
+                return "." + g_pConfig->value("CODEC_EXT/"+codec).toString();
+        }
     }
+}
+
+QString AudioRecorderTest::ContainerFileExtension(QString container)
+{
+
+    foreach(QString c, containers)
+    {
+        if (c == container)
+            return "." + g_pConfig->value("CONTAINER_EXT/"+container).toString();
+    }
+
 }
 
 bool AudioRecorderTest::SetCodec(QString codec)
@@ -217,6 +239,11 @@ bool AudioRecorderTest::SetCodec(QString codec)
         {
             result = true;
             recorder->audioSettings().setCodec(codec);
+            //if constainer wasn't set before
+            if (recorder->containerMimeType() == "")
+            {
+                SetDefaultContainer(codec);
+            }
             recordingExtension.clear();
             recordingExtension = FileExtension(codec);
             MWTS_DEBUG ("Set codec: " + codec);
@@ -225,6 +252,35 @@ bool AudioRecorderTest::SetCodec(QString codec)
     MWTS_LEAVE;
 
     return result;
+}
+
+void AudioRecorderTest::SetDefaultContainer(QString codec) {
+
+    foreach(QString c, codecs)
+    {
+        if (g_pConfig->value("CODEC/"+c).toString() == codec)
+            SetContainer(g_pConfig->value("DEFAULT_CONTAINER/"+c).toString());
+    }
+
+}
+
+bool AudioRecorderTest::SetContainer(QString container) {
+
+    MWTS_ENTER;
+    bool result = false;
+    foreach(QString i, recorder->supportedContainers())
+    {
+        if (container == i)
+        {
+            result = true;
+            recorder->setEncodingSettings (recorder->audioSettings(), QVideoEncoderSettings(), container);
+            MWTS_DEBUG ("Set container: " + container);
+        }
+    }
+    MWTS_LEAVE;
+
+    return result;
+
 }
 
 bool AudioRecorderTest::SetQuality(QString quality){
@@ -350,4 +406,33 @@ void AudioRecorderTest::updateProgress(qint64 duration)
     }
 
     qDebug () << "Recorded " << qRound(duration/1000) <<  " sec";
+}
+
+
+QString AudioRecorderTest::FullRecordedFilePath() const
+{
+    MWTS_ENTER;
+    return fullRecordedFilePath;
+    MWTS_LEAVE;
+}
+
+void AudioRecorderTest::ShowSupportedCodecsAndContainers() const
+{
+    MWTS_ENTER;
+
+    MWTS_DEBUG("-----------------------");
+    MWTS_DEBUG("|Supported codecs:");
+    foreach(QString s, recorder->supportedAudioCodecs())
+    {
+        MWTS_DEBUG(s);
+    }
+    MWTS_DEBUG("-----------------------");
+    MWTS_DEBUG("|Supported containers:");
+    foreach(QString s, recorder->supportedContainers())
+    {
+        MWTS_DEBUG(s);
+    }
+    MWTS_DEBUG("-----------------------");
+
+    MWTS_LEAVE;
 }

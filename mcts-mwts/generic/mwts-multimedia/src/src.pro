@@ -20,16 +20,17 @@ SOURCES += \
         AudioRecorderTest.cpp \
         ImageViewerTest.cpp \
         FMRadioTest.cpp \
-        MultimediaTest.cpp
+        MultimediaTest.cpp \
+        AudioPlayerTest.cpp
 
 HEADERS += \
         AudioRecorderTest.h \
         ImageViewerTest.h \
         FMRadioTest.h \
-        MultimediaTest.h
+        MultimediaTest.h \
+        AudioPlayerTest.h
 
 LIBS += -lmwts-common
 	
 target.path = /usr/lib
 INSTALLS += target
-

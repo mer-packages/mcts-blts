@@ -30,21 +30,18 @@
 #include <string.h>
 
 /* GLib includes */
-#include <glib.h>
+#include <glib-2.0/glib.h>
 #include <glib-2.0/glib-object.h>
-#include <glib/gstdio.h>
+#include <glib-2.0/glib/gstdio.h>
 #include <dbus-1.0/dbus/dbus-glib.h>
 #include <dbus-1.0/dbus/dbus-glib-lowlevel.h>
 
 /* Gstreamer includes */
+#define GST_USE_UNSTABLE_API
 #include <gstreamer-0.10/gst/gst.h>
 #include <gstreamer-0.10/gst/interfaces/xoverlay.h>
 #include <gstreamer-0.10/gst/interfaces/colorbalance.h>
-
-#define GST_USE_UNSTABLE_API
-#include <gst/interfaces/photography.h>
-#include <gst/interfaces/xoverlay.h>
-#include <gst/interfaces/colorbalance.h>
+#include <gstreamer-0.10/gst/interfaces/photography.h>
 
 /* Names of default elements */
 

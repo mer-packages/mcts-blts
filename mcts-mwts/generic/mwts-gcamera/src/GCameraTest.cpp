@@ -381,9 +381,9 @@ void GCameraTest::cleanup_pipeline ()
         gst_object_unref (gst_camera_bin);
         gst_camera_bin = NULL;
 
-        g_list_foreach (video_caps_list, (GFunc) gst_caps_unref, NULL);
-        g_list_free (video_caps_list);
-        video_caps_list = NULL;
+        //g_list_foreach (video_caps_list, (GFunc) gst_caps_unref, NULL);
+        //g_list_free (video_caps_list);
+        //video_caps_list = NULL;
 
         ////
       /*gst_element_set_state (local_pipeline, GST_STATE_NULL);
@@ -768,9 +768,10 @@ gboolean GCameraTest::take_picture(gboolean consecutive)
     QString f = next_output_filename(recordingImageDir,
                                      recordingImageFilename,
                                      ".jpg");
+
     g_object_set (G_OBJECT (gst_camera_bin), "filename", (const char*) f.toLatin1(), NULL);
     //choosing image recording mode
-    g_object_set (gst_camera_bin, "mode", 0, NULL);
+    g_object_set (G_OBJECT (gst_camera_bin), "mode", 0, NULL);
 
     capture_start_timeout_source = g_timeout_add_seconds(CAPTURE_START_AFTER, (gboolean(*)(void*))GCameraTest_photo_capture_start_cb_wrapper, NULL);
     fail_timeout_source = g_timeout_add_seconds(IMG_CAPTURE_TIMEOUT, (gboolean(*)(void*))GCameraTest_fail_timeout_cb_wrapper, NULL);
@@ -837,7 +838,7 @@ gboolean GCameraTest::take_video(guint video_length)
                                      QString().fromLatin1(capture_filename_extension->str));
     g_object_set (G_OBJECT (gst_camera_bin), "filename", (const char*) f.toLatin1(), NULL);
     //choosing video recording mode
-    g_object_set (gst_camera_bin, "mode", 1, NULL);
+    g_object_set (G_OBJECT (gst_camera_bin), "mode", 1, NULL);
     g_signal_emit_by_name (gst_camera_bin, "capture-start", 0);
 
     video_done_timeout_source = g_timeout_add_seconds(video_length, (gboolean(*)(void*))GCameraTest_video_done_timeout_cb_wrapper, NULL);

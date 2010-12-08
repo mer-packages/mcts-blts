@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-qmsystem-tests" domain="System">
+  <suite name="mwts-sensors-tests" domain="System">
+
     <set name="FUTE-Sensors" feature="Sensors" type="Functional">
       <case name="FUTE-Sensors_accelerometer" timeout="10" description=
         "Purpose
@@ -99,5 +100,69 @@
         <step>min -c -t 'FUTE-Sensors_tap'</step>
       </case>
     </set>
+
+    <set name="NFT-Sensors" feature="Sensors" type="Iterative">
+       <case name="NFT-Sensors_Accelerometer-ITER" timeout="600" description=
+        "Purpose
+        Get values from Accelerometer
+        Method
+        Qmsystem API call, waiting simultenaus changing values from API callback, iterative
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'NFT-Sensors_Accelerometer-ITER'</step>
+      </case>
+      <case name="NFT-Sensors_Ambient_Light_Sensor-ITER" timeout="600" description=
+        "Purpose
+        Get values from Ambient Light Sensor
+        Method
+        Qmsystem API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'NFT-Sensors_Ambient_Light_Sensor-ITER'</step>
+      </case>
+      <case name="NFT-Sensors_Magnetometer-ITER" timeout="600" description=
+        "Purpose
+        Get values from Magnetometer
+        Method
+        Qmsystem API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'NFT-Sensors_Magnetometer-ITER'</step>
+      </case>
+      <case name="NFT-Sensors_Orientation-ITER" timeout="600" description=
+        "Purpose
+        Get values from Orientation
+        Method
+        Qmsystem API call, waiting simultaneous changing values from API callback 
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'NFT-Sensors_Orientation-ITER'</step>
+      </case>
+      <case name="NFT-Sensors_Proximity-ITER" timeout="600" description=
+        "Purpose
+        Get values from Proximity
+        Method
+        Qmsystem API call, waiting simultaneous changing values from API callback
+        Pre-/Post-conditions
+        must be run as user 
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'NFT-Sensors_Proximity-ITER'</step>
+      </case>
+    </set>
+
   </suite>
 </testdefinition>

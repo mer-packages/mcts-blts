@@ -1,0 +1,3 @@
+etc/min.d/mwts-systemInfo.min.conf
+usr/share/mwts-systemInfo-scripts/tests.xml
+usr/lib/min/*.cfg
