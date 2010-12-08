@@ -562,7 +562,6 @@ LOCAL int SetPlaybackVolume (MinItemParser * item)
         }
         else
         {
-            //qDebug() << "Set this funcking volume1" << volume;
             test.audioPlayer->SetVolume(volume);
         }
     }
