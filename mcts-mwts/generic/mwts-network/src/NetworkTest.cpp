@@ -500,11 +500,6 @@ bool NetworkTest::AddApPassword(const QString ap_name)
 bool NetworkTest::AddApPasswords()
 {
    QList<QString> ap_list;
-   /*
-   ap_list.append(g_pConfig->value("unsecured_ap/name").toString());
-   ap_list.append(g_pConfig->value("wep_ap/name").toString());
-   ap_list.append(g_pConfig->value("wpa_tkip_ap/name").toString());
-   */
    ap_list.append("unsecured_ap");
    ap_list.append("wep_ap");
    ap_list.append("wpa_tkip_ap");
@@ -514,9 +509,116 @@ bool NetworkTest::AddApPasswords()
       AddApPassword(ap_list.at(i));
    }
 
-
    return true;
 }
+
+bool NetworkTest::SwitchWlan(const QString state)
+{
+	MWTS_ENTER;
+
+	qDebug() << "Trying to switch wlan0 device state to: " << state;
+	bool bState = false;
+	if(state == "on")
+	{
+		bState = true;
+	}
+	else if(state == "off")
+	{	
+		bState = false;
+	}
+	else 
+	{
+		qDebug() << "state is either on or off. Aborting.";
+		return false;
+	}
+
+	qDebug() << "bool val is: " << bState; 
+
+        QDBusInterface manager("org.moblin.connman", "/", "org.moblin.connman.Manager", QDBusConnection::systemBus());
+
+        QDBusReply<QVariantMap> reply = manager.call("GetProperties");
+
+        if(!reply.isValid())
+        {
+                qCritical() << "Reply is inValid!";
+                return false;
+        }
+
+        QVariantMap map = reply;
+        QVariant technologies;
+
+        // get the Services map value
+        if (map.contains("Technologies"))
+        {
+                qDebug() << "Reply contains Technologies!";
+                technologies = map.value("Technologies");
+        }
+
+        QStringList tech_list = qdbus_cast<QStringList>(technologies);
+
+   
+        QDBusReply<QVariantMap> tech_reply;
+	//QDBusReply<QVariantMap> dev_reply;
+	QDBusMessage dev_reply;
+
+	qDebug() << "Techs are: " << tech_list;	
+
+	QVariant devices;
+        for(int i=0;i<tech_list.count();i++)
+        {
+                qDebug() << "Opening tech interface";
+		QDBusInterface tech_iface("org.moblin.connman", tech_list.at(i), "org.moblin.connman.Technology", QDBusConnection::systemBus());
+                tech_reply = tech_iface.call("GetProperties");
+
+	        //qDebug() << "VALUE OF THE TECHNOLOGY IS: " << tech_reply;
+		
+		if(!tech_reply.isValid())
+		{
+			qDebug() << "Technologies reply invalid, aborting...";
+			return false;
+		}
+
+		//qDebug() << "Got technology properties, proceeding to open device interface";
+		QVariantMap tech_map = tech_reply;
+
+	        if(tech_map.contains("Devices"))
+		{
+			//qDebug() << "Devices found"; 
+			if(tech_map.value("Type") == "wifi")
+			{
+				qDebug() << "Proceeding the state change";
+				qDebug() << "type is : " << tech_map.value("Type");
+
+		                devices = tech_map.value("Devices");  
+        			// cast Devices to a string list
+			        QStringList wifi_dev = qdbus_cast<QStringList>(devices);
+
+
+				qDebug() << "Wifi device path is: " << wifi_dev.at(0); 
+		                //QDBusInterface dev_iface("org.moblin.connman", tech_list.at(i),"org.moblin.connman.Device", QDBusConnection::systemBus());
+				QDBusInterface dev_iface("org.moblin.connman", wifi_dev.at(0),"org.moblin.connman.Device", QDBusConnection::systemBus());
+
+   		                dev_reply = dev_iface.call("GetProperties");
+				qDebug() << "Got reply for the device: " << dev_reply;
+
+                                QString property = "Powered";
+                                QList<QVariant> args;
+
+                                args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(bState));
+                                QDBusMessage switch_reply = dev_iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+
+				qDebug() << "::" << switch_reply;
+                                return true;
+			}
+		}
+
+	}
+
+	MWTS_LEAVE;
+        return false;
+}
+
+
 
 void NetworkTest::StopSession()
 {
@@ -775,10 +877,8 @@ bool NetworkTest::ConnectToName(QString ap_name)
 	MWTS_ENTER;
 
 	QString ap;
-
-	// fetch ap ssid from NetworkTest.conf
-	ap = g_pConfig->value("AP/" + ap_name).toString();
-
+	ap = g_pConfig->value(ap_name + "/name").toString();
+	
 	if(ap.isNull())
 	{
 		qCritical() << "no ap with name " << ap_name << " found from config-file! Check the NetworkTest.conf.";
@@ -787,35 +887,12 @@ bool NetworkTest::ConnectToName(QString ap_name)
 
         qDebug() << "AP found, proceeding...";
 
-	//int counter = 1;
-
 	UpdateConfigs();        
-
-        /*
-	while(!IsAccessPointFound(ap))
-	{
-		if(counter == 10)
-		{
-			qCritical() << "Given access point " << ap << " was not found after 10 tries, so aborting";
-			break;
-		}
-		qDebug() << "UPDATING THE CONFIGURATIONS for the " << counter << " time.";
-		// do a scan and update the configs
-		UpdateConfigs();
-		counter++;
-		sleep(4);
-	}
-        */
-	//ap = "23246693";
-	//qDebug() << "CONNECTING TO THIS " << ap;
-	//networkConfiguration = networkManager.configurationFromIdentifier(ap);
-	
 
 	AddApPasswords();
 
 	QString ap_identifier = ConfigurationByName(ap);
 	networkConfiguration = networkManager.configurationFromIdentifier(ap_identifier);
-
 
 	qDebug() << "connecting to config named: " << networkConfiguration.name() << " and identifier: " << networkConfiguration.identifier();	
 

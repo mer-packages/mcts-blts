@@ -133,6 +133,8 @@ MIN SCRIPTER INTERFACE
      Modifies contacts in data store specified in SetContactDataStore
   RemoveContacts
      Removes contacts from data store specified in SetContactDataStore
+  SearchContacts
+     Searches contacts by using default search filters
   CreateCalendarItems
      Creates new calendar items to data store specified in SetCalendarDataStore
   ModifyCalendarItems 

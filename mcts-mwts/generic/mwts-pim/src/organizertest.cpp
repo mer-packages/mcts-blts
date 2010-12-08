@@ -265,7 +265,7 @@ void OrganizerTest::CreateAvailableCalendarDatastores()
  * SearchDefaultCalendarItems function
  *
  * NOT TESTED
- * QOrganizerItemIntersectionFilter, QOrganizerItemUnionFilter
+ * QOrganizerItemIntersectionFilter, QOrganizerItemUnionFilter, QOrganizerItemDateTimePeriodFilter (not found)
  */
 void OrganizerTest::SearchDefaultCalendarItems()
 {
@@ -280,28 +280,36 @@ void OrganizerTest::SearchDefaultCalendarItems()
 
     // define filters
     QDateTime time;
-    time = time.currentDateTime();
+    int day = m_dataFetcher.value("CALENDARITEMDETAILS/day").toInt();
+    int month = m_dataFetcher.value("CALENDARITEMDETAILS/month").toInt();
+    int year = m_dataFetcher.value("CALENDARITEMDETAILS/year").toInt();
+    QDate tmp(year,month,day);
+    time.setDate(tmp);
+
+    QString detailDef = m_dataFetcher.value("CALENDARSEARCH/definition_name").toString();
+    QString detailValue = m_dataFetcher.value("CALENDARSEARCH/definition_value").toString();
+    int maxD = m_dataFetcher.value("CALENDARSEARCH/max_days").toInt();
+    QDateTime maxDays = time.addDays(maxD);
+
+    qDebug()<<"start time: "<<time;
+    qDebug()<<"end time: "<<maxDays;
+    qDebug()<<"detail definition: "<<detailDef;
+    qDebug()<<"detail definition value: "<<detailValue;
 
     // test default filters
     QList<QOrganizerItemFilter> filterList;
     filterList.append(QOrganizerItemChangeLogFilter());
 
-    // Not found anymore in new version
-    //QOrganizerItemDateTimePeriodFilter a;
-    //a.setStartPeriod(time);
-    //a.setEndPeriod(time.addDays(1));
-    //filterList.append(a);
-
     QOrganizerItemDetailFilter b;
-    b.setDetailDefinitionName(QOrganizerItemDisplayLabel::DefinitionName);
-    QVariant input("this is display label");
+    b.setDetailDefinitionName(detailDef);
+    QVariant input(detailValue);
     b.setValue(input);
     filterList.append(b);
 
     QOrganizerItemDetailRangeFilter c;
-    c.setDetailDefinitionName(QOrganizerItemRecurrence::DefinitionName);
+    c.setDetailDefinitionName(detailDef);
     QVariant min(time);
-    QVariant max(time.addDays(2));
+    QVariant max(maxDays);
     c.setRange(min,max);
     filterList.append(c);
 
