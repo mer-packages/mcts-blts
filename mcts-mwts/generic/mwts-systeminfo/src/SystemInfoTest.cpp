@@ -40,8 +40,6 @@ SystemInfoTest::SystemInfoTest()
 {
 	MWTS_ENTER;
 
-        m_pProcess = new QProcess();
-
         MWTS_LEAVE;
 }
 
@@ -51,15 +49,6 @@ SystemInfoTest::SystemInfoTest()
 SystemInfoTest::~SystemInfoTest()
 {
 	MWTS_ENTER;
-
-        if ( m_pProcess )
-        {
-                m_pProcess->kill();
-                m_pProcess->close();
-                m_pProcess->disconnect();
-                delete m_pProcess;
-                m_pProcess = NULL;
-        }
 
         MWTS_LEAVE;
 }
@@ -177,94 +166,386 @@ void SystemInfoTest::TestBattery()
 
 
 
-/** Gets called if there is error in process*/
-void SystemInfoTest::onError( QProcess::ProcessError error )
-{
-        MWTS_ENTER;
-        m_pReturnValue = false;
-        switch ( error )
-        {
-                case QProcess::FailedToStart:
-                        qDebug() << "The process failed to start.";
-                        qCritical() << "The process failed to start.";
-                        break;
-                case QProcess::Crashed:
-                        qDebug() << "The process crashed.";
-                        qCritical() << "The process crashed.";
-                        break;
-                case QProcess::Timedout:
-                        qDebug() << "The last waitFor...() function timed out.";
-                        qCritical() << "The last waitFor...() function timed out.";
-                        break;
-                case QProcess::WriteError:
-                        qDebug() << "An error occurred when attempting to write to the process.";
-                        qCritical() << "An error occurred when attempting to write to the process.";
-                        break;
-                case QProcess::ReadError:
-                        qDebug() << "The last waitFor...() function timed out.";
-                        qCritical() << "The last waitFor...() function timed out.";
-                        break;
-                case QProcess::UnknownError:
-                        qDebug() << "An unknown error occurred.";
-                        qCritical() << "An unknown error occurred.";
-                        break;
-        }
 
-        m_pReturnValue = false;
+void SystemInfoTest::TestWallPower()
+{
+    MWTS_ENTER;
+    m_QmExpectedWallPower = true;
+    SetCharging();
+    MWTS_LEAVE;
+}
+
+void SystemInfoTest::TestBatteryPower()
+{
+    MWTS_ENTER;
+    m_QmExpectedWallPower = false;
+    SetCharging();
+    MWTS_LEAVE;
+}
+
+void SystemInfoTest::TestChargingTypeUSB100mA()
+{
+    MWTS_ENTER;
+//    m_QmExpectedChargingType = Maemo::QmBattery::USB_100mA;
+    SetCharging();
+    MWTS_LEAVE;
+}
+
+void SystemInfoTest::SetCharging()
+{
+    MWTS_ENTER;
+
+    QSystemDeviceInfo systeminfo(this);
+    
+    connect(&systeminfo,
+            SIGNAL(batteryLevelChanged (int)),
+            this,
+            SLOT(batteryLevelChanged (int)));
+
+    connect(&systeminfo,
+            SIGNAL(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)),
+            this,
+            SLOT(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)));
+
+    connect(&systeminfo,
+            SIGNAL(powerStateChanged(QSystemDeviceInfo::PowerState)),
+            this,
+            SLOT(powerStateChanged(QSystemDeviceInfo::PowerState)));
+
+   qDebug("SystemInfoTest::OnInitialize End, all initialised to get signals and listerners started");
+
+    // now start qt main loop
+    MWTS_DEBUG("Starting the qt-main loop");
+    Start();
+
+    // when timer emits signal 'timeout' the Stop is called
+    // then we continue from here.
+    MWTS_DEBUG("Main loop stopped");
+
+    disconnect(&systeminfo,
+            SIGNAL(batteryLevelChanged (int)),
+            this,
+            SLOT(batteryLevelChanged (int)));
+
+    disconnect(&systeminfo,
+            SIGNAL(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)),
+            this,
+            SLOT(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)));
+
+    disconnect(&systeminfo,
+            SIGNAL(powerStateChanged(QSystemDeviceInfo::PowerState)),
+            this,
+            SLOT(powerStateChanged(QSystemDeviceInfo::PowerState)));
+
+    MWTS_LEAVE;
+}
+
+
+/* Battery callbacks */
+void SystemInfoTest::ChargingStateChanged(/*const Maemo::QmBattery::ChargingState state*/)
+{
+    MWTS_ENTER;
+    MWTS_DEBUG("ChargingStateChanged");
+/*
+
+    QString resultText = "";
+    Maemo::QmBattery::ChargerType chargerType;
+    chargerType = m_QmBattery->getChargerType();
+
+    switch (chargerType)
+    {
+    case Maemo::QmBattery::Unknown:
+        MWTS_DEBUG("ChargingType: Unknown charger");
+        g_pResult->Write("\nChargingType changed to: Unknown charger");
+        break;
+    case Maemo::QmBattery::None:
+        MWTS_DEBUG("ChargingType: No charger connected");
+        g_pResult->Write("\nChargingType changed to: No charger connected");
+        break;
+    case Maemo::QmBattery::Wall:
+        MWTS_DEBUG("ChargingType: Wall charger");
+        g_pResult->Write("\nChargingType changed to: Wall charger");
+        break;
+    case Maemo::QmBattery::USB_500mA:
+        MWTS_DEBUG("ChargingType: USB with 500mA output");
+        g_pResult->Write("\nChargingType changed to: USB with 500mA output");
+        break;
+    case Maemo::QmBattery::USB_100mA:
+        MWTS_DEBUG("ChargingType: USB with 100mA output");
+        g_pResult->Write("\nChargingType changed to: USB with 100mA output");
+        break;
+    default:
+        MWTS_DEBUG("Charging type not recognized");
+        g_pResult->Write("\nCharging type not recognized");
+        g_pResult->StepPassed(this->CaseName(), false);
         Stop();
+        return;
+    }
 
-        MWTS_LEAVE;
-}
+    switch (state)
+    {
+    case Maemo::QmBattery::StateNotCharging:
+        MWTS_DEBUG("Charging state: Not charging");
+        g_pResult->Write("ChargingState changed to: Not charging");
 
-/** Called when the process finishes. Logs whether successfull or not*/
-void SystemInfoTest::onFinished( int exitCode, QProcess::ExitStatus exitStatus )
-{
-        MWTS_ENTER;
-
-        qDebug() << "Exit code: " << exitCode;
-
-        switch ( exitStatus )
+        if(m_QmChargerPlugged == true)
         {
-                case QProcess::NormalExit:
-                        qDebug() << "The process exited normally.";
-                        m_pReturnValue = true;
-                        break;
-                case QProcess::CrashExit:
-                        qDebug() << "The process crashed.";
-                        m_pReturnValue = false;
-                        break;
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
         }
-
-        Stop();
-        MWTS_LEAVE;
-}
-
-/** Gets called when iperf process started*/
-void SystemInfoTest::onStarted()
-{
-        MWTS_ENTER;
-        qDebug() << "The process has started.";
-        MWTS_LEAVE;
-}
-
-/** Gets called when process state changes*/
-void SystemInfoTest::onStateChanged( QProcess::ProcessState newState )
-{
-        MWTS_ENTER;
-        switch ( newState )
+        else
         {
-                case QProcess::NotRunning:
-                        qDebug() << "The process is not running.";
-                        break;
-                case QProcess::Starting:
-                        qDebug() << "The process is starting, but the program has not yet been invoked.";
-                        break;
-                case QProcess::Running:
-                        qDebug() << "The process is running and is ready for reading and writing.";
-                        break;
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
         }
-        MWTS_LEAVE;
+        break;
+
+    case Maemo::QmBattery::StateCharging:
+        MWTS_DEBUG("Charging state: Charging");
+        g_pResult->Write("ChargingState changed to: Charging");
+
+        if(m_QmChargerPlugged != true)
+        {
+            m_QmChargerPlugged = true;
+            if(chargerType != m_QmExpectedChargingType)
+            {
+                g_pResult->Write("Wrong ChargingType");
+                g_pResult->StepPassed(this->CaseName(), false);
+            }
+            else
+            {
+                // first step ok
+                MWTS_DEBUG("Charger plugged. Waiting for charger to be unplugged.");
+                return;
+            }
+        }
+        else
+        {
+            g_pResult->Write("Wrong ChargingState: Charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+    case Maemo::QmBattery::StateChargingFailed:
+        MWTS_DEBUG("Charging state: Charging failed");
+        g_pResult->Write("ChargingState changed to: Charging error, e.g. unsupported charger");
+        g_pResult->StepPassed(this->CaseName(), false);
+        break;
+
+    default:
+        MWTS_DEBUG("Charging state not recognized");
+        g_pResult->Write("Charging state not recognized");
+        g_pResult->StepPassed(this->CaseName(), false);
+        break;
+    }
+
+*/
+    Stop();
+    MWTS_LEAVE;
 }
+
+/* This signal is emitted when battery level has changed. level is the new level.*/
+void SystemInfoTest::batteryLevelChanged ( int level )
+{
+    MWTS_ENTER;
+    MWTS_DEBUG("batteryLevelChanged ");
+
+    g_pResult->AddMeasure("batteryLevel", level, "int");
+
+    g_pResult->StepPassed(this->CaseName(), true);
+
+    Stop();
+    MWTS_LEAVE;
+}
+
+
+/* This signal is emitted when battery status has changed. status is the new status. */
+void SystemInfoTest::batteryStatusChanged ( QSystemDeviceInfo::BatteryStatus status )
+{
+    MWTS_ENTER;
+    MWTS_DEBUG("batteryStatusChanged");
+
+    switch (status)
+    {
+    case QSystemDeviceInfo::NoBatteryLevel:
+        MWTS_DEBUG("Battery Status: Battery level undetermined");
+        g_pResult->Write("ChargingState changed to: Battery level undetermined");
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+    case QSystemDeviceInfo::BatteryCritical:
+        MWTS_DEBUG("Battery Status: Battery level is critical 3\% or less");
+        g_pResult->Write("ChargingState changed to: Battery level is critical 3\% or less");
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+
+    case QSystemDeviceInfo::BatteryVeryLow:
+        MWTS_DEBUG("Battery Status: Battery level is very low, 10\% or less");
+        g_pResult->Write("ChargingState changed to: Battery level is very low, 10\% or less");
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+    case QSystemDeviceInfo::BatteryLow:
+        MWTS_DEBUG("Battery Status: Battery level is low 40\% or less");
+        g_pResult->Write("ChargingState changed to: Battery level is low 40\% or less");
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+     case QSystemDeviceInfo::BatteryNormal:
+        MWTS_DEBUG("Battery Status: Battery level is above 40\%");
+        g_pResult->Write("ChargingState changed to: Battery level is above 40\%");
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+     default:
+	qCritical("ChargingState changed to: unsupported value");
+        g_pResult->Write("Charging state not recognized");
+        g_pResult->StepPassed(this->CaseName(), false);
+    }   
+ 
+ 
+    Stop();
+    MWTS_LEAVE;
+}
+
+/* This signal is emitted when the power state has changed, such as when a phone gets plugged in to the wall. state is the new power state. */
+void SystemInfoTest::powerStateChanged ( QSystemDeviceInfo::PowerState state )
+{
+    MWTS_ENTER;
+    MWTS_DEBUG("powerStateChanged");
+
+    switch (state)
+    {
+    case QSystemDeviceInfo::UnknownPower:
+        MWTS_DEBUG("Power Status: Power error");
+        g_pResult->Write("PowerState changed to: Power error");
+	qCritical("PowerState changed to: unsupported value");
+        g_pResult->Write("Power state not recognized");
+        g_pResult->StepPassed(this->CaseName(), false);
+        break;
+
+    case QSystemDeviceInfo::BatteryPower:
+        MWTS_DEBUG("Power Status: On battery power");
+        g_pResult->Write("PowerState changed to: On battery power");
+        m_QmChargerPlugged = false;
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+
+    case QSystemDeviceInfo::WallPower:
+        MWTS_DEBUG("Power Status: On wall power");
+        g_pResult->Write("PowerState changed to: On wall power");
+        m_QmChargerPlugged = true;
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+    case QSystemDeviceInfo::WallPowerChargingBattery:
+        MWTS_DEBUG("Power Status: On wall power and charging main battery");
+        g_pResult->Write("PowerState changed to: On wall power and charging main battery");
+        m_QmChargerPlugged = true;
+
+        if(m_QmChargerPlugged == true)
+        {
+            // passed
+            MWTS_DEBUG("Charger unplugged.");
+            g_pResult->StepPassed(this->CaseName(), true);
+        }
+        else
+        {
+            g_pResult->Write("\nWrong ChargingState: Not charging");
+            g_pResult->StepPassed(this->CaseName(), false);
+        }
+        break;
+
+     default:
+	qCritical("PowerState changed to: unsupported value");
+        g_pResult->Write("Power state not recognized");
+        g_pResult->StepPassed(this->CaseName(), false);
+    }   
+ 
+    Stop();
+    MWTS_LEAVE;
+}
+
 
 
 

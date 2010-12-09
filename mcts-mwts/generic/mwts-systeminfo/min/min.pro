@@ -5,6 +5,8 @@ VERSION = 0.0.1
 CONFIG += dll
 CONFIG += warn_on
 CONFIG += debug
+CONFIG += mobility
+MOBILITY += systeminfo
 
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
