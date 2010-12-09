@@ -48,7 +48,7 @@ SystemInfoTest Test;
 LOCAL int BatteryTest (MinItemParser * item)
 {
     MWTS_ENTER;
-    Test.BatteryTest();
+    Test.TestBattery();
     return ENOERR;
 }
 

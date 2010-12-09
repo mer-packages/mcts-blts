@@ -98,12 +98,8 @@ void AudioPlayerTest::SetMedia(const QString& filePath)
 void AudioPlayerTest::SetVolume(int volume)
 {
     MWTS_ENTER;
-
-    //qDebug() << "Set this funcking volume" << volume;
-
     player->setVolume(volume);
     MWTS_DEBUG ("Set volume: " + volume);
-
     MWTS_LEAVE;
 }
 
@@ -111,7 +107,6 @@ void AudioPlayerTest::SetVolume(int volume)
 
 
 void AudioPlayerTest::onError(QMediaPlayer::Error error) {
-    //MWTS_DEBUG("Error has occured:" + player->errorString());
     qCritical() << "Error has occured:" + player->errorString() << ",error code " << error;
 }
 

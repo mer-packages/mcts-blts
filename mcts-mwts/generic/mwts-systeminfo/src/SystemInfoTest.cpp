@@ -23,9 +23,15 @@
  */
 
 #include <QSystemDeviceInfo>
+//#include <qsystemdeviceinfo.h>
+//#include <qsystemdeviceinfo.h>
+
+
 
 #include "stable.h"
 #include "SystemInfoTest.h"
+
+QTM_USE_NAMESPACE
 
 /**
  * Constructor for template test class
