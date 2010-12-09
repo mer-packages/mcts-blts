@@ -1,59 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-dsme-scripts" domain="System">
+  <suite name="mwts-systeminfo-scripts" domain="System">
 
-    <set name="Dsme_Functional" description="Dsme functional test cases" feature="Settings" type="Functional" >
-      <case name="FUTE-Dsme-DBusThermalManagerTest="Test" timeout="30" description=
+    <set name="SystemInfo_Functional" description="SystemInfo functional test cases" feature="Settings" type="Functional" >
+      <case name="FUTE-SystemInfo-BatteryTest" timeout="30" description=
         "Purpose
-        Get Device temperature value from ThermalManager using DBUS System Bus interface
+        Get Device battery status
         Method
-        Calls /usr/bin/dbus-send and reads result
+        Calls QSystemDeviceInfo and reads result
         Pre-/Post-Conditions
-        None, exepts that device runs deamons as should
+        None
         Pass/Fail Criteria
         Pass if some value is got. We dont know exactly what got value means
         ">
-        <step>min -c -t 'FUTE-Dsme-DBusThermalManagerTest'</step>
-      </case>
-      <case name="FUTE-Dsme-RemoteDBusThermalManagerTest="Test" timeout="30" description=
-        "Purpose
-        Get Device temperature value from ThermalManager using DBUS System Bus interface
-        Method
-        Calls /usr/bin/dbus-send and reads result using ssh remote call
-        Pre-/Post-Conditions
-        ssh keys should be set to device, so automatic connection by ssh is allowed. Device runs deamons as should.
-        Pass/Fail Criteria
-        Pass if some value is got. We dont know exactly what got value means
-        ">
-        <step>min -c -t 'FUTE-Dsme-RemoteDBusThermalManagerTest'</step>
+        <step>min -c -t 'FUTE-SystemInfo-BatteryTest'</step>
       </case>
     </set>
     
-    <set name="Dsme_Iterative" description="Dsme iterative test cases" feature="Settings" type="Iterative" >
-      <case name="NFT-Dsme-DBusThermalManagerTest-ITER" subfeature="Test" timeout="60" description=
+    <set name="SystemInfo_Iterative" description="SystemInfo iterative test cases" feature="Settings" type="Iterative" >
+      <case name="NFT-SystemInfo-BatteryrTest-ITER" subfeature="Test" timeout="60" description=
         "Purpose
-        Get Device temperature value from ThermalManager using DBUS System Bus interface iterative
+        Get Device battery status iterative
         Method
-        Calls /usr/bin/dbus-send and reads result
+        Calls QSystemDeviceInfo and reads result
         Pre-/Post-Conditions
-        None, exepts that device runs deamons as should
+        None
         Pass/Fail Criteria
         Pass if some value is got. We dont know exactly what got value means
         ">
-        <step>min -c -t 'NFT-Dsme-Test_1-ITER'</step>
+        <step>min -c -t 'NFT-SystemInfo-BatteryrTest-ITER"'</step>
       </case>
     </set>
-    <case name="NFT-Dsme-RemoteDBusThermalManagerTest-ITER="Test" timeout="30" description=
-      "Purpose
-      Get Device temperature value from ThermalManager using DBUS System Bus interface iterative
-      Method
-      Calls /usr/bin/dbus-send and reads result using ssh remote call
-      Pre-/Post-Conditions
-      ssh keys should be set to device, so automatic connection by ssh is allowed. Device runs deamons as should.
-      Pass/Fail Criteria
-      Pass if some value is got. We dont know exactly what got value means
-      ">
-      <step>min -c -t 'NFT-Dsme-RemoteDBusThermalManagerTest-ITER'</step>
-    </case>
+   </case>
   </suite>
 </testdefinition>

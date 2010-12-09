@@ -48,15 +48,64 @@ SystemInfoTest Test;
 LOCAL int BatteryTest (MinItemParser * item)
 {
     MWTS_ENTER;
-    Test.BatteryTest();
+    Test.TestBattery();
     return ENOERR;
 }
+
+/**
+ *  @fn int ChargingTypeWallTestFunc()
+ *  @brief Put charging callbacks on.
+ *         If callback for charging is got with Wall charging type, then
+ *         the callback for not charging, the test is written succeeded
+ *         to the result file.
+ *  @return True, if successfull. False otherwise.
+ */
+LOCAL int ChargingTypeWallTestFunc (MinItemParser * item)
+{
+    MWTS_ENTER;
+    Test.TestWallPower();
+    return ENOERR;
+}
+
+/**
+ *  @fn int ChargingTypeUSB500mATestFunc()
+ *  @brief Put charging callbacks on.
+ *         If callback for charging is got with USB with 500mA charging type,
+ *         then the callback for not charging, the test is written succeeded
+ *         to the result file.
+ *  @return True, if successfull. False otherwise.
+ */
+LOCAL int ChargingTypeUSB500mATestFunc (MinItemParser * item)
+{
+    MWTS_ENTER;
+    Test.TestBatteryPower();
+    return ENOERR;
+}
+
+/**
+ *  @fn int ChargingTypeUSB100mATestFunc()
+ *  @brief Put charging callbacks on.
+ *         If callback for charging is got with USB with 100mA charging type,
+ *         then the callback for not charging, the test is written succeeded
+ *         to the result file.
+ *  @return True, if successfull. False otherwise.
+ */
+LOCAL int ChargingTypeUSB100mATestFunc (MinItemParser * item)
+{
+    MWTS_ENTER;
+    Test.TestChargingTypeUSB100mA();
+    return ENOERR;
+}
+
 
 int ts_get_test_cases (DLList ** list)
 {
 	// declare common functions like Init, Close, SetTestTimeout ...
 	MwtsMin::DeclareFunctions(list);
     ENTRYTC (*list, "BatteryTest", BatteryTest);
+    ENTRYTC (*list, "ChargingTypeWallTestFunc", ChargingTypeWallTestFunc);
+    ENTRYTC (*list, "ChargingTypeUSB500mATestFunc", ChargingTypeUSB500mATestFunc);
+    ENTRYTC (*list, "ChargingTypeUSB100mATestFunc", ChargingTypeUSB100mATestFunc);
     return ENOERR;
 }
 
