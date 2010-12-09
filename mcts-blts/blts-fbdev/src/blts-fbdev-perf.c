@@ -23,7 +23,6 @@
 #endif
 
 /* System libs */
-#include <linux/types.h>
 #include <linux/fb.h>
 #include <sys/stat.h>
 #include <fcntl.h>
