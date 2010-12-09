@@ -22,6 +22,14 @@
  *
  */
 
+/** @mainpage MWTS-MULTIMEDIA
+ *
+ * @section links
+ *
+ * For detailed informations check README file on @link gitorious http://gitorious.org/~tumi/qa-tools/mcts-mwts-dev/trees/master/mcts-mwts/generic/mwts-multimedia @endlink
+ */
+
+
 #ifndef _INCLUDED_MULTIMEDIA_TEST_H
 #define _INCLUDED_MULTIMEDIA_TEST_H
 

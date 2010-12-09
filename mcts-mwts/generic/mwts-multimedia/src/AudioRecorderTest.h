@@ -35,6 +35,9 @@ QT_END_NAMESPACE
 
 QT_USE_NAMESPACE
 
+/**
+ *  This class provide functionality for recording audio files.
+ */
 class AudioRecorderTest : public QObject
 {
     Q_OBJECT
@@ -148,13 +151,13 @@ public:
     void PrintAvailableDevices();
 
     /**
-     * Gets full path of recently recorded file
+     * Gets full path of recently recorded file. It is used later when plaing back it.
      * @return fullRecordedFilePath
      */
     QString FullRecordedFilePath() const;
 
     /**
-     * Shows supported codecs and containers
+     * Shows supported codecs and containers. They are printed in debug message.
      * @return
      */
     void ShowSupportedCodecsAndContainers() const;
@@ -165,7 +168,7 @@ private:
     * Generates an incremental filename????, which helps to avoid overwriting
     * previously saved audio filenames.
     * @return next available filename
-    * @example 1. audio0000.ogg, after this functin call 2. audio0001.ogg...
+    * example 1. audio0000.ogg, after this functin call 2. audio0001.ogg...
     */
     QString NextOutputFilename();
 
@@ -173,7 +176,7 @@ private:
     * Gives a file container extension according to the codec type
     * @param codec
     * @return file extension
-    * @example audio/vorbis codec --> .ogg
+    * example audio/vorbis codec --> .ogg
     */
     QString FileExtension(QString codec);
 
@@ -181,7 +184,7 @@ private:
     * Gives a file container extension according to the container name
     * @param container
     * @return file extension
-    * @example matroska container --> .mkv
+    * example matroska container --> .mkv
     */
     QString ContainerFileExtension(QString container);
 
@@ -221,7 +224,7 @@ private:
     int duration;
     //full path to recorded audio file, example: /home/meego/recorded_audio0001.wav
     QString fullRecordedFilePath;
-    //names of codecs and containers
+    //names of codecs and containers, those are loaded from conf file.
     QStringList codecs;
     QStringList containers;
 
