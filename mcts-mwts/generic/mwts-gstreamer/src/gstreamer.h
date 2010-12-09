@@ -92,7 +92,7 @@ public:
     void set_seek_timeout(gint seek_timeout);
     //gint get_position (gint64* playback_position);
     gboolean get_duration (gint64* playback_duration);
-    gint set_change_volume_level();
+    gint set_change_volume_level(bool mode=TRUE);
     gboolean set_volume_level_cb();
 
     gboolean run_pipeline(gboolean flush_on_complete);
