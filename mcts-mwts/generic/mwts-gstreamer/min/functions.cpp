@@ -237,7 +237,8 @@ LOCAL gint MeasureFramerate(MinItemParser * item)
 /**
   SetChangeVolumeLevel -function for scripted cases
   Changes volume level
-  Usage: SeekToEndPosition
+  Usage: SetChangeVolumeLevel up, SetChangeVolumeLevel down, SetChangeVolumeLevel
+  @param [<up>|<down>|]
   @return ENOERR
 */
 LOCAL gint SetChangeVolumeLevel(MinItemParser * item)
