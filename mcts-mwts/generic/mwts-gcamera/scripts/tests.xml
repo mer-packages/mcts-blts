@@ -38,6 +38,30 @@
               the path of output files are defined in GCameraTest.conf">
             <step>min -c -t 'FUTE-Take_picture_post_processing'</step>
         </case>
+
+        <case name="FUTE-Take_picture_with_flash" subfeature="Capture image with post processing" timeout="10" description=
+             "Purpose
+              Capture normal image using primary camera, LED flash enabled
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture_with_flash'</step>
+        </case>
+
+        <case name="FUTE-Take_picture_low_light_settings" subfeature="Capture image with post processing" timeout="10" description=
+             "Purpose
+              Capture normal image using primary camera, Low light settings (ISO 3200)
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture_low_light_settings'</step>
+        </case>
     </set>
     </suite>
 
