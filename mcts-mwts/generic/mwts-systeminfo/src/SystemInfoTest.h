@@ -129,17 +129,6 @@ public:
      */
     void TestBatteryPower();
 
-    /**
-     *  @fn void TestChargingTypeUSB100mA()
-     *  @brief Plug-in USB charger with 100mA, wait awhile, then unplug
-     *         the charger. If wall charger with expected charger type is
-     *         plugged and unplugged, test is written succeeded to the
-     *         result file.
-     *         If timeout or unexpedted charger type is plugged-in, test is
-     *         written failed to the result file.
-     */
-    void TestChargingTypeUSB100mA();
-
     private:
    	    void SetCharging();
 
@@ -162,8 +151,10 @@ public:
     private:
         bool m_pReturnValue;
         bool m_QmExpectedWallPower;
+        bool m_QmExpectedBatteryPower;
         bool m_QmChargerPlugged;
-
+        bool m_FirstStep;
+ 
 
 };
 
