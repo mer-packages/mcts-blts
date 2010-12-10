@@ -1,4 +1,4 @@
-<?xml version="1.0" enoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
   <suite name="mwts-filesystem-tests" domain="System">
 
@@ -236,7 +236,7 @@
     
 <!-- USBMSD tests: USBMSD-MemoryCard" description="File system test cases for mass storage -->
 	
-     <case name="NFT-FS-Write_Data_USBMSD_MemoryCard-THRO" subfeature="write" type="Throughput" timeout="600" description=
+     <case name="NFT-FS-Write_data_to_USBMSD-THRO" subfeature="write" type="Throughput" timeout="600" description=
         "Purpose 
         This test measures write performance for USBMSD-MemoryCard
         Method
@@ -246,9 +246,9 @@
         Pass/Fail Criteria
         Test case returns passed and throughput speed is logged into /var/log/tests/.
         ">
-        <step>min -c -t 'NFT-FS-Write_Data_USBMSD_MemoryCard-THRO'</step>
+        <step>min -c -t 'NFT-FS-Write_data_to_USBMSD-THRO'</step>
       </case>
-      <case name="NFT-FS-Read_Data_USBMSD_MemoryCard-THRO" subfeature="read" type="Throughput" timeout="600" description=
+      <case name="NFT-FS-Read_data_from_USBMSD-THRO" subfeature="read" type="Throughput" timeout="600" description=
         "Purpose 
         This test measures read performance for USBMSD-MemoryCard
         Method
@@ -258,7 +258,7 @@
         Pass/Fail Criteria
         Test case returns passed and throughput speed is logged into /var/log/tests/.
         ">
-        <step>min -c -t 'NFT-FS-Read_Data_USBMSD_MemoryCard-THRO'</step>
+        <step>min -c -t 'NFT-FS-Read_data_from_USBMSD-THRO'</step>
       </case>
       <case name="NFT-FS-Create_Directory_USBMSD_MemoryCard-LATE" subfeature="directory" type="Latency" timeout="600" description=
         "Purpose 

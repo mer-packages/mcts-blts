@@ -46,8 +46,12 @@ void AudioPlayerTest::OnInitialize()
     player = new QMediaPlayer();
     this->SetVolume(g_pConfig->value("PLAYER/volume").toInt());
 
+    playbackDuration = 4000;
+
     connect(player, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(onError(QMediaPlayer::Error)));
     connect(player, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(onStateChanged(QMediaPlayer::State)));
+    connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
+    connect(player, SIGNAL(audioAvailableChanged(bool)), this, SLOT(onAudioAvailableChanged(bool)));
 
     MWTS_LEAVE;
 }
@@ -77,7 +81,7 @@ void AudioPlayerTest::play()
 
     player->play();
 
-    QTimer::singleShot(4000, g_pTest, SLOT(Stop()));
+    QTimer::singleShot(playbackDuration, g_pTest, SLOT(Stop()));
     g_pTest->Start();
 
     MWTS_LEAVE;
@@ -98,22 +102,40 @@ void AudioPlayerTest::SetMedia(const QString& filePath)
 void AudioPlayerTest::SetVolume(int volume)
 {
     MWTS_ENTER;
+    if (volume > 100 || volume < 0)
+    {
+        qCritical() << "100 >= Positive number >= 0 is expected.";
+    }
     player->setVolume(volume);
     MWTS_DEBUG ("Set volume: " + volume);
+    MWTS_LEAVE;
+}
+
+void AudioPlayerTest::SetPlaybackDuration(int msec)
+{
+    MWTS_ENTER;
+    if (msec <= 0)
+    {
+        qCritical() << "Duration should be greater than 0. Recommended value is at least 2000 ms";
+    }
+    playbackDuration = msec;
+    MWTS_DEBUG ("Set playback duration: " + msec);
     MWTS_LEAVE;
 }
 
 /* private slots */
 
 
-void AudioPlayerTest::onError(QMediaPlayer::Error error) {
+void AudioPlayerTest::onError(QMediaPlayer::Error error)
+{
     qCritical() << "Error has occured:" + player->errorString() << ",error code " << error;
 }
 
 
-void AudioPlayerTest::onStateChanged(QMediaPlayer::State state) {
-
-    switch (state) {
+void AudioPlayerTest::onStateChanged(QMediaPlayer::State state)
+{
+    switch (state)
+    {
         case QMediaPlayer::PlayingState:
             MWTS_DEBUG("Playing " + player->media().canonicalUrl().toString() + " audio file");
             break;
@@ -126,21 +148,23 @@ void AudioPlayerTest::onStateChanged(QMediaPlayer::State state) {
         default:
             MWTS_DEBUG("Unknown state");
     }
-
 }
 
 void AudioPlayerTest::onMediaStatusChanged(QMediaPlayer::MediaStatus status) {
-    MWTS_DEBUG("Media statud chanegd to: " + status);
+    MWTS_DEBUG("Media statud changed to: " + status);
 
 }
 
-void AudioPlayerTest::onAudioAvailableChanged(bool available) {
-    if (available) {
-            MWTS_DEBUG("audio available to play");
-        //player->play();
-     } else {
+void AudioPlayerTest::onAudioAvailableChanged(bool available)
+{
+    if (available)
+    {
+        MWTS_DEBUG("audio available to play");
+
+    }
+    else
+    {
         MWTS_DEBUG("audio not available to play");
     }
-
 }
 
