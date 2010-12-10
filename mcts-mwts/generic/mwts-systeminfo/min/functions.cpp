@@ -38,29 +38,14 @@ SystemInfoTest Test;
 
 
 /**
-* @fn void BatteryTest()
-* @brief CGet status of the main battery and power state
-* Implemenation QT dbus classes
-* @param item	MIN scripter parameters
-* @return		ENOERR
-*/
-
-LOCAL int BatteryTest (MinItemParser * item)
-{
-    MWTS_ENTER;
-    Test.TestBattery();
-    return ENOERR;
-}
-
-/**
- *  @fn int ChargingTypeWallTestFunc()
+ *  @fn int WallPowerTestFunc()
  *  @brief Put charging callbacks on.
  *         If callback for charging is got with Wall charging type, then
  *         the callback for not charging, the test is written succeeded
  *         to the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int ChargingTypeWallTestFunc (MinItemParser * item)
+LOCAL int WallPowerTestFunc(MinItemParser * item)
 {
     MWTS_ENTER;
     Test.TestWallPower();
@@ -68,44 +53,28 @@ LOCAL int ChargingTypeWallTestFunc (MinItemParser * item)
 }
 
 /**
- *  @fn int ChargingTypeUSB500mATestFunc()
+ *  @fn int BatteryPowerTestFunc()
  *  @brief Put charging callbacks on.
  *         If callback for charging is got with USB with 500mA charging type,
  *         then the callback for not charging, the test is written succeeded
  *         to the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int ChargingTypeUSB500mATestFunc (MinItemParser * item)
+LOCAL int BatteryPowerTestFunc (MinItemParser * item)
 {
     MWTS_ENTER;
     Test.TestBatteryPower();
     return ENOERR;
 }
 
-/**
- *  @fn int ChargingTypeUSB100mATestFunc()
- *  @brief Put charging callbacks on.
- *         If callback for charging is got with USB with 100mA charging type,
- *         then the callback for not charging, the test is written succeeded
- *         to the result file.
- *  @return True, if successfull. False otherwise.
- */
-LOCAL int ChargingTypeUSB100mATestFunc (MinItemParser * item)
-{
-    MWTS_ENTER;
-    Test.TestChargingTypeUSB100mA();
-    return ENOERR;
-}
 
 
 int ts_get_test_cases (DLList ** list)
 {
 	// declare common functions like Init, Close, SetTestTimeout ...
 	MwtsMin::DeclareFunctions(list);
-    ENTRYTC (*list, "BatteryTest", BatteryTest);
-    ENTRYTC (*list, "ChargingTypeWallTestFunc", ChargingTypeWallTestFunc);
-    ENTRYTC (*list, "ChargingTypeUSB500mATestFunc", ChargingTypeUSB500mATestFunc);
-    ENTRYTC (*list, "ChargingTypeUSB100mATestFunc", ChargingTypeUSB100mATestFunc);
+    ENTRYTC (*list, "WallPowerTest", WallPowerTestFunc);
+    ENTRYTC (*list, "BatteryPowerTest", BatteryPowerTestFunc);
     return ENOERR;
 }
 
