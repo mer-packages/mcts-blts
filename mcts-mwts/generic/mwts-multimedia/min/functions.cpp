@@ -36,7 +36,7 @@ const char *module_time = __TIME__;
 MultimediaTest test;
 
 /**
- * Shows supported codecs and containners on device
+ * Shows debug message of supported codecs and containners on device.
  * @return ENOERR
  */
 LOCAL int ShowSupportedCodecsAndContainers(__attribute__((unused)) MinItemParser * item)
@@ -509,7 +509,6 @@ LOCAL int PlayRecordedAudio(__attribute__((unused)) MinItemParser * item)
      QString filePath = test.audioRecorder->FullRecordedFilePath();
      test.audioPlayer->SetMedia(filePath);
      test.audioPlayer->play();
-
      return ENOERR;
 }
 
@@ -556,14 +555,31 @@ LOCAL int SetPlaybackVolume (MinItemParser * item)
     }
     else
     {
-        if (volume > 100 || volume < 0)
-        {
-            qCritical() << "100 >= Positive number >= 0 is expected.";
-        }
-        else
-        {
             test.audioPlayer->SetVolume(volume);
-        }
+    }
+    MWTS_LEAVE;
+    return ENOERR;
+}
+
+/**
+  Set the audio player duration in miliseconds
+  Usage: SetPlaybackDuration [duration]
+  @param duration > 0
+  @return ENOERR
+*/
+LOCAL int SetPlaybackDuration (MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    int duration = 4000;
+
+    if(mip_get_next_int(item, &duration))
+    {
+        qCritical() << "The volume is an integer number.";
+    }
+    else
+    {
+            test.audioPlayer->SetPlaybackDuration(duration);
     }
     MWTS_LEAVE;
     return ENOERR;
@@ -576,9 +592,7 @@ LOCAL int SetPlaybackVolume (MinItemParser * item)
 LOCAL int Play(__attribute__((unused)) MinItemParser * item)
 {
     MWTS_ENTER;
-
     test.audioPlayer->play();
-
     return ENOERR;
 }
 
@@ -592,10 +606,8 @@ int ts_get_test_cases (DLList ** list)
 {   //min interface
     MwtsMin::DeclareFunctions(list);
 
-    //codecs and containers support check
-    ENTRYTC (*list, "ShowSupportedCodecsAndContainers", ShowSupportedCodecsAndContainers);
-
     //multimedia audio recorder
+    ENTRYTC (*list, "ShowSupportedCodecsAndContainers", ShowSupportedCodecsAndContainers);
     ENTRYTC (*list, "Record", Record);
     ENTRYTC (*list, "SetDevice", SetDevice);
     ENTRYTC (*list, "SetRecordingDuration", SetRecordingDuration);
@@ -623,6 +635,7 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "PlayRecordedAudio", PlayRecordedAudio);
     ENTRYTC (*list, "SetMedia", SetMedia);
     ENTRYTC (*list, "SetPlaybackVolume", SetPlaybackVolume);
+    ENTRYTC (*list, "SetPlaybackDuration", SetPlaybackDuration);
     ENTRYTC (*list, "Play", Play);
 
     return ENOERR;

@@ -29,6 +29,9 @@
 #include <QMediaPlayer>
 #include <QUrl>
 
+/**
+ *  This class provide functionality for playing audio files.
+ */
 class AudioPlayerTest : public QObject
 {
     Q_OBJECT
@@ -36,29 +39,30 @@ class AudioPlayerTest : public QObject
 public:
 
     /**
-     * Constructor for MediaPlayerTest class
+     * Constructor for AudioPlayerTest class
      */
     AudioPlayerTest();
 
     /**
-     * Destructor for MediaPlayerTest class
+     * Destructor for AudioPlayerTest class
      */
     virtual ~AudioPlayerTest();
 
     /**
-     * Function for MediaPlayerTest class
+     * Function for AudioPlayerTest class
      * OnInitialize is called before test execution
      */
     void OnInitialize();
 
     /**
-     * Function for MediaPlayerTest class
+     * Function for AudioPlayerTest class
      * OnUninitialize is called after test execution
      */
     void OnUninitialize();
 
     /**
-     * Starts playing media file. Media file should be set before.
+     * Starts playing media audio file. Media file should be set before.
+     * Currently playing fail only if error occurs.
      */
     void play();
 
@@ -74,14 +78,17 @@ public:
      */
     void SetVolume(int volume);
 
-signals:
-
-public slots:
+    /**
+     * Sets playback duration
+     * @param msec duration in miliseconds
+     */
+    void SetPlaybackDuration(int msec);
 
 private slots:
 
     /**
-    * Displays the emited error information
+    * Displays the emited error information.
+    * If error occurs test will fails, then check error information.
     * @param error QMediaPlayer::Error value
     */
     void onError(QMediaPlayer::Error error);
@@ -107,9 +114,11 @@ private slots:
 
 private:
     /**
-     * Object used for playback feature
+     * Object used for playback feature.
      */
     QMediaPlayer* player;
+    //playback time
+    int playbackDuration;
 
 };
 
