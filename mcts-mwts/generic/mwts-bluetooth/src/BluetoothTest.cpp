@@ -26,6 +26,7 @@
 #include "BluetoothTest.h"
 #include "bluetoothdbus.h"
 #include "bluetoothhci.h"
+#include "mwtsstatistics.h"
 
 /**
  * Constructor for Bluetooth test class
@@ -189,6 +190,64 @@ bool BluetoothTest::SetPowerMode(bool isOn)
     bret = m_pBtApi->SetPowerMode(isOn);
 
     g_pResult->StepPassed("PowerMode", bret);
+
+    MWTS_LEAVE;
+    return bret;
+}
+
+/**
+ * Measure BT device's power mode change latency
+ * @param bool  Power mode, on = true, off = false
+ * @return      true if succeeded, otherwise false
+ */
+bool BluetoothTest::MeasurePowerLatency(bool isOn)
+{
+    MWTS_ENTER;
+
+    bool bret = true;
+    double nftresult = 0.0;
+    QList<double> times;
+
+    if(!m_pBtApi)
+    {
+        qCritical() << "No Api specified";
+        return false;
+    }
+
+    for (int i = 0;i < 50;i++)
+    {
+        bret = m_pBtApi->SetPowerMode(!isOn);
+        if (bret == false)
+        {
+            qCritical() << "Failed to set initial PowerMode";
+            return false;
+        }
+
+        g_pTime->start();
+
+        bret = m_pBtApi->SetPowerMode(isOn);
+
+        nftresult = g_pTime->elapsed();
+
+        if (bret == false)
+        {
+            qCritical() << "Failed to set PowerMode";
+            return false;
+        }
+        qDebug() << "PowerLatency("<< i+1 << "):" << nftresult << "ms";
+        times << nftresult;
+        nftresult = 0.0;
+    }
+    MwtsStatistics stat(times);
+
+    qDebug() << "PowerLatency Mean  :" << stat.Mean() << "ms";
+    qDebug() << "PowerLatency Median:" << stat.Median() << "ms";
+    qDebug() << "PowerLatency Min   :" << stat.Min() << "ms";
+    qDebug() << "PowerLatency Max   :" << stat.Max() << "ms";
+    qDebug() << "PowerLatency Stdev :" << stat.Stdev() << "ms";
+
+    g_pResult->StepPassed("PowerLatency", bret);
+    g_pResult->AddMeasure("power mode latency", stat.Mean(), "ms");
 
     MWTS_LEAVE;
     return bret;

@@ -109,6 +109,73 @@ LOCAL int PowerMode ( MinItemParser* item)
 }
 
 /**
+ * PowerLatency
+ * Min scripter function for bluetooth devices power mode change latency
+ *      -mode, on/off
+ * @param item 	scripter parameters
+ */
+LOCAL int PowerLatency ( MinItemParser* item)
+{
+    int ret = -1;
+    char *mode_str = NULL;
+    bool powerMode;
+    char *tag = NULL;
+
+    /* Parse parameters */
+    while (mip_get_next_string(item, &tag) == ENOERR )
+    {
+        if (tag && strcmp (tag, "mode") == 0)
+        {
+            ret = mip_get_next_string( item, &mode_str);
+            if (ret != ENOERR) return EINVAL;
+        }
+    }
+
+    if( mode_str )
+    {
+        if(strcmp(mode_str, "true") == 0 || strcmp(mode_str, "on") == 0)
+        {
+            qDebug("PowerLatency mode: On");
+            powerMode = true;
+        }
+        else if(strcmp(mode_str, "false") == 0 || strcmp(mode_str, "off") == 0)
+        {
+            qDebug("PowerLatency mode: Off");
+            powerMode = false;
+        }
+        else
+        {
+            qDebug("Unknown power mode, using default: On");
+            powerMode = true;
+        }
+    }
+    else
+    {
+        qDebug("Power mode not set, using default: On");
+        powerMode = true;
+    }
+
+    if(Test.MeasurePowerLatency(powerMode))
+        ret = 0;
+    else
+        ret = -1;
+
+    qDebug() << "Test returned == " << ret;
+
+    if(mode_str)
+    {
+        free(mode_str);
+        mode_str = NULL;
+    }
+    if(tag)
+    {
+        free(tag);
+        tag = NULL;
+    }
+    return ret;
+}
+
+/**
  * ScanMode
  * Min scripter function for bluetooth scan mode
  * @param item  scripter parameters
@@ -666,6 +733,7 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC(*list,"Scan", Scan);
     ENTRYTC(*list,"ScanMode", ScanMode);
     ENTRYTC(*list,"PowerMode", PowerMode);
+    ENTRYTC(*list,"PowerLatency", PowerLatency);
     ENTRYTC(*list,"Transfer", Transfer);
     ENTRYTC(*list,"Device", Device);
     ENTRYTC(*list,"SetApi", SetApi);
