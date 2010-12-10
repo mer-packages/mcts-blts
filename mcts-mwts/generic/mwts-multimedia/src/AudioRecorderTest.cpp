@@ -420,19 +420,24 @@ void AudioRecorderTest::ShowSupportedCodecsAndContainers() const
 {
     MWTS_ENTER;
 
-    MWTS_DEBUG("-----------------------");
-    MWTS_DEBUG("|Supported codecs:");
+    g_pResult->Write("-----------------------");
+
+    g_pResult->Write("|Supported codecs:");
     foreach(QString s, recorder->supportedAudioCodecs())
     {
-        MWTS_DEBUG(s);
+        g_pResult->Write(s);
     }
-    MWTS_DEBUG("-----------------------");
-    MWTS_DEBUG("|Supported containers:");
+    g_pResult->Write("-----------------------");
+    g_pResult->Write("|Supported containers:");
     foreach(QString s, recorder->supportedContainers())
     {
-        MWTS_DEBUG(s);
+        g_pResult->Write(s);
     }
-    MWTS_DEBUG("-----------------------");
+    g_pResult->Write("-----------------------");
+
+    qDebug() << "+---------------------------------+";
+    qDebug() << "| results saved to .result file   |";
+    qDebug() << "+---------------------------------+";
 
     MWTS_LEAVE;
 }

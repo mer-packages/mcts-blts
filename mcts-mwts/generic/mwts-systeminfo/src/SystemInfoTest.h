@@ -26,8 +26,13 @@
 #ifndef _INCLUDED_SYSTEMINFO_TEST_H
 #define _INCLUDED_SYSTEMINFO_TEST_H
 
-#include <QProcess>
+//#include <QProcess>
+#include <QSystemDeviceInfo>
+
 #include <MwtsCommon>
+
+QTM_USE_NAMESPACE
+
 
 
 /**
@@ -103,17 +108,61 @@ public:
      */
     void TestBattery();
 
+    /**
+     *  @fn void TestWallPower()
+     *  @brief Plug-in wall charger, wait awhile, then unplug the charger.
+     *         If wall charger with expected charger type is plugged and
+     *         unplugged, test is written succeeded to the result file.
+     *         If timeout or unexpedted charger type is plugged-in, test is
+     *         written failed to the result file.
+     */
+    void TestWallPower();
+
+    /**
+     *  @fn void TestBatteryPower()
+     *  @brief Plug-in USB charger with 500mA, wait awhile, then unplug
+     *         the charger. If wall charger with expected charger type is
+     *         plugged and unplugged, test is written succeeded to the
+     *         result file.
+     *         If timeout or unexpedted charger type is plugged-in, test is
+     *         written failed to the result file.
+     */
+    void TestBatteryPower();
+
+    /**
+     *  @fn void TestChargingTypeUSB100mA()
+     *  @brief Plug-in USB charger with 100mA, wait awhile, then unplug
+     *         the charger. If wall charger with expected charger type is
+     *         plugged and unplugged, test is written succeeded to the
+     *         result file.
+     *         If timeout or unexpedted charger type is plugged-in, test is
+     *         written failed to the result file.
+     */
+    void TestChargingTypeUSB100mA();
+
+    private:
+   	    void SetCharging();
+
 
     private Q_SLOTS:
-            void onError( QProcess::ProcessError error );
-            void onFinished( int exitCode, QProcess::ExitStatus exitStatus );
-            void onStarted();
-            void onStateChanged( QProcess::ProcessState newState );
+    	    /* Charging callbacks */
+    	    void ChargingStateChanged(/*const Maemo::QmBattery::ChargingState state*/);
 
-private:
-        QProcess*	m_pProcess;
-        QStringList	m_params;
+            /* This signal is emitted when battery level has changed. level is the new level.*/
+            void batteryLevelChanged ( int level );
+
+            /* This signal is emitted when battery status has changed. status is the new status. */
+            void batteryStatusChanged ( QSystemDeviceInfo::BatteryStatus status );
+
+            /* This signal is emitted when the power state has changed, such as when a phone gets plugged in to the wall. state is the new power state. */
+            void powerStateChanged ( QSystemDeviceInfo::PowerState state );
+
+
+
+    private:
         bool m_pReturnValue;
+        bool m_QmExpectedWallPower;
+        bool m_QmChargerPlugged;
 
 
 };

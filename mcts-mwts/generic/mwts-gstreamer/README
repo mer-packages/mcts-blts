@@ -85,8 +85,9 @@ MIN SCRIPTER INTERFACE
     Set time when continuing will happen.
   MeasureFramerate
     Sets Framerate measurement on.
-  SetChangeVolumeLevel
-    Sets volume changing on, so volume goes between 0-100 % during playback
+  SetChangeVolumeLevel [<up>|<down>|]
+    Sets volume changing direction up or down, in default without parameter it is down
+    (volume goes between 0-100 % during playback)
 
 
 KNOWN ISSUES

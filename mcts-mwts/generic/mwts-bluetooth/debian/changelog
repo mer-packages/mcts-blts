@@ -1,3 +1,13 @@
+mwts-bluetooth-tests (0.1.1) unstable; urgency=low
+  * Updated case names to follow guidelines
+  * Fixed discrepancies in case naming
+  * Added comments to tests.xml about slave cases
+  * Added missing min slave options
+  * Added Pre-/Post-Conditions to 2 part cases
+  * Added NFT-BT_Power_on-LATE and NFT-BT_Power_off-LATE cases
+  * Added PowerLatency min keyword
+ -- Timo Ojala <timo.ojala@digia.com>  Fri, 10 Dec 2010 09:09:53 +0200
+
 mwts-bluetooth-tests (0.1.0) unstable; urgency=low
   * Bug causing crashing fixed.
   * Folder architechture changed.

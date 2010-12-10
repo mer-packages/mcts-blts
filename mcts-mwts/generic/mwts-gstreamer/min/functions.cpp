@@ -237,14 +237,45 @@ LOCAL gint MeasureFramerate(MinItemParser * item)
 /**
   SetChangeVolumeLevel -function for scripted cases
   Changes volume level
-  Usage: SeekToEndPosition
+  Usage: SetChangeVolumeLevel up, SetChangeVolumeLevel down, SetChangeVolumeLevel
+  @param [<up>|<down>|]
   @return ENOERR
 */
 LOCAL gint SetChangeVolumeLevel(MinItemParser * item)
 {
 	MWTS_ENTER;
-	Test.set_change_volume_level ();
-	return ENOERR;
+
+    gchar* mode = NULL;
+    bool ret;
+
+    if(ENOERR != mip_get_next_string(item, &mode))
+    {
+        ret = Test.set_change_volume_level ();
+        g_pResult->StepPassed( __FUNCTION__, ret );
+        return ENOERR;
+    }
+
+    else if(strcmp(mode, "up") == 0)
+    {
+        ret = Test.set_change_volume_level (FALSE);
+        g_pResult->StepPassed( __FUNCTION__, ret );
+        return ENOERR;
+    }
+
+    else if(strcmp(mode, "down") == 0)
+    {
+        ret = Test.set_change_volume_level (TRUE);
+        g_pResult->StepPassed( __FUNCTION__, ret);
+        return ENOERR;
+    }
+    else
+    {
+        qCritical() << "Parameter must be up/down/ or no paramater";
+        g_pResult->StepPassed( __FUNCTION__, FALSE );
+        return EINVAL;
+    }
+
+    g_free(mode);
 }
 
 /**

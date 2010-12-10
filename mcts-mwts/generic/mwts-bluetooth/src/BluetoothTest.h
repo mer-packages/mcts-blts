@@ -48,6 +48,7 @@ public:
     int SetApi(int api);
     bool SetScanMode(BluetoothApiInterface::ScanMode mode);
     bool SetPowerMode(bool isOn);
+    bool MeasurePowerLatency(bool isOn);
     bool Scan();
     int Transfer(ServiceRole role,
                 TransferType type = L2CAP,
