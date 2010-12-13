@@ -63,6 +63,8 @@ LOCAL int WallPowerTestFunc(MinItemParser * item)
 LOCAL int BatteryPowerTestFunc (MinItemParser * item)
 {
     MWTS_ENTER;
+    // Test
+    // Test.TestBattery();
     Test.TestBatteryPower();
     return ENOERR;
 }

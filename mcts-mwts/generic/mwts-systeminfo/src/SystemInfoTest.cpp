@@ -59,14 +59,36 @@ SystemInfoTest::~SystemInfoTest()
  */
 void SystemInfoTest::OnInitialize()
 {
-	MWTS_ENTER;
+    MWTS_ENTER;
 
 	// create objects for the test
 	// connect wanted signals
 	// do any kind of initialization here
-        m_QmExpectedWallPower = false;
-        m_QmExpectedBatteryPower = false;
-	MWTS_LEAVE;
+    m_pSysteminfo = new QSystemDeviceInfo(this);
+
+    qDebug() << "SystemInfoTest::OnInitialize: connect";
+
+    connect(m_pSysteminfo,
+            SIGNAL(batteryLevelChanged (int)),
+            this,
+            SLOT(batteryLevelChanged (int)));
+
+    connect(m_pSysteminfo,
+            SIGNAL(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)),
+            this,
+            SLOT(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)));
+
+    connect(m_pSysteminfo,
+            SIGNAL(powerStateChanged(QSystemDeviceInfo::PowerState)),
+            this,
+            SLOT(powerStateChanged(QSystemDeviceInfo::PowerState)));
+
+    qDebug("SystemInfoTest::OnInitialize all initialised to get signals and listerners started");
+ 
+
+    m_QmExpectedWallPower = false;
+    m_QmExpectedBatteryPower = false;
+    MWTS_LEAVE;
 }
 
 /**
@@ -75,31 +97,58 @@ void SystemInfoTest::OnInitialize()
  */
 void SystemInfoTest::OnUninitialize()
 {
-	MWTS_ENTER;
+    MWTS_ENTER;
 	// disconnect signals
 	// clean objects etc
-	MWTS_LEAVE;
+
+    disconnect(m_pSysteminfo,
+            SIGNAL(batteryLevelChanged (int)),
+            this,
+            SLOT(batteryLevelChanged (int)));
+
+    disconnect(m_pSysteminfo,
+            SIGNAL(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)),
+            this,
+            SLOT(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)));
+
+    disconnect(m_pSysteminfo,
+            SIGNAL(powerStateChanged(QSystemDeviceInfo::PowerState)),
+            this,
+            SLOT(powerStateChanged(QSystemDeviceInfo::PowerState)));
+    delete m_pSysteminfo;
+    m_pSysteminfo = NULL;
+
+    MWTS_LEAVE;
 }
 
+#ifdef test
 /**
  * Test function
  */
+/*
 void SystemInfoTest::TestBattery()
 {
 	MWTS_ENTER;
 
         QSystemDeviceInfo systeminfo(this);
 
-        QSystemDeviceInfo::BatteryStatus 	batterystatus = systeminfo.batteryStatus();
-        qDebug() << "BatteryStatus " << batterystatus;
+        QSystemDeviceInfo::BatteryStatus batterystatus = systeminfo.batteryStatus();
+        qDebug() << "1: BatteryStatus " << batterystatus;
 
-        QSystemDeviceInfo::PowerState 	powerstate = systeminfo.currentPowerState ();
-        qDebug() << "PowerState " << powerstate;
+        QSystemDeviceInfo::PowerState powerstate = systeminfo.currentPowerState ();
+        qDebug() << "1: PowerState " << powerstate;
 
+
+        batterystatus = m_pSysteminfo->batteryStatus();
+        qDebug() << "2: BatteryStatus " << batterystatus;
+
+         powerstate = m_pSysteminfo->currentPowerState ();
+        qDebug() << "2: PowerState " << powerstate;
 
 	MWTS_LEAVE;
 }
-
+*/
+#endif
 
 
 
@@ -107,9 +156,9 @@ void SystemInfoTest::TestBattery()
 void SystemInfoTest::TestWallPower()
 {
     MWTS_ENTER;
-    qDebug() << "m_QmExpectedWallPower = true"
+    qDebug() << "m_QmExpectedWallPower = true";
     m_QmExpectedWallPower = true;
-    qDebug() << "SetCharging()"
+    qDebug() << "SetCharging()";
     SetCharging();
     MWTS_LEAVE;
 }
@@ -117,7 +166,8 @@ void SystemInfoTest::TestWallPower()
 void SystemInfoTest::TestBatteryPower()
 {
     MWTS_ENTER;
-    m_QmExpectedBatteryPower  = true;
+    qDebug() << "m_QmExpectedWallPower = false";
+    m_QmExpectedBatteryPower  = false;
     SetCharging();
     MWTS_LEAVE;
 }
@@ -126,27 +176,13 @@ void SystemInfoTest::SetCharging()
 {
     MWTS_ENTER;
 
-    qDebug() << "SystemInfoTest::SetCharging QSystemDeviceInfo systeminfo(this)"
-    QSystemDeviceInfo systeminfo(this);
+    QSystemDeviceInfo::BatteryStatus batterystatus = m_pSysteminfo->batteryStatus();
+    qDebug() << "SetCharging: BatteryStatus " << batterystatus;
+
+    QSystemDeviceInfo::PowerState powerstate = m_pSysteminfo->currentPowerState ();
+    qDebug() << "SetCharging: PowerState " << powerstate;
     
-    qDebug() << "connect"
-    connect(&systeminfo,
-            SIGNAL(batteryLevelChanged (int)),
-            this,
-            SLOT(batteryLevelChanged (int)));
-
-    connect(&systeminfo,
-            SIGNAL(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)),
-            this,
-            SLOT(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)));
-
-    connect(&systeminfo,
-            SIGNAL(powerStateChanged(QSystemDeviceInfo::PowerState)),
-            this,
-            SLOT(powerStateChanged(QSystemDeviceInfo::PowerState)));
-
-   qDebug("SystemInfoTest::SetCharging all initialised to get signals and listerners started");
-   m_FirstStep = false;
+    m_FirstStep = false;
 
     // now start qt main loop
     MWTS_DEBUG("Starting the qt-main loop");
@@ -155,21 +191,6 @@ void SystemInfoTest::SetCharging()
     // when timer emits signal 'timeout' the Stop is called
     // then we continue from here.
     MWTS_DEBUG("Main loop stopped");
-
-    disconnect(&systeminfo,
-            SIGNAL(batteryLevelChanged (int)),
-            this,
-            SLOT(batteryLevelChanged (int)));
-
-    disconnect(&systeminfo,
-            SIGNAL(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)),
-            this,
-            SLOT(batteryStatusChanged(QSystemDeviceInfo::BatteryStatus)));
-
-    disconnect(&systeminfo,
-            SIGNAL(powerStateChanged(QSystemDeviceInfo::PowerState)),
-            this,
-            SLOT(powerStateChanged(QSystemDeviceInfo::PowerState)));
 
     MWTS_LEAVE;
 }

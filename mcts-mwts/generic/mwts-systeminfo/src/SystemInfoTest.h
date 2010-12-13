@@ -57,9 +57,6 @@ QTM_USE_NAMESPACE
  *
  */
 
-#define SERVICE_NAME            "com.nokia.thermalmanager"
-#define SERVICE_PATH            "/com/nokia/thermalmanager"
-
 
 class SystemInfoTest : public MwtsTest
 {
@@ -106,7 +103,9 @@ public:
      *  @brief Get status of the main battery and power state
       *  @param remote, true if call remote device by ssh
      */
+#ifdef test
     void TestBattery();
+#endif
 
     /**
      *  @fn void TestWallPower()
@@ -134,8 +133,6 @@ public:
 
 
     private Q_SLOTS:
-    	    /* Charging callbacks */
-    	    void ChargingStateChanged(/*const Maemo::QmBattery::ChargingState state*/);
 
             /* This signal is emitted when battery level has changed. level is the new level.*/
             void batteryLevelChanged ( int level );
@@ -149,6 +146,8 @@ public:
 
 
     private:
+        QSystemDeviceInfo* m_pSysteminfo;
+
         bool m_pReturnValue;
         bool m_QmExpectedWallPower;
         bool m_QmExpectedBatteryPower;
