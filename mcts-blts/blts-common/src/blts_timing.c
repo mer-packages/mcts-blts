@@ -64,7 +64,10 @@ static int ts_diff(struct timespec *result,
 }
 
 
-
+/**
+ * Mark start point for timing.
+ * @return 0 on success, <0 if CLOCK_REALTIME Posix timer not available
+ */
 int timing_start()
 {
 	if(timer.running) return 0;
@@ -77,6 +80,10 @@ int timing_start()
 	return 0;
 }
 
+/**
+ * Mark end point for timing.
+ * @return 0 on success, <0 if CLOCK_REALTIME Posix timer not available
+ */
 int timing_stop()
 {
 	if(!timer.running) return -1;
@@ -89,7 +96,14 @@ int timing_stop()
 	return 0;
 }
 
-/* return number of seconds timer has run*/
+/**
+ * Return time elapsed since last timing_start() call.
+ * @return Time in seconds
+ *
+ * If a timing_stop() call was made, the returned time is the difference
+ * between timing_start() and timing_stop() points. Otherwise, time since
+ * timing_start() is returned.
+ */
 double timing_elapsed()
 {
 	struct timespec diff;
