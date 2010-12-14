@@ -39,9 +39,9 @@ Running the tests
 
 To see other options for blts-x11-tests;
  $ blts-display-tests -?
-USAGE: ./blts-x11-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
+USAGE: ./blts-display-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
 [-s] [-?] [-nc] [-t execution_time_in_seconds]
--l: Used log file, default blts_x11.txt
+-l: Used log file, default blts_display.txt
 -e: Execute single or multiple selected tests, for example -e 1,4,5.
 -en: Execute test by name, for example -en "My test X"
 -s: Show list of all tests
