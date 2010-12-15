@@ -321,7 +321,7 @@
         ">
         <step>min -c -t 'NFT-FS-Write_Data_to_USBMSD_eMMC-THRO'</step>
       </case>
-      <case name="NFT-FS-Read_Data_from_USBMSD_eMMC-THRO"xclock subfeature="read" type="Throughput" timeout="600" description=
+      <case name="NFT-FS-Read_Data_from_USBMSD_eMMC-THRO" subfeature="read" type="Throughput" timeout="600" description=
         "Purpose
         This test measures read performance for USBMSD-eMMC
         Method

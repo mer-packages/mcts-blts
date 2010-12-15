@@ -63,7 +63,7 @@
     </set>
 
 <!--This set contains LATENCY tests of mwts-location, script file: mwts-location-nft.cfg-->
-    <set name="LOLA-location" description="Location performance" feature="(A)-GPS" type="Latency">
+    <set name="LATE-location" description="Location performance" feature="(A)-GPS" type="Latency">
       <case name="NFT-GPS-HotFix-LATE" timeout="4200" description=
             "Purpose
             Get GPS hot fix. Tests performance of the positioning engine.
