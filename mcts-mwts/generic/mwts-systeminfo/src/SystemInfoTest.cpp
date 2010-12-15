@@ -121,35 +121,6 @@ void SystemInfoTest::OnUninitialize()
     MWTS_LEAVE;
 }
 
-#ifdef test
-/**
- * Test function
- */
-/*
-void SystemInfoTest::TestBattery()
-{
-	MWTS_ENTER;
-
-        QSystemDeviceInfo systeminfo(this);
-
-        QSystemDeviceInfo::BatteryStatus batterystatus = systeminfo.batteryStatus();
-        qDebug() << "1: BatteryStatus " << batterystatus;
-
-        QSystemDeviceInfo::PowerState powerstate = systeminfo.currentPowerState ();
-        qDebug() << "1: PowerState " << powerstate;
-
-
-        batterystatus = m_pSysteminfo->batteryStatus();
-        qDebug() << "2: BatteryStatus " << batterystatus;
-
-         powerstate = m_pSysteminfo->currentPowerState ();
-        qDebug() << "2: PowerState " << powerstate;
-
-	MWTS_LEAVE;
-}
-*/
-#endif
-
 
 
 
@@ -264,7 +235,7 @@ void SystemInfoTest::powerStateChanged ( QSystemDeviceInfo::PowerState state )
     case QSystemDeviceInfo::UnknownPower:
         MWTS_DEBUG("Power Status: Power error");
         g_pResult->Write("PowerState changed to: Power error");
-	qCritical("PowerState changed to: unsupported value");
+        qCritical("PowerState changed to: unsupported value");
         g_pResult->Write("Power state not recognized");
         break;
 

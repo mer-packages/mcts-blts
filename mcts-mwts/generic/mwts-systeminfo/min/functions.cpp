@@ -40,8 +40,8 @@ SystemInfoTest Test;
 /**
  *  @fn int WallPowerTestFunc()
  *  @brief Put charging callbacks on.
- *         If callback for charging is got with Wall charging type, then
- *         the callback for not charging, the test is written succeeded
+ *         If callback for charging is got with Battery Power type, then
+ *         the callback Wall Power type, the test is written succeeded
  *         to the result file.
  *  @return True, if successfull. False otherwise.
  */
@@ -55,16 +55,14 @@ LOCAL int WallPowerTestFunc(MinItemParser * item)
 /**
  *  @fn int BatteryPowerTestFunc()
  *  @brief Put charging callbacks on.
- *         If callback for charging is got with USB with 500mA charging type,
- *         then the callback for not charging, the test is written succeeded
+ *         If callback for charging is got with Wall Power type, then
+ *         the callback Battery Power type, the test is written succeeded
  *         to the result file.
  *  @return True, if successfull. False otherwise.
  */
 LOCAL int BatteryPowerTestFunc (MinItemParser * item)
 {
     MWTS_ENTER;
-    // Test
-    // Test.TestBattery();
     Test.TestBatteryPower();
     return ENOERR;
 }
