@@ -3,10 +3,10 @@
 %define buildroot	%{_topdir}/%{name}-%{version}-root
 
 BuildRoot:      %{buildroot}
-Name:           mwts-multimedia
+Name:           mwts-multimedia-tests
 Summary:        Test asset for Qt Mobility Multimedia API
 License:        LGPL
-Version:        %{version}
+Version:        0.0.1
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -19,19 +19,19 @@ Test asset for Qt Mobility Multimedia API
             
 %package        scripts-generic
 Summary:        MIN test case scripts for mwts-multimedia
-Requires:       mwts-multimedia
+Requires:       mwts-multimedia-tests
 %description    scripts-generic
 MIN test case scripts for mwts-multimedia
 
 %package        config-generic
 Summary:        Generic configuration file for mwts-multimedia
-Requires:       mwts-multimedia
+Requires:       mwts-multimedia-tests
 %description    config-generic
 Generic configuration file for mwts-multimedia
 
 %package	all-generic
 Summary:	meta package containing everything for mwts-multimedia (generic)
-Requires:	mwts-multimedia, mwts-multimedia-scripts-generic, mwts-multimedia-config-generic
+Requires:	mwts-multimedia-tests, mwts-multimedia-scripts-generic, mwts-multimedia-config-generic
 %description	all-generic
 Meta package for installing all needed packages for generic version of mwts-multimedia
 
@@ -65,6 +65,6 @@ make install INSTALL_ROOT=%{buildroot}
 
 %changelog
 * Tue Sep 29 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
-- Intial version
+- Initial version
 
 
