@@ -79,8 +79,8 @@ class Manager:
             print 'There is no dbus, please check'
             EXIT(False)
         self.manager = \
-            dbus.Interface(self.bus.get_object('org.moblin.connman', '/'
-                           ), 'org.moblin.connman.Manager')
+            dbus.Interface(self.bus.get_object('net.connman', '/'
+                           ), 'net.connman.Manager')
         if self.manager == None:
             print 'There is no connmand...do you startup connmand?'
             EXIT(False)
@@ -220,9 +220,9 @@ class Manager:
         self.SetProperty('OfflineMode', dbus.Boolean(0))
 
     def GetSubObject(self, path, name):
-        interface = 'org.moblin.connman.' + name
+        interface = 'net.connman.' + name
         self.subobj = \
-            dbus.Interface(self.bus.get_object('org.moblin.connman',
+            dbus.Interface(self.bus.get_object('net.connman',
                            path), interface)
         return self.subobj
 
@@ -394,8 +394,8 @@ class Manager:
         self.LatestSvc = None
         try:
             service = \
-                dbus.Interface(self.bus.get_object('org.moblin.connman'
-                               , path), 'org.moblin.connman.Service')
+                dbus.Interface(self.bus.get_object('net.connman'
+                               , path), 'net.connman.Service')
         except dbus.DBusException, e:
             return None
         time.sleep(1)
@@ -408,8 +408,8 @@ class Manager:
         props = self.GetProperties()
         for path in props['Services']:
             service = \
-                dbus.Interface(self.bus.get_object('org.moblin.connman'
-                               , path), 'org.moblin.connman.Service')
+                dbus.Interface(self.bus.get_object('net.connman'
+                               , path), 'net.connman.Service')
             properties = service.GetProperties()
             if properties['Name'] == Name:
                 svc = Service(service)
@@ -495,11 +495,11 @@ class Service:
                 self.svc.Connect()
             except dbus.DBusException, e:
                 if e._dbus_error_name \
-                    == 'org.moblin.connman.Error.AlreadyConnected':
+                    == 'net.connman.Error.AlreadyConnected':
                     print 'The service is already connected'
                     return True
                 elif e._dbus_error_name \
-                    == 'org.moblin.connman.Error.InProgress':
+                    == 'net.connman.Error.InProgress':
                     loop = loop + 1
                     print 'Still in connecting'
                     time.sleep(10)
@@ -635,8 +635,8 @@ class Device:
     def GetService(self, servicename=None):
         properties = self.manager.GetProperties()
         for path in properties['Services']:
-            service = dbus.Interface(self.manager.bus.get_object('org.moblin.connman'
-                                   , path), 'org.moblin.connman.Service'
+            service = dbus.Interface(self.manager.bus.get_object('net.connman'
+                                   , path), 'net.connman.Service'
                                    )
             properties = service.GetProperties()
             if "Name" in properties.keys() and servicename!=None:
@@ -837,8 +837,8 @@ class C3GDevice(Device):
         props = manager.GetProperties()
         for path in props['Services']:
             service = \
-                dbus.Interface(manager.bus.get_object('org.moblin.connman'
-                               , path), 'org.moblin.connman.Service')
+                dbus.Interface(manager.bus.get_object('net.connman'
+                               , path), 'net.connman.Service')
 
             properties = service.GetProperties()
             for key in properties.keys():

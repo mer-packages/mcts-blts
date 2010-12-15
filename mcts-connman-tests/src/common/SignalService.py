@@ -42,8 +42,8 @@ class SignalService(SignalBase):
     def Add_Signal_Receiver(self, bus):
         print 'Added Signal'
         bus.add_signal_receiver(property_changed,
-                                bus_name='org.moblin.connman',
-                                dbus_interface='org.moblin.connman.Service'
+                                bus_name='net.connman',
+                                dbus_interface='net.connman.Service'
                                 , signal_name='PropertyChanged',
                                 path_keyword='path')
 
