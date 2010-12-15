@@ -50,15 +50,24 @@ MIN SCRIPT FILES
 
 MIN SCRIPTER INTERFACE
 
-  BatteryTest
-     Get status of the main battery and power state, no parameters
+  BatteryPowerTest
+     Device is set to battery power, no parameters. You should first have charger plugged in and then
+     unplug charger to get test passed.
+  WallPowerTest
+        Device is set to wall power, no parameters. You should first have charger unplugged in and then
+        plug charger to get test passed.
 
 
 KNOWN ISSUES
+  MeeGo
+    QT Mobility does not have working implementation for battery level and charher state information or signals,
+    when this was written, 15.12.2010.
+    Bug 11280 - QSystemDeviceInfo does not give power or battery information
+    http://bugs.meego.com/show_bug.cgi?id=11280
 
- -
+
+
 
 ADDITIONAL RESOURCES
 
   -
-
