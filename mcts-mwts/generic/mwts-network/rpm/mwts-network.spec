@@ -5,8 +5,8 @@
 BuildRoot:		%{buildroot}
 Summary: 		Mwts-network is a wlan/psd networking test asset
 License: 		LGPL
-Name: 			mwts-network
-Version: 		%{ver}
+Name: 			mwts-network-tests
+Version: 		0.0.7
 Release: 		0
 Prefix: 		/usr
 Group: 			Testing
@@ -21,7 +21,7 @@ Mwts-network is a wlan/psd networking test asset
 Summary:                Min test-case scripts for mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
-Requires:               mwts-network
+Requires:               mwts-network-tests
 %description            scripts
 MIN test case scripts for mwts-common
 

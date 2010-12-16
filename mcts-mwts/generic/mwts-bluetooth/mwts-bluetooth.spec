@@ -5,8 +5,8 @@
 BuildRoot:      %{buildroot}
 Summary:        Mwts-bluetooth is a test asset for BlueZ
 License:        LGPL
-Name:           mwts-bluetooth
-Version:        %{ver}
+Name:           mwts-bluetooth-tests
+Version:        0.1.1
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -22,7 +22,7 @@ C++ and MIN interface
 Summary:        Min interface and test cases
 Prefix:         /usr
 Group:          Development/Tools
-Requires:       mwts-bluetooth
+Requires:       mwts-bluetooth-tests
 %description    scripts
 Min interface and test cases
             
@@ -30,7 +30,7 @@ Min interface and test cases
 # Summary:      Command line interface for mwts-bluetooth
 # Prefix:       /usr
 # Group:        Development/Tools
-# Requires:     mwts-bluetooth
+# Requires:     mwts-bluetooth-tests
 # %description  cli
 # Command line interface for mwts-bluetooth
 
