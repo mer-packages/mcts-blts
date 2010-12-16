@@ -1,3 +1,9 @@
+blts-v4l2-tests (0.3.9) unstable; urgency=low
+
+  * Remove obsolete Min support code
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 16 Dec 2010 11:11:15 +0200
+
 blts-v4l2-tests (0.3.8) unstable; urgency=low
 
   [ Jussi Saavalainen ]

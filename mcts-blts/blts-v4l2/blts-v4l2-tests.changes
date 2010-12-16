@@ -1,3 +1,6 @@
+* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.9
+- Remove obsolete Min support code
+
 * Wed 01 Dec 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.8
 - Rename duplicate set in tests.xml
 
