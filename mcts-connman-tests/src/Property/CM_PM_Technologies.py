@@ -35,11 +35,11 @@ import dbus.mainloop.glib
 from common import *
 from property import *
 
-value_list = ['/org/moblin/connman/technology/ethernet',
-              '/org/moblin/connman/technology/wifi',
-              '/org/moblin/connman/technology/bluetooth',
-              '/org/moblin/connman/technology/3g',
-              '/org/moblin/connman/technology/wimax',
-              '/org/moblin/connman/technology/gps',
-              '/org/moblin/connman/technology/cellular']
+value_list = ['/net/connman/technology/ethernet',
+              '/net/connman/technology/wifi',
+              '/net/connman/technology/bluetooth',
+              '/net/connman/technology/3g',
+              '/net/connman/technology/wimax',
+              '/net/connman/technology/gps',
+              '/net/connman/technology/cellular']
 EXIT(InListManagerM('Technologies', value_list))

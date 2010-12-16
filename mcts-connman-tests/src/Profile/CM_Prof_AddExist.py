@@ -50,7 +50,7 @@ for path in profiles:
             profile = manager.CreateProfile('TestProfile')
         except dbus.DBusException, e:
             if e._dbus_error_name \
-                == 'org.moblin.connman.Error.AlreadyExists':
+                == 'net.connman.Error.AlreadyExists':
                 print 'Create exist profile trigger error AlreadyExists!'
                 EXIT(True)
             else:
