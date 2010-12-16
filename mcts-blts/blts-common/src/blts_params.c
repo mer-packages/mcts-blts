@@ -1022,9 +1022,13 @@ static void symbol_table_insert_param_with_default(char *paramname, char *testna
 }
 
 
-/* Top level function for config parsing; parses configuration
-   starting from given file. Usually called from CLI code in
-   common. 0 == ok. */
+/**
+ * Top level function for config parsing; parses configuration
+ * starting from given file. Usually called from CLI code in
+ * common.
+ * @param filename Config file to load
+ * @return 0 == ok.
+ */
 int blts_config_load_from_file(char *filename)
 {
 	FILE *f;
@@ -1051,7 +1055,7 @@ int blts_config_load_from_file(char *filename)
 	return ret;
 }
 
-/* Top level finalize; currently, drops and frees symbol table. */
+/** Top level finalize; currently, drops and frees symbol table. */
 int blts_config_free()
 {
 	symbol_table_free();
@@ -1072,7 +1076,7 @@ static int config_generate_testset_tests(blts_cli_testcase **cases)
 	return 0;
 }
 
-/* Adds testsets to listing in the cli structure */
+/** Adds testsets to listing in the cli structure */
 int blts_config_add_testcases(blts_cli **cli)
 {
 	blts_cli_testcase *cases;
@@ -1115,6 +1119,14 @@ int blts_config_add_testcases(blts_cli **cli)
    success.
 */
 
+/**
+ * Look up constant value from configuration.
+ * @param[in]  key   Identifier
+ * @param[out] value Returned value
+ * @return 0 on success, -ENOENT on not found, -EINVAL on bad arguments.
+ *
+ * This can be used to look up eg. globals from config file.
+ */
 int blts_config_get_value_int(char *key, int *value)
 {
 	struct symbol_table_entry *e;
@@ -1136,6 +1148,7 @@ int blts_config_get_value_int(char *key, int *value)
 	return 0;
 }
 
+/** @see blts_config_get_value_int() */
 int blts_config_get_value_bool(char *key, int *value)
 {
 	struct symbol_table_entry *e;
@@ -1156,6 +1169,7 @@ int blts_config_get_value_bool(char *key, int *value)
 	return 0;
 }
 
+/** @see blts_config_get_value_int() */
 int blts_config_get_value_long(char *key, long *value)
 {
 	struct symbol_table_entry *e;
@@ -1176,6 +1190,7 @@ int blts_config_get_value_long(char *key, long *value)
 	return 0;
 }
 
+/** @see blts_config_get_value_int() */
 int blts_config_get_value_float(char *key, float *value)
 {
 	struct symbol_table_entry *e;
@@ -1196,6 +1211,7 @@ int blts_config_get_value_float(char *key, float *value)
 	return 0;
 }
 
+/** @see blts_config_get_value_int() */
 int blts_config_get_value_double(char *key, double *value)
 {
 	struct symbol_table_entry *e;
@@ -1216,6 +1232,7 @@ int blts_config_get_value_double(char *key, double *value)
 	return 0;
 }
 
+/** @see blts_config_get_value_int() */
 int blts_config_get_value_string(char *key, char **value)
 {
 	struct symbol_table_entry *e;
@@ -1814,29 +1831,29 @@ done:
 	return blts_config_boxed_value_list_reverse(ret);
 }
 
-/* Declare given test case able to use parameter variation according to
-   config file loaded. After this, running the test case results in
-   all configured variations to be executed in sequence. Parameters:
-
-   name == test case name, must match test case definition and one
-           of the tests in the configuration file
-
-   arg_handler == user function called with parameters defined here,
-           for each parameter change (between tests)
-
-   Variable list, as triplets:
-
-   CONFIG_PARAM_<type>, <param_name>, <value>
-        Define parameter types and values in order.
-	   <type> == one of INT,LONG,STRING,FLOAT,DOUBLE,BOOL
-	   <param_name> == label for parameter (must match one defined in config)
-	   <value> == value of given type (int/long/char*
-	                   /float/double/int)
-
-   CONFIG_PARAM_NONE ends the argument list (and must be present).
-
-   Return 0 on success.
-*/
+/**
+ * Declare given test case able to use parameter variation according to
+ * config file loaded. After this, running the test case results in
+ * all configured variations to be executed in sequence.
+ *
+ * @param name == test case name, must match test case definition and one
+ *                of the tests in the configuration file
+ *
+ * @param arg_handler == user function called with parameters defined here,
+ *                for each parameter change (between tests)
+ *
+ * Variable list, as triplets:
+ *
+ * - CONFIG_PARAM_type, param_name, value --
+ *      Define parameter types and values in order.
+ *	- type == one of INT,LONG,STRING,FLOAT,DOUBLE,BOOL
+ *	- param_name == label for parameter (must match one defined in config)
+ *	- value == value of given type (int/long/char* /float/double/int)
+ *
+ * - CONFIG_PARAM_NONE ends the argument list (and must be present).
+ *
+ * @return 0 on success.
+ */
 int blts_config_declare_variable_test(char *name, arg_handler_fn arg_handler, ...)
 {
 	va_list ap;
@@ -2067,7 +2084,7 @@ int blts_config_declare_variable_test_dynamic(char* name, tagged_arg_handler_fn 
 	return ret;
 }
 
-/* True if test exists and has variable parameters, false if not */
+/** True if test exists and has variable parameters, false if not */
 int blts_config_test_is_variable(char* name)
 {
 	struct symbol_table_entry *sym;
@@ -2092,6 +2109,7 @@ int blts_config_test_is_variable(char* name)
 	return 1;
 }
 
+/** Dump variants for test generated with given style to trace */
 int blts_config_debug_dump_variants(char *test, int style)
 {
 	struct variant_list *variants, *temp;
@@ -2120,7 +2138,8 @@ int blts_config_debug_dump_variants(char *test, int style)
 	return 0;
 }
 
-/* Pass parameter list to user-defined function for test. */
+/** Pass parameter list to user-defined function for test. Used internally by
+    common cli. */
 void* _blts_config_mutate_user_params(char *testname, struct boxed_value *values, void* user_ptr)
 {
 	struct symbol_table_entry *sym;
@@ -2156,7 +2175,16 @@ void* _blts_config_mutate_user_params(char *testname, struct boxed_value *values
 	return res;
 }
 
-
+/**
+ * Register a function for use in configuration generation.
+ *
+ * @param name Identifier to use in config file for function.
+ * @param func Function to use in parameter value generation.
+ *
+ * The function is called once for each input value given in config, and is
+ * expected to return the actual value to pass to the test case. Typical use
+ * is (for example) generating long strings from given seed.
+ */
 int blts_config_register_generating_func(char *name, var_generator_func func)
 {
 	struct symbol_table_entry *sym;
@@ -2199,6 +2227,13 @@ static void *mempool_stretch(unsigned newsize)
 	return mempool;
 }
 
+/**
+ * Mempool allocator. Used internally by config parser.
+ * @param size Size (bytes) of region to allocate.
+ * @return Pointer to allocated area or NULL on OOM.
+ *
+ * The alloc arena will be stretched a page at a time.
+ */
 void *_blts_params_mempool_alloc(unsigned size)
 {
 	void *ret;
@@ -2211,6 +2246,11 @@ void *_blts_params_mempool_alloc(unsigned size)
 	return ret;
 }
 
+/**
+ * Release mempool region.
+ *
+ * Note that all memory allocated with _blts_mempool_alloc() will be freed.
+ */
 void _blts_params_mempool_release(void)
 {
 	if (mempool)

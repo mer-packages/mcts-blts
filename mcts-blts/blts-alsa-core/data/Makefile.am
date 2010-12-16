@@ -16,8 +16,6 @@
 
 minconfigdir = $(libdir)/tests/blts-alsa-core-tests
 minconfig_DATA = \
-	blts-alsa-core-min.conf \
-	blts-alsa-core.min \
 	blts-alsa-core-req-files.cfg
 
 config_DATA = \

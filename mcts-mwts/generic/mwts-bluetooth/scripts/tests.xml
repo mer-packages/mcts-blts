@@ -456,7 +456,7 @@
     </set>
 <!--This set contains LATENCY test cases from mwts-bluetooth-nft.cfg-->
     <set name="Latency_Tests" description="Latency test cases for Bluetooth" feature="BT" type="Latency">
-      <case name="NFT-BT_Power_on-LATE" subfeature="Power" timeout="180" description=
+      <case name="NFT-BT_Power_on-LATE" subfeature="Power" timeout="180" description="
             Test basic power on latency of Bluetooth device
             Method
             Test case uses libbluetooth3 library and DBUS-API.

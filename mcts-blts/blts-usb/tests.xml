@@ -53,7 +53,7 @@
     ">
 
     <set name="usb-tests" feature="USB">
-      <case name="USB%20-%20Setup%20host%20driver"
+      <case name="USB - Setup host driver"
         subfeature="Initialization"
         type="Functional"
         timeout="1000"
@@ -77,10 +77,10 @@
         Change history
          Initial documentation 6.5.2010
       ">
-        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB%20-%20Setup%20host%20driver.log -en "USB - Setup host driver"</step>
+        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB_-_Setup_host_driver.log -en "USB - Setup host driver"</step>
       </case>
 
-      <case name="USB%20-%20Setup%20peripheral%20driver"
+      <case name="USB - Setup peripheral driver"
         subfeature="Initialization"
         type="Functional"
         timeout="1000"
@@ -104,11 +104,11 @@
         Change history
          Initial documentation 6.5.2010
       ">
-        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB%20-%20Setup%20peripheral%20driver.log -en "USB - Setup peripheral driver"</step>
+        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB_-_Setup_peripheral_driver.log -en "USB - Setup peripheral driver"</step>
       </case>
 
-      <case name="USB%20-%20Read%20test"
-        subfeature="Data%20transfer"
+      <case name="USB - Read test"
+        subfeature="Data transfer"
         type="Functional"
         timeout="1000"
         description="
@@ -131,11 +131,11 @@
         Change history
          Initial documentation 6.5.2010
       ">
-        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB%20-%20Read%20test.log -en "USB - Read test"</step>
+        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB_-_Read_test.log -en "USB - Read test"</step>
       </case>
 
-      <case name="USB%20-%20Write%20test"
-        subfeature="Data%20transfer"
+      <case name="USB - Write test"
+        subfeature="Data transfer"
         type="Functional"
         timeout="1000"
         description="
@@ -158,23 +158,17 @@
         Change history
          Initial documentation 6.5.2010
       ">
-        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB%20-%20Write%20test.log -en "USB - Write test"</step>
+        <step>/usr/bin/blts-usb-tests -l /var/log/tests/USB_-_Write_test.log -en "USB - Write test"</step>
       </case>
 
-      <!-- Add shell commands to execute after this set here -->
-      <!--
-      <post_steps>
-	<step>echo Hello world</step>
-      </post_steps>
-      -->
-	<get>
-	<!-- Add files to retrieve (logs etc) after running set here.
-	     Quote spaces! -->
-	<file>/var/log/tests/USB%20-%20Setup%20host%20driver.log</file>
-	<file>/var/log/tests/USB%20-%20Setup%20peripheral%20driver.log</file>
-	<file>/var/log/tests/USB%20-%20Read%20test.log</file>
-	<file>/var/log/tests/USB%20-%20Write%20test.log</file>
-	</get>
+      <get>
+        <!-- Add files to retrieve (logs etc) after running set here.
+             Quote spaces! -->
+        <file>/var/log/tests/USB_-_Setup_host_driver.log</file>
+        <file>/var/log/tests/USB_-_Setup_peripheral_driver.log</file>
+        <file>/var/log/tests/USB_-_Read_test.log</file>
+        <file>/var/log/tests/USB_-_Write_test.log</file>
+      </get>
     </set>
 
   </suite>

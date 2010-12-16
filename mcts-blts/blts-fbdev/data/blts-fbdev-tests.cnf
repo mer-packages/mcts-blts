@@ -8,51 +8,86 @@
 
 # Valid backlight subsystem for HW
 [parameter]
-        name backlight_subsystem
-        const "/sys/class/backlight/<enter_valid_sysfs_entry_here>"
+	name backlight_subsystem
+	const "/sys/class/backlight/<enter_valid_sysfs_entry_here>"
 [end_parameter]
 
 # Minimum light level
 [parameter]
-        name minimum_level
-        const 0
+	name minimum_level
+	const 0
 [end_parameter]
 
 # Maximum light level
 [parameter]
-        name maximum_level
-        const 255
+	name maximum_level
+	const 255
 [end_parameter]
 
 # Minimum light level for logarithmic tests
 [parameter]
-        name logarithmic_min
-        const 1
+	name logarithmic_min
+	const 1
 [end_parameter]
 
 # Maximum light level for logarithmic tests
 [parameter]
-        name logarithmic_max
-        const 255
+	name logarithmic_max
+	const 255
 [end_parameter]
 
 # Test case configurations
 [test]
-	name "Core-Set blanking levels"
+	name "Core-Framebuffer read frame buffer information with ioctl"
 	params framebuffer_device
 [end_test]
 
 [test]
-	name "Core-Verify backlight levels"
+	name "Core-Framebuffer set blanking levels"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Framebuffer 1-pixel uncached read"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Framebuffer 1-pixel uncached write"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Framebuffer 1-pixel uncached modify"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Framebuffer fullscreen buffer read"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Framebuffer fullscreen buffer write"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Framebuffer fullscreen buffer modify"
+	params framebuffer_device
+[end_test]
+
+[test]
+	name "Core-Backlight verify backlight levels"
 	params backlight_subsystem minimum_level maximum_level
 [end_test]
 
 [test]
-	name "Core-Linear backlight level changes"
+	name "Core-Backlight linear backlight level changes"
 	params backlight_subsystem minimum_level maximum_level
 [end_test]
 
 [test]
-	name "Core-Logarithmic backlight level changes"
+	name "Core-Backlight logarithmic backlight level changes"
 	params backlight_subsystem logarithmic_min logarithmic_max
 [end_test]

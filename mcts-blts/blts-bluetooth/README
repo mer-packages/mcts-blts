@@ -12,8 +12,6 @@ Running the tests in the package requires
   * Bluez (libbluetooth and kernel modules) >= 4.12
   * Bluez hcidump tool (>= 1.4)
 
-Optionally, a min test framework module will be built if it is present.
-
 
 Building the package
 
@@ -83,7 +81,7 @@ similar to following:
 
 hci0:   Type: USB
         BD Address: 00:15:83:18:C0:30 ACL MTU: 310:10 SCO MTU: 64:8
-        UP RUNNING PSCAN 
+        UP RUNNING PSCAN
         RX bytes:1007 acl:0 sco:0 events:30 errors:0
         TX bytes:367 acl:0 sco:0 commands:28 errors:0
 

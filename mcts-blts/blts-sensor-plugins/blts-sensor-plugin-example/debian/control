@@ -1,4 +1,4 @@
-Source: blts-sensor-plugin-example
+Source: libbltssensorplugin-example
 Section: devel
 Priority: extra
 Maintainer: Pasi Matilainen <pasi.matilainen@digia.com>

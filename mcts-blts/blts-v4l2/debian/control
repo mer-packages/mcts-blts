@@ -17,7 +17,6 @@ Architecture: any
 Priority: optional
 Section: testing
 Depends: ${shlibs:Depends}, ${misc:Depends}, blts-v4l2-tests-config
-Recommends: min | min-all
 Description: Camera baselayer test module
  Tests camera systems through V4L2 API
 

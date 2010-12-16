@@ -1,6 +1,6 @@
 Summary: BLTS FBdev test set
 Name: blts-fbdev-tests
-Version: 0.0.7
+Version: 0.0.8
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -38,7 +38,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %doc README COPYING
 /usr/bin/*
-/usr/lib/tests/%{name}/*
 
 %files config-example
 /etc/blts/blts-fbdev-tests.cnf

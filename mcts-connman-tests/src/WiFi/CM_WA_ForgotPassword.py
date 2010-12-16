@@ -37,21 +37,21 @@ if manager.Apset('1111000000', 'wep64', 1, 0, 1) == False:
 
 bus = dbus.SystemBus()
 
-manager = dbus.Interface(bus.get_object('org.moblin.connman', '/'),
-                         'org.moblin.connman.Manager')
+manager = dbus.Interface(bus.get_object('net.connman', '/'),
+                         'net.connman.Manager')
 
 properties = manager.GetProperties()
 
 for path in properties['Services']:
-    service = dbus.Interface(bus.get_object('org.moblin.connman',
-                             path), 'org.moblin.connman.Service')
+    service = dbus.Interface(bus.get_object('net.connman',
+                             path), 'net.connman.Service')
 
     properties = service.GetProperties()
     if properties['Name'] != 'shz13-otc-cisco-cm':
         continue
     print '%s Found with path=%s' % (properties['Name'], path)
-    svc = dbus.Interface(bus.get_object('org.moblin.connman', path),
-                         'org.moblin.connman.Service')
+    svc = dbus.Interface(bus.get_object('net.connman', path),
+                         'net.connman.Service')
     svc.SetProperty('Passphrase', '1111000001')
     try:
         svc.Connect()

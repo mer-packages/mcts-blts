@@ -43,4 +43,68 @@ USAGE: blts-fbdev-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"] [-s] 
   -C: Used parameter configuration file
   -?: This message
   -nc: Do not output log to terminal
-  -v: Verbose logging
+  -v: Verbose logging (default)
+  -vv: Very verbose logging, with trace information
+
+Test cases
+
+* Core-Framebuffer read frame buffer information with ioctl
+        Reads variant and fixed screen information from frame buffer device(s).
+
+* Core-Framebuffer set blanking levels
+        Tests each of the blanking levels on all configured framebuffer
+        devices.
+
+* Core-Framebuffer 1-pixel uncached read
+        Performance test of reading visible framebuffer pixel by pixel. Uses
+        rusage to estimate the CPU usage %. Prints information about the test
+        and framebuffer into the log and standard output. Done for all
+        configured framebuffer devices.
+
+* Core-Framebuffer 1-pixel uncached write
+        Performance test of writing into visible framebuffer pixel by pixel.
+        Uses rusage to estimate the CPU usage %. Prints information about the
+        test and framebuffer device into the log and standard output. Done
+        for all configured framebuffer devices.
+
+* Core-Framebuffer 1-pixel uncached modify
+        Performance test of both reading and vriting into visible framebuffer
+        pixel by pixel. Uses rusage to estimate the CPU usage %. Prints
+        information about the test and framebuffer into the log and and
+        stadard output. Done for all configured framebuffer devices.
+
+* Core-Framebuffer fullscreen buffer read
+        Performance test of reading a fullscreen framebuffer at once. Uses
+        rusage to estimate the CPU usage %. Prints information about the test
+        and framebuffer into the log and standard output. Done for all
+        configured devices.
+
+* Core-Framebuffer fullscreen buffer write
+        Performance test of writing into  a fullscreen framebuffer at once.
+        Uses rusage to estimate the CPU usage %. Prints information about the
+        test and framebuffer into the log and standard output. Done for all
+        configured devices.
+
+* Core-Framebuffer fullscreen buffer modify
+        Performance test of both reading and writing into a fullscreen
+        framebuffer at once. Uses rusage to estimate the CPU usage %. Prints
+        information about the test and framebuffer into the log and standard
+        output. Done for all configured devices.
+
+* Core-Backlight verify backlight levels
+        Verify backlight system's backlight level limits against configured
+        limits. Tests the limit values, by using the actual limit and going
+        one step over it.
+
+* Core-Backlight linear backlight level changes
+        Linearly goes through all values between configured minimum and maximum
+        values, by first going from min -> max and then from max -> min.
+        NOTE: This case can timeout if the min and max are very big. The case
+        sleeps for two seconds between each step!
+
+* Core-Backlight logarithmic backlight level changes
+        Goes through all values between configured minimum and maximum
+        values, by going from min -> max. The values are increased by following
+        pattern: (max light / log10 (max light)) * log10 (between min and max)
+        NOTE: This case can timeout if the min and max are very big. The case
+        sleeps for two seconds between each step!

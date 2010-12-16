@@ -21,19 +21,16 @@
 #ifndef BLTS_FBDEV_BACKLIGHT_H_
 #define BLTS_FBDEV_BACKLIGHT_H_
 
-/* Own includes */
-#include "blts-fbdev-defs.h"
-
 /* Verify limit values based off config */
 int
-blts_fbdev_case_backlight_verify (blts_fbdev_data *data);
+blts_fbdev_case_backlight_verify (void *test_data, int test_num);
 
 /* Linearly tests different backlight values */
 int
-blts_fbdev_case_backlight_linear (blts_fbdev_data *data);
+blts_fbdev_case_backlight_linear (void *test_data, int test_num);
 
 /* Logarithmically tests different backlight values */
 int
-blts_fbdev_case_backlight_logarithmic (blts_fbdev_data *data);
+blts_fbdev_case_backlight_logarithmic (void *test_data, int test_num);
 
 #endif /* BLTS_FBDEV_BLANKING_H_ */

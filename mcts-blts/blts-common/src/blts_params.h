@@ -21,30 +21,30 @@
 
 #include <blts_cli_frontend.h>
 
-/* Options for variation generation */
+/** Options for variation generation */
 enum config_variation_mode {
-	CONFIG_VARIATION_COMBINATIONS,  /* Generate all combinations (likely slow) */
-	CONFIG_VARIATION_ALLPAIRS,      /* Generate combinations with allpairs */
-	CONFIG_VARIATION_FIRST,         /* Pick first value from each variable
+	CONFIG_VARIATION_COMBINATIONS,  /**< Generate all combinations (likely slow) */
+	CONFIG_VARIATION_ALLPAIRS,      /**< Generate combinations with allpairs */
+	CONFIG_VARIATION_FIRST,         /**< Pick first value from each variable
 					   (start of range, first mentioned in lists) */
-	CONFIG_VARIATION_LAST           /* Pick last value from each variable */
+	CONFIG_VARIATION_LAST           /**< Pick last value from each variable */
 };
 
-/* Type codes for boxed values */
+/** Type codes for boxed values */
 enum config_param_type {
-	CONFIG_PARAM_INT,    /* C: int */
-	CONFIG_PARAM_LONG,   /* C: long */
-	CONFIG_PARAM_FLOAT,  /* C: float */
-	CONFIG_PARAM_DOUBLE, /* C: double */
-	CONFIG_PARAM_STRING, /* C: char * */
-	CONFIG_PARAM_BOOL,   /* C: int */
+	CONFIG_PARAM_INT,    /**< C: int */
+	CONFIG_PARAM_LONG,   /**< C: long */
+	CONFIG_PARAM_FLOAT,  /**< C: float */
+	CONFIG_PARAM_DOUBLE, /**< C: double */
+	CONFIG_PARAM_STRING, /**< C: char * */
+	CONFIG_PARAM_BOOL,   /**< C: int */
 	CONFIG_PARAM_NONE
 };
 
-/* Generic value (type == CONFIG_PARAM_*) */
+/** Generic value. Use blts_config_boxed_value_get/set to read/write content. */
 struct boxed_value {
-	int type;
-	struct boxed_value *next; /* optional, for use in lists */
+	int type;                   /**< Type (see #config_param_type) */
+	struct boxed_value *next;   /**< optional, link for list construction */
 	union {
 		long int_val;       /* INT, LONG, BOOL */
 		char *str_val;      /* STRING */
@@ -52,14 +52,15 @@ struct boxed_value {
 	};
 };
 
-/* Linked list for storing generated parameter variations */
+/** Linked list for storing generated parameter variations */
 struct variant_list {
-	unsigned index;
-	struct variant_list *next;
-	struct boxed_value *values; /* Linked list of parameter values for this variation */
+	unsigned index;             /**< Used by CLI frontend */
+	struct variant_list *next;  /**< Link field */
+	struct boxed_value *values; /**< Linked list of parameter values for this variation */
 };
 
-/* Type for argument handler function called once for each parameter variation
+/**
+   Type for argument handler function called once for each parameter variation
    when running variable case. Returned pointer is passed to test case as
    user_ptr argument, with null return as fail. The function is assumed to
    set up the passed pointer according to the passed parameter list.
@@ -68,7 +69,8 @@ typedef void *(*arg_handler_fn)(struct boxed_value *args, void *user_ptr);
 
 typedef void *(*tagged_arg_handler_fn)(struct boxed_value *arg_tags, struct boxed_value *args, void *user_ptr);
 
-/* Type for user-supplied function that can be used to generate values for a parameter,
+/**
+   Type for user-supplied function that can be used to generate values for a parameter,
    given other varying parameter values in the configuration. Arguments are a linked
    list of boxed values, in same order as the definition in the configuration file.
  */

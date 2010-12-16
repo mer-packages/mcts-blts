@@ -29,6 +29,7 @@
 #include <blts_log.h>
 
 /* Own includes */
+#include "blts-fbdev-defs.h"
 #include "blts-fbdev-backlight.h"
 #include "blts-fbdev-utils.h"
 
@@ -42,7 +43,7 @@
 /* Private functions */
 
 /* Read a brightness value from a file */
-int
+static int
 blts_fbdev_get_brightness (blts_fbdev_data *data, const char *brightness_file)
 {
         int   brightness  = 0;
@@ -112,14 +113,12 @@ ERROR:
 }
 
 /* Write a brightness value into a file */
-int
+static int
 blts_fbdev_set_brightness (blts_fbdev_data *data, int brightness)
 {
         char *full_path   = NULL;
         FILE *brightnessf = NULL;
         size_t foo, foo2, len;
-
-        FUNC_ENTER();
 
         FUNC_ENTER();
 
@@ -183,8 +182,9 @@ ERROR:
 
 /* Verify limit values based off config */
 int
-blts_fbdev_case_backlight_verify (blts_fbdev_data *data)
+blts_fbdev_case_backlight_verify (void *test_data, int test_num)
 {
+        blts_fbdev_data *data  = test_data;
         int current_brightness = 0;
         int max_brightness     = 0;
         int actual_brightness  = 0;
@@ -316,8 +316,9 @@ ERROR:
 
 /* Linearly tests different backlight values */
 int
-blts_fbdev_case_backlight_linear (blts_fbdev_data *data)
+blts_fbdev_case_backlight_linear (void *test_data, int test_num)
 {
+        blts_fbdev_data *data  = test_data;
         int current_brightness = 0;
         int i = 0;
 
@@ -411,8 +412,9 @@ ERROR:
 
 /* Logarithmically tests different backlight values */
 int
-blts_fbdev_case_backlight_logarithmic (blts_fbdev_data *data)
+blts_fbdev_case_backlight_logarithmic (void *test_data, int test_num)
 {
+        blts_fbdev_data *data  = test_data;
         int current_brightness = 0;
         int i = 0;
 
