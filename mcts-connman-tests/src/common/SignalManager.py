@@ -41,9 +41,9 @@ class SignalManager(SignalBase):
 
     def Add_Signal_Receiver(self, bus):
         bus.add_signal_receiver(property_changed,
-                                bus_name='org.moblin.connman',
+                                bus_name='net.connman',
                                 signal_name='PropertyChanged',
-                                dbus_interface='org.moblin.connman.Manager'
+                                dbus_interface='net.connman.Manager'
                                 )
 
     def property_changed(self, name, value):

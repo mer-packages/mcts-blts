@@ -47,7 +47,7 @@ class SignalConnman(SignalBase):
 
     def Add_Signal_Receiver(self, bus):
         bus.add_signal_receiver(property_changed,
-                                bus_name='org.moblin.connman',
+                                bus_name='net.connman',
                                 signal_name='PropertyChanged',
                                 path_keyword='path',
                                 interface_keyword='interface')
