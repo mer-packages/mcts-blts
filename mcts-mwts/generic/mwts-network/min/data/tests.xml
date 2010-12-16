@@ -55,7 +55,7 @@
       Pass- /Fail Criteria: connection to access point is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Connect_WPAtkip"'</step>
+        <step>min -c -t 'FUTE-WLAN-Connect_WPAtkip'</step>
       </case>
       <case name="FUTE-WLAN-Connect_WPAaes"  timeout="10" description=
       "Purpose: Test connecting to secured wlan access point
@@ -64,7 +64,7 @@
       Pass- /Fail Criteria: connection to access point is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Connect_WPAaes"'</step>
+        <step>min -c -t 'FUTE-WLAN-Connect_WPAaes'</step>
       </case>
       <case name="FUTE-WLAN-Disconnect"  timeout="10" description=
       "Purpose: Test disconnecting from a wlan access point
@@ -73,8 +73,103 @@
       Pass- /Fail Criteria: connection is disconnected, interface is down, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Disconnect"'</step>
+        <step>min -c -t 'FUTE-WLAN-Disconnect'</step>
       </case>
+
+      <case name="FUTE-WLAN-Connect_Adhoc"  timeout="10" description=
+      "Purpose: Test connecting to unsecured adhoc wlan access point
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Connect_Adhoc'</step>
+      </case>
+      <case name="FUTE-WLAN-Connect_Adhoc_WEP"  timeout="10" description=
+      "Purpose: Test connecting to wep adhoc wlan access point
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Connect_Adhoc_WEP'</step>
+      </case>
+     <case name="FUTE-WLAN-Download_file_10M"  timeout="10" description=
+      "Purpose: Test connecting to unsecured ap and download file from ftp server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is downloaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Download_file_10M'</step>
+      </case>
+     <case name="FUTE-WLAN-Upload_file_10M "  timeout="10" description=
+      "Purpose: Test connecting to unsecured ap and upload file from to server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is uploaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Upload_file_10M'</step>
+      </case>
+     <case name="FUTE-WLAN-Download_file_10M_WEP "  timeout="10" description=
+      "Purpose: Test connecting to wep secured ap and download file from ftp server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is downloaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Download_file_10M_WEP'</step>
+      </case>
+     <case name="FUTE-WLAN-Upload_file_10M_WEP"  timeout="10" description=
+      "Purpose: Test connecting to wep ap and upload file from to server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is uploaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Upload_file_10M_WEP'</step>
+      </case>
+     <case name="FUTE-WLAN-Download_file_10M_WPA-TKIP"  timeout="10" description=
+      "Purpose: Test connecting to wpa tkip secured ap and download file from ftp server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is downloaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Download_file_10M_WPA-TKIP'</step>
+      </case>
+     <case name="FUTE-WLAN-Upload_file_10M_WPA-TKIP"  timeout="10" description=
+      "Purpose: Test connecting to wpa tkip secured ap and upload file from to server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is uploaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Upload_file_10M_WPA-TKIP'</step>
+      </case>
+     <case name="FUTE-WLAN-Download_file_10M_WPA2-AES"  timeout="10" description=
+      "Purpose: Test connecting to wpa2 aes secured ap and download file from ftp server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is downloaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Download_file_10M_WPA2-AES'</step>
+      </case>
+     <case name="FUTE-WLAN-Upload_file_10M_WPA2-AES"  timeout="10" description=
+      "Purpose: Test connecting to wpa2 aes secured ap and upload file from to server
+      Method: Bring wlan interface up and create connection
+      Pre- /Post-conditions: none
+      Pass- /Fail Criteria: connection to access point is made, file is uploaded, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-WLAN-Upload_file_10M_WPA2-AES'</step>
+      </case>
+
+
+
+
    </set>
    <set name="FUTE-PSD" description="Networking functionality" feature="(E)GPRS" type="Functional">
       <case name="FUTE-PSD-Connect"  timeout="10" description=
@@ -84,7 +179,7 @@
       Pass- /Fail Criteria: connection to psd network is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-PSD-Connect"'</step>
+        <step>min -c -t 'FUTE-PSD-Connect'</step>
       </case>
       <case name="FUTE-PSD-Disconnect"  timeout="10" description=
       "Purpose: Test disconnecting from a psd network
@@ -93,8 +188,36 @@
       Pass- /Fail Criteria: connection to psd network is disconnected, interface is down, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-PSD-Disconnect"'</step>
+        <step>min -c -t 'FUTE-PSD-Disconnect'</step>
       </case>
+      <case name="FUTE-PSD-3G_Connect"  timeout="10" description=
+      "Purpose: Test connecting to a 3g psd network
+      Method: Bring up gprs0 interface and create connection to PSD network 
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to psd network is made, test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-PSD-3G_Connect'</step>
+      </case>
+      <case name="FUTE-PSD-3G_Download_10M_file"  timeout="10" description=
+      "Purpose: Create 3g connection and download 10MB file from ftp server
+      Method: Bring up gprs0 interface and create connection to PSD network, download file from ftp server 
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to 3g network is is created, file downloaded, test does not crash
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-PSD-3G_Download_10M_file'</step>
+      </case>
+      <case name="FUTE-PSD-3G_Upload_10M_file"  timeout="10" description=
+      "Purpose: Create 3g connection and upload 10MB file to ftp server
+      Method: Bring up gprs0 interface and create connection to 3g network, upload file to ftp server
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to 3g network is is created, file uploaded, test does not crash
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'FUTE-PSD-3G_Upload_10M_file'</step>
+      </case>
+
    </set>
    <set name="DATAFLOW-PSD" description="Networking functionality" feature="(E)GPRS" type="Functional">
       <case name="DATAFLOW-PSD-2g_Download_2.5M_file"  timeout="300" description=
@@ -192,6 +315,42 @@
    </set>
    
    <set name="NFT-PSD-Robustness" description="Networking functionality" feature="(E)GPRS" type="Iterative">
+      <case name="NFT-PSD-EDGE_Download_throughput-THRO" timeout="300" description=
+      "Purpose: Test download troughput with EDGE psd network
+      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to EDGE network is made, troughput is measured and test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'NFT-PSD-EDGE_Download_throughput-THRO'</step>
+      </case>
+      <case name="NFT-PSD-EDGE_Upload_throughput-THRO " timeout="300" description=
+      "Purpose: Test upload troughput with EDGE psd network
+      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to EDGE network is made, troughput is measured and test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'NFT-PSD-EDGE_Upload_throughput-THRO'</step>
+      </case>
+      <case name="NFT-PSD-HSDPA_Download_throughput-THRO" timeout="300" description=
+      "Purpose: Test download troughput with 3.5g psd network
+      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to 3.5g network is made, troughput is measured and test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'NFT-PSD-HSDPA_Download_throughput-THRO'</step>
+      </case>
+      <case name="NFT-PSD-HSUPA_Upload_throughput-THRO " timeout="300" description=
+      "Purpose: Test upload troughput with 3.5g psd network
+      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf
+      Pre- /Post-conditions: SIM card is inserted 
+      Pass- /Fail Criteria: connection to 3.5g network is made, troughput is measured and test does not crash 
+      References: 
+      Required test data: None.">
+        <step>min -c -t 'NFT-PSD-HSUPA_Upload_throughput-THRO '</step>
+      </case>
       <case name="NFT-PSD-3g_Download_file_1M-ITER" timeout="300" description=
       "Purpose: Test downloading file via 3g psd network
       Method: Bring up gprs0 interface and create connection to PSD network. Download file from ftp server 
@@ -752,14 +911,14 @@
       Required test data: None." >
         <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WPA2aes-ITER"'</step>
       </case> 
-      <case name=" NFT-WLAN-Connect_idle_disconnect"  timeout="100" description=
+      <case name="NFT-WLAN-Connect_idle_disconnect-ITER"  timeout="100" description=
       "Purpose: Test connecting to access point and then idle given time
       Method: Bring up wlan interface, idle, disconnect   
       Pre- /Post-conditions: 
       Pass- /Fail Criteria: connection to ap is made, connection stays in idle, connection is disconnected, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_idle_disconnect-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_idle_disconnect-ITER'</step>
       </case> 
      </set>
      
@@ -873,7 +1032,101 @@
         <step>min -c -t 'NFT-WLAN-Download_throughput_WPA2tkip"'</step>
       </case>
     </set>
-    
+
+    <set name="NFT-WLAN-LATE" description="Networking functionality" feature="WLAN" type="Latency">
+      <case name="NFT-WLAN-Connect_unsaved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with unsaved and unsecured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_unsaved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_saved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with saved unsecured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_saved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WEP_unsaved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with unsaved wep secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_WEP_unsaved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WEP_saved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with saved wep secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_WEP_saved-LATE '</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WPA-TKIP_unsaved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with unsaved wpa tkip secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_WPA-TKIP_unsaved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WPA-TKIP_saved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with saved wpa tkip secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t NFT-WLAN-Connect_WPA-TKIP_saved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WPA2-TKIP_unsaved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with unsaved wpa2 tkip secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_WPA2-TKIP_unsaved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WPA2-TKIP_saved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with saved wpa2 tkip secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
+      </case>
+     <case name="NFT-WLAN-Connect_WPA2-AES_saved-LATE"
+  timeout="10" description=
+        "Purpose: tests connection creation latency with saved wpa2 aes secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_WPA2-AES_saved-LATE"'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_WPA2-AES_unsaved-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with unsaved wpa2 aes secured ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_WPA2-AES_unsaved-LATE'</step>
+      </case>
+    </set>
+
     <set name="NFT-WLAN-LOLA" description="Networking functionality" feature="WLAN" type="Long-lasting">
       <case name="NFT-WLAN-Upload_troughput-LOLA"  timeout="10" description=
         "Purpose: Test upload 2 hour upload troughput via wlan connection

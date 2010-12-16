@@ -104,10 +104,7 @@ GstreamerTest::GstreamerTest()
     local_elapsed_time = 0;
     local_event_type = 0;
     local_second_event_type = 0;
-    m_bMeasureFpsPerformance = FALSE;
-    /* For controlling volume level during playback */
-    local_volume_level = 1;
-    local_volume_level_decreasing = TRUE;
+    m_bMeasureFpsPerformance = FALSE;    
 
     /* These are user-given settings for timeouts with default values */
     local_fail_timeout_setting = 0;
@@ -1092,7 +1089,7 @@ gboolean GstreamerTest::get_duration (gint64* duration)
   @return TRUE if success
 */
 
-gint GstreamerTest::set_change_volume_level()
+gint GstreamerTest::set_change_volume_level(bool mode)
 {
     MWTS_ENTER;
     //local_change_volume_level = TRUE;
@@ -1102,6 +1099,17 @@ gint GstreamerTest::set_change_volume_level()
         g_source_remove(local_change_volume_timeout_source);
         local_change_volume_timeout_source=0;
     }
+
+    local_volume_level_decreasing=mode;
+    if (local_volume_level_decreasing==TRUE)
+    {
+        local_volume_level=1.0;
+    }
+    else
+    {
+        local_volume_level=0.0;
+    }
+
     local_change_volume_timeout_source = g_timeout_add_seconds_full(G_PRIORITY_HIGH, VOLUME_CHANGE_TIMEOUT, (gboolean(*)(void*))GstreamerTest_set_volume_level_cb_wrapper, NULL, NULL);
 
 

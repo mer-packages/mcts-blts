@@ -42,7 +42,7 @@
         <step>min -c -t 'FUTE-Multimedia_Record_audio_mono_1channel_48KHz_128kbs_PCM'</step>
       </case>
 
-      <case name="FUTE-Multimedia_Record_audio_stereo_48KHz_320kbs_PCM" subfeature="Record" timeout="120" description=
+      <case name="FUTE-Multimedia_Record_audio_stereo_2channel48KHz_320kbs_PCM" subfeature="Record" timeout="120" description=
         "Purpose
         Test basic recording functionality of the device
         Method
@@ -52,7 +52,75 @@
         Is able to create audio files with >0 size
         Test case result can be found from /var/log/tests
         ">
-        <step>min -c -t 'FUTE-Multimedia_Record_audio_stereo_48KHz_320kbs_PCM'</step>
+        <step>min -c -t 'FUTE-Multimedia_Record_audio_stereo_2channel48KHz_320kbs_PCM'</step>
+      </case>
+
+      <case name="FUTE-Multimedia_Show_supported_codecs_and_containers" subfeature="Record" timeout="120" description=
+        "Purpose
+        Shows supported codecs and containers
+        Method
+        Test case uses qt-mobility multimedia API
+        Pre-/Post-Conditions
+        Pass/Fail Criteria
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE-Multimedia_Show_supported_codecs_and_containers'</step>
+      </case>
+
+      <case name="FUTE-Multimedia_Listen_recorded_stereo_2channel_48KHZ_256kbs_vorbis" subfeature="Record" timeout="120" description=
+        "Purpose
+        Test basic recording functionality of the device and playing it back
+        Method
+        Test case uses qt-mobility multimedia API
+        Pre-/Post-Conditions
+        Audio is saved to '/home/meego' so that directory should exists
+        Pass/Fail Criteria
+        Is able to create audio files with >0 size and play it back with no MediaPLayer error
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE-Multimedia_Listen_recorded_stereo_2channel_48KHZ_256kbs_vorbis'</step>
+      </case>
+
+      <case name="FUTE-Multimedia_Listen_recorded_mono_1channel_48KHz_128kbs_PCM" subfeature="Record" timeout="120" description=
+        "Purpose
+        Test basic recording functionality of the device and playing it back
+        Method
+        Test case uses qt-mobility multimedia API
+        Pre-/Post-Conditions
+        Audio is saved to '/home/meego' so that directory should exists
+        Pass/Fail Criteria
+        Is able to create audio files with >0 size and play it back with no MediaPLayer error
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE-Multimedia_Listen_recorded_mono_1channel_48KHz_128kbs_PCM'</step>
+      </case>
+
+      <case name="FUTE-Multimedia_Listen_audio_stereo_2channel_44.1KHZ_128kbs_vorbis_ogg" subfeature="Playback" timeout="120" description=
+        "Purpose
+        Test basic playback functionality on device
+        Method
+        Test case uses qt-mobility multimedia API
+        Pre-/Post-Conditions
+        Audio file to play should exists in given path, check path and file name in test case script.
+        Pass/Fail Criteria
+        Is able to play given audio file with no error.
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE-Multimedia_Listen_audio_stereo_2channel_44.1KHZ_128kbs_vorbis_ogg'</step>
+      </case>
+
+      <case name="FUTE-Multimedia_Listen_audio_mono_1channel_8KHZ_128kbs_PCM_wav" subfeature="Playback" timeout="120" description=
+        "Purpose
+        Test basic playback functionality on device
+        Method
+        Test case uses qt-mobility multimedia API
+        Pre-/Post-Conditions
+        Audio file to play should exists in given path, check path and file name in test case script.
+        Pass/Fail Criteria
+        Is able to play given audio file with no error.
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE-Multimedia_Listen_audio_mono_1channel_8KHZ_128kbs_PCM_wav'</step>
       </case>
     </set>
   </suite>
@@ -70,8 +138,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            https://projects.maemo.org/svn/testdata/media/Image/JPEG/JPEG_2304x1296(3MPix)_24BPP_BigBuckBunny_1.2MB.jpg" timeout="360">
+            Required test data (JPEG files)
+            " timeout="360">
             <step>min -c -t 'NFT-Imageviewing-Show_1MB_JPG_image-ITER'</step>
       </case>
       <case name="NFT-Imageviewing-Show_various_size_JPG_images-ITER" subfeature="Show" description=
@@ -84,8 +152,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            Contents of https://projects.maemo.org/svn/testdata/media/Image/JPEG/" timeout="120">
+            Required test data (JPEG files)
+            " timeout="120">
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_JPG_images-ITER'</step>
       </case>
       <case name="NFT-Imageviewing-Show_various_size_BMP_images-ITER" subfeature="Show" description=
@@ -98,8 +166,8 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            Contents of https://projects.maemo.org/svn/testdata/media/Image/BMP/" timeout="360">
+            Required test data (BMP files)
+            " timeout="360">
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_BMP_images-ITER'</step>
       </case>
       <case name="NFT-Imageviewing-Show_various_size_PNG_images-ITER" subfeature="Show" description=
@@ -112,10 +180,26 @@
             Pass/Fail Criteria
             Image is shown in screen. Testcase does not crash. Memory is managed properly.
             References
-            Required test data
-            Contents of https://projects.maemo.org/svn/testdata/media/Image/PNG/" timeout="360">
+            Required test data (PNG files)
+            " timeout="360">
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_PNG_images-ITER'</step>
       </case>
+    </set>
+    <set name="Functional test" description="Multimedia image viewining functionality tests" feature="Still Viewing" type="Functional" >
+      <case name="FUTE-Imageviewing-Open_1MB_JPG_image" subfeature="Show" description=
+            "Purpose
+            Test opening and viewing still image(s).
+            Method
+            Test case uses qt-mobility multimedia API
+            Pre-/Post-conditions
+            Image file(s) available in device at /home/user/MyDocs/testdata/Image/JPEG/
+            Pass/Fail Criteria
+            Image is shown in screen. Testcase does not crash.
+            References
+            Required test data (JPEG files)">
+            <step>min -c -t 'FUTE-Imageviewing-Open_1MB_JPG_image'</step>
+      </case>
+
     </set>
   </suite>
 
@@ -146,6 +230,19 @@
         Test case result can be found from /var/log/tests
         ">
         <step>min -c -t 'Dataflow_FMRadio_Scan_frequency'</step>
+      </case>
+
+      <case name="FUTE_Multimedia_FMRadio_Tune_on_active_frequency" subfeature="" timeout="120" description=
+        "Purpose
+        Test turning on active frequency
+        Method
+        Test case uses qt-mobility mobility API
+        Pre-/Post-Conditions
+        Pass/Fail Criteria
+        Is able to listen radio at a certain frequency
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE_Multimedia_FMRadio_Tune_on_active_frequency'</step>
       </case>
     </set>
   </suite>

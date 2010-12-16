@@ -24,8 +24,23 @@
 
 #include "mwtsradio.h"
 #include <MwtsCommon>
-#include <QDBusConnection>
-#include <QDBusInterface>
+
+
+/** Singleton implementation */
+MwtsRadio* MwtsRadio::inst = NULL;
+MwtsRadio* MwtsRadio::instance()
+{
+	if(!inst)
+		inst=new MwtsRadio();
+	return inst;		
+}
+
+#ifdef OFONO_QT_EXISTS
+
+MwtsRadio::MwtsRadio()
+{
+	m_radioSettings = new OfonoRadioSettings(OfonoModem::AutomaticSelect, QString(), NULL);
+}
 
 /** Changes radio access technology mode*/
 bool MwtsRadio::ChangeMode(int mode)
@@ -53,24 +68,44 @@ bool MwtsRadio::ChangeMode(int mode)
 		return false;
 	}
 
-	QDBusMessage reply;
-
-	qDebug() << "Opening Manager interface";
-	QDBusInterface manager("org.ofono", "/", "org.ofono.Manager", QDBusConnection::systemBus());
-
-	qDebug() << "Querying modems";
-	reply = manager.call("GetModems");
-
-	QString modemPath=reply.arguments()[0].toString();
-	
-	qDebug() << "Opening RadioSettings interface";
-	QDBusInterface radioSettings("org.ofono", modemPath, "org.ofono.RadioSettings", QDBusConnection::systemBus());
-
-	qDebug() << "Calling TechnologyPreference";
-	radioSettings.call("TechnologyPreference", sMode);
-
+        qDebug() << "Radio settings validity:" << m_radioSettings->isValid();
+        qDebug() << "Current radio mode:" << m_radioSettings->technologyPreference();
+	qDebug() << "Setting mode to: " << sMode;
+        m_radioSettings->setTechnologyPreference(sMode);
 	MWTS_LEAVE;
 	return true;
 }
+
+/** 
+  slot for notification when radio mode has really changed
+*/
+void MwtsRadio::onRadioModeChanged()
+{
+	qDebug() << "Radio mode changed to:" << m_radioSettings->technologyPreference();
+}
+
+
+
+
+
+
+#else
+// ----------------- DUMMY implementation ----------------
+
+MwtsRadio::MwtsRadio()
+{
+	MWTS_ENTER;
+}
+bool MwtsRadio::ChangeMode(int mode)
+{
+	MWTS_ENTER;
+	qWarning() << "Radio mode change not available due to missing ofono-qt";
+	return true;
+}
+void MwtsRadio::onRadioModeChanged()
+{
+	MWTS_ENTER;
+}
+#endif
 
 

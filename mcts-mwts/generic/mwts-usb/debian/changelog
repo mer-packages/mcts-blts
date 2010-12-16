@@ -1,3 +1,7 @@
+mwts-usb-tests (0.0.7) unstable; urgency=low
+  * Fixed one master slave case to use correct slave
+ -- Tuomo Pelkonen <tuomo.pelkonen@digia.com>  Tue, 7 Dec 2010 12:00:00 +0200
+
 mwts-usb-tests (0.0.6) unstable; urgency=low
   * Fixed documentation, code and test scripts for open sourcing
  -- Esa-Pekka Miettinen <ext-esa-pekka.miettinen@nokia.com>  Fri, 1 Oct 2010 10:41:00 +0200

@@ -1,0 +1,54 @@
+/*
+ * Tests plan for QtM Feedback module
+ * Create proof-of-concept
+ * Jan Grela
+ *
+ */
+
+
+/*--------------------------------------------------------------------
+|  Test cases plan for functional tests of Qt Mobility Feedback API  |
+--------------------------------------------------------------------*/
+
+1. Test start of effect
+	tests if effect state changes to 'Running' (2)
+	
+2. Test pause of effect
+	tests if effect state changes to 'Paused' (1)
+
+3. Test stop of effect
+	tests if effect state changes to 'Stopped' (0)
+
+4. Test attack (fade in) of an effect
+	tests if attack intensity is set
+
+5. Test setting intesity of an effect
+        tests if intensity is set 
+
+6. Test setting duration of an effect
+        tests if duration is set 
+
+7. Test attack (fade in) intensity of an effect
+        tests if attack intensity is set 
+
+8. Test fade (fade out) intensity of an effect
+        tests if fade intensity is set
+
+9. Test support for theme effects
+	tests if device supports theme effects
+
+Before running every test duration and intensity should be set (might be default values)
+
+
+/*----------------------------------------------------------------
+|  Plan for test asset FeedbackTest                              |
+----------------------------------------------------------------*/
+
+In this test asset QFeedbackHapticsEffect class will be used. This can take advantage of haptics feature of mobile devices (vibration).
+
+* One field of test asset class is pointer to object of class QFeedbackHapticsEffect 
+* Initialization of fields of this obeject (duration, intensity, attack time, attack intensity, fade time, fade intensity)
+* Setters and getters for them
+* Methods for changing state of effect
+* Method of acting (possible switching error indicator) when error accurs.
+

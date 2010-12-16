@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-systeminfo-scripts" domain="System">
+
+    <set name="SystemInfo_Functional" description="SystemInfo functional test cases" feature="Settings" type="Functional" >
+      <case name="FUTE-SystemInfo-BatteryTest" timeout="30" description=
+        "Purpose
+        Get Device battery status
+        Method
+        Calls QSystemDeviceInfo and reads result
+        Pre-/Post-Conditions
+        None
+        Pass/Fail Criteria
+        Pass if some value is got. We dont know exactly what got value means
+        ">
+        <step>min -c -t 'FUTE-SystemInfo-BatteryTest'</step>
+      </case>
+    </set>
+    
+    <set name="SystemInfo_Iterative" description="SystemInfo iterative test cases" feature="Settings" type="Iterative" >
+      <case name="NFT-SystemInfo-BatteryrTest-ITER" subfeature="Test" timeout="60" description=
+        "Purpose
+        Get Device battery status iterative
+        Method
+        Calls QSystemDeviceInfo and reads result
+        Pre-/Post-Conditions
+        None
+        Pass/Fail Criteria
+        Pass if some value is got. We dont know exactly what got value means
+        ">
+        <step>min -c -t 'NFT-SystemInfo-BatteryrTest-ITER"'</step>
+      </case>
+    </set>
+   </case>
+  </suite>
+</testdefinition>

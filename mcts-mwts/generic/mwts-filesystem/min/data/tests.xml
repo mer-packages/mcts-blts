@@ -2,10 +2,65 @@
 <testdefinition version="0.1">
   <suite name="mwts-filesystem-tests" domain="System">
 
+    <set name="FUTE-Filesystem" description="File system FUTE test cases" feature="Filesystem" type="Functional">
 
-<!-- TMP tests -->
+    <case name="FUTE-FS-Write_data_to_USBMSD" subfeature="write" type="Functional" timeout="600" description=
+       "Purpose
+       This test verifies Write tor USBMSD-MemoryCard
+       Method
+       Test case writes data. File block size 32kB and block count 500.
+       Pre-/Post-Conditions
+       Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+       Pass/Fail Criteria
+       Test case returns passed logged into /var/log/tests/.
+       ">
+       <step>min -c -t 'FUTE-FS-Write_data_to_USBMSD'</step>
+     </case>
+     <case name="FUTE-FS-Read_data_from_USBMSD" subfeature="read" type="Functional" timeout="600" description=
+       "Purpose
+       This test verifies read from USBMSD-MemoryCard
+       Method
+       Test case reads data. File block size 32kB and block count 500.
+       Pre-/Post-Conditions
+       Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+       Pass/Fail Criteria
+       Test case returns passed logged into /var/log/tests/.
+       ">
+       <step>min -c -t 'FUTE-FS-Read_data_from_USBMSD'</step>
+     </case>
+
+      <case name="FUTE-FS-Write_Data_to_USBMSD_eMMC" subfeature="write" type="Functional" timeout="600" description=
+        "Purpose
+        This test verifies write to USBMSD-eMMC
+        Method
+        Test case writes data to eMMC-mass storage. File block size 32kB and block count 500.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'FUTE-FS-Write_Data_to_USBMSD_eMMC'</step>
+      </case>
+      <case name="FUTE-FS-Read_Data_from_USBMSD_eMMC" subfeature="read" type="Functional" timeout="600" description=
+        "Purpose
+        This test measures read from USBMSD-eMMC
+        Method
+        Test case reads data from eMMC-mass storage. File block size 32kB and block count 500.
+        Pre-/Post-Conditions
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test asset is installed to the device. Test must be executed as root.
+        Pass/Fail Criteria
+        Test case returns passed logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'FUTE-FS-Read_Data_from_USBMSD_eMMC'</step>
+      </case>
+
+    </set>
+
+
+    <set name="NFT-Filesystem" description="File system NFT test cases" feature="Filesystem" type="Iterative">
+
+<!-- TMP tests: File system test cases for TEMP file system -->
 	
-	<set name="TMP" description="File system test cases for TEMP file system" feature="TEMP">
       <case name="NFT-FS-Write_Data_TMP-THRO" subfeature="write" type="Throughput" timeout="600" description=
             "Purpose 
 	 	    This test measures Write performance for TMP
@@ -90,11 +145,9 @@
 	    ">
 		<step>min -c -t 'NFT-FS-Sync_Latency_TMP-LATE'</step>
       </case>
-    </set>
     
-<!-- ROOT tests -->
+<!-- ROOT tests: File system test cases for TEMP file system -->
 	
-	<set name="ROOT" description="File system test cases for TEMP file system" feature="TEMP">
       <case name="NFT-FS-Write_Data_ROOT-THRO" subfeature="write" type="Throughput" timeout="600" description=
             "Purpose 
 	 	    This test measures Write performance for ROOT
@@ -179,15 +232,13 @@
 	    ">
 		<step>min -c -t 'NFT-FS-Sync_Latency_ROOT-LATE'</step>
       </case>
-    </set>
     
     
-<!-- USBMSD tests -->
+<!-- USBMSD tests: USBMSD-MemoryCard" description="File system test cases for mass storage -->
 	
-    <set name="USBMSD-MemoryCard" description="File system test cases for mass storage" feature="Filesystem">
-      <case name="NFT-FS-Write_Data_USBMSD_MemoryCard-THRO" subfeature="write" type="Throughput" timeout="600" description=
+     <case name="NFT-FS-Write_data_to_USBMSD-THRO" subfeature="write" type="Throughput" timeout="600" description=
         "Purpose 
-        This test measures Write performance for USBMSD-MemoryCard
+        This test measures write performance for USBMSD-MemoryCard
         Method
         Test case measures writes data and measures troughput. File block size 32kB and block count 50000.
         Pre-/Post-Conditions
@@ -195,11 +246,11 @@
         Pass/Fail Criteria
         Test case returns passed and throughput speed is logged into /var/log/tests/.
         ">
-        <step>min -c -t 'NFT-FS-Write_Data_USBMSD_MemoryCard-THRO'</step>
+        <step>min -c -t 'NFT-FS-Write_data_to_USBMSD-THRO'</step>
       </case>
-      <case name="NFT-FS-Read_Data_USBMSD_MemoryCard-THRO" subfeature="read" type="Throughput" timeout="600" description=
+      <case name="NFT-FS-Read_data_from_USBMSD-THRO" subfeature="read" type="Throughput" timeout="600" description=
         "Purpose 
-        This test measures Write performance for UBI
+        This test measures read performance for USBMSD-MemoryCard
         Method
         Test case measures reads data and measures troughput. File block size 32kB and block count 50000.
         Pre-/Post-Conditions
@@ -207,7 +258,7 @@
         Pass/Fail Criteria
         Test case returns passed and throughput speed is logged into /var/log/tests/.
         ">
-        <step>min -c -t 'NFT-FS-Read_Data_USBMSD_MemoryCard-THRO'</step>
+        <step>min -c -t 'NFT-FS-Read_data_from_USBMSD-THRO'</step>
       </case>
       <case name="NFT-FS-Create_Directory_USBMSD_MemoryCard-LATE" subfeature="directory" type="Latency" timeout="600" description=
         "Purpose 
@@ -257,29 +308,30 @@
         ">
         <step>min -c -t 'NFT-FS-Remove_File_USBMSD_MemoryCard-LATE'</step>
       </case>
-      <case name="NFT-FS-Write_Data_USBMSD_eMMC-THRO" subfeature="write" type="Throughput" timeout="600" description=
-        "Purpose 
-        This test measures Write performance for USBMSD-eMMC
+
+     <case name="NFT-FS-Write_Data_to_USBMSD_eMMC-THRO" subfeature="write" type="Throughput" timeout="600" description=
+        "Purpose
+        This test measures write performance for USBMSD-eMMC
         Method
-        Test case writes data to eMMC-mass storage and measures latency. File block size 32kB and block count 50000.
+        Test case measures writes data and measures troughput. File block size 32kB and block count 50000.
         Pre-/Post-Conditions
-        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test must be executed as root.
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
         Pass/Fail Criteria
         Test case returns passed and throughput speed is logged into /var/log/tests/.
         ">
-        <step>min -c -t 'NFT-FS-Write_Data_USBMSD_eMMC-THRO'</step>
+        <step>min -c -t 'NFT-FS-Write_Data_to_USBMSD_eMMC-THRO'</step>
       </case>
-      <case name="NFT-FS-Read_Data_USBMSD_eMMC-THRO" subfeature="read" type="Throughput" timeout="600" description=
-        "Purpose 
-        This test measures Read performance from USBMSD-eMMC
+      <case name="NFT-FS-Read_Data_from_USBMSD_eMMC-THRO" subfeature="read" type="Throughput" timeout="600" description=
+        "Purpose
+        This test measures read performance for USBMSD-eMMC
         Method
-        Test case reads data from eMMC-mass storage and measures latency. File block size 32kB and block count 50000.
+        Test case measures reads data and measures troughput. File block size 32kB and block count 50000.
         Pre-/Post-Conditions
-        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Test asset is installed to the device. Test must be executed as root.
+        Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
         Pass/Fail Criteria
         Test case returns passed and throughput speed is logged into /var/log/tests/.
         ">
-        <step>min -c -t 'NFT-FS-Read_Data_USBMSD_eMMC-THRO'</step>
+        <step>min -c -t 'NFT-FS-Read_Data_from_USBMSD_eMMC-THRO'</step>
       </case>
       <case name="NFT-FS-Create_Directory_USBMSD_eMMC-LATE" subfeature="directory" type="Latency" timeout="600" description=
         "Purpose 
@@ -293,7 +345,7 @@
         ">
         <step>min -c -t 'NFT-FS-Create_Directory_USBMSD_eMMC-LATE'</step>
       </case>
-      <case name="NFT-FS-Remove_Directory_USBMSD_eMMC-LATE" subfeature="directory" type="Throughput" timeout="600" description=
+      <case name="NFT-FS-Remove_Directory_USBMSD_eMMC-LATE" subfeature="directory" type="Latency" timeout="600" description=
         "Purpose 
         This test measures Remove directory latency in USBMSD-eMMC
         Method
@@ -305,7 +357,7 @@
         ">
         <step>min -c -t 'NFT-FS-Remove_Directory_USBMSD_eMMC-LATE'</step>
       </case>
-      <case name="NFT-FS-Create_File_USBMSD_eMMC-LATE" subfeature="file" type="Throughput" timeout="600" description=
+      <case name="NFT-FS-Create_File_USBMSD_eMMC-LATE" subfeature="file" type="Latency" timeout="600" description=
         "Purpose 
         This test measures Create file latency in USBMSD-eMMC
         Method
@@ -317,7 +369,7 @@
         ">
         <step>min -c -t 'NFT-FS-Create_File_USBMSD_eMMC-LATE'</step>
       </case>
-      <case name="NFT-FS-Remove_File_USBMSD_eMMC-LATE" subfeature="file" type="Throughput" timeout="600" description=
+      <case name="NFT-FS-Remove_File_USBMSD_eMMC-LATE" subfeature="file" type="Latency" timeout="600" description=
         "Purpose 
         This test measures Remove file latency in USBMSD-eMMC
         Method
@@ -329,8 +381,10 @@
         ">
         <step>min -c -t 'NFT-FS-Remove_File_USBMSD_eMMC-LATE'</step>
       </case>
+
     </set>
       
+
   </suite>
 </testdefinition>
 

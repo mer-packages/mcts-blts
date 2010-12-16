@@ -1,11 +1,85 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-gcamera" domain="Camera">
-  <!--This set contains test cases from mwts-gcamera.cfg-->
-    <set name="" description="" feature="" type="functional" >
-      <case name="" subfeature="" description=" " timeout="120">
-        <step>min -c -t ''</step>
-      </case>  
+    <!-- Image capturing test cases from file mwts-gcamera.cfg -->
+    <suite name="mwts-gcamera-image" domain="Visual">
+    <set name="Functional test" description="Camera image capturing" feature="Settings" type="Functional" >
+        <case name="FUTE-Take_picture" subfeature="Capture still image" timeout="10" description=
+             "Purpose
+              Test basic image capturing functionality of the device
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture'</step>
+        </case>
+
+        <case name="FUTE-Take_picture_zoom" subfeature="Capture image with zoom" timeout="10" description=
+             "Purpose
+              Test basic image capturing functionality of the device
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture_zoom'</step>
+        </case>
+
+        <case name="FUTE-Take_picture_post_processing" subfeature="Capture image with post processing" timeout="10" description=
+             "Purpose
+              Test basic image capturing functionality of the device
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture_post_processing'</step>
+        </case>
+
+        <case name="FUTE-Take_picture_with_flash" subfeature="Capture image with post processing" timeout="10" description=
+             "Purpose
+              Capture normal image using primary camera, LED flash enabled
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture_with_flash'</step>
+        </case>
+
+        <case name="FUTE-Take_picture_low_light_settings" subfeature="Capture image with post processing" timeout="10" description=
+             "Purpose
+              Capture normal image using primary camera, Low light settings (ISO 3200)
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+            <step>min -c -t 'FUTE-Take_picture_low_light_settings'</step>
+        </case>
     </set>
-  </suite>
+    </suite>
+
+    <!-- Video capturing test cases from file mwts-gcamera.cfg -->
+    <suite name="mwts-gcamera-video" domain="Visual">
+    <set name="Functional test" description="Camera video capturing" feature="Settings" type="Functional" >
+        <case name="FUTE-Take_video" subfeature="Capture video" timeout="120" description=
+             "Purpose
+              Test basic video capturing functionality of the device
+              Method
+              Test case uses gstreamer bad plugins
+              Pre-/Post-Conditions
+              Pass/Fail Criteria
+              Test case result can be found from /var/log/tests and
+              the path of output files are defined in GCameraTest.conf">
+           <step>min -c -t 'FUTE-Take_video'</step>
+        </case>
+    </set>
+    </suite>
 </testdefinition>
+

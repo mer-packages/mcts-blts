@@ -26,47 +26,33 @@
 #define _INCLUDED_G_CAMERA_TEST_H
 
 #include <MwtsCommon>
-#include <glib-2.0/glib-object.h>
-#include <dbus-1.0/dbus/dbus-glib.h>
-#include <dbus-1.0/dbus/dbus-glib-lowlevel.h>
-///////////////////////////
-#include <glib.h>
-#include <glib/gstdio.h>
+#include <QDir>
 #include <string.h>
 
+/* GLib includes */
+#include <glib-2.0/glib.h>
+#include <glib-2.0/glib-object.h>
+#include <glib-2.0/glib/gstdio.h>
+#include <dbus-1.0/dbus/dbus-glib.h>
+#include <dbus-1.0/dbus/dbus-glib-lowlevel.h>
+
 /* Gstreamer includes */
+#define GST_USE_UNSTABLE_API
 #include <gstreamer-0.10/gst/gst.h>
 #include <gstreamer-0.10/gst/interfaces/xoverlay.h>
 #include <gstreamer-0.10/gst/interfaces/colorbalance.h>
-
-#define GST_USE_UNSTABLE_API
 #include <gstreamer-0.10/gst/interfaces/photography.h>
 
-/*Output dir/file settings*/
-#define BASE_DIR		 "/home/user/"
-#define DEFAULT_IMAGEDIR "/MyDocs/.images/"
-#define DEFAULT_VIDEODIR "/MyDocs/.videos/"
-
-#define VIDEO_DIR "/home/user/MyDocs/.videos/"
-#define IMAGE_DIR "/home/user/MyDocs/.images/"
-
-#define FPS_FILE "/var/log/tests/camera-fps.csv"
-#define LATENCY_FILE "/var/log/tests/camera-latency.csv"
-
 /* Names of default elements */
-//#define CAMERA_APP_VIDEOSRC "v4l2camsrc"
-//#define CAMERA_APP_VIDEOSRC "v4l2newcamsrc"
-#define CAMERA_APP_VIDEOSRC "v4l2src"
-#define CAMERA_APP_IMAGE_POSTPROC "ipp"
 
-/* Device names */
-//only option on netbook
-#define MAIN_CAMERA "/dev/video0"
-#define FRONTAL_CAMERA "/dev/video1"
+//the identity does nothing, but demonstrate the postprocessing
+#define CAMERA_APP_IMAGE_POSTPROC "identity"
+#define CAMERA_APP_VIDEO_POSTPROC "identity"
 
 #define IMG_CAPTURE_TIMEOUT		60
-#define CAPTURE_START_AFTER		10
-#define CAMERA_FILTER_CAPS "video/x-raw-yuv"
+#define CAPTURE_START_AFTER		1
+//important to set fourcc for the sake v4l2src on netbook
+#define CAMERA_FILTER_CAPS "video/x-raw-yuv, format=(fourcc)I420, width = (int) 320, height = (int) 240"
 
 #define DEFAULT_VF_CAPS \
 "video/x-raw-yuv, width = (int) 320, height = (int) 240, framerate = (fraction) 1496/100;" \
@@ -76,16 +62,18 @@
 "video/x-raw-yuv, width = (int) 800, height = (int) 480, framerate = (fraction) 1494/100;" \
 "video/x-raw-yuv, width = (int) 720, height = (int) 480, framerate = (fraction) 1494/100"
 
-#define PREVIEW_CAPS \
-"video/x-raw-rgb, width = (int) 640, height = (int) 480"
-
 typedef enum
 {
+    GST_CAMERABIN_FLAG_SOURCE_RESIZE = 0x00000001,
+    //when video format of the driver and the camerabin do not match, it has to be set
+    //it is expensive regarding the CPU cost
     GST_CAMERABIN_FLAG_SOURCE_COLORSPACE_CONVERSION  = 0x00000002,
-    GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION = 0x00000004
+    GST_CAMERABIN_FLAG_VIEWFINDER_COLORSPACE_CONVERSION = 0x00000004,
+    GST_CAMERABIN_FLAG_VIEWFINDER_SCALE = 0x00000008,
+    GST_CAMERABIN_FLAG_AUDIO_CONVERSION = 0x00000010,
+    GST_CAMERABIN_FLAG_DISABLE_AUDIO = 0x00000020,
+    GST_CAMERABIN_IMAGE_COLORSPACE_CONVERSION = 0x00000040
 } GstCameraBinFlags;
-
-
 
 
 /**
@@ -144,16 +132,24 @@ public:
     void set_metadata ();
 
     /**
-     * Set image and/video resolution
-     * if video mode then also setup fps_h and fps_l
+     * Set video resolution
+     * it can also setup fps_h and fps_l
      * real fps = fps_h / fps_l
      *
-     * @param x		image width
-     * @param y		image height
+     * @param x		video width
+     * @param y		video height
      * @param fps_h fps 'high' value
      * @param fps_l fps 'low' value
      */
-    void set_resolution(gint x, gint y, gint fps_h, gint fps_l);
+    void set_video_resolution(gint x, gint y, gint fps_h, gint fps_l);
+
+    /**
+     * Set image resolution
+     *
+     * @param x		image width
+     * @param y		image height
+     */
+    void set_image_resolution(gint x, gint y);
 
 
     /**
@@ -165,7 +161,7 @@ public:
      * @param ghcar * extension		extension of file
      * @return success/failure
      */
-    gboolean setup_codecs(gchar *videocodec, gchar *muxer, gchar *audiosrc, gchar *audiocodec, gchar *extension);
+    gboolean setup_codecs(const gchar *videocodec, const gchar *muxer, const gchar *audiosrc, const gchar *audiocodec, const gchar *extension);
 
     /**
      * Take picture
@@ -183,12 +179,20 @@ public:
      */
     gboolean take_video(guint video_length);
 
+
     /**
      * Set image Post Processing on
      * @return gboolean success/failure
      *
      */
-    gboolean set_pp();
+    gboolean set_image_pp();
+
+    /**
+     * Set video Post Processing on
+     * @return gboolean success/failure
+     *
+     */
+    gboolean set_video_pp();
 
 
     /**
@@ -263,8 +267,7 @@ public:
     /************************************************************
      *
      * GStreamer photography interface
-     * interfaces/photography
-     * This is not part of MeeGo SDK, implementation is commented out in .cpp
+     * interfaces/photography     
      */
 
     /**
@@ -303,37 +306,6 @@ public:
     gboolean set_wb_mode(GstWhiteBalanceMode mode);
 
     /**
-     * all in one with picture (still images)
-     *
-     * Camera white balance mode
-     * GST_PHOTOGRAPHY_WB_MODE_AUTO = 0,
-     * GST_PHOTOGRAPHY_WB_MODE_DAYLIGHT,
-     * GST_PHOTOGRAPHY_WB_MODE_CLOUDY,
-     * GST_PHOTOGRAPHY_WB_MODE_SUNSET,
-     * GST_PHOTOGRAPHY_WB_MODE_TUNGSTEN,
-     * GST_PHOTOGRAPHY_WB_MODE_FLUORESCENT
-     *
-     * set tone from selection of
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NORMAL = 0,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_SEPIA,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NEGATIVE,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_GRAYSCALE,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_NATURAL,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_VIVID,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_COLORSWAP,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_SOLARIZE,
-     * GST_PHOTOGRAPHY_COLOUR_TONE_MODE_OUT_OF_FOCUS
-     *
-     * Set flash mode
-     * GST_PHOTOGRAPHY_FLASH_MODE_AUTO = 0,
-     * GST_PHOTOGRAPHY_FLASH_MODE_OFF,
-     * GST_PHOTOGRAPHY_FLASH_MODE_ON,
-     * GST_PHOTOGRAPHY_FLASH_MODE_FILL_IN,
-     * GST_PHOTOGRAPHY_FLASH_MODE_RED_EYE
-     */
-    gboolean all_in_one_with_picture();
-
-    /**
      * Set amount of zoom
      * zoom value can be from 100 to 1000
      *
@@ -366,18 +338,36 @@ public:
      */
     void set_autofocus();
 
-public:
-    /* states:
-    (image) <---> (video_stopped) <---> (video_recording)
-    */
-    typedef enum _tag_CaptureState
-    {
-        CAP_STATE_IMAGE,
-        CAP_STATE_VIDEO_STOPPED,
-        CAP_STATE_VIDEO_PAUSED,
-        CAP_STATE_VIDEO_RECORDING,
-    } CaptureState;
+    gboolean set_flags (GstCameraBinFlags flags);
 
+private:
+    /**
+    * Generates an incremental filename????, which helps to avoid overwriting
+    * previously saved video/image filenames.
+    * @return next available filename
+    * @example 1. video0000.ogg, after this functin call 2. video0001.ogg...
+    */
+    QString next_output_filename(QString recordingPath, QString recordingFilename, QString recordingExtension);
+
+public:    
+    /* Main objects for video/image capture*/
+    GstElement *gst_camera_bin;
+    GstElement *gst_videosrc;   
+    GstCaps *gst_filtercaps;
+    GstBus *local_bus;
+    GMainLoop* local_mainloop;
+    gint local_bus_watch_source;
+
+
+    /* Variables for customization */
+    GList *video_caps_list;
+    GString *capture_resolution;
+
+    guint flag_capture_done;
+    guint flag_fps_on;
+    guint flag_picture_done;
+    guint flag_autofocus;
+    bool  flag_take_video;
 
     struct
     {
@@ -387,25 +377,17 @@ public:
         guint fps_l;
     } current_resolution;
 
-
-    guint flag_picture_done;
-    guint flag_autofocus;
-
-    GstElement *gst_camera_bin;
-    GstElement *gst_videosrc;
-
-    GList *video_caps_list;
-    GString *capture_filename;
-    GString *capture_filename_extension;
-    guint file_nro;
-    GString *capture_resolution;
-
-    guint flag_capture_done;
-    guint flag_fps_on;
-
-    GMainLoop* local_mainloop;
-
-    gint local_bus_watch_source;
+    /* Output recording variables */
+    //String holds recording directory's path
+    QString recordingVideoDir;
+    QString recordingImageDir;
+    //String holds recording file's name
+    //for example: "recorded_audio????", the question marks mean the sequence number
+    QString recordingVideoFilename;
+    QString recordingImageFilename;
+    QString recordingFileExtension;    
+    GString *capture_filename_extension;    
+    QString model;
 };
 
 #endif //#ifndef _INCLUDED_G_CAMERA_TEST_H

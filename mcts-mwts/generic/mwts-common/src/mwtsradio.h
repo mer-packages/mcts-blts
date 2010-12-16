@@ -32,10 +32,39 @@
 #define RADIO_UMTS	3
 #define RADIO_LTE	4
 
-class MwtsRadio
+#include <QObject>
+
+// ofono-qt missing currently from MeeGo images. You can enable mode change by
+// - compiling and installing ofono-qt from gitorious:
+//   git://gitorious.org/meego-cellular/ofono-qt.git
+// - uncomment following line, recompile and install mwts-common:
+// #define OFONO_QT_EXISTS
+
+#ifdef OFONO_QT_EXISTS
+	#include <ofono-qt/ofonoradiosettings.h>
+#endif
+
+
+class MwtsRadio : public QObject
 {
+	Q_OBJECT
 public:
-	static bool ChangeMode(int mode);
+	static MwtsRadio* instance();
+private:
+	static MwtsRadio* inst;
+
+
+public:
+	bool ChangeMode(int mode);
+
+protected slots:
+	void onRadioModeChanged();
+
+protected:
+	MwtsRadio();
+#ifdef OFONO_QT_EXISTS
+	OfonoRadioSettings* m_radioSettings;
+#endif
 };
 
 

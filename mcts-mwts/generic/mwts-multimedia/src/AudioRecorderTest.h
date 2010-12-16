@@ -35,6 +35,9 @@ QT_END_NAMESPACE
 
 QT_USE_NAMESPACE
 
+/**
+ *  This class provide functionality for recording audio files.
+ */
 class AudioRecorderTest : public QObject
 {
     Q_OBJECT
@@ -81,6 +84,20 @@ public:
     * @return true or false depends the audio codec is available or not
     */
     bool SetCodec(QString codec);
+
+    /**
+    * Sets the container of the recording audio
+    * @param container name
+    * @return true or false depends the container is available or not
+    */
+    bool SetContainer(QString container);
+
+    /**
+    * Sets the default container for given codec
+    * @param container name
+    * If codec is not supported constainer is set to an ampty string ""
+    */
+    void SetDefaultContainer(QString codec);
 
     /**
      * Sets the used input device of the recording
@@ -133,13 +150,25 @@ public:
     */
     void PrintAvailableDevices();
 
+    /**
+     * Gets full path of recently recorded file. It is used later when plaing back it.
+     * @return fullRecordedFilePath
+     */
+    QString FullRecordedFilePath() const;
+
+    /**
+     * Shows supported codecs and containers. They are printed in debug message.
+     * @return
+     */
+    void ShowSupportedCodecsAndContainers() const;
+
 private:
 
     /**
     * Generates an incremental filename????, which helps to avoid overwriting
     * previously saved audio filenames.
     * @return next available filename
-    * @example 1. audio0000.ogg, after this functin call 2. audio0001.ogg...
+    * example 1. audio0000.ogg, after this functin call 2. audio0001.ogg...
     */
     QString NextOutputFilename();
 
@@ -147,9 +176,17 @@ private:
     * Gives a file container extension according to the codec type
     * @param codec
     * @return file extension
-    * @example audio/vorbis codec --> .ogg
+    * example audio/vorbis codec --> .ogg
     */
     QString FileExtension(QString codec);
+
+    /**
+    * Gives a file container extension according to the container name
+    * @param container
+    * @return file extension
+    * example matroska container --> .mkv
+    */
+    QString ContainerFileExtension(QString container);
 
 private slots:
 
@@ -185,6 +222,12 @@ private:
     //String holds recording file's extension is the return value of  FileExtension(codec) private method
     QString recordingExtension;
     int duration;
+    //full path to recorded audio file, example: /home/meego/recorded_audio0001.wav
+    QString fullRecordedFilePath;
+    //names of codecs and containers, those are loaded from conf file.
+    QStringList codecs;
+    QStringList containers;
+
 };
 
 #endif //#ifndef _INCLUDED_AUDIO_RECORDER_TEST_H

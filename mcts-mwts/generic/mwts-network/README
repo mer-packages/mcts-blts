@@ -2,14 +2,13 @@ mwts-network
 -----------
 Introduction
  
-   Mwts-network test asset is created for testing the wireless LAN and Packed switched data connections and data transfers.
+   MWTS-Network contains tests for QT Bearer Management API. Test asset is used for measuring the performance and reliability of wireless LAN and packet switched data transfers.
 
-   Mwts-network uses Qt Bearer Management provided by Qt Mobility which takes care of connecting to given access point and notifies state changes in active access points. 
-   Test asset is used for measuring the performance and reliability of wireless LAN and packet switched data transfers.
+   Usage of mwts-network is currently restricted to wlan-cases.
 
-   The package is currently intended only for MeeGo? , Maemo devices. In Meego platform bearer management works on top of connman.
+   Using QtBearerManagement, you can list, connect and disconnect to already configured and known networks. You cannot configure a new connection. 
 
-   Questions: MWTSSupport@nokia.com
+   Contact: toivanen.pauli-pekka@digia.com 
 
 Function descriptions
 
@@ -25,21 +24,30 @@ These are MIN interface function used in cases.
    ServerStartIperf <time> 	 Start iperf upload measurement while given time
    ServerStartDownload <time> 	 Start iperf download measurement while given time
    Idle <time> 	                 Idle given time
+   SwitchWlan <on/off>           Switches wlan on/off
+
 
 Usage
 
 Source code and compiling
 
-   mwts-multimedia compiles on a typical red hat/linux distributions by executing sh rpmbuild.sh if you have missing dependencies, add them with 'zypper install'
+  mwts-network compiles on a typical red hat/linux distributions by executing sh rpmbuild.sh if you have missing dependencies, add them with
 
-   if you need to search after a package you can do that with 'zypper search'
+  zypper install
 
-   and get more info with 'zypper info'
+  , if you need to search after a package you can do that with
 
-   on non-debian/red-hat based linux system you can compile and install by (no dependency check)	
-   qmake
-   make
-   make install (as root)
+  zypper search
+
+  and get more info with
+
+  zypper info
+
+  on non-debian/red-hat based linux system you can compile and install by (no dependency check)
+
+  qmake
+  make
+  make install (as root) 
 
 Requirements for environment
 
@@ -49,6 +57,15 @@ Requirements for environment
 Executing tests
 
    MWTS-Network test execution is performed normally. Check the "General MWTS testing guide".
+
+   IMPORTANT! Before running wlan cases, tester must add access point configurations to device. In example if you run cases on a fresh flashed device, debug gives you "invalid configuration" even 
+   though the access point is seen.
+
+   Currently the fastest way to do this is to first connect to a access point trough user interface. After that automated tests can be executed.
+
+   Also connman test-scripts can be used if no user interface available
+
+   connman-tests package /usr/lib/connman/test './connect-service <ssid> <passphrase> <encyption> example: ./connect-service MWTS-WPAtkip mwtswpatkip wpa 
 
 Test results
 
