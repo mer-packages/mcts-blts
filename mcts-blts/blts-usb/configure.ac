@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-usb-tests, 0.0.14, mikko.ojala@digia.com)
+AC_INIT(blts-usb-tests, 0.0.15, mikko.ojala@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts-usb-testrunner.c])
