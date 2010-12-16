@@ -2,10 +2,7 @@ Source: blts-fbdev-tests
 Section: devel
 Priority: extra
 Maintainer: Mika Niinistö <mika.niinisto@digia.com>
-Build-Depends:
-	debhelper (>= 5),
-	cdbs,
-	libbltscommon-dev
+Build-Depends: debhelper (>= 5), cdbs, libbltscommon-dev
 Standards-Version: 3.8.0
 Homepage: https://cwiki.nokia.com/BaseLayerTestSuite/
 
@@ -14,7 +11,7 @@ Architecture: any
 Priority: optional
 Section: testing
 Depends: ${shlibs:Depends}, ${misc:Depends}, blts-fbdev-tests-config
-Recommends: fbset, min | min-all
+Recommends: fbset
 Description: BLTS FbDev functional tests
  This package contains functional tests for the frame buffer device.
 

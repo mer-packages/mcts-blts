@@ -1,6 +1,6 @@
 /* -*- mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
-/* blts-fbdev-backlight.h -- Framebuffer backlight tests
+/* blts-fbdev-perf.h -- Frame buffer measurements
 
    Copyright (C) 2000-2010, Nokia Corporation.
 
@@ -18,19 +18,26 @@
 
 */
 
-#ifndef BLTS_FBDEV_BACKLIGHT_H_
-#define BLTS_FBDEV_BACKLIGHT_H_
+#ifndef BLTS_FBDEV_PERF_H
+#define BLTS_FBDEV_PERF_H
 
-/* Verify limit values based off config */
+/* Test cases */
 int
-blts_fbdev_case_backlight_verify (void *test_data, int test_num);
+blts_fbdev_case_one_pixel_read (void *test_data, int test_num);
 
-/* Linearly tests different backlight values */
 int
-blts_fbdev_case_backlight_linear (void *test_data, int test_num);
+blts_fbdev_case_one_pixel_write (void *test_data, int test_num);
 
-/* Logarithmically tests different backlight values */
 int
-blts_fbdev_case_backlight_logarithmic (void *test_data, int test_num);
+blts_fbdev_case_one_pixel_readwrite (void *test_data, int test_num);
 
-#endif /* BLTS_FBDEV_BLANKING_H_ */
+int
+blts_fbdev_case_buffer_read (void *test_data, int test_num);
+
+int
+blts_fbdev_case_buffer_write (void *test_data, int test_num);
+
+int
+blts_fbdev_case_buffer_modify (void *test_data, int test_num);
+
+#endif /* BLTS_FBDEV_PERF_H */

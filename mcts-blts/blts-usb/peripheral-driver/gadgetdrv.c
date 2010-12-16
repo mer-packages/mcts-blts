@@ -440,7 +440,7 @@ int gadgetdrv_release(struct inode *inode, struct file *filp)
 	return 0;
 }
 
-int gadgetdrv_ioctl(struct inode *inode, struct file *filp,
+static long gadgetdrv_unlocked_ioctl(struct file *filp,
 	unsigned cmd, unsigned long arg)
 {
 	int err = 0;
@@ -591,7 +591,7 @@ const struct file_operations gadgetdrv_fops = {
 	.write = gadgetdrv_write,
 	.open = gadgetdrv_open,
 	.release = gadgetdrv_release,
-	.ioctl = gadgetdrv_ioctl,
+	.unlocked_ioctl = gadgetdrv_unlocked_ioctl,
 	.llseek = gadgetdrv_llseek,
 };
 

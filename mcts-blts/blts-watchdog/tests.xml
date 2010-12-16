@@ -17,15 +17,18 @@
 
 -->
 <testdefinition version="1.0">
-  <suite name="blts-watchdog-tests" domain="Core">
+  <suite name="blts-watchdog-tests" domain="Kernel">
     <set name="watchdog-tests" feature="Linux Kernel">
-      <case name="Core-Watchdog%20presence%20check">
+      <case name="Core-Watchdog presence check"
+       type="Functional">
         <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Watchdog_presence_check.log -e 1</step>
       </case>
-      <case name="Core-Open%20and%20close%20watchdog">
+      <case name="Core-Open and close watchdog"
+       type="Functional">
         <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Open_and_close_watchdog.log -e 2</step>
       </case>
-      <case name="Core-Send%20keepalive%20messages">
+      <case name="Core-Send keepalive messages"
+       type="Functional">
         <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Send_keepalive_messages.log -e 3</step>
       </case>
 	  <get>

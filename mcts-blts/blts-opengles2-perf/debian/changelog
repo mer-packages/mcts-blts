@@ -1,3 +1,9 @@
+blts-opengles2-tests (0.0.14) unstable; urgency=low
+
+  * Remove obsolete Min support code
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 16 Dec 2010 11:03:35 +0200
+
 blts-opengles2-tests (0.0.13) unstable; urgency=low
 
   [ zhengkui ]

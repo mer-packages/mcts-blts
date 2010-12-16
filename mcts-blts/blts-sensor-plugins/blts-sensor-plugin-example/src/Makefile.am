@@ -28,4 +28,4 @@ pkglib_LTLIBRARIES= libbltssensor_example.la
 
 libbltssensor_example_la_LIBADD = -lbltscommon
 libbltssensor_example_la_SOURCES = $(parser_sources) $(h_sources) $(local_h_sources) $(c_sources)
-libbltssensor_example_la_LDFLAGS = -version-info $(PLUGIN_VERSION)
+libbltssensor_example_la_LDFLAGS = -avoid-version -module

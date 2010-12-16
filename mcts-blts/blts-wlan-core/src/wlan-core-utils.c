@@ -182,6 +182,9 @@ static int nl80211_get_ifflags_ifname(wlan_core_data* data,
 {
 	struct ifreq ifr;
 
+	if(!ifname)
+		return -EINVAL;
+
 	memset(&ifr, 0, sizeof(struct ifreq));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_name[IFNAMSIZ-1] = 0;

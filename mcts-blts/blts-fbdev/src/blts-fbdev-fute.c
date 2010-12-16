@@ -1,6 +1,6 @@
 /* -*- mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 
-/* fbdev_fute.c -- Frame buffer functional tests
+/* blts-fbdev-fute.c -- Frame buffer functional tests
 
    Copyright (C) 2000-2010, Nokia Corporation.
 
@@ -39,29 +39,9 @@
 #include <blts_log.h>
 
 /* Own includes */
-#include "fbdev_fute.h"
+#include "blts-fbdev-fute.h"
 #include "blts-fbdev-defs.h"
 #include "blts-fbdev-utils.h"
-
-struct fb_fix_screeninfo glob_fb_fix_info;
-struct fb_var_screeninfo glob_fb_var_info;
-
-/* Return pointer to shared buffer with updated variable frame buffer information. Don't free. */
-struct fb_var_screeninfo *
-fetch_fb_var_screeninfo (int fb_fd)
-{
-        FUNC_ENTER();
-
-	BLTS_TRACE("Variable info..");
-	if(ioctl(fb_fd, FBIOGET_VSCREENINFO, &glob_fb_var_info) < 0) {
-		BLTS_LOGGED_PERROR("Variable screen info ioctl() failed");
-                FUNC_LEAVE();
-		return NULL;
-	}
-	BLTS_TRACE("ok.\n");
-        FUNC_LEAVE();
-	return &glob_fb_var_info;
-}
 
 void log_print_fb_fix_screeninfo(struct fb_fix_screeninfo *fsi)
 {
@@ -157,8 +137,10 @@ void log_print_fb_var_screeninfo(struct fb_var_screeninfo *vsi)
 
 /* Open frame buffer device, fetch & print info, and close the device */
 int
-fute_fb_open_fetch_info_close (blts_fbdev_data *data)
+blts_fbdev_case_fetch_info (void *test_data, int test_num)
 {
+        blts_fbdev_data *data = test_data;
+
         FUNC_ENTER();
 
         if (!data || !data->device) {
@@ -176,20 +158,23 @@ fute_fb_open_fetch_info_close (blts_fbdev_data *data)
          */
 	log_print_fb_fix_screeninfo (&data->device->fixed_info);
 
-	struct fb_var_screeninfo *vsi;
-
-	if (!(vsi = fetch_fb_var_screeninfo (data->device->fd))) {
+	if (!blts_fbdev_get_variant_info (data->device)) {
                 BLTS_ERROR ("Error: Failed to get variable screen info!\n");
 		goto ERROR;
 	}
 
-	log_print_fb_var_screeninfo (vsi);
+	log_print_fb_var_screeninfo (&data->device->variant_info);
+
+        blts_fbdev_close (data->device);
 
         FUNC_LEAVE();
 
         return 0;
 
 ERROR:
+
+        if (data)
+                blts_fbdev_close (data->device);
 
         FUNC_LEAVE();
 

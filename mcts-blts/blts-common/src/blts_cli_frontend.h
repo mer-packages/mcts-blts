@@ -24,40 +24,47 @@
 
 typedef struct
 {
-	/* NULL terminated test case name. */
+	/** NULL terminated test case name. */
 	char* case_name;
 
-	/* Function that executes the test case. */ 
+	/** Function that executes the test case. */
 	int (*case_func)(void* user_ptr, int test_num);
 
-	/* Timeout for the test case in ms. */
+	/** Timeout for the test case in ms. */
 	unsigned int timeout;
 } blts_cli_testcase;
 
 typedef struct
 {
-	/* Array of all test cases. Mandatory. */
+	/** Array of all test cases. Mandatory. */
 	blts_cli_testcase* test_cases;
 
-	/* Prints out help msg. Optional, can be NULL.
-	 * help_msg_base: use with;
-	 * fprintf(stdout, help_msg_base, "[-j]", "-j: something"); */
+	/** Prints out help msg. Optional, can be NULL.
+	 * @param help_msg_base: used with
+	 * \code
+	 * fprintf(stdout, help_msg_base, "[-j]", "-j: something");
+	 * \endcode
+	 */
 	void (*blts_cli_help)(const char* help_msg_base);
 
-	/* Process given arguments. Optional, can be NULL. */
+	/** Process given arguments. Optional, can be NULL. */
 	void* (*blts_cli_process_arguments)(int argc, char **argv);
 
-	/* Called before exiting the program. Optional, can be NULL. */	
+	/** Called before exiting the program. Optional, can be NULL. */
 	void (*blts_cli_teardown)(void* user_ptr);
-	
-	/* Name of the log file. Optional, can be NULL. */
+
+	/** Name of the log file. Optional, can be NULL. */
 	char* log_file;
 } blts_cli;
 
-/* Call from your main() func */
+/** Call from your main() function.
+ * @see blts_cli
+ */
 int blts_cli_main(blts_cli* cli, int argc, char **argv);
 
-/* Override timeout for all following test cases */
+/** Override timeout for all following test cases
+ * @param timeout Timeout (in ms)
+ */
 void blts_cli_set_timeout(unsigned int timeout);
 
 #endif /* BLTS_CLI_FRONTEND_H */

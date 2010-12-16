@@ -36,9 +36,10 @@
 #include "blts-fbdev-defs.h"
 
 /* Test cases */
-#include "fbdev_fute.h"
+#include "blts-fbdev-fute.h"
 #include "blts-fbdev-blanking.h"
 #include "blts-fbdev-backlight.h"
+#include "blts-fbdev-perf.h"
 
 /* Usage */
 static void
@@ -168,7 +169,7 @@ blts_fbdev_cli_parse_args (int argc, char *argv[])
         memset (data->device, 0, sizeof (blts_fbdev_device));
 
         ret = blts_config_declare_variable_test (
-                "Core-Read frame buffer information with ioctl",
+                "Core-Framebuffer read frame buffer information with ioctl",
                 blts_fbdev_cli_args_dev,
                 CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
                 CONFIG_PARAM_NONE);
@@ -176,7 +177,7 @@ blts_fbdev_cli_parse_args (int argc, char *argv[])
         if (ret) goto ERROR;
 
         ret = blts_config_declare_variable_test (
-                "Core-Set blanking levels",
+                "Core-Framebuffer set blanking levels",
                 blts_fbdev_cli_args_dev,
                 CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
                 CONFIG_PARAM_NONE);
@@ -184,7 +185,55 @@ blts_fbdev_cli_parse_args (int argc, char *argv[])
         if (ret) goto ERROR;
 
         ret = blts_config_declare_variable_test (
-                "Core-Verify backlight levels",
+                "Core-Framebuffer 1-pixel uncached read",
+                blts_fbdev_cli_args_dev,
+                CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
+                CONFIG_PARAM_NONE);
+
+        if (ret) goto ERROR;
+
+        ret = blts_config_declare_variable_test (
+                "Core-Framebuffer 1-pixel uncached write",
+                blts_fbdev_cli_args_dev,
+                CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
+                CONFIG_PARAM_NONE);
+
+        if (ret) goto ERROR;
+
+        ret = blts_config_declare_variable_test (
+                "Core-Framebuffer 1-pixel uncached modify",
+                blts_fbdev_cli_args_dev,
+                CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
+                CONFIG_PARAM_NONE);
+
+        if (ret) goto ERROR;
+
+        ret = blts_config_declare_variable_test (
+                "Core-Framebuffer fullscreen buffer read",
+                blts_fbdev_cli_args_dev,
+                CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
+                CONFIG_PARAM_NONE);
+
+        if (ret) goto ERROR;
+
+        ret = blts_config_declare_variable_test (
+                "Core-Framebuffer fullscreen buffer write",
+                blts_fbdev_cli_args_dev,
+                CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
+                CONFIG_PARAM_NONE);
+
+        if (ret) goto ERROR;
+
+        ret = blts_config_declare_variable_test (
+                "Core-Framebuffer fullscreen buffer modify",
+                blts_fbdev_cli_args_dev,
+                CONFIG_PARAM_STRING, "framebuffer_device", "/dev/fb0",
+                CONFIG_PARAM_NONE);
+
+        if (ret) goto ERROR;
+
+        ret = blts_config_declare_variable_test (
+                "Core-Backlight verify backlight levels",
                 blts_fbdev_cli_args_backlight_level,
                 CONFIG_PARAM_STRING, "backlight_subsystem",
                 "/sys/class/backlight/dell_backlight",
@@ -195,7 +244,7 @@ blts_fbdev_cli_parse_args (int argc, char *argv[])
         if (ret) goto ERROR;
 
         ret = blts_config_declare_variable_test (
-                "Core-Linear backlight level changes",
+                "Core-Backlight linear backlight level changes",
                 blts_fbdev_cli_args_backlight_level,
                 CONFIG_PARAM_STRING, "backlight_subsystem",
                 "/sys/class/backlight/dell_backlight",
@@ -206,7 +255,7 @@ blts_fbdev_cli_parse_args (int argc, char *argv[])
         if (ret) goto ERROR;
 
         ret = blts_config_declare_variable_test (
-                "Core-Logarithmic backlight level changes",
+                "Core-Backlight logarithmic backlight level changes",
                 blts_fbdev_cli_args_backlight_level,
                 CONFIG_PARAM_STRING, "backlight_subsystem",
                 "/sys/class/backlight/dell_backlight",
@@ -247,46 +296,20 @@ blts_fbdev_cli_teardown (void *user_data)
                 free (data->device);
                 data->device = NULL;
         }
+        if (data->shuffle_lut) {
+                free (data->shuffle_lut);
+                data->shuffle_lut = NULL;
+        }
+        if (data->testframe[0]) {
+                free (data->testframe[0]);
+                data->testframe[0] = NULL;
+        }
+        if (data->testframe[1]) {
+                free (data->testframe[1]);
+                data->testframe[1] = NULL;
+        }
+
         free (data);
-}
-
-/* Run a test case */
-static int
-blts_fbdev_cli_run_case (void *user_data, int test_num)
-{
-        int ret = 0;
-        blts_fbdev_data *data = user_data;
-
-        if (!data) {
-                BLTS_ERROR ("Error: No user data!\n");
-                return -1;
-        }
-
-        BLTS_TRACE ("Running test case %d\n", test_num);
-
-        switch (test_num) {
-        case BLTS_FBDEV_CASE_OPEN_CLOSE:
-                ret = fute_fb_open_fetch_info_close (data);
-                break;
-        case BLTS_FBDEV_CASE_BLANKING:
-                ret = blts_fbdev_case_blanking (data);
-                break;
-        case BLTS_FBDEV_CASE_BACKLIGHT_LIMITS:
-                ret = blts_fbdev_case_backlight_verify (data);
-                break;
-        case BLTS_FBDEV_CASE_BACKLIGHT_LINEAR:
-                ret = blts_fbdev_case_backlight_linear (data);
-                break;
-        case BLTS_FBDEV_CASE_BACKLIGHT_LOGARITHMIC:
-                ret = blts_fbdev_case_backlight_logarithmic (data);
-                break;
-        default:
-                /* assert not reached? */
-                BLTS_ERROR ("Error: No such case!\n");
-                return -1;
-        }
-
-        return ret;
 }
 
 /* Test case definitions */
@@ -295,13 +318,28 @@ static blts_cli_testcase blts_fbdev_cases[] = {
 	 * It is possible to use same function for multiple cases.
 	 * Zero timeout = infinity
          */
-        { "Core-Read frame buffer information with ioctl",
-          blts_fbdev_cli_run_case, 30000 },
-        { "Core-Set blanking levels", blts_fbdev_cli_run_case, 60000 },
-        { "Core-Verify backlight levels", blts_fbdev_cli_run_case, 60000 },
-        { "Core-Linear backlight level changes", blts_fbdev_cli_run_case, 0 },
-        { "Core-Logarithmic backlight level changes", blts_fbdev_cli_run_case,
-          0 },
+        { "Core-Framebuffer read frame buffer information with ioctl",
+          blts_fbdev_case_fetch_info, 30000 },
+        { "Core-Framebuffer set blanking levels",
+          blts_fbdev_case_blanking, 60000 },
+        { "Core-Framebuffer 1-pixel uncached read",
+          blts_fbdev_case_one_pixel_read, 60000 },
+        { "Core-Framebuffer 1-pixel uncached write",
+          blts_fbdev_case_one_pixel_write, 60000 },
+        { "Core-Framebuffer 1-pixel uncached modify",
+          blts_fbdev_case_one_pixel_readwrite, 60000 },
+        { "Core-Framebuffer fullscreen buffer read",
+          blts_fbdev_case_buffer_read, 60000 },
+        { "Core-Framebuffer fullscreen buffer write",
+          blts_fbdev_case_buffer_write, 60000 },
+        { "Core-Framebuffer fullscreen buffer modify",
+          blts_fbdev_case_buffer_modify, 60000 },
+        { "Core-Backlight verify backlight levels",
+          blts_fbdev_case_backlight_verify, 60000 },
+        { "Core-Backlight linear backlight level changes",
+          blts_fbdev_case_backlight_linear, 0 },
+        { "Core-Backlight logarithmic backlight level changes",
+          blts_fbdev_case_backlight_logarithmic, 0 },
 	BLTS_CLI_END_OF_LIST
 };
 

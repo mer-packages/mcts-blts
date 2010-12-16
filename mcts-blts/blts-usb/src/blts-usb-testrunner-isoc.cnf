@@ -40,7 +40,7 @@
 
 [parameter]
 	name ep_configuration_file
-	const "/usr/share/blts-usb-tests/ep-configuration-isoc.cfg"
+	const "/etc/blts/ep-configuration-isoc.cfg"
 [end_parameter]
 
 ################

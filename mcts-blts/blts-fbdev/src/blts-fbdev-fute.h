@@ -1,4 +1,4 @@
-/* fbdev_fute.h -- Frame buffer functional tests
+/* blts-fbdev-fute.h -- Frame buffer functional tests
 
    Copyright (C) 2000-2010, Nokia Corporation.
 
@@ -31,6 +31,9 @@ struct fb_fix_screeninfo *fetch_fb_fix_screeninfo(int fb_fd);
 struct fb_var_screeninfo *fetch_fb_var_screeninfo(int fb_fd);
 void log_print_fb_fix_screeninfo(struct fb_fix_screeninfo *fsi);
 void log_print_fb_var_screeninfo(struct fb_var_screeninfo *vsi);
-int fute_fb_open_fetch_info_close (blts_fbdev_data *data);
+
+/* Test cases */
+int
+blts_fbdev_case_fetch_info (void *test_data, int test_num);
 
 #endif /* FBDEV_FUTE_H */

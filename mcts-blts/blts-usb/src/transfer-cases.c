@@ -282,7 +282,11 @@ static int test_read_real(char *node_name, unsigned size)
 
 	free(buf);
 	close(fdr);
-	return ret >= 0 ? 0 : -errno;
+
+	if(errno && ret)
+		return -errno;
+
+	return ret;
 }
 
 
@@ -342,7 +346,11 @@ static int test_write_real(char *node_name, unsigned size)
 	}
 	free(buf);
 	close(fdw);
-	return ret >= 0 ? 0 : -errno;
+
+	if(errno && ret)
+		return -errno;
+
+	return ret;
 }
 
 static void *read_thread_function(void *ptr)

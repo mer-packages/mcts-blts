@@ -15,7 +15,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.59)
-AC_INIT(blts-sensor-plugin-example, 0.1.3, pasi.matilainen@digia.com)
+AC_INIT(libbltssensorplugin-example, 0.1.4, pasi.matilainen@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/sensor-plugin-example.c])

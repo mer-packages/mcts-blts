@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([blts-bluetooth-tests], [0.2.9], [jussi.saavalainen@digia.com])
+AC_INIT([blts-bluetooth-tests], [0.2.10], [jussi.saavalainen@digia.com])
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/hci.c])
@@ -41,13 +41,8 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-AC_CHECK_LIB([minevent], [min_event_create])
-AC_CHECK_LIB([mintmapi], [tm_printf])
-AC_CHECK_LIB([minutils], [mip_get_uint])
 
 PKG_CHECK_MODULES([PACKAGE],[bluez bltscommon])
-
-AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Checks for header files.
 AC_HEADER_STDC

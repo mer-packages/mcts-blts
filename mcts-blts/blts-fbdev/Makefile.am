@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = src . min-scripts data
+SUBDIRS = src . data
 
 pkgdata_DATA = tests.xml
 
