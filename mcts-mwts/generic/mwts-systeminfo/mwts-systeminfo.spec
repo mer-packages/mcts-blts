@@ -52,14 +52,16 @@ make install INSTALL_ROOT=%{buildroot}
 %files 
 %doc README
 %doc doc/MWTS.README
-/usr/lib/libmwts-systeminfo*
-/usr/lib/min/*.so*
+%doc COPYING
+%doc DEPENDENCIES.png
+/usr/lib/libmwts-systeminfo.*
 
 
 %files scripts-generic
 /etc/min.d/*.min.conf
 /usr/share/mwts-systeminfo-scripts/tests.xml
 /usr/lib/min/*.cfg
+/usr/lib/min/*.so*
 
 %files config-generic
 /usr/lib/tests/*

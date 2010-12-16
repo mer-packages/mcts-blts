@@ -228,6 +228,7 @@
         Test case returns passed if connection can be made and file can be transffered using scp
         ">
         <step>min -c -t 'FUTE-USB-Receive_512kb_file'</step>
+      </case>
       <case name="FUTE-USB-Send_10MB_file" subfeature="Send" timeout="600" description=
         "Purpose 
         This test case measures USB network functionality from device to PC

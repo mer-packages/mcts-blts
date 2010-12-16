@@ -26,7 +26,6 @@
 #ifndef _INCLUDED_SYSTEMINFO_TEST_H
 #define _INCLUDED_SYSTEMINFO_TEST_H
 
-//#include <QProcess>
 #include <QSystemDeviceInfo>
 
 #include <MwtsCommon>
@@ -44,21 +43,9 @@ QTM_USE_NAMESPACE
  *  @brief Implements main functionality of the test asset
  *
  *  This class is used as the main test asset code. Implements
- *  tests for dsme using dbus calls. Device temperature tesr
- *  are only tests that are implemented now, but also battery
- *  status can be found from dsme
- *
- * When this was written, dsme seems to be start of implementing
- * because implemented client side dbus calls were only temperature surface,
- * even if battery/charging status and omap temparatures should also be handled.
- *
- *  Look also QT mobility API
- *  for similar functionality.
+ *  tests for dsme using QSystemDeviceInfo calls.
  *
  */
-
-#define SERVICE_NAME            "com.nokia.thermalmanager"
-#define SERVICE_PATH            "/com/nokia/thermalmanager"
 
 
 class SystemInfoTest : public MwtsTest
@@ -98,15 +85,9 @@ public:
     void OnUninitialize();
 
 	/**
-	 * Test function
+     * Test functions
 	 */
 
-    /**
-     *  @fn void TestBattery()
-     *  @brief Get status of the main battery and power state
-      *  @param remote, true if call remote device by ssh
-     */
-    void TestBattery();
 
     /**
      *  @fn void TestWallPower()
@@ -134,8 +115,6 @@ public:
 
 
     private Q_SLOTS:
-    	    /* Charging callbacks */
-    	    void ChargingStateChanged(/*const Maemo::QmBattery::ChargingState state*/);
 
             /* This signal is emitted when battery level has changed. level is the new level.*/
             void batteryLevelChanged ( int level );
@@ -149,6 +128,8 @@ public:
 
 
     private:
+        QSystemDeviceInfo* m_pSysteminfo;
+
         bool m_pReturnValue;
         bool m_QmExpectedWallPower;
         bool m_QmExpectedBatteryPower;
