@@ -1,6 +1,6 @@
 Summary: BLTS input devices test set
 Name: blts-input-devices-tests
-Version: 0.0.2
+Version: 0.0.3
 Release: 1
 License: GPLv2
 Group: Development/Testing
