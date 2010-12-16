@@ -192,7 +192,7 @@ int ofono_lock_pin(void* user_ptr, __attribute__((unused))int test_num)
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
-
+			BLTS_DEBUG("Locking PIN \"%s\" with number %s\n", data->pin_type, data->old_pin);
 			// type, pin
 			if(!org_ofono_SimManager_lock_pin(proxy,  data->pin_type, data->old_pin, &error))
 			{
@@ -241,6 +241,7 @@ int ofono_unlock_pin(void* user_ptr, __attribute__((unused))int test_num)
 				return -1;
 			}
 
+			BLTS_DEBUG("UnLocking PIN \"%s\" with number %s\n", data->pin_type, data->old_pin);
 			// type, pin
 			if(!org_ofono_SimManager_unlock_pin(proxy, data->pin_type, data->old_pin, &error))
 			{

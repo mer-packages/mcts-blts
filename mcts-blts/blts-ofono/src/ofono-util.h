@@ -41,6 +41,7 @@ typedef struct
 	char *old_pin;
 	char *new_pin;
 	char *pin_type;
+	char *barrings_pin;
 
 	int user_timeout;
 	char* volume;

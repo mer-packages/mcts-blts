@@ -1,11 +1,12 @@
 # oFono test case configuration for parameters
 
 [globals]
-	default_pin "2648"
-[end_globals]
-
-[globals]
+#considered as PIN1
+	default_pin "2468"
+#considered as PIN2 
 	default_pin2 "3579"
+#considered as pin affecting barrings 
+	default_barrings_pin "31337"
 [end_globals]
 
 # This is used if not otherwise specified on individual test cases
@@ -25,7 +26,7 @@
 
 [parameter]
 	name remote_address
-	const "1234567890"
+	const "123456789"
 [end_parameter]
 
 [parameter]
@@ -216,7 +217,7 @@
 
 [parameter]
 	name pin_type
-	const "pin" "pin2"
+	const "pin"
 [end_parameter]
 
 [parameter]
@@ -236,6 +237,16 @@
 
 [test]
 	name "oFono - Reset PIN"
+	params old_pin new_pin pin_type
+[end_test]
+
+[test]
+	name "oFono - Lock PIN"
+	params old_pin new_pin pin_type
+[end_test]
+
+[test]
+	name "oFono - Unlock PIN"
 	params old_pin new_pin pin_type
 [end_test]
 

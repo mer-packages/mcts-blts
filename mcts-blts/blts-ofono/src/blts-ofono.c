@@ -54,7 +54,7 @@ static void my_ofono_help(const char* help_msg_base)
 	fprintf(stdout, help_msg_base,
 		/* What is displayed on the first 'USAGE' line */
 		"[-r <number>] [-m <number>] [-f <number>] [-h hangup]\n"
-		//"[-n new_pin] [-o old_pin] [-y pin_type]\n"
+		"[-n new_pin] [-o old_pin] [-y pin_type]\n"
 		"[-V volume] [-a accu_cm_max] [-p ppu] [-c currency] [-t timeout]",
 		/* Description of the arguments */
 		"  -r: Recipient address/phone number (for voice call/SMS)\n"
@@ -112,21 +112,21 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 				free(my_data->volume);
 			my_data->volume = strdup(optarg);
 			break;
-/*		case 'n':
+		case 'n':
 			if (my_data->new_pin)
 				free(my_data->new_pin);
 			my_data->new_pin = strdup(optarg);
-			break;*/
-/*		case 'o':
+			break;
+		case 'o':
 			if (my_data->old_pin)
 				free(my_data->old_pin);
 			my_data->old_pin = strdup(optarg);
-			break;*/
-/*		case 'y':
+			break;
+		case 'y':
 			if (my_data->pin_type)
 				free(my_data->pin_type);
 			my_data->pin_type = strdup(optarg);
-			break;*/
+			break;
 		case 'r':
 			if (my_data->remote_address)
 				free(my_data->remote_address);
@@ -271,6 +271,24 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Reset PIN",
 		sim_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "old_pin", "13243546",
+		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "pin_type", "pin",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Lock PIN",
+		sim_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "old_pin", "1234",
+		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "pin_type", "pin",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Unlock PIN",
+		sim_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "new_pin", "1234",
 		CONFIG_PARAM_STRING, "pin_type", "pin",
 		CONFIG_PARAM_NONE);
@@ -492,14 +510,14 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	if (ret)
 		return NULL;
 
-	if(!my_data->old_pin)
+	if(!my_data->barrings_pin)
 	{
-		ret = blts_config_get_value_string("default_pin2", &my_data->old_pin);
+		ret = blts_config_get_value_string("default_barrings_pin", &my_data->barrings_pin);
 		if(ret)
 		{
 			BLTS_WARNING("Can't read original pin value from config file\n");
 			BLTS_WARNING("Defaulting to 3579\n");
-			my_data->old_pin=strdup("3579");
+			my_data->barrings_pin=strdup("3579");
 		}
 	}
 
@@ -549,6 +567,9 @@ static void my_ofono_teardown(void *user_ptr)
 
 		if (data->pin_type)
 			free(data->pin_type);
+
+		if (data->barrings_pin)
+			free(data->barrings_pin);
 
 		for(i=0; i<MAX_MODEMS; i++) {
 			if (data->modem[i])
@@ -1174,12 +1195,12 @@ static blts_cli_testcase my_ofono_cases[] =
 	 * Zero timeout = infinity
 	 *
 	 * Test case timeouts set to 0 are handled via configuration file! */
-	{ "oFono - Information Query", my_ofono_case_query, 15000 },
-	{ "oFono - Register to network", my_ofono_case_regnetwork, 15000 },
-	{ "oFono - De-register from network", my_ofono_case_deregnetwork, 15000 },
-	{ "oFono - Enable modems", my_ofono_case_enable_modems, 15000 },
-	{ "oFono - Set modems online", blts_ofono_case_modems_online, 15000 },
-	{ "oFono - Set modems offline", blts_ofono_case_modems_offline, 15000 },
+	{ "oFono - Information Query", my_ofono_case_query, 60000 },
+	{ "oFono - Register to network", my_ofono_case_regnetwork, 60000 },
+	{ "oFono - De-register from network", my_ofono_case_deregnetwork, 60000 },
+	{ "oFono - Enable modems", my_ofono_case_enable_modems, 60000 },
+	{ "oFono - Set modems online", blts_ofono_case_modems_online, 60000 },
+	{ "oFono - Set modems offline", blts_ofono_case_modems_offline, 60000 },
 	{ "oFono - Create voicecall", my_ofono_case_voicecall_to, 0 },
 	{ "oFono - Create voicecall with hidden caller ID", my_ofono_case_voicecall_to, 0 },
 	{ "oFono - Answer to voicecall and hangup", my_ofono_case_voicecall_answer, 0 },
@@ -1200,11 +1221,11 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Forward if not reachable", my_ofono_case_forwardings, 0 },
 	{ "oFono - Send SMS", blts_ofono_send_sms_default, 0 },
 	{ "oFono - Receive SMS", blts_ofono_receive_sms_default, 0 },
-	{ "oFono - Change PIN", ofono_change_pin, 15000 },
-	{ "oFono - Enter PIN", ofono_enter_pin, 15000 },
-	{ "oFono - Reset PIN", ofono_reset_pin, 15000 },
-	{ "oFono - Lock PIN", ofono_lock_pin, 15000 },
-	{ "oFono - Unlock PIN", ofono_unlock_pin, 15000 },
+	{ "oFono - Change PIN", ofono_change_pin, 60000 },
+	{ "oFono - Enter PIN", ofono_enter_pin, 60000 },
+	{ "oFono - Reset PIN", ofono_reset_pin, 60000 },
+	{ "oFono - Lock PIN", ofono_lock_pin, 60000 },
+	{ "oFono - Unlock PIN", ofono_unlock_pin, 60000 },
 	{ "oFono - Set microphone volume", blts_ofono_set_microphone_volume, 0 },
 	{ "oFono - Set speaker volume", blts_ofono_set_speaker_volume, 0 },
 	{ "oFono - Set muted", blts_ofono_set_muted, 0 },
@@ -1218,7 +1239,7 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Disable outgoing barrings", ofono_barring_properties, 0 },
 	{ "oFono - Change password for barrings", ofono_barring_properties, 0 },
 	{ "oFono - Call barrings test", ofono_call_barring_test, 0 },
-	{ "oFono - List all properties", ofono_list_modems, 15000 },
+	{ "oFono - List all properties", ofono_list_modems, 60000 },
 	// This operation can take several...
 	{ "oFono - Propose scan", ofono_propose_scan, 120000 },
 	//... seconds, and up to several minutes on some modems
