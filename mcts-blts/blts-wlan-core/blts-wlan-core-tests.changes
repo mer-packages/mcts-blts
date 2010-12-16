@@ -1,3 +1,7 @@
+* Wed 24 Nov 2010 Aki Nyman <aki.nyman@digia.com> - 0.1.3
+- Add Establish new adhoc network test.
+- Add Join established adhoc network test.
+
 * Tue 28 Sep 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.2
 - Add associate with WPA2-PSK AP test.
 

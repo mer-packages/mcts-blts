@@ -15,15 +15,17 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+#
+#  For MeeGo mcts OpenVG test suite
+#  Zheng Kui <kui.zheng@intel.com>
 
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-opengles2-tests, 0.0.13, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-openvg-tests, 0.0.11, kui.zheng@intel.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
-AC_CONFIG_SRCDIR([src/ogles2_perf_test.c])
+AC_CONFIG_SRCDIR([src/blts_openvg_test.c])
 AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
@@ -56,10 +58,10 @@ BLTS_COMMON_LIBS=`pkg-config --libs bltscommon`
 AC_SUBST(BLTS_COMMON_CFLAGS)
 AC_SUBST(BLTS_COMMON_LIBS)
 
-# Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADER([GLES2/gl2.h],,AC_MSG_ERROR([cannot find gl2.h]))
-AC_CHECK_HEADER([EGL/egl.h],,AC_MSG_ERROR([cannot find egl.h]))
+# Checks for header files. Disabled due to bug8919
+#AC_HEADER_STDC
+#AC_CHECK_HEADER([EGL/egl.h],,AC_MSG_ERROR([cannot find egl.h]))
+#AC_CHECK_HEADER([VG/openvg.h],,AC_MSG_ERROR([cannot find openvg.h]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 
@@ -68,7 +70,6 @@ AC_CHECK_HEADER([EGL/egl.h],,AC_MSG_ERROR([cannot find egl.h]))
 AC_CONFIG_FILES([     \
 	Makefile      \
 	src/Makefile  \
-	data/Makefile \
 	])
 AC_OUTPUT
 

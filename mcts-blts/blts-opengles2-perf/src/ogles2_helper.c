@@ -1065,7 +1065,7 @@ int glesh_generate_cube(float scale, glesh_object* object)
 		return 0;
 	}
 	memcpy(object->vertices, cubeVerts, sizeof( cubeVerts ));
-	for ( i = 0; i < num_vertices; i++ )
+	for ( i = 0; i < num_vertices * 3; i++ )
 	{
 		object->vertices[i] *= scale;
 	}

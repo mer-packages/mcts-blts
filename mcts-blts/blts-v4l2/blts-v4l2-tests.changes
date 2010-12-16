@@ -1,3 +1,6 @@
+* Wed 01 Dec 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.8
+- Rename duplicate set in tests.xml
+
 * Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.7
 - Packaging script updated.
 - Logging updated to new common library standard.
