@@ -27,21 +27,21 @@ The package builds (from the source tree root) with
 
 Or, 
  $ run "./pack.sh" directly
- $ blts-display-test-0.0.11-1.i386.rpm should be generated 
+ $ mcts-display-tests-0.0.11-1.i386.rpm should be generated 
    in /root/rpmbuild/RPMS/i386/
- $ rpm -ivh /root/rpmbuild/RPMS/i386/blts-display-test-0.0.11-1.i386.rpm
- $ After installation, /usr/bin/blts-display-test and /usr/share/blts-display-test/tests.xml 
+ $ rpm -ivh /root/rpmbuild/RPMS/i386/mcts-display-tests-0.0.11-1.i386.rpm
+ $ After installation, /usr/bin/mcts-display-tests and /usr/share/mcts-display-tests/tests.xml 
    should be available.
 
 Running the tests
 
- $ blts-display-test
+ $ mcts-display-tests
 
-To see other options for blts-x11-tests;
- $ blts-display-tests -?
-USAGE: ./blts-display-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
+To see other options for mcts-display-tests;
+ $ mcts-display-tests -?
+USAGE: ./mcts-display-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
 [-s] [-?] [-nc] [-t execution_time_in_seconds]
--l: Used log file, default blts_display.txt
+-l: Used log file, default mcts_display.txt
 -e: Execute single or multiple selected tests, for example -e 1,4,5.
 -en: Execute test by name, for example -en "My test X"
 -s: Show list of all tests

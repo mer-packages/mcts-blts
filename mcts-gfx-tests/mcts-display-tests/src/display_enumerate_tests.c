@@ -52,19 +52,19 @@ int test_enumerate (double execution_time)
 
 	if (!XRRQueryExtension (params.display, &event_base, &error_base))
 	{
-		LOGERR ("XRRQueryExtension failed\n");
+		BLTS_ERROR ("XRRQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if (!XRRQueryVersion (params.display, &ver, &rev))
 	{
-		LOGERR ("XRRQueryVersion failed\n");
+		BLTS_ERROR ("XRRQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG ("XRandR Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG ("XRandR Extension version %i.%i\n", ver, rev);
 	XRRSelectInput (params.display, params.root_window,
 		RRScreenChangeNotifyMask | RRCrtcChangeNotifyMask |
 		RROutputChangeNotifyMask | RROutputPropertyNotifyMask);
@@ -74,39 +74,39 @@ int test_enumerate (double execution_time)
 	current_size = XRRConfigCurrentConfiguration (scr_conf, &current_rotation);
 	current_rate = XRRConfigCurrentRate (scr_conf);
 	sizes = XRRConfigSizes (scr_conf, &nsizes);
-	LOG ("\nCurrent:%dx%d, Rate:%d\n", (sizes + current_size)->width,
+	BLTS_DEBUG ("\nCurrent:%dx%d, Rate:%d\n", (sizes + current_size)->width,
 		(sizes + current_size)->height, current_rate);
 //output
 	for (i = 0; i < scr_res->noutput; i++)
 	{
 		output_info =
 			XRRGetOutputInfo (params.display, scr_res, *(scr_res->outputs + i));
-		LOG ("Output Name=%s, ID=0x%lx, %s\n", output_info->name,
+		BLTS_DEBUG ("Output Name=%s, ID=0x%lx, %s\n", output_info->name,
 			*(scr_res->outputs + i),
 			(output_info->connection) ? "disconnected" : "connected");
-		LOG ("	Width(millimeters)=%u, Height(millimeters)=%u, Crtc=0x%lx\n",
+		BLTS_DEBUG ("	Width(millimeters)=%u, Height(millimeters)=%u, Crtc=0x%lx\n",
 			output_info->mm_width, output_info->mm_height, output_info->crtc);
-		LOG ("	ncrtc:%d, RRCrtc ID: ", output_info->ncrtc);
+		BLTS_DEBUG ("	ncrtc:%d, RRCrtc ID: ", output_info->ncrtc);
 		for (j = 0; j < output_info->ncrtc; j++)
-			LOG ("0x%lx, ", *(output_info->crtcs + j));
-		LOG ("\n");
-		LOG ("	Preferred RRMode:\n");
+			BLTS_DEBUG ("0x%lx, ", *(output_info->crtcs + j));
+		BLTS_DEBUG ("\n");
+		BLTS_DEBUG ("	Preferred RRMode:\n");
 
 		for (k = 0; k < output_info->nmode; k++)
 			for (j = 0; j < scr_res->nmode; j++)
 			{
 				if (*(output_info->modes + k) == (scr_res->modes + j)->id)
 				{
-					LOG	("	-id:0x%lx, name:%s, size:%ux%u, refresh rate:%d, dotClock:%lu\n",
+					BLTS_DEBUG ("	-id:0x%lx, name:%s, size:%ux%u, refresh rate:%d, dotClock:%lu\n",
 						(scr_res->modes + j)->id, (scr_res->modes + j)->name,
 						(scr_res->modes + j)->width, (scr_res->modes + j)->height,
 						REFRESH_RATE (((scr_res->modes + j)->dotClock),
 							((scr_res->modes + j)->hTotal), ((scr_res->modes + j)->vTotal)),
 						(scr_res->modes + j)->dotClock);
-					LOG ("		   hSyncStart:%u, hSyncEnd:%u, hTotal:%u, hSkew:%u\n",
+					BLTS_DEBUG ("		   hSyncStart:%u, hSyncEnd:%u, hTotal:%u, hSkew:%u\n",
 						(scr_res->modes + j)->hSyncStart, (scr_res->modes + j)->hSyncEnd,
 						(scr_res->modes + j)->hTotal, (scr_res->modes + j)->hSkew);
-					LOG ("		   vSyncStart:%u, vSyncEnd:%u, vTotal:%u, modeFlags:%lu\n",
+					BLTS_DEBUG ("		   vSyncStart:%u, vSyncEnd:%u, vTotal:%u, modeFlags:%lu\n",
 						(scr_res->modes + j)->vSyncStart, (scr_res->modes + j)->vSyncEnd,
 						(scr_res->modes + j)->vTotal, (scr_res->modes + j)->modeFlags);
 				}

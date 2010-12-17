@@ -23,31 +23,31 @@
     <set name="Display function testing" feature="Display">
       <case name="Display-Enumerate%20Screen/Crtc/Output/Modeline%20">
 	<!-- description="Enumerate Screen/Crtc/Output/Modeline test" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Enumerate_display.log" -en "Display-Enumerate Screen/Crtc/Output/Modeline test"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Enumerate_display.log" -en "Display-Enumerate Screen/Crtc/Output/Modeline test"</step>
       </case>
       <case name="Display-Set%20Crtc%20modeline">
 	<!-- description="Display-Set Crtc Modeline test" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Set_Crtc_Mode.log" -en "Display-Set Crtc Modeline test"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Crtc_Mode.log" -en "Display-Set Crtc Modeline test"</step>
       </case>
       <case name="Display-Set%20Backlight">
 	<!-- description="Set Backlight test" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Set_Backlight.log" -en "Display-Set Backlight test"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Backlight.log" -en "Display-Set Backlight test"</step>
       </case>
       <case name="Display-Rotation%20test">
 	<!-- description="Rotation test" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Set_Rotation.log" -en "Display-Rotation test"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Rotation.log" -en "Display-Rotation test"</step>
       </case>
       <case name="Display-Set%20Position">
 	<!-- description="Set Crtc Position test" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Set_Position.log" -en "Display-Set Crtc Position test"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Position.log" -en "Display-Set Crtc Position test"</step>
       </case>
       <case name="Display-Scaling%20test">
 	<!-- description="Crtc Scaling test" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Set_Scale.log" -en "Display-Crtc Scaling test"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Scale.log" -en "Display-Crtc Scaling test"</step>
       </case>
       <case name="Display-Hotplug%20test">
 	<!-- description="Hotplug external display" -->
-        <step>/usr/bin/blts-display-test -l "/var/log/tests/blts-display-test/Display-Hotplug.log" -en "Display-Hotplug external display"</step>
+        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Hotplug.log" -en "Display-Hotplug external display"</step>
       </case>
     </set>
   </suite>
