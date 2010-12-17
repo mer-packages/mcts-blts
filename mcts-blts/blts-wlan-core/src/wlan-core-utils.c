@@ -605,8 +605,10 @@ int phy_lookup(char *name)
 	if (fd < 0)
 		return -1;
 	pos = read(fd, buf, sizeof(buf) - 1);
-	if (pos < 0)
+	if (pos < 0) {
+		close(fd);
 		return -1;
+	}
 	buf[pos] = '\0';
 	close(fd);
 
