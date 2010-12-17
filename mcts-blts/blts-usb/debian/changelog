@@ -1,3 +1,13 @@
+blts-usb-tests (0.0.15) unstable; urgency=low
+
+  [ Kimmo Myllyvirta ]
+  * Tests.xml update
+  [ Jussi Saavalainen ]
+  * Ensure failure when no data transfered
+  * BKL removal from kernel modules for Linux 2.6.36+ support
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Thu, 16 Dec 2010 11:07:42 +0200
+
 blts-usb-tests (0.0.14) unstable; urgency=low
 
   [ Mika Niinistö, Kimmo Myllyvirta ]

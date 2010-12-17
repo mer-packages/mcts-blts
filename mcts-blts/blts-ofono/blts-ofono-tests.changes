@@ -1,3 +1,6 @@
+* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.1.15
+- Tests.xml update
+
 * Thu 11 Nov 2010 Kari Laakso <kari.laakso@digia.com> - 0.1.14
 - [ Aki Nyman ] Dual call cases (transfer, swap, release & answer, hold & answer) updated to work with oFono 0.33 API
 - [ Aki Nyman ]  Incoming call cases (hangup, hangup all, remote hangup, deflect and cancel) updated to work with oFono 0.33 API

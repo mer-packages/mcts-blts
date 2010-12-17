@@ -52,7 +52,7 @@ print 'Remove no exist profile TestProfile'
 try:
     manager.RemoveProfile('/profile/TestProfile')
 except dbus.DBusException, e:
-    if e._dbus_error_name == 'org.moblin.connman.Error.NotFound':
+    if e._dbus_error_name == 'net.connman.Error.NotFound':
         print 'Remove none exist profile trigger error NotFound'
         EXIT(True)
     else:

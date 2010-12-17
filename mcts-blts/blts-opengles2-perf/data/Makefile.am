@@ -16,9 +16,6 @@
 
 configdir = $(libdir)/tests/blts-opengles2-tests
 config_DATA = \
-	blts-opengles2-perf.min \
-	blts-opengles2-perf-smoke.min \
-	blts-opengles2-perf-min.conf \
 	blts-opengles2-perf.cnf
 
 imagesdir = $(pkgdatadir)/images

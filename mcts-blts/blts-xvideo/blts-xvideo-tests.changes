@@ -1,3 +1,6 @@
+* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.8
+- Remove obsolete Min support code
+
 * Wed 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
 - Packaging script updated.
 - Logging updated to new common library standard.

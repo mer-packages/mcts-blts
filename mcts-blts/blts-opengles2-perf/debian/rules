@@ -100,9 +100,6 @@ install-arch:
 
 	dh_install -s
 
-	mkdir -p $(CURDIR)/debian/blts-opengles2-tests/usr/lib/tests/blts-opengles2-tests
-	ln -s ../../libbltsopengles2perf.so.0.0.0 $(CURDIR)/debian/blts-opengles2-tests/usr/lib/tests/blts-opengles2-tests/libbltsopengles2perf.so
-
 
 # Must not depend on anything. This is to be called by
 # binary-arch/binary-indep

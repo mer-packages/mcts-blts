@@ -1,7 +1,10 @@
+mwts-accounts-tests (0.0.2) unstable; urgency=low
+  * Accounts can be created
+  * SSO credentials can be created 
+  * Session creation now possible
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Thu, 16 Nov 2010 13:57:00 +0200
+
 mwts-accounts-tests (0.0.1) unstable; urgency=low
   * Initial version
- -- Reijo Korhonen <reijo.korhonen@digia.com>  Fri, 30 Oct 2010 17:41:00 +0200Reijo Korhonen
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Fri, 19 Nov 2010 10:32:00 +0200
 
-mwts-accounts (0.0.1) unstable; urgency=low
-  * Initial version
- -- Reijo Korhonen <reijo.korhonen@digia.com>  Fri, 30 Oct 2010 17:41:00 +0200Reijo Korhonen

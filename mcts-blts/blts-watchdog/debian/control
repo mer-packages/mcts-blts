@@ -9,7 +9,6 @@ Homepage: http://wiki.meego.com/Quality/TestSuite/MCTS
 Package: blts-watchdog-tests
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: min | min-all
 Description: BLTS watchdog functional test set
  This package contains functional tests for kernel Watchdog Timers.
 

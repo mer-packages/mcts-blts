@@ -50,7 +50,7 @@ for path in profiles:
             manager.SetProperty('ActiveProfile', path)
         except dbus.DBusException, e:
             if e._dbus_error_name \
-                == 'org.moblin.connman.Error.NotSupported':
+                == 'net.connman.Error.NotSupported':
                 print 'This feature is not supported now, please wait...'
                 EXIT(False)
             else:

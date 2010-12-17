@@ -1,3 +1,10 @@
+* Thu 2 Dec 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.1.4
+- Package name in configure.ac and debian/control changed to
+  libbltssensorplugin-example so that source package name matches binary
+  packages
+- Preparation for MeeGo OBS: LDFLAGS changed to produce only unversioned .so,
+  spec file updated to avoid rpmlint warnings in MeeGo OBS- Package name in configure.ac changed to match spec file
+
 * Tue 16 Nov 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.1.3
 - Packaging script updated.
 - Logging updated to new common library standard.

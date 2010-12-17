@@ -56,13 +56,19 @@ static pid_t local_syslog_capture_pid = 0;
 /* default path used */
 static const char log_path[] = "/var/log/tests";
 
-/* system messages */
+/* Output file for kernel log */
 static const char syslog_path[] = "/var/log/tests/kmsg.log";
 
-/* general buffer for syslog capture */
+/* general buffer for kernel log capture */
 static char buffer[4096];
 
-/* Open given log file; < 0 = fail */
+/**
+ * Open given log file
+ * @param filename Log file to open. NULL opens /dev/null
+ * @param flags Flags for log output format and destination.
+ * @return < 0 = fail
+ * @see blts_log_open_flags
+ */
 int blts_log_open(const char *filename, unsigned int flags)
 {
 	char *real_filename;
@@ -99,7 +105,10 @@ int blts_log_open(const char *filename, unsigned int flags)
 	return 0;
 }
 
-/* Close current log file; < 0 = fail */
+/**
+ * Close current log file.
+ * @return < 0 = fail
+ */
 int blts_log_close()
 {
 	int ret = 0;
@@ -115,17 +124,30 @@ int blts_log_close()
 	return ret;
 }
 
+/**
+ * Set maximum level of log messages to print.
+ * @param level New level
+ */
 void blts_log_set_level(int level)
 {
 	logging_level = level;
 }
 
+/**
+ * Get maximum level of log messages to print.
+ * @return Log level
+ */
 int blts_log_get_level()
 {
 	return logging_level;
 }
 
-/* printf to current log file (std args, return vals) */
+/**
+ * Output formatted message to current log file if log level allows it.
+ * @param level Log level to use
+ * @param format As \c printf
+ * @return As \c printf
+ */
 void blts_log_print_level(int level, const char *format, ...)
 {
 	va_list ap;
@@ -181,7 +203,8 @@ void blts_log_print_level(int level, const char *format, ...)
 	}
 }
 
-/** syslog capture, runs as it's own in childprocess */
+/* Worker for kernel log capture, runs as it's own in childprocess */
+/* TODO: why is this not static? */
 int blts_log_run_syslog_capture()
 {
 	int read_bytes = 0;
@@ -222,7 +245,15 @@ int blts_log_run_syslog_capture()
 	return 0;
 }
 
-//; < 0 = fail
+/**
+ * Begin capturing kernel log to a file.
+ * @return 0 == success
+ *
+ * This forks a separate process for the logging; use
+ * blts_log_end_syslog_capture() to stop. The output file is currently
+ * "/var/log/tests/kmsg.log" (see syslog_path); move this to test-specific
+ * name when done.
+ */
 int blts_log_start_syslog_capture()
 {
 	/* clear log */
@@ -244,7 +275,10 @@ int blts_log_start_syslog_capture()
 	return 0;
 }
 
-//; < 0 = fail
+/**
+ * Stop a running kernel log capture.
+ * @return 0 == success.
+ */
 int blts_log_end_syslog_capture()
 {
 	if (local_syslog_capture_pid == 0)
@@ -424,7 +458,7 @@ void log_set_level(int level)
 	logging_level = level;
 }
 
-/** syslog capture, runs as it's own in childprocess */
+/* syslog capture, runs as it's own in childprocess */
 int run_syslog_capture()
 {
 	int read_bytes = 0;

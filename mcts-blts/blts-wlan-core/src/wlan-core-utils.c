@@ -182,6 +182,9 @@ static int nl80211_get_ifflags_ifname(wlan_core_data* data,
 {
 	struct ifreq ifr;
 
+	if(!ifname)
+		return -EINVAL;
+
 	memset(&ifr, 0, sizeof(struct ifreq));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_name[IFNAMSIZ-1] = 0;
@@ -382,7 +385,9 @@ int nl80211_finish_device_init(wlan_core_data* data, int test_num)
 	BLTS_DEBUG("Finishing device:%s initialization before testing...\n", data->cmd->ifname);
 	data->cmd->ifindex = if_nametoindex(data->cmd->ifname);
 
-	if(test_num == CORE_DISCONNECT_FROM_ADHOC_NETWORK)
+	if(test_num == CORE_DISCONNECT_FROM_ADHOC_NETWORK || 
+		test_num == CORE_ESTABLISH_NEW_ADHOC_NETWORK ||
+		test_num == CORE_JOIN_ESTABLISHED_ADHOC_NETWORK)
 		mode = 1;
 	else
 		mode = 0;
@@ -431,6 +436,7 @@ int nl80211_finish_device_init(wlan_core_data* data, int test_num)
 int nl80211_init(wlan_core_data* data)
 {
 	int err;
+	int flags = 0;
 
 	if (data == NULL)
 		return -1;
@@ -518,6 +524,11 @@ int nl80211_init(wlan_core_data* data)
 		BLTS_ERROR("socket(PF_INET,SOCK_DGRAM) failed\n");
 		err = -ENOENT;
 		goto out_cache_free;
+	}
+
+	if (nl80211_get_ifflags(data, &flags) == 0)
+	{
+		nl80211_set_ifflags(data, flags & ~IFF_UP);
 	}
 
 	return 0;

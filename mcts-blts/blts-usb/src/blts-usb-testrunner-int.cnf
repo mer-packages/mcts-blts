@@ -40,7 +40,7 @@
 
 [parameter]
 	name ep_configuration_file
-	const "/usr/share/blts-usb-tests/ep-configuration-int.cfg"
+	const "/etc/blts/ep-configuration-int.cfg"
 [end_parameter]
 
 ################

@@ -50,20 +50,20 @@ configure-stamp:
 build: build-arch build-indep
 
 build-arch: build-arch-stamp
-build-arch-stamp: configure-stamp  
+build-arch-stamp: configure-stamp
 
 	# Add here commands to compile the arch part of the package.
 	$(MAKE)
 	touch $@
 
 build-indep: build-indep-stamp
-build-indep-stamp: configure-stamp  
+build-indep-stamp: configure-stamp
 
 	# Add here commands to compile the indep part of the package.
 	#$(MAKE) doc
 	touch $@
 
-clean: 
+clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-arch-stamp build-indep-stamp configure-stamp
@@ -71,13 +71,13 @@ clean:
 	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
 
-	dh_clean 
+	dh_clean
 
 install: install-indep install-arch
 install-indep:
 	dh_testdir
 	dh_testroot
-#	dh_prep -i 
+#	dh_prep -i
 	dh_clean -k -i
 	dh_installdirs -i
 
@@ -90,7 +90,7 @@ install-indep:
 install-arch:
 	dh_testdir
 	dh_testroot
-#	dh_prep -s 
+#	dh_prep -s
 	dh_clean -k -s
 	dh_installdirs -s
 
@@ -99,9 +99,6 @@ install-arch:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/blts-watchdog-tests install
 
 	dh_install -s
-
-	mkdir -p $(CURDIR)/debian/blts-watchdog-tests/usr/lib/tests/blts-watchdog-tests
-	ln -s ../../libbltswatchdog.so.0.0.0 $(CURDIR)/debian/blts-watchdog-tests/usr/lib/tests/blts-watchdog-tests/libbltswatchdog.so
 
 # Must not depend on anything. This is to be called by
 # binary-arch/binary-indep

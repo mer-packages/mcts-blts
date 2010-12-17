@@ -272,8 +272,10 @@ static int check_bin(char* name, int loglevel)
 
 /**
  * Parse rulesfile and dispatch checks for each line
- * loglevel:0=quiet 1=errors 2=all
- * return 0 = all checks ok
+ * @param rulesfile File with rules for check.
+ * @param loglevel 0=quiet 1=errors 2=all
+ * @return 0 = all checks ok
+ *
  * ( todo: might be prettier do do this with yacc&bison )
  */
 int depcheck(char *rulesfile, int loglevel)

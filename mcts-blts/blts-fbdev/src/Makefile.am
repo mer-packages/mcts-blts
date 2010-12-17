@@ -20,34 +20,20 @@ requiredlibs = \
 	$(BLTS_FBDEV_LIBS) \
 	-lm -lrt
 
-if WANT_MIN
-min_libs = -lminutils -lmintmapi -lminevent
-else
-min_libs =
-endif
-
 h_sources = \
 	blts-fbdev-defs.h \
 	blts-fbdev-utils.h \
 	blts-fbdev-blanking.h \
 	blts-fbdev-backlight.h \
-	fbdev_fute.h
+	blts-fbdev-fute.h \
+	blts-fbdev-perf.h
 
 c_sources = \
 	blts-fbdev-utils.c \
 	blts-fbdev-blanking.c \
 	blts-fbdev-backlight.c \
-	fbdev_fute.c
-
-if WANT_MIN
-
-lib_LTLIBRARIES = libbltsfbdev.la
-libbltsfbdev_la_SOURCES = $(h_sources) $(c_sources) min_scripter_mod.c
-libbltsfbdev_la_CFLAGS = -fPIC
-libbltsfbdev_la_LIBADD = $(min_libs)
-libbltsfbdev_la_LDFLAGS = -shared -module
-
-endif
+	blts-fbdev-fute.c \
+	blts-fbdev-perf.c
 
 bin_PROGRAMS = blts-fbdev-tests
 

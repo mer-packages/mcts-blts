@@ -18,22 +18,25 @@
 -->
 <testdefinition version="1.0">
   <suite name="blts-input-devices-tests" domain="Graphics">
-    <set name="input-devices-tests" feature="Input">
-       <!-- Add shell commands to execute before this set here -->
-      <!--
-      <pre_steps>
-        <step>echo Hello world</step>
-      </pre_steps>
-      -->
-      <case name="Input%20-%20Enumerate%20devices">
-        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input%20-%20Enumerate%20devices.log -e 1</step>
+    <set name="input-devices-tests" feature="Input Adaptation">
+      <case name="Input - Enumerate devices"
+        type="Functional">
+        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Enumerate_devices.log -e 1</step>
       </case>
-      <case name="Input%20-%20Single%20touch">
-        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input%20-%20Key%20events.log -e 2</step>
+      <case name="Input - Single touch"
+        type="Functional">
+        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Single_touch.log -e 2</step>
       </case>
-      <case name="Input%20-%20Multi-touch">
-        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Pointer%20-%20Key%20events.log -e 3</step>
+      <case name="Input - Multi-touch"
+        type="Functional">
+        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Multi-touch.log -e 3</step>
       </case>
+
+      <get>
+        <file>/var/log/tests/Input_-_Enumerate_devices.log</file>
+        <file>/var/log/tests/Input_-_Single_touch.log</file>
+        <file>/var/log/tests/Input_-_Multi-touch.log</file>
+      </get>
    </set>
   </suite>
 </testdefinition>

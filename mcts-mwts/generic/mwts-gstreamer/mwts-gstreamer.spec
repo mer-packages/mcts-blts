@@ -6,7 +6,7 @@
 BuildRoot:	%{buildroot}
 Summary: 	Test libraries for GStreamer.
 License: 	LGPL
-Name: 		%{name}
+Name: 		mwts-gstreamer-tests
 Version: 	0.0.5
 Release: 	%{release}
 Prefix: 	/usr
@@ -21,19 +21,19 @@ Test libraries for GStreamer.
 Summary:	Test cases for GStreamer.
 Prefix: 	/usr
 Group: 		Development/Tools
-Requires:	mwts-gstreamer
+Requires:	mwts-gstreamer-tests
 %description	scripts-generic
 MIN test cases for measuring performance and reliability
 
 %package        config-generic
 Summary:       	Generic configuration file for mwts-gstreamer
-Requires:       mwts-gstreamer
+Requires:       mwts-gstreamer-tests
 %description    config-generic
 Generic configuration file for mwts-gstreamer
 
 %package	all-generic
 Summary:	meta package containing everything for mwts-gstreamer (generic)
-Requires:	mwts-gstreamer, mwts-gstreamer-scripts-generic, mwts-gstreamer-config-generic
+Requires:	mwts-gstreamer-tests, mwts-gstreamer-scripts-generic, mwts-gstreamer-config-generic
 %description	all-generic
 Meta package for installing all needed packages for generic version of mwts-gstreamer
 

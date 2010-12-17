@@ -6,8 +6,8 @@
 BuildRoot:              %{buildroot}
 Summary:                mwts-filesystem is generic File system test asset API libraries and generic configuration
 License:                LGPL
-Name:                   %{name}
-Version:                %{version}
+Name:                   mwts-filesystem-tests
+Version:                1.0.0
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -22,7 +22,7 @@ mwts-filesystem is a common library for MWTS test assets. It provides tool for f
 Summary:                mwts-filesystem development files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               qt-devel, mwts-filesystem
+Requires:               qt-devel, mwts-filesystem-tests
 %description            devel
 Development headers and libraries for mwts-filesystem
 
@@ -30,7 +30,7 @@ Development headers and libraries for mwts-filesystem
 Summary:                mwts-filesystem MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-filesystem
+Requires:               min, mwts-filesystem-tests
 %description            scripts
 MIN test cases for mwts-filesystem
 
