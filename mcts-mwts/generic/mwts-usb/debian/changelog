@@ -1,3 +1,7 @@
+mwts-usb-tests (0.0.8) unstable; urgency=low
+  * added new test cases
+ -- Jan Grela <jan.grela@digia.com>  , Thu Dec 15 2010 16:26:00 +0200
+
 mwts-usb-tests (0.0.7) unstable; urgency=low
   * Fixed one master slave case to use correct slave
  -- Tuomo Pelkonen <tuomo.pelkonen@digia.com>  Tue, 7 Dec 2010 12:00:00 +0200
