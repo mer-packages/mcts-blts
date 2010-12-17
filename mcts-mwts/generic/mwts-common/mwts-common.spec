@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Mwts-common is a Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-common
-Version:                1.0.0
+Version:                1.0.2
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -46,22 +46,22 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files
 %doc README COPYING DEPENDENCIES.png
-/usr/lib/libmwts-common.*
+/usr/lib/libmwts-common.so.*
 /usr/bin/*.py
 
 %files devel
 %doc README COPYING DEPENDENCIES.png
+/usr/lib/libmwts-common.so
+/usr/lib/min/libmin-mwts-common.so
 /usr/include/MwtsCommon
 /usr/include/mwts*.h
-#/usr/share/doc/mwts-common-dev/*
 
 %files tests
 %doc README COPYING DEPENDENCIES.png
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/lib/min/libmin-mwts-common.*
+/usr/lib/min/libmin-mwts-common.so.*
 /usr/share/applications/*.desktop
-#/usr/share/doc/mwts-common-tests/*
 
 %post
 mkdir -p /var/log/tests
