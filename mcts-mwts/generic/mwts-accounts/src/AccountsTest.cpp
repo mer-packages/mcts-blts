@@ -32,6 +32,8 @@ AccountsTest::AccountsTest()
     qDebug() << "Creating the ssoCLient";
     ssoClient = new SignonClient(this);
 
+    success = false;
+
     // set logging on
     g_pLog->EnableDebug(true);
     g_pLog->EnableTrace(true);
@@ -272,7 +274,7 @@ bool AccountsTest::RemoveAccount(const QString strName)
     }
 
     MWTS_LEAVE;
-    return false;
+    return true;
 }
 
 bool AccountsTest::ClearAccounts()
@@ -293,7 +295,7 @@ bool AccountsTest::ClearAccounts()
     }
 
     MWTS_LEAVE;
-    return false;
+    return true;
 }
 
 /** SSO FUNCTIONS **/

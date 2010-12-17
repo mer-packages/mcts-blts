@@ -102,6 +102,8 @@ public:
 
 
 private:
+        bool success;
+
         SignonClient *ssoClient;
 
         /*
