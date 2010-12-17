@@ -16,8 +16,6 @@
 
 configdir = $(libdir)/tests/blts-watchdog-tests
 config_DATA = \
-	blts-watchdog-smoke.min \
-	blts-watchdog-min.conf \
 	blts-watchdog-req_files.cfg
 
 EXTRA_DIST = $(config_DATA)

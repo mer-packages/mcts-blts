@@ -152,3 +152,36 @@ ERROR:
 
         return 0;
 }
+
+/* Fetches variant screen info of a device */
+int
+blts_fbdev_get_variant_info (blts_fbdev_device *device)
+{
+        FUNC_ENTER();
+
+        if (!device || device->fd <= 0) {
+                BLTS_ERROR ("Error: Device is not initted right\n");
+                goto ERROR;
+        }
+
+	BLTS_TRACE ("Fetching info...\n");
+
+        /* TODO: Separate ioctl module? */
+	if (ioctl (device->fd, FBIOGET_VSCREENINFO,
+                   &device->variant_info) < 0) {
+		BLTS_LOGGED_PERROR("Variant screen info ioctl() failed");
+                goto ERROR;
+	}
+
+        BLTS_TRACE ("ok.\n");
+
+        FUNC_LEAVE();
+
+        return 1;
+
+ERROR:
+
+        FUNC_LEAVE();
+
+        return 0;
+}

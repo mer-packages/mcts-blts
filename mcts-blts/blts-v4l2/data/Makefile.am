@@ -16,9 +16,6 @@
 
 minconfigdir = $(libdir)/tests/blts-v4l2-tests
 minconfig_DATA = \
-	blts-v4l2.min \
-	blts-v4l2-SMOKE.min \
-	min.conf \
 	blts-v4l2-req_file.cfg
 
 config_DATA = \

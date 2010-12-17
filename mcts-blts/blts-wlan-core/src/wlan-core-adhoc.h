@@ -35,7 +35,7 @@
 #include "wlan-core-definitions.h"
 #include "wlan-core-connect.h"
 
-int join_existing_open_adhoc_network(wlan_core_data* data);
+int join_established_open_adhoc_network(wlan_core_data* data);
 int create_open_adhoc_network(wlan_core_data* data);
 
 int do_test_data_sending(wlan_core_data* data, struct associate_params *params);

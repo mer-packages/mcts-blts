@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-alsa-core-tests, 0.0.8, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-alsa-core-tests, 0.0.10, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts_alsa_core_test.c])
@@ -39,11 +39,6 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-#AC_CHECK_LIB([minevent], [min_event_create])
-#AC_CHECK_LIB([mintmapi], [tm_printf])
-#AC_CHECK_LIB([minutils], [mip_get_uint])
-
-#AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 # Library configs
 PKG_CHECK_MODULES(BLTS_COMMON, [

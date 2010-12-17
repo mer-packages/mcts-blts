@@ -35,8 +35,12 @@ blts_fbdev_init (blts_fbdev_device *device);
 void
 blts_fbdev_close (blts_fbdev_device *device);
 
-/* Fetches fixed info of a device */
+/* Fetches fixed screen info of a device */
 int
 blts_fbdev_get_fixed_info (blts_fbdev_device *device);
+
+/* Fetches variant screen info of a device */
+int
+blts_fbdev_get_variant_info (blts_fbdev_device *device);
 
 #endif /* BLTS_FBDEV_UTILS_H_ */

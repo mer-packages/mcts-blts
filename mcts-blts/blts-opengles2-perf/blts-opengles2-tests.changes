@@ -1,3 +1,10 @@
+* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.14
+- Remove obsolete Min support code
+
+* Wed 01 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.13
+- Fix vertex scale issue of glesh_generate_cube().
+- Fixes: BMC#10543
+
 * Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.12
 - Packaging script updated.
 - Logging updated to new common library standard.

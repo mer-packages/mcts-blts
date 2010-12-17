@@ -20,12 +20,6 @@ AM_CFLAGS = \
 
 requiredlibs = -lm -lrt
 
-#if WANT_MIN
-#min_libs = -lminutils -lmintmapi -lminevent
-#else
-#min_libs =
-#endif
-
 h_sources = \
 	alsa_async.h \
 	alsa_config.h \
@@ -56,16 +50,6 @@ c_sources = \
 
 library_includedir = $(includedir)/blts
 #library_include_HEADERS = $(h_sources)
-
-#if WANT_MIN
-
-#lib_LTLIBRARIES = libbltsalsacore.la
-#libbltsalsacore_la_SOURCES = $(h_sources) $(lib_h_sources) $(c_sources) $(lib_c_sources) min_scripter_mod.c
-#libbltsalsacore_la_CFLAGS = $(AM_CFLAGS) $(BLTS_COMMON_CFLAGS) $(DBUS_GLIB_CFLAGS) -fPIC
-#libbltsalsacore_la_LIBADD = $(requiredlibs) $(BLTS_COMMON_LIBS) $(DBUS_GLIB_LIBS)
-#libbltsalsacore_la_LDFLAGS = $(AM_LDFLAGS) -shared -module
-
-#endif
 
 bin_PROGRAMS = blts-alsa-core-tests
 

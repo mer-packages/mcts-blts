@@ -548,8 +548,8 @@ static void adjust_ep_max_transfer(unsigned endpoint, unsigned new_max_transfer)
 			clamp(new_max_transfer, size_min, size_max);
 }
 
-int hostdrv_ioctl(struct inode *inode, struct file *filp,
-	unsigned cmd, unsigned long arg)
+static long hostdrv_unlocked_ioctl(struct file *filp, unsigned cmd,
+				   unsigned long arg)
 {
 	struct hostdrv_current_config tmp;
 	int err = 0, i;
@@ -1026,7 +1026,7 @@ const struct file_operations hostdrv_fops = {
 	.write = hostdrv_write,
 	.open = hostdrv_open,
 	.release = hostdrv_release,
-	.ioctl = hostdrv_ioctl,
+	.unlocked_ioctl = hostdrv_unlocked_ioctl,
 	.llseek = hostdrv_llseek,
 };
 

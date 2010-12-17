@@ -1,3 +1,8 @@
+* Tue 16 Dec 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.15
+- [Kimmo Myllyvirta] Tests.xml update
+- Ensure failure when no data transfered
+- BKL removal from kernel modules for Linux 2.6.36+ support
+
 * Tue 16 Nov 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.14
 - Packaging script updated.
 - Logging updated to new common library standard.

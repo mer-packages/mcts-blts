@@ -420,42 +420,67 @@ int BluetoothTest::Device(int command, char* host /*= 0*/, char* pin /*= 0*/, bo
  */
 int BluetoothTest::FileTransfer(char* filename, char* host, ServiceRole role)
 {
-	MWTS_ENTER;
-	int bret = true;
+    MWTS_ENTER;
+    int bret = true;
 
-	if(!m_pObex)
-	{
-		qCritical() << "No obex instance";
-		return -1;
-	}
+    if(!m_pObex)
+    {
+        qCritical() << "No obex instance";
+        return -1;
+    }
 
-	/* parse host */
-	QString phost;
-	if(host == 0)
-        phost = QString(g_pConfig->value("host_mac").toString());
-	else
-		phost = host;
-	qDebug() << "host_mac:"<< phost;
-	/* create path */
-	qDebug() << "Append path and filename";
-	QString path = g_pConfig->value("Obex/path").toString();
-	path.append(filename);
-	qDebug() << "file:" << path;
+    /* parse host */
+    QString phost;
+    if (host == NULL)
+    {
+        qDebug() << "host_mac" << g_pConfig->value("host_mac").toString();
+        phost = g_pConfig->value("host_mac").toString();
+    }
+    else
+    {
+        /* check if equals to any key available in .conf file */
+        /* load mac addresses from conf file */
+        qDebug() << "Load mac addresses";
+        g_pConfig->beginGroup("MAC");
+        QStringList keys = g_pConfig->childKeys();
+        qDebug() << "Found"<<keys.length()<<"keys";
+        qDebug() << "Find compatible partner for key:"<<host;
+        foreach(QString str, keys)
+        {
+            qDebug() << "Found key:"<<str;
+            if(str.compare(QString(host))==0)
+            {
+                QString value = g_pConfig->value(str).toString();
+                qDebug() << "Using key:"<<str<<"with value"<<value;
+                phost = value;
+            }
+        }
+        g_pConfig->endGroup();
+        if(phost.isEmpty())
+            phost = host;
+        qDebug() << "phost" << phost;
+    }
+    qDebug() << "host_mac:"<< phost;
+    /* create path */
+    qDebug() << "Append path and filename";
+    QString path = g_pConfig->value("Obex/path").toString();
+    path.append(filename);
+    qDebug() << "file:" << path;
 
-	/* get proto path */
-	QString proto = g_pConfig->value("Obex/proto").toString();
+    /* get proto path */
+    QString proto = g_pConfig->value("Obex/proto").toString();
 
-	/* transfer */
-	qDebug() << "Call obex transfer";
-	bret = m_pObex->Transfer(role, phost,path,proto);
+    /* transfer */
+    qDebug() << "Call obex transfer";
+    bret = m_pObex->Transfer(role, phost,path,proto);
 
-	/* mark result */
+    /* mark result */
     g_pResult->StepPassed(this->CaseName(), bret);
 
-	MWTS_LEAVE;
-	if(!bret)
-		return -1;
-	return 0;
+    MWTS_LEAVE;
+    if(!bret)
+        return -1;
+    return 0;
 }
 
 /**

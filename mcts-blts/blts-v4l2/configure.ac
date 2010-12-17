@@ -15,7 +15,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.59)
-AC_INIT(blts-v4l2-tests, 0.3.7, mikko.ojala@digia.com)
+AC_INIT(blts-v4l2-tests, 0.3.9, mikko.ojala@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/camera.c])
@@ -40,9 +40,6 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 AC_CHECK_LIB([m], [acosf])
 AC_CHECK_LIB([rt], [clock_gettime])
-#AC_CHECK_LIB([minevent], [min_event_create])
-#AC_CHECK_LIB([mintmapi], [tm_printf])
-#AC_CHECK_LIB([minutils], [mip_get_uint])
 
 # --- PKG_CHECK_MODULES does this already ---
 # Library configs
@@ -61,7 +58,6 @@ AC_SUBST(XVIDEO_LIBS)
 
 AC_SUBST(configdir)
 
-#AM_CONDITIONAL([WANT_MIN], [test "x$ac_cv_lib_mintmapi_tm_printf" == "xyes"])
 
 AC_CONFIG_FILES([     \
 	Makefile      \

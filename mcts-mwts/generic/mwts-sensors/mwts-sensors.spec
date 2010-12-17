@@ -6,9 +6,9 @@
 BuildRoot:              %{buildroot}
 Summary:                mwts-sensors is a Qt based framework library used by all MWTS test assets
 License:                LGPL
-Name:                   %{name}
-Version:                %{version}
-Release:                %{release}
+Name:                   mwts-sensors-tests
+Version:                1.0.0
+Release:                0
 Prefix:                 /usr
 Group:                  Development/Tools
 BuildRequires:          qt-devel, min-devel, min, mwts-common-devel, qt-mobility-devel
@@ -22,7 +22,7 @@ mwts-sensors is a common library for MWTS test assets. It provides tool for sens
 Summary:                mwts-sensors development files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               qt-devel, mwts-sensors
+Requires:               qt-devel, mwts-sensors-tests
 %description            devel
 Development headers and libraries for mwts-sensors
 
@@ -30,7 +30,7 @@ Development headers and libraries for mwts-sensors
 Summary:                mwts-sensors MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-sensors
+Requires:               min, mwts-sensors-tests
 %description            scripts
 MIN test cases for mwts-sensors
 
