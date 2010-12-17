@@ -6,7 +6,7 @@
 BuildRoot:              %{buildroot}
 Summary:                mwts-filesystem is generic File system test asset API libraries and generic configuration
 License:                LGPL
-Name:                   mwts-filesystem-tests
+Name:                   mwts-filesystem
 Version:                1.0.0
 Release:                %{release}
 Prefix:                 /usr
