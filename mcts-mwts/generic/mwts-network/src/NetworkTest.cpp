@@ -26,13 +26,8 @@
 #include "NetworkTest.h"
 #include "ftpwindow.h"
 
-#include <QHostAddress>
-#include <QNetworkInterface>
 #include <QTest>
-#include <QList>
-
 #include <QtDBus>
-
 #include <QVariantMap>
 #include <QVariant>
 
@@ -381,7 +376,6 @@ void NetworkTest::CloseActiveSessions()
         for (int i = 0; i < configs.size(); ++i) {
 		if(configs.at(i).state() == QNetworkConfiguration::Active)
 		{
-		   //qDebug() << "Found active session, now closing it";
 		   QNetworkSession session(configs.at(i));
 		   session.disconnect();
 		   session.stop();
@@ -417,13 +411,13 @@ bool NetworkTest::AddApPassword(const QString ap_name)
     
 	// cast Services to a string list 
 	QStringList services_list = qdbus_cast<QStringList>(services); 
-	//qDebug() << "Stringlist of services: " << services_list; 
-    
-	QDBusReply<QVariant> setProperty_reply;
 
         QString name = g_pConfig->value(ap_name + "/name").toString();
 
 	qDebug() << "Ap: " << ap_name << " is: " << name;
+	
+	// variantmap vor service getproperties replies
+	QVariantMap map;
 
 	// preserve the service path for the found service
 	//QString service_path = "";
@@ -434,20 +428,18 @@ bool NetworkTest::AddApPassword(const QString ap_name)
        		
 		if(reply.isValid())
 		{
-			QVariantMap map = reply;
+			map = reply;
 	
 			QMapIterator<QString, QVariant>iter(map);
 			while (iter.hasNext()) {
 				iter.next();
-				if(iter.key() == "Name" && iter.value() == name)
+				if(iter.key() == "Name" && iter.value() == name) // service name matches with our access point name 
 				{
 					qDebug() << "/////////";
 					qDebug() << "Found service named: " << name << " . Path is : " << services_list.at(i); 
 				        
+					// open interface to the service 
 			                QDBusInterface iface("org.moblin.connman", services_list.at(i), "org.moblin.connman.Service", QDBusConnection::systemBus());
-			                
-					//QDBusMessage replai = service_iface.call("GetProperties");
-					//qDebug() << "Replyna: " << replai;
 
 					QString name = g_pConfig->value(ap_name + "/name").toString();
 					QString security = g_pConfig->value(ap_name + "/wlan_security").toString();
@@ -468,13 +460,6 @@ bool NetworkTest::AddApPassword(const QString ap_name)
 					{
 						qDebug() << "Ap is open, no need to add passphrase";
 					}
-					/*
-					if(pass.isNull())
-					{
-						qDebug() << "Encryption type not wpa => Add wepkey to conf.";
-						pass = g_pConfig->value(ap_name + "/wlan_wepkey1").toString();	
-					}
-					*/
 
 					qDebug() << "Password: " << pass;
 
@@ -483,11 +468,8 @@ bool NetworkTest::AddApPassword(const QString ap_name)
 
 					args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(pass));
 					QDBusMessage pass_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
-					//qDebug() << "SetProperty: " << pass_reply;
-					
 					
 					return true;
-					//break;
 				}
 			}
 		}
@@ -503,6 +485,7 @@ bool NetworkTest::AddApPasswords()
    ap_list.append("unsecured_ap");
    ap_list.append("wep_ap");
    ap_list.append("wpa_tkip_ap");
+
    for(int i=0;i<ap_list.count();i++)
    {
       qDebug() << "List: " << ap_list.at(i);
@@ -532,8 +515,6 @@ bool NetworkTest::SwitchWlan(const QString state)
 		return false;
 	}
 
-	qDebug() << "bool val is: " << bState; 
-
         QDBusInterface manager("org.moblin.connman", "/", "org.moblin.connman.Manager", QDBusConnection::systemBus());
 
         QDBusReply<QVariantMap> reply = manager.call("GetProperties");
@@ -556,9 +537,7 @@ bool NetworkTest::SwitchWlan(const QString state)
 
         QStringList tech_list = qdbus_cast<QStringList>(technologies);
 
-   
         QDBusReply<QVariantMap> tech_reply;
-	//QDBusReply<QVariantMap> dev_reply;
 	QDBusMessage dev_reply;
 
 	qDebug() << "Techs are: " << tech_list;	
@@ -569,8 +548,6 @@ bool NetworkTest::SwitchWlan(const QString state)
                 qDebug() << "Opening tech interface";
 		QDBusInterface tech_iface("org.moblin.connman", tech_list.at(i), "org.moblin.connman.Technology", QDBusConnection::systemBus());
                 tech_reply = tech_iface.call("GetProperties");
-
-	        //qDebug() << "VALUE OF THE TECHNOLOGY IS: " << tech_reply;
 		
 		if(!tech_reply.isValid())
 		{
@@ -593,9 +570,7 @@ bool NetworkTest::SwitchWlan(const QString state)
         			// cast Devices to a string list
 			        QStringList wifi_dev = qdbus_cast<QStringList>(devices);
 
-
 				qDebug() << "Wifi device path is: " << wifi_dev.at(0); 
-		                //QDBusInterface dev_iface("org.moblin.connman", tech_list.at(i),"org.moblin.connman.Device", QDBusConnection::systemBus());
 				QDBusInterface dev_iface("org.moblin.connman", wifi_dev.at(0),"org.moblin.connman.Device", QDBusConnection::systemBus());
 
    		                dev_reply = dev_iface.call("GetProperties");
@@ -624,7 +599,6 @@ void NetworkTest::StopSession()
 {
 	MWTS_ENTER;
 	qDebug() << "Stopping session.!";
-	
 	
         if(networkSession != 0)
 	{
@@ -936,7 +910,6 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
 	// debug list available configs
 	ListConfigurations();
 
-	/*
 	// do verify that connection is valid and in discovered or active state
 	if(!config.isValid())
 	{
@@ -945,15 +918,13 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
 		MWTS_LEAVE;
 		return false;
 	}
-	*/
-	/*
+
  	if(config.state() != QNetworkConfiguration::Discovered && config.state() != QNetworkConfiguration::Active)
 	{
 		qCritical() << "Configuration is not in Discovered or Active state, aborting";
 		MWTS_LEAVE;
 		return false;
 	}
-	*/
 
 	qDebug() << "CONFIGURATION VALID CONNECTING TO";
 	debugPrintConfiguration(config);
