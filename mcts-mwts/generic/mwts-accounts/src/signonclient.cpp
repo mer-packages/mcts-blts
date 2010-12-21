@@ -142,10 +142,14 @@ int SignonClient::CreateIdentity(const QString provider)
         return 0;
     }
 
-    qCritical() << "Creating a new identity....";
-    qCritical() << "Method:   " << method;
-    qCritical() << "Username: " << username;
-    qCritical() << "Password: " << password;
+    // some account providers names differ with method names. A little fix here
+    if(method == "ovi")
+        method = "oviauth";
+
+    qDebug() << "Creating a new identity....";
+    qDebug() << "Method:   " << method;
+    qDebug() << "Username: " << username;
+    qDebug() << "Password: " << password;
 
     if ( m_identity ) delete m_identity;
 
@@ -237,6 +241,11 @@ bool SignonClient::CreateSession(const QString name)
     QString username = g_pConfig->value(name + "/username").toString();
     QString password = g_pConfig->value(name + "/password").toString();
 
+
+    // some account providers names differ with method names. A little fix here
+    if(method == "ovi")
+        method = "oviauth";
+
     qDebug() << "Seems you have created identity, so proceeding..";
 
     qDebug() << "Method: "   << method;
@@ -302,22 +311,33 @@ void SignonClient::slotStateChanged(AuthSession::AuthSessionState state, const Q
     {
         case AuthSession::SessionNotStarted:
             statestring += "Session not started";
+            break;
         case AuthSession::HostResolving:
             statestring += "HostResolving";
+            break;
         case AuthSession::ServerConnecting:
             statestring += "ServerConnecting";
+            break;
         case AuthSession::DataSending:
             statestring += "DataSending";
+            break;
         case AuthSession::ReplyWaiting:
             statestring += "ReplyWaiting";
+            break;
         case AuthSession::UserPending:
             statestring += "UserPending";
+            break;
         case AuthSession::UiRefreshing:
             statestring += "UiRefreshing";
+            break;
         case AuthSession::ProcessPending:
             statestring += "ProcessPending";
+            break;
         case AuthSession::ProcessDone:
             statestring += "ProcessDone";
+            break;
+        default:
+            statestring += "default..";
     }
 
     qDebug() << statestring;
@@ -411,6 +431,8 @@ void SignonClient::response(const SessionData &sessionData)
 void SignonClient::sessionError(const Error &error)
 {
     MWTS_ENTER;
+    testObj->Stop();
+
     qDebug("session Err: %d", error.type());
     qDebug() << error.message();
     success = false;

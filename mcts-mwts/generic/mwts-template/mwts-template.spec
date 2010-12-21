@@ -1,12 +1,12 @@
 # spec file for mwts-template
 
-%define buildroot	%{_topdir}/%{name}-%{version}-root
+%define buildroot	%{_tmppath}/%{name}-%{version}-%{release}-root  
 
 BuildRoot:      %{buildroot}
 Name:           mwts-template
 Summary:        Template test asset
 License:        LGPL
-Version:        %{version}
+Version:        0.0.1
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -16,23 +16,29 @@ Source:         %{name}-%{version}.tar.gz
 
 %description
 Template test asset.
-            
-%package        scripts-generic
+
+%package        devel
+Summary:        Mwts-template development files
+Requires:       mwts-template
+%description    devel
+Development files for mwts-template
+
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-template
 Requires:       mwts-template
-%description    scripts-generic
+%description    generic-tests
 MIN test case scripts for mwts-template
 
-%package        config-generic
+%package        generic-config
 Summary:        Generic configuration file for mwts-template
 Requires:       mwts-template
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-template
 
-%package	all-generic
-Summary:	meta package containing everything for mwts-template (generic)
-Requires:	mwts-template, mwts-template-scripts-generic, mwts-template-config-generic
-%description	all-generic
+%package	generic
+Summary:	Meta package containing everything for mwts-template (generic)
+Requires:	mwts-template, mwts-template-generic-tests, mwts-template-generic-config
+%description	generic
 Meta package for installing all needed packages for generic version of mwts-template
 
 
@@ -40,25 +46,41 @@ Meta package for installing all needed packages for generic version of mwts-temp
 %setup -q
 
 %build
-qmake "CONFIG+=plugin"
+qmake
 make
 
 %install
 make install INSTALL_ROOT=%{buildroot}
 
 %files 
+%defattr (-,root,root)
 %doc README
 %doc doc/MWTS.README
-/usr/lib/libmwts-template*
-/usr/lib/min/*.so*
+/usr/lib/libmwts-template.so.*
+/usr/lib/min/*.so.*
 
+%files devel
+%defattr (-,root,root)
+/usr/lib/libmwts-template.so
+/usr/lib/min/libmin-mwts-template.so
+/usr/include/TemplateTest.h
 
-%files scripts-generic
-/etc/min.d/*.min.conf
-/usr/share/mwts-template-scripts/tests.xml
+%files generic-tests
+%defattr (-,root,root)
+/usr/share/mwts-template-generic-tests/tests.xml
 /usr/lib/min/*.cfg
+/etc/min.d/*.min.conf
 
-%files config-generic
+%files generic-config
+%defattr (-,root,root)
 /usr/lib/tests/*
 
-%files all-generic
+%files generic
+%defattr (-,root,root)
+%doc README
+
+%post  
+ldconfig
+   
+%postun  
+ldconfig  

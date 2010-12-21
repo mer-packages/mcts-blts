@@ -1,11 +1,11 @@
 # spec file for mwts-network
 
-%define buildroot	%{_topdir}/%{name}-%{version}-root
+%define buildroot	%{_tmppath}/%{name}-%{version}-%{release}-root  
 
 BuildRoot:		%{buildroot}
 Summary: 		Mwts-network is a wlan/psd networking test asset
 License: 		LGPL
-Name: 			mwts-network-tests
+Name: 			mwts-network
 Version: 		0.0.7
 Release: 		0
 Prefix: 		/usr
@@ -16,14 +16,23 @@ Source: 		%{name}-%{version}.tar.gz
 
 %description
 Mwts-network is a wlan/psd networking test asset
-            
-%package                scripts
+
+%package                devel
+Summary:                Development files
+Prefix:                 /usr
+Group:                  Development/Scripts
+Requires:               mwts-network
+%description            devel
+Development files for mwts-network
+
+
+%package                tests
 Summary:                Min test-case scripts for mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
-Requires:               mwts-network-tests
-%description            scripts
-MIN test case scripts for mwts-common
+Requires:               mwts-network
+%description            tests
+MIN test case scripts for mwts-network
 
 
 %prep
@@ -36,27 +45,30 @@ make
 %install
 make install INSTALL_ROOT=%{buildroot}
 
-%files
+%files devel
 %doc README
 %doc doc/MWTS.README
-/usr/lib/*.so*
-/usr/lib/min/*.so*
-/usr/lib/tests/*
+/usr/lib/*.so
+/usr/lib/min/*.so
 
-
-%files scripts
+%files
 %doc README
 %doc doc/MWTS.README
 %doc DEPENDENCIES.png
 %doc COPYING
+#/usr/lib/*.so.*
+#/usr/lib/min/*.so.*
+/usr/lib/tests/*
+
+%files tests
+%doc README
+%doc doc/MWTS.README
 /etc/min.d/mwts-network.min.conf
-/usr/share/mwts-network-scripts/tests.xml
+/usr/share/mwts-network-tests/tests.xml
 /usr/lib/min/*.cfg
 
-
 %post
-mkdir -p /var/log/tests
-chmod 777 /var/log/tests
+ldconfig
 
 %postun
 ldconfig

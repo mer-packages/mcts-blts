@@ -1,13 +1,13 @@
 # spec file for mwts-pim
 
 %define release         0
-%define buildroot       %{_topdir}/%{name}-%{version}-root
+%define buildroot       %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRoot:              %{buildroot}
-Summary:                mwts-pim is a test asset for testing personal information managagement in qt mobility 
+Summary:                Test asset for testing personal information managagement in qt mobility 
 License:                LGPL
-Name:                   %{name}
-Version:                %{version}
+Name:                   mwts-pim
+Version:                0.0.2
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -18,12 +18,20 @@ Source:                 %{name}-%{version}.tar.gz
 %description
 mwts-pim is a test asset for testing personal information managagement in qt mobility. It provides tool for pim testing, logging and reporting results.
 
-%package                scripts
-Summary:                mwts-pim MIN files
+%package                devel
+Summary:                Development files for PIM
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               min, mwts-pim
-%description            scripts
+%description            devel
+Development files for PIM
+
+%package                tests
+Summary:                Test case files
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               min, mwts-pim
+%description            tests
 MIN test cases for mwts-pim
 
 %prep
@@ -41,12 +49,18 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/*.so*
-/usr/lib/min/*.so*
+/usr/lib/*.so.*
+/usr/lib/min/*.so.*
 /usr/lib/tests/PimTest.conf
 /usr/lib/tests/mwts-pim/*.vcf
+/usr/lib/tests/mwts-pim/*.ics
 
-%files scripts
+%files devel
+/usr/lib/*.so
+/usr/lib/min/*.so
+
+
+%files tests
 %doc README
 %doc COPYING
 %doc DEPENDENCIES.png
@@ -54,6 +68,9 @@ make install INSTALL_ROOT=%{buildroot}
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
 /user/share/mwts-pim-tests/tests.xml
+
+%post
+ldconfig
 
 %postun
 ldconfig

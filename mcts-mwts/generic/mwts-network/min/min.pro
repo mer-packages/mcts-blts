@@ -31,13 +31,9 @@ MIN_SCRIPTS.files = data/*.cfg
 MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
-ALLTESTS.files = data/tests.xml
-ALLTESTS.path = /usr/share/mwts-network-scripts
-INSTALLS += ALLTESTS
-
-#TESTS.files = data/tests.xml
-#TESTS.path = /usr/share/mwts-network-tests
-#INSTALLS += TESTS
+TESTS.files = data/tests.xml
+TESTS.path = /usr/share/mwts-network-tests
+INSTALLS += TESTS
 
 target.path = /usr/lib/min
 INSTALLS += target

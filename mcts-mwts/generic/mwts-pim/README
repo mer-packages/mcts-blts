@@ -119,6 +119,10 @@ MIN SCRIPTER INTERFACE
      Exports contact to vcard
   ImportContactFromVcard
      Imports contact from vcard
+  ExportCalendarItemToIcalendar
+     Exports calendar item to iCalendar
+  ImportCalendarItemFromIcalendar
+     Imports calendar item from iCalendar
   CreateContacts
      Creates new contacts to data store specified in SetContactDataStore
   ModifyContacts
