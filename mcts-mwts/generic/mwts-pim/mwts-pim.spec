@@ -45,6 +45,7 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/*.so*
 /usr/lib/tests/PimTest.conf
 /usr/lib/tests/mwts-pim/*.vcf
+/usr/lib/tests/mwts-pim/*.ics
 
 %files scripts
 %doc README
