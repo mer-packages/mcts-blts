@@ -46,7 +46,7 @@ Meta package for installing all needed packages for generic version of mwts-temp
 %setup -q
 
 %build
-qmake "CONFIG+=plugin"
+qmake
 make
 
 %install
@@ -56,13 +56,14 @@ make install INSTALL_ROOT=%{buildroot}
 %defattr (-,root,root)
 %doc README
 %doc doc/MWTS.README
-#/usr/lib/libmwts-template.so.*
-#/usr/lib/min/*.so.*
+/usr/lib/libmwts-template.so.*
+/usr/lib/min/*.so.*
 
 %files devel
 %defattr (-,root,root)
 /usr/lib/libmwts-template.so
 /usr/lib/min/libmin-mwts-template.so
+/usr/include/TemplateTest.h
 
 %files generic-tests
 %defattr (-,root,root)
