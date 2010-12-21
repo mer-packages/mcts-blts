@@ -417,7 +417,7 @@ bool NetworkTest::AddApPassword(const QString ap_name)
 	qDebug() << "Ap: " << ap_name << " is: " << name;
 	
 	// variantmap vor service getproperties replies
-	QVariantMap map;
+	map = QVariantMap();
 
 	// preserve the service path for the found service
 	//QString service_path = "";
