@@ -354,6 +354,33 @@ LOCAL int ImportContactFromVcard (MinItemParser * /*item*/)
 }
 
 /**
+ * Pim ExportCalendarItemToIcalendar function.
+ * Creates a new calendar item and exports iCalendar from it
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int ExportCalendarItemToIcalendar (MinItemParser * /*item*/)
+{
+    MWTS_ENTER;
+    test.OrganizerTestImpl().ExportCalendarItemToIcalendar();
+    return ENOERR;
+}
+
+/**
+ * Pim ImportCalendarItemFromIcalendar function.
+ * Imports and saves calendar item from iCalendar
+ * @param item	MIN scripter parameters
+ * @return		ENOERR
+ */
+LOCAL int ImportCalendarItemFromIcalendar (MinItemParser * /*item*/)
+{
+    MWTS_ENTER;
+    test.OrganizerTestImpl().ImportCalendarItemFromIcalendar();
+    return ENOERR;
+}
+
+
+/**
  * Pim CreateContacts function.
  * Creates new contacts. Number of contacts is defined in SetNumberOfItems
  * @param item	MIN scripter parameters
@@ -486,6 +513,8 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "CreateAvailableContactDatastores", CreateAvailableContactDatastores);
     ENTRYTC (*list, "ExportContactToVcard", ExportContactToVcard);
     ENTRYTC (*list, "ImportContactFromVcard", ImportContactFromVcard);
+    ENTRYTC (*list, "ExportCalendarItemToIcalendar", ExportCalendarItemToIcalendar);
+    ENTRYTC (*list, "ImportCalendarItemFromIcalendar", ImportCalendarItemFromIcalendar);
     ENTRYTC (*list, "CreateContacts", CreateContacts);
     ENTRYTC (*list, "ModifyContacts", ModifyContacts);
     ENTRYTC (*list, "RemoveContacts", RemoveContacts);
