@@ -102,7 +102,7 @@ public:
 
 
 private:
-        bool success;
+        bool m_bSuccess;
 
         SignonClient *ssoClient;
 

@@ -23,11 +23,13 @@
 using namespace SignOn;
 
 
-SignonClient::SignonClient(MwtsTest *testObj)
+SignonClient::SignonClient(MwtsTest *testObj) : m_testObj(testObj),
+                                                m_identity(NULL),
+                                                m_info(NULL),
+                                                m_session(NULL)
+
 {
     MWTS_ENTER;
-
-    this->testObj = testObj;
 
     // set logging on
     g_pLog->EnableDebug(true);
@@ -35,12 +37,8 @@ SignonClient::SignonClient(MwtsTest *testObj)
 
     m_service = new AuthService();
 
-    m_identity = NULL;
-    m_info = NULL;
-    m_session = NULL;
-
     // test verdict
-    success = false;
+    m_bSuccess = false;
 
     connect(m_service, SIGNAL(methodsAvailable(const QStringList&)),
         this, SLOT(methodsAvailable(const QStringList&)));
@@ -67,7 +65,7 @@ SignonClient::~SignonClient()
     {
         qDebug() << "Destroying m_identity";
         delete m_identity;
-        m_service = NULL;
+        m_identity = NULL;
     }
 
     if(m_info)
@@ -103,10 +101,10 @@ bool SignonClient::clearCredentials()
        this, SLOT(clear()));
 
    m_service->clear();
-   testObj->Start();
+   m_testObj->Start();
 
-   qDebug() << "Cleared: " << success;
-   return success;
+   qDebug() << "Cleared: " << m_bSuccess;
+   return m_bSuccess;
 }
 
 bool SignonClient::queryIdents()
@@ -115,13 +113,13 @@ bool SignonClient::queryIdents()
 
     qDebug() << "Querying identities...";
     m_service->queryIdentities();
-    testObj->Start();
+    m_testObj->Start();
 
     qDebug() << "Querying methods...";
     m_service->queryMethods();
-    testObj->Start();
+    m_testObj->Start();
 
-    return success;
+    return m_bSuccess;
     MWTS_LEAVE;
 }
 
@@ -155,7 +153,7 @@ int SignonClient::CreateIdentity(const QString provider)
 
     QMap<MethodName,MechanismsList> methods;
 
-    QStringList mechs = QStringList() << QString::fromLatin1("ClientLogin");
+    QStringList mechs = QStringList() << QString("ClientLogin");
 
     methods.insert(method, mechs);
 
@@ -220,10 +218,10 @@ int SignonClient::CreateIdentity(const QString provider)
 
 
     qDebug() << "Wait for credentialStored-signal..";
-    testObj->Start();
+    m_testObj->Start();
 
-    return m_identity->id();
     MWTS_LEAVE;
+    return m_identity->id();
 }
 
 
@@ -281,9 +279,9 @@ bool SignonClient::CreateSession(const QString name)
 
     m_session->process(data , QLatin1String("ClientLogin"));
 
-    testObj->Start();
+    m_testObj->Start();
 
-    return this->success;
+    return this->m_bSuccess;
     MWTS_LEAVE;
 }
 
@@ -295,9 +293,9 @@ bool SignonClient::CreateSession(const QString name)
 void SignonClient::clear()
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
     qDebug() << "Credentials database is clear now...";
-    success = true;
+    m_bSuccess = true;
     MWTS_LEAVE;
 }
 
@@ -348,7 +346,7 @@ void SignonClient::slotStateChanged(AuthSession::AuthSessionState state, const Q
 void SignonClient::methodsAvailable(const QStringList &mechs)
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
     qDebug() << "Listing methods...";
     qDebug() << "##################";
 
@@ -364,7 +362,7 @@ void SignonClient::methodsAvailable(const QStringList &mechs)
 void SignonClient::mechanismsAvailable(const QString &method, const QStringList &mechs)
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
     qDebug() << "Listing Mechanisms Available for method: ";
     qDebug() << "#############################";
 
@@ -382,9 +380,9 @@ void SignonClient::mechanismsAvailable(const QString &method, const QStringList 
 void SignonClient::identities(const QList<IdentityInfo> &identityList)
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
 
-    success = true;
+    m_bSuccess = true;
 
     qDebug() << "Listing identities...";
     qDebug() << "#####################";
@@ -407,7 +405,7 @@ void SignonClient::identities(const QList<IdentityInfo> &identityList)
 void SignonClient::response(const SessionData &sessionData)
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
     Q_UNUSED(sessionData);
 
     QStringList property_names = sessionData.propertyNames();
@@ -422,7 +420,7 @@ void SignonClient::response(const SessionData &sessionData)
     }
 
     // we got session response, test passes
-    success = true;
+    m_bSuccess = true;
 
     qDebug("Got session response.");
     MWTS_LEAVE;
@@ -431,11 +429,11 @@ void SignonClient::response(const SessionData &sessionData)
 void SignonClient::sessionError(const Error &error)
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
 
     qDebug("session Err: %d", error.type());
     qDebug() << error.message();
-    success = false;
+    m_bSuccess = false;
 
     MWTS_LEAVE;
 }
@@ -445,7 +443,7 @@ void SignonClient::error(const Error &error)
     MWTS_ENTER;
     qDebug("identity Err: %d", error.type());
     qDebug() << error.message();
-    success = false;
+    m_bSuccess = false;
 
     MWTS_LEAVE;
 }
@@ -453,12 +451,12 @@ void SignonClient::error(const Error &error)
 void SignonClient::credentialsStored(const quint32 id)
 {
     MWTS_ENTER;
-    testObj->Stop();
+    m_testObj->Stop();
     qDebug() << "Identity created!";
     qDebug() << "stored id: " << id;
 
     // the identity was created, test passes
-    success = true;
+    m_bSuccess = true;
 
     QString message;
     message.setNum(id);

@@ -32,7 +32,7 @@ AccountsTest::AccountsTest()
     qDebug() << "Creating the ssoCLient";
     ssoClient = new SignonClient(this);
 
-    success = false;
+    m_bSuccess = false;
 
     // set logging on
     g_pLog->EnableDebug(true);
@@ -98,7 +98,9 @@ bool AccountsTest::ListAccounts()
 
     qDebug() << "Got the list";
     qDebug() << "Listing available accounts on device";
-    for (int i = 0; i < list.size(); ++i)
+
+    const int size = list.size();
+    for (int i = 0; i < size; ++i)
     {
         qDebug ("///////////////////////////");
         qDebug ( "Account: %u", list.at(i));
@@ -114,17 +116,16 @@ bool AccountsTest::ListAccounts()
             qDebug() << "Account supports following services: ";
 
             ServiceList list = acc->services(NULL);
-
             for (int i = 0; i < list.size(); ++i)
             {
                 qDebug () << "Service nro:" << i;
                 Service* service = manager->service(list.at(i)->name());
-                if (service!=NULL)
+                if (!service)
                 {
-                    qDebug () << "---> Service: " << service->name();
-                    qDebug () << "     DisplayName: " << service->displayName();
-                    qDebug () << "     Type: " << service->serviceType();
-                    qDebug () << "     Provider: " << service->provider();
+                    qDebug () << "---> Service     : " << service->name();
+                    qDebug () << "     DisplayName : " << service->displayName();
+                    qDebug () << "     Type        : " << service->serviceType();
+                    qDebug () << "     Provider    : " << service->provider();
                 }
                 service=NULL;
             }
@@ -144,7 +145,8 @@ bool AccountsTest::ListServices()
     ServiceList list = manager->serviceList(NULL);
 
     qDebug() << "Listing available services on device";
-    for (int i = 0; i < list.size(); ++i)
+    const int size = list.size();
+    for (int i = 0; i < size; ++i)
     {
         qDebug () << "Service nro:" << i;
         Service* service = manager->service(list.at(i)->name());
@@ -206,8 +208,6 @@ bool AccountsTest::CreateAccount(const QString provider_name)
     qDebug() << "Account was created. Setting account variables...";
     account->setDisplayName(username);
     account->setCredentialsId(credId);
-    //account->setValue(QString("username"),QString(username));
-    //account->setValue(QString("password"),QString(password));
 
     account->setEnabled(true);
     account->sync();
@@ -221,6 +221,7 @@ bool AccountsTest::CreateAccount(const QString provider_name)
 
     ServiceList list = account->services(NULL);
 
+    const int size = list.size();
     for (int i = 0; i < list.size(); ++i)
     {
         qDebug () << "Service nro:" << i;
@@ -258,7 +259,8 @@ bool AccountsTest::RemoveAccount(const QString strName)
     AccountIdList acc_list = manager->accountList(NULL);
 
     qDebug() << "Listing available accounts on device";
-    for (int i = 0; i < acc_list.size(); ++i)
+    const int size = acc_list.size();
+    for (int i = 0; i < size; ++i)
     {
         Account* acc = manager->account(acc_list.at(i));
 
@@ -286,7 +288,8 @@ bool AccountsTest::ClearAccounts()
     AccountIdList acc_list = manager->accountList(NULL);
 
     qDebug() << "Listing available accounts on device";
-    for (int i = 0; i < acc_list.size(); ++i)
+    const int size = acc_list.size();
+    for (int i = 0; i < size; ++i)
     {
         Account* acc = manager->account(acc_list.at(i));
         acc->remove();
@@ -306,11 +309,7 @@ bool AccountsTest::ListIdentities()
 
     qDebug() << "Listing identities from sso...";
 
-    bool retval = false;
-
-    retval = ssoClient->queryIdents();
-
-    return retval;
+    return ssoClient->queryIdents();
     MWTS_LEAVE;
 }
 

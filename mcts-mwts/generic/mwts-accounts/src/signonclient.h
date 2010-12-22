@@ -54,7 +54,13 @@ public:
     bool clearCredentials();
 private:
 
-    bool success; // test verdict
+    bool m_bSuccess; // test verdict
+
+
+    /*
+     * Pointer to MwtsTest object. Needed for event loop
+     */
+    MwtsTest *m_testObj;
 
     /*
      * Base service to query identities, mechanisms and service methods
@@ -78,10 +84,6 @@ private:
      */
     AuthSession *m_session;
 
-    /*
-     * Pointer to MwtsTest object. Needed for event loop
-     */
-    MwtsTest *testObj;
 
 public slots:
     /*
