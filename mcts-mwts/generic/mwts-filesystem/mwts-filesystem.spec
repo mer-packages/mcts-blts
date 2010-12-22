@@ -77,7 +77,7 @@ make install INSTALL_ROOT=%{buildroot}
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
 /usr/lib/min/libmin-mwts-filesystem.so.*
-/usr/share/mwts-filesystem-scripts/tests.xml
+/usr/share/mwts-filesystem-tests/tests.xml
 
 %files cli
 %doc README
