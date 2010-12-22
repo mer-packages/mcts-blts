@@ -30,7 +30,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-filesystem-scripts
+TESTS.path = /usr/share/mwts-filesystem-tests
 INSTALLS += TESTS
 
 target.path = /usr/lib/min
