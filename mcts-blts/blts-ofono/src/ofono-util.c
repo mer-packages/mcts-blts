@@ -302,6 +302,8 @@ reset_supplementary_services(my_ofono_data* data)
 	DBusGProxy *proxy = NULL;
 	char *condition = "all";
 	int i, ret = 0;
+	if (data->fl_dontcleanup)
+		return 0;
 	if (!data->number_modems)
 		return -1;
 
@@ -418,7 +420,7 @@ set_modems_online(my_ofono_data *data)
 		proxy = dbus_g_proxy_new_for_name(data->connection, OFONO_BUS,
 		    data->modem[i], OFONO_MODEM_INTERFACE);
 
-		/* This only happens when we're out of memory, so no point continying */
+		/* This only happens when we're out of memory, so no point to continue */
 		if (!proxy)
 		{
 			BLTS_ERROR("Failed to create proxy on object %s using iface %s\n",
