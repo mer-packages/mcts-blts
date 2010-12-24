@@ -733,7 +733,7 @@ class Device:
 
     def IsConnected(self):
         service = self.GetService()
-        return service.BroadcastPing()
+        return service != None and service.BroadcastPing()
 
     def IsSCPWork(self):
         print 'scp to xfzheng'
