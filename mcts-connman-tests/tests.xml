@@ -5825,5 +5825,31 @@ the device is off</p>]]></description>
 
 </case>
 </set>
+<set name="Stress" description="&lt;p&gt;Stress Test&lt;/p&gt;">
+
+<case name="CM_Stress_BT" manual="true" timeout="90" type="LongPeriod" insignificant="false" level="System">
+	<description><![CDATA[<p>Purpose (Mandatory): BT on/off 2000 times with WiFi on</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Stress_BT.py 2000</p>
+<p>Pass/Fail criteria (Mandatory): Return successfully</p>
+<p>Test Environment (Optional): Test platform should contain both WiFi and BT. And an AP with essis 'Guest', an BT PAN server that already paired.</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
+
+<case name="CM_Stress_Flight" manual="true" timeout="90" type="LongPeriod" insignificant="false" level="System">
+	<description><![CDATA[<p>Purpose (Mandatory): Flight on/off 2000 times with WiFi/BT on</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Stress_Flight.py 2000</p>
+<p>Pass/Fail criteria (Mandatory): Return successfully</p>
+<p>Test Environment (Optional): Test platform should contain both WiFi and BT. And an AP with essid 'Guest', an BT PAN server that already paired.</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
+
+<case name="CM_Stress_WiFi" manual="true" timeout="90" type="LongPeriod" insignificant="false" level="System">
+	<description><![CDATA[<p>Purpose (Mandatory): WiFi on/off 2000 times with&nbsp;BT on</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Stress_WiFi.py 2000</p>
+<p>Pass/Fail criteria (Mandatory): Return successfully</p>
+<p>Test Environment (Optional): Test platform should contain both WiFi and BT. And an AP with essis 'Guest', an BT PAN server that already paired.</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
+</set>
 </suite>
 </testdefinition>

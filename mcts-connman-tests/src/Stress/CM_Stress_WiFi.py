@@ -59,7 +59,7 @@ while count < round:
     else:
         print "Guest is not connected, test fails"
 	EXIT(FALSE)
-    time.sleep(10)
+    time.sleep(40)
     print "Diable device"
     dev.Disable()
     time.sleep(10)
@@ -68,7 +68,7 @@ while count < round:
 	EXIT(FALSE)
     else:
         print "Guest is not connected"
-    time.sleep(10)
+    time.sleep(40)
     count += 1
     
 print "Test Case success"
