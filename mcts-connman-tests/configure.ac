@@ -27,5 +27,5 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 # Checks for programs.
 AC_PROG_CC
 
-AC_CONFIG_FILES([Makefile  src/Makefile src/3G/Makefile src/BT/Makefile src/common/Makefile src/Ethernet/Makefile src/Flight/Makefile src/Profile/Makefile src/Property/Makefile src/Signal/Makefile src/WiFi/Makefile data/Makefile])
+AC_CONFIG_FILES([Makefile  src/Makefile src/3G/Makefile src/BT/Makefile src/common/Makefile src/Ethernet/Makefile src/Flight/Makefile src/Profile/Makefile src/Property/Makefile src/Signal/Makefile src/WiFi/Makefile src/Stress/Makefile data/Makefile])
 AC_OUTPUT
