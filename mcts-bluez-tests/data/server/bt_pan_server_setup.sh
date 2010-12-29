@@ -1,5 +1,4 @@
 #!/bin/sh
-#
 # Copyright (C) 2010, Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
@@ -16,19 +15,22 @@
 # Place - Suite 330, Boston, MA 02111-1307 USA.
 #
 # Authors:
-#       Zhang Jingke  <jingke.zhang@intel.com>
-# Date Created: 2010/01/12
+#       Guo, Zhaojuan  <zhaojuan.guo@@intel.com>
+# Date Created: 2010/12/02
 #
 # Modifications:
 #          Modificator  Date
 #          Content of Modification
-#
 
-# Set environment variable here to specify the BT autotest server's MAC address
+# DESC:build pan server envieroment
 
-DATA_DIR="./data"
-FTP_CLIENT="${DATA_DIR}/ftp-client"
-PBAP_CLIENT="${DATA_DIR}/pbap-client"
-SERV_BD_ADDR="00:0A:94:03:EC:CD"
-ROOT_PASS="123456"
-export PATH=$PATH:/sbin/:/usr/sbin/:./data/
+brctl addbr pan1
+
+ifconfig pan1 192.168.0.1
+
+echo 1 > /proc/sys/net/ipv4/ip_forward 
+
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+iptables -A FORWARD -i pant1 -j ACCEPT
+

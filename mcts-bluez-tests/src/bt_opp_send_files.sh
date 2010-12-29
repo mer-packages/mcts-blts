@@ -1,7 +1,6 @@
 #!/bin/sh
-#DESCR: Check l2cap socket communication using l2ping
+#DESCR: Check OPP (Objects Push Profile) by putting files to OPP server
 # Copyright (C) 2010 Intel Corporation
-# 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -18,7 +17,7 @@
 #
 # Authors:
 #       Zhang Jingke  <jingke.zhang@intel.com>
-# Date Created: 2010/01/12
+# Date Created: 2010/12/23
 #
 # Modifications:
 #          Modificator  Date
@@ -31,7 +30,8 @@ cd `dirname $0`
 
 adaptors=`hciconfig  | grep "BD Address" | awk '{print $3}'`
 hci0=`echo "$adaptors" | sed -n '1p'`
-echo $hci0
+export DISPLAY=:0.0
+
 if [ -z $hci0 ]; then
     echo "No adaptor found!"
     exit 1
@@ -39,32 +39,41 @@ fi
 
 # If both IUTS' adaptor support simple pairing feature, then the pairing agent is needed
 # to handle the pairing request when making a l2cap connection.
-
 ${DATA_DIR}/auto_accept_agent hci0 $SERV_BD_ADDR
 sleep 2
 
-curr_user=`whoami`
-if [ $curr_user != "root" ]; then
-    ${DATA_DIR}/sudo_l2ping.sh $ROOT_PASS $SERV_BD_ADDR "l2ping.log"
-else
-    l2ping $SERV_BD_ADDR -c 4 >l2ping.log
-fi
+# Get the last opp test file number on server root dir.
+oldfilecount=`${FTP_CLIENT} -d $SERV_BD_ADDR -l | grep -c "tmp_opp_send"`
+opp_lastfile_number=`${FTP_CLIENT} -d $SERV_BD_ADDR -l | grep "tmp_opp_send" | awk -v max=0 -F"_" '{if($NF>max) {max=$NF ; print max}}' | tail -n 1`
 
-num_reply=`cat l2ping.log | grep "44 bytes from $SERV_BD_ADDR" -c`
+# Create 3 temporary files, whose suffix number is bigger than last file number
+temp_number=3
 
-if [ $curr_user != "root" ]; then
-    ${DATA_DIR}/sudo_rm.sh $ROOT_PASS "l2ping.log"
-else
-    rm -rf l2ping.log
-fi
+i=0
+files=""
+while [ $i -lt $temp_number ]; 
+do
+    temp_file="tmp_opp_send_`expr ${opp_lastfile_number} + 1`"
+    cp ${DATA_DIR}/object $temp_file   
+    files="$files `pwd`/$temp_file"
+    ((i++))
+    ((opp_lastfile_number++))
+done
 
-if [ "$num_reply" -le 0 ]; then
-    echo "no response recieved from adaptor $SERV_BD_ADDR"
-    echo "Check l2cap socket communication using l2ping: Failed"
+# Upload this file to FTP server, if the file is not text, server will use 
+# OPP (channel 9) to receive
+${DATA_DIR}/send-files $SERV_BD_ADDR $files
+
+rm -rf tmp_opp_send_*
+ 
+# Try to get the file count of the folder we just pushed.
+newfilecount=`${FTP_CLIENT} -d $SERV_BD_ADDR -l | grep -c "tmp_opp_send"`
+
+if [ $newfilecount -ne `expr $oldfilecount + $temp_number` ]; then
+    echo "Failed to upload files tmp_opp_send_* to OPP server!"
+    echo "Check OPP file put: Failed"
     exit 1
-else
-    echo "l2cap ping check passed, got $num_reply responses from $SERV_BD_ADDR"
-    echo "Check l2cap socket communication using l2ping: Successfully"
 fi
 
+echo "Check OPP files put: successfully"
 exit 0

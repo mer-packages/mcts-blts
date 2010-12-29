@@ -17,7 +17,9 @@ pygobject --- python binding for gobject used by pairing script
               data/client/auto_accept_agent
 rpm-build --- for packaging
 md5sum    --- to check the file consistence after FTP transfering.
-On Server, we also need some daemon running: bluetoothd and obexd (for server_startup.sh)
+bridge-utils --- add a network bridge for PAN server setting.
+When PANU case is running, server should install bridge-utils to create a network bridge as PAN server.
+On Server, we also need some daemon running: bluetoothd and obexd (the obexd-server should be >0.32)
 
 -----------------------
 Build and Run
@@ -33,7 +35,7 @@ Steps:
 3. sh pack.sh    --- It will make and generate the mcts-bluez-tests RPM
 4. rpm -ivh mcts-bluez-tests-1.0.0-1.i386.rpm    --- install RPM to your testing machine 
 5. cd /usr/share/mcts-bluez-tests/
-6. testrunner-lite -a -f tests.xml -o results.xml
+6. testrunner-lite -f tests.xml -o results.xml
 
 
 -----------------------

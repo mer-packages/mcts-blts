@@ -15,6 +15,11 @@ class Agent(dbus.service.Object):
         self.verbose = verbose
 
     @dbus.service.method("org.openobex.Agent",
+                    in_signature="o", out_signature="s")
+    def Request(self, path):
+        return ""
+
+    @dbus.service.method("org.openobex.Agent",
                     in_signature="ot", out_signature="")
     def Progress(self, path, transferred):
         if self.verbose:
@@ -51,8 +56,8 @@ def parse_options():
                       help="Get FILE", metavar="FILE")
     parser.add_option("-p", "--put", dest="put_file",
                       help="Put FILE", metavar="FILE")
-    parser.add_option("-D", "--del", dest="del_file",
-                      help="Del FILE", metavar="FILE")
+    parser.add_option("-r", "--remove", dest="remove_file",
+                      help="Remove FILE", metavar="FILE")
     parser.add_option("-C", "--create", dest="create_folder",
                       help="Create Folder", metavar="FILE")
 
@@ -60,6 +65,11 @@ def parse_options():
 
     return parser.parse_args()
 
+def error(err):
+    print err
+
+def void_reply():
+    pass
 
 def change_folder(session, new_dir):
     for node in new_dir.split("/"):
@@ -74,14 +84,20 @@ def list_folder(session):
 
 def put_file(session, filename):
     session.PutFile(os.path.abspath(filename),
-                    os.path.basename(filename))
+                    os.path.basename(filename),
+                    reply_handler=void_reply,
+                    error_handler=error)
 
 def get_file(session, filename):
     session.GetFile(os.path.abspath(filename),
-                    os.path.basename(filename))
+                    os.path.basename(filename),
+                    reply_handler=void_reply,
+                    error_handler=error)
 
-def del_file(session, filename):
-    session.Delete(filename)
+def remove_file(session, filename):
+    session.Delete(filename,
+                    reply_handler=void_reply,
+                    error_handler=error)
 
 def create_folder (session, foldername):
     session.CreateFolder(foldername)
@@ -123,12 +139,6 @@ if  __name__ == '__main__':
     if options.new_dir:
         change_folder(ftp, options.new_dir)
 
-    if options.del_file:
-        del_file (ftp, options.del_file)
-
-    if options.create_folder:
-        create_folder (ftp, options.create_folder)
-
     if options.list_dir:
         list_folder(ftp)
 
@@ -139,6 +149,12 @@ if  __name__ == '__main__':
     if options.put_file:
         need_mainloop = True
         put_file(ftp, options.put_file)
+
+    if options.remove_file:
+        remove_file(ftp, options.remove_file)
+
+    if options.create_folder:
+        create_folder (ftp, options.create_folder)
 
     if need_mainloop:
         mainloop.run()
