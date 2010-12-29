@@ -1,6 +1,7 @@
-#
-#
-# Copyright (C) 2010, Intel Corporation.
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2010 Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -16,10 +17,18 @@
 # Place - Suite 330, Boston, MA 02111-1307 USA.
 #
 # Authors:
-#       Jeff Zheng	<jeff.zheng@intel.com>
+#       Jeff Zheng <jeff.zheng@intel.com>
 #
-# Date Created: 07-07-2010
-#	Modified from sample Makefile
+# Description: CM_WS_RSN_Upload
+#
 
-SUBDIRS=3G BT Ethernet Profile WiFi common Flight Property Signal Stress
+import sys
+import os
+dir=os.path.dirname(sys.argv[0])+"/common"
+sys.path.append(dir)
+from common import *
+
+dev = WiFiDevice()
+manager.ConnectAP(cm_ap_essid_rsn, cm_ap_rsn_key, 'psk', 1, 0, 1)
+EXIT(dev.Upload())
 

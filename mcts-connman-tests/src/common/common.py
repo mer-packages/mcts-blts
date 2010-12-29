@@ -264,8 +264,8 @@ class Manager:
         channel=1,
         ):
         if self.Apset(passphrase, security, open, hidden, channel):
-            return self.ConnectAP(passphrase, security, open, hidden,
-                                  channel)
+            return self.ConnectAP(cm_apset_ap_essid, passphrase, security, 
+                                  open, hidden, channel)
         return False
     def TurnAP(self, state):
         apset_cmd = 'ssh ' + cm_apset_server + ' ' + cm_apset_server_path 
@@ -335,6 +335,7 @@ class Manager:
     # Refer to ConnectWiFi
     def ConnectAP(
         self,
+        essid=cm_apset_ap_essid,
         passphrase='',
         security='psk',
         open=1,
@@ -364,9 +365,9 @@ class Manager:
             sec = 'rsn'
         self.manager.RequestScan('wifi')
         time.sleep(2)
-        path = self.ConnectService(cm_apset_ap_essid, passphrase,
+        path = self.ConnectService(essid, passphrase,
                                    sec)
-        print 'passphrase is %s sec is %s' % (passphrase, sec)
+        print 'essid is %s passphrase is %s sec is %s' % (essid, passphrase, sec)
         time.sleep(5)
         print 'path is %s' % path
         if path == None:
@@ -763,6 +764,25 @@ class Device:
         self.Enable()
         return self.IsEnabled()
 
+    def Upload(self, cmd):
+        print "Uploading file with %s" % (cmd)
+        ret = commands.getstatusoutput(cmd)
+        if ret[0] == 0:
+            print "Upload success!"
+        else:
+            print "Upload failed!"
+            print ret
+        return ret[0] == 0
+
+    def Download(self, cmd):
+        print "Downloading file with %s" % (cmd)
+        ret = commands.getstatusoutput(cmd)
+        if ret[0] == 0:
+            print "Download success!"
+        else:
+            print "Download failed!"
+            print ret
+        return ret[0] == 0
 
 class EthDevice(Device):
 
@@ -772,6 +792,12 @@ class EthDevice(Device):
         if svc == None:
             return
         svc.Connect()
+
+    def Upload(self):
+        return (Device.Upload(self, cm_eth_upload))
+
+    def Download(self):
+        return (Device.Download(self, cm_eth_download))
 
 
 class WiFiDevice(Device):
@@ -827,6 +853,12 @@ class WiFiDevice(Device):
         print 'Current state is not ready'
         return False
 
+    def Upload(self):
+        return (Device.Upload(self, cm_wifi_upload))
+
+    def Download(self):
+        return (Device.Download(self, cm_wifi_download))
+
 
 class C3GDevice(Device):
 
@@ -878,6 +910,12 @@ class C3GDevice(Device):
     def IsConnected(self):
         return self.BroadcastPing()
 
+    def Upload(self):
+        return (Device.Upload(self, cm_3g_upload))
+
+    def Download(self):
+        return (Device.Download(self, cm_3g_download))
+
 
 class BTDevice(Device):
 
@@ -888,6 +926,11 @@ class BTDevice(Device):
         service = Device.GetService(self)
         service.Connect()
 
+    def Upload(self):
+        return (Device.Upload(self, cm_bt_upload))
+
+    def Download(self):
+        return (Device.Download(self, cm_bt_download))
 
 class WiFiGuestDevice(WiFiDevice):
 

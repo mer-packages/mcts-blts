@@ -21,7 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-connman_SCRIPTS = CM_BT_BigPing.py CM_BT_Connect.py CM_BT_DeviceIsExist.py CM_BT_Disconnect.py CM_BT_HasDHCP.py CM_BT_HasIP.py CM_BT_IfconfigDown.py CM_BT_IfconfigUp.py CM_BT_IsPoweredOn.py CM_BT_IsReady.py CM_BT_IsReEnableWorks.py CM_BT_IsSCPWork.py CM_BT_PoweredOff.py CM_BT_PoweredOn.py CM_BT_SmallPing.py 
+connman_SCRIPTS = CM_BT_BigPing.py CM_BT_Connect.py CM_BT_DeviceIsExist.py CM_BT_Disconnect.py CM_BT_HasDHCP.py CM_BT_HasIP.py CM_BT_IfconfigDown.py CM_BT_IfconfigUp.py CM_BT_IsPoweredOn.py CM_BT_IsReady.py CM_BT_IsReEnableWorks.py CM_BT_IsSCPWork.py CM_BT_PoweredOff.py CM_BT_PoweredOn.py CM_BT_SmallPing.py CM_BT_Download.py CM_BT_Upload.py
 connmandir = /opt/$(PACKAGE)
 helper_SCRIPTS = startup cleanup
 helperdir = /opt/$(PACKAGE)/BT
