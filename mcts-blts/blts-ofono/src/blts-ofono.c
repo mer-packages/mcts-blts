@@ -270,8 +270,8 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 
 	ret = blts_config_declare_variable_test("oFono - Reset PIN",
 		sim_variant_set_arg_processor,
-		CONFIG_PARAM_STRING, "old_pin", "13243546",
-		CONFIG_PARAM_STRING, "new_pin", "1234",
+		CONFIG_PARAM_STRING, "puk_code", "13243546",
+		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_STRING, "pin_type", "pin",
 		CONFIG_PARAM_NONE);
 	if (ret)

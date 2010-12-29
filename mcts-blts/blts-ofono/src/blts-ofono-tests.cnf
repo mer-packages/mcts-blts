@@ -237,7 +237,7 @@
 
 [test]
 	name "oFono - Reset PIN"
-	params old_pin new_pin pin_type
+	params puk_code old_pin pin_type
 [end_test]
 
 [test]
