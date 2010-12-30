@@ -80,80 +80,201 @@ bool PimContactDetailManager::addDefaultContactDetails(QContact &target)
 
     QContactAvatar avatar;
     avatar.setImageUrl(QUrl(m_avatar_url));
-    verifyDetailAddition("QContactAvatar",avatar.imageUrl()==QUrl(m_avatar_url));
     m_contactDetails.append(avatar);
 
     qDebug()<<"DATE: "<<m_date;
     QContactBirthday birthday;
     birthday.setDate(m_date.date());
-    verifyDetailAddition("QContactBirthday",birthday.date()==m_date.date());
     m_contactDetails.append(birthday);
 
     QContactEmailAddress emailAddress;
     emailAddress.setEmailAddress(m_emailAddress);
-    verifyDetailAddition("QContactEmailAddress",emailAddress.emailAddress()==m_emailAddress);
     m_contactDetails.append(emailAddress);
 
     QContactGender gender;
     gender.setGender(m_gender);
-    verifyDetailAddition("QContactGender",gender.gender()==m_gender);
     m_contactDetails.append(gender);
 
     QContactGuid guid;
     guid.setGuid(m_guid);
-    verifyDetailAddition("QContactGuid",guid.guid()==m_guid);
     m_contactDetails.append(guid);
 
     QContactNickname nickName;
     nickName.setNickname(m_nameNick);
-    verifyDetailAddition("QContactNickname",nickName.nickname()==m_nameNick);
     m_contactDetails.append(nickName);
 
     QContactNote note;
     note.setNote(m_note);
-    verifyDetailAddition("QContactNote",note.note()==m_note);
     m_contactDetails.append(note);
 
     QContactPhoneNumber phoneNumber;
     phoneNumber.setNumber(m_phoneNumber);
-    verifyDetailAddition("QContactPhoneNumber",phoneNumber.number()==m_phoneNumber);
     m_contactDetails.append(phoneNumber);
 
     QContactRingtone ringtone;
     ringtone.setAudioRingtoneUrl(QUrl(m_ringTone));
-    verifyDetailAddition("QContactRingtone",ringtone.audioRingtoneUrl()==m_ringTone);
     m_contactDetails.append(ringtone);
 
     QContactSyncTarget syncTarget;
     syncTarget.setSyncTarget(m_syncTarget);
-    verifyDetailAddition("QContactSyncTarget",syncTarget.syncTarget()==m_syncTarget);
     m_contactDetails.append(syncTarget);
 
     QContactTag tag;
     tag.setTag(m_tag);
-    verifyDetailAddition("QContactTag",tag.tag()==m_tag);
     m_contactDetails.append(tag);
 
     QContactThumbnail thumbnail;
     thumbnail.setThumbnail(QImage(m_thumbUri));
-    verifyDetailAddition("QContactThumbnail",thumbnail.thumbnail()==QImage(m_thumbUri));
     m_contactDetails.append(thumbnail);
 
     QContactType type;
     type.setType(m_type);
-    verifyDetailAddition("QContactType",type.type()==m_type);
     m_contactDetails.append(type);
 
     QContactUrl url;
     url.setUrl(m_contactUrl);
-    verifyDetailAddition("QContactUrl",url.url()==m_contactUrl);
     m_contactDetails.append(url);
 
     // save details
     saveDetailsToContact(target);
     m_contactDetails.clear();
 
+    // verify (true means that all set values are checked)
+    verifyContactDetails(target,true);
+
     return m_returnValue;
+}
+
+/**
+ * Verifies contact details
+ */
+void PimContactDetailManager::verifyContactDetails(QContact& contact, bool valueSetting)
+{
+     MWTS_ENTER;
+
+     QContactName name = contact.detail<QContactName>();
+     QContactAvatar avatar = contact.detail<QContactAvatar>();
+     QContactBirthday birthday = contact.detail<QContactBirthday>();
+     QContactEmailAddress emailAddress = contact.detail<QContactEmailAddress>();
+     QContactGender gender = contact.detail<QContactGender>();
+     QContactGuid guid = contact.detail<QContactGuid>();
+     QContactNickname nickName = contact.detail<QContactNickname>();
+     QContactNote note = contact.detail<QContactNote>();
+     QContactPhoneNumber phoneNumber = contact.detail<QContactPhoneNumber>();
+     QContactRingtone ringtone = contact.detail<QContactRingtone>();
+     QContactSyncTarget syncTarget = contact.detail<QContactSyncTarget>();
+     QContactTag tag = contact.detail<QContactTag>();
+     QContactThumbnail thumbnail = contact.detail<QContactThumbnail>();
+     QContactType type = contact.detail<QContactType>();
+     QContactUrl url = contact.detail<QContactUrl>();
+     QContactAddress address = contact.detail<QContactAddress>();
+     QContactGeoLocation geoLocation = contact.detail<QContactGeoLocation>();
+     QContactGlobalPresence globalPrecence = contact.detail<QContactGlobalPresence>();
+     QContactOrganization organization = contact.detail<QContactOrganization>();
+     QContactPresence precence = contact.detail<QContactPresence>();
+     QContactAnniversary anniversary = contact.detail<QContactAnniversary>();
+     QContactFamily contactFamily = contact.detail<QContactFamily>();
+     QContactOnlineAccount onlineAccount = contact.detail<QContactOnlineAccount>();
+     QContactTimestamp timeStamp = contact.detail<QContactTimestamp>();
+
+     verifyDetailAddition("imageUrl",avatar,avatar.imageUrl()==QUrl(m_avatar_url));
+     verifyDetailAddition("date",birthday,birthday.date()==m_date.date());
+     verifyDetailAddition("emailAddress",emailAddress,emailAddress.emailAddress()==m_emailAddress);
+     verifyDetailAddition("gender",gender,gender.gender()==m_gender);
+
+     // Don't verify these after saving, the database modifies this
+     if(valueSetting)
+     {
+        verifyDetailAddition("guid",guid,guid.guid()==m_guid);
+     }
+
+     verifyDetailAddition("nickname",nickName,nickName.nickname()==m_nameNick);
+     verifyDetailAddition("note",note,note.note()==m_note);
+     verifyDetailAddition("number",phoneNumber,phoneNumber.number()==m_phoneNumber);
+     verifyDetailAddition("audioRingtoneUrl",ringtone,ringtone.audioRingtoneUrl()==m_ringTone);
+     verifyDetailAddition("syncTarget",syncTarget,syncTarget.syncTarget()==m_syncTarget);
+     verifyDetailAddition("tag",tag,tag.tag()==m_tag);
+     verifyDetailAddition("thumbnail",thumbnail,thumbnail.thumbnail()==QImage(m_thumbUri));
+     verifyDetailAddition("type",type,type.type()==m_type);
+     verifyDetailAddition("url",url,url.url()==m_contactUrl);
+
+      // address
+     verifyDetailAddition("country",address,address.country()==m_country);
+     verifyDetailAddition("locality",address,address.locality()==m_locality);
+     verifyDetailAddition("postcode",address,address.postcode()==m_postcode);
+     verifyDetailAddition("postOfficeBox",address,address.postOfficeBox()==m_pobox);
+     verifyDetailAddition("region",address,address.region()==m_region);
+     verifyDetailAddition("street",address,address.street()==m_street);
+
+     // geo location
+     verifyDetailAddition("accuracy",geoLocation,geoLocation.accuracy()==m_geoAccuracy);
+     verifyDetailAddition("altitude",geoLocation,geoLocation.altitude()==m_geoAltitude);
+     verifyDetailAddition("altitudeAccuracy",geoLocation,geoLocation.altitudeAccuracy()==m_geoAltAccuracy);
+     verifyDetailAddition("heading",geoLocation,geoLocation.heading()==m_geoHeading);
+     verifyDetailAddition("label",geoLocation,geoLocation.label()==m_geoLabel);
+     verifyDetailAddition("latitude",geoLocation,geoLocation.latitude()==m_geoLat);
+     verifyDetailAddition("longitude",geoLocation,geoLocation.longitude()==m_geoLon);
+     verifyDetailAddition("speed",geoLocation,geoLocation.speed()==m_geoSpeed);
+     verifyDetailAddition("timestamp",geoLocation,geoLocation.timestamp().date()==m_date.date());
+
+     // global precence
+     verifyDetailAddition("customMessage",globalPrecence,globalPrecence.customMessage()==m_precenceMsg);
+     verifyDetailAddition("nickname",globalPrecence,globalPrecence.nickname()==m_precenceNick);
+     verifyDetailAddition("presenceState",globalPrecence,globalPrecence.presenceState()==m_precenceState);
+     verifyDetailAddition("presenceStateImageUrl",globalPrecence,globalPrecence.presenceStateImageUrl()==m_precenceImgUrl);
+     verifyDetailAddition("presenceStateText",globalPrecence,globalPrecence.presenceStateText()==m_precenceTxt);
+     verifyDetailAddition("timestamp",globalPrecence,globalPrecence.timestamp().date()==m_date.date());
+
+     // name
+     verifyDetailAddition("customLabel",name,name.customLabel()==m_nameLabel);
+     verifyDetailAddition("firstName",name,name.firstName()==m_nameFirst);
+     verifyDetailAddition("lastName",name,name.lastName()==m_nameLast);
+     verifyDetailAddition("middleName",name,name.middleName()==m_nameMiddle);
+     verifyDetailAddition("prefix",name,name.prefix()==m_namePrefix);
+     verifyDetailAddition("suffix",name,name.suffix()==m_nameSuffix);
+
+     // organization
+     verifyDetailAddition("assistantName",organization,organization.assistantName()==m_assistant);
+     if(organization.department().count()>0)
+     {
+        verifyDetailAddition("department",organization,organization.department()[0]==m_department);
+     }
+     verifyDetailAddition("location",organization,organization.location()==m_location);
+     verifyDetailAddition("logoUrl",organization,organization.logoUrl()==m_thumbUri);
+     verifyDetailAddition("name",organization,organization.name()==m_organizationName);
+     verifyDetailAddition("role",organization,organization.role()==m_role);
+     verifyDetailAddition("title",organization,organization.title()==m_title);
+
+     // precence
+     verifyDetailAddition("customMessage",precence,precence.customMessage()==m_precenceMsg);
+     verifyDetailAddition("nickname",precence,precence.nickname()==m_precenceNick);
+     verifyDetailAddition("presenceState",precence,precence.presenceState()==m_precenceState);
+     verifyDetailAddition("presenceStateImageUrl",precence,precence.presenceStateImageUrl()==m_precenceImgUrl);
+     verifyDetailAddition("presenceStateText",precence,precence.presenceStateText()==m_precenceTxt);
+     verifyDetailAddition("timestamp",precence,precence.timestamp().date()==m_date.date());
+
+     // anniversary
+     verifyDetailAddition("originalDate",anniversary,anniversary.originalDate()==m_date.date());
+     verifyDetailAddition("event",anniversary,anniversary.event()==m_anniversary);
+
+     // contact family
+     if(contactFamily.children().count()>0)
+     {
+         verifyDetailAddition("children",contactFamily,contactFamily.children()[0]==m_childName);
+     }
+     verifyDetailAddition("spouse",contactFamily,contactFamily.spouse()==m_spouseName);
+
+     // online account
+     verifyDetailAddition("accountUri",onlineAccount,onlineAccount.accountUri()==m_accUri);
+     verifyDetailAddition("serviceProvider", onlineAccount,onlineAccount.serviceProvider()==m_serviceProd);
+
+     //time stamp
+     // Don't verify these after saving, the database modifies these
+     if(valueSetting)
+     {
+        verifyDetailAddition("created",timeStamp,timeStamp.created().date()==m_date.date());
+        verifyDetailAddition("lastModified",timeStamp,timeStamp.lastModified().date()==m_date.addDays(1).date());
+     }
 }
 
 /**
@@ -193,12 +314,6 @@ QContactAddress PimContactDetailManager::address()
     address.setPostOfficeBox(m_pobox);
     address.setRegion(m_region);
     address.setStreet(m_street);
-    verifyDetailAddition("QContactAddress",address.country()==m_country);
-    verifyDetailAddition("QContactAddress",address.locality()==m_locality);
-    verifyDetailAddition("QContactAddress",address.postcode()==m_postcode);
-    verifyDetailAddition("QContactAddress",address.postOfficeBox()==m_pobox);
-    verifyDetailAddition("QContactAddress",address.region()==m_region);
-    verifyDetailAddition("QContactAddress",address.street()==m_street);
     return address;
 }
 
@@ -219,15 +334,6 @@ QContactGeoLocation PimContactDetailManager::geoLocation()
     geoLocation.setLongitude(m_geoLon);
     geoLocation.setSpeed(m_geoSpeed);
     geoLocation.setTimestamp(m_date);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.accuracy()==m_geoAccuracy);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.altitude()==m_geoAltitude);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.altitudeAccuracy()==m_geoAltAccuracy);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.heading()==m_geoHeading);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.label()==m_geoLabel);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.latitude()==m_geoLat);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.longitude()==m_geoLon);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.speed()==m_geoSpeed);
-    verifyDetailAddition("QContactGeoLocation",geoLocation.timestamp().date()==m_date.date());
     return geoLocation;
 }
 
@@ -245,12 +351,6 @@ QContactGlobalPresence PimContactDetailManager::globalPrecence()
     globalPrecence.setPresenceStateImageUrl(QUrl(m_precenceImgUrl));
     globalPrecence.setPresenceStateText(m_precenceTxt);
     globalPrecence.setTimestamp(m_date);
-    verifyDetailAddition("QContactGlobalPresence",globalPrecence.customMessage()==m_precenceMsg);
-    verifyDetailAddition("QContactGlobalPresence",globalPrecence.nickname()==m_precenceNick);
-    verifyDetailAddition("QContactGlobalPresence",globalPrecence.presenceState()==m_precenceState);
-    verifyDetailAddition("QContactGlobalPresence",globalPrecence.presenceStateImageUrl()==m_precenceImgUrl);
-    verifyDetailAddition("QContactGlobalPresence",globalPrecence.presenceStateText()==m_precenceTxt);
-    verifyDetailAddition("QContactGlobalPresence",globalPrecence.timestamp().date()==m_date.date());
     return globalPrecence;
 }
 
@@ -268,12 +368,6 @@ QContactName PimContactDetailManager::contactName()
     name.setMiddleName(m_nameMiddle);
     name.setPrefix(m_namePrefix);
     name.setSuffix(m_nameSuffix);
-    verifyDetailAddition("QContactName",name.customLabel()==m_nameLabel);
-    verifyDetailAddition("QContactName",name.firstName()==m_nameFirst);
-    verifyDetailAddition("QContactName",name.lastName()==m_nameLast);
-    verifyDetailAddition("QContactName",name.middleName()==m_nameMiddle);
-    verifyDetailAddition("QContactName",name.prefix()==m_namePrefix);
-    verifyDetailAddition("QContactName",name.suffix()==m_nameSuffix);
     return name;
 }
 
@@ -294,13 +388,6 @@ QContactOrganization PimContactDetailManager::organization()
     organization.setName(m_organizationName);
     organization.setRole(m_role);
     organization.setTitle(m_title);
-    verifyDetailAddition("QContactOrganization",organization.assistantName()==m_assistant);
-    verifyDetailAddition("QContactOrganization",organization.department()[0]==m_department);
-    verifyDetailAddition("QContactOrganization",organization.location()==m_location);
-    verifyDetailAddition("QContactOrganization",organization.logoUrl()==m_thumbUri);
-    verifyDetailAddition("QContactOrganization",organization.name()==m_organizationName);
-    verifyDetailAddition("QContactOrganization",organization.role()==m_role);
-    verifyDetailAddition("QContactOrganization",organization.title()==m_title);
     return organization;
 }
 
@@ -318,12 +405,6 @@ QContactPresence PimContactDetailManager::precence()
     precence.setPresenceStateImageUrl(QUrl(m_precenceImgUrl));
     precence.setPresenceStateText(m_precenceTxt);
     precence.setTimestamp(m_date);
-    verifyDetailAddition("QContactPresence",precence.customMessage()==m_precenceMsg);
-    verifyDetailAddition("QContactPresence",precence.nickname()==m_precenceNick);
-    verifyDetailAddition("QContactPresence",precence.presenceState()==m_precenceState);
-    verifyDetailAddition("QContactPresence",precence.presenceStateImageUrl()==m_precenceImgUrl);
-    verifyDetailAddition("QContactPresence",precence.presenceStateText()==m_precenceTxt);
-    verifyDetailAddition("QContactPresence",precence.timestamp().date()==m_date.date());
     return precence;
 }
 
@@ -337,8 +418,6 @@ QContactAnniversary PimContactDetailManager::anniversary()
     QContactAnniversary anniversary;
     anniversary.setOriginalDate(m_date.date());
     anniversary.setEvent(m_anniversary);
-    verifyDetailAddition("QContactAnniversary",anniversary.originalDate()==m_date.date());
-    verifyDetailAddition("QContactAnniversary",anniversary.event()==m_anniversary);
     return anniversary;
 }
 
@@ -354,8 +433,6 @@ QContactFamily PimContactDetailManager::family()
     list.append(m_childName);
     contactFamily.setChildren(list);
     contactFamily.setSpouse(m_spouseName);
-    verifyDetailAddition("QContactFamily",contactFamily.children()[0]==m_childName);
-    verifyDetailAddition("QContactFamily",contactFamily.spouse()==m_spouseName);
     return contactFamily;
 }
 
@@ -371,8 +448,6 @@ QContactOnlineAccount PimContactDetailManager::onlineAccount()
     QStringList cabList;
     onlineAccount.setCapabilities(cabList);
     onlineAccount.setServiceProvider(m_serviceProd);
-    verifyDetailAddition("QContactOnlineAccount",onlineAccount.accountUri()==m_accUri);
-    verifyDetailAddition("QContactOnlineAccount",onlineAccount.serviceProvider()==m_serviceProd);
     return onlineAccount;
 }
 
@@ -386,20 +461,31 @@ QContactTimestamp PimContactDetailManager::timeStamp()
     QContactTimestamp timeStamp;
     timeStamp.setCreated(m_date);
     timeStamp.setLastModified(m_date.addDays(1));
-    verifyDetailAddition("QContactTimestamp",timeStamp.created().date()==m_date.date());
-    verifyDetailAddition("QContactTimestamp",timeStamp.lastModified().date()==m_date.addDays(1).date());
     return timeStamp;
 }
 
 /**
   * verifyDetailAddition function
   */
-void PimContactDetailManager::verifyDetailAddition(QString detailType, bool success)
+void PimContactDetailManager::verifyDetailAddition(QString detailValueName, QContactDetail detail, bool success)
 {
-    if(!success)
+    if(!detail.isEmpty())
     {
-        qCritical()<<detailType<<" addition failed";
-        m_returnValue = success;
+        if(!success)
+        {
+            //qCritical()<<detailType<<" addition failed";
+            qCritical()<<detail.definitionName()<<" addition failed, detail value: "<<detailValueName<<" mismatched";
+            m_returnValue = success;
+        }
+        // for debugging
+        //else
+        //{
+        //    qDebug()<<"detail: "<<detail.definitionName()<<" succeeded";
+        //}
+    }
+    else
+    {
+        qDebug()<<"Detail: "<<detail.definitionName()<<" not supported";
     }
 }
 
