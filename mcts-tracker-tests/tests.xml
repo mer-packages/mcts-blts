@@ -2,313 +2,104 @@
 <testdefinition version="1.0">
 <description></description>
 <suite name="Media Tracker" >
+	
 <set name="Tracker_Package" >
 
-<case name="med_tracker-package_installation" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check if tracker package is installed correcttly;<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Run command: &quot;rpm -qa | grep tracker&quot;;<br />
-3) Run command: &quot;rpm -ql tracker&quot;;<br />
-Pass/Fail Criteria:<br />
-<br />
-1) Tracker package should be installed in step 2);<br />
-2) Tracker package path should be shown in step 3);</p>]]></description>
-
+<case name="med_tracker-package_installation" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-package_installation.sh</step>
 </case>
 
-<case name="med_tracker-package_process" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check if tracker daemon can be started automatically after system boot;<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Boot system;<br />
-2) Open terminal;<br />
-3) Run command: &quot;ps -ef | grep tracker&quot;;<br />
-Pass/Fail Criteria:<br />
-<br />
-1) tracker-miner-fs and tracker-store daemon should be started automatically after system boot</p>]]></description>
-
+<case name="med_tracker-package_process" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-package_process.sh</step>
 </case>
 </set>
+
 <set name="Tracker_Tag" >
 
-<case name="med_tracker-tag_remove" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can remove a tag<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy a video (such as big-buck-bunny.ogv) to /home/usr/Video path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-tag -a test /home/usr/Video/big-buck-bunny.ogv&quot; to add tag test for big-buck-bunny.ogv;</p>
-<p>4) Run command: &quot;tracker-tag -d test /home/usr/Video/big-buck-bunny.ogv&quot; to remove tag for big-buck-bunny.ogv;</p>
-<p>5) Run command:&quot;tracker-tag -t -s&quot; to show all tag info<br />
-Pass/Fail Criteria:<br />
-<br />
-No test tag for big-buck-bunny.ogv</p>]]></description>
-
+<case name="med_tracker-tag_remove" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_remove.sh</step>
 </case>
 
-<case name="med_tracker-tag_single_file" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can add multiple tags to same file<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy a video (such as big-buck-bunny.ogv) to /home/usr/Video path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-tag -a test1 /home/usr/Video/big-buck-bunny.ogv&quot; to add tag test1 for big-buck-bunny.ogv;</p>
-<p>4) Run command: &quot;tracker-tag -a test2 /home/usr/Video/big-buck-bunny.ogv&quot; to add tag test2 for big-buck-bunny.ogv;</p>
-<p>5) Run command:&quot;tracker-tag -t -s&quot; to show all tag info<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show 2 tags: &quot;test1&quot; and &quot;test2&quot; with same file</p>]]></description>
-
+<case name="med_tracker-tag_single_file" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_single_file.sh</step>
 </case>
 
-<case name="med_tracker-tag_multiple_file" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can add multiple tags to multiple files<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy a video (such as big-buck-bunny.ogv) to /home/usr/Video path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-tag -a test1 /home/usr/Video/big-buck-bunny.ogv&quot; to add tag test1 for big-buck-bunny.ogv;</p>
-<p>4) Run command: &quot;tracker-tag -a test2 /home/usr/Video/kittens.ogv&quot; to add tag test2 for kittens.ogv;</p>
-<p>5) Run command:&quot;tracker-tag -t &quot; to show all tag info;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show 2 tags: &quot;test1&quot; and &quot;test2&quot;</p>]]></description>
-
+<case name="med_tracker-tag_multiple_file" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_multiple_file.sh</step>
 </case>
 
-<case name="med_tracker-tag_add" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can add a tag for files<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy a video (such as big-buck-bunny.ogv) to /home/usr/Video path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-tag -a test /home/usr/Video/big-buck-bunny.ogv&quot; to add tag &quot;test&quot; for big-buck-bunny.ogv;</p>
-<p>4) Run command:&quot;tracker-tag -t -s test &quot; to show tag associated file<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show show files associated with tag &quot;test&quot;</p>]]></description>
-
+<case name="med_tracker-tag_add" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_add.sh</step>
 </case>
 </set>
 <set name="Tracker_Search" >
 
-<case name="med_tracker-search_video" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search all video files<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy some video contents into /home/usr/Video path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -v&quot; to search all video files;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show all video files</p>]]></description>
-
+<case name="med_tracker-search_video" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_video.sh</step>
 </case>
 
-<case name="med_tracker-search_music_album" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search all music albums<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy some music contents with different albums into /home/usr/Music path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -a&quot; to search all music albums;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show all music albums</p>]]></description>
-
+<case name="med_tracker-search_music_album" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_music_album.sh</step>
 </case>
 
-<case name="med_tracker-search_single_file" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search for files<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy a video file (such as big-buck-bunny.ogv) to /home/usr/Video path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -f big-buck-bunny&quot; to search file big-buck-bunny.ogv which is copied in step1;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show all files which name include &quot;big-buck-bunny&quot;</p>]]></description>
-
+<case name="med_tracker-search_single_file" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_single_file.sh</step>
 </case>
 
-<case name="med_tracker-search_image" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search all image files<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy some image files to /home/usr/Picture path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -i&quot; to search all image files;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show all image files</p>]]></description>
-
+<case name="med_tracker-search_image" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_image.sh</step>
 </case>
 
-<case name="med_tracker-search_music" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search all music files<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy some music files to /home/usr/Music path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -u&quot; to search all music files;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show all music files</p>]]></description>
-
+<case name="med_tracker-search_music" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_music.sh</step>
 </case>
 
-<case name="med_tracker-search_music_artist" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search for music artists<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy some music contents with different artists to /home/usr/Music path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -s&quot; to search all music artists;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show all music artists</p>]]></description>
-
+<case name="med_tracker-search_music_artist" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_music_artist.sh</step>
 </case>
 
-<case name="med_tracker-search_folder" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can search for folders<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Copy&nbsp;a folder (such as DovEporTar - Test night n.1)&nbsp;to /home/usr/Music path;</p>
-<p>2) Open terminal;</p>
-<p>3) Run command: &quot;tracker-search -e DovEporTar - Test night n.1&quot; to search folder &quot;DovEporTar - Test night n.1&quot; which is copied in step1;<br />
-Pass/Fail Criteria:<br />
-<br />
-Tracker should show the path for folder: DovEporTar - Test night n.1</p>]]></description>
-
+<case name="med_tracker-search_folder" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_folder.sh</step>
 </case>
 </set>
 <set name="Tracker_Live_Update" >
 
-<case name="med_tracker-live-update_video" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can live update video file<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Add a new video (such as&nbsp;abc.ogv) to /home/usr/Videos;<br />
-3) Run command: &quot;tracker-search -v&quot; to search all video files;<br />
-4) Remove abc.ogv from file system;<br />
-5) Repeat step 3);<br />
-Pass/Fail Criteria:<br />
-<br />
-1) abc.ogv can be searched by tracker-search;<br />
-2) After abc.ogv is removed, tracker-search can't find this file again;</p>]]></description>
-
+<case name="med_tracker-live-update_video" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_video.sh</step>
 </case>
 
-<case name="med_tracker-live-update_music" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can live update music file<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Add a new music (such as&nbsp;abc.mp3) to /home/usr/Music;<br />
-3) Run command: &quot;tracker-search -u&quot; to search all music files;<br />
-4) Remove abc.mp3 from file system;<br />
-5) Repeat step 3);<br />
-Pass/Fail Criteria:<br />
-<br />
-1) abc.mp3 can be searched by tracker-search;<br />
-2) After abc.mp3 is removed, tracker-search can't find this file again;</p>]]></description>
-
+<case name="med_tracker-live-update_music" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_music.sh</step>
 </case>
 
-<case name="med_tracker-live-update_image" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can live update image file<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Add a new image (such as abc.jpg) to /home/usr/Pictures;<br />
-3) Run command: &quot;tracker-search -i&quot; to search all image files;<br />
-4) Remove abc.jpg from file system;<br />
-5) Repeat step 3);<br />
-Pass/Fail Criteria:<br />
-<br />
-1) abc.jpg can be searched by tracker-search;<br />
-2) After abc.jpg is removed, tracker-search can't find this file again;</p>]]></description>
-
+<case name="med_tracker-live-update_image" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_image.sh</step>
 </case>
 
-<case name="med_tracker-live-update_folder" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can live update folder<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Add a new folder (such as &quot;abc&quot;) with music (such as &quot;1.mp3&quot;), video (such as &quot;2.ogv&quot;) and image (such as &quot;3.jpg&quot;) to /home/usr/Download;<br />
-3) Run command: &quot;tracker-search -e abc&quot; to search folder abc;<br />
-4) Run command: &quot;tracker-search -u&quot; to search all music files;<br />
-5) Run command: &quot;tracker-search -v&quot; to search all video files;<br />
-6) Run command: &quot;tracker-search -i&quot;; to search all image files<br />
-7) Remove abc folder from file system;<br />
-8) Repeat step 3) and 4), 5), 6);<br />
-Pass/Fail Criteria:<br />
-<br />
-1) folder &quot;abc&quot; can be searched by tracker-search;<br />
-2) music, video and image in this folder can be searched by tracker-search;<br />
-3) After this folder is removed, tracker-search can't find this folder and music/video/image again;</p>]]></description>
-
+<case name="med_tracker-live-update_folder" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_folder.sh</step>
 </case>
 </set>
 <set name="Tracker_USB" >
 
-<case name="med_tracker-usb_detect" manual="true" timeout="60">
+<case name="med_tracker-usb_detect" manual="true" timeout="100">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check tracker can detect the mount and umount of USB<br />
@@ -327,7 +118,7 @@ Pass/Fail Criteria:<br />
 
 </case>
 
-<case name="med_tracker-usb_live_update" manual="true" timeout="60">
+<case name="med_tracker-usb_live_update" manual="true" timeout="100">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check tracker can live search media from USB disk<br />
@@ -349,7 +140,7 @@ Pass/Fail Criteria:<br />
 
 </case>
 
-<case name="med_tracker-usb_search" manual="true" timeout="60">
+<case name="med_tracker-usb_search" manual="true" timeout="100">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check tracker can search media from USB disk<br />
@@ -367,7 +158,7 @@ Tracker can search out media content from USB disk with right metadata</p>]]></d
 
 </case>
 
-<case name="med_tracker-usb_cache" manual="true" timeout="60">
+<case name="med_tracker-usb_cache" manual="true" timeout="100">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Check tracker can cache USB records<br />
@@ -375,7 +166,7 @@ Run Instructions:<br />
 <br />
 Test steps:<br />
 1) Open terminal;<br />
-2) Insert USB disk with 100 music files;<br />
+2) Insert USB disk with 60 music files;<br />
 3) Run command: &quot;tracker-search -u&quot; to search all music files;<br />
 4) Umount and insert USB disk again;<br />
 5) Repeat step 3;<br />
@@ -387,66 +178,24 @@ In step 5, tracker should show USB content in short time without long time index
 </set>
 <set name="Tracker_Control" >
 
-<case name="med_tracker-control_terminate" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check all tracker daemons can be killed<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Run command: &quot;tracker-control -t&quot; to kill all tracker daemons;<br />
-Pass/Fail Criteria:<br />
-<br />
-All tracker daemons should be killed</p>]]></description>
-
+<case name="med_tracker-control_terminate" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_terminate.sh</step>
 </case>
 
-<case name="med_tracker-control_start" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check whether tracker daemon is started<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Run command: &quot;tracker-control -s&quot; to start all tracker daemons;<br />
-Pass/Fail Criteria:<br />
-<br />
-tracker-miner-fs and tracker-store should be started</p>]]></description>
-
+<case name="med_tracker-control_start" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_start.sh</step>
 </case>
 
-<case name="med_tracker-control_restart" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check all tracker daemons can be restarted<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Run command: &quot;tracker-control -t&quot; to kill all tracker daemons;<br />
-3) Run command: &quot;tracker-control -s&quot; to start all tracker daemons;<br />
-Pass/Fail Criteria:<br />
-<br />
-After step3, tracker-miner-fs and tracker-store should be restarted</p>]]></description>
-
+<case name="med_tracker-control_restart" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_restart.sh</step>
 </case>
 
-<case name="med_tracker-control_reset" manual="true" timeout="60">
-	<description><![CDATA[<p>Purpose:<br />
-<br />
-Check tracker can be reset<br />
-Run Instructions:<br />
-<br />
-Test steps:<br />
-1) Open terminal;<br />
-2) Run command: &quot;tracker-control -r&quot; to reset tracker;<br />
-3) Check tracker database in /home/usr/.cache/tracker<br />
-Pass/Fail Criteria:<br />
-<br />
-tracker deamon and tracker database should be killed and removed;</p>]]></description>
-
+<case name="med_tracker-control_reset" manual="false" timeout="100">
+	<description></description>
+	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_reset.sh</step>
 </case>
 </set>
 </suite>
