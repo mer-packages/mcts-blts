@@ -48,7 +48,7 @@ ${FTP_CLIENT} -d $SERV_BD_ADDR -C $tmp_folder_name
 
 # List the server's root directory and check if 
 # the new created sub-folder listed in the folder browse output
-${FTP_CLIENT} -d $SERV_BD_ADDR -l >tmp_ftp_folder.log
+${FTP_CLIENT} -d $SERV_BD_ADDR -l > tmp_ftp_folder.log
 created=`grep "$tmp_folder_name" ./tmp_ftp_folder.log -c`
 if [ $created -le 0 ]; then
     echo "The folder $tmp_folder_name is not created!"
@@ -58,10 +58,10 @@ if [ $created -le 0 ]; then
 fi
 
 # Remove the folder we just created
-${FTP_CLIENT} -d $SERV_BD_ADDR -D $tmp_folder_name
+${FTP_CLIENT} -d $SERV_BD_ADDR -r $tmp_folder_name
 
 # List the root folder again and check if the folder really got removed
-${FTP_CLIENT} -d $SERV_BD_ADDR -l >tmp_ftp_folder.log
+${FTP_CLIENT} -d $SERV_BD_ADDR -l > tmp_ftp_folder.log
 exist=`grep "$tmp_folder_name" ./tmp_ftp_folder.log -c`
 if [ $exist -gt 0 ]; then
     echo "Failed to delete the folder $tmp_folder_name!"

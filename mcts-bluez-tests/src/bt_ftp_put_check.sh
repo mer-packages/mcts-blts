@@ -1,7 +1,6 @@
 #!/bin/sh
 #DESCR: Check FTP (File Transfer Profile) put file
 # Copyright (C) 2010 Intel Corporation
-# 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -83,7 +82,7 @@ if [ $newfilecount -ne `expr $oldfilecount + 1` ]; then
 fi
 
 # remove the file we just pushed
-${FTP_CLIENT} -d $SERV_BD_ADDR -c $subdir -D tmp_ftp_put.log
+${FTP_CLIENT} -d $SERV_BD_ADDR -c $subdir -r tmp_ftp_put.log
 
 echo "Check FTP file put: successfully"
 exit 0

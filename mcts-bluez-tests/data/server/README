@@ -3,6 +3,9 @@ Bluez auto test system server side configuration guide
 The only thing you need to do is to start script server_startup.sh in session user.
 $ ./server_startup.sh
 
+When you run the case "bt_panu_setup_check.sh" (the others needn't), you must set up the server firstly.
+$ ./pan_server_setup.sh
+
 
 During the server startup, above script will copy the directory server into
 server_tmp and set obexd root directory to this temporary dirctory.
