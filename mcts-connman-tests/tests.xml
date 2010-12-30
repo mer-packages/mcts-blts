@@ -279,6 +279,44 @@ Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
 <step expected_result="0">/opt/mcts-connman-tests/CM_BT_SmallPing.py</step>
 </case>
+
+<case name="CM_BT_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test bluetooth upload.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_BT_Upload.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Need to pair to the AP as normal BT cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_bt_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Upload.py</step>
+</case>
+
+<case name="CM_BT_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test Bluetooth download</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_BT_Download.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_bt_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Download.py</step>
+</case>
+
 <post_steps>
 <step expected_result="0">/opt/mcts-connman-tests/BT/cleanup </step>
 </post_steps>
@@ -662,6 +700,43 @@ Pass/Fail Criteria:</p>
 <p>there should be IP allocated for service after reconnected it and also can surf internet though this services.</p>]]></description>
 
 </case>
+
+<case name="CM_3G_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test&nbsp;3g upload.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_3G_Upload.py<br />
+This commands basically do:<br />
++ Connect To the network<br />
++ Upload/Download file to/from peer machine</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ 3G network as normal BT cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_3g_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_Upload.py</step>
+</case>
+
+<case name="CM_3G_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test bluetooth download.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_3G_Download.py<br />
+This commands basically do:<br />
++ Connect To the network<br />
++ Upload/Download file to/from peer machine</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ 3G network as normal BT cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_3g_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_Download.py</step>
+</case>
+
 <post_steps>
 <step expected_result="0">/opt/mcts-connman-tests/3G/cleanup </step>
 </post_steps>
@@ -1000,6 +1075,86 @@ Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
 <step expected_result="0">/opt/mcts-connman-tests/CM_WG_SmallBroadcastPing.py</step>
 </case>
+<case name="CM_WS_WEP_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi upload with wep64 key. It can also be used as test cases for features shared/hidden</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_WEP_Upload.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_WEP_Upload.py</step>
+</case>
+
+<case name="CM_WS_RSN_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi upload with wpa rsn. It can also be used as test cases for features open/broadcast</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_RSN_Upload.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_RSN_Upload.py</step>
+</case>
+
+<case name="CM_WS_WEP_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi download with wep64 key. It can also be used as test cases for features shared/hidden</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_WEP_Download.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_WEP_Download.py</step>
+</case>
+
+<case name="CM_WS_RSN_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi download with wpa rsn. It can also be used as test cases for features open/broadcast</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_RSN_Download.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_RSN_Download.py</step>
+</case>
+
 <post_steps>
 <step expected_result="0">/opt/mcts-connman-tests/WiFi/cleanup </step>
 </post_steps>
@@ -1240,6 +1395,42 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
 <step expected_result="0">/opt/mcts-connman-tests/CM_Eth_SmallBroadcastPing.py</step>
+</case>
+
+<case name="CM_Eth_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test ethernet upload.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Eth_Upload.py<br />
+This commands basically do:<br />
++ Connect To the network<br />
++ Upload/Download file to/from peer machine</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++&nbsp;Wired network as normal wired network cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_eth_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_Upload.py</step>
+</case>
+
+<case name="CM_Eth_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test wired network download.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Eth_Download.py<br />
+This commands basically do:<br />
++ Connect To the network<br />
++ Upload/Download file to/from peer machine</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++&nbsp;Wired&nbsp;network as normal Wired network cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_eth_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_Download.py</step>
 </case>
 </set>
 <set name="DHCP" >
@@ -5823,6 +6014,32 @@ Pass/Fail Criteria:<br />
 <br />
 the device is off</p>]]></description>
 
+</case>
+</set>
+<set name="Stress" description="&lt;p&gt;Stress Test&lt;/p&gt;">
+
+<case name="CM_Stress_BT" manual="true" timeout="90" type="LongPeriod" insignificant="false" level="System">
+	<description><![CDATA[<p>Purpose (Mandatory): BT on/off 2000 times with WiFi on</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Stress_BT.py 2000</p>
+<p>Pass/Fail criteria (Mandatory): Return successfully</p>
+<p>Test Environment (Optional): Test platform should contain both WiFi and BT. And an AP with essis 'Guest', an BT PAN server that already paired.</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
+
+<case name="CM_Stress_Flight" manual="true" timeout="90" type="LongPeriod" insignificant="false" level="System">
+	<description><![CDATA[<p>Purpose (Mandatory): Flight on/off 2000 times with WiFi/BT on</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Stress_Flight.py 2000</p>
+<p>Pass/Fail criteria (Mandatory): Return successfully</p>
+<p>Test Environment (Optional): Test platform should contain both WiFi and BT. And an AP with essid 'Guest', an BT PAN server that already paired.</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
+
+<case name="CM_Stress_WiFi" manual="true" timeout="90" type="LongPeriod" insignificant="false" level="System">
+	<description><![CDATA[<p>Purpose (Mandatory): WiFi on/off 2000 times with&nbsp;BT on</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Stress_WiFi.py 2000</p>
+<p>Pass/Fail criteria (Mandatory): Return successfully</p>
+<p>Test Environment (Optional): Test platform should contain both WiFi and BT. And an AP with essis 'Guest', an BT PAN server that already paired.</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 </set>
 </suite>

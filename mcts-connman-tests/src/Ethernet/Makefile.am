@@ -21,7 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-connman_SCRIPTS = CM_Eth_BigBroadcastPing.py CM_Eth_Connect.py CM_Eth_DeviceIsExist.py CM_Eth_Disconnect.py CM_Eth_HasDHCP.py CM_Eth_HasIP.py CM_Eth_IfconfigDown.py CM_Eth_IfconfigUp.py CM_Eth_IsPoweredOn.py CM_Eth_IsReady.py CM_Eth_IsReEnableWorks.py CM_Eth_IsSCPWork.py CM_Eth_PoweredOff.py CM_Eth_PoweredOn.py CM_Eth_SmallBroadcastPing.py
+connman_SCRIPTS = CM_Eth_BigBroadcastPing.py CM_Eth_Connect.py CM_Eth_DeviceIsExist.py CM_Eth_Disconnect.py CM_Eth_HasDHCP.py CM_Eth_HasIP.py CM_Eth_IfconfigDown.py CM_Eth_IfconfigUp.py CM_Eth_IsPoweredOn.py CM_Eth_IsReady.py CM_Eth_IsReEnableWorks.py CM_Eth_IsSCPWork.py CM_Eth_PoweredOff.py CM_Eth_PoweredOn.py CM_Eth_SmallBroadcastPing.py CM_Eth_Download.py CM_Eth_Upload.py
 helper_SCRIPTS = startup
 helperdir = /opt/$(PACKAGE)/Ethernet
 connmandir = /opt/$(PACKAGE)

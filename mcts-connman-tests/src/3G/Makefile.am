@@ -21,7 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-connman_SCRIPTS = CM_3G_BigPing.py CM_3G_Connect.py CM_3G_DeviceIsExist.py CM_3G_Disconnect.py CM_3G_HasDHCP.py CM_3G_HasIP.py CM_3G_IfconfigDown.py CM_3G_IfconfigUp.py CM_3G_IsPoweredOn.py CM_3G_IsReady.py CM_3G_IsReEnableWorks.py CM_3G_IsSCPWork.py CM_3G_PoweredOff.py CM_3G_PoweredOn.py CM_3G_SmallPing.py
+connman_SCRIPTS = CM_3G_BigPing.py CM_3G_Connect.py CM_3G_DeviceIsExist.py CM_3G_Disconnect.py CM_3G_HasDHCP.py CM_3G_HasIP.py CM_3G_IfconfigDown.py CM_3G_IfconfigUp.py CM_3G_IsPoweredOn.py CM_3G_IsReady.py CM_3G_IsReEnableWorks.py CM_3G_IsSCPWork.py CM_3G_PoweredOff.py CM_3G_PoweredOn.py CM_3G_SmallPing.py CM_3G_Download.py CM_3G_Upload.py
 helper_SCRIPTS = startup cleanup
 helperdir = /opt/$(PACKAGE)/3G
 connmandir = /opt/$(PACKAGE)

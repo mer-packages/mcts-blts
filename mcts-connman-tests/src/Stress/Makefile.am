@@ -21,5 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-SUBDIRS=3G BT Ethernet Profile WiFi common Flight Property Signal Stress
+connman_SCRIPTS = CM_Stress_BT.py CM_Stress_Flight.py CM_Stress_WiFi.py
+connmandir = /opt/$(PACKAGE)
+EXTRA_DIST = $(connman_SCRIPTS)
 
