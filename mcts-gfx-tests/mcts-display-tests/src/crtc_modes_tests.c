@@ -51,19 +51,19 @@ int test_modes (double execution_time)
 
 	if (!XRRQueryExtension (params.display, &event_base, &error_base))
 	{
-		LOGERR ("XRRQueryExtension failed\n");
+		BLTS_ERROR ("XRRQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if (!XRRQueryVersion (params.display, &ver, &rev))
 	{
-		LOGERR ("XRRQueryVersion failed\n");
+		BLTS_ERROR ("XRRQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG ("XRandR Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG ("XRandR Extension version %i.%i\n", ver, rev);
 	XRRSelectInput (params.display, params.root_window,
 		RRScreenChangeNotifyMask | RRCrtcChangeNotifyMask | RROutputChangeNotifyMask
 		| RROutputPropertyNotifyMask);
@@ -71,10 +71,10 @@ int test_modes (double execution_time)
 	scr_res = XRRGetScreenResources (params.display, params.root_window);
 	for (i = 0; i < scr_res->noutput; i++)
 	{
-		LOG ("RROutput ID: 0x%lx, ", *(scr_res->outputs + i));
+		BLTS_DEBUG ("RROutput ID: 0x%lx, ", *(scr_res->outputs + i));
 		output_info =
 			XRRGetOutputInfo (params.display, scr_res, *(scr_res->outputs + i));
-		LOG ("name=%s, mm_width=%u, mm_height=%u, connection=%d\n",
+		BLTS_DEBUG ("name=%s, mm_width=%u, mm_height=%u, connection=%d\n",
 			output_info->name, output_info->mm_width, output_info->mm_height,
 			output_info->connection);
 		if (!output_info->connection && output_info->crtc)
@@ -87,7 +87,7 @@ int test_modes (double execution_time)
 				{
 					if (*(output_info->modes + k) == (scr_res->modes + j)->id)
 					{
-						LOG ("	Setting Crtc mode ......\n");
+						BLTS_DEBUG ("	Setting Crtc mode ......\n");
 						crtc_info =
 							XRRGetCrtcInfo (params.display, scr_res, output_info->crtc);
 						err =
@@ -95,29 +95,29 @@ int test_modes (double execution_time)
 							CurrentTime, crtc_info->x, crtc_info->y,
 							*(output_info->modes + k), RR_Rotate_0, crtc_info->outputs,
 							crtc_info->noutput);
-						LOG
+						BLTS_DEBUG
 							("   -id:0x%lx, name:%s, size:%ux%u, refresh rate:%d, dotClock:%lu\n",
 							(scr_res->modes + j)->id, (scr_res->modes + j)->name,
 							(scr_res->modes + j)->width, (scr_res->modes + j)->height,
 							REFRESH_RATE (((scr_res->modes + j)->dotClock),
 								((scr_res->modes + j)->hTotal), ((scr_res->modes + j)->vTotal)),
 							(scr_res->modes + j)->dotClock);
-						LOG
+						BLTS_DEBUG
 							("              hSyncStart:%u, hSyncEnd:%u, hTotal:%u, hSkew:%u\n",
 							(scr_res->modes + j)->hSyncStart, (scr_res->modes + j)->hSyncEnd,
 							(scr_res->modes + j)->hTotal, (scr_res->modes + j)->hSkew);
-						LOG
+						BLTS_DEBUG
 							("              vSyncStart:%u, vSyncEnd:%u, vTotal:%u, modeFlags:%lu\n",
 							(scr_res->modes + j)->vSyncStart, (scr_res->modes + j)->vSyncEnd,
 							(scr_res->modes + j)->vTotal, (scr_res->modes + j)->modeFlags);
-						LOG ("\n");
+						BLTS_DEBUG ("\n");
 						sleep (2);
 
 					}
 				}
 			}
 
-			LOG ("Restoring original mode ......\n");
+			BLTS_DEBUG ("Restoring original mode ......\n");
 			err =
 				XRRSetCrtcConfig (params.display, scr_res, output_info->crtc,
 				CurrentTime, 0, 0, origin_mode, RR_Rotate_0, crtc_info->outputs,

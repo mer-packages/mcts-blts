@@ -30,8 +30,7 @@ Display *open_display ()
 	if (!display)
 	{
 		/* DISPLAY environment variable may not exist on non-posix-conformant systems */
-		LOG
-			("XOpenDisplay(NULL) failed, DISPLAY environment variable missing? Trying display :0.\n");
+		BLTS_DEBUG ("XOpenDisplay(NULL) failed, DISPLAY environment variable missing? Trying display :0.\n");
 		display = XOpenDisplay (":0");
 		if (!display)
 		{
@@ -81,7 +80,7 @@ int create_window_ex (window_struct * params, const char *window_name,
 	params->display = open_display ();
 	if (!params->display)
 	{
-		LOGERR ("XOpenDisplay failed\n");
+		BLTS_ERROR ("XOpenDisplaRORailed\n");
 		goto cleanup;
 	}
 
@@ -89,7 +88,7 @@ int create_window_ex (window_struct * params, const char *window_name,
 	params->root_window = RootWindow (params->display, params->screen);
 	if (!params->root_window)
 	{
-		LOGERR ("No root window\n");
+		BLTS_ERROR ("No root window\n");
 		goto cleanup;
 	}
 
@@ -98,7 +97,7 @@ int create_window_ex (window_struct * params, const char *window_name,
 	if (!XGetWindowAttributes (params->display, params->root_window,
 			&params->root_window_attributes))
 	{
-		LOGERR ("XGetWindowAttributes failed\n");
+		BLTS_ERROR ("XGetWindowAttributes failed\n");
 		goto cleanup;
 	}
 
@@ -123,32 +122,32 @@ int create_window_ex (window_struct * params, const char *window_name,
 		params->width, params->height, 0, 0x0, 0x00FFFFFF);
 	if (!params->window)
 	{
-		LOGERR ("XCreateSimpleWindow failed\n");
+		BLTS_ERROR ("XCreateSimpleWindow failed\n");
 		goto cleanup;
 	}
 
 	if (!XGetWindowAttributes (params->display, params->root_window,
 			&params->window_attributes))
 	{
-		LOGERR ("XGetWindowAttributes failed\n");
+		BLTS_ERROR ("XGetWindowAttributes failed\n");
 		goto cleanup;
 	}
 
 	if (!XMapWindow (params->display, params->window))
 	{
-		LOGERR ("XMapWindow failed\n");
+		BLTS_ERROR ("XMapWindow failed\n");
 		goto cleanup;
 	}
 
 	if (!XRaiseWindow (params->display, params->window))
 	{
-		LOGERR ("XRaiseWindow failed\n");
+		BLTS_ERROR ("XRaiseWindow failed\n");
 		goto cleanup;
 	}
 
 	if (!XStoreName (params->display, params->window, window_name))
 	{
-		LOGERR ("XStoreName failed\n");
+		BLTS_ERROR ("XStoreName failed\n");
 		goto cleanup;
 	}
 
@@ -157,16 +156,9 @@ int create_window_ex (window_struct * params, const char *window_name,
 		XCreateGC (params->display, params->window, GCForeground, &values);
 	if (!params->gc)
 	{
-		LOGERR ("XCreateGC failed\n");
+		BLTS_ERROR ("XCreateGC failed\n");
 		goto cleanup;
 	}
-
-//  XFlush(params->display);
-
-	/* Slow down execution a bit. Before test starts user sees a blank, white,
-	   window before any drawing or other activity. This gives some time for user to
-	   react. */
-//  sleep(1);
 
 	return 0;
 
@@ -188,7 +180,7 @@ int create_simple_window (double execution_time)
 		goto cleanup;
 	}
 
-	LOG ("Display width: %d height: %d depth: %d\n", DisplayWidth (params.display,
+	BLTS_DEBUG ("Display width: %d height: %d depth: %d\n", DisplayWidth (params.display,
 			params.screen), DisplayHeight (params.display, params.screen),
 		DefaultDepth (params.display, params.screen));
 

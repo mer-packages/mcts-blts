@@ -1,6 +1,6 @@
 #                                               -*- Autoconf -*-
 
-# configure.ac -- Autoconf script for blts-x11
+# configure.ac -- Autoconf script for mcts-display-tests
 #
 #  Copyright (C) 2000-2010, Nokia Corporation.
 #
@@ -20,10 +20,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-display-test, 0.0.10, kui.zheng@intel.com)
+AC_INIT(mcts-display-tests, 0.0.10, kui.zheng@intel.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
-AC_CONFIG_SRCDIR([src/blts_display_test.c])
+AC_CONFIG_SRCDIR([src/mcts_display_tests.c])
 AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.

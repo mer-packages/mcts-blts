@@ -22,5 +22,5 @@ pkgdata_DATA = tests.xml
 
 EXTRA_DIST = \
 	autogen.sh \
-	blts-display-tests.changes \
+	mcts-display-tests.changes \
 	$(pkgdata_DATA)

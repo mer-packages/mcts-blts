@@ -56,19 +56,19 @@ int test_hotplug (double execution_time)
 
 	if (!XRRQueryExtension (params.display, &event_base, &error_base))
 	{
-		LOGERR ("XRRQueryExtension failed\n");
+		BLTS_ERROR ("XRRQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if (!XRRQueryVersion (params.display, &ver, &rev))
 	{
-		LOGERR ("XRRQueryVersion failed\n");
+		BLTS_ERROR ("XRRQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG ("XRandR Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG ("XRandR Extension version %i.%i\n", ver, rev);
 	XRRSelectInput (params.display, params.root_window,
 		RRScreenChangeNotifyMask | RRCrtcChangeNotifyMask | RROutputChangeNotifyMask
 		| RROutputPropertyNotifyMask);
@@ -78,7 +78,7 @@ int test_hotplug (double execution_time)
 	current_size = XRRConfigCurrentConfiguration (scr_conf, &current_rotation);
 	current_rate = XRRConfigCurrentRate (scr_conf);
 	sizes = XRRConfigSizes (scr_conf, &nsizes);
-	LOG ("\nCurrent:%dx%d, Rate:%d\n", (sizes + current_size)->width,
+	BLTS_DEBUG ("\nCurrent:%dx%d, Rate:%d\n", (sizes + current_size)->width,
 		(sizes + current_size)->height, current_rate);
 //output
 	do
@@ -94,7 +94,7 @@ int test_hotplug (double execution_time)
 		if (j == 0)
 			new_cnct[1] = new_cnct[0];
 		j++;
-		LOG ("!! Please insert your connector !!\n");
+		BLTS_DEBUG ("!! Please insert your connector !!\n");
 		sleep (2);
 	}
 	while (!(new_cnct[0] ^ new_cnct[1]));

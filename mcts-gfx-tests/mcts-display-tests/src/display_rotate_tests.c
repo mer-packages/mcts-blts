@@ -56,19 +56,19 @@ int test_rotate (double execution_time)
 
 	if (!XRRQueryExtension (params.display, &event_base, &error_base))
 	{
-		LOGERR ("XRRQueryExtension failed\n");
+		BLTS_ERROR ("XRRQueryExtension failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
 	if (!XRRQueryVersion (params.display, &ver, &rev))
 	{
-		LOGERR ("XRRQueryVersion failed\n");
+		BLTS_ERROR ("XRRQueryVersion failed\n");
 		ret = -1;
 		goto cleanup;
 	}
 
-	LOG ("XRandR Extension version %i.%i\n", ver, rev);
+	BLTS_DEBUG ("XRandR Extension version %i.%i\n", ver, rev);
 	XRRSelectInput (params.display, params.root_window,
 		RRScreenChangeNotifyMask | RRCrtcChangeNotifyMask | RROutputChangeNotifyMask
 		| RROutputPropertyNotifyMask);
@@ -78,7 +78,7 @@ int test_rotate (double execution_time)
 	current_rate = XRRConfigCurrentRate (scr_conf);
 	current_size_id = XRRConfigCurrentConfiguration (scr_conf, &current_rotation);
 //Rotate Screen
-	LOG ("Rotating Screen .......\n");
+	BLTS_DEBUG ("Rotating Screen .......\n");
 	for (i = 0; i < 5; i++)
 	{
 		err =
@@ -90,19 +90,19 @@ int test_rotate (double execution_time)
 			RotationOp = RotationOp << 1;
 		current_size_id =
 			XRRConfigCurrentConfiguration (scr_conf, &current_rotation);
-		LOG ("	Current Rotation = 0x%x\n", current_rotation);
+		BLTS_DEBUG ("	Current Rotation = 0x%x\n", current_rotation);
 		sleep (1);
 	}
 
 //Rotate Crtc
-	LOG ("Rotating Crtc .......");
+	BLTS_DEBUG ("Rotating Crtc .......");
 	scr_res = XRRGetScreenResources (params.display, params.root_window);
 	for (i = 0; i < scr_res->noutput; i++)
 	{
-		LOG ("RROutput ID: 0x%lx\n", *(scr_res->outputs + i));
+		BLTS_DEBUG ("RROutput ID: 0x%lx\n", *(scr_res->outputs + i));
 		output_info =
 			XRRGetOutputInfo (params.display, scr_res, *(scr_res->outputs + i));
-		LOG ("   Crtc=0x%lx, name=%s, mm_width=%u, mm_height=%u, connection=%d,\n",
+		BLTS_DEBUG ("   Crtc=0x%lx, name=%s, mm_width=%u, mm_height=%u, connection=%d,\n",
 			output_info->crtc, output_info->name, output_info->mm_width,
 			output_info->mm_height, output_info->connection);
 		RotationOp = RR_Rotate_0;
@@ -116,7 +116,7 @@ int test_rotate (double execution_time)
 					CurrentTime, crtc_info->x, crtc_info->y, crtc_info->mode, RotationOp,
 					crtc_info->outputs, crtc_info->noutput);
 				sleep (2);
-				LOG ("	Current RotationOp: 0x%x\n", RotationOp);
+				BLTS_DEBUG ("	Current RotationOp: 0x%x\n", RotationOp);
 				RotationOp = RotationOp << 1;
 				if (RotationOp > RR_Rotate_270)
 					RotationOp = RR_Rotate_0;

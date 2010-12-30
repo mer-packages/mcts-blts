@@ -1,4 +1,4 @@
-# Makefile.am - Automake script for blts-x11
+# Makefile.am - Automake script for mcts-display-tests
 #
 #  Copyright (C) 2000-2010, Nokia Corporation.
 #
@@ -20,12 +20,6 @@ AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -fPIC
 
 requiredlibs = -lm -lrt
 
-if WANT_MIN
-min_libs = -lminutils -lmintmapi -lminevent
-else
-min_libs =
-endif
-
 h_sources = \
 	display_common.h \
 	display_helper.h
@@ -40,13 +34,10 @@ c_sources = \
 	display_backlight_tests.c \
 	display_hotplug_tests.c 
 
-library_includedir = $(includedir)/blts
-#library_include_HEADERS = $(h_sources)
 
+bin_PROGRAMS =	mcts-display-tests
 
-bin_PROGRAMS =	blts-display-test
-
-blts_display_test_SOURCES = $(h_sources) $(c_sources) blts_display_test.c
-blts_display_test_CFLAGS = $(AM_CFLAGS) $(PACKAGE_CFLAGS)
-blts_display_test_LDADD = $(requiredlibs) $(PACKAGE_LIBS)
+mcts_display_tests_SOURCES = $(h_sources) $(c_sources) mcts_display_tests.c
+mcts_display_tests_CFLAGS = $(AM_CFLAGS) $(PACKAGE_CFLAGS)
+mcts_display_tests_LDADD = $(requiredlibs) $(PACKAGE_LIBS)
 
