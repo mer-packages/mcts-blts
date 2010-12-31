@@ -1,4 +1,4 @@
-* Dec 09 Dec 2010 Jan Grela <jan.grela@digia.com> - 0.1.0
+* Thu 09 Dec 2010 Jan Grela <jan.grela@digia.com> - 0.1.0
  - Added playback functionality, codecs and containters setting moved to .conf file, added new test cases
 
 * Tue 29 Sep 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
