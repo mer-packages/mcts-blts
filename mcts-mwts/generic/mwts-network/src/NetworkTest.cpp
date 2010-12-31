@@ -259,6 +259,30 @@ bool NetworkTest::IsOnline()
 		return false;
 }
 
+bool NetworkTest::IsAccessPointFound(const QString ap_name)
+{
+    QNetworkConfigurationManager mgr;
+    QList<QNetworkConfiguration> configs = mgr.allConfigurations();
+
+    // fetch ap ssid from NetworkTest.conf
+    const QString ap = g_pConfig->value(ap_name + "/name").toString();
+
+    qDebug() << "Looking if scan found " << ap;
+
+    const int size = configs.size();
+    for (int i = 0; i < size; ++i) {
+        if(configs.at(i).name() == ap)
+        {
+            qDebug() << "Access point with name: " << ap << " was found!";
+            return true;
+        }
+
+    }
+	
+    qCritical() << "Access point was not found in scan. Aborting...";
+    return false;
+}
+
 bool NetworkTest::Downloadfile(const QString strFilename)
 {
 	MWTS_ENTER;
@@ -787,6 +811,7 @@ void NetworkTest::slotError(QNetworkReply::NetworkError error)
  * HTTP SLOTS
  * ********************/
 
+/*
 bool NetworkTest::IsAccessPointFound(QString ap_name)
 {
 	MWTS_ENTER;
@@ -805,7 +830,7 @@ bool NetworkTest::IsAccessPointFound(QString ap_name)
 
 	return false;
 	MWTS_LEAVE;
-}
+} */
 
 
 void NetworkTest::ListConfigurations()
