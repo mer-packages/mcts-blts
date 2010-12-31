@@ -3,7 +3,7 @@
 %define buildroot	%{_tmppath}/%{name}-%{version}-%{release}-root  
 
 BuildRoot:		%{buildroot}
-Summary: 		Mwts-network is a wlan/psd networking test asset
+Summary: 		A wlan/psd networking test asset
 License: 		LGPL
 Name: 			mwts-network
 Version: 		0.0.7
@@ -16,15 +16,6 @@ Source: 		%{name}-%{version}.tar.gz
 
 %description
 Mwts-network is a wlan/psd networking test asset
-
-%package                devel
-Summary:                Development files
-Prefix:                 /usr
-Group:                  Development/Scripts
-Requires:               mwts-network
-%description            devel
-Development files for mwts-network
-
 
 %package                tests
 Summary:                Min test-case scripts for mwts-network
@@ -39,25 +30,19 @@ MIN test case scripts for mwts-network
 %setup -q -n %{name}-%{version}
 
 %build
-qmake "CONFIG+=plugin"
+qmake
 make
 
 %install
 make install INSTALL_ROOT=%{buildroot}
-
-%files devel
-%doc README
-%doc doc/MWTS.README
-/usr/lib/*.so
-/usr/lib/min/*.so
 
 %files
 %doc README
 %doc doc/MWTS.README
 %doc DEPENDENCIES.png
 %doc COPYING
-#/usr/lib/*.so.*
-#/usr/lib/min/*.so.*
+/usr/lib/*.so*
+/usr/lib/min/*.so
 /usr/lib/tests/*
 
 %files tests

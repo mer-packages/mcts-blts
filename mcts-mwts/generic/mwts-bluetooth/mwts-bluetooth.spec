@@ -3,7 +3,7 @@
 %define buildroot	%{_topdir}/%{name}-%{version}-%{release}-root
 
 BuildRoot:      %{buildroot}
-Summary:        Mwts-bluetooth is a test asset for BlueZ
+Summary:        A test asset for BlueZ
 License:        LGPL
 Name:           mwts-bluetooth
 Version:        0.1.1
@@ -56,7 +56,7 @@ make install INSTALL_ROOT=%{buildroot}
 %doc README
 %doc doc/MWTS.README
 /usr/lib/*.so*
-/usr/lib/min/*.so*
+/usr/lib/min/*.so
 /usr/lib/tests/*
 
 %files tests

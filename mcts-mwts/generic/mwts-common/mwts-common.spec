@@ -1,7 +1,7 @@
 # spec file for mwts-common
 
 %define release         0
-%define buildroot       %{_topdir}/%{name}-%{version}-root
+%define buildroot       %{_topdir}/%{name}-%{version}-%{release}-root
 
 BuildRoot:              %{buildroot}
 Summary:                Mwts-common is a Qt based framework library used by all MWTS test assets

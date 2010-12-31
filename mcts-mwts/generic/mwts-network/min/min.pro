@@ -2,7 +2,7 @@ TARGET = min-mwts-network
 TEMPLATE = lib
 VERSION = 0.0.6
 
-CONFIG += dll
+CONFIG += plugin
 CONFIG += warn_on
 CONFIG += debug
 CONFIG += link_pkgconfig
