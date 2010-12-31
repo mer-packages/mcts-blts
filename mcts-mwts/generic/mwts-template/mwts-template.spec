@@ -17,12 +17,6 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Template test asset.
 
-%package        devel
-Summary:        Mwts-template development files
-Requires:       mwts-template
-%description    devel
-Development files for mwts-template
-
 %package        generic-tests
 Summary:        MIN test case scripts for mwts-template
 Requires:       mwts-template
@@ -56,14 +50,8 @@ make install INSTALL_ROOT=%{buildroot}
 %defattr (-,root,root)
 %doc README
 %doc doc/MWTS.README
-/usr/lib/libmwts-template.so.*
-/usr/lib/min/*.so.*
-
-%files devel
-%defattr (-,root,root)
-/usr/lib/libmwts-template.so
-/usr/lib/min/libmin-mwts-template.so
-/usr/include/TemplateTest.h
+/usr/lib/libmwts-template.so*
+/usr/lib/min/*.so
 
 %files generic-tests
 %defattr (-,root,root)

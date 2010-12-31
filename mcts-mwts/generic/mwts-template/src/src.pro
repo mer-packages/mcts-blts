@@ -22,8 +22,4 @@ LIBS += -lmwts-common
 target.path = /usr/lib
 INSTALLS += target
 
-HEADERS.version = Versions
-HEADERS.files = TemplateTest.h
-HEADERS.path = /usr/include
-INSTALLS += HEADERS
 
