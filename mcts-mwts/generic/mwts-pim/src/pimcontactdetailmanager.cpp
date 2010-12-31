@@ -192,7 +192,11 @@ void PimContactDetailManager::verifyContactDetails(QContact& contact, bool value
      verifyDetailAddition("note",note,note.note()==m_note);
      verifyDetailAddition("number",phoneNumber,phoneNumber.number()==m_phoneNumber);
      verifyDetailAddition("audioRingtoneUrl",ringtone,ringtone.audioRingtoneUrl()==m_ringTone);
-     verifyDetailAddition("syncTarget",syncTarget,syncTarget.syncTarget()==m_syncTarget);
+     // Don't verify these after saving, the database modifies this
+     if(valueSetting)
+     {
+        verifyDetailAddition("syncTarget",syncTarget,syncTarget.syncTarget()==m_syncTarget);
+     }
      verifyDetailAddition("tag",tag,tag.tag()==m_tag);
      verifyDetailAddition("thumbnail",thumbnail,thumbnail.thumbnail()==QImage(m_thumbUri));
      verifyDetailAddition("type",type,type.type()==m_type);
