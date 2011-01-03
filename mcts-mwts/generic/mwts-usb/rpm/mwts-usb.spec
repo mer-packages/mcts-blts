@@ -6,12 +6,12 @@
 BuildRoot:		%{buildroot}
 Summary: 		Test libraries for USB networking.
 License: 		LGPL
-Name: 			%{name}
-Version: 		%{version}
-Release: 		%{release}
+Name: 			mwts-usb-tests
+Version: 		0.0.6
+Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
-BuildRequires:		qt-devel, min-devel, mwts-common-devel
+BuildRequires:	qt-devel, min-devel, mwts-common-devel
 Requires:		mwts-common
 Source: 		%{name}-%{version}.tar.gz
 %description
@@ -21,7 +21,7 @@ Test libraries for USB networking. C++ and MIN test modules.
 Summary:		Test cases for USB networking.
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		mwts-usb
+Requires:		mwts-usb-tests
 %description	scripts
 MIN test cases for measuring performance and reliability
             

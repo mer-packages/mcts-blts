@@ -1,3 +1,6 @@
+mwts-network-tests (1.0.0) unstable; urgency=low
+  * Modified wlan scan logic. Now it searches if specifig access point is found
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed, 29 Dec 2010 01:41:00 +0300
 
 mwts-network-tests (0.0.9) unstable; urgency=low
   * Fixed bug concering conf-file reading

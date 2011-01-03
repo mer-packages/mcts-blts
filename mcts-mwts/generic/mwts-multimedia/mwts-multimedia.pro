@@ -18,4 +18,8 @@ TESTS.files = scripts/tests.xml
 TESTS.path = /usr/share/mwts-multimedia-tests
 INSTALLS += TESTS
 
+HEADER.files = src/MultimediaTest.h
+HEADER.path = /usr/include
+INSTALLS += HEADER
+
 

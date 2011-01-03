@@ -359,6 +359,9 @@ LOCAL int PlayImageViewer(MinItemParser * item)
     }
     free(path);
 
+    if (!test.IsPassed())
+        return 1;
+
     return ENOERR;
 }
 

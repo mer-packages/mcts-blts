@@ -16,8 +16,6 @@
 
 minconfigdir = $(libdir)/tests/blts-bluetooth-tests
 minconfig_DATA = \
-	blts-bluetooth.min \
-	blts-bluetooth-min.conf \
 	blts-bluetooth-req_files.cfg
 
 config_DATA = \

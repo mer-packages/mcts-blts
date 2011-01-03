@@ -34,10 +34,6 @@ TESTS.files = data/tests.xml
 TESTS.path = /usr/share/mwts-pim-tests
 INSTALLS += TESTS
 
-ALLTESTS.files = data/alltests.xml
-ALLTESTS.path = /usr/share/mwts-pim-scripts
-INSTALLS += ALLTESTS
-
 target.path = /usr/lib/min
 INSTALLS += target
 

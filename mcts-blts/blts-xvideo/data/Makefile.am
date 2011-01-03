@@ -16,8 +16,6 @@
 
 minconfigdir = $(libdir)/tests/blts-xvideo-tests
 minconfig_DATA = \
-	blts-xvideo-min.conf \
-	blts-xvideo.min \
 	blts-xvideo-req-files.cfg
 
 config_DATA = \

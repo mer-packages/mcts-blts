@@ -16,9 +16,6 @@
 
 minconfigdir = $(libdir)/tests/blts-x11-tests
 minconfig_DATA = \
-	blts-x11-smoke.min \
-	blts-x11-min.conf \
-	blts-x11-xrender-bench.min \
 	blts-x11-req_files.cfg
 
 imagesdir = $(pkgdatadir)/images

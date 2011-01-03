@@ -55,10 +55,6 @@ USAGE: ./blts-opengles2-tests [-l mylog.txt] [-e test1,test2...] [-en "my test"]
 -d: Used window depth. 16, 24 or 32. If 0 uses desktop depth. (default: 0)
 -c: Run the tests with minimal compositor
 
-You can also run the tests using min
-
- $ min
-
 Execute the tests without window manager. Composite window managers, such as
 Compiz, slow down execution considerably.
 

@@ -1,2 +1,2 @@
-usr/lib/tests/blts-sensor-plugins/*
+usr/lib/tests/blts-sensor-plugins/*.so
 etc/blts/blts-sensor-example.cnf

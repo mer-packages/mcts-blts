@@ -1,6 +1,6 @@
 Summary: BLTS Watchdog test set
 Name: blts-watchdog-tests
-Version: 0.0.7
+Version: 0.0.8
 Release: 1
 License: GPLv2
 Group: Development/Testing

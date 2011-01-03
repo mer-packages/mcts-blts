@@ -1,3 +1,19 @@
+blts-wlan-core-tests (0.1.4) unstable; urgency=low
+
+  [ Jussi Saavalainen ]
+  * Fix crash when nl80211 driver loaded but no devices present
+  [ Kimmo Myllyvirta ]
+  * Tests.xml update
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Thu, 16 Dec 2010 11:17:41 +0200
+
+blts-wlan-core-tests (0.1.3) unstable; urgency=low
+
+  * Add Establish new adhoc network test.
+  * Add Join established adhoc network test.
+
+ -- Aki Nyman <aki.nyman@digia.com>  Wed, 24 Nov 2010 15:55:00 +0300
+
 blts-wlan-core-tests (0.1.2) unstable; urgency=low
 
   * Add associate with WPA2-PSK AP test.

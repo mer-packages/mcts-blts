@@ -36,22 +36,29 @@ NetworkTest Test;
 /*
  * Wlan scan
  */
-LOCAL int Scan( __attribute__((unused)) MinItemParser * item)
+LOCAL int Scan( MinItemParser * item)
 {
 	MWTS_ENTER;
 
 	Test.UpdateConfigs();
 
-	bool success = 1;
+        bool retval = false;
+
+        char* ap_name = NULL;
+        if (ENOERR != mip_get_next_string(item, &ap_name))
+        {
+                qCritical() << "Missing parameter: access point name";
+                MWTS_LEAVE;
+                return EINVAL;
+        }
 
 	if(Test.IsUpdateComplete())
 	{
-		success = 1;
-		qDebug() << "Access points found!";
-		Test.ListConfigurations();
+            // scan completed, lets see if the ap was found
+            retval = Test.IsAccessPointFound(ap_name);
 	}
 
-	g_pResult->StepPassed( __FUNCTION__, success );
+        g_pResult->StepPassed( __FUNCTION__, retval );
 
  	return 0;
 }

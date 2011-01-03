@@ -206,14 +206,16 @@
   <suite name="mwts-multimedia-fmradio-tests" domain="System">
     <!--This set contains test cases from mwts-multimedia-fmradio.cfg-->
     <set name="Functional test" description="Multimedia fm radio functionality tests" feature="Settings" type="Functional" >
+      <!--
       <case name="Dataflow_FMRadio_Tune_on_active_frequency" subfeature="" timeout="120" description=
         "Purpose
         Test turning on active frequency
         Method
         Test case uses qt-mobility API
         Pre-/Post-Conditions
+        Set frequency should be active.
         Pass/Fail Criteria
-        Is able to listen radio at a certain frequency
+        Is able to listen radio at a certain frequency.
         Test case result can be found from /var/log/tests
         ">
         <step>min -c -t 'Dataflow_FMRadio_Tune_on_active_frequency'</step>
@@ -223,7 +225,7 @@
         "Purpose
         Test scaning frequency
         Method
-        Test case uses qt-mobility API
+        Test case uses qt-mobility API. RadioTuner class is used to play radio.
         Pre-/Post-Conditions
         Pass/Fail Criteria
         Is able to scan down or up
@@ -231,18 +233,33 @@
         ">
         <step>min -c -t 'Dataflow_FMRadio_Scan_frequency'</step>
       </case>
+      -->
 
       <case name="FUTE_Multimedia_FMRadio_Tune_on_active_frequency" subfeature="" timeout="120" description=
         "Purpose
         Test turning on active frequency
         Method
-        Test case uses qt-mobility mobility API
+        Test case uses qt-mobility mobility API. RadioTuner class is used to play radio.
         Pre-/Post-Conditions
         Pass/Fail Criteria
         Is able to listen radio at a certain frequency
         Test case result can be found from /var/log/tests
         ">
         <step>min -c -t 'FUTE_Multimedia_FMRadio_Tune_on_active_frequency'</step>
+      </case>
+
+      <case name="FUTE_Multimedia_FMRadio_Scan_frequency" subfeature="" timeout="120" description=
+        "Purpose
+        Test scaning frequency
+        Method
+        Test case uses qt-mobility mobility API. RadioTuner class is used to search backward from current frequency and play radio.
+        Pre-/Post-Conditions
+        There should be active freqency below set one.
+        Pass/Fail Criteria
+        Is able to scan down or up and then play a radio.
+        Test case result can be found from /var/log/tests
+        ">
+        <step>min -c -t 'FUTE_Multimedia_FMRadio_Scan_frequency'</step>
       </case>
     </set>
   </suite>

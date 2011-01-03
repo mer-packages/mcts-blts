@@ -1,39 +1,33 @@
-/* AccountsTest.h
- *
- * This file is part of MCTS
- *
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
- *
- * Contact: Tommi Toropainen; tommi.toropainen@nokia.com;
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * version 2.1 as published by the Free Software Foundation.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA
- *
- */
+/* AccountsTest.h -- Accounts test asset definition
 
+   Copyright (C) 2000-2010, Nokia Corporation.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, version 2.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #ifndef _INCLUDED_TEMPLATE_TEST_H
 #define _INCLUDED_TEMPLATE_TEST_H
 
+
 #include <MwtsCommon>
+#include <QtCore>
+#include "signonclient.h"
 
 
-/**
- * Accounts test class
- * Demonstrates how to create test classes
- * Inherited from MwtsTest class
- */
+#include <Accounts/manager.h>
+
+using namespace Accounts;
+
 class AccountsTest : public MwtsTest
 {
 	Q_OBJECT
@@ -62,10 +56,63 @@ public:
 	void OnUninitialize();
 
 	/**
-	 * Test function
+         * List added accounts
 	 */
-	void TestSomething();
+        bool ListAccounts();
 
+        /**
+         * List available services
+         */
+        bool ListServices();
+
+        /**
+         * Create account
+         */
+        bool CreateAccount(const QString provider_name);
+
+        /**
+         * Remove account
+         */
+        bool RemoveAccount(const QString strName);
+
+        /**
+         * Removes all accounts
+         */
+        bool ClearAccounts();
+
+        /**
+         * Lists identities / credentials from sso db
+         */
+        bool ListIdentities();
+
+        /**
+         * Creates identity/credential
+         */
+        bool CreateIdentity(const QString strName);
+
+        /**
+         * Open session (sign in with chosen service. Identity needs to be created first)
+         */
+        bool CreateSession(const QString strName);
+
+        /**
+         * Clears all credentials from sso db
+         */
+        bool ClearIdentities();
+
+
+private:
+        bool m_bSuccess;
+
+        SignonClient *ssoClient;
+
+        /*
+         * Accounts Manager
+         */
+        Manager* manager;
+        
+protected slots:
+        void slotAccountCreated(AccountId id);
 };
 
 #endif //#ifndef _INCLUDED_TEMPLATE_TEST_H

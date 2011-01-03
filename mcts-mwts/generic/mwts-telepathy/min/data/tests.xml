@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.2">
+  <suite name="mwts-telepathy-scripts" domain="Communication" level="Feature">
+    <set name="VoIP-FuTe" description="VoIP functional test cases" feature="VoIP" type="Functional">
+      <case name="FUTE-VoIP-Create_GTalk_call-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test creating a VoIP call using GTalk.
+	      Method
+	      Open GTalk account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-VoIP-Create_GTalk_call-MS'</step>
+      </case>
+      <case name="FUTE-VoIP-Answer_GTalk_call-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test answering to VoIP call using GTalk.
+	      Method
+	      Open GTalk account, wait for incoming VoIP call GTalk call, answer. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-VoIP-Answer_GTalk_call-MS'</step>
+      </case>
+      <case name="FUTE-IM-Send_IM_using_GTalk-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test sending instant message using GTalk.
+	      Method
+	      Open GTalk account, request text channel and send message. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-IM-Send_IM_using_GTalk-MS'</step>
+      </case>
+      <case name="SMOKE-VoIP-GTalk_Create_Call" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test creating a VoIP call using GTalk.
+	      Method
+	      Open GTalk account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'SMOKE-VoIP-GTalk_Create_Call'</step>
+      </case>
+      <case name="SMOKE-VoIP-GTalk_Answer_Call" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test answering a VoIP call using GTalk.
+	      Method
+	      Open GTalk account, wait for a media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'SMOKE-VoIP-GTalk_Answer_Call'</step>
+      </case>
+      <case name="SMOKE-IM-Send_IM_using_GTalk" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test sending instant using GTalk.
+	      Method
+	      Open GTalk account, request text channel and send message. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'SMOKE-IM-Send_IM_using_GTalk'</step>
+      </case>
+      <case name="SMOKE-IM-Receive_IM_using_GTalk" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test receiving instant message using GTalk.
+	      Method
+	      Open GTalk account, wait for text channel and verify message. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'SMOKE-IM-Receive_IM_using_GTalk'</step>
+      </case>
+      <case name="FUTE-Create_VoIP_Account_Using_SKYPE" subfeature="Skype" timeout="360" description=
+	      "Purpose
+	      Test account creation using Skype.
+	      Method
+	      Open Skype account. No measurements. 
+	      Pre- /Post-conditions
+	      Skype account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-Create_VoIP_Account_Using_SKYPE'</step>
+      </case>
+      <case name="FUTE-Create_VoIP_Call_Using_SKYPE" subfeature="Skype" timeout="360" description=
+	      "Purpose
+	      Test creating VoIP call using Skype.
+	      Method
+	      Open Skype account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      Skype account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-Create_VoIP_Call_Using_SKYPE'</step>
+      </case>
+      <case name="FUTE-VoIP-Create_SKYPE_call-MS" subfeature="Skype" timeout="360" description=
+	      "Purpose
+	      Test creating Master/Slave VoIP call using Skype.
+	      Method
+	      Open Skype account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      Skype account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-VoIP-Create_SKYPE_call-MS'</step>
+      </case>
+      <case name="FUTE-VoIP-Answer_SKYPE_call-MS" subfeature="Skype" timeout="360" description=
+	      "Purpose
+	      Test answering Master/Slave VoIP call using Skype.
+	      Method
+	      Open Skype account, wait for media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      Skype account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-VoIP-Answer_SKYPE_call-MS'</step>
+      </case>
+      <case name="FUTE-Create_VoIP_Account_Using_SIP" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating account using SIP.
+	      Method
+	      Open SIP account. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-Create_VoIP_Account_Using_SIP'</step>
+      </case>
+      <case name="FUTE-Create_VoIP_Call_Using_SIP" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating VoIP call using SIP.
+	      Method
+	      Open SIP account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-Create_VoIP_Call_Using_SIP'</step>
+      </case>
+      <case name="FUTE-VoIP-Create_SIP_call-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating Master/Slave VoIP call using SIP.
+	      Method
+	      Open SIP account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-VoIP-Create_SIP_call-MS'</step>
+      </case>
+      <case name="FUTE-VoIP-Answer_SIP_call-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test answering Master/Slave VoIP call using SIP.
+	      Method
+	      Open SIP account, wait for media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-VoIP-Answer_SIP_call-MS'</step>
+      </case>
+      <case name="FUTE-IM-Send_IM_using_SIP-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test sending Master/Slave instant message using SIP.
+	      Method
+	      Open SIP account, request text channel and send message. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-IM-Send_IM_using_SIP-MS'</step>
+      </case>
+      <case name="FUTE-IM-Receive_IM_using_SIP-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test receiving Master/Slave instant message using SIP.
+	      Method
+	      Open SIP account, wait for text channel and verify message. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'FUTE-IM-Receive_IM_using_SIP-MS'</step>
+      </case>
+    </set>
+    <set name="VoIP-LATE" description="VoIP latency test cases" feature="VoIP" type="Latency">
+      <case name="NFT-VoIP-Latency_for_creating_GTalk_call-MS-LATE" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test creating a VoIP call using GTalk and measure latency.
+	      Method
+	      Open GTalk account, request media channel and open audio stream. Measure latency. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Latency_for_creating_GTalk_call-MS-LATE'</step>
+      </case>
+      <case name="NFT-VoIP-Latency_for_answering_GTalk_call-MS-LATE" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test answering to VoIP call using GTalk and measure latency.
+	      Method
+	      Open GTalk account, wait for incoming VoIP call GTalk call, answer. Measure latency. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Latency_for_answering_GTalk_call-MS-LATE'</step>
+      </case>
+      <case name="NFT-IM-Send_IM_message_using_GTalk-MS-LATE" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test sending instant message using GTalk and measure latency.
+	      Method
+	      Open GTalk account, request text channel and send message. Measure latency. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-IM-Send_IM_message_using_GTalk-MS-LATE'</step>
+      </case>
+      <case name="NFT-VoIP-Latency_for_creating_SIP_call-MS-LATE" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating VoIP call using SIP and measure latency.
+	      Method
+	      Open SIP account, request media channel and open audio stream. Measure latency. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Call creation successfull. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Latency_for_creating_SIP_call-MS-LATE'</step>
+      </case>
+      <case name="NFT-VoIP-Latency_for_answering_SIP_call-MS-LATE" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test answering VoIP call using SIP and measure latency.
+	      Method
+	      Open SIP account, wait for media channel and open audio stream. Measure latency. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answering successfull. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Latency_for_answering_SIP_call-MS-LATE'</step>
+      </case>
+      <case name="NFT-IM-Send_IM_message_using_SIP-MS-LATE" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test sending instant message using SIP and measure latency.
+	      Method
+	      Open SIP account, request text channel and send message. Measure latency. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Message sending successfull. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-IM-Send_IM_message_using_SIP-MS-LATE'</step>
+      </case>
+    </set>
+    <set name="VoIP-ITER" description="VoIP iterative test cases" feature="VoIP" type="Iterative">
+      <case name="NFT-VoIP-Answer_GTalk_call-ITER-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test iterative answering to VoIP call using GTalk.
+	      Method
+	      Open Gtalk account, wait for incoming VoIP call. Answer. No measurements. 
+	      Pre- /Post-conditions
+	      Gtalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answer successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Answer_GTalk_call-ITER-MS'</step>
+      </case>
+      <case name="NFT-VoIP-Create_GTalk_call-ITER-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test iterative creation of VoIP call using GTalk.
+	      Method
+	      Open GTalk account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Create_GTalk_call-ITER-MS'</step>
+      </case>
+      <case name="NFT-IM-Send_IM_message_using_GTalk-ITER-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test iterative sending of instant messages using GTalk.
+	      Method
+	      Open GTalk account, request text channel and send message. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Sending successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-IM-Send_IM_message_using_GTalk-ITER-MS'</step>
+      </case>
+      <case name="NFT-VoIP-Create_SIP_call-ITER-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test iterative creation of VoIP call using SIP.
+	      Method
+	      Open SIP account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Create_SIP_call-ITER-MS'</step>
+      </case>
+      <case name="NFT-VoIP-Answer_SIP_call-ITER-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test iterative creation of VoIP call using SIP.
+	      Method
+	      Open SIP account, wait for media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Answering successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Answer_SIP_call-ITER-MS'</step>
+      </case>
+      <case name="NFT-IM-Send_IM_using_SIP-ITER-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test iterative sending of instant message using SIP.
+	      Method
+	      Open SIP account, request text channel and send message. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Sending successfull on all iterations. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-IM-Send_IM_using_SIP-ITER-MS'</step>
+      </case>
+    </set>
+    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Long-lasting">
+      <case name="NFT-VoIP-Create_GTalk_call-LOLA-MS" subfeature="GTalk" timeout="360" description=
+	      "Purpose
+	      Test creating long lasting VoIP call.
+	      Method
+	      Open GTalk account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      GTalk account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Create_GTalk_call-LOLA-MS'</step>
+      </case>
+      <case name="NFT-VoIP-Create_SIP_call-LOLA-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating long lasting VoIP call.
+	      Method
+	      Open SIP account, request media channel and open audio stream. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successfull. Testcase does not crash. 
+	      ">
+      	<step>min -c -t 'NFT-VoIP-Create_SIP_call-LOLA-MS'</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>
