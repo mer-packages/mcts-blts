@@ -46,13 +46,14 @@ gint main(int argc, char *argv[])
     //test->set_flags(GST_CAMERABIN_FLAG_SOURCE_RESIZE);
     test->setup_pipeline();
     //test->set_fps();
-    /*for (int i=0; i<5;i++)
-    {
-        test->take_video(3);
-    }
-     */
+//    for (int i=0; i<20;i++)
+  //  {
+        test->take_picture(TRUE);
+    //    sleep(1000);
+    //}
 
-    test->take_video(5);
+
+    //test->take_video(5);
     //test->take_video(2);
     //test->increase_zoom(700);
 
