@@ -68,3 +68,4 @@ make install INSTALL_ROOT=%{buildroot}
 * Tue Nov 2 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
 - Intial version
 
+
