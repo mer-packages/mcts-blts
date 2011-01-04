@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+    <!-- Sim test cases from file mwts-ofono-sim.cfg -->
+    <suite name="mwts-ofono-tests" domain="Visual">
+    <set name="Functional test" description="ofono-qt sim card operations" feature="Settings" type="Functional" >
+        <case name="FUTE-" subfeature="Sim new pin code" timeout="10" description=
+          
+            <step>min -c -t ''</step>
+        </case>
+    </set>
+    </suite>
+</testdefinition>
+
