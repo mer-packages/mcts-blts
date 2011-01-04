@@ -6,7 +6,7 @@
 BuildRoot:              %{buildroot}
 Summary:                Mwts-location is a test asset for GPS using Qt Mobility location API
 License:                LGPL
-Name:                   mwts-location-tests
+Name:                   mwts-location
 Version:                0.0.3
 Release:                %{release}
 Prefix:                 /usr
@@ -19,12 +19,12 @@ Source:                 %{name}-%{version}.tar.gz
 Mwts-location-tests is a test asset for GPS using Qt Mobility location API
 
 
-%package               scripts
+%package               tests-generic
 Summary:               Min interface and test cases
 Prefix:                 /usr
 Group:                 Development/Tools
 Requires:              mwts-location-tests
-%description           scripts
+%description           tests-generic
 MIN test cases for mwts-location-tests
 
 %prep
@@ -43,17 +43,13 @@ make install INSTALL_ROOT=%{buildroot}
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
 /usr/lib/libmwts-location.*
+/usr/lib/min/libmin-mwts-location.*
 /usr/lib/tests/LocationTest.conf
 
 
-%files scripts
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
+%files tests-generic
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/lib/min/libmin-mwts-location.*
 /usr/share/mwts-location-scripts/tests.xml
 
 
