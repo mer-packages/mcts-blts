@@ -53,7 +53,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-accounts.min.conf 
-/usr/share/mwts-accounts-tests/tests.xml
+/usr/share/mwts-accounts-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config
