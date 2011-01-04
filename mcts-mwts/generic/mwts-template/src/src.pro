@@ -21,3 +21,5 @@ LIBS += -lmwts-common
 	
 target.path = /usr/lib
 INSTALLS += target
+
+

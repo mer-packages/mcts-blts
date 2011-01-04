@@ -88,6 +88,11 @@ public: // new functions
      */
     void initializeContactData();
 
+    /**
+     * Verifies contact details. if valueSetting is true, timestamp and quid are not tested because database modifies those
+     */
+    void verifyContactDetails(QContact& contact, bool valueSetting);
+
 private: // new functions
 
     /**
@@ -98,7 +103,7 @@ private: // new functions
     /**
      * Verifying function for adding data to detail
      */
-    void verifyDetailAddition(QString detailType, bool success);
+    void verifyDetailAddition(QString detailValueName, QContactDetail detail, bool success);
 
     /**
      * Data addition functions for largest details

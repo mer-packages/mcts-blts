@@ -28,6 +28,7 @@
 // includes
 #include <qtorganizer.h>
 #include "pimorganizeritemmanager.h"
+#include "versit.h"
 
 /**
  * Constructor for OrganizerTest class
@@ -590,6 +591,99 @@ bool OrganizerTest::removeItem(QOrganizerManager& manager, QOrganizerItemId& ite
     }
     return result;
 }
+
+
+/**
+  * Imports calendar item from iCalendar
+  */
+void OrganizerTest::ImportCalendarItemFromIcalendar()
+{
+    MWTS_ENTER;
+    QOrganizerManager *manager = FindCalendarDataStore();
+    if(!manager)
+    {
+        qCritical()<<"Calendar data store not created";
+        return;
+    }
+
+    Versit importer;
+    QList<QOrganizerItem> itemList;
+    QString iCalFile = g_pConfig->value("ICALENDAR/input_file").toString();
+    bool result = importer.ImportCalendarItemFromIcalendar(itemList,iCalFile);
+    if(!result)
+    {
+        qCritical()<<"Calendar importing failed";
+        return;
+    }
+
+    qDebug()<<"Calendar importing succeeded, details...";
+    QOrganizerItem item;
+    const int count = itemList.count();
+    for(int i=0;i<count;++i)
+    {
+        // check compatibility
+        item = itemList[i];
+        qDebug()<<"Detail count before pruning: "<<item.details().count();
+        item = manager->compatibleItem(item);
+        qDebug()<<"Detail count after pruning: "<<item.details().count();
+    }
+}
+
+/**
+  * Exports calendar item to iCalendar
+  */
+void OrganizerTest::ExportCalendarItemToIcalendar()
+{
+    MWTS_ENTER;
+
+    QList<QOrganizerItem> itemList;
+    QOrganizerItem item;
+    Versit exporter;
+
+    QOrganizerManager *manager = FindCalendarDataStore();
+    if(!manager)
+    {
+        qCritical()<<"Calendar data store not created";
+        return;
+    }
+
+    // get all items
+    QList<PimItem> items = m_itemManager->getCreatedItems();
+
+    const int count = items.count();
+    if(count==0)
+    {
+        qWarning()<<"There are no calendar items created";
+    }
+
+    for(int i=0;i<count;++i)
+    {
+        //  export only contacts created to this data store
+        if(items[i].dataStoreName==m_calendarStore)
+        {
+            // get item
+            item = manager->item(items[i].itemLocalId);
+            if(manager->error()!=QOrganizerManager::NoError)
+            {
+                qCritical()<<"Calendar fetching from data store failed, error: "<<manager->error();
+                break;
+            }
+            itemList.append(item);
+        }
+    } // for
+
+    // import all found calendar items
+    bool result = exporter.ExportCalendarItemToIcalendar(itemList);
+    if(!result)
+    {
+        qCritical()<<"Exporting failed";
+    }
+    else
+    {
+        qDebug()<<"Exporting succeeded";
+    }
+}
+
 
 
 /**

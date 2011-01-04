@@ -99,6 +99,30 @@
         ">
         <step>min -c -t 'NFT-USB-Receive_640MB_file-THRO'</step>
       </case>
+      <case name="NFT-USB-Send_640MB_file_to_EXT-THRO" subfeature="send" timeout="1200" description=
+        "Purpose
+        This test case measures USB network throughput with real file from desktop PC to test device. Transfer is done to extX partition on internal memory.
+        Method
+        Scp program is used to measure the performance, the file (640MB) is copied from the PC's hard drive to the test device 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Test case is executed in the desktop. destfile has to be dir on extX partition.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Send_640MB_file_to_EXT-THRO'</step>
+      </case>
+      <case name="NFT-USB-Receive_640MB_file_from_EXT-THRO" subfeature="receive" timeout="1200" description=
+        "Purpose
+        This test case measures USB network throughput with real file test device to desktop PC. Transfer is done from extX partition on internal memory.
+        Method
+        Scp program is used to measure the performance, the file (640MB) is copied from the test device to the PC's hard drive 7 times.
+        Pre-/Post-Conditions
+        Test files are available and passwordless SSH connection is set up (see README). Send case must be run before this, so the test data is available in the device.Test case is executed in the desktop.
+        Pass/Fail Criteria
+        Test case returns passed and throughput speed is logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'NFT-USB-Receive_640MB_file_from_EXT-THRO'</step>
+      </case>
     </set>
     
     

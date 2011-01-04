@@ -1,13 +1,13 @@
 # spec file for mwts-filesystem
 
 %define release         0
-%define buildroot       %{_topdir}/%{name}-%{version}-root
+%define buildroot       %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRoot:              %{buildroot}
-Summary:                mwts-filesystem is generic File system test asset API libraries and generic configuration
+Summary:                Generic File system test asset
 License:                LGPL
-Name:                   %{name}
-Version:                %{version}
+Name:                   mwts-filesystem
+Version:                1.0.1
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -22,16 +22,16 @@ mwts-filesystem is a common library for MWTS test assets. It provides tool for f
 Summary:                mwts-filesystem development files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               qt-devel, mwts-filesystem
+Requires:               qt-devel, mwts-filesystem-tests
 %description            devel
 Development headers and libraries for mwts-filesystem
 
-%package                scripts
+%package                tests
 Summary:                mwts-filesystem MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-filesystem
-%description            scripts
+Requires:               min, mwts-filesystem-tests
+%description            tests
 MIN test cases for mwts-filesystem
 
 %package                cli
@@ -57,7 +57,7 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/libmwts-filesystem.*
+/usr/lib/libmwts-filesystem.so.*
 /usr/lib/tests/FilesystemTest.conf
 
 %files devel
@@ -65,17 +65,19 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
+/usr/lib/libmwts-filesystem.so
+/usr/lib/min/libmin-mwts-filesystem.so
 /usr/include/FilesystemTest.h
 
-%files scripts
+%files tests
 %doc README
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/lib/min/libmin-mwts-filesystem.*
-/usr/share/mwts-filesystem-scripts/tests.xml
+/usr/lib/min/libmin-mwts-filesystem.so.*
+/usr/share/mwts-filesystem-tests/tests.xml
 
 %files cli
 %doc README
@@ -84,6 +86,8 @@ make install INSTALL_ROOT=%{buildroot}
 %doc doc/MWTS.README
 /usr/bin/mwts-filesystem-cli
 
+%post
+ldconfig
 
 %postun
 ldconfig

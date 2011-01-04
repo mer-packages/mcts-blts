@@ -29,6 +29,7 @@
 // Includes
 #include <qmobilityglobal.h>
 #include <QContact>
+#include <QOrganizerItem>
 
 // namespace
 QTM_USE_NAMESPACE
@@ -68,17 +69,19 @@ public: // new functions
     /**
      * Imports calendar item from vCard. Not supported yet
      */
-     bool ImportCalendarItemFromIcalendar() { return false; }
+     bool ImportCalendarItemFromIcalendar(QList<QOrganizerItem>& items, QString iCalFile);
 
     /**
       * Exports iCalendar from calendar item. Not supported yet
       */
-     bool ExportCalendarItemToIcalendar() { return false; }
+     bool ExportCalendarItemToIcalendar(QList<QOrganizerItem>& items);
 
 private: // data
 
      // vCard data
      QByteArray m_inputVCard;
+     // iCalendar data
+     QByteArray m_inputIcal;
 };
 
 #endif // VERSIT_H

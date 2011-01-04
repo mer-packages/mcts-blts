@@ -1106,8 +1106,7 @@
         Required test data: None.">
         <step>min -c -t NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
       </case>
-     <case name="NFT-WLAN-Connect_WPA2-AES_saved-LATE"
-  timeout="10" description=
+     <case name="NFT-WLAN-Connect_WPA2-AES_saved-LATE" timeout="10" description=
         "Purpose: tests connection creation latency with saved wpa2 aes secured ap
         Method: Connection is made, latency is measured
         Pre- /Post-conditions: 
@@ -1124,6 +1123,24 @@
         References: 
         Required test data: None.">
         <step>min -c -t 'NFT-WLAN-Connect_WPA2-AES_unsaved-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_to_unsaved_open_Access_Point-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with unsaved open ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_to_unsaved_open_Access_Point-LATE'</step>
+      </case>
+      <case name="NFT-WLAN-Connect_to_saved_WPA_PSK_Access_Point-LATE"  timeout="10" description=
+        "Purpose: tests connection creation latency with saved WPA tkip ap
+        Method: Connection is made, latency is measured
+        Pre- /Post-conditions: 
+        Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
+        References: 
+        Required test data: None.">
+        <step>min -c -t 'NFT-WLAN-Connect_to_saved_WPA_PSK_Access_Point-LATE'</step>
       </case>
     </set>
 

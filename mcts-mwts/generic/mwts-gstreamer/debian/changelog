@@ -1,6 +1,5 @@
 mwts-gstreamer (0.0.5) unstable; urgency=low
   * MeeGo Audio and Video test cases added
-
  -- Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com>  Wed, 22 Sep 2010 14:04:00 +0300
 
 mwts-gstreamer (0.0.4) unstable; urgency=low
