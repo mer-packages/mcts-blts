@@ -4,8 +4,8 @@
 
 BuildRoot:		%{buildroot}
 Summary: 		Mwts-messaging is a test asset for Qt Mobility Messaging
-License: 		GPL
-Name: 			mwts-messaging-tests
+License: 		LGPL
+Name: 			mwts-messaging
 Version: 		0.0.1
 Release: 		0
 Prefix: 		/usr
@@ -17,12 +17,12 @@ Source: 		%{name}-%{version}.tar.gz
 %description
 Mwts-messaging-tests is a test asset for Qt Mobility Messaging. It supports currently only SMS.
             
-%package		tests
+%package		tests-generic
 Summary:		Mwts-messaging MIN files
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		min, mwts-common, mwts-messaging-tests
-%description	tests
+Requires:		min, mwts-common, mwts-messaging
+%description	tests-generic
 MIN test cases for mwts-messaging-tests
 
 %prep
@@ -38,13 +38,14 @@ make install INSTALL_ROOT=%{buildroot}
 %files 
 %doc README
 /usr/lib/libmwts-messaging.*
+/usr/lib/min/libmin-mwts-messaging.*
 /usr/lib/tests/*
+/usr/bin/mwts-messaging-cli
 
-%files tests
+%files tests-generic
 %doc README
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/lib/min/libmin-mwts-messaging.*
 /usr/share/mwts-messaging-*/*.xml
 
 %postun
