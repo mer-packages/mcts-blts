@@ -51,11 +51,6 @@ ButeoTest::~ButeoTest()
         pm = NULL;
     }
 
-    if(m_pProcess)
-    {
-        delete m_pProcess;
-        m_pProcess = NULL;
-    }
     MWTS_LEAVE;
 }
 
@@ -71,8 +66,6 @@ void ButeoTest::OnInitialize()
     g_pLog->EnableTrace(true);
 
     qDebug() << "CONNECTING SIGNALS!!!";
-
-    m_pProcess=new QProcess();
 
     sci = new SyncClientInterface();
 

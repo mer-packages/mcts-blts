@@ -98,14 +98,14 @@ public:
 
 
 private:
+        /*
+         * helper function to load profile from given template xml. Same functionality is also in the ProfileManager-class
+         */
         SyncProfile *loadProfileFromXml(QString filename);
 
         SyncClientInterface *sci;
         ProfileManager *pm;
 
-        QProcess* m_pProcess;
-
-        // test verdict
         bool m_bSuccess;
 
 protected slots:
