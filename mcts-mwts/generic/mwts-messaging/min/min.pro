@@ -3,6 +3,7 @@ TEMPLATE			 = lib
 VERSION				 = 0.0.1
 
 CONFIG				+= dll
+CONFIG				+= plugin
 CONFIG				+= warn_on
 CONFIG				+= debug
 CONFIG				+= mobility
@@ -29,12 +30,8 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-messaging-tests
+TESTS.path = /usr/share/mwts-messaging
 INSTALLS += TESTS
-
-ALLTESTS.files = data/tests.xml
-ALLTESTS.path = /usr/share/mwts-messaging-scripts
-INSTALLS += ALLTESTS
 
 target.path = /usr/lib/min
 INSTALLS += target
