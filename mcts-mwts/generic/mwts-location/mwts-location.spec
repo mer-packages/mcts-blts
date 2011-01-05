@@ -19,13 +19,31 @@ Source:                 %{name}-%{version}.tar.gz
 Mwts-location-tests is a test asset for GPS using Qt Mobility location API
 
 
-%package               tests-generic
+%package               generic-tests
 Summary:               Min interface and test cases
 Prefix:                 /usr
 Group:                 Development/Tools
-Requires:              mwts-location-tests
-%description           tests-generic
+Requires:              mwts-location
+%description           generic-tests
 MIN test cases for mwts-location-tests
+
+%package               generic-config
+Summary:               Configuration file for mwts-location / generic
+Prefix:                 /usr
+Group:                 Development/Tools
+Requires:              mwts-location
+%description           generic-config
+Configuration file for mwts-location / generic
+
+%package               generic-all
+Summary:               Meta package for all needed mwts-location generic packages
+Prefix:                 /usr
+Group:                 Development/Tools
+Requires:              mwts-location, mwts-location-generic-config, mwts-location-generic-tests
+%description           generic-all
+Meta package for all needed mwts-location generic packages
+
+
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -43,14 +61,18 @@ make install INSTALL_ROOT=%{buildroot}
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
 /usr/lib/libmwts-location.*
-/usr/lib/min/libmin-mwts-location.*
-/usr/lib/tests/LocationTest.conf
+/usr/lib/min/*.so
 
 
-%files tests-generic
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
 /usr/share/mwts-location-scripts/tests.xml
+
+%files generic-config
+/usr/lib/tests/LocationTest.conf
+
+%files generic-all
 
 
 %postun
