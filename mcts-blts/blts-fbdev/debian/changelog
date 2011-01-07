@@ -1,3 +1,9 @@
+blts-fbdev-tests (0.0.9) unstable; urgency=low
+
+  * Bugfix: Backlight tests now poll for the brightness value change after setting it to a new value
+
+ -- Mika Niinistö <mika.niinisto@digia.com>  Fri, 07 Jan 2011 13:57:02 +0200
+
 blts-fbdev-tests (0.0.8) unstable; urgency=low
 
   * Added six new performance test cases
