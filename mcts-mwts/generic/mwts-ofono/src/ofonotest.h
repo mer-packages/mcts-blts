@@ -26,15 +26,25 @@
 
 #include <MwtsCommon>
 #include <ofono-qt/ofonosimmanager.h>
+#include <QtTest/QtTest>
 
+//for debug purposes
+#define MWTS_OFONO_CONF_DEBUG
+
+//on armv7 n900 images sometime the available libofono-qt version is 0.0.7-2.14 which
+//has different public method names (not refactored)
+//#define MWTS_SIMMANAGER_OLD
+
+//original state: PIN, PUK are disabled (unlocked)
 class OfonoTest : public MwtsTest
 {
     Q_OBJECT
+
 public:    
     /**
      * Constructor for template test class
      */
-    OfonoTest();
+    OfonoTest(QObject* pParent = 0 );
 
     /**
      * Destructor for template test class
@@ -52,8 +62,20 @@ public:
     /**
      * Overridden functions for MwtsTest class
      * OnUninitialize is called after test execution
+     * Delete SimManager, QEventLoop, QTimer from the heap
+     * beside takes care of keeping the original state on the sim
+     * original state: PIN, PUK are disabled (unlocked)
      */
     void OnUninitialize();
+
+    /**
+     * Enters the currently pending pin.  The type value must
+     * match the pin type being asked in the PinRequired
+     * property.
+     * @param pin type, pin code
+     * @return true on success
+     */
+    bool enterPin(const QString &pinType, const QString &pin);
 
     /**
      * Changes the pin given by string type.
@@ -61,10 +83,6 @@ public:
      * @return true if the change was successful
      */
     bool changePin(const QString &pinType, const QString &oldPin, const QString &newPin);
-
-    //TODO on request
-    //bool enterPin(const QString &pinType, const QString &pin);
-    //bool resetPin(const QString &pinType, const QString &puk, const QString &newPin);
 
     /**
      * Activates the lock for the particular pin type. The
@@ -85,8 +103,43 @@ public:
      */
     bool disablePin (const QString &pinType, const QString &pin);
 
+    /**
+     * Provides the unblock key to the modem and if correct
+     * resets the pin to the new value of newpin.
+     * @param pin type, puk code, new pin code
+     * @retunr true on success, otherwise false
+     */
+    bool resetPin (const QString &pintype, const QString &puk, const QString &newpin);
+
+    /**
+     * Prints info about the sim card (locked pins, pin required)
+     *
+     */
+    void simInfo (void);
+
+signals:
+    /**
+     * Signal if pending pin code is required
+     *
+     */
+    void enterPinRequired(const QString&, const QString&);
+
+private Q_SLOTS:
+    void testTimeout();
+
+    /**
+     * If the pending pin is required (after reboot), it enters that before running any other method
+     *
+     */
+    void onEnterPinRequired(const QString&, const QString&);
+
 private:
-    OfonoSimManager *m;
+    OfonoSimManager *mSimManager;
+    QEventLoop      *mEventLoop;
+    QTimer          *mTimer;
+
+    QString mPin;
+    QString mPuk;
 };
 
 #endif // OFONOTEST_H

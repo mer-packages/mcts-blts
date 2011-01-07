@@ -69,7 +69,7 @@ LOCAL int ChangePin(MinItemParser * item)
     }
 
     result = test.changePin(pinType, oldPin, newPin);
-    g_pResult->StepPassed( __FUNCTION__, result);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
     free(oldPin);
@@ -110,7 +110,7 @@ LOCAL int EnablePin(MinItemParser * item)
     }
 
     result = test.enablePin(pinType, pin);
-    g_pResult->StepPassed( __FUNCTION__, result);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
     free(pin);
@@ -147,10 +147,176 @@ LOCAL int DisablePin(MinItemParser * item)
     }
 
     result = test.disablePin(pinType, pin);
-    g_pResult->StepPassed( __FUNCTION__, result);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
     free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * VerifyPin
+ * Changes the given pin code to the same pin code
+ * (no change in the real) and verifies whether the device realizes its correctness
+ * Usage: VerifyPin [pinType, pin]
+ * @param pinType, pin
+ * @return ENOERR
+ */
+LOCAL int VerifyPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.changePin(pinType, pin, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * VerifyInvalidPin
+ * Changes the given invalid pin code to the same invalid pin code
+ * (no change in the real) and verifies whether the device realizes its correctness
+ * Usage: VerifyInvalidPin [pinType, invalid pin]
+ * @param pinType, invalid pin
+ * @return ENOERR
+ */
+//TODO
+LOCAL int VerifyInvalidPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.changePin(pinType, pin, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, !result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+  * Enters the currently pending pin. The type value must match the
+  * pin type being asked in the "pin required" (SimInfo) property
+  * @param pinType, pin
+  * @return ENOERR
+  */
+LOCAL int EnterPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.enterPin(pinType, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+  * Provides the unblock key to the modem and if correct
+  * resets the pin to the new value of newpin.
+  * @param pinType, puk, newPin
+  * @return ENOERR
+  */
+LOCAL int ResetPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *puk = NULL;
+    char *newPin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &puk ))
+    {
+        qCritical() << "could not parse current puk code";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &newPin ))
+    {
+        qCritical() << "could not parse new pin code";
+        return EINVAL;
+    }
+
+    result = test.resetPin(pinType, puk, newPin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(puk);
+    free(newPin);
+
+    return ENOERR;
+}
+
+/**
+ * Prints info about the sim card (locked pins, pin required)
+ * @return ENOERR
+ */
+LOCAL int SimInfo(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    test.simInfo();
 
     return ENOERR;
 }
@@ -167,6 +333,13 @@ int ts_get_test_cases( DLList** list )
     ENTRYTC(*list,"ChangePin", ChangePin);
     ENTRYTC(*list,"EnablePin", EnablePin);
     ENTRYTC(*list,"DisablePin", DisablePin);
+    ENTRYTC(*list,"EnterPin", EnterPin);
+    ENTRYTC(*list,"ResetPin", ResetPin);
+
+    ENTRYTC(*list,"VerifyPin", VerifyPin);
+    ENTRYTC(*list,"VerifyInvalidPin", VerifyInvalidPin);
+
+    ENTRYTC(*list,"SimInfo", SimInfo);
 
     return ENOERR;
 

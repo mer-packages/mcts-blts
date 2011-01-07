@@ -6,7 +6,7 @@ CONFIG += plugin
 CONFIG += warn_on
 CONFIG += debug
 
-QT += network dbus
+QT += network core dbus
 
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
