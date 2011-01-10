@@ -1,0 +1,9 @@
+* Thu 16 Dec 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.2
+- Accounts can be created
+- SSO credentials can be created
+- Session creation now possible
+
+* Fri 19 Nov 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.1
+- Initial version
+
+

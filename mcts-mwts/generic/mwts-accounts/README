@@ -1,0 +1,74 @@
+
+	MWTS-Accounts
+	-------------
+
+
+INTRODUCTION
+
+  MWTS-Accounts is a test asset for accounts-api in meego/harmattan. 
+   
+  Questions: MWTSSupport@nokia.com
+
+  See document MWTS.README under doc directory for detailed general 
+  information about mwts test modules.
+  
+  
+SOURCE CODE AND COMPILING
+
+  Look doc/MWTS.README.
+  
+
+ENVIRONMENT REQUIREMENTS
+
+  This section explains specific setup which is necessary to
+  execute test cases. Most of the environment setups are 
+  explained in the MWTS.README.
+
+
+EXECUTING TESTS
+
+  For local test cases you need to connect to device using ssh connection and
+  start MIN tool using command 'min'.
+
+  Add here package specific instructions if needed. 
+  
+
+TEST RESULTS
+
+  Test results can be found from device in directory /var/log/tests/
+  Result files are named according to test cases, <test_case_name>.result file contains
+  overall information about test run and measured values.
+  
+  Add here package specific instructions if needed. 
+
+
+MIN SCRIPT FILES
+
+  mwts-accounts.cfg 
+     Basic functionality test cases, like SMOKE tests
+  mwts-accounts-nft.cfg
+     Non-functional test cases
+
+MIN SCRIPTER INTERFACE
+
+  ListAccounts 
+     Lists created accounts
+  ListServices 
+     List available services
+  CreateAccount <provider_name>
+     Creates account for the provider. Params come from the conf-file.
+  RemoveAccount <name>
+     Removes account
+  ClearAccounts
+     Clears all the accounts from the db
+  ListIdentities
+     Lists available sso credentials
+  CreateIdentity
+     Creates and stores a sso credential
+  CreateSession
+     Creates sso credential and account for given service. Signs on to created service.
+
+KNOWN ISSUES
+
+ADDITIONAL RESOURCES
+
