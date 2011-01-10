@@ -93,7 +93,7 @@ public:
      * @param pin type, current pin code
      * @return true on success, otherwise false
      */
-    bool enablePin (const QString &pinType, const QString &pin);
+    bool enablePin(const QString &pinType, const QString &pin);
 
     /**
      * Deactivates the lock for the particular pin type. The
@@ -101,21 +101,21 @@ public:
      * @param pin type, current pin code
      * @return true on success, otherwise false
      */
-    bool disablePin (const QString &pinType, const QString &pin);
+    bool disablePin(const QString &pinType, const QString &pin);
 
     /**
-     * Provides the unblock key to the modem and if correct
-     * resets the pin to the new value of newpin.
-     * @param pin type, puk code, new pin code
-     * @retunr true on success, otherwise false
+     * Verifies the invalidy or validity of the pin code.
+     *
+     * @param invalid/valid, pin type, current pin code
+     * @return true on success, otherwise false
      */
-    bool resetPin (const QString &pintype, const QString &puk, const QString &newpin);
+    bool verifyPin(const QString validity, const QString pinType, const QString pin);
 
     /**
      * Prints info about the sim card (locked pins, pin required)
      *
      */
-    void simInfo (void);
+    void simInfo(void);
 
 signals:
     /**

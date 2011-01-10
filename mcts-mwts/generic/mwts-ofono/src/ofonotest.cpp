@@ -264,7 +264,7 @@ bool OfonoTest::enablePin(const QString &pinType, const QString &pin)
     //check whether the pin is already enabled
     if (mSimManager->lockedPins().contains(pinType))
     {
-        qCritical () << __PRETTY_FUNCTION__ << pinType << " is already enabled.";
+        qDebug () << __PRETTY_FUNCTION__ << pinType << " is already enabled.";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -340,45 +340,42 @@ bool OfonoTest::disablePin(const QString &pinType, const QString &pin)
     }
 }
 
-bool OfonoTest::resetPin (const QString &pinType, const QString &puk, const QString &newPin)
+bool OfonoTest::verifyPin(const QString validity, const QString pinType, const QString pin)
 {
     MWTS_ENTER;
+    bool retval = false;
 
-    QSignalSpy resetPin(mSimManager, SIGNAL(resetPinComplete(bool)));
-
-    #ifdef MWTS_SIMMANAGER_OLD
-        mSimManager->requestResetPin(pinType, puk, newPin);
-    #else
-        mSimManager->resetPin(pinType, puk, newPin);
-    #endif
-
-        qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType
-                                         << " puk code:" << puk
-                                         << " new pin code:" << newPin;
-
-    mTimer->start(1000);
-    mEventLoop->exec();
-
-    qDebug () << __PRETTY_FUNCTION__ << resetPin.count();
-    if (resetPin.takeFirst().at(0).toBool())
+    //if the pin type is already locked (enabled)
+    if (mSimManager->lockedPins().contains(pinType))
     {
-        qDebug () << __PRETTY_FUNCTION__ << "TRUE";
-        MWTS_LEAVE;
-        return TRUE;
+        //unlock (disable) it to verify the pin code
+        retval = this->disablePin(pinType, pin);
     }
+    else //else the pin type is already unlocked (disabled)
+    {
+        //lock (enable) it to verify the pin code
+        retval = this->enablePin(pinType, pin);
+    }
+
+    //if the verification is about the validity
+    if (validity == "valid")
+        return retval;
     else
-    {
-        qDebug () << __PRETTY_FUNCTION__ << "FALSE";
-        MWTS_LEAVE;
-        return FALSE;
-    }
+        return !retval;
+
+    MWTS_LEAVE;
 }
 
 void OfonoTest::simInfo (void)
 {
     MWTS_ENTER;
     qDebug () << __PRETTY_FUNCTION__ << "Pin required: " << mSimManager->pinRequired();
-    qDebug () << __PRETTY_FUNCTION__ << "Locked pins: " << mSimManager->lockedPins().count();
+    qDebug () << __PRETTY_FUNCTION__ << "Locked (enabled) pins: " << mSimManager->lockedPins().count();
+    foreach (QString str, mSimManager->lockedPins())
+    {
+        qDebug () << __PRETTY_FUNCTION__ << str;
+    }
+
     MWTS_LEAVE;
 }
 
