@@ -162,7 +162,7 @@ int SignonClient::CreateIdentity(const QString provider)
 
     m_info = new IdentityInfo(caption, username, methods);
 
-    //m_info->setSecret(password);
+    m_info->setSecret(password);
     //m_info->setSecret("test");
 
     QStringList realms = QStringList() << realm;
@@ -254,7 +254,7 @@ bool SignonClient::CreateSession(const QString name)
 
     SessionData data;
 
-    //data.setSecret(password);
+    data.setSecret(password);
     //data.setSecret("test");
     data.setUserName(username);
     //data.setPassWord(password);

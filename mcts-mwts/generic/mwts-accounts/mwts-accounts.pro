@@ -3,6 +3,7 @@ SUBDIRS = src min
 
 CONF.files = data/AccountsTest.conf
 CONF.path = /usr/lib/tests
+INSTALLS += CONF
 
 MIN_CONFIG.version = Versions
 MIN_CONFIG.files = min/data/*.min.conf
@@ -19,3 +20,6 @@ INSTALLS += MIN_CONFIG
 INSTALLS += MIN_SCRIPTS
 INSTALLS += CONF
 
+TESTS.files = min/data/tests.xml
+TESTS.path = /usr/share/mwts-accounts-generic-tests
+INSTALLS +=TESTS
