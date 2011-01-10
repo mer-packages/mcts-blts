@@ -1,12 +1,22 @@
-<!-- TODO -->
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
     <!-- Sim test cases from file mwts-ofono-sim.cfg -->
     <suite name="mwts-ofono-tests" domain="Visual">
     <set name="Functional test" description="ofono-qt sim card operations" feature="Settings" type="Functional" >
-        <case name="FUTE-" subfeature="Sim new pin code" timeout="10" description=
-          
-            <step>min -c -t ''</step>
+        <case name="FUTE-Verify_PIN" subfeature="Verifies valid pin code" timeout="10" description=""
+            <step>min -c -t 'FUTE-Verify_PIN'</step>
+        </case>
+        <case name="FUTE-Verify_invalid_PIN" subfeature="Verifies invalid pin code" timeout="10" description=""
+            <step>min -c -t 'FUTE-Verify_invalid_PIN'</step>
+        </case>
+        <case name="FUTE-Change_PIN" subfeature="Changes pin code" timeout="10" description=""
+            <step>min -c -t 'FUTE-Change_PIN'</step>
+        </case>
+        <case name="Disable_PIN" subfeature="Disable (unlock) pin code" timeout="10" description=""
+            <step>min -c -t 'Disable_PIN'</step>
+        </case>
+        <case name="Enable_PIN" subfeature="Enable (lokc) pin code" timeout="10" description=""
+            <step>min -c -t 'Enable_PIN'</step>
         </case>
     </set>
     </suite>
