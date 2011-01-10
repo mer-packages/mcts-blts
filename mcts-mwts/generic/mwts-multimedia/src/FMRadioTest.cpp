@@ -81,9 +81,15 @@ void FMRadioTest::SetFrequency(int freq)
         radio->setBand(QRadioTuner::FM);
 
     if (radio->isAvailable())
+    {
         qDebug() << "No Signal";
+    }
     else
-        qDebug() << "No radio found";
+    {
+        qCritical() << "No radio found";
+        g_pResult->StepPassed("No radio found!", false);
+    }
+
 
     radio->setFrequency(freq);
 

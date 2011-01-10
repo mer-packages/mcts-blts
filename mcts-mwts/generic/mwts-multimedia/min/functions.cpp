@@ -430,6 +430,8 @@ LOCAL int PlayRadio (__attribute__((unused)) MinItemParser * item)
 {
     MWTS_ENTER;
     test.fmRadio->PlayRadio();
+    if (!test.IsPassed())
+        return 1;
     MWTS_LEAVE;
     return ENOERR;
 }

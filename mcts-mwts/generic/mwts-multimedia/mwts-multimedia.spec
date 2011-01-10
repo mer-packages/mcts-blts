@@ -17,34 +17,27 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Test asset for Qt Mobility Multimedia API
 
-%package                devel
-Summary:                mwts-multimedia development files
-Group:                  Development/Tools
-Requires:               qt-devel, mwts-multimedia
-%description            devel
-Development headers and libraries for mwts-multimedia
-            
-%package        scripts-generic
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-multimedia
 Requires:       mwts-multimedia
-%description    scripts-generic
+%description    generic-tests
 MIN test case scripts for mwts-multimedia
 
-%package        config-generic
+%package        generic-config
 Summary:        Generic configuration file for mwts-multimedia
 Requires:       mwts-multimedia
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-multimedia
 
-%package	all-generic
+%package	generic-all
 Summary:	meta package containing everything for mwts-multimedia (generic)
-Requires:	mwts-multimedia, mwts-multimedia-devel, mwts-multimedia-scripts-generic, mwts-multimedia-config-generic
-%description	all-generic
+Requires:	mwts-multimedia, mwts-multimedia-generic-tests, mwts-multimedia-generic-config
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-multimedia
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}
 
 %build
 qmake
@@ -53,36 +46,26 @@ make
 %install
 make install INSTALL_ROOT=%{buildroot}
 
-%files 
+%files
 %defattr (-,root,root)
 %doc README
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/libmwts-multimedia.so.*
-/usr/lib/min/libmin-mwts-multimedia.so.*
+/usr/lib/*.so*
+/usr/lib/min/*.so
 
-%files devel
-%defattr (-,root,root)
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
-/usr/lib/libmwts-multimedia.so
-/usr/lib/min/libmin-mwts-multimedia.so
-/usr/include/MultimediaTest.h
-
-%files scripts-generic
+%files generic-tests
 %defattr (-,root,root)
 /etc/min.d/*.min.conf
 /usr/share/mwts-multimedia-tests/tests.xml
 /usr/lib/min/*.cfg
 
-%files config-generic
+%files generic-config
 %defattr (-,root,root)
 /usr/lib/tests/*
 
-%files all-generic
+%files generic-all
 %defattr (-,root,root)
 %doc README
 
