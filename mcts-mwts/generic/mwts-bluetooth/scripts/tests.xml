@@ -230,6 +230,32 @@
             ">
         <step>min -c -t 'FUTE-BT-Obex_receive-MS' -s 192.168.3.15</step>
       </case>
+      <case name="FUTE-BT-Headset_Pairing_On" subfeature="Pairing" timeout="180" description=
+            "Purpose
+            Pairs device and headset, pairing is left on for FIT purposes. Use FUTE-BT-Headset_Pairing_Off to remove pairing.
+            Method
+            Test case uses libbluetooth3 library and DBUS-API.
+            Pre-/Post-Conditions
+            Both devices in pairable mode. headset_mac used from configuration.
+            Pass/Fail Criteria
+            Devices connect, pair, and audio is routed.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-Headset_Pairing_On'</step>
+      </case>
+      <case name="FUTE-BT-Headset_Pairing_Off" subfeature="Pairing" timeout="180" description=
+            "Purpose
+            Disconnects and removes pairing.
+            Method
+            Test case uses libbluetooth3 library and DBUS-API.
+            Pre-/Post-Conditions
+            Devices are paired. Use FUTE-BT-Headset_Pairing_On for that.
+            Pass/Fail Criteria
+            Devices disconnect and pairing is removed.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-Headset_Pairing_Off'</step>
+      </case>
     </set>
 
 <!--This set contains ITERATIVE test cases from mwts-bluetooth-nft.cfg-->
