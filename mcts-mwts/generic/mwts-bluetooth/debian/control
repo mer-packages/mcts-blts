@@ -14,7 +14,7 @@ Description: Test libraries for BlueZ and libbluetooth3
  Bluetooth test asset for BlueZ and libbluetooth
  C++ and MIN interface
 
-Package: mwts-bluetooth-scripts
+Package: mwts-bluetooth-tests
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, mwts-bluetooth, min
