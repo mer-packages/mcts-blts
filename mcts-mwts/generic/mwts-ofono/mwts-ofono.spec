@@ -11,30 +11,30 @@ Version: 	0.0.1
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
-BuildRequires:	qt-devel, min-devel, mwts-common-devel, ofono-devel, libofono-qt-devel
+BuildRequires:	qt-devel, min-devel, mwts-common-devel, libofono-qt-devel
 Requires:	mwts-common, ofono, libofono-qt
 Source: 	%{name}-%{version}.tar.gz
 %description
 Test cases for ofono-qt
 
-%package	scripts-generic
+%package	generic-tests
 Summary:	Test cases for ofono-qt
 Prefix: 	/usr
 Group: 		Development/Tools
 Requires:	mwts-ofono
-%description	scripts-generic
+%description	generic-tests
 MIN test cases for measuring performance and reliability
 
-%package        config-generic
+%package        generic-config
 Summary:       	Generic configuration file for mwts-ofono
 Requires:       mwts-ofono
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-ofono
 
-%package	all-generic
+%package	generic-all
 Summary:	meta package containing everything for mwts-ofono (generic)
-Requires:	mwts-ofono, mwts-ofono-scripts-generic, mwts-ofono-config-generic
-%description	all-generic
+Requires:	mwts-ofono, mwts-ofono-generic-tests, mwts-ofono-generic-config
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-ofono
 
 %prep
@@ -54,18 +54,21 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/*.so*
 /usr/lib/tests/*
 
-%files scripts-generic
+%files generic-tests
 /etc/min.d/mwts-ofono.min.conf
 /usr/share/mwts-ofono-scripts/tests.xml
 /usr/lib/min/*.cfg
 
-%files config-generic
+%files generic-config
 /usr/lib/tests/*
 
-%files all-generic
+%files generic-all
 
 %changelog
 * Tue Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
 - Intial version
+- Added test cases
+- Added content to README
+- Refactored package names in mwts-ofono.spec
 
 
