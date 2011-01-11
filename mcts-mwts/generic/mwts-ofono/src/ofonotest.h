@@ -110,6 +110,12 @@ public:
      */
     bool verifyPin(const QString validity, const QString pinType, const QString pin);
 
+    /**
+     * Provides the unblock key to the modem and if correct
+     * resets the pin to the new value of newpin.
+     * @param  pin type, puk code, new pin code
+     * @return true on success, otherwise false
+     */
     bool resetPin(const QString pinType, const QString puk, const QString newPin);
 
     /**

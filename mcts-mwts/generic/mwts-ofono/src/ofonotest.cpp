@@ -339,6 +339,7 @@ bool OfonoTest::verifyPin(const QString validity, const QString pinType, const Q
     MWTS_LEAVE;
 }
 
+//TODO
 bool OfonoTest::resetPin(const QString pinType, const QString puk, const QString newPin)
 {
     MWTS_ENTER;
