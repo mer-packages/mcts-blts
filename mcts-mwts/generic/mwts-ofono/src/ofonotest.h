@@ -35,7 +35,6 @@
 //has different public method names (not refactored)
 //#define MWTS_SIMMANAGER_OLD
 
-//original state: PIN, PUK are disabled (unlocked)
 class OfonoTest : public MwtsTest
 {
     Q_OBJECT
