@@ -78,6 +78,44 @@ LOCAL int ChangePin(MinItemParser * item)
     return ENOERR;
 }
 
+LOCAL int ResetPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *puk = NULL;
+    char *newPin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &puk ))
+    {
+        qCritical() << "could not parse old puk code";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &newPin ))
+    {
+        qCritical() << "could not parse new pin code";
+        return EINVAL;
+    }
+
+    result = test.resetPin(pinType, puk, newPin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(puk);
+    free(newPin);
+
+    return ENOERR;
+}
+
+
 /**
  * EnablePin
  * Activates the lock for the particular pin type. The
@@ -290,6 +328,7 @@ int ts_get_test_cases( DLList** list )
     ENTRYTC(*list,"EnablePin", EnablePin);
     ENTRYTC(*list,"DisablePin", DisablePin);
     ENTRYTC(*list,"EnterPin", EnterPin);
+    ENTRYTC(*list,"ResetPin", ResetPin);
 
     ENTRYTC(*list,"VerifyPin", VerifyPin);
     ENTRYTC(*list,"VerifyInvalidPin", VerifyInvalidPin);

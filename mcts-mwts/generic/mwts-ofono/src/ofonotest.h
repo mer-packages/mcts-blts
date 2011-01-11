@@ -35,7 +35,6 @@
 //has different public method names (not refactored)
 //#define MWTS_SIMMANAGER_OLD
 
-//original state: PIN, PUK are disabled (unlocked)
 class OfonoTest : public MwtsTest
 {
     Q_OBJECT
@@ -112,6 +111,14 @@ public:
     bool verifyPin(const QString validity, const QString pinType, const QString pin);
 
     /**
+     * Provides the unblock key to the modem and if correct
+     * resets the pin to the new value of newpin.
+     * @param  pin type, puk code, new pin code
+     * @return true on success, otherwise false
+     */
+    bool resetPin(const QString pinType, const QString puk, const QString newPin);
+
+    /**
      * Prints info about the sim card (locked pins, pin required)
      *
      */
@@ -137,9 +144,6 @@ private:
     OfonoSimManager *mSimManager;
     QEventLoop      *mEventLoop;
     QTimer          *mTimer;
-
-    QString mPin;
-    QString mPuk;
 };
 
 #endif // OFONOTEST_H

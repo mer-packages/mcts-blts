@@ -46,7 +46,7 @@ mwts-filesystem generic config file
 Summary:                mwts-filesystem meta package for generic version
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mwts-filesystem-generic-scripts
+Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mwts-filesystem-generic-tests
 %description            generic-all
 mwts-filesystem meta package for generic version
 
