@@ -64,7 +64,10 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-all
 
-%changelog
-* Tue Nov 2 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
-- Intial version
+%post
+ldconfig
+
+%postun
+ldconfig
+
 

@@ -85,5 +85,8 @@ make install INSTALL_ROOT=%{buildroot}
 %doc doc/MWTS.README
 /usr/bin/mwts-feedback-cli
 
+%post
+ldconfig
+
 %postun
 ldconfig

@@ -74,6 +74,8 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-all
 
+%post
+ldconfig
 
 %postun
 ldconfig

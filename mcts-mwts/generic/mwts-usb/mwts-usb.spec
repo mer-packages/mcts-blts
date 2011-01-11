@@ -48,3 +48,9 @@ make install INSTALL_ROOT=%{buildroot}
 /etc/min.d/mwts-usb.min.conf
 /usr/share/mwts-usb-scripts/tests.xml
 /usr/lib/min/*.cfg
+
+%post
+ldconfig
+
+%postun
+ldconfig

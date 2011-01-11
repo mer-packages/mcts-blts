@@ -60,3 +60,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/tests/*.conf
 
 %files generic-all
+
+%post
+ldconfig
+
+%postun
+ldconfig
