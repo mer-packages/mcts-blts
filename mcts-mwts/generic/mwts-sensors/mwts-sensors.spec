@@ -80,7 +80,7 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/bin/mwts-sensors-cli
 
 %files generic-config
-/usr/share/tests/*
+/usr/lib/tests/*
 
 %files generic-all
 %doc README
