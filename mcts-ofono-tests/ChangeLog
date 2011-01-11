@@ -1,4 +1,5 @@
-
+ver 1.0.0.3
+	release real network(2G&3G) cases
 ver 1.0.0-2 
 	add manual cases into tests.xml
 	update test scripts to align with APIs change
