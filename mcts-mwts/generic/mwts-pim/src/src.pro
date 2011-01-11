@@ -8,6 +8,9 @@ CONFIG += mobility
 QT += network
 MOBILITY = organizer versit contacts
 
+PKGCONFIG += QtVersitOrganizer
+PKGCONFIG += QtVersit
+
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
 
