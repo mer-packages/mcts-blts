@@ -110,6 +110,8 @@ public:
      */
     bool verifyPin(const QString validity, const QString pinType, const QString pin);
 
+    bool resetPin(const QString pinType, const QString puk, const QString newPin);
+
     /**
      * Prints info about the sim card (locked pins, pin required)
      *
@@ -136,9 +138,6 @@ private:
     OfonoSimManager *mSimManager;
     QEventLoop      *mEventLoop;
     QTimer          *mTimer;
-
-    QString mPin;
-    QString mPuk;
 };
 
 #endif // OFONOTEST_H
