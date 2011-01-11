@@ -1,12 +1,12 @@
 # spec file for mwts-ofono
 
 #%define release		0
-%define buildroot	%{_topdir}/%{name}-%{version}-root
+%define buildroot	 %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRoot:	%{buildroot}
 Summary: 	Test libraries for ofono-qt
 License: 	LGPL
-Name: 		%{name}
+Name: 		mwts-ofono
 Version: 	0.0.1
 Release: 	%{release}
 Prefix: 	/usr
