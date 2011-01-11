@@ -31,7 +31,7 @@ Summary:                mwts-pim generic config
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               mwts-pim
-%description            generic-tests
+%description            generic-config
 mwts-pim generic config
 
 %package                generic-all
