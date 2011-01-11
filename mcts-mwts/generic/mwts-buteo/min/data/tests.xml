@@ -1,103 +1,132 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-qmsystem-tests" domain="System">
-    <set name="FUTE-Sensors" feature="Sensors" type="Functional">
-      <case name="FUTE-Sensors_accelerometer" timeout="10" description=
+  <suite name="mwts-buteo-tests" domain="System">
+    <set name="FUTE-Buteo" feature="Sync" type="Functional">
+      <case name="FUTE-Buteo_list_profiles" timeout="10" description=
         "Purpose
-        Get values from Accelerometer
+	Lists available sync profiles
         Method
-        QT Mobility Sensors API call, waiting simultenaus changing values from API callback  
+        Syncfw-API call lists available profiles
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_accelerometer'</step>
+        <step>min -c -t 'FUTE-Buteo_list_profiles'</step>
       </case>
-      <case name="FUTE-Sensors_ambient_light_sensor" timeout="10" description=
+      <case name=" FUTE-Buteo_create_btprofile" timeout="10" description=
         "Purpose
-        Get values from Ambient Light Sensor
+	Creates bluetooth sync profile
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Syncfw-API call creates a bluetooth profile
         Pre-/Post-conditions
-        must be run as user 
+	bluetooth profile template existing and passed as parameter (/etc/sync/profiles/sync)
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, profile is created, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_ambient_light_sensor'</step>
+        <step>min -c -t 'FUTE-Buteo_create_btprofile'</step>
       </case>
-      <case name="FUTE-Sensors_compass" timeout="10" description=
+      <case name=" FUTE-Buteo_create_google" timeout="10" description=
         "Purpose
-        Get values from Compass
+	Creates google sync profile
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Syncfw-API call creates a google sync profile and enables sync services (contacts, calendar etc)
         Pre-/Post-conditions
-        must be run as user 
+	google.com profile template existing and passed as parameter (/etc/sync/profiles/sync)
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, profile is created, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_compass'</step>
+        <step>min -c -t 'FUTE-Buteo_remove_google'</step>
       </case>
-      <case name="FUTE-Sensors_magnetometer" timeout="10" description=
+      <case name=" FUTE-Buteo_remove_bt_profile" timeout="10" description=
         "Purpose
-        Get values from Magnetometer
+	Removes bt sync profile
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Syncfw-API call removes a bt sync profile from device
         Pre-/Post-conditions
-        must be run as user 
+	Profile exists
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, profile is removed, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_magnetometer'</step>
+        <step>min -c -t 'FUTE-Buteo_remove_bt_profile'</step>
       </case>
-      <case name="FUTE-Sensors_orientation" timeout="10" description=
+      <case name=" FUTE-Buteo_remove_google_profile" timeout="10" description=
         "Purpose
-        Get values from Orientation
+	Removes google sync profile
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback 
+        Syncfw-API call removes a google sync profile from device
         Pre-/Post-conditions
-        must be run as user 
+	Profile exists
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, profile is removed, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_orientation'</step>
+        <step>min -c -t 'FUTE-Buteo_remove_google_profile'</step>
       </case>
-      <case name="FUTE-Sensors_proximity" timeout="10" description=
+      <case name=" FUTE-Buteo_remove_profiles" timeout="10" description=
         "Purpose
-        Get values from Proximity
+	Removes profiles
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Syncfw-API call removes all profiles from device
         Pre-/Post-conditions
-        must be run as user 
+	Profile exists
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, profiles are removed, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_proximity'</step>
+        <step>min -c -t 'FUTE-Buteo_remove_profiles'</step>
       </case>
-      <case name="FUTE-Sensors_rotation" timeout="10" description=
+      <case name=" FUTE-Buteo_sync_bt" timeout="120" description=
         "Purpose
-        Get values from Proximity
+	Syncs with bluetooth profile
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Syncfw-API call starts bluetooth sync
         Pre-/Post-conditions
-        must be run as user, DUT must be moved during test to get not zero values
+	Profile exists, devices are paired, needed device parameters filled in config file
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, sync completed, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_rotation'</step>
+        <step>min -c -t 'FUTE-Buteo_sync_bt'</step>
       </case>
-      <case name="FUTE-Sensors_tap" timeout="10" description=
+      <case name=" FUTE-Buteo_sync_google" timeout="120" description=
         "Purpose
-        Get values from Tap
+	Syncs with google profile
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Syncfw-API call starts google sync
         Pre-/Post-conditions
-        must be run as user, Screen must be tapped by finger or external vece playing finger to get values 
+	Profile exists, internet connection on, account credentials filled in config file
         Pass-/Fail Criteria
-        test runs successfully, test does not crash
+        test runs successfully, sync completed, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_tap'</step>
+        <step>min -c -t 'FUTE-Buteo_sync_google'</step>
       </case>
+    </set>
+    <set name="NFT-Buteo" feature="Sync" type="Reliability">
+      <case name=" FUTE-Buteo_sync_bt-ITER" timeout="120" description=
+        "Purpose
+	Iterative sync with bluetooth profile
+        Method
+        Syncfw-API call starts bluetooth sync, 120 iterations.
+        Pre-/Post-conditions
+	Profile exists, devices are paired, needed device parameters filled in config file
+        Pass-/Fail Criteria
+        test runs successfully, sync completed, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Buteo_sync_bt-ITER'</step>
+      </case>
+      <case name=" FUTE-Buteo_sync_google-ITER" timeout="120" description=
+        "Purpose
+	Iteratively syncs with google profile
+        Method
+        Syncfw-API call starts google sync
+        Pre-/Post-conditions, 120 iterations.
+	Profile exists, internet connection on, account credentials filled in config file
+        Pass-/Fail Criteria
+        test runs successfully, sync completed, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Buteo_sync_google-ITER'</step>
+      </case>
+
+ FUTE-Buteo_sync_bt-ITER
+
+ FUTE-Buteo_sync_google-ITER
     </set>
   </suite>
 </testdefinition>
