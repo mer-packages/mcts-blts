@@ -17,20 +17,39 @@ Source: 		%{name}-%{version}.tar.gz
 %description
 Mwts-telepathy is a MWTS test asset for Telepathy-QT4. It provides test cases for all available account types.
 
-%package		tests
+%package		generic-tests
 Summary:		Mwts-telepathy MIN files
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		min, mwts-common
-%description	tests
+Requires:		min, mwts-telepathy
+%description		generic-tests
 MIN test cases for mwts-telepathy
+
+
+%package		generic-config
+Summary:		Mwts-telepathy generic config
+Prefix: 		/usr
+Group: 			Development/Tools
+Requires:		mwts-telepathy
+%description		generic-config
+Mwts-telepathy generic config
+
+
+%package		generic-all
+Summary:		Mwts-telepathy generic meta package
+Prefix: 		/usr
+Group: 			Development/Tools
+Requires:		mwts-telepathy, mwts-telepathy-generic-config, mwts-telepathy-generic-tests
+%description		generic-all
+Mwts-telepathy generic meta package
+
 
 %package		cli
 Summary:		Command line interface for mwts-telepathy
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		min, mwts-common
-%description	cli
+Requires:		mwts-telepathy
+%description		cli
 Command line interface for mwts-telepathy.
 
 %prep
@@ -48,21 +67,22 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-telepathy.*
 /usr/lib/min/libmin-mwts-telepathy.so
 /usr/share/telepathy/clients/*.client
-/usr/lib/tests/*.conf
 
-%files tests
-%doc README
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
 /usr/share/mwts-telepathy-tests/tests.xml
 
+%files generic-config
+/usr/lib/tests/*.conf
+
+%files generic-all
+
 %files cli
-%doc README
 /usr/bin/mwts-telepathy-cli
 
 %post
-mkdir -p /var/log/tests
-chmod 777 /var/log/tests
+ldconfig
 
 %postun
 ldconfig

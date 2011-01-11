@@ -18,13 +18,32 @@ Source:                 %{name}-%{version}.tar.gz
 %description
 mwts-sensors is a common library for MWTS test assets. It provides tool for sensors testing, logging and reporting results.
 
-%package                tests
+%package                generic-tests
 Summary:                mwts-sensors MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-sensors-tests
-%description            tests
+Requires:               min, mwts-sensors
+%description            generic-tests
 MIN test cases for mwts-sensors
+
+
+%package                generic-config
+Summary:                mwts-sensors generic config
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               mwts-sensors
+%description            generic-config
+mwts-sensors generic config
+
+
+%package                generic-all
+Summary:                mwts-sensors generic meta package
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               mwts-sensors, mwts-sensors-generic-all, mwts-sensors-generic-config
+%description            generic-all
+mwts-sensors generic meta package
+
 
 %package                cli
 Summary:                mwts-sensors command line tool
@@ -49,29 +68,24 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/libmwts-sensors.*
+/usr/lib/*.so*
+/usr/lib/min/*.so
 
-%files tests
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/lib/min/libmin-mwts-sensors.so
 /usr/share/mwts-sensors-tests/tests.xml
 
 %files cli
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
 /usr/bin/mwts-sensors-cli
 
+%files generic-config
+/usr/share/tests/*
+
+%files generic-all
+%doc README
 
 %post
-mkdir -p /var/log/tests
-chmod 777 /var/log/tests
 ldconfig
 
 %postun

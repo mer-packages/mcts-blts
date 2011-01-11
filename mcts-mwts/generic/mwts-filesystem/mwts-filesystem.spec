@@ -22,7 +22,7 @@ mwts-filesystem is a common library for MWTS test assets. It provides tool for f
 Summary:                mwts-filesystem development files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               qt-devel, mwts-filesystem-tests
+Requires:               qt-devel, mwts-filesystem
 %description            devel
 Development headers and libraries for mwts-filesystem
 
@@ -38,7 +38,7 @@ MIN test cases for mwts-filesystem
 Summary:                mwts-filesystem generic config file
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-filesystem
+Requires:               mwts-filesystem
 %description            generic-config
 mwts-filesystem generic config file
 

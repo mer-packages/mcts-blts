@@ -63,7 +63,7 @@ make install INSTALL_ROOT=%{buildroot}
 %defattr (-,root,root)
 /usr/lib/tests/*
 
-%files generic
+%files generic-all
 %defattr (-,root,root)
 %doc README
 
