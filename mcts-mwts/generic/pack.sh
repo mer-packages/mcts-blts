@@ -194,7 +194,7 @@ if [ "x$no_rpm" = "x" ]; then
     fi
 
     # Then, build the stuff
-    rpmbuild -ba $source_package.spec
+    rpmbuild -ba --clean $source_package.spec
 
     if [ ! $? = 0 ]; then
         echo "Error: Failed to rpmbuild $package_name!"

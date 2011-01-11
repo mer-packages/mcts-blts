@@ -1,0 +1,54 @@
+ 
+	MWTS-Buteo
+	-------------
+
+
+INTRODUCTION
+
+  MWTS-Buteo is a test asset for Buteo sync framework apis.
+   
+  Questions: pauli-pekka.toivanen@digia.com
+
+  See document MWTS.README under doc directory for detailed general 
+  information about mwts test modules.
+  
+  
+SOURCE CODE AND COMPILING
+
+  Look doc/MWTS.README.
+  
+
+ENVIRONMENT REQUIREMENTS
+
+  Before running cases you need to set LD_LIBRARY_PATH enviroment variable to '/lib'. Use 'export LD_LIBRARY_PATH=/lib' . This is a current workaround and will propably change in future.
+  For cloud syncing you need to se up internet connection first.
+  For bluetooth syncing you should pair your devices beforehand.
+  Otherwise MWTS-Buteo test execution is performed normally. Check the "General MWTS testing guide". 
+
+EXECUTING TESTS
+
+  For local test cases you need to connect to device using ssh connection and
+  start MIN tool using command 'min'.
+
+  Add here package specific instructions if needed. 
+  
+
+TEST RESULTS
+
+  Test results can be found from device in directory /var/log/tests/
+  Result files are named according to test cases, <test_case_name>.result file contains
+  overall information about test run and measured values.
+  
+MIN SCRIPT FILES
+
+  mwts-buteo.cfg 
+     Basic functionality test cases, like SMOKE tests
+  mwts-buteo-nft.cfg
+     Non-functional test cases
+
+KNOWN ISSUES
+
+   Currently missing some capabilities for services 
+
+ADDITIONAL RESOURCES
+

@@ -1,0 +1,9 @@
+mwts-buteo-tests (0.0.2) unstable; urgency=low
+  * Added nft-cases
+  * cloud sync with google working (contacts only)
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed, 22 Nov 2010 09:00:00 +0200
+
+mwts-buteo-tests (0.0.1) unstable; urgency=low
+  * Initial version
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed, 22 Nov 2010 09:00:00 +0200
+

@@ -1,0 +1,4 @@
+usr/lib/*.so*
+usr/lib/min/*.so*
+/usr/lib/tests/ButeoTest.conf
+

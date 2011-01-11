@@ -17,29 +17,29 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Accounts test asset.
             
-%package        tests-generic
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-accounts
 Requires:       mwts-accounts
-%description    tests-generic
+%description    generic-tests
 MIN test case scripts for mwts-accounts
 
-%package        config-generic
+%package        generic-config
 Summary:        Generic configuration file for mwts-accounts
 Requires:       mwts-accounts-tests
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-accounts
 
-%package	all-generic
+%package	generic-all
 Summary:	meta package containing everything for mwts-accounts (generic)
-Requires:	mwts-accounts, mwts-accounts-tests-generic, mwts-accounts-config-generic
-%description	all-generic
+Requires:	mwts-accounts, mwts-accounts-generic-tests, mwts-accounts-generic-config
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-accounts
 
 %prep
 %setup -q
 
 %build
-qmake "CONFIG+=plugin"
+qmake
 make
 
 %install
@@ -51,10 +51,18 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-accounts*
 /usr/lib/min/*.so*
 
-%files tests-generic
+%files generic-tests
 /etc/min.d/mwts-accounts.min.conf 
-/usr/share/mwts-accounts-tests/tests.xml
+/usr/share/mwts-accounts-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
-%files config-generic
+%files generic-config
 /usr/lib/tests/*.conf
+
+%files generic-all
+
+%post
+ldconfig
+
+%postun
+ldconfig

@@ -1,0 +1,21 @@
+Source: mwts-buteo-tests
+Section: libs
+Priority: optional
+Build-Depends: libqt4-dev, mwts-common-dev(>=0.2.0), min-dev
+Maintainer: Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-buteo
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0)
+Description: MWTS-buteo libraries
+ Accounts MiddleWare Test Suite packages
+ c++ interface
+
+Package: mwts-buteo-scripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-buteo, min
+Description: MWTS-buteo Test cases
+ Min interface and test cases

@@ -35,33 +35,266 @@ const char *module_time = __TIME__;
 OfonoTest test;
 
 /**
-  ChangePin
-  Changes pin code
-  Usage: ChangePin [pinType, oldPin, newPin]
-  @param pinType, oldPin, newPin
-  @return ENOERR
-*/
-LOCAL gint ChangePin(MinItemParser * item)
+ * ChangePin
+ * Changes the pin given by string type.
+ * Usage: ChangePin [pinType, oldPin, newPin]
+ * @param pinType, oldPin, newPin
+ * @return ENOERR
+ */
+LOCAL int ChangePin(MinItemParser * item)
 {
     MWTS_ENTER;
 
-    gchar* mode = NULL;
-    bool ret;
+    char *pinType = NULL;
+    char *oldPin = NULL;
+    char *newPin = NULL;
+    bool result = false;
 
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
 
-    g_free(mode);
+    if (ENOERR != mip_get_next_string( item, &oldPin ))
+    {
+        qCritical() << "could not parse old pin code";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &newPin ))
+    {
+        qCritical() << "could not parse new pin code";
+        return EINVAL;
+    }
+
+    result = test.changePin(pinType, oldPin, newPin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(oldPin);
+    free(newPin);
+
+    return ENOERR;
 }
 
 /**
-  Test function list for MIN
-  @return ENOERR
-*/
-gint ts_get_test_cases( DLList** list )
+ * EnablePin
+ * Activates the lock for the particular pin type. The
+ * device will ask for a PIN automatically next time the
+ * device is turned on or the SIM is removed and
+ * re-inserter. The current PIN is required for the
+ * operation to succeed.
+ * Usage: EnablePin [pinType, pin]
+ * @param pinType, pin
+ * @return ENOERR
+ */
+LOCAL int EnablePin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.enablePin(pinType, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * DisablePin
+ * Deactivates the lock for the particular pin type. The
+ * current PIN is required for the operation to succeed.
+ * Usage: ChangePin [pinType, pin]
+ * @param pinType, pin
+ * @return ENOERR
+ */
+LOCAL int DisablePin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.disablePin(pinType, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * VerifyPin
+ * Verifies the pin by enabling or disabling with the valid pin code
+ * and verifies whether the device realizes its correctness
+ * Usage: VerifyPin [pinType, pin]
+ * @param pinType, pin
+ * @return ENOERR
+ */
+LOCAL int VerifyPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.verifyPin("valid", pinType, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * VerifyInvalidPin
+ * Verifies the pin by enabling or disabling witn the invalid pin code
+ * and verifies whether the device realizes its correctness
+ * Usage: VerifyInvalidPin [pinType, invalid pin]
+ * @param pinType, invalid pin
+ * @return ENOERR
+ */
+LOCAL int VerifyInvalidPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.verifyPin("invalid", pinType, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+  * Enters the currently pending pin. The type value must match the
+  * pin type being asked in the "pin required" (SimInfo) property
+  * @param pinType, pin
+  * @return ENOERR
+  */
+LOCAL int EnterPin(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *pinType = NULL;
+    char *pin = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &pinType ))
+    {
+        qCritical() << "could not parse pin type";
+        return EINVAL;
+    }
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse current pin code";
+        return EINVAL;
+    }
+
+    result = test.enterPin(pinType, pin);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(pinType);
+    free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * Prints info about the sim card (locked pins, pin required)
+ * @return ENOERR
+ */
+LOCAL int SimInfo(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    test.simInfo();
+
+    return ENOERR;
+}
+
+/**
+ * Test function list for MIN
+ * @return ENOERR
+ */
+int ts_get_test_cases( DLList** list )
 {
     // declare common functions like Init, Close..
     MwtsMin::DeclareFunctions(list);
 
     ENTRYTC(*list,"ChangePin", ChangePin);
+    ENTRYTC(*list,"EnablePin", EnablePin);
+    ENTRYTC(*list,"DisablePin", DisablePin);
+    ENTRYTC(*list,"EnterPin", EnterPin);
+
+    ENTRYTC(*list,"VerifyPin", VerifyPin);
+    ENTRYTC(*list,"VerifyInvalidPin", VerifyInvalidPin);
+
+    ENTRYTC(*list,"SimInfo", SimInfo);
 
     return ENOERR;
 
