@@ -64,11 +64,16 @@ MIN SCRIPTER INTERFACE
 
   VerifyPuk <puk code>
     Verifies the valid puk by resetting a new pin code (hard-coded) and verifies whether the device realizes its correctness.
-    Currently the resetPin does not work, so neither this.
+    Currently the resetPin does not work, so neither this. http://bugs.meego.com/show_bug.cgi?id=12337
 
   VerifyInvalidPuk <puk code>
     Verifies the invalid puk by resetting a new pin code (hard-coded) and verifies whether the device realizes its correctness
-    Currently the resetPin does not work, so neither this.
+    Currently the resetPin does not work, so neither this. http://bugs.meego.com/show_bug.cgi?id=12337
+
+  ResetPin <puk type> <puk type> <new pin code>
+    Provides the unblock key to the modem and if correct
+    resets the pin to the new value of newpin.
+    http://bugs.meego.com/show_bug.cgi?id=12337
 
   EnterPin <pin type> <pin code>
 	Enters the currently pending pin. The type value must match the
