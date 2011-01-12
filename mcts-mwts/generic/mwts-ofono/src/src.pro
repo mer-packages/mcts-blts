@@ -12,7 +12,7 @@ OBJECTS_DIR = ../tmp
 PRECOMPILED_HEADER = stable.h
 
 CONFIG += link_pkgconfig
-PKGCONFIG += dbus-1
+PKGCONFIG += dbus-1 
 
 SOURCES += \
     ofonotest.cpp

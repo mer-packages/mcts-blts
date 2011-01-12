@@ -25,7 +25,7 @@ MIN test case scripts for mwts-accounts
 
 %package        generic-config
 Summary:        Generic configuration file for mwts-accounts
-Requires:       mwts-accounts-tests
+Requires:       mwts-accounts
 %description    generic-config
 Generic configuration file for mwts-accounts
 

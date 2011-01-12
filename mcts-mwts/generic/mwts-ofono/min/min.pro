@@ -20,8 +20,6 @@ SOURCES += \
 
 INCLUDEPATH += ../src
 
-CONFIG += link_pkgconfig
-
 LIBS+= -L../src
 LIBS += -lminutils -lmintmapi -lminevent -lmwts-common -lmwts-ofono
 
