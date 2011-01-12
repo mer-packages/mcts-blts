@@ -15,10 +15,14 @@ CONFIG += link_pkgconfig
 PKGCONFIG += dbus-1 
 
 SOURCES += \
-    ofonotest.cpp
+    ofonotest.cpp \
+    simmanagertest.cpp \
+    voicecallmanagertest.cpp
 
 HEADERS += \
-    ofonotest.h
+    ofonotest.h \
+    simmanagertest.h \
+    voicecallmanagertest.h
 
 LIBS += -lmwts-common -lofono-qt
 
