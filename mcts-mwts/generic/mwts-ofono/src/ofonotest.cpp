@@ -57,7 +57,7 @@ void OfonoTest::OnInitialize()
 
     if (!mSimManager->modem()->powered())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "modem is not powered on";
+        qDebug () << __PRETTY_FUNCTION__ << "modem is not powered on";               
         mSimManager->modem()->setPowered(true);
 
         mTimer->start(5000);
@@ -66,7 +66,8 @@ void OfonoTest::OnInitialize()
 
     if (mSimManager->isValid())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "modem is valid";
+        qDebug () << __PRETTY_FUNCTION__ << "modem is valid: TRUE";
+        g_pResult->StepPassed("modem is valid: ", TRUE);
     }
     else
     {
@@ -77,6 +78,7 @@ void OfonoTest::OnInitialize()
     }
 
         qDebug () << __PRETTY_FUNCTION__ << "modem is powered: " << mSimManager->modem()->powered();
+        g_pResult->StepPassed("modem is powered: ", mSimManager->modem()->powered());
 
         MWTS_LEAVE;
 
@@ -88,7 +90,7 @@ void OfonoTest::OnUninitialize()
 
     if (mTimer->isActive())
     {
-        qDebug() << "Timer active, stopping it...";
+        qDebug() << "Timer active, stopping it...";        
         mTimer->stop();
     }
 
@@ -153,7 +155,7 @@ bool OfonoTest::enterPin(const QString &pinType, const QString &pin)
         mSimManager->enterPin(pinType, pin);
     #endif
 
-    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
+    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;    
 
     mTimer->start(1000);
     mEventLoop->exec();
@@ -389,7 +391,7 @@ bool OfonoTest::resetPin(const QString pinType, const QString puk, const QString
     QSignalSpy resetPin(mSimManager, SIGNAL(resetPinComplete(bool)));
 
     #ifdef MWTS_SIMMANAGER_OLD
-        mSimManager->resetLockPin(pinType, puk, newPin);
+        mSimManager->requestResetPin(pinType, puk, newPin);
     #else
         mSimManager->resetPin(pinType, puk, newPin);
     #endif
