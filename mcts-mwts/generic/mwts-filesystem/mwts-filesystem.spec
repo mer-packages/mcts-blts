@@ -26,13 +26,30 @@ Requires:               qt-devel, mwts-filesystem-tests
 %description            devel
 Development headers and libraries for mwts-filesystem
 
-%package                tests
+%package                generic-tests
 Summary:                mwts-filesystem MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-filesystem-tests
-%description            tests
+Requires:               min, mwts-filesystem
+%description            generic-tests
 MIN test cases for mwts-filesystem
+
+%package                generic-config
+Summary:                mwts-filesystem generic config file
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               min, mwts-filesystem
+%description            generic-config
+mwts-filesystem generic config file
+
+%package                generic-all
+Summary:                mwts-filesystem meta package for generic version
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mwts-filesystem-generic-scripts
+%description            generic-all
+mwts-filesystem meta package for generic version
+
 
 %package                cli
 Summary:                mwts-filesystem command line tool
@@ -58,32 +75,24 @@ make install INSTALL_ROOT=%{buildroot}
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
 /usr/lib/libmwts-filesystem.so.*
-/usr/lib/tests/FilesystemTest.conf
+/usr/lib/min/libmin-mwts-filesystem*
 
 %files devel
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
 /usr/lib/libmwts-filesystem.so
 /usr/lib/min/libmin-mwts-filesystem.so
 /usr/include/FilesystemTest.h
 
-%files tests
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/lib/min/libmin-mwts-filesystem.so.*
 /usr/share/mwts-filesystem-tests/tests.xml
 
+%files generic-config
+/usr/lib/tests/FilesystemTest.conf
+
+%files generic-all
+
 %files cli
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
 /usr/bin/mwts-filesystem-cli
 
 %post
