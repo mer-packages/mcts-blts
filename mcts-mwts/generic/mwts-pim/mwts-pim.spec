@@ -65,7 +65,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/user/share/mwts-pim-tests/tests.xml
+/usr/share/mwts-pim-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/PimTest.conf
