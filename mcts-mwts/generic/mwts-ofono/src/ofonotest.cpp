@@ -312,8 +312,9 @@ bool OfonoTest::verifyPin(const QString validity, const QString pinType, const Q
 {
     MWTS_ENTER;
     bool retval = false;    
+    QString error;
 
-    //if the pin type is already locked (enabled)
+    //CHECK PIN IS LOCKED (ENABLED)
     if (mSimManager->lockedPins().contains(pinType))
     {
         //unlock (disable) it to verify the pin code
@@ -321,25 +322,66 @@ bool OfonoTest::verifyPin(const QString validity, const QString pinType, const Q
         //setting back to latter state
         if (retval)
             this->enablePin(pinType, pin);
+        //othwerwise, get the dbus errormessage
+        else
+            error = mSimManager->errorName();
     }
-    else //else the pin type is already unlocked (disabled)
+    //CHECK PIN IS UNLOCKED (DISABLED)
+    else
     {
         //lock (enable) it to verify the pin code
         retval = this->enablePin(pinType, pin);        
+        //if success, set back the latter state
         if (retval)
             this->disablePin(pinType, pin);
+        //othwerwise, get the dbus errormessage
+        else
+            error = mSimManager->errorName();
     }
 
-    //if the verification is about the validity
-    if (validity == "valid")    
-        return retval;
+    //VERIFY INVALIDITY
+    if (validity == "invalid")
+    {
+        qDebug ("invalid");
+        MWTS_LEAVE;
+        return invalidityCheck(error);
+    }
     else
-        return !retval;
+    {
+        MWTS_LEAVE;
+        return retval;
+    }
 
     MWTS_LEAVE;
 }
 
-//TODO
+//TODO resetPin, it does not work. It might be a bug report to ofono
+bool OfonoTest::verifyPuk(const QString validity, QString puk)
+{
+    MWTS_ENTER;
+    bool retval = false;
+
+    //seems the only way to verify the puk code somehow
+    retval = this->resetPin("pin", puk, "1234");
+
+   QString error = mSimManager->errorName();
+
+   //VERIFY INVALIDITY
+   if (validity == "invalid")
+   {
+       MWTS_LEAVE;
+       return invalidityCheck(error);
+   }
+   else
+   {
+       MWTS_LEAVE;
+       return retval;
+   }
+
+    MWTS_LEAVE;
+}
+
+//TODO, it does not work. It might be a bug report to ofono
 bool OfonoTest::resetPin(const QString pinType, const QString puk, const QString newPin)
 {
     MWTS_ENTER;
@@ -411,5 +453,42 @@ void OfonoTest::onEnterPinRequired(const QString &pinType, const QString &pin)
         this->enterPin(pinType, pin);
     }
 
+    else if (mSimManager->pinRequired() == "puk")
+    {
+        qCritical () << __PRETTY_FUNCTION__ << "Ooops, puk in required to enter. You might want to call " <<
+                                                "EnterPin puk <puk code>  explicitly.";
+        MWTS_LEAVE;
+        return;
+    }
+
     MWTS_LEAVE;
+}
+
+bool OfonoTest::invalidityCheck (const QString error)
+{
+    //VERIFY INVALIDITY
+    MWTS_ENTER;
+
+    //the dbus throw invalid format error
+    if (error == "org.ofono.Error.InvalidFormat")
+    {
+        qCritical () << __PRETTY_FUNCTION__ << "The dbus raised the following error message " <<
+                     "(might be ofono bug, or simply invalid arguments): " << error;
+        MWTS_LEAVE;
+        return FALSE;
+    }
+    //dbus throws error failed hopefully means the invalidity check is okay
+    else if (error == "org.ofono.Error.Failed")
+    {
+        qDebug () << __PRETTY_FUNCTION__ << "The dbus raised the following message" <<
+                " (which is good at invalidity check)" << error;
+        MWTS_LEAVE;
+        return TRUE;
+    }
+    //TODO
+    else
+    {
+        MWTS_LEAVE;
+        return TRUE;
+    }
 }

@@ -78,6 +78,7 @@ LOCAL int ChangePin(MinItemParser * item)
     return ENOERR;
 }
 
+//TODO resetPin, it does not work. It might be a bug report to ofono
 LOCAL int ResetPin(MinItemParser * item)
 {
     MWTS_ENTER;
@@ -195,8 +196,7 @@ LOCAL int DisablePin(MinItemParser * item)
 
 /**
  * VerifyPin
- * Verifies the pin by enabling or disabling with the valid pin code
- * and verifies whether the device realizes its correctness
+ * Verifies the invalid pin by enabling or disabling the pin
  * Usage: VerifyPin [pinType, pin]
  * @param pinType, pin
  * @return ENOERR
@@ -232,8 +232,7 @@ LOCAL int VerifyPin(MinItemParser * item)
 
 /**
  * VerifyInvalidPin
- * Verifies the pin by enabling or disabling witn the invalid pin code
- * and verifies whether the device realizes its correctness
+ * Verifies the invalid pin by enabling or disabling the pin
  * Usage: VerifyInvalidPin [pinType, invalid pin]
  * @param pinType, invalid pin
  * @return ENOERR
@@ -263,6 +262,64 @@ LOCAL int VerifyInvalidPin(MinItemParser * item)
 
     free(pinType);
     free(pin);
+
+    return ENOERR;
+}
+
+/**
+ * VerifyPuk
+ * Verifies the puk by resetting a new pin code (hard-coded)
+ * TODO resetPin, it does not work. It might be a bug report to ofono
+ * Usage: VerifyPuk [puk]
+ * @param puk code
+ * @return ENOERR
+ */
+LOCAL int VerifyPuk(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *puk = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &puk ))
+    {
+        qCritical() << "could not parse puk code";
+        return EINVAL;
+    }
+
+    result = test.verifyPuk("valid", puk);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(puk);
+
+    return ENOERR;
+}
+
+/**
+ * VerifyInvalidPuk
+ * Verifies the invalid puk by resetting a new pin code (hard-coded)
+ * TODO resetPin, it does not work. It might be a bug report to ofono
+ * Usage: VerifyPuk [puk]
+ * @param invalid puk code
+ * @return ENOERR
+ */
+LOCAL int VerifyInvalidPuk(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *puk = NULL;
+    bool result = false;
+
+    if (ENOERR != mip_get_next_string( item, &puk ))
+    {
+        qCritical() << "could not parse puk code";
+        return EINVAL;
+    }
+
+    result = test.verifyPuk("invalid", puk);
+    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+
+    free(puk);
 
     return ENOERR;
 }
@@ -332,6 +389,9 @@ int ts_get_test_cases( DLList** list )
 
     ENTRYTC(*list,"VerifyPin", VerifyPin);
     ENTRYTC(*list,"VerifyInvalidPin", VerifyInvalidPin);
+
+    ENTRYTC(*list,"VerifyPuk", VerifyPuk);
+    ENTRYTC(*list,"VerifyInvalidPuk", VerifyInvalidPuk);
 
     ENTRYTC(*list,"SimInfo", SimInfo);
 

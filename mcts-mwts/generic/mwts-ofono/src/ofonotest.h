@@ -63,7 +63,6 @@ public:
      * OnUninitialize is called after test execution
      * Delete SimManager, QEventLoop, QTimer from the heap
      * beside takes care of keeping the original state on the sim
-     * original state: PIN, PUK are disabled (unlocked)
      */
     void OnUninitialize();
 
@@ -103,12 +102,21 @@ public:
     bool disablePin(const QString &pinType, const QString &pin);
 
     /**
-     * Verifies the invalidy or validity of the pin code.
+     * Verifies the invalidity or validity of the pin code.
      *
      * @param invalid/valid, pin type, current pin code
      * @return true on success, otherwise false
      */
     bool verifyPin(const QString validity, const QString pinType, const QString pin);
+
+    /**
+     * Verifies the invalidity or validity of the puk code.
+     *
+     * @param invalid/valid, puk code
+     * @return true on success, otherwise false
+     */
+    //seems the only way to verify the puk code somehow
+    bool verifyPuk(const QString validity, const QString puk);
 
     /**
      * Provides the unblock key to the modem and if correct
@@ -123,6 +131,8 @@ public:
      *
      */
     void simInfo(void);
+private:
+    bool invalidityCheck (const QString error);
 
 signals:
     /**
