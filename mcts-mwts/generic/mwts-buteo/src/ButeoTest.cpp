@@ -16,11 +16,8 @@
 */
 
 
-#include <QProcess>
-
 #include "stable.h"
 #include "ButeoTest.h"
-
 
 /**
  * Constructor for template test class
@@ -39,11 +36,12 @@ ButeoTest::~ButeoTest()
 {
     MWTS_ENTER;
 
+    /*
     if(sci)
     {
         delete sci;
         sci = NULL;
-    }
+    } */
 
     if(pm)
     {
@@ -77,8 +75,16 @@ void ButeoTest::OnInitialize()
     connect(sci, SIGNAL(resultsAvailable(QString,Buteo::SyncResults)), this, SLOT(slotResultsAvailable(QString,Buteo::SyncResults)));
     connect(sci, SIGNAL(transferProgress(QString,int,int,QString)), this, SLOT(slotTransferProgress(QString,int,int,QString)));
 
-    pm = new ProfileManager("/home/meego/.sync/profiles/");
-    //connect(sci, SIGNAL(signalProfileChanged(QString, int, QString)), this, SLOT(slotProfileChanged(QString,int,QString,int)));
+    QString sync_folder  = g_pConfig->value("sync_home").toString();
+
+    if(sync_folder.isNull())
+    {
+        qDebug() << "No sync folder path defined, using /home/meego/.sync/profiles";
+        //sync_folder = "/home/meego/.sync/profiles/";
+        pm = new ProfileManager("/home/meego/.sync/profiles/");
+    }
+
+    pm = new ProfileManager(sync_folder);
 
     MWTS_LEAVE;
 }
@@ -153,31 +159,32 @@ void ButeoTest::slotResultsAvailable(QString aProfileId, SyncResults aResults)
         switch(aResults.minorCode())
         {
             case SyncResults::SYNC_FINISHED:
-                qDebug() << "SYNC_FINISHED";
+                qCritical() << "SYNC_FINISHED";
                 break;
             case SyncResults::NO_ERROR:
-                qDebug() << "NO_ERROR";
+                qCritical() << "NO_ERROR";
                 break;
             case SyncResults::INTERNAL_ERROR:
-                qDebug() << "INTERNAL_ERROR";
+                qCritical() << "INTERNAL_ERROR";
                 break;
             case SyncResults::AUTHENTICATION_FAILURE:
                 qDebug() << "AUTHENTICATION_FAILURE";
+                qCritical() << "Check the conf file if the credentials are right.";
                 break;
             case SyncResults::DATABASE_FAILURE:
-                qDebug() << "DATABASE_FAILURE";
+                qCritical() << "DATABASE_FAILURE";
                 break;
             case SyncResults::ABORTED:
-                qDebug() << "ABORTED";
+                qCritical() << "ABORTED";
                 break;
             case SyncResults::CONNECTION_ERROR:
-                qDebug() << "CONNECTION_ERROR";
+                qCritical() << "CONNECTION_ERROR";
                 break;
             case SyncResults::INVALID_SYNCML_MESSAGE:
-                qDebug() << "INVALID_SYNCML_MESSAGE";
+                qCritical() << "INVALID_SYNCML_MESSAGE";
                 break;
             case SyncResults::UNSUPPORTED_SYNC_TYPE:
-                qDebug() << "UNSUPPORTED_SYNC_TYPE";
+                qCritical() << "UNSUPPORTED_SYNC_TYPE";
                 break;
         }
         qCritical() << "Sync failed...";
@@ -242,8 +249,8 @@ bool ButeoTest::CreateBtProfile(const QString profile_path)
         return false;
     }
 
-    QString bt_name = g_pConfig->value("bt_profile/bt_name").toString();
-    QString bt_address = g_pConfig->value("bt_profile/bt_address").toString();
+    QString bt_name      = g_pConfig->value("bt_profile/bt_name").toString();
+    QString bt_address   = g_pConfig->value("bt_profile/bt_address").toString();
     QString profile_name = g_pConfig->value("bt_profile/profile_name").toString();
 
     if(bt_name.isNull())
@@ -256,10 +263,9 @@ bool ButeoTest::CreateBtProfile(const QString profile_path)
         bt_address = "00:00:00:00:00:00";
 
     qDebug() << "Profile loaded!";
-    qDebug() << "Name before: " << syncProfile->name();
     syncProfile->setName(profile_name);
-    qDebug() << "Name after: " << syncProfile->name();
-    qDebug() << "Type of profile: " << syncProfile->type();
+    qDebug() << "Name            : " << syncProfile->name();
+    qDebug() << "Type of profile : " << syncProfile->type();
 
     // set needed parameters for the profile root
     syncProfile->setKey("displayname", "btprofile");
@@ -279,6 +285,7 @@ bool ButeoTest::CreateBtProfile(const QString profile_path)
     btProfile->setKey("bt_address", bt_address);
     btProfile->setKey("device", "destinationtype");
 
+    /*
     qDebug() << "Creating sub profile for sync ml client and setting parameters";
     Profile *syncmlProfile;
 
@@ -299,7 +306,7 @@ bool ButeoTest::CreateBtProfile(const QString profile_path)
     hcontacts->setKey("Target URI", "./contacts");
     hcontacts->setKey("Type", "text/x-vcard");
     hcontacts->setKey("Version", "2.1");
-    hcontacts->setKey("enabled", "true");
+    hcontacts->setKey("enabled", "true"); */
 
 
     qDebug() << "Updating and enabling bluetooth profile...";
@@ -308,7 +315,6 @@ bool ButeoTest::CreateBtProfile(const QString profile_path)
 
     delete syncProfile;
     syncProfile = NULL;
-    qDebug() << "deleted sync";
 
     return true;
     MWTS_LEAVE;
@@ -337,8 +343,8 @@ bool ButeoTest::CreateGoogleProfile(const QString profile_path)
 
     syncProfile->setName(profile_name);
 
-    qDebug() << "Name: " << syncProfile->name();
-    qDebug() << "Type of profile: " << syncProfile->type();
+    qDebug() << "Name            : " << syncProfile->name();
+    qDebug() << "Type of profile : " << syncProfile->type();
 
     // set needed parameters for the profile root
     syncProfile->setKey("displayname", profile_name);
@@ -352,10 +358,8 @@ bool ButeoTest::CreateGoogleProfile(const QString profile_path)
     Profile *google_profile;
 
     google_profile = syncProfile->subProfile("google.com");
-
     google_profile->setKey("Username", username);
     google_profile->setKey("Password", password);
-
     google_profile->setKey("destinationtype", "online");
 
     qDebug() << "Creating sub profile for hcontacts and setting parameters";
@@ -380,6 +384,164 @@ bool ButeoTest::CreateGoogleProfile(const QString profile_path)
     MWTS_LEAVE;
 }
 
+bool ButeoTest::CreateMemotooProfile(const QString profile_path)
+{
+    MWTS_ENTER;
+    qDebug() << "Creating a cloud service profile based on: " << profile_path;
+    qDebug() << "Profile type is: memotoo_profile";
+
+    QString profile_name = g_pConfig->value("memotoo_profile/profile_name").toString();
+    QString username     = g_pConfig->value("memotoo_profile/username").toString();
+    QString password     = g_pConfig->value("memotoo_profile/password").toString();
+
+    SyncProfile *syncProfile = loadProfileFromXml(profile_path);
+
+    if(syncProfile == NULL)
+    {
+        qCritical() << "Loading of " << profile_path << "  failed aborting. Filepath propably wrong.";
+        return false;
+    }
+
+    qDebug() << "Creating profile: " << profile_name << " : " << username << " : " << password;
+
+    syncProfile->setName(profile_name);
+
+    qDebug() << "Name            : " << syncProfile->name();
+    qDebug() << "Type of profile : " << syncProfile->type();
+
+    // set needed parameters for the profile root
+    syncProfile->setKey("displayname", profile_name);
+    syncProfile->setKey("hidden", "false");
+    syncProfile->setKey("enabled", "true");
+
+    // create sub profiles
+    QList<QString> subProfileNames = syncProfile->subProfileNames();
+    qDebug() << "SubProfiles: " << subProfileNames;
+
+    Profile *memotoo_profile;
+
+    memotoo_profile = syncProfile->subProfile("memotoo.com");
+    memotoo_profile->setKey("Username", username);
+    memotoo_profile->setKey("Password", password);
+    memotoo_profile->setKey("destinationtype", "online");
+
+    qDebug() << "Updating and enabling " << profile_name << " profile...";
+    syncProfile->setEnabled(true);
+    pm->updateProfile(*syncProfile);
+
+    delete syncProfile;
+    syncProfile = NULL;
+
+    return true;
+    MWTS_LEAVE;
+}
+
+bool ButeoTest::CreateMobicalProfile(const QString profile_path)
+{
+    MWTS_ENTER;
+    qDebug() << "Creating a cloud service profile based on: " << profile_path;
+    qDebug() << "Profile type is: mobical_profile";
+
+    QString profile_name = g_pConfig->value("mobical_profile/profile_name").toString();
+    QString username     = g_pConfig->value("mobical_profile/username").toString();
+    QString password     = g_pConfig->value("memotoo_profile/password").toString();
+
+    SyncProfile *syncProfile = loadProfileFromXml(profile_path);
+
+    if(syncProfile == NULL)
+    {
+        qCritical() << "Loading of " << profile_path << "  failed aborting. Filepath propably wrong.";
+        return false;
+    }
+
+    qDebug() << "Creating profile: " << profile_name << " : " << username << " : " << password;
+
+    syncProfile->setName(profile_name);
+
+    qDebug() << "Name            : " << syncProfile->name();
+    qDebug() << "Type of profile : " << syncProfile->type();
+
+    // set needed parameters for the profile root
+    syncProfile->setKey("displayname", profile_name);
+    syncProfile->setKey("hidden", "false");
+    syncProfile->setKey("enabled", "true");
+
+    // create sub profiles
+    QList<QString> subProfileNames = syncProfile->subProfileNames();
+    qDebug() << "SubProfiles: " << subProfileNames;
+
+    Profile *mobical_profile;
+
+    mobical_profile = syncProfile->subProfile("mobical.com");
+    mobical_profile->setKey("Username", username);
+    mobical_profile->setKey("Password", password);
+    mobical_profile->setKey("destinationtype", "online");
+
+    qDebug() << "Updating and enabling " << profile_name << " profile...";
+    syncProfile->setEnabled(true);
+    pm->updateProfile(*syncProfile);
+
+    delete syncProfile;
+    syncProfile = NULL;
+
+    return true;
+    MWTS_LEAVE;
+}
+
+bool ButeoTest::CreateOviProfile(const QString profile_path)
+{
+    MWTS_ENTER;
+    qDebug() << "Creating a cloud service profile based on: " << profile_path;
+    qDebug() << "Profile type is: ovi_profile ";
+
+    QString profile_name = g_pConfig->value("ovi_profile/profile_name").toString();
+    QString username     = g_pConfig->value("ovi_profile/username").toString();
+    QString password     = g_pConfig->value("ovi_profile/password").toString();
+
+    SyncProfile *syncProfile = loadProfileFromXml(profile_path);
+
+    if(syncProfile == NULL)
+    {
+        qCritical() << "Loading of " << profile_path << " failed aborting. Filepath propably wrong.";
+        return false;
+    }
+
+    qDebug() << "Creating profile: " << profile_name << " : " << username << " : " << password;
+
+    syncProfile->setName(profile_name);
+
+    qDebug() << "Name            : " << syncProfile->name();
+    qDebug() << "Type of profile : " << syncProfile->type();
+
+    // set needed parameters for the profile root
+    syncProfile->setKey("displayname", profile_name);
+    syncProfile->setKey("hidden", "false");
+    syncProfile->setKey("enabled", "true");
+
+    // create sub profiles
+    QList<QString> subProfileNames = syncProfile->subProfileNames();
+    qDebug() << "SubProfiles: " << subProfileNames;
+
+    Profile *ovi_profile;
+
+    ovi_profile = syncProfile->subProfile("ovi-contact");
+    ovi_profile->setKey("Username", username);
+    ovi_profile->setKey("Password", password);
+    ovi_profile->setKey("destinationtype", "online");
+
+    qDebug() << "Updating and enabling " << profile_name << " profile...";
+    syncProfile->setEnabled(true);
+
+    pm->updateProfile(*syncProfile);
+
+    delete syncProfile;
+    syncProfile = NULL;
+
+    return true;
+    MWTS_LEAVE;
+}
+
+
 bool ButeoTest::ListProfiles()
 {
     QList<SyncProfile*> profiles = pm->allSyncProfiles();
@@ -397,7 +559,6 @@ bool ButeoTest::ListProfiles()
        qDebug() << "type        : " << profiles.at(i)->type();
        qDebug() << "is valid    : " << profiles.at(i)->isValid();
     }
-
 
     return m_bSuccess;
 }
@@ -472,6 +633,9 @@ bool ButeoTest::Sync(const QString profile_name)
 
     delete syncProfile;
     syncProfile = NULL;
+
+    delete sci;
+    sci = NULL;
 
     return m_bSuccess;
     MWTS_LEAVE;

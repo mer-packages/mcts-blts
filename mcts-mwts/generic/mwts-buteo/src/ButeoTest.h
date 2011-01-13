@@ -80,6 +80,25 @@ public:
 	*/ 
         bool CreateGoogleProfile(const QString profile_path);
 
+        /*
+        * Creates memotoo specific profile
+        * @param profile_path path of profile template xml
+        */
+        bool CreateMemotooProfile(const QString profile_path);
+
+        /*
+        * Creates mobical specific profile
+        * @param profile_path path of profile template xml
+        */
+        bool CreateMobicalProfile(const QString profile_path);
+
+
+        /*
+        * Creates ovi specific profile
+        * @param profile_path path of profile template xml
+        */
+        bool CreateOviProfile(const QString profile_path);
+
 	/*
 	* Removes profile
 	* @param profile_name name of the removed profile
