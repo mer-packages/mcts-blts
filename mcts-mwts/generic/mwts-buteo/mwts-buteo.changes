@@ -1,0 +1,7 @@
+* Wed 13 Jan 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.3
+- Fixed crashing bug with profile creation
+- Added ovi-contacts, memotoo, mobical syncs
+- New nft cases (iterative & sync) 
+
+
+
