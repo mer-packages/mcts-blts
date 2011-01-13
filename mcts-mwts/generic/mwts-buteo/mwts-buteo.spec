@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-buteo
 Summary:        Mwts-buteo syncing test asset 
 License:        LGPL
-Version:        %{version}
+Version:        0.0.3
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
