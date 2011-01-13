@@ -1,4 +1,4 @@
-Source: mwts-multimedia-tests
+Source: mwts-multimedia
 Section: libs
 Priority: optional
 Build-Depends: debhelper, libqt4-dev, libqtm-dev, mwts-common-dev(>=0.2.0)

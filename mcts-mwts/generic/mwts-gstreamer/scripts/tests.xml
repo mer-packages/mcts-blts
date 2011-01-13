@@ -718,7 +718,21 @@
         References
         Required test data
         Audio/AAC/AAC-LC_16bit_Mono_8KHz_64Kbps_2min23sec(0.8Mb)_AKM(hinted).mp4" timeout="153">
-        <step>min -c -t 'FUTE-GStreamer-Stream_RTSP_MP4_AAC_44.1_kHz_192kbs_stereo'</step>
+        <step>min -c -t 'FUTE-Gstreamer-Stream_RTSP_MP4_AAC_44.1_kHz_192kbs_stereo'</step>
+      </case>
+      <case name="FUTE-GStreamer-Stream_RTSP_MP4_MP3_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
+        "Purpose
+        Test gstreamer media playing.
+        Method
+        Stream MP3 file using RTSP method.
+        Pre-/Post-conditions
+        Audio file available in streaming server in address rtsp://192.168.1.1/Audio/MP3/MP3_16bit_Stereo_44.1KHz_192Kbps_60s(1.4Mb).mp4
+        Pass/Fail Criteria
+        Sound is played.
+        References
+        Required test data
+        Audio/MP3/MP3_16bit_Stereo_44.1KHz_192Kbps_60s(1.4Mb).mp4" timeout="153">
+        <step>min -c -t 'FUTE-Gstreamer-Stream_RTSP_MP4_MP3_44.1_kHz_192kbs_stereo'</step>
       </case>
     </set>
   </suite>
