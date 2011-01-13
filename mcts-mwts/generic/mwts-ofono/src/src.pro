@@ -16,13 +16,15 @@ PKGCONFIG += dbus-1
 
 SOURCES += \
     ofonotest.cpp \
-    simmanagertest.cpp \
-    voicecallmanagertest.cpp
+    simmanagertest.cpp \    
+    voicecalltest.cpp \
+    ofonotestinterface.cpp
 
 HEADERS += \
     ofonotest.h \
     simmanagertest.h \
-    voicecallmanagertest.h
+    voicecalltest.h \
+    ofonotestinterface.h
 
 LIBS += -lmwts-common -lofono-qt
 

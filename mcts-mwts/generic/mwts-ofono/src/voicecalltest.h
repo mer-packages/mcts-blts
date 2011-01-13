@@ -21,43 +21,39 @@
  *
  */
 
-#ifndef OFONOTEST_H
-#define OFONOTEST_H
+#ifndef VOICECALLTEST_H
+#define VOICECALLTEST_H
 
-#include "simmanagertest.h"
-#include "voicecalltest.h"
+#include "ofonotestinterface.h"
+#include <QtTest/QtTest>
 
-class OfonoTest : public MwtsTest
+#include <ofono-qt/ofonocallforwarding.h>
+#include <ofono-qt/ofonocallbarring.h>
+#include <ofono-qt/ofonovoicecallmanager.h>
+
+class VoiceCallManagerTest : public OfonoTestInterface
 {
     Q_OBJECT
 
 public:
-    SimManagerTest *mSimManagerTest;
-
-public:    
-    /**
-     * Constructor for template test class
-     */
-    OfonoTest();
-
-    /**
-     * Destructor for template test class
-     */
-    virtual ~OfonoTest();
-
-    /**
-     * Overridden functions for MwtsTest class
-     * OnInitialize is called before test execution
-     */
-
-    void OnInitialize();
-
-    /**
-     * Overridden functions for MwtsTest class
-     * OnUninitialize is called after test execution
-     */
-    void OnUninitialize();
-
+    explicit VoiceCallManagerTest(QObject *parent = 0);
 };
 
-#endif // OFONOTEST_H
+
+class VoiceCallForwardingTest : public OfonoTestInterface
+{
+    Q_OBJECT
+
+public:
+    explicit VoiceCallForwardingTest(QObject *parent = 0);
+};
+
+class VoiceCallBarringTest : public OfonoTestInterface
+{
+    Q_OBJECT
+
+public:
+    explicit VoiceCallBarringTest(QObject *parent = 0);
+};
+
+#endif // VOICECALLTEST_H

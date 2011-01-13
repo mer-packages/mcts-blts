@@ -25,8 +25,6 @@
 #include "interface.h"
 #include "ofonotest.h"
 
-#include <MwtsCommon>
-
 // MIN's module information
 const char *module_date = __DATE__;
 const char *module_time = __TIME__;
@@ -68,7 +66,7 @@ LOCAL int ChangePin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.changePin(pinType, oldPin, newPin);
+    result = test.mSimManagerTest->changePin(pinType, oldPin, newPin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -106,7 +104,7 @@ LOCAL int ResetPin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.resetPin(pinType, puk, newPin);
+    result = test.mSimManagerTest->resetPin(pinType, puk, newPin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -148,7 +146,7 @@ LOCAL int EnablePin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.enablePin(pinType, pin);
+    result = test.mSimManagerTest->enablePin(pinType, pin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -185,7 +183,7 @@ LOCAL int DisablePin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.disablePin(pinType, pin);
+    result = test.mSimManagerTest->disablePin(pinType, pin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -221,7 +219,7 @@ LOCAL int VerifyPin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.verifyPin("valid", pinType, pin);
+    result = test.mSimManagerTest->verifyPin("valid", pinType, pin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -257,7 +255,7 @@ LOCAL int VerifyInvalidPin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.verifyPin("invalid", pinType, pin);
+    result = test.mSimManagerTest->verifyPin("invalid", pinType, pin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -287,7 +285,7 @@ LOCAL int VerifyPuk(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.verifyPuk("valid", puk);
+    result = test.mSimManagerTest->verifyPuk("valid", puk);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(puk);
@@ -316,7 +314,7 @@ LOCAL int VerifyInvalidPuk(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.verifyPuk("invalid", puk);
+    result = test.mSimManagerTest->verifyPuk("invalid", puk);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(puk);
@@ -350,7 +348,7 @@ LOCAL int EnterPin(MinItemParser * item)
         return EINVAL;
     }
 
-    result = test.enterPin(pinType, pin);
+    result = test.mSimManagerTest->enterPin(pinType, pin);
     g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
 
     free(pinType);
@@ -367,7 +365,7 @@ LOCAL int SimInfo(__attribute__((unused)) MinItemParser * item)
 {
     MWTS_ENTER;
 
-    test.simInfo();
+    test.mSimManagerTest->simInfo();
 
     return ENOERR;
 }
