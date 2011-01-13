@@ -206,8 +206,15 @@ int SensorsTest::TestSensor()
 	Start();
 
 	// when signal is got
-	// then we continue here.
-	MWTS_DEBUG("Main loop stopped");
+    // then we continue here.
+    MWTS_DEBUG("Main loop stopped");
+
+    // check if connected to backend
+    if (!m_Sensor->connectedToBackend())
+    {
+        g_pResult->StepPassed("readingChanged", false);
+        qCritical() << "Sensor is not connected to a backend. A sensor that has not been connected to a backend cannot do anything useful.";
+    }
 
 	m_Sensor->stop();
 	disconnect(m_Sensor,
