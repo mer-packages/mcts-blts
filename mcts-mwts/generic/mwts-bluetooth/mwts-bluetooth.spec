@@ -33,6 +33,15 @@ Group:          Development/Tools
 Requires:       mwts-bluetooth
 %description    generic-config
 configuration file, generic
+
+%package        generic-all
+Summary:        mwts-bluetooth, meta package, generic
+Prefix:         /usr
+Group:          Development/Tools
+Requires:       mwts-bluetooth, mwts-bluetooth-generic-config, mwts-bluetooth-generic-tests
+%description    generic-all
+mwts-bluetooth, meta package, generic
+
             
 # %package      cli
 # Summary:      Command line interface for mwts-bluetooth
@@ -73,6 +82,9 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-config
 /usr/lib/tests/*.conf
+
+%files generic-all
+%doc README
 
 
 # %files cli

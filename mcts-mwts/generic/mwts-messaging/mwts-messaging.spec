@@ -10,7 +10,7 @@ Version: 		0.0.1
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
-BuildRequires:		qt-devel, mwts-common-devel, min-devel
+BuildRequires:		qt-devel, mwts-common-devel, min-devel, qmf-devel, qt-mobility-devel
 Requires:		qt-x11, min, mwts-common
 Source: 		%{name}-%{version}.tar.gz
 

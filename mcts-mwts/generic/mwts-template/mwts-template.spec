@@ -29,12 +29,11 @@ Requires:       mwts-template
 %description    generic-config
 Generic configuration file for mwts-template
 
-%package	generic
+%package	generic-all
 Summary:	Meta package containing everything for mwts-template (generic)
 Requires:	mwts-template, mwts-template-generic-tests, mwts-template-generic-config
-%description	generic
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-template
-
 
 %prep
 %setup -q
@@ -63,7 +62,7 @@ make install INSTALL_ROOT=%{buildroot}
 %defattr (-,root,root)
 /usr/lib/tests/*
 
-%files generic
+%files generic-all
 %defattr (-,root,root)
 %doc README
 
