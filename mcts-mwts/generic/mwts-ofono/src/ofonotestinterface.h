@@ -21,43 +21,28 @@
  *
  */
 
-#ifndef OFONOTEST_H
-#define OFONOTEST_H
+#ifndef OFONOTESTINTERFACE_H
+#define OFONOTESTINTERFACE_H
 
-#include "simmanagertest.h"
-#include "voicecalltest.h"
+#include <MwtsCommon>
 
-class OfonoTest : public MwtsTest
+class OfonoTestInterface : public QObject
 {
     Q_OBJECT
-
 public:
-    SimManagerTest *mSimManagerTest;
+    explicit OfonoTestInterface(QObject *parent = 0);
 
-public:    
+private slots:
+    void testTimeout();
+
+protected:
     /**
-     * Constructor for template test class
-     */
-    OfonoTest();
-
-    /**
-     * Destructor for template test class
-     */
-    virtual ~OfonoTest();
-
-    /**
-     * Overridden functions for MwtsTest class
-     * OnInitialize is called before test execution
-     */
-
-    void OnInitialize();
-
-    /**
-     * Overridden functions for MwtsTest class
      * OnUninitialize is called after test execution
      */
     void OnUninitialize();
 
+    QEventLoop      *mEventLoop;
+    QTimer          *mTimer;
 };
 
-#endif // OFONOTEST_H
+#endif // OFONOTESTINTERFACE_H

@@ -62,10 +62,23 @@ MIN SCRIPTER INTERFACE
   VerifyInvalidPin <pin type> <pin code>
     Verifies the pin by enabling or disabling with the invalid pin code and verifies whether the device realizes its correctness
 
+  VerifyPuk <puk code>
+    Verifies the valid puk by resetting a new pin code (hard-coded) and verifies whether the device realizes its correctness.
+    Currently the resetPin does not work, so neither this. http://bugs.meego.com/show_bug.cgi?id=12337
+
+  VerifyInvalidPuk <puk code>
+    Verifies the invalid puk by resetting a new pin code (hard-coded) and verifies whether the device realizes its correctness
+    Currently the resetPin does not work, so neither this. http://bugs.meego.com/show_bug.cgi?id=12337
+
+  ResetPin <puk type> <puk type> <new pin code>
+    Provides the unblock key to the modem and if correct
+    resets the pin to the new value of newpin.
+    http://bugs.meego.com/show_bug.cgi?id=12337
+
   EnterPin <pin type> <pin code>
 	Enters the currently pending pin. The type value must match the
     pin type being asked in the "pin required" (SimInfo) property. This 
-	method is implicitly called from the test asset if needed. It is remained
+    method is implicitly called from the test asset if needed. It is remained
     here only for special cases. 
 
   SimInfo 
