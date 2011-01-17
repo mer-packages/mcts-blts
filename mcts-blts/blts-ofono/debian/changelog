@@ -1,3 +1,12 @@
+blts-ofono-tests (0.1.16) unstable; urgency=low
+
+  * Fixes to PIN lock and unlock cases
+  * Timeouts increased to 60 seconds in several network-facing cases
+  * "dontcleanup" flag now also affects supplementary service resets
+  * PIN Reset default configuration now matches Phonesim interface
+
+ -- Mikko Ojala <mikko.ojala@digia.com>  Tue, 11 Jan 2011 11:47:58 +0200
+
 blts-ofono-tests (0.1.15) unstable; urgency=low
 
   * Tests.xml update
@@ -24,8 +33,8 @@ blts-ofono-tests (0.1.13) unstable; urgency=low
   [ Mikko Ojala ]
   * Fixed call forwarding tests for oFono 0.31
   * Fixed call barring tests for oFono 0.31
-  * Added modem power on and online checks to test case inits  
-  
+  * Added modem power on and online checks to test case inits
+
  -- Mikko Ojala <mikko.ojala@digia.com>  Thu, 28 Oct 2010 15:23:13 +0300
 
 blts-ofono-tests (0.1.12) unstable; urgency=low
