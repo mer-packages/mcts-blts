@@ -1,3 +1,10 @@
+blts-wlan-core-tests (0.1.5) unstable; urgency=low
+
+  [ Jussi Saavalainen ]
+  * Trivial resource leak fix in phy lookup failure path
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 11 Jan 2011 12:01:35 +0200
+
 blts-wlan-core-tests (0.1.4) unstable; urgency=low
 
   [ Jussi Saavalainen ]

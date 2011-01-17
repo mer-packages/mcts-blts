@@ -27,7 +27,7 @@
 
 echo "Test case: med_tracker-search_music_artist"
 
-cp -rf /tmp/data/test_tracks/meego_m3.mp3 ~/Music/
+cp -rf /tmp/data/test_tracks/meego_m3.ogg ~/Music/
 
 if tracker-search --music-artists | grep "Artists">/dev/null 2>&1
 then
@@ -47,4 +47,4 @@ else
   exit 1
 fi
 
-rm ~/Music/meego_m3.mp3
+rm ~/Music/meego_m3.ogg

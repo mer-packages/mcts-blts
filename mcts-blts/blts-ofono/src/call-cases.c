@@ -1033,5 +1033,7 @@ struct boxed_value *dtmf_variant_tones_generator(struct boxed_value *args)
 		message[i] = seed[i % seed_len];
 	message[total_len] = '\0';
 
+	free(seed);
+
 	return blts_config_boxed_value_new_string_take(message);
 }

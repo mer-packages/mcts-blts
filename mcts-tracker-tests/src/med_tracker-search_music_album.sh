@@ -25,7 +25,7 @@
 #
 
 
-cp -rf /tmp/data/test_tracks/meego_m3.mp3 ~/Music/
+cp -rf /tmp/data/test_tracks/meego_m3.ogg ~/Music/
 
 echo "Test case: med_tracker-search_album"
 
@@ -47,4 +47,4 @@ else
   exit 1
 fi
 
-rm -rf ~/Music/meego_m3.mp3
+rm -rf ~/Music/meego_m3.ogg
