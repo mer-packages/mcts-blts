@@ -1,3 +1,6 @@
+* Mon 17 Jan 2011 Mika Niinisto <mika.niinisto@digia.com> - 0.0.16
+- Bugfix: When any of the endpoints fails in read / write cases, the test case will fail from now on.
+
 * Tue 16 Dec 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.15
 - [Kimmo Myllyvirta] Tests.xml update
 - Ensure failure when no data transfered
