@@ -90,6 +90,27 @@ LOCAL int CreateGoogleProfile (MinItemParser * item)
         bool success = false;
 
         char* profile_path = NULL;
+
+        if (ENOERR != mip_get_next_string(item, &profile_path))
+        {
+                qCritical() << "Missing parameter: profile_path";
+                MWTS_LEAVE;
+                return 1;
+        }
+
+        success = Test.CreateGoogleProfile(profile_path);
+
+        g_pResult->StepPassed( __FUNCTION__, success );
+        return ENOERR;
+}
+
+LOCAL int CreateMemotooProfile (MinItemParser * item)
+{
+        MWTS_ENTER;
+
+        bool success = false;
+
+        char* profile_path = NULL;
         //char* profile_type = NULL;
 
         if (ENOERR != mip_get_next_string(item, &profile_path))
@@ -107,11 +128,65 @@ LOCAL int CreateGoogleProfile (MinItemParser * item)
                 return 1;
         } */
 
-        success = Test.CreateGoogleProfile(profile_path);
+        success = Test.CreateMemotooProfile(profile_path);
+        qDebug() << "THIS IS FUNCTIONS!";
 
         g_pResult->StepPassed( __FUNCTION__, success );
         return ENOERR;
 }
+
+LOCAL int CreateMobicalProfile (MinItemParser * item)
+{
+        MWTS_ENTER;
+
+        bool success = false;
+
+        char* profile_path = NULL;
+        //char* profile_type = NULL;
+
+        if (ENOERR != mip_get_next_string(item, &profile_path))
+        {
+                qCritical() << "Missing parameter: profile_path";
+                MWTS_LEAVE;
+                return 1;
+        }
+
+        /*
+        if (ENOERR != mip_get_next_string(item, &profile_type))
+        {
+                qCritical() << "Missing parameter: profile_type";
+                MWTS_LEAVE;
+                return 1;
+        } */
+
+        success = Test.CreateMobicalProfile(profile_path);
+
+        g_pResult->StepPassed( __FUNCTION__, success );
+        return ENOERR;
+}
+
+LOCAL int CreateOviProfile (MinItemParser * item)
+{
+        MWTS_ENTER;
+
+        bool success = false;
+
+        char* profile_path = NULL;
+
+        if (ENOERR != mip_get_next_string(item, &profile_path))
+        {
+                qCritical() << "Missing parameter: profile_path";
+                MWTS_LEAVE;
+                return 1;
+        }
+
+        success = Test.CreateOviProfile(profile_path);
+
+        g_pResult->StepPassed( __FUNCTION__, success );
+        return ENOERR;
+}
+
+
 
 LOCAL int ListProfiles(MinItemParser * item)
 {
@@ -174,9 +249,9 @@ int ts_get_test_cases (DLList ** list)
         ENTRYTC (*list, "ListProfiles", ListProfiles);
         ENTRYTC (*list, "CreateBtProfile", CreateBtProfile);
         ENTRYTC (*list, "CreateGoogleProfile", CreateGoogleProfile);
-
-
-
+        ENTRYTC (*list, "CreateMemotooProfile", CreateMemotooProfile);
+        ENTRYTC (*list, "CreateMobicalProfile", CreateMobicalProfile);
+        ENTRYTC (*list, "CreateOviProfile", CreateOviProfile);
 
 	return ENOERR;
 }

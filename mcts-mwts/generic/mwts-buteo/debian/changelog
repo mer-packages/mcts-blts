@@ -1,3 +1,8 @@
+mwts-buteo-tests (0.0.3) unstable; urgency=low
+  * Added nft-cases (iterative % latency)
+  * cloud sync with ovi-contacts, memotoo & mobical
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed,13 Jan 2010 11:00:00 +0200
+
 mwts-buteo-tests (0.0.2) unstable; urgency=low
   * Added nft-cases
   * cloud sync with google working (contacts only)
