@@ -11,6 +11,7 @@ blts-usb-tests (0.0.15-1) unstable; urgency=low
 
  -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
 
+
 blts-usb-tests (0.0.15) unstable; urgency=low
 
   [ Kimmo Myllyvirta ]
