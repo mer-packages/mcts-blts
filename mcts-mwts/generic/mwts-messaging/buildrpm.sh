@@ -20,7 +20,8 @@ rm -fr /var/tmp/$SRCPKGNAME
 
 #Build RPM
 echo "Building RPM packages..."
-rpmbuild -v -bb --clean `ls rpm/*.spec` --define "ver $VERSION" --define "_topdir $CUR/rpm"
+#rpmbuild -v -bb --clean `ls rpm/*.spec` --define "ver $VERSION" --define "_topdir $CUR/rpm"
+rpmbuild -v -bb --clean $NAME.spec --define "version $VERSION" --define "_topdir $CUR/rpm" --define "name $NAME"
 
 echo "=========================================="
 echo "$NAME RPM files can be located from rpm/RPMS"

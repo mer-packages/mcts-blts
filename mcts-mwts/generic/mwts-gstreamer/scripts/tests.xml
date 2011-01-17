@@ -720,6 +720,20 @@
         Audio/AAC/AAC-LC_16bit_Mono_8KHz_64Kbps_2min23sec(0.8Mb)_AKM(hinted).mp4" timeout="153">
         <step>min -c -t 'FUTE-GStreamer-Stream_RTSP_MP4_AAC_44.1_kHz_192kbs_stereo'</step>
       </case>
+      <case name="FUTE-GStreamer-Stream_RTSP_MP4_MP3_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
+        "Purpose
+        Test gstreamer media playing.
+        Method
+        Stream MP3 file using RTSP method.
+        Pre-/Post-conditions
+        Audio file available in streaming server in address rtsp://192.168.1.1/Audio/MP3/MP3_16bit_Stereo_44.1KHz_192Kbps_60s(1.4Mb).mp4
+        Pass/Fail Criteria
+        Sound is played.
+        References
+        Required test data
+        Audio/MP3/MP3_16bit_Stereo_44.1KHz_192Kbps_60s(1.4Mb).mp4" timeout="153">
+        <step>min -c -t 'FUTE-GStreamer-Stream_RTSP_MP4_MP3_44.1_kHz_192kbs_stereo'</step>
+      </case>
     </set>
   </suite>
 
@@ -798,7 +812,7 @@
         Video/AVI/MPEG4/VGA/MP3/AVI_MPEG4_DivX(ASP@L1)_VGA_30FPS_1262Kbps_MP3_Stereo_44.1KHz_128Kbps_60sec(10MB)_BBB(marker).AVI" timeout="120">
         <step>min -c -t 'NFT-GstLocalPlayback-Video_AVI_MPEG4_VGA_MP3-ITER'</step>
       </case>
-      <case name="NFT-GstLocalPlayback-Video-AVI_XVID_720p_AC3-ITER" subfeature="Playback" description=
+      <case name="NFT-GstLocalPlayback-Video_AVI_XVID_720p_AC3-ITER" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
         Method
@@ -810,7 +824,7 @@
         References
         Required test data
         Video/AVI/MPEG4/720p/AC3/AVI_MPEG4(Xvid_ASP@L5)_720p_30FPS_5731kbps_AC-3_Stereo_41.1KHz_192Kbps_60sec(43Mb).avi" timeout="120">
-        <step>min -c -t 'NFT-GstLocalPlayback-AVI_XVID_720p_AC3-ITER'</step>
+        <step>min -c -t 'NFT-GstLocalPlayback-Video_AVI_XVID_720p_AC3-ITER'</step>
       </case>
       <case name="NFT-GstLocalPlayback-Video_WMV_WVGA_WMA-ITER" subfeature="Playback" description=
         "Purpose
@@ -974,7 +988,7 @@
         Video/ASF/WMV9/CIF/WMA/ASF_WMV9(SP)_CIF_30FPS_456Kbps_WMA3_Stereo_128Kbps_60sec_(4.2Mb)_BBB.asf" timeout="120">
         <step>min -c -t 'NFT-GstStreaming-Video_ASF_WMV9_CIF_WMA_HTTP-ITER'</step>
       </case>
-      <case name="NFT-GstStreaming-Video-Seek_forward_h264_RTSP-ITER" subfeature="Playback" description=
+      <case name="NFT-GstStreaming-Video_Seek_forward_h264_RTSP-ITER" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
         Method
@@ -986,9 +1000,9 @@
         References
         Required test data
         Video/3GP/h264/QVGA/AMR/3GP_h264(BL@1.1)_QVGA_30FPS_385Kbps_AMR-NB_Mono_12.2Kbps_60sec_(2.8Mb)_BBB(hinted).3gp" timeout="120">
-        <step>min -c -t 'NFT-GstStreaming-Video-Seek_forward_h264_RTSP-ITER'</step>
+        <step>min -c -t 'NFT-GstStreaming-Video_Seek_forward_h264_RTSP-ITER'</step>
       </case>
-      <case name="NFT-GstStreaming-Video-Seek_backward_h264_RTSP-ITER" subfeature="Playback" description=
+      <case name="NFT-GstStreaming-Video_Seek_backward_h264_RTSP-ITER" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
         Method
@@ -1000,7 +1014,7 @@
         References
         Required test data
         Video/3GP/h264/QVGA/AMR/3GP_h264(BL@1.1)_QVGA_30FPS_385Kbps_AMR-NB_Mono_12.2Kbps_60sec_(2.8Mb)_BBB(hinted).3gp" timeout="120">
-        <step>min -c -t 'NFT-GstStreaming-Video-Seek_backward_h264_RTSP-ITER'</step>
+        <step>min -c -t 'NFT-GstStreaming-Video_Seek_backward_h264_RTSP-ITER'</step>
       </case>
       <case name="NFT-GstStreaming-Video_Pause_seek_resume_h264_RTSP-ITER" subfeature="Playback" description=
         "Purpose
@@ -1238,6 +1252,13 @@
         Video/ASF/WMV9/CIF/WMA/ASF_WMV9(SP)_CIF_30FPS_456Kbps_WMA3_Stereo_128Kbps_60sec_(4.2Mb)_BBB.asf" timeout="120">
         <step>min -c -t 'NFT-GstStreaming-Video_ASF_WMV9_CIF_WMA_HTTP-FPS'</step>
       </case>
+    </set>
+
+<!-- Video benchmark test cases -->
+     <set name="Video benchmark" feature="Video benchmark" type="Benchmark">
+        <case name="NFT-GstLocalPlayback-Video_WMV_WVGA_WMA-BENC" description="" >
+                <step>min -c -t "NFT-GstLocalPlayback-Video_WMV_WVGA_WMA-BENC"</step>
+        </case>
     </set>
   </suite>
 </testdefinition>
