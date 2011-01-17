@@ -46,6 +46,8 @@ void FMRadioTest::OnInitialize()
     freq = g_pConfig->value("FMRADIO/frequency").toInt();
     duration = g_pConfig->value("FMRADIO/duration").toInt();; 
 
+    radio = NULL;
+
     MWTS_LEAVE;
 }
 
