@@ -187,8 +187,10 @@ int async_handler_add(async_callback callback, pcm_device *hw, int trigger_fd,
 
 	if (!async_handlers) {
 		ret = set_signal_cb();
-		if (ret)
+		if (ret) {
+			free(handler);
 			return ret;
+		}
 	}
 
 	async_handlers = slist_prepend(async_handlers, handler);

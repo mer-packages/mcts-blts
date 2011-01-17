@@ -1,3 +1,6 @@
+* Tue 11 Jan 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.11
+- Fix trivial resource leaks in asynchronous and V4L2 failure paths.
+
 * Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.10
 - Remove obsolete Min support code
 

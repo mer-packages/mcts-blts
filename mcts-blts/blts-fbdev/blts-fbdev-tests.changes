@@ -1,3 +1,6 @@
+* Fri 7 Jan 2011 Mika Niinistö <mika.niinisto@digia.com> - 0.0.9
+- Bugfix: Backlight tests now poll for the brightness value change after setting it to a new value
+
 * Fri 3 Dec 2010 Mika Niinistö <mika.niinisto@digia.com> - 0.0.8
 - Added six new performance test cases
 
