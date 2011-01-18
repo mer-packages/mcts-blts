@@ -145,8 +145,8 @@ int ofono_reset_pin(void* user_ptr, __attribute__((unused))int test_num)
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
-
-			// type, puk, pin
+			BLTS_DEBUG ("Enterin PUK code %s to \"%s\", new pin will be %s\n", data->old_pin, data->pin_type, data->new_pin);
+			// type = type, old_pin = puk , new_pin = original pin
 			if(!org_ofono_SimManager_reset_pin(proxy, data->pin_type, data->old_pin, data->new_pin, &error))
 			{
 				display_dbus_glib_error(error);
@@ -192,7 +192,7 @@ int ofono_lock_pin(void* user_ptr, __attribute__((unused))int test_num)
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
-
+			BLTS_DEBUG("Locking PIN \"%s\" with number %s\n", data->pin_type, data->old_pin);
 			// type, pin
 			if(!org_ofono_SimManager_lock_pin(proxy,  data->pin_type, data->old_pin, &error))
 			{
@@ -241,6 +241,7 @@ int ofono_unlock_pin(void* user_ptr, __attribute__((unused))int test_num)
 				return -1;
 			}
 
+			BLTS_DEBUG("UnLocking PIN \"%s\" with number %s\n", data->pin_type, data->old_pin);
 			// type, pin
 			if(!org_ofono_SimManager_unlock_pin(proxy, data->pin_type, data->old_pin, &error))
 			{
