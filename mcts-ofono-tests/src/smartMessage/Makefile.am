@@ -23,7 +23,7 @@
 
 ofono_SCRIPTS = vcalFile vcalSend  Vcaltest  vcardCalReceive \
 vcardFile  vcardReceive  vcardSend  \
-Vcardtest  wapPushNotification \
+Vcardtest  wapPushNotification 
 ofonodir = /opt/$(PACKAGE)
 EXTRA_DIST = $(ofono_SCRIPTS)
 
