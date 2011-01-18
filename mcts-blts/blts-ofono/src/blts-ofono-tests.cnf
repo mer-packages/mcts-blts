@@ -411,3 +411,25 @@
 	name "oFono - Set muted"
 	params call_volume_timeout
 [end_test]
+
+
+################
+# Radio Access #
+################
+
+[parameter]
+	name RAT_timeout
+	const global_timeout
+[end_parameter]
+
+
+[parameter]
+	name RAT
+	const "lte" "umts" "gsm" "any"  
+[end_parameter]
+
+[test]
+	name "oFono - Change Radio Access Technology"
+	params RAT RAT_timeout
+[end_test]
+
