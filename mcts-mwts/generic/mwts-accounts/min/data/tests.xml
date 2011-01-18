@@ -1,102 +1,300 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-qmsystem-tests" domain="System">
-    <set name="FUTE-Sensors" feature="Sensors" type="Functional">
-      <case name="FUTE-Sensors_accelerometer" timeout="10" description=
+  <suite name="mwts-accounts-tests" domain="System">
+    <set name="FUTE-Accounts" feature="Accounts" type="Functional">
+      <case name="FUTE-Accounts_list" timeout="10" description=
         "Purpose
-        Get values from Accelerometer
+	List accounts created to device
         Method
-        QT Mobility Sensors API call, waiting simultenaus changing values from API callback  
+        Query accounts-qt api for list of accounts
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_accelerometer'</step>
+        <step>min -c -t 'FUTE-Accounts_list'</step>
       </case>
-      <case name="FUTE-Sensors_ambient_light_sensor" timeout="10" description=
+
+      <case name="FUTE-Accounts_list_services" timeout="10" description=
         "Purpose
-        Get values from Ambient Light Sensor
+	List services available for accounts
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Query accounts-qt api for list of services
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_ambient_light_sensor'</step>
+        <step>min -c -t 'FUTE-Accounts_list_services'</step>
       </case>
-      <case name="FUTE-Sensors_compass" timeout="10" description=
+
+      <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
         "Purpose
-        Get values from Compass
+	Creates a facebook account 
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Uses accounts-qt api to create account to device
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_compass'</step>
+        <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
       </case>
-      <case name="FUTE-Sensors_magnetometer" timeout="10" description=
+
+      <case name="FUTE-Accounts_create_account_google" timeout="10" description=
         "Purpose
-        Get values from Magnetometer
+	Creates a google account 
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Uses accounts-qt api to create account to device
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_magnetometer'</step>
+        <step>min -c -t 'FUTE-Accounts_create_account_google'</step>
       </case>
-      <case name="FUTE-Sensors_orientation" timeout="10" description=
+
+      <case name="FUTE-Accounts_create_account_ovi" timeout="10" description=
         "Purpose
-        Get values from Orientation
+	Creates a ovi account 
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback 
+        Uses accounts-qt api to create account to device
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_orientation'</step>
+        <step>min -c -t 'FUTE-Accounts_create_account_ovi'</step>
       </case>
-      <case name="FUTE-Sensors_proximity" timeout="10" description=
+
+      <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
         "Purpose
-        Get values from Proximity
+	Creates a facebook account 
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Uses accounts-qt api to create account to device
         Pre-/Post-conditions
-        must be run as user 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_proximity'</step>
+        <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
       </case>
-      <case name="FUTE-Sensors_rotation" timeout="10" description=
+      <case name="FUTE-Accounts_create_account_msn" timeout="10" description=
         "Purpose
-        Get values from Proximity
+	Creates a msn account 
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Uses accounts-qt api to create account to device
         Pre-/Post-conditions
-        must be run as user, DUT must be moved during test to get not zero values
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_rotation'</step>
+        <step>min -c -t 'FUTE-Accounts_create_account_msn'</step>
       </case>
-      <case name="FUTE-Sensors_tap" timeout="10" description=
+      <case name="FUTE-Accounts_create_account_twitter" timeout="10" description=
         "Purpose
-        Get values from Tap
+	Creates a twitter account 
         Method
-        QT Mobility Sensors API call, waiting simultaneous changing values from API callback
+        Uses accounts-qt api to create account to device
         Pre-/Post-conditions
-        must be run as user, Screen must be tapped by finger or external vece playing finger to get values 
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'FUTE-Sensors_tap'</step>
+        <step>min -c -t 'FUTE-Accounts_create_account_twitter'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_flickr" timeout="10" description=
+        "Purpose
+	Creates a flickr account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_flickr'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_skype" timeout="10" description=
+        "Purpose
+	Creates a skype account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_skype'</step>
+      </case>
+      <case name="FUTE-Accounts_remove_account" timeout="10" description=
+        "Purpose
+	Removes target account
+        Method
+        Uses accounts-qt api to remove given account
+        Pre-/Post-conditions
+	Account is already created in device
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_remove_account'</step>
+      </case>
+      <case name="FUTE-Accounts_clear_accounts" timeout="10" description=
+        "Purpose
+	Removes all the accounts from the device
+        Method
+        Uses accounts-qt api to remove available accounts
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t ' FUTE-Accounts_clear_accounts'</step>
+      </case>
+
+      <case name="FUTE-SSO_list_identities" timeout="10" description=
+        "Purpose
+	List sso credentials
+        Method
+        Uses signon-qt api to query sso credentials
+        Pre-/Post-conditions
+	Credentials exist on device
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-SSO_list_identities'</step>
+      </case>
+
+      <case name="FUTE-SSO_clear_identities" timeout="10" description=
+        "Purpose
+	Clears sso credentials
+        Method
+        Uses signon-qt api to clear all sso credentials
+        Pre-/Post-conditions
+	Credentials exist on device
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-SSO_clear_identities'</step>
+      </case>
+
+      <case name="SSO_create_identity_google" timeout="10" description=
+        "Purpose
+	Creates sso credential for google service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_google'</step>
+      </case>
+
+      <case name="SSO_create_identity_facebook" timeout="10" description=
+        "Purpose
+	Creates sso credential for facebook service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_facebook'</step>
+      </case>
+
+      <case name="SSO_create_identity_ovi" timeout="10" description=
+        "Purpose
+	Creates sso credential for ovi service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_ovi'</step>
+      </case>
+
+      <case name="SSO_create_identity_msn" timeout="10" description=
+        "Purpose
+	Creates sso credential for msn service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_msn'</step>
+      </case>
+
+      <case name="SSO_create_identity_flicker" timeout="10" description=
+        "Purpose
+	Creates sso credential for flicker service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_flicker'</step>
+      </case>
+
+      <case name="SSO_create_identity_twitter" timeout="10" description=
+        "Purpose
+	Creates sso credential for twitter service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_twitter'</step>
+      </case>
+
+      <case name="SSO_create_identity_skype" timeout="10" description=
+        "Purpose
+	Creates sso credential for skype service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_skype'</step>
+      </case>
+
+      <case name="SSO_create_identity_sip" timeout="10" description=
+        "Purpose
+	Creates sso credential for sip service
+        Method
+        Uses signon-qt api to create sso credential
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_identity_sip'</step>
+      </case>
+
+      <case name="SSO_create_session_google" timeout="100" description=
+        "Purpose
+	Creates account and sso credential for google service. Opens session.
+        Method
+        Uses signon-qt api to create account and sso credential for google service. Opens session.
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_session_google'</step>
+      </case>
+      <case name="SSO_create_session_facebook" timeout="100" description=
+        "Purpose
+	Creates account and sso credential for facebook service. Opens session.
+        Method
+        Uses signon-qt api to create account and sso credential for facebook service. Opens session.
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_session_facebook'</step>
+      </case>
+      <case name="SSO_create_session_ovi" timeout="100" description=
+        "Purpose
+	Creates account and sso credential for ovi service. Opens session.
+        Method
+        Uses signon-qt api to create account and sso credential for ovi service. Opens session.
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'SSO_create_session_ovi'</step>
       </case>
     </set>
   </suite>
