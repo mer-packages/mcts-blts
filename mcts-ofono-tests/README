@@ -42,14 +42,15 @@ Or
 Please refer to oFono doc for how to install it 
 (http://git.kernel.org/?p=network/ofono/ofono.git;a=tree).
 
-2. install phonesim if it is not installed yet
+there are phonesim based and real network based cases within mcts-ofono-tests
+2. for phonesim based cases, please install phonesim if it is not installed yet
 (1) yum install phonesim or zypper install phonesim
 Or
 (2) download from http://ofono.org/downloads and install it
 Please refer to phonesim doc for how to install it 
 (http://git.kernel.org/?p=network/ofono/phonesim.git;a=tree).
 
-3. Enable phonesim driver
+3. for phonesim based cases, you should Enable phonesim driver firstly
 Ensure phonesim is enabled in /etc/ofono/modem.conf:
 [phonesim]
 Driver=phonesim
@@ -59,7 +60,7 @@ Port=12345
 Note: If you want to run phonesim remotely, please replace the address with 
 the Remote Computer IP. 
 
-4. Start phonesim (as normal user):
+4. for phonesim based cases, please start phonesim (as normal user):
 # phonesim -p 12345 /usr/share/phonesim/default.xml
 
 5. Start ofono if it is not running (as root):
@@ -69,6 +70,8 @@ Enable the modem:
 # /usr/lib/ofono/test/enable-modem
 or
 # /opt/mcts-ofono-tests/test-modem poweron
+
+6. for real network based cases, please running them on real device with workable modem.
 -----------------------
 Tools
 -----------------------

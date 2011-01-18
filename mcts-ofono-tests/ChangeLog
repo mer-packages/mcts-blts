@@ -1,3 +1,6 @@
+ver 1.0.0.4
+	release smart message and wap push cases
+	cleanup tests.xml	
 ver 1.0.0.3
 	release real network(2G&3G) cases
 ver 1.0.0-2 
