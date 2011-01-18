@@ -42,7 +42,8 @@ src/modem/Makefile
 src/networking/Makefile 
 src/radio_setting/Makefile 
 src/simple_call/Makefile 
-src/ss_setting/Makefile 
+src/ss_setting/Makefile
+src/smartMessage/Makefile 
 src/voicemail/Makefile])
 AC_OUTPUT
 

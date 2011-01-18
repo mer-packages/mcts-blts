@@ -3,7 +3,7 @@
 Summary: meego core test suite for oFono component
 Name: mcts-ofono-tests
 Version: 1.0.0
-Release: 3
+Release: 4
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz
