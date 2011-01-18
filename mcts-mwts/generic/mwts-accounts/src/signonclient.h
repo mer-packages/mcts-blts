@@ -56,6 +56,7 @@ private:
 
     bool m_bSuccess; // test verdict
 
+    QStringList m_strListMechanisms;
 
     /*
      * Pointer to MwtsTest object. Needed for event loop
@@ -128,6 +129,8 @@ public slots:
      */
     void sessionError(const SignOn::Error &error);
 
+
+    void slotMechanismsAvailable(const QStringList &mechanisms);
 
 };
 
