@@ -46,6 +46,8 @@ SignonClient::SignonClient(MwtsTest *testObj) : m_testObj(testObj),
     connect(m_service, SIGNAL(identities(const QList<SignOn::IdentityInfo>& )),
         this, SLOT(identities(const QList<SignOn::IdentityInfo>& )));
 
+    connect(m_service, SIGNAL(mechanismsAvailable(const QString &, const QStringList &)),
+        this, SLOT(mechanismsAvailable(const QString &, const QStringList &)));
 
     MWTS_LEAVE;
 }
@@ -112,24 +114,12 @@ bool SignonClient::queryIdents()
 {
     MWTS_ENTER;
 
-    connect(m_service, SIGNAL(mechanismsAvailable(const QString &, const QStringList &)),
-        this, SLOT(mechanismsAvailable(const QString &, const QStringList &)));
-
-
     qDebug() << "Querying identities...";
     m_service->queryIdentities();
     m_testObj->Start();
 
     qDebug() << "Querying methods...";
     m_service->queryMethods();
-    m_testObj->Start();
-
-    qDebug() << "Querying mechanisms for facebook...";
-    m_service->queryMechanisms("facebook");
-    m_testObj->Start();
-
-    qDebug() << "Querying mechanisms for googlek...";
-    m_service->queryMechanisms("google");
     m_testObj->Start();
 
     return m_bSuccess;
@@ -166,57 +156,27 @@ int SignonClient::CreateIdentity(const QString provider)
 
     QMap<MethodName,MechanismsList> methods;
 
-    QStringList mechs = QStringList() << QString("ClientLogin");
-    //QStringList mechs = QStringList() << QString("AuthLogin");
-    //QStringList mechs = QStringList() << QString("AuthLogin") << QString("ClientLogin");
+    qDebug() << "Querying mechanisms for " << method;
+    m_service->queryMechanisms(method);
+    m_testObj->Start();
 
-    methods.insert(method, mechs);
+    qDebug() << "Mechanism available for " << method << " are: " << m_strListMechanisms;
+    methods.insert(method, this->m_strListMechanisms);
 
     // caption, username, methods
     qDebug() << "Creating new Identity with params caption: " << caption << " . username: " << username;
 
     m_info = new IdentityInfo(caption, username, methods);
 
+    // store password with identity
     m_info->setSecret(password);
-    //m_info->setSecret("test");
 
     QStringList realms = QStringList() << realm;
     //QStringList realms = QStringList() << QString::fromLatin1("google.com");
                          //<< QString::fromLatin1("example.com")
                          //<< QString::fromLatin1("example2.com");
 
-
     m_info->setRealms(realms);
-
-    /*
-    QString credName = "signon::";
-    credName += username;
-    QStringList acl = QStringList() << QString::fromLatin1("AID::10")
-                      << credName;
-                      //<< QString::fromLatin1("AID::10")
-
-    m_info->setAccessControlList(acl);
-    */
-
-    /*
-    int randomType = qrand() % 4;
-    switch (randomType) {
-    case 0:
-        m_info->setType(IdentityInfo::Other);
-        break;
-    case 1:
-        m_info->setType(IdentityInfo::Application);
-        break;
-    case 2:
-        m_info->setType(IdentityInfo::Web);
-
-        break;
-    case 3:
-
-        m_info->setType(IdentityInfo::Network);
-        break;
-
-    } */
 
     m_info->setType(IdentityInfo::Web);
 
@@ -230,7 +190,6 @@ int SignonClient::CreateIdentity(const QString provider)
 
     // save values to sso db
     m_identity->storeCredentials();
-
 
     qDebug() << "Wait for credentialStored-signal..";
     m_testObj->Start();
@@ -253,7 +212,7 @@ bool SignonClient::CreateSession(const QString name)
     QString method = g_pConfig->value(name + "/provider").toString();
     QString username = g_pConfig->value(name + "/username").toString();
     QString password = g_pConfig->value(name + "/password").toString();
-
+    QString mechanism = g_pConfig->value(name + "/mechanism").toString();
 
     // some account providers names differ with method names. A little fix here
     if(method == "ovi")
@@ -261,33 +220,37 @@ bool SignonClient::CreateSession(const QString name)
 
     qDebug() << "Seems you have created identity, so proceeding..";
 
-    qDebug() << "Method: "   << method;
-    qDebug() << "Username: " << username;
-    qDebug() << "Password: " << password;
+    qDebug() << "Method    : "  << method;
+    qDebug() << "Mechanism : "  << mechanism;
+    qDebug() << "Username  : "  << username;
+    qDebug() << "Password  : "  << password;
     qDebug() << "Identity Id is: " << m_identity->id();
 
+    if(mechanism.isNull())
+    {
+        qCritical() << "No mechanism to signin with this provider. It is not currently supported!";
+        return 0;
+    }
 
     SessionData data;
 
-    data.setSecret(password);
-    //data.setSecret("test");
-    data.setUserName(username);
-    //data.setPassWord(password);
+    //provide session with auth credentials
+    //data.setSecret(password);
+    //data.setUserName(username);
 
     // session is created based on a method name which should already be inserted to created identity
     if (!m_session) {
+
+        // start timer
+        g_pTime->start();
+
         m_session=m_identity->createSession(method);
 
         qDebug() << "Session object created.....look UI!";
-        qDebug() << "METHOD: " << m_session->name();
+        qDebug() << "Method is                   : " << m_session->name();
+        qDebug() << "Authentication mechanism is : " << mechanism;
 
-
-        m_session->queryAvailableMechanisms();
-
-        connect(m_session, SIGNAL(mechanismsAvailable(const QStringList &)),
-            this, SLOT(slotMechanismsAvailable(const QStringList &)));
-
-        m_testObj->Start();
+        //m_testObj->Start();
 
         connect(m_session, SIGNAL(response(const SignOn::SessionData&)),
             this, SLOT(response(const SignOn::SessionData&)));
@@ -299,8 +262,8 @@ bool SignonClient::CreateSession(const QString name)
             this, SLOT(slotStateChanged(AuthSession::AuthSessionState, const QString &)));
 
     }
-
-    m_session->process(data , QLatin1String("ClientLogin"));
+    m_session->process(data , mechanism);
+    //m_session->process(data , QLatin1String("signin"));
 
     m_testObj->Start();
 
@@ -403,6 +366,8 @@ void SignonClient::mechanismsAvailable(const QString &method, const QStringList 
         qDebug() << mechs.at(i).toLocal8Bit().constData() << endl;
     }
 
+    this->m_strListMechanisms << mechs;
+
     MWTS_LEAVE;
     return;
 }
@@ -455,6 +420,11 @@ void SignonClient::response(const SessionData &sessionData)
 
     // we got session response, test passes
     m_bSuccess = true;
+
+    double elapsed=g_pTime->elapsed();
+    qDebug() << "Signon response took: " << elapsed << " ms";
+
+    g_pResult->AddMeasure("SignOn latency: ", elapsed, "ms");
 
     qDebug("Got session response.");
     MWTS_LEAVE;
