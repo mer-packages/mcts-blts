@@ -28,7 +28,7 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 import time
 from common import *
-dev = WiFiDevice()
+dev = WiFiGuestDevice()
 dev.ifconfigDown()
 time.sleep(2)
 ret = dev.ifconfigUP()
