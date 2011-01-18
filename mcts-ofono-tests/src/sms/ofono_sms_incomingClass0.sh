@@ -15,27 +15,25 @@
 # Place - Suite 330, Boston, MA 02111-1307 USA.
 #
 # Authors:
-#       Li,Zhigang  <zhigang.li@intel.com>
+#       Li,Lily  <li.l.li@intel.com>
 #
+#
+#!/bin/sh
 
-BASE_DIR=`dirname $0`
-cd ${BASE_DIR}
+baseDir=$(cd "$(dirname "$0")";pwd)
+echo $baseDir
 
-#./test-simple-voicecall dial 177
-./ofono_incomingCall.sh
 
-sleep 3 
+dbus-send --session --print-reply --dest=org.ofono.phonesim / org.ofono.phonesim.Script.SetPath string:${baseDir}
 
-./test-simple-voicecall answer
+dbus-send --session --print-reply --dest=org.ofono.phonesim / org.ofono.phonesim.Script.Run string:smsClass0.js
 
-sleep 2
 
-./test-simple-voicecall senddtmf 9
+
 
 if [ $? -ne 0 ]; then
-	echo "error when send dtmf during call"
+	echo "error in incoming sms"
 	exit 1
 else
-	./test-simple-voicecall hangup
 	exit 0
 fi

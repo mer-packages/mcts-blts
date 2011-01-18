@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 2008-2010, Intel Corporation.
+# Copyright (C) 2008, Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -17,25 +17,25 @@
 # Authors:
 #       Li,Zhigang  <zhigang.li@intel.com>
 #
+#
 
 BASE_DIR=`dirname $0`
 cd ${BASE_DIR}
 
-#./test-simple-voicecall dial 177
-./ofono_incomingCall.sh
-
-sleep 3 
-
-./test-simple-voicecall answer
+./test-receive-message &
 
 sleep 2
 
-./test-simple-voicecall senddtmf 9
+./ofono_sms_incomingClass3.sh
+
+sleep 8
+
+killall test-receive-message
+
 
 if [ $? -ne 0 ]; then
-	echo "error when send dtmf during call"
+	echo "error in receive message"
 	exit 1
 else
-	./test-simple-voicecall hangup
 	exit 0
 fi
