@@ -1,0 +1,6 @@
+* Thu 02 Dec 2010 Arto Katajasalo <arto.katajasalo@digia.com> - 0.0.2
+- Contacts, Organizer, and Versit APIs separated to own classes. Min scripter interface modified. NFT test cases added. Input data moved to PimTest.conf.  
+
+* Fri 26 Nov 2010 Arto Katajasalo <arto.katajasalo@digia.com> - 0.0.1
+- Initial version
+

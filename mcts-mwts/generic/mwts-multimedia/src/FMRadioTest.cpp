@@ -46,6 +46,8 @@ void FMRadioTest::OnInitialize()
     freq = g_pConfig->value("FMRADIO/frequency").toInt();
     duration = g_pConfig->value("FMRADIO/duration").toInt();; 
 
+    radio = NULL;
+
     MWTS_LEAVE;
 }
 
@@ -81,9 +83,15 @@ void FMRadioTest::SetFrequency(int freq)
         radio->setBand(QRadioTuner::FM);
 
     if (radio->isAvailable())
+    {
         qDebug() << "No Signal";
+    }
     else
-        qDebug() << "No radio found";
+    {
+        qCritical() << "No radio found";
+        g_pResult->StepPassed("No radio found!", false);
+    }
+
 
     radio->setFrequency(freq);
 

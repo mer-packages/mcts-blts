@@ -200,11 +200,12 @@ bool BluetoothObex::SendFile()
 	qDebug() << "file:" << m_sFilePath;
 	QVariantMap target;
 	target.insert("Destination",m_sHost);
-	QList<QVariant> argumentList;
+        QList<QVariant> argumentList;
 	argumentList << qVariantFromValue(target)
 				 << qVariantFromValue(QStringList(m_sFilePath))
 				 << qVariantFromValue(QDBusObjectPath(m_pClientAgent->Path()));
-	qDebug() << "Send files";
+        qDebug() << "Argument list: " << argumentList;
+        qDebug() << "Send files";
 	m_pClient->callWithArgumentList(QDBus::BlockWithGui, QLatin1String("SendFiles"),argumentList);
 	qDebug() << "Client:" << m_pClient->lastError().message();
 

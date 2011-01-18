@@ -5,7 +5,7 @@
 
 INTRODUCTION
 
-mwts-multimedia s a test package aimed for testing basic functionalities of Qt Mobility Multimedia. mwts-multimedia contains tests for:
+mwts-multimedia test package aimed for testing basic functionalities of Qt Mobility Multimedia. mwts-multimedia contains tests for:
     Audio recorder. Tests are designed to address:
         - various codecs
         - various input device
@@ -57,6 +57,9 @@ For fm radio test cases
 For audio player test cases
     Please note that test data (WAV, OGG files) should be provided.
 
+DATA FILES
+
+The data files for the test cases are/will available here: http://testdata.meego.com/p/d/meego_qa/media/index.html
 
 EXECUTING TESTS
 

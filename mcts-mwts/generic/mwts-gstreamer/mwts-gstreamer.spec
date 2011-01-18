@@ -1,13 +1,13 @@
 # spec file for mwts-gstreamer
 
 #%define release		0
-%define buildroot	%{_topdir}/%{name}-%{version}-root
+%define buildroot	%{_topdir}/%{name}-%{version}-%{release}-root
 
 BuildRoot:	%{buildroot}
 Summary: 	Test libraries for GStreamer.
 License: 	LGPL
-Name: 		%{name}
-Version: 	0.0.5
+Name: 		mwts-gstreamer
+Version: 	1.0.0
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
@@ -17,24 +17,24 @@ Source: 	%{name}-%{version}.tar.gz
 %description
 Test libraries for GStreamer.
 
-%package	scripts-generic
+%package	generic-tests
 Summary:	Test cases for GStreamer.
 Prefix: 	/usr
 Group: 		Development/Tools
 Requires:	mwts-gstreamer
-%description	scripts-generic
+%description	generic-tests
 MIN test cases for measuring performance and reliability
 
-%package        config-generic
+%package        generic-config
 Summary:       	Generic configuration file for mwts-gstreamer
 Requires:       mwts-gstreamer
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-gstreamer
 
-%package	all-generic
+%package	generic-all
 Summary:	meta package containing everything for mwts-gstreamer (generic)
-Requires:	mwts-gstreamer, mwts-gstreamer-scripts-generic, mwts-gstreamer-config-generic
-%description	all-generic
+Requires:	mwts-gstreamer, mwts-gstreamer-generic-tests, mwts-gstreamer-generic-config
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-gstreamer
 
 %prep
@@ -51,21 +51,21 @@ make install INSTALL_ROOT=%{buildroot}
 %doc README
 %doc doc/MWTS.README
 /usr/lib/*.so*
-/usr/lib/min/*.so*
+/usr/lib/min/*.so
 /usr/lib/tests/*
 
-%files scripts-generic
+%files generic-tests
 /etc/min.d/mwts-gstreamer.min.conf
-/usr/share/mwts-gstreamer-scripts/tests.xml
+/usr/share/mwts-gstreamer-tests/tests.xml
 /usr/lib/min/*.cfg
 
-%files config-generic
+%files generic-config
 /usr/lib/tests/*
 
-%files all-generic
+%files generic-all
 
-%changelog
-* Wed Sep 22 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> 0.0.5
-- MeeGo Audio and Video test cases added
-- MeeGo support
+%post
+ldconfig
 
+%postun
+ldconfig

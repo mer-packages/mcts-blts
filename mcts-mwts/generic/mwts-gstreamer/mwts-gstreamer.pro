@@ -15,5 +15,5 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = scripts/tests.xml
-TESTS.path = /usr/share/mwts-gstreamer-scripts
+TESTS.path = /usr/share/mwts-gstreamer-tests
 INSTALLS += TESTS

@@ -1,7 +1,7 @@
 Source: mwts-accounts-tests
 Section: libs
 Priority: optional
-Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev
+Build-Depends: libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libaccounts-qt-dev, libaccounts-qt1, libsignon-qt0, libsignon-qt-dev
 Maintainer: Reijo Korhonen <reijo.korhonen@digia.com>
 Standards-Version: 3.8.0
 

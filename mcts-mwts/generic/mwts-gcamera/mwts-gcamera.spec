@@ -6,7 +6,7 @@
 BuildRoot:	%{buildroot}
 Summary: 	Test libraries for camera over gstreamer
 License: 	LGPL
-Name: 		%{name}
+Name: 		mwts-gcamera
 Version: 	0.0.1
 Release: 	%{release}
 Prefix: 	/usr
@@ -17,24 +17,24 @@ Source: 	%{name}-%{version}.tar.gz
 %description
 Test cases for camera over gstreamer
 
-%package	scripts-generic
+%package	generic-tests
 Summary:	Test cases for camera over gstreamer
 Prefix: 	/usr
 Group: 		Development/Tools
 Requires:	mwts-gcamera
-%description	scripts-generic
+%description	generic-tests
 MIN test cases for measuring performance and reliability
 
-%package        config-generic
+%package        generic-config
 Summary:       	Generic configuration file for mwts-gcamera
 Requires:       mwts-gcamera
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-gcamera
 
-%package	all-generic
+%package	generic-all
 Summary:	meta package containing everything for mwts-gcamera (generic)
-Requires:	mwts-gcamera, mwts-gcamera-scripts-generic, mwts-gcamera-config-generic
-%description	all-generic
+Requires:	mwts-gcamera, mwts-gcamera-generic-tests, mwts-gcamera-generic-config
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-gcamera
 
 %prep
@@ -51,20 +51,23 @@ make install INSTALL_ROOT=%{buildroot}
 %doc README
 %doc doc/MWTS.README
 /usr/lib/*.so*
-/usr/lib/min/*.so*
+/usr/lib/min/*.so
 /usr/lib/tests/*
 
-%files scripts-generic
+%files generic-tests
 /etc/min.d/mwts-gcamera.min.conf
-/usr/share/mwts-gcamera-scripts/tests.xml
+/usr/share/mwts-gcamera-tests/tests.xml
 /usr/lib/min/*.cfg
 
-%files config-generic
+%files generic-config
 /usr/lib/tests/*
 
-%files all-generic
+%files generic-all
 
-%changelog
-* Tue Nov 2 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
-- Intial version
+%post
+ldconfig
+
+%postun
+ldconfig
+
 

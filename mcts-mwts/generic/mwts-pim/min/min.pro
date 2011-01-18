@@ -2,7 +2,7 @@ TARGET = min-mwts-pim
 TEMPLATE = lib
 VERSION = 0.0.2
 
-CONFIG += dll
+CONFIG += plugin
 CONFIG += warn_on
 CONFIG += debug
 
@@ -33,10 +33,6 @@ INSTALLS += MIN_SCRIPTS
 TESTS.files = data/tests.xml
 TESTS.path = /usr/share/mwts-pim-tests
 INSTALLS += TESTS
-
-ALLTESTS.files = data/alltests.xml
-ALLTESTS.path = /usr/share/mwts-pim-scripts
-INSTALLS += ALLTESTS
 
 target.path = /usr/lib/min
 INSTALLS += target

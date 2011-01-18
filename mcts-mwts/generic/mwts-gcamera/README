@@ -75,10 +75,10 @@ MIN SCRIPTER INTERFACE
     set beforehand.
 
   TakeVideo <seconds>
-    Start recording a video with given duration in seconds. Everything has to be set beforhand.
+    Start recording a video with given duration in seconds. Everything has to be set beforehand.
 
   TakePicture
-    Takes a picture, it can be called once or more times if needed. Everything has to be set beforhand.
+    Takes a picture, it can be called once or more times if needed. Everything has to be set beforehand.
 
   SetFPSMeasure
     Measure framerate when and output to the results

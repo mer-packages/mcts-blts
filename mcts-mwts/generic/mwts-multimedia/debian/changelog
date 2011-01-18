@@ -1,6 +1,10 @@
-mwts-multimedia-tests (0.2) unstable; urgency=low
+mwts-multimedia (0.1.0) unstable; urgency=low
+  * Added playback functionality
+  * Codecs and containters setting moved to .conf file
+  * added new test cases
+ -- Jan Grela <jan.grela@digia.com>  Thu, 09 Dec 2010 16:26:00 +0300
+
+mwts-multimedia (0.0.1) unstable; urgency=low
   * Initial version for qt-mobility
-
  -- Balazs Sipos <balazs.sipos@digia.com>  Tue, 29 Sep 2010 15:35:00 +0300
-
 

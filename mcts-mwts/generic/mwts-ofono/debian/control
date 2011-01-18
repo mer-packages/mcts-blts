@@ -1,0 +1,20 @@
+Source: mwts-ofono
+Section: libs
+Priority: optional
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, ofono-dev
+Maintainer: Balazs Sipos <balazs.sipos@digia.com>
+Standards-Version: 3.8.0
+
+Package: mwts-ofono
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0), ofono, ofono-phonesim
+Description: Testing libraries for MIN
+ MIN libraries for mwts-ofono
+
+Package: mwts-ofono-cripts
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, mwts-ofono, min
+Description: Test cases for ofono-qt
+ Test case files for mwts-ofono

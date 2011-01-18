@@ -230,6 +230,32 @@
             ">
         <step>min -c -t 'FUTE-BT-Obex_receive-MS' -s 192.168.3.15</step>
       </case>
+      <case name="FUTE-BT-Headset_Pairing_On" subfeature="Pairing" timeout="180" description=
+            "Purpose
+            Pairs device and headset, pairing is left on for FIT purposes. Use FUTE-BT-Headset_Pairing_Off to remove pairing.
+            Method
+            Test case uses libbluetooth3 library and DBUS-API.
+            Pre-/Post-Conditions
+            Both devices in pairable mode. headset_mac used from configuration.
+            Pass/Fail Criteria
+            Devices connect, pair, and audio is routed.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-Headset_Pairing_On'</step>
+      </case>
+      <case name="FUTE-BT-Headset_Pairing_Off" subfeature="Pairing" timeout="180" description=
+            "Purpose
+            Disconnects and removes pairing.
+            Method
+            Test case uses libbluetooth3 library and DBUS-API.
+            Pre-/Post-Conditions
+            Devices are paired. Use FUTE-BT-Headset_Pairing_On for that.
+            Pass/Fail Criteria
+            Devices disconnect and pairing is removed.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'FUTE-BT-Headset_Pairing_Off'</step>
+      </case>
     </set>
 
 <!--This set contains ITERATIVE test cases from mwts-bluetooth-nft.cfg-->
@@ -368,6 +394,58 @@
             ">
         <step>min -c -t 'NFT-BT-L2CAP_Receive_10MB-THRO-MS' -s 192.168.3.15</step>
       </case>
+      <case name="NFT-BT-L2CAP_Send_1MB-THRO-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Send side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+       <step>min -c -t 'NFT-BT-L2CAP_Send_1MB-THRO-MS' -s 192.168.3.15</step>
+       </case>
+       <case name="NFT-BT-L2CAP_Send_50KB-THRO-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Send side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+      <step>min -c -t 'NFT-BT-L2CAP_Send_50KB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-L2CAP_Receive_1MB-THRO-MS" subfeature="Receive" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Receive side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, receiving is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Receive_1MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-L2CAP_Receive_50KB-THRO-MS" subfeature="Receive" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth L2CAP Receive side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, receiving is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-L2CAP_Receive_50KB-THRO-MS' -s 192.168.3.15</step>
+      </case>
       <case name="NFT-BT-RfComm_Send_10MB-THRO-MS" subfeature="Send" timeout="1800" description=
             "Purpose
             Test basic Bluetooth RfComm Send side performance, master-slave
@@ -394,6 +472,58 @@
             ">
         <step>min -c -t 'NFT-BT-RfComm_Receive_10MB-THRO-MS' -s 192.168.3.15</step>
       </case>
+      <case name="NFT-BT-RfComm_Send_1MB-THRO-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Send side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Send_1MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Send_50KB-THRO-MS" subfeature="Send" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Send side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, sending is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Send_50KB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Receive_1MB-THRO-MS" subfeature="Receive" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Receive side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, receiving is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Receive_1MB-THRO-MS' -s 192.168.3.15</step>
+      </case>
+      <case name="NFT-BT-RfComm_Receive_50KB-THRO-MS" subfeature="Receive" timeout="1800" description=
+            "Purpose
+            Test basic Bluetooth RfComm Receive side performance, master-slave
+            Method
+            Test case uses libbluetooth3 library and C-API, receiving is made 7 times, average and median calculated.
+            Pre-/Post-Conditions
+            Master - Slave set up. Slave IP 192.168.3.15 expected.
+            Pass/Fail Criteria
+            All data is transferred in all iterations.
+            Test case result can be found from /var/log/tests
+            ">
+        <step>min -c -t 'NFT-BT-RfComm_Receive_50KB-THRO-MS' -s 192.168.3.15</step>
+      </case>
       <case name="NFT-BT-Obex_send_10MB-THRO-MS" subfeature="Send" timeout="180" description=
             "Purpose
             Throughput test for transfering a file between two devices, using Obex protocol.
@@ -409,7 +539,7 @@
             ">
         <step>min -c -t 'NFT-BT-Obex_send_10MB-THRO-MS' -s 192.168.3.15</step>
       </case>
-      <case name="NFT-BT-Obex_receive-THRO-MS" subfeature="Receive" timeout="180" description=
+      <case name="NFT-BT-Obex_receive_10MB-THRO-MS" subfeature="Receive" timeout="180" description=
             "Purpose
             Throughput test for transfering a file between two devices, using Obex protocol.
             Method
@@ -422,7 +552,7 @@
             Test case result can be found from /var/log/tests
             Transferred file can be found form /var/log/tests/data/
             ">
-        <step>min -c -t 'NFT-BT-Obex_receive-THRO-MS' -s 192.168.3.15</step>
+        <step>min -c -t 'NFT-BT-Obex_receive_10MB-THRO-MS' -s 192.168.3.15</step>
       </case>
   </set>
 <!--This set contains LONG-LASTING test cases from mwts-bluetooth-nft.cfg-->
@@ -456,9 +586,9 @@
     </set>
 <!--This set contains LATENCY test cases from mwts-bluetooth-nft.cfg-->
     <set name="Latency_Tests" description="Latency test cases for Bluetooth" feature="BT" type="Latency">
-      <case name="NFT-BT_Power_on-LATE" subfeature="Power" timeout="180" description="
-            Test basic power on latency of Bluetooth device
-            Method
+       <case name="NFT-BT-Power_on-LATE" subfeature="Power" timeout="180" description=
+            "Purpose
+	    Test basic power on latency of Bluetooth device. 
             Test case uses libbluetooth3 library and DBUS-API.
             50 measurements taken, mean average displayed.
             Pre-/Post-Conditions
@@ -467,9 +597,9 @@
             Device power mode change latency measured succesfully. 
             Test case result can be found from /var/log/tests
             ">
-        <step>min -c -t 'NFT-BT_Power_on-LATE'</step>
+        <step>min -c -t 'NFT-BT-Power_on-LATE'</step>
       </case>
-      <case name="NFT-BT_Power_off-LATE" subfeature="Power" timeout="180" description=
+      <case name="NFT-BT-Power_off-LATE" subfeature="Power" timeout="180" description=
             "Purpose
             Test basic power off latency of Bluetooth device
             Method
@@ -481,7 +611,7 @@
             Device power mode change latency measured succesfully. 
             Test case result can be found from /var/log/tests
             ">
-        <step>min -c -t 'NFT-BT_Power_off-LATE'</step>
+        <step>min -c -t 'NFT-BT-Power_off-LATE'</step>
       </case>
     </set>
   </suite>

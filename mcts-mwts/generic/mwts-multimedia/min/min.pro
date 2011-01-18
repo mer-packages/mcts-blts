@@ -2,7 +2,7 @@ TARGET = min-mwts-multimedia
 TEMPLATE = lib
 VERSION = 0.0.1
 
-CONFIG += dll
+CONFIG += plugin
 CONFIG += warn_on
 CONFIG += debug
 CONFIG += mobility
