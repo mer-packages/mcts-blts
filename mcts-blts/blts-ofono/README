@@ -283,6 +283,13 @@ Call meter cases:
          be changed from configuration file. 
 
 
+ * oFono - Change Radio Access Technology
+         Change Radio Technology of the device. Values to
+         use are either "any", "lte", "umts" or "gsm" as
+         specified it oFono. Values and timeouts can
+         be changed from configuration file. 
+
+
 General cases:
 
  * oFono - Information Query

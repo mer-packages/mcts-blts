@@ -186,7 +186,12 @@
 	  <case name="oFono - Change Radio Access Technology"
         type="Functional">
 		<step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono_-_Change_Radio_Access_Technology.log -en "oFono - Change Radio Access Technology"</step>
+	  </case>	  
+	  <case name="oFono - Change Radio Access Technology"
+        type="Functional">
+		<step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono_-_Change_Radio_Access_Technology.log -en "oFono - Change Radio Access Technology"</step>
 	  </case>
+	  
 	  
 
       <get>
