@@ -37,6 +37,8 @@ ENVIRONMENT REQUIREMENTS
   This test asset has been developed usaging phonesim simulator or ncdk (when it worked)
   on netbook meego image.
 
+  Beside mwts log, you might want to use '/usr/lib/ofono/test/monitor-ofono' to monitor the steps.
+
 
 EXECUTING TESTS
 
@@ -92,32 +94,52 @@ MIN SCRIPTER INTERFACE
   SimInfo 
 	Prints info about the sim card (locked pin names, pin required)
 
-  TODO comment, usage
   #voice call forwarding
-  EnableVoiceCallBusy
+  EnableVoiceCallBusy [telephone number]
+    Enables the value of the voice "Busy" call forwarding rule
+
   DisableVoiceCallBusy
+    Disables the voice "Busy" call forwarding rule, by setting to the value to empty
 
-  EnableVoiceCallNoReply
+  EnableVoiceCallNoReply [telephone number]
+    Enables the value of the voice "No Reply" call forwarding rule.
+
   DisableVoiceCallNoReply
+    Disables the voice "NoReply" call forwarding rule, by setting to the value to empty
 
-  EnableVoiceCallNotReachable
+  EnableVoiceCallNotReachable [telephone number]
+    Enables the value of the voice "Not Reachable" callforwarding rule.
+
   DisableVoiceCallNotReachable
+    Disables the voice "NotReachable" call forwarding rule, by setting to the value to empty
 
-  EnableVoiceCallUnconditional
+  EnableVoiceCallUnconditional [telephone number]
+    Enables the value of the voice unconditional call forwarding property
+
   DisableVoiceCallUnconditional
+    Disables the voice "Unconditional" call forwarding rule, by setting to the value to empty
 
   DisableVoiceCallForwarding
+    Disables all the voice call forwarding rules.
 
   #voice call waiting (settings)
   EnableVoiceCallWaiting
+    Enables the call voice call waiting
   DisableVoiceCallWaiting
+    Disables the call voice call waiting
 
   #voice call barring
-  EnableVoiceCallOutgoing
-  DisabelVoiceCallOutgoing
+  EnableVoiceCallOutgoing [all|international|internationalnothome] [pin code]
+    Enables the voice call barring to outgoing calls
 
-  EnableVoiceCallIncoming
-  DisableVoiceCallIncoming
+  DisableVoiceCallOutgoing [pin code]
+    Disables the barring to outgoing voice calls
+
+  EnableVoiceCallIncoming [always|whenroaming] [pin code]
+    Enables the barring to incoming voice calls
+
+  DisableVoiceCallIncoming [pin code]
+    Disables the barring to incoming voice calls
 
 
 KNOWN ISSUES

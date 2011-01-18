@@ -369,8 +369,9 @@ LOCAL int SimInfo(__attribute__((unused)) MinItemParser * item)
 }
 
 /**
- * Contains the value of the voice "Busy" call forwarding rule
- * @param property is the telephone number value
+ * Enables the value of the voice "Busy" call forwarding rule
+ * Usage: EnableVoiceCallBusy [telephone number]
+ * @param telephone number value starting like 050596121 (not +358, instead 00)
  * @return ENOERR
  */
 LOCAL int EnableVoiceCallBusy(MinItemParser * item)
@@ -393,7 +394,7 @@ LOCAL int EnableVoiceCallBusy(MinItemParser * item)
 
 /**
  * Disables the voice "Busy" call forwarding rule, by setting to the value to empty
- * @return ENOERR
+ * Usage: DisableVoiceCallBusy
  */
 LOCAL int DisableVoiceCallBusy(__attribute__((unused))MinItemParser * item)
 {
@@ -405,8 +406,9 @@ LOCAL int DisableVoiceCallBusy(__attribute__((unused))MinItemParser * item)
 }
 
 /**
- * Contains the value of the voice "No Reply" call forwarding rule.
- * @param property is the telephone number value
+ * Enables the value of the voice "No Reply" call forwarding rule.
+ * Usage: EnableVoiceCallNoReply [telephone number]
+ * @param telephone number value starting like 050596121 (not +358, instead 00)
  * @return ENOERR
  */
 LOCAL int EnableVoiceCallNoReply(MinItemParser * item)
@@ -441,8 +443,9 @@ LOCAL int DisableVoiceCallNoReply(__attribute__((unused))MinItemParser * item)
 }
 
 /**
- * Contains the value of the voice "Not Reachable" callforwarding rule.
- * @param property is the telephone number value
+ * Enables the value of the voice "Not Reachable" call forwarding rule.
+ * Usage: EnableVoiceCallNotReachable [telephone number]
+ * @param telephone number value starting like 050596121 (not +358, instead 00)
  * @return ENOERR
  */
 LOCAL int EnableVoiceCallNotReachable(MinItemParser * item)
@@ -476,11 +479,9 @@ LOCAL int DisableVoiceCallNotReachable(__attribute__((unused))MinItemParser * it
 }
 
 /**
- * Contains the value of the voice unconditional call
- * forwarding property. If the value is an empty string,
- * then this call forwarding rule is not active.  Otherwise
- * the rule is active with the string value as the phone number.
- * @param property is the telephone number value
+ * Enables the value of the voice unconditional call forwarding property.
+ * Usage: EnableVoiceCallUnconditional [telephone number]
+ * @param telephone number value starting like 050596121 (not +358, instead 00)
  * @return ENOERR
  */
 LOCAL int EnableVoiceCallUnconditional(MinItemParser * item)
@@ -515,7 +516,10 @@ LOCAL int DisableVoiceCallUnconditional(__attribute__((unused))MinItemParser * i
     return ENOERR;
 }
 
-//TODO comment
+/**
+ * Disables all the voice call forwarding rules.
+ * @return ENOERR
+ */
 LOCAL int DisableVoiceCallForwarding(MinItemParser * item)
 {
     MWTS_ENTER;
