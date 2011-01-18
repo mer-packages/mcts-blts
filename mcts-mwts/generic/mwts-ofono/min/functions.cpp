@@ -67,7 +67,7 @@ LOCAL int ChangePin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->changePin(pinType, oldPin, newPin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(oldPin);
@@ -105,7 +105,7 @@ LOCAL int ResetPin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->resetPin(pinType, puk, newPin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(puk);
@@ -147,7 +147,7 @@ LOCAL int EnablePin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->enablePin(pinType, pin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(pin);
@@ -184,7 +184,7 @@ LOCAL int DisablePin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->disablePin(pinType, pin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(pin);
@@ -220,7 +220,7 @@ LOCAL int VerifyPin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->verifyPin("valid", pinType, pin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(pin);
@@ -256,7 +256,7 @@ LOCAL int VerifyInvalidPin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->verifyPin("invalid", pinType, pin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(pin);
@@ -286,7 +286,7 @@ LOCAL int VerifyPuk(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->verifyPuk("valid", puk);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(puk);
 
@@ -315,7 +315,7 @@ LOCAL int VerifyInvalidPuk(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->verifyPuk("invalid", puk);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(puk);
 
@@ -349,7 +349,7 @@ LOCAL int EnterPin(MinItemParser * item)
     }
 
     result = test.mSimManagerTest->enterPin(pinType, pin);
-    g_pResult->StepPassed( __PRETTY_FUNCTION__, result);
+    g_pResult->StepPassed( __FUNCTION__, result);
 
     free(pinType);
     free(pin);
@@ -364,9 +364,312 @@ LOCAL int EnterPin(MinItemParser * item)
 LOCAL int SimInfo(__attribute__((unused)) MinItemParser * item)
 {
     MWTS_ENTER;
-
     test.mSimManagerTest->simInfo();
+    return ENOERR;
+}
 
+/**
+ * Contains the value of the voice "Busy" call forwarding rule
+ * @param property is the telephone number value
+ * @return ENOERR
+ */
+LOCAL int EnableVoiceCallBusy(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *property = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &property ))
+    {
+        qCritical() << "could not parse property";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallBusy(property));
+    free(property);
+    return ENOERR;
+}
+
+/**
+ * Disables the voice "Busy" call forwarding rule, by setting to the value to empty
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallBusy(__attribute__((unused))MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallBusy(""));
+    return ENOERR;
+}
+
+/**
+ * Contains the value of the voice "No Reply" call forwarding rule.
+ * @param property is the telephone number value
+ * @return ENOERR
+ */
+LOCAL int EnableVoiceCallNoReply(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *property = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &property ))
+    {
+        qCritical() << "could not parse property";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallNoReply(property));
+    free(property);
+    return ENOERR;
+}
+
+/**
+ * Disables the voice "NoReply" call forwarding rule, by setting to the value to empty
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallNoReply(__attribute__((unused))MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallNoReply(""));
+    return ENOERR;
+}
+
+/**
+ * Contains the value of the voice "Not Reachable" callforwarding rule.
+ * @param property is the telephone number value
+ * @return ENOERR
+ */
+LOCAL int EnableVoiceCallNotReachable(MinItemParser * item)
+{
+    MWTS_ENTER;
+    char *property = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &property ))
+    {
+        qCritical() << "could not parse property";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallNotReachable(property));
+    free(property);
+    return ENOERR;
+}
+
+/**
+ * Disables the voice "NotReachable" call forwarding rule, by setting to the value to empty
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallNotReachable(__attribute__((unused))MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallNotReachable(""));
+    return ENOERR;
+}
+
+/**
+ * Contains the value of the voice unconditional call
+ * forwarding property. If the value is an empty string,
+ * then this call forwarding rule is not active.  Otherwise
+ * the rule is active with the string value as the phone number.
+ * @param property is the telephone number value
+ * @return ENOERR
+ */
+LOCAL int EnableVoiceCallUnconditional(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *property = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &property ))
+    {
+        qCritical() << "could not parse property";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallUnconditional(property));
+
+    free(property);
+    return ENOERR;
+}
+
+/**
+ * Disables the voice "Unconditional" call forwarding rule, by setting to the value to empty
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallUnconditional(__attribute__((unused))MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallUnconditional(""));
+    return ENOERR;
+}
+
+//TODO comment
+LOCAL int DisableVoiceCallForwarding(MinItemParser * item)
+{
+    MWTS_ENTER;
+    char *type = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &type ))
+    {
+        qCritical() << "could not parse type parameter";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->disableAll(type));
+
+    free (type);
+    return ENOERR;
+}
+
+/**
+ * Enables the call voice call waiting
+ * @return ENOERR
+ */
+
+LOCAL int EnableVoiceCallWaiting(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallWaiting("enabled"));
+
+    return ENOERR;
+}
+
+/**
+ * Disables the call voice call waiting
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallWaiting(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallWaiting("disabled"));
+
+    return ENOERR;
+}
+
+/**
+ * Enables the voice call barring to outgoing calls
+ * Usage: EnableVoiceCallOutgoing [all|international|internationalnothome] [pin code]
+ * @param all|international|internationalnothome, pin code
+ * @return ENOERR
+ */
+LOCAL int EnableVoiceCallOutgoing(MinItemParser * item)
+{
+    MWTS_ENTER;
+    char *type = NULL;
+    char *pin = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &type ))
+    {
+        qCritical() << "could not parse barring type parameter";
+        return EINVAL;
+    }
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse pin parameter";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallOutgoing(type, pin));
+
+    free (type);
+    free (pin);
+    return ENOERR;
+}
+
+/**
+ * Disables the barring to outgoing voice calls
+ * Usage: DisableVoiceCallOutgoing [pin code]
+ * @param pin code
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallOutgoing(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+    char *pin = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse pin parameter";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallOutgoing("disabled", pin));
+
+    free (pin);
+    return ENOERR;
+}
+
+/**
+ * Enables the barring to incoming voice calls
+ * Usage: EnableVoiceCallIncoming [always|whenroaming] [pin code]
+ * @param always|whenroaming, pin code
+ * @return ENOERR
+ */
+LOCAL int EnableVoiceCallIncoming(MinItemParser * item)
+{
+    MWTS_ENTER;
+    char *type = NULL;
+    char *pin = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &type ))
+    {
+        qCritical() << "could not parse barring type parameter";
+        return EINVAL;
+    }
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse pin parameter";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallIncoming(type, pin));
+
+    free (type);
+    free (pin);
+    return ENOERR;
+}
+
+/**
+ * Disables the barring to incoming voice calls
+ * Usage: DisableVoiceCallIncoming [pin code]
+ * @param pin code
+ * @return ENOERR
+ */
+LOCAL int DisableVoiceCallIncoming(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+    char *pin = NULL;
+
+    if (ENOERR != mip_get_next_string( item, &pin ))
+    {
+        qCritical() << "could not parse pin parameter";
+        return EINVAL;
+    }
+
+    g_pResult->StepPassed( __FUNCTION__,
+                           test.mVoiceCallTest->setVoiceCallIncoming("disabled", pin));
+
+    free (pin);
     return ENOERR;
 }
 
@@ -379,19 +682,43 @@ int ts_get_test_cases( DLList** list )
     // declare common functions like Init, Close..
     MwtsMin::DeclareFunctions(list);
 
+    //sim manager test
     ENTRYTC(*list,"ChangePin", ChangePin);
     ENTRYTC(*list,"EnablePin", EnablePin);
     ENTRYTC(*list,"DisablePin", DisablePin);
     ENTRYTC(*list,"EnterPin", EnterPin);
     ENTRYTC(*list,"ResetPin", ResetPin);
-
     ENTRYTC(*list,"VerifyPin", VerifyPin);
     ENTRYTC(*list,"VerifyInvalidPin", VerifyInvalidPin);
-
     ENTRYTC(*list,"VerifyPuk", VerifyPuk);
     ENTRYTC(*list,"VerifyInvalidPuk", VerifyInvalidPuk);
-
     ENTRYTC(*list,"SimInfo", SimInfo);
+
+    //voice call forwarding
+    ENTRYTC(*list,"EnableVoiceCallBusy", EnableVoiceCallBusy);
+    ENTRYTC(*list,"DisableVoiceCallBusy", DisableVoiceCallBusy);
+
+    ENTRYTC(*list,"EnableVoiceCallNoReply", EnableVoiceCallNoReply);
+    ENTRYTC(*list,"DisableVoiceCallNoReply", DisableVoiceCallNoReply);
+
+    ENTRYTC(*list,"EnableVoiceCallNotReachable", EnableVoiceCallNotReachable);
+    ENTRYTC(*list,"DisableVoiceCallNotReachable", DisableVoiceCallNotReachable);
+
+    ENTRYTC(*list,"EnableVoiceCallUnconditional", EnableVoiceCallUnconditional);
+    ENTRYTC(*list,"DisableVoiceCallUnconditional", DisableVoiceCallUnconditional);
+
+    ENTRYTC(*list,"DisableVoiceCallForwarding", DisableVoiceCallForwarding);
+
+    //voice call settings
+    ENTRYTC(*list,"EnableVoiceCallWaiting", EnableVoiceCallWaiting);
+    ENTRYTC(*list,"DisableVoiceCallWaiting", DisableVoiceCallWaiting);
+
+    //voice call barring
+    ENTRYTC(*list,"EnableVoiceCallOutgoing", EnableVoiceCallOutgoing);
+    ENTRYTC(*list,"DisableVoiceCallOutgoing", DisableVoiceCallOutgoing);
+
+    ENTRYTC(*list,"EnableVoiceCallIncoming", EnableVoiceCallIncoming);
+    ENTRYTC(*list,"DisableVoiceCallIncoming", DisableVoiceCallIncoming);
 
     return ENOERR;
 
