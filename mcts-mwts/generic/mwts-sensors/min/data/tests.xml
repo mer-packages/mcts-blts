@@ -14,6 +14,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_accelerometer'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="FUTE-Sensors_ambient_light_sensor" timeout="10" description=
         "Purpose
@@ -38,6 +39,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_compass'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="FUTE-Sensors_magnetometer" timeout="10" description=
         "Purpose
@@ -50,6 +52,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_magnetometer'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="FUTE-Sensors_orientation" timeout="10" description=
         "Purpose
@@ -62,6 +65,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_orientation'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="FUTE-Sensors_proximity" timeout="10" description=
         "Purpose
@@ -74,10 +78,11 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_proximity'</step>
+        <step>DUT is needed to be covered and uncovered.</step>
       </case>
       <case name="FUTE-Sensors_rotation" timeout="10" description=
         "Purpose
-        Get values from Proximity
+        Get values from Rotation
         Method
         QT Mobility Sensors API call, waiting simultaneous changing values from API callback
         Pre-/Post-conditions
@@ -86,6 +91,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_rotation'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="FUTE-Sensors_tap" timeout="10" description=
         "Purpose
@@ -98,6 +104,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Sensors_tap'</step>
+        <step>You must manually tap the screen by you finger or use some kind external device to play finger to get tap sensor values.</step>
       </case>
     </set>
 
@@ -113,6 +120,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'NFT-Sensors_Accelerometer-ITER'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="NFT-Sensors_Ambient_Light_Sensor-ITER" timeout="600" description=
         "Purpose
@@ -137,6 +145,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'NFT-Sensors_Magnetometer-ITER'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="NFT-Sensors_Orientation-ITER" timeout="600" description=
         "Purpose
@@ -149,6 +158,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'NFT-Sensors_Orientation-ITER'</step>
+        <step>You must move DUT while executing sensor test.</step>
       </case>
       <case name="NFT-Sensors_Proximity-ITER" timeout="600" description=
         "Purpose
@@ -161,6 +171,7 @@
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'NFT-Sensors_Proximity-ITER'</step>
+        <step>DUT is needed to be covered and uncovered.</step>
       </case>
     </set>
 

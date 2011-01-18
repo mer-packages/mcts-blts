@@ -42,6 +42,52 @@
 
 /* Private functions */
 
+/* Construct a file name from a path and brightness file */
+static char *
+blts_fbdev_make_path (blts_fbdev_data *data, const char *brightness_file)
+{
+        char   *path = NULL;
+        size_t  len, f_len, p_len;
+
+        FUNC_ENTER();
+
+        if (data->backlight_subsystem == NULL ||
+            data->backlight_subsystem[0] == '\0') {
+                BLTS_ERROR ("Failed to make brightness path (no backlight "
+                            "subsystem set!)\n");
+                FUNC_LEAVE();
+                return NULL;
+        }
+
+        if (brightness_file == NULL || brightness_file[0] == '\0') {
+                BLTS_ERROR ("Failed to make brightness path (given file is "
+                            "0)!\n");
+                FUNC_LEAVE();
+                return NULL;
+        }
+
+        p_len = strlen (data->backlight_subsystem);
+        f_len = strlen (brightness_file);
+        len = f_len + p_len + 1;
+
+        path = malloc (sizeof (char) * len);
+
+        if (path == NULL) {
+                BLTS_ERROR ("OOM!\n");
+                FUNC_LEAVE();
+                return NULL;
+        }
+
+        memset (path, 0, len);
+
+        strcat (path, data->backlight_subsystem);
+        strcat (path, brightness_file);
+
+        FUNC_LEAVE();
+
+        return path;
+}
+
 /* Read a brightness value from a file */
 static int
 blts_fbdev_get_brightness (blts_fbdev_data *data, const char *brightness_file)
@@ -49,19 +95,14 @@ blts_fbdev_get_brightness (blts_fbdev_data *data, const char *brightness_file)
         int   brightness  = 0;
         char *full_path   = NULL;
         FILE *brightnessf = NULL;
-        size_t foo, foo2, len;
 
         FUNC_ENTER();
 
-        foo  = strlen (data->backlight_subsystem);
-        foo2 = strlen (brightness_file);
-        len  = foo + foo2 + 1;
+        full_path = blts_fbdev_make_path (data, brightness_file);
 
-        full_path = malloc (sizeof (char) * len);
-        memset (full_path, 0, len);
-
-        strcat (full_path, data->backlight_subsystem);
-        strcat (full_path, brightness_file);
+        if (full_path == NULL) {
+                goto ERROR;
+        }
 
         brightnessf = fopen (full_path, "r");
 
@@ -118,19 +159,14 @@ blts_fbdev_set_brightness (blts_fbdev_data *data, int brightness)
 {
         char *full_path   = NULL;
         FILE *brightnessf = NULL;
-        size_t foo, foo2, len;
 
         FUNC_ENTER();
 
-        foo  = strlen (data->backlight_subsystem);
-        foo2 = strlen (BLTS_FBDEV_BACKLIGHT_CURRENT);
-        len  = foo + foo2 + 1;
+        full_path = blts_fbdev_make_path (data, BLTS_FBDEV_BACKLIGHT_CURRENT);
 
-        full_path = malloc (sizeof (char) * len);
-        memset (full_path, 0, len);
-
-        strcat (full_path, data->backlight_subsystem);
-        strcat (full_path, BLTS_FBDEV_BACKLIGHT_CURRENT);
+        if (full_path == NULL) {
+                goto ERROR;
+        }
 
         brightnessf = fopen (full_path, "w");
 
@@ -173,6 +209,41 @@ ERROR:
                 brightnessf = NULL;
         }
 
+        FUNC_LEAVE();
+
+        return -1;
+}
+
+/* Poll for brightness, compare to expected value, do this for 10 times,
+ * sleep a bit between each try... Tried normal polling (as in linux poll()),
+ * but didn't work as expected, so created a custom polling code...
+ */
+static int
+blts_fbdev_poll_brightness (
+    blts_fbdev_data *data,
+    const char      *brightness_file,
+    int              expected)
+{
+        int brightness = 0;
+        int i          = 0;
+
+        FUNC_ENTER();
+
+        do {
+                brightness = blts_fbdev_get_brightness (data, brightness_file);
+
+                if (brightness < 0) {
+                        goto ERROR;
+                }
+
+                /* Sleep 300 ms */
+                usleep (300000);
+        } while (brightness != expected && ++i <= 10);
+
+        FUNC_LEAVE();
+
+        return brightness;
+ERROR:
         FUNC_LEAVE();
 
         return -1;
@@ -229,8 +300,8 @@ blts_fbdev_case_backlight_verify (void *test_data, int test_num)
                 goto ERROR;
         }
 
-        actual_brightness = blts_fbdev_get_brightness (
-                data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+        actual_brightness =  blts_fbdev_poll_brightness (
+            data, BLTS_FBDEV_BACKLIGHT_ACTUAL, new_brightness);
 
         if (actual_brightness != new_brightness) {
                 BLTS_ERROR ("Error: Actual brightness %d isn't the same as "
@@ -248,8 +319,8 @@ blts_fbdev_case_backlight_verify (void *test_data, int test_num)
                 goto ERROR;
         }
 
-        actual_brightness = blts_fbdev_get_brightness (
-                data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+        actual_brightness = blts_fbdev_poll_brightness (
+            data, BLTS_FBDEV_BACKLIGHT_ACTUAL, new_brightness);
 
         if (actual_brightness != new_brightness) {
                 BLTS_ERROR ("Error: Actual brightness %d isn't the same as "
@@ -266,8 +337,8 @@ blts_fbdev_case_backlight_verify (void *test_data, int test_num)
          */
         blts_fbdev_set_brightness (data, new_brightness);
 
-        actual_brightness = blts_fbdev_get_brightness (
-                data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+        actual_brightness = blts_fbdev_poll_brightness (
+            data, BLTS_FBDEV_BACKLIGHT_ACTUAL, new_brightness);
 
         if (actual_brightness == new_brightness) {
                 BLTS_ERROR ("Error: Actual brightness %d is the same as "
@@ -284,8 +355,8 @@ blts_fbdev_case_backlight_verify (void *test_data, int test_num)
          */
         blts_fbdev_set_brightness (data, new_brightness);
 
-        actual_brightness = blts_fbdev_get_brightness (
-                data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+        actual_brightness = blts_fbdev_poll_brightness (
+            data, BLTS_FBDEV_BACKLIGHT_ACTUAL, new_brightness);
 
         if (actual_brightness == new_brightness) {
                 BLTS_ERROR ("Error: Actual brightness %d is the same as "
@@ -349,8 +420,8 @@ blts_fbdev_case_backlight_linear (void *test_data, int test_num)
                         goto ERROR;
                 }
 
-                actual_brightness = blts_fbdev_get_brightness (
-                        data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+                actual_brightness = blts_fbdev_poll_brightness (
+                    data, BLTS_FBDEV_BACKLIGHT_ACTUAL, i);
 
                 if (actual_brightness != i) {
                         BLTS_ERROR ("Error: Actual brightness %d isn't the "
@@ -359,11 +430,10 @@ blts_fbdev_case_backlight_linear (void *test_data, int test_num)
                         goto ERROR;
                 }
 
-                sleep (2);
-
                 /* TODO:
                  * - Support for external verification tool?
                  */
+                sleep (1);
         }
 
         for (i = data->maximum_light; i >= data->minimum_light; i--) {
@@ -375,8 +445,8 @@ blts_fbdev_case_backlight_linear (void *test_data, int test_num)
                         goto ERROR;
                 }
 
-                actual_brightness = blts_fbdev_get_brightness (
-                        data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+                actual_brightness = blts_fbdev_poll_brightness (
+                    data, BLTS_FBDEV_BACKLIGHT_ACTUAL, i);
 
                 if (actual_brightness != i) {
                         BLTS_ERROR ("Error: Actual brightness %d isn't the "
@@ -385,11 +455,10 @@ blts_fbdev_case_backlight_linear (void *test_data, int test_num)
                         goto ERROR;
                 }
 
-                sleep (2);
-
                 /* TODO:
                  * - Support for external verification tool?
                  */
+                sleep (1);
         }
 
         /* Restore the original brightness */
@@ -459,8 +528,8 @@ blts_fbdev_case_backlight_logarithmic (void *test_data, int test_num)
                         goto ERROR;
                 }
 
-                actual = blts_fbdev_get_brightness (
-                        data, BLTS_FBDEV_BACKLIGHT_ACTUAL);
+                actual = blts_fbdev_poll_brightness (
+                    data, BLTS_FBDEV_BACKLIGHT_ACTUAL, (int)light_level);
 
                 if (actual != (int)light_level) {
                         BLTS_ERROR ("Error: Actual brightness %d isn't the "
@@ -469,11 +538,10 @@ blts_fbdev_case_backlight_logarithmic (void *test_data, int test_num)
                         goto ERROR;
                 }
 
-                sleep (2);
-
                 /* TODO:
                  * - Support for external verification tool?
                  */
+                sleep (1);
         }
 
         /* Restore the original brightness */

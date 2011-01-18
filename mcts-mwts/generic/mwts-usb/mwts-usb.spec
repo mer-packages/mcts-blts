@@ -39,7 +39,7 @@ Summary:		mwts-usb generic meta package
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		mwts-usb, mwts-usb-generic-config, mwts-usb-generic-tests
-%description		generic-config
+%description		generic-all
 mwts-usb generic meta package
             
 %prep

@@ -46,6 +46,7 @@ SignonClient::SignonClient(MwtsTest *testObj) : m_testObj(testObj),
     connect(m_service, SIGNAL(identities(const QList<SignOn::IdentityInfo>& )),
         this, SLOT(identities(const QList<SignOn::IdentityInfo>& )));
 
+
     MWTS_LEAVE;
 }
 
@@ -111,12 +112,24 @@ bool SignonClient::queryIdents()
 {
     MWTS_ENTER;
 
+    connect(m_service, SIGNAL(mechanismsAvailable(const QString &, const QStringList &)),
+        this, SLOT(mechanismsAvailable(const QString &, const QStringList &)));
+
+
     qDebug() << "Querying identities...";
     m_service->queryIdentities();
     m_testObj->Start();
 
     qDebug() << "Querying methods...";
     m_service->queryMethods();
+    m_testObj->Start();
+
+    qDebug() << "Querying mechanisms for facebook...";
+    m_service->queryMechanisms("facebook");
+    m_testObj->Start();
+
+    qDebug() << "Querying mechanisms for googlek...";
+    m_service->queryMechanisms("google");
     m_testObj->Start();
 
     return m_bSuccess;
@@ -136,7 +149,7 @@ int SignonClient::CreateIdentity(const QString provider)
 
     if(method.isNull())
     {
-        qCritical() << "No method found with name: " << method;
+        qCritical() << "No method found with name: " << provider;
         return 0;
     }
 
@@ -154,6 +167,8 @@ int SignonClient::CreateIdentity(const QString provider)
     QMap<MethodName,MechanismsList> methods;
 
     QStringList mechs = QStringList() << QString("ClientLogin");
+    //QStringList mechs = QStringList() << QString("AuthLogin");
+    //QStringList mechs = QStringList() << QString("AuthLogin") << QString("ClientLogin");
 
     methods.insert(method, mechs);
 
@@ -266,6 +281,14 @@ bool SignonClient::CreateSession(const QString name)
         qDebug() << "Session object created.....look UI!";
         qDebug() << "METHOD: " << m_session->name();
 
+
+        m_session->queryAvailableMechanisms();
+
+        connect(m_session, SIGNAL(mechanismsAvailable(const QStringList &)),
+            this, SLOT(slotMechanismsAvailable(const QStringList &)));
+
+        m_testObj->Start();
+
         connect(m_session, SIGNAL(response(const SignOn::SessionData&)),
             this, SLOT(response(const SignOn::SessionData&)));
 
@@ -296,6 +319,15 @@ void SignonClient::clear()
     m_testObj->Stop();
     qDebug() << "Credentials database is clear now...";
     m_bSuccess = true;
+    MWTS_LEAVE;
+}
+
+void SignonClient::slotMechanismsAvailable(const QStringList &mechanisms)
+{
+    MWTS_ENTER;
+    m_testObj->Stop();
+    qDebug() << "LIST OF AVAILABLE MECHANISMS FOR THE CURRENT SESSION: " << mechanisms;
+
     MWTS_LEAVE;
 }
 
@@ -363,10 +395,8 @@ void SignonClient::mechanismsAvailable(const QString &method, const QStringList 
 {
     MWTS_ENTER;
     m_testObj->Stop();
-    qDebug() << "Listing Mechanisms Available for method: ";
+    qDebug() << "Listing Mechanisms Available for method: " << method;
     qDebug() << "#############################";
-
-    qDebug() << method;
 
     for (int i = 0; i < mechs.size(); ++i) {
 
@@ -402,6 +432,10 @@ void SignonClient::identities(const QList<IdentityInfo> &identityList)
     return;
  }
 
+
+/*
+ * the sign on response
+ */
 void SignonClient::response(const SessionData &sessionData)
 {
     MWTS_ENTER;

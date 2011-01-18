@@ -33,7 +33,7 @@ Generic configuration file for mwts-gstreamer
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-gstreamer (generic)
-Requires:	mwts-gstreamer-tests, mwts-gstreamer-generic-tests, mwts-gstreamer-generic-config
+Requires:	mwts-gstreamer, mwts-gstreamer-generic-tests, mwts-gstreamer-generic-config
 %description	generic-all
 Meta package for installing all needed packages for generic version of mwts-gstreamer
 

@@ -23,6 +23,3 @@
 
 connman_DATA = apset.tgz
 connmandir = /opt/$(PACKAGE)/data
-EXTRA_DIST = $(connmand_DATA)
-testdefdir = $(datadir)/$(PACKAGE)
-dist_testdef_DATA = bt.xml 3g.xml wifi.xml sanity.xml full.xml default.xml

@@ -1,3 +1,6 @@
+* Tue 11 Jan 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.1
+- Remove assert from missing configuration when using global config section
+
 * Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.4.0
 - Packaging script updated.
 - Added results.xml output from any test case; adds libXML dependency

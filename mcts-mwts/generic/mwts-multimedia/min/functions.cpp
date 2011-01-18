@@ -62,6 +62,9 @@ LOCAL int Record(__attribute__((unused)) MinItemParser * item)
     result = test.audioRecorder->Record();
     g_pResult->StepPassed(__FUNCTION__, result);
 
+    if (!result)
+        return 1;
+
     return ENOERR;
 }
 
@@ -115,10 +118,13 @@ LOCAL int SetContainer(MinItemParser * item)
     }
     else
     {
-        result = test.audioRecorder->SetCodec(container);
+        result = test.audioRecorder->SetContainer(container);
         g_pResult->StepPassed(__FUNCTION__, result);
     }
     free(container);
+
+    if (!result)
+        return 1;
 
     return ENOERR;
 }
@@ -146,6 +152,9 @@ LOCAL int SetCodec(MinItemParser * item)
         g_pResult->StepPassed(__FUNCTION__, result);
     }
     free(codec);
+
+    if (!result)
+        return 1;
 
     return ENOERR;
 }
