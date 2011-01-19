@@ -6,6 +6,9 @@ INTRODUCTION
 
 The mwts-ofono test package aimed for testtin basic functionalities of libofono-qt API. Currently the tests are designed to address:
 	- sim manager 
+    - voice call (forwarding, waiting, barring)
+
+The ofono-qt api is available here: http://meego.gitorious.org/meego-cellular/ofono-qt.
 
 Test scenarios include:
 	- enable (lock) pin, disable (unlock) pin
@@ -28,12 +31,19 @@ SOURCE CODE AND COMPILING
 
 ENVIRONMENT REQUIREMENTS
 
-  Settings for base paths for local and streaming in /usr/lib/tests/OfonoTest.conf.
+  Modem name (later other settings might come) /usr/lib/tests/OfonoTest.conf, is set
+  here. If the modem path in the .conf file is not found on the device, then another
+  modem path is going to be chosen automaticily (if available)
+  This test asset has been developed usaging phonesim simulator or ncdk (when it worked)
+  on netbook meego image.
+
+  Beside mwts log, you might want to use '/usr/lib/ofono/test/monitor-ofono' to monitor the steps.
 
 
 EXECUTING TESTS
 
   mwts-ofono test execution is performed normally. Check the "General MWTS testing guide".
+
 
 
 TEST RESULTS
@@ -62,16 +72,94 @@ MIN SCRIPTER INTERFACE
   VerifyInvalidPin <pin type> <pin code>
     Verifies the pin by enabling or disabling with the invalid pin code and verifies whether the device realizes its correctness
 
+  VerifyPuk <puk code>
+    Verifies the valid puk by resetting a new pin code (hard-coded) and verifies whether the device realizes its correctness.
+    Currently the resetPin does not work, so neither this. http://bugs.meego.com/show_bug.cgi?id=12337
+
+  VerifyInvalidPuk <puk code>
+    Verifies the invalid puk by resetting a new pin code (hard-coded) and verifies whether the device realizes its correctness
+    Currently the resetPin does not work, so neither this. http://bugs.meego.com/show_bug.cgi?id=12337
+
+  ResetPin <puk type> <puk type> <new pin code>
+    Provides the unblock key to the modem and if correct
+    resets the pin to the new value of newpin.
+    http://bugs.meego.com/show_bug.cgi?id=12337
+
   EnterPin <pin type> <pin code>
 	Enters the currently pending pin. The type value must match the
     pin type being asked in the "pin required" (SimInfo) property. This 
-	method is implicitly called from the test asset if needed. It is remained
+    method is implicitly called from the test asset if needed. It is remained
     here only for special cases. 
 
   SimInfo 
 	Prints info about the sim card (locked pin names, pin required)
 
+  #voice call forwarding
+  EnableVoiceCallBusy [telephone number]
+    Enables the value of the voice "Busy" call forwarding rule
+
+  DisableVoiceCallBusy
+    Disables the voice "Busy" call forwarding rule, by setting to the value to empty
+
+  EnableVoiceCallNoReply [telephone number]
+    Enables the value of the voice "No Reply" call forwarding rule.
+
+  DisableVoiceCallNoReply
+    Disables the voice "NoReply" call forwarding rule, by setting to the value to empty
+
+  EnableVoiceCallNotReachable [telephone number]
+    Enables the value of the voice "Not Reachable" callforwarding rule.
+
+  DisableVoiceCallNotReachable
+    Disables the voice "NotReachable" call forwarding rule, by setting to the value to empty
+
+  EnableVoiceCallUnconditional [telephone number]
+    Enables the value of the voice unconditional call forwarding property
+
+  DisableVoiceCallUnconditional
+    Disables the voice "Unconditional" call forwarding rule, by setting to the value to empty
+
+  DisableVoiceCallForwarding
+    Disables all the voice call forwarding rules.
+
+  #voice call waiting (settings)
+  EnableVoiceCallWaiting
+    Enables the call voice call waiting
+  DisableVoiceCallWaiting
+    Disables the call voice call waiting
+
+  #voice call barring
+  EnableVoiceCallOutgoing [all|international|internationalnothome] [pin code]
+    Enables the voice call barring to outgoing calls
+
+  DisableVoiceCallOutgoing [pin code]
+    Disables the barring to outgoing voice calls
+
+  EnableVoiceCallIncoming [always|whenroaming] [pin code]
+    Enables the barring to incoming voice calls
+
+  DisableVoiceCallIncoming [pin code]
+    Disables the barring to incoming voice calls
+
+
 KNOWN ISSUES
+
+#general
+- for some reason asset 'close' crashes sometime
+
+#sim manager
+- resetPin throws invalid argument dbus error:
+  http://bugs.meego.com/show_bug.cgi?id=12337
+
+#voice call (forwarding, waiting, barring)
+- signal 'voice..Complete' signals do not get emitted,
+  bug report should be issued at ofono-qt api
+- currently high FORWARDING_TIMEOUT (5 sec) is set
+  for waiting for DBUS reply from the modem
+- barring incoming, outgoing calls fail on
+  phonesim
+- on ncdk the methods sometime run, sometime no
+
 
 
 

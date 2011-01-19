@@ -1,4 +1,4 @@
- 
+
 	MWTS-Buteo
 	-------------
 
@@ -20,10 +20,10 @@ SOURCE CODE AND COMPILING
 
 ENVIRONMENT REQUIREMENTS
 
-  Before running cases you need to set LD_LIBRARY_PATH enviroment variable to '/lib'. Use 'export LD_LIBRARY_PATH=/lib' . This is a current workaround and will propably change in future.
-  For cloud syncing you need to se up internet connection first.
-  For bluetooth syncing you should pair your devices beforehand.
-  Otherwise MWTS-Buteo test execution is performed normally. Check the "General MWTS testing guide". 
+  This section explains specific setup which is necessary to
+  execute test cases. Most of the environment setups are 
+  explained in the MWTS.README.
+
 
 EXECUTING TESTS
 
@@ -39,6 +39,9 @@ TEST RESULTS
   Result files are named according to test cases, <test_case_name>.result file contains
   overall information about test run and measured values.
   
+  Add here package specific instructions if needed. 
+
+
 MIN SCRIPT FILES
 
   mwts-buteo.cfg 
@@ -47,8 +50,6 @@ MIN SCRIPT FILES
      Non-functional test cases
 
 KNOWN ISSUES
-
-   Currently missing some capabilities for services 
 
 ADDITIONAL RESOURCES
 

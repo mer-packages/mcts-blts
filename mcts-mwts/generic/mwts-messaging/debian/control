@@ -1,7 +1,7 @@
 Source: mwts-messaging
 Section: libs
 Priority: optional
-Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libqtm-dev
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libqmf-dev, libqtm-dev
 Maintainer: Arttu Valo <arttu.valo@digia.com>
 Standards-Version: 3.8.0
 

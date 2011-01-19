@@ -592,9 +592,11 @@ static gboolean smsc_do_negative_test(gpointer data, const char* invalid_smsc)
 	
 	len = strlen(invalid_smsc);
 	
-	if(len && len <= SMSC_NUMBER_MAX_LEN)
+	if(len && len <= SMSC_NUMBER_MAX_LEN) {
+		free(smsc);
 		return FALSE;
-		
+	}
+
 	g_value_init(smsc, G_TYPE_STRING);
 	g_value_set_static_string(smsc, invalid_smsc);
 
@@ -933,6 +935,8 @@ struct boxed_value *sms_variant_message_generator(struct boxed_value *args)
 	for (i = 0; i < total_len; ++i)
 		message[i] = seed[i % seed_len];
 	message[total_len] = '\0';
+
+	free(seed);
 
 	return blts_config_boxed_value_new_string_take(message);
 }

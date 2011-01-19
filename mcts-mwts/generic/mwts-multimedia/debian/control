@@ -9,7 +9,7 @@ Package: mwts-multimedia
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, libqt4-core, libqt4-gui, libqt4-opengl, libqtm-multimedia, mwts-common(>=0.2.0)
-Description: Test libraries for Template
+Description: Test libraries for multimedia
  C++ and MIN test modules
 
 Package: mwts-multimedia-tests

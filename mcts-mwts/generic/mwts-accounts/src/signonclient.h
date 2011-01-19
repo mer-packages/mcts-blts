@@ -129,6 +129,8 @@ public slots:
     void sessionError(const SignOn::Error &error);
 
 
+    void slotMechanismsAvailable(const QStringList &mechanisms);
+
 };
 
 #endif // SIGNONCLIENT_H
