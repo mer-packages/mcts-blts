@@ -73,6 +73,59 @@ EXECUTING TESTS
   For local test cases you need to connect to device using ssh connection and
   start MIN tool using command 'min'. Look doc/MWTS.README.
 
+  All devices don't have MMC or eMMC cards, so check what is mounted and there.
+  Main trend seens to be, that device does not have SD-card place for exterternal SD-card to plug in.
+
+
+EXECUTING MASS STORAGE TESTS
+
+  Mass Storage test cases are executed in PC Linux.
+
+  Excpected functionality of the device is like this:
+  You need to have USB-cable connection to device. Device asks mode and you must select mass storage mode.
+  Now PC mounts automatically devices MMC and embedded MMC cards into PC.
+
+  When this is written, this kind of functionality is not found in any MeeGo device, writer has tested.
+  To test devices Mass Storage capabilities, tests asset provides for you convinience utilities to
+  set up Mass Storage mode in any device, that has USB-fuctionality and big enough root filesystem.
+
+  Utility "utils/make_mass_storege_filesystem.sh" is a script that makes 1 GB Mass Storage file in device and
+  sets device in Mass Storage mode. It should be run as "root" in device, so copy it to device.
+  USB cable should be connected between PC and device. If you run this script in USB-networking, USB-networking hangs
+  at the end of script, because Mass Storage mode is set on. New file is created in device,
+  so all date in Mass Stirage created this way is destroyed.
+
+  Utility utils/set_mass_storege_mode.sh" sets device to mass storage mode using sharing file created with
+  script described above. It does not destroy anything.
+
+  In most moders linux distributions, they found that device is in mass storage mode providing it automatically
+  mounted in "/media/MeeGo". This is set in test assets configuration file as default for Mass Storage Cases.
+
+  Check also /usr/lib/tests/FilesystemTest.conf that devices mass storage cards are mounted in directories conf file says.
+  If needed, correct conf to adapt your device.
+
+EXECUTING MASS STORAGE TESTS for EXPERTS
+
+  If this is not enough for your needs to test Mass Storage and if you are an expert or wan't to be one,
+  you can refer Internet instructions, for instance
+  <http://www.linux-usb.org/gadget/file_storage.html>
+  <http://www.linux-usb.org/usbtest/>
+
+  Connect into device. You should have root privileges in device.
+
+  Try to load use mass storage module by hand.
+  Command like this can work
+
+          modprobe g_file_storage file=/dev/mmcblk0p3 stall=0
+
+  On the desktop PC you can mount mass storage device by hand:
+
+          sudo mkdir -p /mnt/meego
+          sudo mount -t vfat /dev/sdb /mnt/meego -o gid=<username>,uid=<username>,rw
+
+  Note, that you must change /usr/lib/tests/FilesystemTest.conf to adapt these directories.
+
+
 
 
 
@@ -119,4 +172,6 @@ MIN SCRIPTER INTERFACE
 
 KNOWN ISSUES
 
-  None
+  When this was written, none of tested MeeGo device provided UI to set device into Mass Storage mode,
+  when USB-cable is plugged in. You should adapt intructions given above to set up mass stoage by
+  extra utilities provided by test asset, these utilities are not official distributions functionality.
