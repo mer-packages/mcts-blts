@@ -17,10 +17,10 @@ blts-ofono-tests (0.1.16) unstable; urgency=low
   * Timeouts increased to 60 seconds in several network-facing cases
   * "dontcleanup" flag now also affects supplementary service resets
   * PIN Reset default configuration now matches Phonesim interface
-  * "--doncleanup" changed to "--cleanup" and removed mandatory environment check
+  * "--dontcleanup" changed to "--cleanup" and removed mandatory environment check
   * Improved command line help
 
- -- Kari Laakso <kari.laakso@digia.com>  Thu, 20 Jan 2011 10:18:53 +0200
+ -- Kari Laakso <kari.laakso@digia.com>  Wed, 19 Jan 2011 12:33:31 +0200
 
 blts-ofono-tests (0.1.15) unstable; urgency=low
 

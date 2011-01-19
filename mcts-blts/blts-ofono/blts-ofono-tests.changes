@@ -1,6 +1,6 @@
 * Mon 17 Jan 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.17
 - [ Mikko Ojala ] Added radio technology change test
-- [ Kari Laakso ] "--doncleanup" changed to "--cleanup" and removed mandatory environment check
+- [ Kari Laakso ] "--dontcleanup" changed to "--cleanup" and removed mandatory environment check
 - [ Kari Laakso ] Improved command line help
 
 * Tue 11 Jan 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.16
