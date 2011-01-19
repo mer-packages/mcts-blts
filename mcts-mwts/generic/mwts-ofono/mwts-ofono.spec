@@ -73,8 +73,11 @@ ldconfig
 %changelog
 * Tue Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
 - Intial version
-- Added test cases
+- Added test cases for sim manager
 - Added content to README
 - Refactored package names in mwts-ofono.spec
+- Added classes for voice call (forwarding, waiting, barring)
+- Added mwts-ofono-call.cfg
+- Added functionality test cases to mwts-ofono-call.cfg
 
 
