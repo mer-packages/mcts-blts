@@ -1,3 +1,9 @@
+blts-ofono-tests (0.1.16-1) unstable; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
 blts-ofono-tests (0.1.16) unstable; urgency=low
 
   * Fixes to PIN lock and unlock cases

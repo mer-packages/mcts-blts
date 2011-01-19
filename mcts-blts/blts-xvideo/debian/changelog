@@ -1,3 +1,9 @@
+blts-xvideo-tests (0.0.8-1) unstable; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
 blts-xvideo-tests (0.0.8) unstable; urgency=low
 
   * Remove obsolete Min support code

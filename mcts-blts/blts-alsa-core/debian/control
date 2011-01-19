@@ -2,14 +2,13 @@ Source: blts-alsa-core-tests
 Section: devel
 Priority: extra
 Maintainer: Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>
-Build-Depends:
-        debhelper (>= 5),
+Build-Depends: debhelper (>= 5),
         cdbs,
         libbltscommon-dev (>= 0.2.4),
         linux-libc-dev | linux-kernel-headers,
         libglib2.0-0,
         libdbus-1-dev,
-        libdbus-glib-1-dev
+        libdbus-glib-1-dev, automake, pkg-config
 Standards-Version: 3.8.0
 
 Package: blts-alsa-core-tests
