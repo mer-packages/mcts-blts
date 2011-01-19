@@ -308,7 +308,7 @@ blts_ofono_case_modems_offline (void *user_data, int testnum)
 		properties = NULL;
 	}
 
-	if (!data->fl_dontcleanup) {
+	if (data->fl_cleanup) {
 		blts_ofono_case_modems_online (user_data, testnum);
 	}
 

@@ -37,8 +37,14 @@ or
 blts-ofono-tests -C [config file]
 
 NOTE: Default config file is installed to /etc/blts/blts-ofono-tests.cnf.
-NOTE: Running cases always resets call forwardings and call barrings with each test case
-	use -o switch to give blts-ofono-tests access to do so.
+
+Other
+
+Test case can check and clean test environment of all existing voice calls,
+call forwarding rules and other used supplementary services with --cleanup
+flag. This is recommended if test environment is not fully pre-configured.
+Use -o switch to give proper PIN code if it is not handled with configuration
+file.
 
 N900 specific
 
@@ -49,243 +55,244 @@ Test cases
 SMS:
 
  * oFono - Send SMS
-   	 Sends a regular SMS with content "Test" to a recipient.
-	 Extra command line parameters:
-	       -r <number> : Use <number> as recipient (default: 123456)
-	       -m <number> : Use <number> as SMS Center (default: NTN SMSC)
+         Sends a regular SMS with content "Test" to a recipient.
+         Extra command line parameters:
+               -r <number> : Use <number> as recipient (default: 123456)
+                -m <number> : Use <number> as SMS Center (default: NTN SMSC)
 
  * oFono - Receive SMS
-   	 Waits for an incoming regular SMS. If one is successfully received, test
-	 passes.
+         Waits for an incoming regular SMS. If one is successfully received, test
+         passes.
 
  * oFono - SMSC number test
-	Test different sizes of SMS center numbers
+         Test different sizes of SMS center numbers
 
-SIM Cases:
+SIM cases:
 
  * oFono - Change PIN
-    Change code of PIN
-	 Extra command line parameters:
-	       -n <code> : New PIN
-	       -o <code> : Old PIN
-	       -y <type> : Password type (pin, pin2,...)
+         Change PIN code
+         Extra command line parameters:
+               -n <code> : New PIN
+               -o <code> : Old PIN
+               -y <type> : Password type (pin, pin2,...)
 
  * oFono - Enter PIN
-    Enters PIN code
-	 Extra command line parameters:
-	       -o <code> : PIN code
-	       -y <type> : Password type (pin, pin2,...)
+         Enters PIN code
+         Extra command line parameters:
+               -o <code> : PIN code
+               -y <type> : Password type (pin, pin2,...)
 
  * oFono - Reset PIN
-    Reset PIN to default with PUK code
-	 Extra command line parameters:
-	       -n <code> : PIN Code
-	       -o <code> : PUK code
-	       -y <type> : Password type
+         Reset PIN to default with PUK code
+         Extra command line parameters:
+               -n <code> : PIN Code
+               -o <code> : PUK code
+               -y <type> : Password type
 
  * oFono - Lock PIN
-    Lock PIN code
-	 Extra command line parameters:
-	       -o <code> : PIN
-	       -y <type> : Password type
+         Lock PIN code
+         Extra command line parameters:
+               -o <code> : PIN
+               -y <type> : Password type
 
  * oFono - Unlock PIN
-    Unlock PIN code
-	 Extra command line parameters:
-	       -o <code> : Old PIN
-	       -y <type> : Password type
+         Unlock PIN code
+         Extra command line parameters:
+               -o <code> : Old PIN
+               -y <type> : Password type
 
-Calls:
+Voice call cases:
 
  * oFono - Create call and hangup
-	Create voicecall to given number.
-	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
+         Create voicecall to given number.
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
 
  * oFono - Create call with hidden caller ID and hangup
-	Creates voicecall with hidden caller ID to given number.
-	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
+         Creates voicecall with hidden caller ID to given number.
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
 
  * oFono - Answer to voicecall and hangup
- 	Answer the incoming call and hang up this specific call. Execute test and
- 	then create call to this device.
+         Answer the incoming call and hang up this specific call. Execute test and
+         then create call to this device.
 
  * oFono - Answer to voicecall and hangup all
-  	Answer to incoming call and hang up all active/inactive calls. Execute test
-  	and	then create call to this device.
+         Answer to incoming call and hang up all active/inactive calls. Execute test
+         and then create call to this device.
 
  * oFono - Answer to voicecall and deflect
-   	Answer to incoming call and deflect voice call to given number. Execute test
-   	and	then create call to this device.
- 	Extra command line parameters:
-	      -r <number> : Use <number> as deflect call receiver
+         Answer to incoming call and deflect voice call to given number. Execute test
+         and then create call to this device.
+         Extra command line parameters:
+               -r <number> : Use <number> as deflect call receiver
 
  * oFono - Answer to voicecall and remote hang up
-   	Answer to incoming call and wait until remote side hangs up the call.
-   	Execute test and then create call to this device, after a while hang up.
+         Answer to incoming call and wait until remote side hangs up the call.
+         Execute test and then create call to this device, after a while hang up.
 
  * oFono - Cancel voicecall
-	Cancel the call without answering at all. Execute test and then create
-	call to this device
+         Cancel the call without answering at all. Execute test and then create
+         call to this device
 
  * oFono - Transfer
-	Answer the first incoming call, put the current call on hold and
-	answer the currently waiting (the second incoming) call, after a while
-	join the currently Active and Held calls together and disconnect both calls.
+         Answer the first incoming call, put the current call on hold and
+         answer the currently waiting (the second incoming) call, after a while
+         join the currently Active and Held calls together and disconnect both calls.
 
  * oFono - Swap
-	Answer the first incoming call, put the current call on hold and
-	answer the currently waiting (the second incoming) call, after a while
-	swap the calls (the call that were Active will be Held and the call
-	that were Held will be Active) and finally disconnect both calls.
+         Answer the first incoming call, put the current call on hold and
+         answer the currently waiting (the second incoming) call, after a while
+         swap the calls (the call that were Active will be Held and the call
+         that were Held will be Active) and finally disconnect both calls.
 
  * oFono - Release and answer
-	Answer the first incoming call, release currently active call and answers
-	the currently waiting call, finally disconnect also the second call.
+         Answer the first incoming call, release currently active call and answers
+         the currently waiting call, finally disconnect also the second call.
 
  * oFono - Hold and answer
-	Answer the first incoming call, put the current call on hold and
-	answer the currently waiting (the second incoming) call, after a while
-	disconnect both calls.
+         Answer the first incoming call, put the current call on hold and
+         answer the currently waiting (the second incoming) call, after a while
+         disconnect both calls.
 
  * oFono - Call and send DTMF
-	Create voicecall to given number. After 10 seconds device will send DTMF
-	sound assigned to '3'.
- 	Extra command line parameters:
-	      -r <number> : Use <number> as deflect call receiver
-	      -t <timeout> : Use <timeout> how long call is active.
+         Create voicecall to given number. After 10 seconds device will send DTMF
+         sound assigned to '3'.
+         Extra command line parameters:
+              -r <number> : Use <number> as deflect call receiver
+              -t <timeout> : Use <timeout> how long call is active.
 
  * oFono - Multiparty call test
- 	Receive 2 calls in and create multiparty call of these calls (conference call)
- 	
- * oFono - Private call test
- 	Receive total of 3 calls in and create multiparty of these calls (conference call)
- 	After this it will create private call between first call and DUT	      
+         Receive 2 calls in and create multiparty call of these calls (conference call)
 
-Call forwardings:
+ * oFono - Private call test
+         Receive total of 3 calls in and create multiparty of these calls (conference call)
+         After this it will create private call between first call and DUT	      
+
+Call forwarding cases:
 
  * oFono - Disable forwardings
-    Will reset forwardings.
+    Reset forwardings.
 
  * oFono - Unconditional forwarding
-    Always forward incoming calls
-	Extra command line parameters:
-	      -f <number> : Use <number> as forwarding address
+         Always forward incoming calls
+         Extra command line parameters:
+               -f <number> : Use <number> as forwarding address
 
  * oFono - Forward if busy
-    Forwards calls to given number and then calls to another.
- 	Extra command line parameters:
- 	      -r <number> : Calls to number
-	      -f <number> : Use <number> as forwarding address
-	      -t <time> : time keep call live
+         Forwards calls to given number and then calls to another.
+         Extra command line parameters:
+               -r <number> : Calls to number
+               -f <number> : Use <number> as forwarding address
+               -t <time> : time keep call live
 
  * oFono - Forward if no reply
-    Forward call to -f parameter number if no call is answered.
-    Extra command line parameters:
-	      -f <number> : Use <number> as forwarding address
+         Forward call to -f parameter number if no call is answered.
+         Extra command line parameters:
+               -f <number> : Use <number> as forwarding address
 
  * oFono - Forward if not reachable
-    Forwards call if no network connection available.
-    Extra command line parameters:
-	      -f <number> : Use <number> as forwarding address
+         Forwards call if no network connection available.
+         Extra command line parameters:
+               -f <number> : Use <number> as forwarding address
 
-Call barrings:
+Call barring cases:
 
   * oFono - Check barring properties
-  	 Prints out current barring situation
+         Prints out current barring situation
 
   * oFono - Disable barrings
-     Disables all barrings
+         Disables all barrings
 
   * oFono - Change password for barrings
-     Change password
+         Change password
 
   * oFono - Call barrings test
-  	Sets different call barrings.
+         Sets different call barrings.
 
   * oFono - Disable incoming barrings
-    Disables barring from incoming calls
+         Disables barring from incoming calls
 
   * oFono - Disable outgoing barrings
-    Disables barring from outgoing calls
+         Disables barring from outgoing calls
 
-
-Call volume:
+Call volume cases:
 
  * oFono - Set microphone volume
- 	Create voice call to a given number. In the middle of the call,
- 	microphone volume is changed and finally original value restored
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
-	      -v <volume> : Use <volume> as volume percent.
- * oFono - Set speaker volume
- 	Create voice call to a given number. In the middle of the call,
- 	speaker	volume is changed and finally original value restored
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
-	      -v <volume> : Use <volume> as volume percent.
- * oFono - Set muted
-	Create voice call to a given number. In the middle of the call,
- 	mute state is toggled and finally original value restored
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
+         Create voice call to a given number. In the middle of the call,
+         microphone volume is changed and finally original value restored
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
+               -v <volume> : Use <volume> as volume percent.
 
-Call meters:
+ * oFono - Set speaker volume
+         Create voice call to a given number. In the middle of the call,
+         speaker volume is changed and finally original value restored
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
+               -v <volume> : Use <volume> as volume percent.
+
+ * oFono - Set muted
+         Create voice call to a given number. In the middle of the call,
+         mute state is toggled and finally original value restored
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
+
+Call meter cases:
 
  * oFono - Call meters read
- 	Create voice call to a given number. Hang up and verify that
- 	call meter and accumulated call meter are both increased
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
+         Create voice call to a given number. Hang up and verify that
+         call meter and accumulated call meter are both increased
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
 
  * oFono - Call meters set
- 	Change at least one (-a, -p or -c) call meter property and
- 	create voice call to a given number. Hang up and verify that
- 	call meter values are expected ones. Finally original call
- 	meter values are restored.
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
-		  -a <value> : Use <value> as accumulated call meter maximum - optional
-  		  -p <value> : Use <value> as price per unit conversion - optional
-  	      -c <code> : Use <code> as three character currency code - optional
- 		  -o <code> : Old (current) PIN
+         Change at least one (-a, -p or -c) call meter property and
+         create voice call to a given number. Hang up and verify that
+         call meter values are expected ones. Finally original call
+         meter values are restored.
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
+               -a <value> : Use <value> as accumulated call meter maximum - optional
+               -p <value> : Use <value> as price per unit conversion - optional
+               -c <code> : Use <code> as three character currency code - optional
+               -o <code> : Old (current) PIN
 
  * oFono - Call meters reset
- 	Create voice call to a given number. Hang up and verify that
- 	accumulated call meter is reset to zero
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
-	      -o <code> : Old (current) PIN
+         Create voice call to a given number. Hang up and verify that
+         accumulated call meter is reset to zero
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
+               -o <code> : Old (current) PIN
 
  * oFono - Call meters near max warning
-	Set AccumulatedCallMeterMaximum property to be < 30 sec.
-	Create voice call to a given number. Hang up and verify that
-	NearMaximumWarning signal is received
- 	Extra command line parameters:
-	      -r <number> : Use <number> as call receiver
-	      -o <code> : Old (current) PIN
+         Set AccumulatedCallMeterMaximum property to be < 30 sec.
+         Create voice call to a given number. Hang up and verify that
+         NearMaximumWarning signal is received
+         Extra command line parameters:
+               -r <number> : Use <number> as call receiver
+               -o <code> : Old (current) PIN
 
-General:
+General cases:
 
  * oFono - Information Query
-	Tests modem, network interface and SIM phonebook
+         Tests modem, network interface and SIM phonebook
 
  * oFono - List all properties
-	Queries through every interface that modem has
+         Queries through every interface that modem has
 
  * oFono - Register to network
 
  * oFono - De-register from network
 
  * oFono - Enable modems
-	Enables (powers on) all modems in device.
+         Enables (powers on) all modems in device.
 
  * oFono - Set modems online
-        Sets modems online (turns off flight mode)
+         Sets modems online (turns off flight mode)
 
  * oFono - Set modems offline
-        Sets modems offline (turns on flight mode)
+         Sets modems offline (turns on flight mode)
 
  * oFono - Propose scan
-    Scans possible networks
+         Scans possible networks

@@ -69,7 +69,7 @@ static void my_ofono_help(const char* help_msg_base)
 		"  -p: Price Per Unit conversion value\n"
 		"  -c: Three character currency code\n"
 		"  -t: Set timeout for test case execution\n"
-		"  --dontcleanup: Don't clean up call state before/after tests\n"
+		"  --cleanup: Clean up call state before/after tests\n"
 		);
 }
 
@@ -77,7 +77,7 @@ static void my_ofono_help(const char* help_msg_base)
 static const char short_opts[] = "r:m:f:h:n:o:y:V:a:p:c:t:";
 static const struct option long_opts[] =
 {
-	{"dontcleanup", 0, NULL, 1},
+	{"cleanup", 0, NULL, 1},
 	{0,0,0,0}
 };
 
@@ -152,7 +152,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 			/* getopt_long() flag */
 			break;
 		case 1:
-			my_data->fl_dontcleanup = 1;
+			my_data->fl_cleanup = 1;
 			break;
 		default:
 			free(my_data);

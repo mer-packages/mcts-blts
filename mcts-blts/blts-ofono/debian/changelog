@@ -6,12 +6,14 @@ blts-ofono-tests (0.1.16-1) unstable; urgency=low
 
 blts-ofono-tests (0.1.16) unstable; urgency=low
 
+  [ Mikko Ojala, Kari Laakso ]
   * Fixes to PIN lock and unlock cases
   * Timeouts increased to 60 seconds in several network-facing cases
   * "dontcleanup" flag now also affects supplementary service resets
   * PIN Reset default configuration now matches Phonesim interface
+  * "--dontcleanup" changed to "--cleanup" and removed mandatory environment check
 
- -- Mikko Ojala <mikko.ojala@digia.com>  Tue, 11 Jan 2011 11:47:58 +0200
+ -- Kari Laakso <kari.laakso@digia.com>  Wed, 19 Jan 2011 12:33:31 +0200
 
 blts-ofono-tests (0.1.15) unstable; urgency=low
 
