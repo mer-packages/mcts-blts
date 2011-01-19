@@ -45,43 +45,23 @@ ENVIRONMENT REQUIREMENTS
 
   Mass Storage test cases are executed in PC Linux.         
   You need to have USB-cable connection to device. Device asks mode and you must select mass storage mode.
-  Now PC mounts automatically devices MMC and embedded MMC cards into PC.
-  
-  All devices don't have MMC or eMMC cards, so check what is mounted and there.
-  Check also /usr/lib/tests/FilesystemTest.conf that devices mass storage cards are mounted in directories conf file says.
-  If needed, correct conf to adapt your device.
-  
-  If device does not ask mode and you can't see in PC mounted USB mass storage devices, you can try load mass storage module.
-  You can refer Internet instructions, for instance <http://www.linux-usb.org/usbtest/>.
-  Connect into device. You should have root privileges in device.
-  
-  Check what device should be MMC cards device.
-  Try to load use mass storage module by hand. 
-  Command like this can work 
- 
-          modprobe g_file_storage file=/dev/mmcblk0p3 stall=0
-
-  On the desktop PC you can mount mass storage device by hand:
- 
-          sudo mkdir -p /mnt/meego
-          sudo mount -t vfat /dev/sdb /mnt/meego -o gid=<username>,uid=<username>,rw
-          
-  Note, that you must change /usr/lib/tests/FilesystemTest.conf to adapt these directories.
+  Now PC mounts automatically devices MMC and embedded MMC cards into PC. All devices don't have MMC or eMMC cards,
+  so check what is mounted and there.  Main trend seens to be, that device does not have SD-card place for
+  exterternal SD-card to plug in.
 
 EXECUTING TESTS
 
   For local test cases you need to connect to device using ssh connection and
   start MIN tool using command 'min'. Look doc/MWTS.README.
 
-  All devices don't have MMC or eMMC cards, so check what is mounted and there.
-  Main trend seens to be, that device does not have SD-card place for exterternal SD-card to plug in.
+
 
 
 EXECUTING MASS STORAGE TESTS
 
   Mass Storage test cases are executed in PC Linux.
 
-  Excpected functionality of the device is like this:
+  Expected functionality of the device is like this:
   You need to have USB-cable connection to device. Device asks mode and you must select mass storage mode.
   Now PC mounts automatically devices MMC and embedded MMC cards into PC.
 
@@ -95,7 +75,7 @@ EXECUTING MASS STORAGE TESTS
   at the end of script, because Mass Storage mode is set on. New file is created in device,
   so all date in Mass Stirage created this way is destroyed.
 
-  Utility utils/set_mass_storege_mode.sh" sets device to mass storage mode using sharing file created with
+  Utility "utils/set_mass_storege_mode.sh" sets device to mass storage mode using sharing file created with
   script described above. It does not destroy anything.
 
   In most moders linux distributions, they found that device is in mass storage mode providing it automatically
