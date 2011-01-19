@@ -21,7 +21,8 @@
 BASE_DIR=`dirname $0`
 cd ${BASE_DIR}
 
-./test-simple-voicecall dial 177
+#./test-simple-voicecall dial 177
+./ofono_incomingCall.sh
 
 sleep 3 
 
