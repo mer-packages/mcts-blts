@@ -46,6 +46,9 @@ flag. This is recommended if test environment is not fully pre-configured.
 Use -o switch to give proper PIN code if it is not handled with configuration
 file.
 
+Timeouts can be configured for certain test cases via configuration file
+(preferred) or -t flag. It is not supported in test cases 1-6, 27-31, 45 and 46.
+
 N900 specific
 
 Use kill-telepathy before tests and enable-telepathy when finished

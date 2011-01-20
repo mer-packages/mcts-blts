@@ -1,9 +1,10 @@
-* Wed 19 Jan 2011 Kari Laakso <kari.laakso@digia.com> - 0.1.16
+* Thu 20 Jan 2011 Kari Laakso <kari.laakso@digia.com> - 0.1.16
 - [ Mikko Ojala ] Fixes to PIN lock and unlock cases
 - [ Mikko Ojala ] Timeouts increased to 60 seconds in several network-facing cases
 - [ Mikko Ojala ] "dontcleanup" flag now also affects supplementary service resets
 - [ Mikko Ojala ] PIN Reset default configuration now matches Phonesim interface
-- [ Kari Laakso ] "--dontcleanup" changed to "--cleanup" and removed mandatory environment check
+- [ Kari Laakso ] "--doncleanup" changed to "--cleanup" and removed mandatory environment check
+- [ Kari Laakso ] Improved command line help
 
 * Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.1.15
 - Tests.xml update

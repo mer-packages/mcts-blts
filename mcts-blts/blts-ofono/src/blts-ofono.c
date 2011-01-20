@@ -69,6 +69,7 @@ static void my_ofono_help(const char* help_msg_base)
 		"  -p: Price Per Unit conversion value\n"
 		"  -c: Three character currency code\n"
 		"  -t: Set timeout for test case execution\n"
+		"      (Not supported in test cases 1-6, 27-31, 45, 46)\n"
 		"  --cleanup: Clean up call state before/after tests\n"
 		);
 }
