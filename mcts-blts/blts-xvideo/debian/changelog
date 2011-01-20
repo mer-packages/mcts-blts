@@ -1,3 +1,9 @@
+blts-xvideo-tests (0.0.9) unstable; urgency=low
+
+  * Simplify the example configuration file. Fixes: BMC#10455
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 20 Jan 2011 10:51:54 +0200
+
 blts-xvideo-tests (0.0.8-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.

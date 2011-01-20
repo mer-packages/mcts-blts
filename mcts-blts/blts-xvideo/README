@@ -39,9 +39,17 @@ The package builds (from the source tree root) with
  $ ./configure
  $ make
 
-To build debian package
+Build debian package with
 
  $ dpkg-buildpackage -rfakeroot
+
+or
+
+ $ ./pack.sh -d
+
+Build RPM package with
+
+ $ ./pack.sh -r
 
 Test cases
 ==========
@@ -72,19 +80,16 @@ This will execute tests using default configuration file, which is;
 The test results are printed to terminal and also to
 /var/log/tests/blts_xvideo.txt.
 
-Other possible execution parameters for blts-xvideo-tests:
-   * -l: Used log file, default blts_xvideo_core.txt
-   * -e: Execute single or multiple selected tests, for example -e 1,4,5.
-   * -en: Execute test by name, for example -en "My test X"
-   * -s: Show list of all tests
-   * -C: Used parameter configuration file
-   * -?: This message
-   * -nc: Do not output log to terminal
+See optional arguments with;
+ $ blts-xvideo-tests -?
 
 Configuration file
 ==================
 
-Configuration file contains used parameters for benchmarks;
+Configuration file contains used parameters for the test cases, such as used
+xvideo adaptor, port attributes etc (see below). blts-xvideo-tests-config-example
+package contains an example configuration file. Modify the example configuration
+to match with the platform/drivers being tested if needed.
 
 ######################
 # General parameters #
@@ -158,5 +163,4 @@ Configuration file contains used parameters for benchmarks;
 	name fute_port_attributes
 	const "XV_VSYNC 0"
 [end_parameter]
-
 
