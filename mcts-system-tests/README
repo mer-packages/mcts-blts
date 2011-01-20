@@ -1,0 +1,62 @@
+-----------------------
+ Introduction
+-----------------------
+mcts-system-tests contains common system tests, tests.xml describes both auto
+and manual tests.
+
+
+-----------------------
+Build and Run
+-----------------------
+1. Build
+cd mcts-system-tests
+./pack.sh
+This will generate rpm package mcts-system-tests-<version>-<release>.<arch>.rpm
+
+2. Install
+rpm -ivh mcts-system-tests-<version>-<release>.<arch>.rpm
+
+3. configuration
+check the "configuration" phase
+
+4. Run
+testrunner-lite -f /usr/share/mcts-system-tests/tests.xml -o results.xml
+
+
+---------------------
+configuration
+---------------------
+1. sys_check_unusual_mem:
+edit the [Percentage Threshold] in /usr/share/mcts-system-tests/tests.xml
+directly, the default value is 10(%).
+/opt/mcts-system-tests/abpchk.sh cpu [Percentage Threshold]
+2. sys_check_unusual_cpu:
+edit the [Percentage Threshold] in /usr/share/mcts-system-tests/tests.xml
+directly, the default value is 10(%).
+/opt/mcts-system-tests/abpchk.sh cpu [Percentage Threshold]
+
+
+---------------------
+Common Install
+---------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+
+-----------------------
+Test Environment
+-----------------------
+N/A
+
+
+-----------------------
+Known Issues
+-----------------------
+N/A
+
+
+-----------------------
+TODO
+-----------------------
+Welcome to contribute!

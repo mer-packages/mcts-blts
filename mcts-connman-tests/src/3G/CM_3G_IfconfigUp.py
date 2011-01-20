@@ -29,6 +29,7 @@ sys.path.append(dir)
 import time
 from common import *
 dev = C3GDevice()
+dev.Connect()
 dev.ifconfigDown()
 time.sleep(2)
 ret = dev.ifconfigUP()

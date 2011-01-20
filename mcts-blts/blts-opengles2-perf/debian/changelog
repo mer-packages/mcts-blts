@@ -1,3 +1,9 @@
+blts-opengles2-tests (0.0.15) unstable; urgency=low
+
+  * Fix build with MeeGo pvr-bin-devel. Fixes: BMC#10112
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Tue, 18 Jan 2011 10:43:21 +0200
+
 blts-opengles2-tests (0.0.14) unstable; urgency=low
 
   * Remove obsolete Min support code
