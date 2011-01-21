@@ -61,18 +61,6 @@
         ">
         <step>min -c -t 'FUTE-Accounts_create_account_ovi'</step>
       </case>
-
-      <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
-        "Purpose
-	Creates a facebook account 
-        Method
-        Uses accounts-qt api to create account to device
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
-      </case>
       <case name="FUTE-Accounts_create_account_msn" timeout="10" description=
         "Purpose
 	Creates a msn account 
@@ -117,6 +105,74 @@
         ">
         <step>min -c -t 'FUTE-Accounts_create_account_skype'</step>
       </case>
+
+      <case name="FUTE-Accounts_create_account_ms_exchange" timeout="10" description=
+        "Purpose
+	Creates a exchange account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_ms_exchange'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_myspace" timeout="10" description=
+        "Purpose
+	Creates a myspace account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_myspace'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_nokia_messaging" timeout="10" description=
+        "Purpose
+	Creates a nokia messaging account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_nokia_messaging'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_picasa" timeout="10" description=
+        "Purpose
+	Creates a picasa account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_picasa'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_sip" timeout="10" description=
+        "Purpose
+	Creates a sip account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_sip'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_yahoo" timeout="10" description=
+        "Purpose
+	Creates a yahoo account 
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+        <step>min -c -t 'FUTE-Accounts_create_account_yahoo'</step>
+      </case>
+
       <case name="FUTE-Accounts_remove_account" timeout="10" description=
         "Purpose
 	Removes target account
@@ -138,7 +194,7 @@
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t ' FUTE-Accounts_clear_accounts'</step>
+        <step>min -c -t 'FUTE-Accounts_clear_accounts'</step>
       </case>
 
       <case name="FUTE-SSO_list_identities" timeout="10" description=
@@ -167,103 +223,7 @@
         <step>min -c -t 'FUTE-SSO_clear_identities'</step>
       </case>
 
-      <case name="SSO_create_identity_google" timeout="10" description=
-        "Purpose
-	Creates sso credential for google service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_google'</step>
-      </case>
-
-      <case name="SSO_create_identity_facebook" timeout="10" description=
-        "Purpose
-	Creates sso credential for facebook service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_facebook'</step>
-      </case>
-
-      <case name="SSO_create_identity_ovi" timeout="10" description=
-        "Purpose
-	Creates sso credential for ovi service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_ovi'</step>
-      </case>
-
-      <case name="SSO_create_identity_msn" timeout="10" description=
-        "Purpose
-	Creates sso credential for msn service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_msn'</step>
-      </case>
-
-      <case name="SSO_create_identity_flicker" timeout="10" description=
-        "Purpose
-	Creates sso credential for flicker service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_flicker'</step>
-      </case>
-
-      <case name="SSO_create_identity_twitter" timeout="10" description=
-        "Purpose
-	Creates sso credential for twitter service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_twitter'</step>
-      </case>
-
-      <case name="SSO_create_identity_skype" timeout="10" description=
-        "Purpose
-	Creates sso credential for skype service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_skype'</step>
-      </case>
-
-      <case name="SSO_create_identity_sip" timeout="10" description=
-        "Purpose
-	Creates sso credential for sip service
-        Method
-        Uses signon-qt api to create sso credential
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'SSO_create_identity_sip'</step>
-      </case>
-
-      <case name="SSO_create_session_google" timeout="100" description=
+        <case name="FUTE-SSO_create_session_google" timeout="100" description=
         "Purpose
 	Creates account and sso credential for google service. Opens session.
         Method
@@ -272,9 +232,9 @@
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'SSO_create_session_google'</step>
+        <step>min -c -t 'FUTE-SSO_create_session_google'</step>
       </case>
-      <case name="SSO_create_session_facebook" timeout="100" description=
+      <case name="FUTE-SSO_create_session_facebook" timeout="100" description=
         "Purpose
 	Creates account and sso credential for facebook service. Opens session.
         Method
@@ -283,9 +243,9 @@
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'SSO_create_session_facebook'</step>
+        <step>min -c -t 'FUTE-SSO_create_session_facebook'</step>
       </case>
-      <case name="SSO_create_session_ovi" timeout="100" description=
+      <case name="FUTE-SSO_create_session_ovi" timeout="100" description=
         "Purpose
 	Creates account and sso credential for ovi service. Opens session.
         Method
@@ -294,7 +254,7 @@
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
-        <step>min -c -t 'SSO_create_session_ovi'</step>
+        <step>min -c -t 'FUTE-SSO_create_session_ovi'</step>
       </case>
     </set>
   </suite>
