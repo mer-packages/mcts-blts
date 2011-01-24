@@ -19,6 +19,7 @@ blts-ofono-tests (0.1.16) unstable; urgency=low
   * PIN Reset default configuration now matches Phonesim interface
   * "--doncleanup" changed to "--cleanup" and removed mandatory environment check
   * Improved command line help
+  * Improved all voice call, dual call and multiparty case run time instructions
 
  -- Kari Laakso <kari.laakso@digia.com>  Thu, 20 Jan 2011 10:18:53 +0200
 
