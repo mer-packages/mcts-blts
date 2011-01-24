@@ -77,6 +77,11 @@ Run as root:
 This will execute tests using default configuration file, which is;
 /etc/blts/blts-xvideo-tests.cnf
 
+blts-xvideo-tests-config-example contains two different configurations;
+blts-xvideo-tests.cnf: Default config, should work on most of the ia32 platforms
+blts-xvideo-n900.cnf: For N900 (generic OMAP). Run with;
+ $ blts-xvideo-tests -C /etc/blts/blts-xvideo-n900.cnf
+
 The test results are printed to terminal and also to
 /var/log/tests/blts_xvideo.txt.
 
@@ -88,7 +93,7 @@ Configuration file
 
 Configuration file contains used parameters for the test cases, such as used
 xvideo adaptor, port attributes etc (see below). blts-xvideo-tests-config-example
-package contains an example configuration file. Modify the example configuration
+package contains example configuration files. Modify the example configurations
 to match with the platform/drivers being tested if needed.
 
 ######################

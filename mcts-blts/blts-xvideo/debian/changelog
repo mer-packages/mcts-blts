@@ -1,6 +1,7 @@
 blts-xvideo-tests (0.0.9) unstable; urgency=low
 
   * Simplify the example configuration file. Fixes: BMC#10455
+  * Update n900 config file and put it into the example config package. Fixes: BMC#10432
 
  -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 20 Jan 2011 10:51:54 +0200
 

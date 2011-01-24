@@ -44,4 +44,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files config-example
 /etc/blts/blts-xvideo-tests.cnf
+/etc/blts/blts-xvideo-n900.cnf
 /usr/share/blts-xvideo-tests/tests.xml
