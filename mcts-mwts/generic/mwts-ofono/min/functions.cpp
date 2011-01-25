@@ -517,28 +517,6 @@ LOCAL int DisableVoiceCallUnconditional(__attribute__((unused))MinItemParser * i
 }
 
 /**
- * Disables all the voice call forwarding rules.
- * @return ENOERR
- */
-LOCAL int DisableVoiceCallForwarding(MinItemParser * item)
-{
-    MWTS_ENTER;
-    char *type = NULL;
-
-    if (ENOERR != mip_get_next_string( item, &type ))
-    {
-        qCritical() << "could not parse type parameter";
-        return EINVAL;
-    }
-
-    g_pResult->StepPassed( __FUNCTION__,
-                           test.mVoiceCallTest->disableAll(type));
-
-    free (type);
-    return ENOERR;
-}
-
-/**
  * Enables the call voice call waiting
  * @return ENOERR
  */
@@ -604,7 +582,7 @@ LOCAL int EnableVoiceCallOutgoing(MinItemParser * item)
  * @param pin code
  * @return ENOERR
  */
-LOCAL int DisableVoiceCallOutgoing(__attribute__((unused)) MinItemParser * item)
+LOCAL int DisableVoiceCallOutgoing(MinItemParser * item)
 {
     MWTS_ENTER;
     char *pin = NULL;
@@ -659,7 +637,7 @@ LOCAL int EnableVoiceCallIncoming(MinItemParser * item)
  * @param pin code
  * @return ENOERR
  */
-LOCAL int DisableVoiceCallIncoming(__attribute__((unused)) MinItemParser * item)
+LOCAL int DisableVoiceCallIncoming(MinItemParser * item)
 {
     MWTS_ENTER;
     char *pin = NULL;
@@ -710,8 +688,6 @@ int ts_get_test_cases( DLList** list )
 
     ENTRYTC(*list,"EnableVoiceCallUnconditional", EnableVoiceCallUnconditional);
     ENTRYTC(*list,"DisableVoiceCallUnconditional", DisableVoiceCallUnconditional);
-
-    ENTRYTC(*list,"DisableVoiceCallForwarding", DisableVoiceCallForwarding);
 
     //voice call settings
     ENTRYTC(*list,"EnableVoiceCallWaiting", EnableVoiceCallWaiting);
