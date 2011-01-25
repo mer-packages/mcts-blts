@@ -1,7 +1,8 @@
 blts-usb-tests (0.0.16) unstable; urgency=low
 
-  * Bugfix: When any of the endpoints fails in read / write cases, the test
-    case will fail from now on.
+  * [ Mika Niinistö ] Bugfix: When any of the endpoints fails in read / write
+    cases, the test case will fail from now on.
+  * [ Kimmo Myllyvirta ] Fix build with Linux 2.6.37+
 
  -- Mika Niinistö <mika.niinisto@digia.com>  Mon, 17 Jan 2011 18:28:34 +0200
 
