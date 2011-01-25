@@ -25,10 +25,13 @@
 #define OFONOTESTINTERFACE_H
 
 #include <MwtsCommon>
+#include <QtTest/QtTest>
 
+#define MODEM_TIMEOUT 5000
 class OfonoTestInterface : public QObject
 {
     Q_OBJECT
+
 public:
     explicit OfonoTestInterface(QObject *parent = 0);
 

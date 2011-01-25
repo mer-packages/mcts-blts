@@ -2,6 +2,7 @@ TARGET = min-mwts-pim
 TEMPLATE = lib
 VERSION = 0.0.2
 
+CONFIG += dll
 CONFIG += plugin
 CONFIG += warn_on
 CONFIG += debug

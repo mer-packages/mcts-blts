@@ -26,7 +26,6 @@
 
 #include <ofono-qt/ofonosimmanager.h>
 #include "ofonotestinterface.h"
-#include <QtTest/QtTest>
 
 //for debug purposes
 #define MWTS_OFONO_CONF_DEBUG
@@ -61,8 +60,14 @@ public:
      */
     void OnUninitialize();
 
+    /************************************************************
+     *
+     * Sim manager methods
+     *
+     */
+
     /**
-     * Enters the currently pending pin.  The type value must
+     * Enters the currently pending pin (after reboot). The type value must
      * match the pin type being asked in the PinRequired
      * property.
      * @param pin type, pin code

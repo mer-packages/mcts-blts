@@ -31,9 +31,6 @@ class OfonoTest : public MwtsTest
 {
     Q_OBJECT
 
-public:
-    SimManagerTest *mSimManagerTest;
-
 public:    
     /**
      * Constructor for template test class
@@ -58,6 +55,8 @@ public:
      */
     void OnUninitialize();
 
+    SimManagerTest *mSimManagerTest;
+    VoiceCallTest *mVoiceCallTest;
 };
 
 #endif // OFONOTEST_H

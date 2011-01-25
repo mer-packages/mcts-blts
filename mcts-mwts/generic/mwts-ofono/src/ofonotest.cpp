@@ -29,6 +29,7 @@ OfonoTest::OfonoTest()
     MWTS_ENTER;
 
     mSimManagerTest = new SimManagerTest;
+    mVoiceCallTest = new VoiceCallTest;
 
     MWTS_LEAVE;
 }
@@ -44,6 +45,7 @@ void OfonoTest::OnInitialize()
     MWTS_ENTER;
 
     mSimManagerTest->OnInitialize();
+    mVoiceCallTest->OnInitialize();
 
     MWTS_LEAVE;
 }
@@ -52,11 +54,19 @@ void OfonoTest::OnUninitialize()
 {
     MWTS_ENTER;    
 
+    mVoiceCallTest->OnUninitialize();
     mSimManagerTest->OnUninitialize();
+
     if (mSimManagerTest)
     {
         delete mSimManagerTest;
         mSimManagerTest = NULL;
+    }
+
+    if (mVoiceCallTest)
+    {
+        delete mVoiceCallTest;
+        mVoiceCallTest = NULL;
     }
 
     MWTS_LEAVE;

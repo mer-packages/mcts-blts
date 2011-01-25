@@ -56,6 +56,7 @@ private:
 
     bool m_bSuccess; // test verdict
 
+    QStringList m_strListMechanisms;
 
     /*
      * Pointer to MwtsTest object. Needed for event loop

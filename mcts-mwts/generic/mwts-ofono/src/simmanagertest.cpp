@@ -43,40 +43,35 @@ void SimManagerTest::OnInitialize()
 
     //qDebug() << "Config file name: " << g_pConfig->fileName();
     QString modem = g_pConfig->value("DEFAULT/modem").toString();
-    qDebug () << __PRETTY_FUNCTION__ << "modem: " << modem;
-    //TODO, might put on option for AUTOSELECT
-    mSimManager = new OfonoSimManager(OfonoModem::ManualSelect, modem, this);
+    qDebug () << __FUNCTION__ << "modem name in the config file: " << modem;
+    mSimManager = new OfonoSimManager(OfonoModem::AutomaticSelect, modem, this);
+    qDebug () << __FUNCTION__ << "selected modem: " << mSimManager->modem()->model();
 
     connect( this, SIGNAL(enterPinRequired(const QString&, const QString&)),
              this, SLOT(onEnterPinRequired(const QString&, const QString&)));
 
     if (!mSimManager->modem()->powered())
-    {
-        qDebug () << __PRETTY_FUNCTION__ << "modem is not powered on";
+    {        
         mSimManager->modem()->setPowered(true);
 
-        mTimer->start(5000);
+        mTimer->start(MODEM_TIMEOUT);
         mEventLoop->exec();
     }
 
     if (mSimManager->isValid())
-    {
-        qDebug () << __PRETTY_FUNCTION__ << "modem is valid: TRUE";
+    {        
         g_pResult->StepPassed("modem is valid: ", TRUE);
     }
     else
     {
         qCritical ("modem is not valid");
-        g_pResult->StepPassed(__PRETTY_FUNCTION__, FALSE);
+        g_pResult->StepPassed(__FUNCTION__, FALSE);
         MWTS_LEAVE;
         return;
     }
 
-        qDebug () << __PRETTY_FUNCTION__ << "modem is powered: " << mSimManager->modem()->powered();
-        g_pResult->StepPassed("modem is powered: ", mSimManager->modem()->powered());
-
-        MWTS_LEAVE;
-
+    g_pResult->StepPassed("modem is powered: ", mSimManager->modem()->powered());
+    MWTS_LEAVE;
 }
 
 void SimManagerTest::OnUninitialize()
@@ -100,7 +95,7 @@ bool SimManagerTest::enterPin(const QString &pinType, const QString &pin)
 
     if (mSimManager->pinRequired() != pinType )
     {
-        qCritical () << __PRETTY_FUNCTION__ << pinType << " is not required to enter.";
+        qCritical () << __FUNCTION__ << pinType << " is not required to enter.";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -113,21 +108,19 @@ bool SimManagerTest::enterPin(const QString &pinType, const QString &pin)
         mSimManager->enterPin(pinType, pin);
     #endif
 
-    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
+    qDebug () << __FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
 
     mTimer->start(1000);
     mEventLoop->exec();
 
-    qDebug () << __PRETTY_FUNCTION__ << enterPin.count();
+    qDebug () << __FUNCTION__ << enterPin.count();
     if (enterPin.takeFirst().at(0).toBool())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "TRUE";
         MWTS_LEAVE;
         return TRUE;
     }
     else
     {
-        qDebug () << __PRETTY_FUNCTION__ << "FALSE";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -143,12 +136,12 @@ bool SimManagerTest::changePin(const QString &pinType, const QString &oldPin, co
     //if lock pin is not enabled
     if (!mSimManager->lockedPins().contains(pinType))
     {
-        qDebug () << __PRETTY_FUNCTION__ <<
+        qDebug () << __FUNCTION__ <<
             pinType << "has to be enabled to change the code.Running enablePin ...";
         //enable the pin lock and call changePin again
         if (this->enablePin(pinType, oldPin))
         {
-            qDebug () << __PRETTY_FUNCTION__ << "Running changePin again ...";
+            qDebug () << __FUNCTION__ << "Running changePin again ...";
             return this->changePin(pinType, oldPin, newPin);
         }
     }
@@ -161,22 +154,20 @@ bool SimManagerTest::changePin(const QString &pinType, const QString &oldPin, co
         mSimManager->changePin(pinType, oldPin, newPin);
     #endif
 
-    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType
+    qDebug () << __FUNCTION__ << "pin type:" << pinType
               << " old pin:" << oldPin << " new pin:" << newPin;
 
     mTimer->start(1000);
     mEventLoop->exec();
 
-    qDebug () << __PRETTY_FUNCTION__ << changePin.count();
+    qDebug () << __FUNCTION__ << changePin.count();
     if (changePin.takeFirst().at(0).toBool())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "TRUE";
         MWTS_LEAVE;
         return TRUE;
     }
     else
     {
-        qDebug () << __PRETTY_FUNCTION__ << "FALSE";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -192,7 +183,7 @@ bool SimManagerTest::enablePin(const QString &pinType, const QString &pin)
     //check whether the pin is already enabled
     if (mSimManager->lockedPins().contains(pinType))
     {
-        qDebug () << __PRETTY_FUNCTION__ << pinType << " is already enabled.";
+        qDebug () << __FUNCTION__ << pinType << " is already enabled.";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -205,21 +196,19 @@ bool SimManagerTest::enablePin(const QString &pinType, const QString &pin)
         mSimManager->lockPin(pinType, pin);
     #endif
 
-    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
+    qDebug () << __FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
 
     mTimer->start(1000);
     mEventLoop->exec();
 
-    qDebug () << __PRETTY_FUNCTION__ << lockPin.count();
+    qDebug () << __FUNCTION__ << lockPin.count();
     if (lockPin.takeFirst().at(0).toBool())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "TRUE";
         MWTS_LEAVE;
         return TRUE;
     }
     else
     {
-        qDebug () << __PRETTY_FUNCTION__ << "FALSE";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -235,7 +224,7 @@ bool SimManagerTest::disablePin(const QString &pinType, const QString &pin)
     //check whether the pin is already disabled
     if (!mSimManager->lockedPins().contains(pinType))
     {
-        qCritical () << __PRETTY_FUNCTION__ << pinType << " is already disabled.";
+        qCritical () << __FUNCTION__ << pinType << " is already disabled.";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -248,21 +237,19 @@ bool SimManagerTest::disablePin(const QString &pinType, const QString &pin)
         mSimManager->unlockPin(pinType, pin);
     #endif
 
-    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
+    qDebug () << __FUNCTION__ << "pin type:" << pinType << " pin code:" << pin;
 
     mTimer->start(1000);
     mEventLoop->exec();
 
-    qDebug () << __PRETTY_FUNCTION__ << unlockPin.count();
+    qDebug () << __FUNCTION__ << unlockPin.count();
     if (unlockPin.takeFirst().at(0).toBool())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "TRUE";
         MWTS_LEAVE;
         return TRUE;
     }
     else
     {
-        qDebug () << __PRETTY_FUNCTION__ << "FALSE";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -310,9 +297,7 @@ bool SimManagerTest::verifyPin(const QString validity, const QString pinType, co
     {
         MWTS_LEAVE;
         return retval;
-    }
-
-    MWTS_LEAVE;
+    }   
 }
 
 //TODO resetPin, it does not work. It might be a bug report to ofono
@@ -337,8 +322,6 @@ bool SimManagerTest::verifyPuk(const QString validity, QString puk)
        MWTS_LEAVE;
        return retval;
    }
-
-    MWTS_LEAVE;
 }
 
 //TODO, it does not work. It might be a bug report to ofono
@@ -354,21 +337,19 @@ bool SimManagerTest::resetPin(const QString pinType, const QString puk, const QS
         mSimManager->resetPin(pinType, puk, newPin);
     #endif
 
-    qDebug () << __PRETTY_FUNCTION__ << "pin type:" << pinType << " puk code:" << puk << "new pin " << newPin;
+    qDebug () << __FUNCTION__ << "pin type:" << pinType << " puk code:" << puk << "new pin " << newPin;
 
     mTimer->start(1000);
     mEventLoop->exec();
 
-    qDebug () << __PRETTY_FUNCTION__ << resetPin.count();
+    qDebug () << __FUNCTION__ << resetPin.count();
     if (resetPin.takeFirst().at(0).toBool())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "TRUE";
         MWTS_LEAVE;
         return TRUE;
     }
     else
     {
-        qDebug () << __PRETTY_FUNCTION__ << "FALSE";
         MWTS_LEAVE;
         return FALSE;
     }
@@ -394,16 +375,16 @@ void SimManagerTest::onEnterPinRequired(const QString &pinType, const QString &p
     MWTS_ENTER;
     if (pinType == mSimManager->pinRequired())
     {
-        qDebug () << __PRETTY_FUNCTION__ << "Entering of pending " << pinType
+        qDebug () << __FUNCTION__ << "Entering of pending " << pinType
                  << " code is required. Running enterPin ...";
-        qDebug () << __PRETTY_FUNCTION__ << "If it fails you might wanto to run EnterPin explicitly from the script";
+        qDebug () << __FUNCTION__ << "If it fails you might wanto to run EnterPin explicitly from the script";
 
         this->enterPin(pinType, pin);
     }
 
     else if (mSimManager->pinRequired() == "puk")
     {
-        qCritical () << __PRETTY_FUNCTION__ << "Ooops, puk in required to enter. You might want to call " <<
+        qCritical () << __FUNCTION__ << "Ooops, puk in required to enter. You might want to call " <<
                                                 "EnterPin puk <puk code>  explicitly.";
         MWTS_LEAVE;
         return;
@@ -420,7 +401,7 @@ bool SimManagerTest::invalidityCheck (const QString error)
     //the dbus throw invalid format error
     if (error == "org.ofono.Error.InvalidFormat")
     {
-        qCritical () << __PRETTY_FUNCTION__ << "The dbus raised the following error message " <<
+        qCritical () << __FUNCTION__ << "The dbus raised the following error message " <<
                      "(might be ofono bug, or simply invalid arguments): " << error;
         MWTS_LEAVE;
         return FALSE;
@@ -428,7 +409,7 @@ bool SimManagerTest::invalidityCheck (const QString error)
     //dbus throws error failed hopefully means the invalidity check is okay
     else if (error == "org.ofono.Error.Failed")
     {
-        qDebug () << __PRETTY_FUNCTION__ << "The dbus raised the following message" <<
+        qDebug () << __FUNCTION__ << "The dbus raised the following message" <<
                 " (which is good at invalidity check)" << error;
         MWTS_LEAVE;
         return TRUE;
