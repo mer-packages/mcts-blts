@@ -30,14 +30,13 @@
 # valiables
 DIRECTORY="/root/data"
 FILE=$DIRECTORY"/backing_file"
-#filesystem size in Megabytes, so 1024= 1 GB
-SIZE=1024
-#SIZE=64
-CYLINDERS=16384
+#filesystem size in Megabytes, so 2048= 2 GB
+SIZE=2048
+CYLINDERS=32768
 
 # 1 GB filesysten
 echo
-echo "Making 1 GB file for filesystem, please wait"
+echo "Making 2 GB file for filesystem, please wait"
 mkdir -p $DIRECTORY
 dd bs=1M count=$SIZE if=/dev/zero of=$FILE
 
@@ -52,7 +51,6 @@ echo h
 echo 16
 echo c
 echo $CYLINDERS
-#echo 1024
 echo r
 echo n
 echo p

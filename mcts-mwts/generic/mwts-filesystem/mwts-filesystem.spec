@@ -46,7 +46,7 @@ mwts-filesystem generic config file
 Summary:                mwts-filesystem generic utils
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               mwts-filesystem
+Requires:               dosfstools
 %description            generic-utils
 mwts-filesystem generic utils
 
@@ -59,12 +59,12 @@ Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mw
 mwts-filesystem meta package for generic version
 
 
-%package                cli
+%package                generic-cli
 Summary:                mwts-filesystem command line tool
 Prefix:                 /usr/bin
 Group:                  Development/Tools
 Requires:               mwts-filesystem
-%description            cli
+%description            generic-cli
 mwts-filesystem command line tool
 
 %prep
@@ -103,7 +103,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-all
 
-%files cli
+%files generic-cli
 /usr/bin/mwts-filesystem-cli
 
 %post
