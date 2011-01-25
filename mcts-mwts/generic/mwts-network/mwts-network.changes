@@ -1,0 +1,10 @@
+* Tue 7 Jan 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.9
+- Fixed bug concerning conf-file reading
+
+* Tue 30 Nov 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.8
+- new psd test cases added and tests.xml updated 
+
+* Mon 8 Oct 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.7
+- ap configurations (encrypted ap passwords) now added via connman-service-api
+
+
