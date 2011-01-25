@@ -8,7 +8,7 @@ Standards-Version: 3.8.0
 Package: libbltscommon-dev
 Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, libbltscommon1 (= ${binary:Version}), ${misc:Depends}
+Depends: ${shlibs:Depends}, libbltscommon1 (= ${binary:Version}), ${misc:Depends}, libxml2-dev
 Description: Common BLTS functions dev package
  This package contains blts-common library development files
 
