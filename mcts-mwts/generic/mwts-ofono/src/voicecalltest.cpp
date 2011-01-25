@@ -22,6 +22,7 @@ void VoiceCallTest::OnInitialize()
     mCallForwarding = new OfonoCallForwarding(OfonoModem::AutomaticSelect, modem, this);
     mCallSettings = new OfonoCallSettings(OfonoModem::AutomaticSelect, modem, this);
     mCallBarring = new OfonoCallBarring(OfonoModem::AutomaticSelect, modem, this);
+
     qDebug () << __FUNCTION__ << "selected modem: " << mCallForwarding->modem()->model();
 
     if (!mCallForwarding->modem()->powered())
@@ -96,47 +97,8 @@ bool VoiceCallTest::setVoiceCallBusy(const QString &property)
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceBusy (" << property << ")";
-
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceBusyComplete" << voiceBusyComplete.count();
-    if (!voiceBusyComplete.isEmpty())
-    {
-        list = voiceBusyComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceBusyComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceBusyComplete" << list.at(1).toString();
-
-        if (list.at(0).toBool())
-        {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
-            return TRUE;
-        }
-
-    }
-
-    //this is not voiceBusyCompleted signal catch, but enough
-    //to detect if the setVoiceBusy was completed or not
-    qDebug () << "XXXXXXvoiceBusyChanged" << voiceBusyChanged.count();
-    if (!voiceBusyChanged.isEmpty())
-    {
-        list = voiceBusyChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceBusyChanged" << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        return TRUE;
-    }
-
-    qDebug () << "XXXXXXvoiceBusyFailed" << setVoiceBusyFailed.count();
-    if (!setVoiceBusyFailed.isEmpty())
-    {
-        qDebug () << "VoiceBusyFailed: " << mCallForwarding->errorName() << " "
-                                         << mCallForwarding->errorMessage();
-        qDebug () << "XXXXXXsetVoiceBusyFailed";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
+    qDebug () << __FUNCTION__ << property;
+    return this->onSpySignals(voiceBusyComplete, voiceBusyChanged, setVoiceBusyFailed, "Busy");
 }
 
 bool VoiceCallTest::setVoiceCallNoReply(const QString &property)
@@ -151,47 +113,8 @@ bool VoiceCallTest::setVoiceCallNoReply(const QString &property)
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceCallNoReply (" << property << ")";
-
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceNoReplyComplete" << voiceNoReplyComplete.count();
-    if (!voiceNoReplyComplete.isEmpty())
-    {
-        list = voiceNoReplyComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceNoReplyComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceNoReplyComplete" << list.at(1).toString();
-
-        if (list.at(0).toBool())
-        {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
-            return TRUE;
-        }
-
-    }
-
-    //this is not voiceNoReplyCompleted signal catch, but enough
-    //to detect if the setVoiceNoReply was completed or not
-    qDebug () << "XXXXXXvoiceNoReplyChanged" << voiceNoReplyChanged.count();
-    if (!voiceNoReplyChanged.isEmpty())
-    {
-        list = voiceNoReplyChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceNoReplyChanged"  << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        return TRUE;
-    }
-
-    qDebug () << "XXXXXXvoiceNoReplyFailed" << setVoiceNoReplyFailed.count();
-    if (!setVoiceNoReplyFailed.isEmpty())
-    {
-        qDebug () << "VoiceNoReplyFailed: " << mCallForwarding->errorName() << " "
-                                         << mCallForwarding->errorMessage();
-        qDebug () << "XXXXXXsetVoiceNoReplyFailed";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
+    qDebug () << __FUNCTION__ << property;
+    return this->onSpySignals(voiceNoReplyComplete, voiceNoReplyChanged, setVoiceNoReplyFailed, "NoReply");
 }
 
 bool VoiceCallTest::setVoiceCallNotReachable(const QString &property)
@@ -206,47 +129,8 @@ bool VoiceCallTest::setVoiceCallNotReachable(const QString &property)
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceNotReachable (" << property << ")";
-
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceNotReachableComplete" << voiceNotReachableComplete.count();
-    if (!voiceNotReachableComplete.isEmpty())
-    {
-        list = voiceNotReachableComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceNotReachableComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceNotReachableComplete" << list.at(1).toString();
-
-        if (list.at(0).toBool())
-        {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
-            return TRUE;
-        }
-
-    }
-
-    //this is not voiceNotReachableCompleted signal catch, but enough
-    //to detect if the setVoiceNotReachable was completed or not
-    qDebug () << "XXXXXXvoiceNotReachableChanged" << voiceNotReachableChanged.count();
-    if (!voiceNotReachableChanged.isEmpty())
-    {
-        list = voiceNotReachableChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceNotReachableChanged" << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        return TRUE;
-    }
-
-    qDebug () << "XXXXXXvoiceNotReachableFailed" << setVoiceNotReachableFailed.count();
-    if (!setVoiceNotReachableFailed.isEmpty())
-    {
-        qDebug () << "VoiceNotReachableFailed: " << mCallForwarding->errorName() << " "
-                                         << mCallForwarding->errorMessage();
-        qDebug () << "XXXXXXsetVoiceNotReachableFailed";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
+    qDebug () << __FUNCTION__ <<  property;
+    return this->onSpySignals(voiceNotReachableComplete, voiceNotReachableChanged, setVoiceNotReachableFailed, "NotReachable");
 }
 
 bool VoiceCallTest::setVoiceCallUnconditional(const QString &property)
@@ -261,76 +145,8 @@ bool VoiceCallTest::setVoiceCallUnconditional(const QString &property)
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceUnconditional(" << property << ")";
-
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceUnconditionalComplete" << voiceUnconditionalComplete.count();
-    if (!voiceUnconditionalComplete.isEmpty())
-    {
-        list = voiceUnconditionalComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceUnconditionalComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceUnconditionalComplete" << list.at(1).toString();
-
-        if (list.at(0).toBool())
-        {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
-            return TRUE;
-        }
-
-    }
-
-    //this is not voiceUnconditionalCompleted signal catch, but enough
-    //to detect if the setVoiceUnconditional was completed or not
-    qDebug () << "XXXXXXvoiceUnconditionalChanged" << voiceUnconditionalChanged.count();
-    if (!voiceUnconditionalChanged.isEmpty())
-    {
-        list = voiceUnconditionalChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceUnconditionalChanged" << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        return TRUE;
-    }
-
-    qDebug () << "XXXXXXvoiceUnconditionalFailed" << setVoiceUnconditionalFailed.count();
-    if (!setVoiceUnconditionalFailed.isEmpty())
-    {
-        qDebug () << "VoiceUnconditionalFailed: " << mCallForwarding->errorName() << " "
-                                         << mCallForwarding->errorMessage();
-        qDebug () << "XXXXXXsetVoiceUnconditionalFailed";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
-}
-
-bool VoiceCallTest::disableAll(const QString &type)
-{
-    MWTS_ENTER;
-    QSignalSpy disableAllComplete(mCallForwarding, SIGNAL(disableAllComplete(bool)));
-
-    /*mCallForwarding->disableAll(type);
-
-    mTimer->start(FORWARDING_TIMEOUT);
-    mEventLoop->exec();
-
-    qDebug () << __FUNCTION__ << disableAllComplete.count();
-    if (disableAllComplete.takeFirst().at(0).toBool())
-    {
-        qDebug () << __FUNCTION__ << "TRUE";
-        MWTS_LEAVE;
-        return TRUE;
-    }
-    else
-    {
-        qDebug () << __FUNCTION__ << "FALSE";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
-    */
+    qDebug () << __FUNCTION__ << property;
+    return this->onSpySignals(voiceUnconditionalComplete, voiceUnconditionalChanged, setVoiceUnconditionalFailed, "Unconditional");
 }
 
 bool VoiceCallTest::setVoiceCallWaiting (const QString &setting)
@@ -345,47 +161,8 @@ bool VoiceCallTest::setVoiceCallWaiting (const QString &setting)
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceCallWaiting(" << setting << ")";
-
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceCallWaitinglComplete" << voiceCallWaitingComplete.count();
-    if (!voiceCallWaitingComplete.isEmpty())
-    {
-        list = voiceCallWaitingComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceCallWaitingComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceCallWaitingComplete" << list.at(1).toString();
-
-        if (list.at(0).toBool())
-        {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
-            return TRUE;
-        }
-
-    }
-
-    //this is not voiceCallWaitingCompleted signal catch, but enough
-    //to detect if the setVoicCallWaiting was completed or not
-    qDebug () << "XXXXXXvoiceCallWaitingChanged" << voiceCallWaitingChanged.count();
-    if (!voiceCallWaitingChanged.isEmpty())
-    {
-        list = voiceCallWaitingChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceCallWaitingChanged" << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        return TRUE;
-    }
-
-    qDebug () << "XXXXXXvoiceCallWaitingFailed" << setVoiceCallWaitingFailed.count();
-    if (!setVoiceCallWaitingFailed.isEmpty())
-    {
-        qDebug () << "VoiceCallWaitingFailed: " << mCallSettings->errorName() << " "
-                                         << mCallSettings->errorMessage();
-        qDebug () << "XXXXXXsetVoiceCallWaitingFailed";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
+    qDebug () << __FUNCTION__ << setting;
+    return this->onSpySignals(voiceCallWaitingComplete, voiceCallWaitingChanged, setVoiceCallWaitingFailed, "CallWaiting");
 }
 
 bool VoiceCallTest::setVoiceCallIncoming(const QString &barrings, const QString &pin)
@@ -399,47 +176,8 @@ bool VoiceCallTest::setVoiceCallIncoming(const QString &barrings, const QString 
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceCallIncoming(" << barrings << ","<< pin << ")";
-
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceIncomingComplete" << voiceIncomingComplete.count();
-    if (!voiceIncomingComplete.isEmpty())
-    {
-        list = voiceIncomingComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceIncomingComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceIncomingComplete" << list.at(1).toString();
-
-        if (list.at(0).toBool())
-        {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
-            return TRUE;
-        }
-
-    }
-
-    //this is not voiceIncomingCompleted signal catch, but enough
-    //to detect if the setVoiceIncoming was completed or not
-    qDebug () << "XXXXXXvoiceIncomingChanged" << voiceIncomingChanged.count();
-    if (!voiceIncomingChanged.isEmpty())
-    {
-        list = voiceIncomingChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceIncomingChanged" << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
-        return TRUE;
-    }
-
-    qDebug () << "XXXXXXvoiceIncomingFailed" << setVoiceIncomingFailed.count();
-    if (!setVoiceIncomingFailed.isEmpty())
-    {
-        qDebug () << "VoiceIncomingFailed: " << mCallBarring->errorName() << " "
-                                         << mCallBarring->errorMessage();
-        qDebug () << "XXXXXXsetVoiceIncomingFailed";
-        MWTS_LEAVE;
-        return FALSE;
-    }
-
-    MWTS_LEAVE;
-    return TRUE;
+    qDebug () << __FUNCTION__ << barrings << ","<< pin;
+    return this->onSpySignals(voiceIncomingComplete, voiceIncomingChanged, setVoiceIncomingFailed, "Incoming");
 }
 
 bool VoiceCallTest::setVoiceCallOutgoing(const QString &barrings, const QString &pin)
@@ -453,41 +191,43 @@ bool VoiceCallTest::setVoiceCallOutgoing(const QString &barrings, const QString 
     mTimer->start(FORWARDING_TIMEOUT);
     mEventLoop->exec();
 
-    qDebug () << "XXXXXX" << "setVoiceCallOutgoing(" << barrings << ","<< pin << ")";
+    qDebug () << __FUNCTION__ << barrings << "," << pin;
+    return this->onSpySignals(voiceOutgoingComplete, voiceOutgoingChanged, setVoiceOutgoingFailed, "Outgoing");
+}
 
-    //this seems as not working , TODO bug report to ofono-qt maintainer
-    qDebug () << "XXXXXXvoiceOutgoingComplete" << voiceOutgoingComplete.count();
-    if (!voiceOutgoingComplete.isEmpty())
+bool VoiceCallTest::onSpySignals (QSignalSpy &complete, QSignalSpy &changed, QSignalSpy &failed, const QString &name)
+{
+
+    //this does not miet, TODO bug report to ofono-qt maintainer
+    qDebug () << "voice" << name << "Complete:" << complete.count();
+    if (!complete.isEmpty())
     {
-        list = voiceOutgoingComplete.takeFirst();
-        qDebug () << "XXXXXXvoiceOutgoingComplete" << list.at(0).toBool();
-        qDebug () << "XXXXXXvoiceOutgoingComplete" << list.at(1).toString();
+        list = complete.takeFirst();
+        qDebug () << "voice" << name << "Complete:" <<  list.at(0).toBool();
+        qDebug () << "voice" << name << "Complete:" <<  list.at(1).toString();
 
         if (list.at(0).toBool())
         {
-            g_pResult->StepPassed(__FUNCTION__, TRUE);
+            MWTS_LEAVE;
             return TRUE;
         }
-
     }
 
-    //this is not voiceOutgoingCompleted signal catch, but enough
-    //to detect if the setVoiceOutgoing was completed or not
-    qDebug () << "XXXXXXvoiceOutgoingChanged" << voiceOutgoingChanged.count();
-    if (!voiceOutgoingChanged.isEmpty())
+    qDebug () << "voice" << name << "Changed:" << changed.count();
+    if (!changed.isEmpty())
     {
-        list = voiceOutgoingChanged.takeFirst();
-        qDebug () << "XXXXXXvoiceOutgoingChanged" << list.at(0).toString();
-        g_pResult->StepPassed(__FUNCTION__, TRUE);
+        list = changed.takeFirst();
+        qDebug () << "voice" << name << "Changed:" << list.at(0).toString();
+
+        MWTS_LEAVE;
         return TRUE;
     }
 
-    qDebug () << "XXXXXXvoiceOutgoingFailed" << setVoiceOutgoingFailed.count();
-    if (!setVoiceOutgoingFailed.isEmpty())
+    qDebug () << "voice" << name << "Failed" << failed.count();
+    if (!failed.isEmpty())
     {
-        qDebug () << "VoiceOutgoingFailed: " << mCallBarring->errorName() << " "
-                                         << mCallBarring->errorMessage();
-        qDebug () << "XXXXXXsetVoiceOutgoingFailed";
+        qDebug () << "voice" << name << "Failed";
+
         MWTS_LEAVE;
         return FALSE;
     }
