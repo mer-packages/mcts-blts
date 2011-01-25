@@ -196,9 +196,7 @@ bool VoiceCallTest::setVoiceCallOutgoing(const QString &barrings, const QString 
 }
 
 bool VoiceCallTest::onSpySignals (QSignalSpy &complete, QSignalSpy &changed, QSignalSpy &failed, const QString &name)
-{
-
-    //this does not miet, TODO bug report to ofono-qt maintainer
+{   
     qDebug () << "voice" << name << "Complete:" << complete.count();
     if (!complete.isEmpty())
     {
