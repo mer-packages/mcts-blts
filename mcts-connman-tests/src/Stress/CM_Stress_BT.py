@@ -47,28 +47,27 @@ dev = BTDevice()
 
 count=1
 
-while count < round:
+while count <= round:
     print "At the %s round" % (count)
     print "Enable device"
     dev.Enable()
     time.sleep(10)
     dev.Connect()
     if dev.IsConnected():
-        print "Guest is connected"
+        print "Bluetooth is connected"
     else:
-        print "Guest is not connected, test fails"
+        print "Bluetooth is not connected, test fails"
 	EXIT(FALSE)
     time.sleep(40)
     print "Diable device"
     dev.Disable()
     time.sleep(10)
     if dev.IsConnected():
-        print "Guest is still connected, test fails"
+        print "Bluetooth is still connected, test fails"
 	EXIT(FALSE)
     else:
-        print "Guest is not connected"
+        print "Bluetooth is not connected"
     time.sleep(40)
     count += 1
     
-print "Test Case success"
-
+EXIT(True)

@@ -55,7 +55,7 @@ if not wifidev.IsConnected():
 
 count=1
 
-while count < round:
+while count <= round:
     print "At the %s round" % (count)
     print "offline on"
     manager.Offline()
@@ -64,6 +64,15 @@ while count < round:
     manager.Online()
     time.sleep(10)
     count += 1
-    
-print "Test Case success"
+ 
+print "Now final check WiFi/Bluetooth status"   
+btdev.Connect()
+if not btdev.IsConnected():
+    print "Bluetooth device is not connected, case fails"
+    EXIT(False)
+wifidev.Connect('Guest')
+if not wifidev.IsConnected():
+    print "WiFi device is not connected, case fails"
+    EXIT(False)
+EXIT(True)
 
