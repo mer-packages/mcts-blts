@@ -47,7 +47,7 @@ make
 %install
 make install INSTALL_ROOT=%{buildroot}
 
-%files 
+%files
 %doc README
 %doc doc/MWTS.README
 /usr/lib/*.so*
@@ -71,13 +71,13 @@ ldconfig
 ldconfig
 
 %changelog
-* Tue Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
+* Wed Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
 - Intial version
-- Added test cases for sim manager
-- Added content to README
+* Fri Jan 07 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.0.2
+- Added functionality test cases to mwts-ofono-sim.cfg
+* Tue Jan 18 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.1.0
+- Added classes for sim manager and voice call (forwarding, waiting, barring)
 - Refactored package names in mwts-ofono.spec
-- Added classes for voice call (forwarding, waiting, barring)
-- Added mwts-ofono-call.cfg
 - Added functionality test cases to mwts-ofono-call.cfg
-
+- Added content to README
 
