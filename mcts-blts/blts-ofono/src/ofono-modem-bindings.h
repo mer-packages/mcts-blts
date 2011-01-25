@@ -1641,4 +1641,85 @@ org_ofono_Manager_get_modems_async (DBusGProxy *proxy, org_ofono_Manager_get_mod
 }
 #endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_Manager */
 
+#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_RadioSettings
+#define DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_RadioSettings
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+gboolean
+org_ofono_RadioSettings_get_properties (DBusGProxy *proxy, GHashTable** OUT_arg0, GError **error)
+
+{
+  return dbus_g_proxy_call (proxy, "GetProperties", error, G_TYPE_INVALID, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), OUT_arg0, G_TYPE_INVALID);
+}
+
+typedef void (*org_ofono_RadioSettings_get_properties_reply) (DBusGProxy *proxy, GHashTable *OUT_arg0, GError *error, gpointer userdata);
+
+static void
+org_ofono_RadioSettings_get_properties_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+{
+  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
+  GError *error = NULL;
+  GHashTable* OUT_arg0;
+  dbus_g_proxy_end_call (proxy, call, &error, dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), &OUT_arg0, G_TYPE_INVALID);
+  (*(org_ofono_RadioSettings_get_properties_reply)data->cb) (proxy, OUT_arg0, error, data->userdata);
+  return;
+}
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+DBusGProxyCall*
+org_ofono_RadioSettings_get_properties_async (DBusGProxy *proxy, org_ofono_RadioSettings_get_properties_reply callback, gpointer userdata)
+
+{
+  DBusGAsyncData *stuff;
+  stuff = g_slice_new (DBusGAsyncData);
+  stuff->cb = G_CALLBACK (callback);
+  stuff->userdata = userdata;
+  return dbus_g_proxy_begin_call (proxy, "GetProperties", org_ofono_RadioSettings_get_properties_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
+}
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+gboolean
+org_ofono_RadioSettings_set_property (DBusGProxy *proxy, const char * IN_arg0, const GValue* IN_arg1, GError **error)
+
+{
+  return dbus_g_proxy_call (proxy, "SetProperty", error, G_TYPE_STRING, IN_arg0, G_TYPE_VALUE, IN_arg1, G_TYPE_INVALID, G_TYPE_INVALID);
+}
+
+typedef void (*org_ofono_RadioSettings_set_property_reply) (DBusGProxy *proxy, GError *error, gpointer userdata);
+
+static void
+org_ofono_RadioSettings_set_property_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
+{
+  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
+  GError *error = NULL;
+  dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID);
+  (*(org_ofono_RadioSettings_set_property_reply)data->cb) (proxy, error, data->userdata);
+  return;
+}
+
+static
+#ifdef G_HAVE_INLINE
+inline
+#endif
+DBusGProxyCall*
+org_ofono_RadioSettings_set_property_async (DBusGProxy *proxy, const char * IN_arg0, const GValue* IN_arg1, org_ofono_RadioSettings_set_property_reply callback, gpointer userdata)
+
+{
+  DBusGAsyncData *stuff;
+  stuff = g_slice_new (DBusGAsyncData);
+  stuff->cb = G_CALLBACK (callback);
+  stuff->userdata = userdata;
+  return dbus_g_proxy_begin_call (proxy, "SetProperty", org_ofono_RadioSettings_set_property_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_STRING, IN_arg0, G_TYPE_VALUE, IN_arg1, G_TYPE_INVALID);
+}
+#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ofono_RadioSettings */
+
+
 G_END_DECLS

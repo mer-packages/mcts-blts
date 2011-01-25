@@ -48,6 +48,7 @@
 #include "sim-cases.h"
 #include "call-volume-cases.h"
 #include "call-meter-cases.h"
+#include "radio-settings.h"
 
 static void my_ofono_help(const char* help_msg_base)
 {
@@ -69,7 +70,8 @@ static void my_ofono_help(const char* help_msg_base)
 		"  -p: Price Per Unit conversion value\n"
 		"  -c: Three character currency code\n"
 		"  -t: Set timeout for test case execution\n"
-		"  --dontcleanup: Don't clean up call state before/after tests\n"
+		"      (Not supported in test cases 1-6, 27-31, 45, 46)\n"
+		"  --cleanup: Clean up call state before/after tests\n"
 		);
 }
 
@@ -77,7 +79,7 @@ static void my_ofono_help(const char* help_msg_base)
 static const char short_opts[] = "r:m:f:h:n:o:y:V:a:p:c:t:";
 static const struct option long_opts[] =
 {
-	{"dontcleanup", 0, NULL, 1},
+	{"cleanup", 0, NULL, 1},
 	{0,0,0,0}
 };
 
@@ -152,7 +154,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 			/* getopt_long() flag */
 			break;
 		case 1:
-			my_data->fl_dontcleanup = 1;
+			my_data->fl_cleanup = 1;
 			break;
 		default:
 			free(my_data);
@@ -509,6 +511,16 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
+
+	ret = blts_config_declare_variable_test("oFono - Change Radio Access Technology",
+		radio_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "RAT", "any",
+		CONFIG_PARAM_STRING, "RAT_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
+
+
 
 	if(!my_data->barrings_pin)
 	{
@@ -1246,6 +1258,8 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - SMSC number test", ofono_sms_center_number, 0 },
 	{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 0 },
 	{ "oFono - Private call test", blts_ofono_case_private_chat, 0 },
+	{ "oFono - Change Radio Access Technology", my_ofono_chage_radio_technology, 0 },
+
 
 	BLTS_CLI_END_OF_LIST
 };

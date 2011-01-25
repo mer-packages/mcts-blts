@@ -14,15 +14,47 @@
 #include "signal-marshal.h"
 
 
+struct sim_manager_state
+{
+	my_ofono_data* data;
+	DBusGProxy* proxy;
+
+	GCallback signalcb_SimManager_PropertyChanged;
+
+	gint result;
+};
+
+
+static void
+on_sim_manager_property_changed(__attribute__((unused))DBusGProxy *proxy, char *key,
+    GValue* value, gpointer user_data);
+static gboolean sim_manager_timeout(gpointer user_data);
+
+
+GHashTable* get_sim_properties(DBusGProxy *proxy)
+{
+	GError *error = NULL;
+	GHashTable* list = NULL;
+
+	if(!proxy)
+		return NULL;
+
+	if(!org_ofono_SimManager_get_properties(proxy, &list, &error))
+	{
+		display_dbus_glib_error(error);
+		g_error_free (error);
+		return NULL;
+	}
+	return list;
+}
+
+
 int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 {
 	my_ofono_data* data = (my_ofono_data*)user_ptr;
 	GError *error = NULL;
 	DBusGProxy *proxy=NULL;
-	int retval = 0;
-
-	int i;
-
+	int i, retval = 0;
 
 	if(!data->pin_type ||
 	   !data->old_pin ||
@@ -32,6 +64,7 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 		return -1;
 	}
 
+
 	if(!my_ofono_get_modem(data))
 	{
 		for(i=0; i<data->number_modems; i++)
@@ -43,7 +76,7 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 			if(!proxy)
 			{
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
-				return -1;
+				retval = -1;
 			}
 
 			//type, old, new
@@ -53,8 +86,11 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 				g_error_free (error);
 				retval = -1;
 			}
+
+			g_object_unref(proxy);
 			proxy = NULL;
 		}
+
 	}
 	else
 	{
@@ -63,202 +99,339 @@ int ofono_change_pin(void* user_ptr, __attribute__((unused))int test_num)
 	}
 
 	return retval;
+}
+
+void delete_chars(char *src, char c, int len)
+{
+    char *dst;
+    int i;
+    if ( c == 0 )
+        return;
+    if ( len <= 0 )
+        len = strlen(src);
+    dst = src;
+    for ( i = 0; i < len && *src != 0; i++, src++ )
+    {
+        if ( *src != c )
+            *dst++ = *src;
+    }
+    *dst = 0;
+     return;
 }
 
 int ofono_enter_pin(void* user_ptr, int __attribute__((unused))test_num)
 {
 	my_ofono_data* data = (my_ofono_data*)user_ptr;
 	GError *error = NULL;
-	DBusGProxy *proxy=NULL;
-	int retval = 0;
-
+	GHashTable* props = NULL;
 	int i;
+	GValue *value = NULL;
 
-	if(!data->pin_type ||
-	   !data->old_pin)
+	struct sim_manager_state state;
+	state.data = data;
+	state.proxy = NULL;
+
+	if(!state.data->pin_type ||
+	   !state.data->old_pin)
 	{
 		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <pin> \n");
 		return -1;
 	}
 
-
-	if(!my_ofono_get_modem(data))
+	if(!my_ofono_get_modem(state.data))
 	{
-		for(i=0; i<data->number_modems; i++)
+		for(i=0; i<state.data->number_modems; i++)
 		{
-			proxy = dbus_g_proxy_new_for_name (data->connection,
+			state.proxy = dbus_g_proxy_new_for_name (state.data->connection,
 												OFONO_BUS,
-												data->modem[i],
+												state.data->modem[i],
 												OFONO_SIM_INTERFACE);
-			if(!proxy)
+			if(!state.proxy)
 			{
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
+			// check if some PIN is requested
+			props = get_sim_properties(state.proxy);
+			value = g_hash_table_lookup(props, "PinRequired");
+			char *str = g_strdup_value_contents(value);
+			g_hash_table_destroy(props);
+			delete_chars(str, '\"', 0);
+
+			if(strcmp(state.data->pin_type, str))
+			{
+				BLTS_DEBUG("SIM card is not requesting current given PIN number, case failed\n");
+				BLTS_DEBUG("Set SIM card to state where it requests PIN\n");
+				BLTS_DEBUG("Case is expecting value '%s'\n", str);
+				g_object_unref(state.proxy);
+				state.proxy = NULL;
+				state.result = -1;
+				continue;
+			}
+
+
+			state.signalcb_SimManager_PropertyChanged = G_CALLBACK(
+			    on_sim_manager_property_changed);
+			dbus_g_proxy_add_signal(state.proxy, "PropertyChanged", G_TYPE_STRING,
+			    G_TYPE_VALUE, G_TYPE_INVALID);
+			dbus_g_proxy_connect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state, 0);
+
+
 			//type, pin
-			if(!org_ofono_SimManager_enter_pin(proxy, data->pin_type, data->old_pin, &error))
+			if(!org_ofono_SimManager_enter_pin(state.proxy, state.data->pin_type, state.data->old_pin, &error))
 			{
 				display_dbus_glib_error(error);
 				g_error_free (error);
-				retval = -1;
+				state.result = -1;
 			}
-			proxy = NULL;
+			guint source_id = g_timeout_add(20000, (GSourceFunc) sim_manager_timeout,
+			    &state);
+			g_main_loop_run(state.data->mainloop);
+			g_source_remove(source_id);
+
+			dbus_g_proxy_disconnect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state);
+
+			g_object_unref(state.proxy);
+			state.proxy = NULL;
 		}
 	}
 	else
 	{
 		BLTS_DEBUG("No modems found!\n");
-		retval = -1;
+		state.result = -1;
 	}
 
-	return retval;
+	return state.result;
 }
 
 int ofono_reset_pin(void* user_ptr, __attribute__((unused))int test_num)
 {
 	my_ofono_data* data = (my_ofono_data*)user_ptr;
 	GError *error = NULL;
-	DBusGProxy *proxy=NULL;
-	int retval = 0;
-
+	GHashTable* props = NULL;
+	GValue *value = NULL;
 	int i;
-	if(!data->pin_type ||
-	   !data->old_pin ||
-	   !data->new_pin)
+
+	struct sim_manager_state state;
+	state.data = data;
+	state.proxy = NULL;
+	state.result = 0;
+
+	if(!state.data->pin_type ||
+	   !state.data->old_pin ||
+	   !state.data->new_pin)
 	{
 		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <puk> -n <pin>\n");
 		return -1;
 	}
 
 
-	if(!my_ofono_get_modem(data))
+	if(!my_ofono_get_modem(state.data))
 	{
-		for(i=0; i<data->number_modems; i++)
+		for(i=0; i<state.data->number_modems; i++)
 		{
-			proxy = dbus_g_proxy_new_for_name (data->connection,
+			state.proxy = dbus_g_proxy_new_for_name (state.data->connection,
 												OFONO_BUS,
-												data->modem[i],
+												state.data->modem[i],
 												OFONO_SIM_INTERFACE);
-			if(!proxy)
+			if(!state.proxy)
 			{
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
-			BLTS_DEBUG ("Enterin PUK code %s to \"%s\", new pin will be %s\n", data->old_pin, data->pin_type, data->new_pin);
+			// check if some PIN is requested
+			props = get_sim_properties(state.proxy);
+			value = g_hash_table_lookup(props, "PinRequired");
+			char *str = g_strdup_value_contents(value);
+			g_hash_table_destroy(props);
+			delete_chars(str, '\"', 0);
+
+			if(strcmp("puk", str) || strcmp("puk2", str))
+			{
+				BLTS_DEBUG("SIM card is not requesting reset at current moment case failed\n");
+				BLTS_DEBUG("Set SIM card to state where it requests PUK\n");
+				BLTS_DEBUG("Case is expecting value '%s'\n", str);
+				g_object_unref(state.proxy);
+				state.proxy = NULL;
+				state.result = -1;
+				continue;
+			}
+
+			state.signalcb_SimManager_PropertyChanged = G_CALLBACK(
+			    on_sim_manager_property_changed);
+			dbus_g_proxy_add_signal(state.proxy, "PropertyChanged", G_TYPE_STRING,
+			    G_TYPE_VALUE, G_TYPE_INVALID);
+			dbus_g_proxy_connect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state, 0);
+
+			BLTS_DEBUG ("Enterin PUK code %s to \"%s\", new pin will be %s\n", state.data->old_pin, state.data->pin_type, state.data->new_pin);
+
 			// type = type, old_pin = puk , new_pin = original pin
-			if(!org_ofono_SimManager_reset_pin(proxy, data->pin_type, data->old_pin, data->new_pin, &error))
+			if(!org_ofono_SimManager_reset_pin(state.proxy, state.data->pin_type, state.data->old_pin, state.data->new_pin, &error))
 			{
 				display_dbus_glib_error(error);
 				g_error_free (error);
-				retval = -1;
+				state.result = -1;
 			}
-			proxy = NULL;
+			guint source_id = g_timeout_add(20000, (GSourceFunc) sim_manager_timeout,
+			    &state);
+			g_main_loop_run(state.data->mainloop);
+			g_source_remove(source_id);
+
+			dbus_g_proxy_disconnect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state);
+
+			g_object_unref(state.proxy);
+			state.proxy = NULL;
+
 		}
 	}
 	else
 	{
 		BLTS_DEBUG("No modems found!\n");
-		retval = -1;
+		state.result = -1;
 	}
 
-	return retval;
+	return state.result;
 }
 
 int ofono_lock_pin(void* user_ptr, __attribute__((unused))int test_num)
 {
 	my_ofono_data* data = (my_ofono_data*)user_ptr;
 	GError *error = NULL;
-	DBusGProxy *proxy=NULL;
-	int retval = 0;
 	int i;
-	if(!data->pin_type ||
-	   !data->old_pin)
+
+	struct sim_manager_state state;
+	state.data = data;
+	state.proxy = NULL;
+	state.result = 0;
+	if(!state.data->pin_type ||
+	   !state.data->old_pin)
 	{
 		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <pin> \n");
 		return -1;
 	}
 
-	if(!my_ofono_get_modem(data))
+	if(!my_ofono_get_modem(state.data))
 	{
-		for(i=0; i<data->number_modems; i++)
+		for(i=0; i<state.data->number_modems; i++)
 		{
-			proxy = dbus_g_proxy_new_for_name (data->connection,
+			state.proxy = dbus_g_proxy_new_for_name (state.data->connection,
 												OFONO_BUS,
-												data->modem[i],
+												state.data->modem[i],
 												OFONO_SIM_INTERFACE);
-			if(!proxy)
+			if(!state.proxy)
 			{
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
-			BLTS_DEBUG("Locking PIN \"%s\" with number %s\n", data->pin_type, data->old_pin);
+
+
+			state.signalcb_SimManager_PropertyChanged = G_CALLBACK(
+			    on_sim_manager_property_changed);
+			dbus_g_proxy_add_signal(state.proxy, "PropertyChanged", G_TYPE_STRING,
+			    G_TYPE_VALUE, G_TYPE_INVALID);
+			dbus_g_proxy_connect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state, 0);
+
+			BLTS_DEBUG("Locking PIN \"%s\" with number %s\n", state.data->pin_type, state.data->old_pin);
 			// type, pin
-			if(!org_ofono_SimManager_lock_pin(proxy,  data->pin_type, data->old_pin, &error))
+			if(!org_ofono_SimManager_lock_pin(state.proxy,  state.data->pin_type, state.data->old_pin, &error))
 			{
 				display_dbus_glib_error(error);
 				g_error_free (error);
-				retval = -1;
+				state.result = -1;
 			}
-			proxy = NULL;
+			guint source_id = g_timeout_add(20000, (GSourceFunc) sim_manager_timeout,
+			    &state);
+			g_main_loop_run(state.data->mainloop);
+			g_source_remove(source_id);
+
+			dbus_g_proxy_disconnect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state);
+
+			g_object_unref(state.proxy);
+			state.proxy = NULL;
 		}
 	}
 	else
 	{
 		BLTS_DEBUG("No modems found!\n");
-		retval = -1;
+		state.result = -1;
 	}
 
-	return retval;
+	return state.result;
 }
 
 int ofono_unlock_pin(void* user_ptr, __attribute__((unused))int test_num)
 {
 	my_ofono_data* data = (my_ofono_data*)user_ptr;
 	GError *error = NULL;
-	DBusGProxy *proxy=NULL;
-	int retval = 0;
 	int i;
-	if(!data->pin_type ||
-	   !data->old_pin)
+
+	struct sim_manager_state state;
+	state.data = data;
+	state.proxy = NULL;
+
+	if(!state.data->pin_type ||
+	   !state.data->old_pin)
 	{
 		BLTS_DEBUG("usage: -y <pin,pin2,...> -o <pin> \n");
 		return -1;
 	}
 
-
-	if(!my_ofono_get_modem(data))
+	if(!my_ofono_get_modem(state.data))
 	{
-		for(i=0; i<data->number_modems; i++)
+		for(i=0; i<state.data->number_modems; i++)
 		{
-			proxy = dbus_g_proxy_new_for_name (data->connection,
+			state.proxy = dbus_g_proxy_new_for_name (state.data->connection,
 												OFONO_BUS,
-												data->modem[i],
+												state.data->modem[i],
 												OFONO_SIM_INTERFACE);
-			if(!proxy)
+			if(!state.proxy)
 			{
 				BLTS_DEBUG ("Failed to open proxy for " OFONO_SIM_INTERFACE "\n");
 				return -1;
 			}
 
-			BLTS_DEBUG("UnLocking PIN \"%s\" with number %s\n", data->pin_type, data->old_pin);
+			state.signalcb_SimManager_PropertyChanged = G_CALLBACK(
+			    on_sim_manager_property_changed);
+			dbus_g_proxy_add_signal(state.proxy, "PropertyChanged", G_TYPE_STRING,
+			    G_TYPE_VALUE, G_TYPE_INVALID);
+			dbus_g_proxy_connect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state, 0);
+
+			BLTS_DEBUG("UnLocking PIN \"%s\" with number %s\n", state.data->pin_type, state.data->old_pin);
+
 			// type, pin
-			if(!org_ofono_SimManager_unlock_pin(proxy, data->pin_type, data->old_pin, &error))
+			if(!org_ofono_SimManager_unlock_pin(state.proxy, state.data->pin_type, state.data->old_pin, &error))
 			{
 				display_dbus_glib_error(error);
 				g_error_free (error);
-				retval = -1;
+				state.result = -1;
 			}
-			proxy = NULL;
+			guint source_id = g_timeout_add(20000, (GSourceFunc) sim_manager_timeout,
+			    &state);
+			g_main_loop_run(state.data->mainloop);
+			g_source_remove(source_id);
+
+			dbus_g_proxy_disconnect_signal(state.proxy, "PropertyChanged",
+			    state.signalcb_SimManager_PropertyChanged, &state);
+
+			g_object_unref(state.proxy);
+			state.proxy = NULL;
 		}
 	}
 	else
 	{
 		BLTS_DEBUG("No modems found!\n");
-		retval = -1;
+		state.result = -1;
 	}
 
-	return retval;
+	return state.result;
 }
 
 int ofono_sim_properties(void* user_ptr, __attribute__((unused))int test_num)
@@ -339,4 +512,30 @@ void *sim_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 		data->pin_type = pin_type;
 
 	return data;
+}
+
+/** Signal callback */
+static void
+on_sim_manager_property_changed(__attribute__((unused))DBusGProxy *proxy, char *key,
+    GValue* value, gpointer user_data)
+{
+	struct sim_manager_state* state = (struct sim_manager_state*) user_data;
+	const char* value_str = g_value_get_string(value);
+
+	BLTS_DEBUG("SIM manager property '%s' changed to '%s'\n", key, value_str);
+
+	g_main_loop_quit(state->data->mainloop);
+}
+
+
+static gboolean
+sim_manager_timeout(gpointer user_data)
+{
+	struct sim_manager_state* state = (struct sim_manager_state*) user_data;
+	state->result = -1;
+	BLTS_DEBUG("Timeout while waiting for signal\n");
+
+	g_main_loop_quit(state->data->mainloop);
+
+	return FALSE;
 }
