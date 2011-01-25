@@ -69,13 +69,13 @@ EXECUTING MASS STORAGE TESTS
   To test devices Mass Storage capabilities, tests asset provides for you convinience utilities to
   set up Mass Storage mode in any device, that has USB-fuctionality and big enough root filesystem.
 
-  Utility "utils/make_mass_storege_filesystem.sh" is a script that makes 1 GB Mass Storage file in device and
+  Utility "/usr/bin/make_mass_storege_filesystem.sh" is a script that makes 1 GB Mass Storage file in device and
   sets device in Mass Storage mode. It should be run as "root" in device, so copy it to device.
   USB cable should be connected between PC and device. If you run this script in USB-networking, USB-networking hangs
   at the end of script, because Mass Storage mode is set on. New file is created in device,
   so all date in Mass Stirage created this way is destroyed.
 
-  Utility "utils/set_mass_storege_mode.sh" sets device to mass storage mode using sharing file created with
+  Utility "/usr/bin/set_mass_storege_mode.sh" sets device to mass storage mode using sharing file created with
   script described above. It does not destroy anything.
 
   In most moders linux distributions, they found that device is in mass storage mode providing it automatically
