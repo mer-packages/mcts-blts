@@ -26,18 +26,6 @@
         <step>min -c -t 'FUTE-Accounts_list_services'</step>
       </case>
 
-      <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
-        "Purpose
-	Creates a facebook account 
-        Method
-        Uses accounts-qt api to create account to device
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
-        <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
-      </case>
-
       <case name="FUTE-Accounts_create_account_google" timeout="10" description=
         "Purpose
 	Creates a google account 

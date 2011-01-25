@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-multimedia
 Summary:        Test asset for Qt Mobility Multimedia API
 License:        LGPL
-Version:        0.1.0
+Version:        0.1.1
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -76,6 +76,8 @@ ldconfig
 ldconfig
 
 %changelog
+* Fri Jan 14 2011 Jan Grela <jan.grela@digia.com> - 0.1.1
+ - Added bug fix for FM radio test cases, UnInitialize fails fixed (QRadioTuner pointer issue), minor changes to codecs and container setting
 * Thu Dec 09 2010 Jan Grela <jan.grela@digia.com> - 0.1.0
 - added playback functionality, codecs and containters setting moved to .conf file, added new test cases
 * Tue Sep 29 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1

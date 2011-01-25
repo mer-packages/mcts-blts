@@ -1,3 +1,6 @@
+* Fri 14 Jan 2011 Jan Grela <jan.grela@digia.com> - 0.1.1
+ - Added bug fix for FM radio test cases, UnInitialize fails fixed (QRadioTuner pointer issue), minor changes to codecs and containers setting
+
 * Thu 09 Dec 2010 Jan Grela <jan.grela@digia.com> - 0.1.0
  - Added playback functionality, codecs and containters setting moved to .conf file, added new test cases
 
