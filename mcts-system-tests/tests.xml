@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+  <description/>
+  <suite name="system">
+    <set name="process">
+      <case name="sys_check_unusual_mem" manual="false" timeout="90">
+        <description/>
+        <step expected_result="0" manual="false">/opt/mcts-system-tests/abpchk.sh mem 10</step>
+      </case>
+      <case name="sys_check_unusual_cpu" manual="false" timeout="90">
+        <description/>
+        <step expected_result="0" manual="false">/opt/mcts-system-tests/abpchk.sh cpu 10</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>

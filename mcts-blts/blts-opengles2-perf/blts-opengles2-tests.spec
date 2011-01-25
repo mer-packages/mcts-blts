@@ -1,6 +1,6 @@
 Summary: BLTS OpenGL ES2 test set
 Name: blts-opengles2-tests
-Version: 0.0.14
+Version: 0.0.15
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -8,8 +8,8 @@ URL: http://wiki.meego.com/Quality/TestSuite/OpenGLGLES_Performance_Test_Specifi
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libX11-devel libXdamage-devel libXcomposite-devel
-BuildRequires: libEGL-devel libGLESv2-devel libXext-devel
-Requires: libbltscommon1 libX11 libXdamage libXcomposite libEGL libGLESv2 libXext
+BuildRequires: libXext-devel pkgconfig(egl) pkgconfig(glesv2)
+Requires: libbltscommon1 libX11 libXdamage libXcomposite libXext
 
 %description
 This package contains functional and performance tests for OpenGL ES2.

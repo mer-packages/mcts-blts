@@ -29,6 +29,7 @@ sys.path.append(dir)
 import time
 from common import *
 dev = BTDevice()
+dev.Connect()
 ret = dev.ifconfigDown()
 time.sleep(2)
 ret = dev.ifconfigUP()
