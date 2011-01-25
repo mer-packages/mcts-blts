@@ -1,3 +1,14 @@
 mwts-ofono (0.0.1) unstable; urgency=low
   * Initial version
- -- Balazs Sipos <balazs.sipos@digia.com>  Tue, 22 Dec 2010 2:22:00 +0300
+ -- Balazs Sipos <balazs.sipos@digia.com>  Wed, 22 Dec 2010 2:22:00 +0300
+
+mwts-ofono (0.0.2) unstable; urgency=low
+  * Added functionality test cases to mwts-ofono-sim.cfg
+ -- Balazs Sipos <balazs.sipos@digia.com>  Fri, 07 Jan 2011 2:22:00 +0300
+
+mwts-ofono (0.1.0) unstable; urgency=low
+  * Added classes for sim manager and voice call (forwarding, waiting, barring)
+  * Refactored package names in mwts-ofono.spec
+  * Added functionality test cases to mwts-ofono-call.cfg
+  * Added content to README
+ -- Balazs Sipos <balazs.sipos@digia.com>  Tue, 18 Jan 2011 2:22:00 +0300
