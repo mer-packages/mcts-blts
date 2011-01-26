@@ -1,3 +1,11 @@
+mwts-filesystem (1.1.1) unstable; urgency=low
+  * Added functionality to mame Mass Storage functionality in a device, that does not originally dupported by platform
+    This is implemented in separate package not included in all package
+    Configuration file changed to support Mass Storage utilities added
+    Docomentation made more clear for mass storage testing and MeeGo device status for it
+    Fuctionality is not changed.
+ -- Reijo Korhonen  <reijo.korhonen@digia.com>  Fri, 3 Dec 2010 12:50:00 +0200
+
 mwts-filesystem (1.0.1) unstable; urgency=low
   * Min script reorgasating as standard way to FUTE and NFT cases. Checked and updated documentation.
     Fuctionality is not changed.
