@@ -100,20 +100,28 @@ public:
      */
     void SetRadioDuration(int millisecond);
 
+    /**
+     * Sets radio band. This also sets minFrequency and maxFrequency values.
+     * @param band to set
+     */
     void SetBand(QRadioTuner::Band band);
 
+    /**
+     * Sets scan mode.
+     * @param mode mode to set
+     */
     void SetScanMode(ScanMode mode);
 
+    /**
+     * Starts scanning the whole renge of set band.
+     * Log founded radio stations (freqency and signal stregth)
+     */
     void PerformBandScan();
 
 private:
     //The main object used for radio playing
     QRadioTuner* radio;
-    //Integer holds the the initial, later set volume value
-    //int vol;
-    //Integer holds the the initial, later set frequency value
-    //int freq;
-    //Integer holds the the initial, later set frequency value
+    //Integer holds the the initial, later set duration value
     int duration;
     //scan mode
     ScanMode scanMode;
@@ -123,7 +131,7 @@ private:
 
 
 private slots:
-    //slots for QRadioTunerControl signals
+    //slots for QRadioTuner signals
     void onBandChanged(QRadioTuner::Band band);
     void onFrequencyChanged(int freqency);
     void onStateChanged(QRadioTuner::State state);
@@ -133,28 +141,9 @@ private slots:
     void onSearchingChanged(bool searching);
     void onVolumeChanged(int volume);
     void onStereoStatusChanged(bool stereo);
-    //slot for searching chaged signal emitting workaround
+    //slot for searching changed signal emitting workaround
     void checkSearching();
 
-
-    /**
-     * Outputs the current frequency in kHz
-     */
-    //void freqChanged(int);
-    /**
-     * Based on signal strength, outputs if signal exists or not
-     */
-    //void signalChanged(int);
-    /**
-    * Displays the emited error
-    * @param error
-    */
-    //void error(QRadioTuner::Error error);
-    /**
-    * Displays the current QRadioTuner state
-    * @param state
-    */
-    //void stateChanged(QRadioTuner::State state);
 };
 
 

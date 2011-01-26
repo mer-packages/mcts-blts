@@ -58,7 +58,6 @@ void FMRadioTest::OnInitialize()
 
     if (radio->isAvailable())
     {
-        //qDebug() << "No Signal";
         qDebug() << "Radio available";
     }
     else
@@ -76,9 +75,8 @@ void FMRadioTest::OnInitialize()
 
     SetVolume(g_pConfig->value("FMRADIO/volume").toInt());
     SetFrequency(g_pConfig->value("FMRADIO/frequency").toInt());
-    //duration = g_pConfig->value("FMRADIO/duration").toInt();;
+    duration = g_pConfig->value("FMRADIO/duration").toInt();;
 
-    //radio = NULL;
 
     MWTS_LEAVE;
 }
@@ -100,38 +98,11 @@ void FMRadioTest::SetFrequency(int frequency)
 {
     MWTS_ENTER;
 
-    /*radio = new QRadioTuner;
-
-    connect(radio,SIGNAL(frequencyChanged(int)),
-        this,SLOT(freqChanged(int)));
-    connect(radio,SIGNAL(signalStrengthChanged(int)),
-        this,SLOT(signalChanged(int)));
-    connect(radio, SIGNAL(error (QRadioTuner::Error)),
-        this, SLOT(error(QRadioTuner::Error)));
-    connect(radio, SIGNAL(error(QRadioTuner::Error)),
-        this, SLOT(error(QRadioTuner::Error)));
-    */
-    //if(radio->isBandSupported(QRadioTuner::FM))
-    //    radio->setBand(QRadioTuner::FM);
-
-    /*if (radio->isAvailable())
-    {
-        qDebug() << "No Signal";
-    }
-    else
-    {
-        qCritical() << "No radio found";
-        g_pResult->StepPassed("No radio found!", false);
-    }*/
-
-
     radio->setFrequency(frequency);
 
-    qDebug () << "Initial frequency: " << radio->frequency()/1000 << " kHz";
-    //qDebug () << "Initial radio playing duration: " << duration;
+    qDebug () << "Freuency set to: " << radio->frequency()/1000 << " kHz";
 
     MWTS_LEAVE;
-    //return;
 }
 
 void FMRadioTest::ScanUp()
