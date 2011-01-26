@@ -2,13 +2,14 @@ Source: blts-opengles2-tests
 Section: devel
 Priority: extra
 Maintainer: Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>
-# does not depend on gles2 on purpose - the packages are vendor specific
 Build-Depends: debhelper (>= 5),
 	libbltscommon-dev (>= 0.2.4),
 	libx11-dev,
 	libxcomposite-dev (>= 1:0.4.0),
 	libxdamage-dev (>= 1:1.1.0),
-	libxext-dev, automake, pkg-config
+	libxext-dev, automake, pkg-config,
+	libgles2-sgx-img-dev [arm armel], opengles-sgx-img-common-dev [arm armel]
+# Note: GLES packages are vendor specific; consult your platform documentation
 Standards-Version: 3.8.0
 
 Package: blts-opengles2-tests
