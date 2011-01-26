@@ -54,6 +54,7 @@ public:
 
 	void TestLocationFix();
 	void GetLocationFix();
+    void TestAccuracy();
 
 	void CalculateDistances();
 	

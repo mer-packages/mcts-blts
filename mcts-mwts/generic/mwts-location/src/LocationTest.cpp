@@ -315,6 +315,39 @@ void LocationTest::GetLocationFix()
 
 }
 
+void LocationTest::TestAccuracy()
+{
+    MWTS_ENTER;
+
+    if (!m_gpisLocationSource)
+    {
+        qCritical() << "No location source";
+        return;
+    }// fetch ap ssid from NetworkTest.conf
+
+    const double numOfFixes = g_pConfig->value("Accuracy/Number_of_fixes").toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Number_of_fixes" << numOfFixes;
+
+    const double allowedRadius = g_pConfig->value("Accuracy/Allowed_radius").toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Allowed_radius" << allowedRadius ;
+
+    const double antennaX = g_pConfig->value("Accuracy/Antenna_X").toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_X" << antennaX;
+
+    const double antennaY = g_pConfig->value("Accuracy/Antenna_Y").toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Y" << antennaY;
+
+    const double antennaZ = g_pConfig->value("Accuracy/Antenna_Z").toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Z" << antennaZ;
+
+    const double requiredProsent = g_pConfig->value("Accuracy/Required_prosent").toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Required_prosent" << requiredProsent;
+
+    MWTS_LEAVE;
+
+}
+
+
 void LocationTest::CalculateDistances()
 {
 	MWTS_ENTER;
