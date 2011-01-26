@@ -1,3 +1,9 @@
+mwts-multimedia (0.1.1) unstable; urgency=low
+  * Added bug fix for FM radio test cases
+  * UnInitialize fails fixed (QRadioTuner pointer issue)
+  * Minor changes to codecs and containers setting
+ -- Jan Grela <jan.grela@digia.com>  Fri, 14 Jan 2011 16:00:00 +0300
+
 mwts-multimedia (0.1.0) unstable; urgency=low
   * Added playback functionality
   * Codecs and containters setting moved to .conf file
