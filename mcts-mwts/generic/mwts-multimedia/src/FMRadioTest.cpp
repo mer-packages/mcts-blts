@@ -74,7 +74,7 @@ void FMRadioTest::OnInitialize()
 
 
     SetVolume(g_pConfig->value("FMRADIO/volume").toInt());
-    SetFrequency(g_pConfig->value("FMRADIO/frequency").toInt());
+    //SetFrequency(g_pConfig->value("FMRADIO/frequency").toInt());
     duration = g_pConfig->value("FMRADIO/duration").toInt();;
 
 
