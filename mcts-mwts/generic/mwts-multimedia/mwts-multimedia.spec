@@ -80,5 +80,5 @@ ldconfig
  - Added bug fix for FM radio test cases, UnInitialize fails fixed (QRadioTuner pointer issue), minor changes to codecs and container setting
 * Thu Dec 09 2010 Jan Grela <jan.grela@digia.com> - 0.1.0
 - added playback functionality, codecs and containters setting moved to .conf file, added new test cases
-* Tue Sep 29 2010 Balazs Sipos <balazs.sipos@digia.com> 0.0.1
+* Tue Sep 29 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
 - Initial version

@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-buteo
 Summary:        Mwts-buteo syncing test asset 
 License:        LGPL
-Version:        0.0.2
+Version:        0.0.4
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -34,7 +34,7 @@ mwts-buteo generic configuration
 %package        generic-all
 Summary:        mwts-buteo generic meta package
 Prefix:		/usr
-Requires:       mwts-buteo, mwts-buteo-generic-config, mwts-buteo-generic-tests
+Requires:       mwts-buteo, mwts-buteo-generic-config, mwts-buteo-generic-tests, buteo-service-google, buteo-service-memotoo, buteo-service-mobical
 %description    generic-all
 mwts-buteo generic meta package
 
