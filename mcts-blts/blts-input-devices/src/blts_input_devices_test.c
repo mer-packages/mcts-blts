@@ -123,11 +123,13 @@ static void *key_test_variant_set_arg_processor(struct boxed_value *args,
 static void *pointer_test_variant_set_arg_processor(struct boxed_value *args,
 	void *user_ptr)
 {
+	char *dev_name;
 	struct input_data *data = ((struct input_data *) user_ptr);
 	if (!data)
 		return NULL;
 
-	if (blts_config_boxed_value_get_string(args)[0] != '/')
+	dev_name = blts_config_boxed_value_get_string(args);
+	if (dev_name[0] != '/' && dev_name[0] != '*')
 		strcpy(data->pointer_device, "/dev/input/");
 	strcat(data->pointer_device, blts_config_boxed_value_get_string(args));
 	args = args->next;

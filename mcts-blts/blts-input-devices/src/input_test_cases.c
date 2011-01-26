@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <dirent.h>
 #include <linux/input.h>
 #include <asm/bitsperlong.h>
 
@@ -210,7 +211,7 @@ static int print_device_info(const char *dev_name)
 	BLTS_DEBUG("\nDevice %s\n", dev_name);
 
 	fd = open(dev_name, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -262,6 +263,84 @@ static int print_device_info(const char *dev_name)
 
 cleanup:
 	close(fd);
+
+	return ret;
+}
+
+static char *check_device_name(const char *node_name, const char *dev_name)
+{
+	int fd;
+	char name[256];
+
+	if (!node_name || !dev_name)
+		return NULL;
+
+	fd = open(node_name, O_RDWR);
+	if (fd < 0) {
+		BLTS_LOGGED_PERROR("Failed to open device");
+		return NULL;
+	}
+
+	if (ioctl(fd, EVIOCGNAME(sizeof(name)), name) < 0) {
+		BLTS_LOGGED_PERROR("EVIOCGNAME");
+		close(fd);
+		return NULL;
+	}
+
+	close(fd);
+
+	if (strstr(name, dev_name))
+		return strdup(name);
+
+	return NULL;
+}
+
+static char *find_device_by_name(const char *dev_name)
+{
+	char *ret = NULL;
+	DIR *dir;
+	struct dirent *dirent;
+	char *path = "/dev/input/";
+	char *evdev = "event";
+	const char *dev_to_search;
+	char full_name[PATH_MAX];
+
+	if (!dev_name)
+		return NULL;
+
+	if (dev_name[0] != '*')
+		return strdup(dev_name);
+
+	dev_to_search = &dev_name[1];
+
+	dir = opendir(path);
+	if (!dir) {
+		BLTS_ERROR("Cannot open directory '%s\n", dir);
+		return NULL;
+	}
+
+	while ((dirent = readdir(dir))) {
+		char *name = dirent->d_name;
+
+		if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
+			continue;
+
+		if (strncmp(name, evdev, strlen(evdev)) != 0)
+			continue;
+
+		strcpy(full_name, path);
+		strcat(full_name, name);
+
+		BLTS_TRACE("Checking device %s\n", full_name);
+		if ((ret = check_device_name(full_name, dev_to_search))) {
+			BLTS_TRACE("Device found '%s', '%s'\n", full_name, ret);
+			free(ret);
+			ret = strdup(full_name);
+			break;
+		}
+	}
+
+	closedir(dir);
 
 	return ret;
 }
@@ -320,7 +399,7 @@ int test_device(const char *device)
 	struct input_event ev[64];
 
 	fd = open(device, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -367,7 +446,7 @@ int input_key_test(void *user_ptr, int test_num)
 	}
 
 	fd = open(key->device, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -446,7 +525,7 @@ int input_pointer_test(void *user_ptr, int test_num)
 	struct window_struct ws;
 
 	fd = open(data->pointer_device, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -559,11 +638,19 @@ static int wait_for_st_event(struct input_data *data,
 	int st = 0;
 	struct input_event ev[64];
 	struct input_absinfo abs;
+	char *used_device;
 
-	fd = open(data->pointer_device, O_RDWR);
-	if (!fd) {
+	used_device = find_device_by_name(data->pointer_device);
+	if (!used_device) {
+		BLTS_ERROR("Could not find device '%s'\n", data->pointer_device);
+		return -ENODEV;
+	}
+
+	fd = open(used_device, O_RDWR);
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
-		return -errno;
+		ret = -errno;
+		goto cleanup;
 	}
 
 	if (!data->no_grab) {
@@ -710,13 +797,20 @@ static int wait_for_st_event(struct input_data *data,
 cleanup:
 	timing_stop();
 
-	if (!data->no_grab) {
-		if (ioctl(fd, EVIOCGRAB, 0)) {
-			BLTS_LOGGED_PERROR("EVIOCGRAB");
-			ret = -errno;
+	if (fd != -1) {
+		if (!data->no_grab) {
+			if (ioctl(fd, EVIOCGRAB, 0)) {
+				BLTS_LOGGED_PERROR("EVIOCGRAB");
+				ret = -errno;
+			}
 		}
+
+		close(fd);
 	}
-	close(fd);
+
+	if (used_device)
+		free(used_device);
+
 	return ret;
 }
 
@@ -825,11 +919,21 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 	struct input_event ev[64];
 	struct mt_touchpoint tps[64];
 	struct input_absinfo abs;
+	char *used_device;
 
-	fd = open(data->pointer_device, O_RDWR);
-	if (!fd) {
+	memset(&ws, 0, sizeof(ws));
+
+	used_device = find_device_by_name(data->pointer_device);
+	if (!used_device) {
+		BLTS_ERROR("Could not find device '%s'\n", data->pointer_device);
+		return -ENODEV;
+	}
+
+	fd = open(used_device, O_RDWR);
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
-		return -errno;
+		ret = -errno;
+		goto cleanup;
 	}
 
 	if (!data->no_grab) {
@@ -1001,25 +1105,37 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 			tps[t].x < (int)data->scr_width / 2 &&
 			tps[t].y < (int)data->scr_height / 2) {
 			BLTS_DEBUG("Touchpoint %d is inside upper left area (x: %d, y: %d)\n",
-				tps[t].id, x, y);
+				tps[t].id, tps[t].x, tps[t].y);
 			ret++;
 		} else if (tps[t].x > (int)data->scr_width / 2 &&
 			tps[t].y > (int)data->scr_height / 2 &&
 			tps[t].x < (int)data->scr_width &&
 			tps[t].y < (int)data->scr_height) {
 			BLTS_DEBUG("Touchpoint %d is inside lower right area (x: %d, y: %d)\n",
-				tps[t].id, x, y);
+				tps[t].id, tps[t].x, tps[t].y);
 			ret++;
 		} else {
 			BLTS_DEBUG("Touchpoint %d is outside both areas (x: %d, y: %d)\n",
-				tps[t].id, x, y);
+				tps[t].id, tps[t].x, tps[t].y);
 		}
 	}
 
 cleanup:
 	input_close_window(&ws);
 
-	close(fd);
+	if (fd != -1) {
+		if (!data->no_grab) {
+			if (ioctl(fd, EVIOCGRAB, 0)) {
+				BLTS_LOGGED_PERROR("EVIOCGRAB");
+				ret = -errno;
+			}
+		}
+
+		close(fd);
+	}
+
+	if (used_device)
+		free(used_device);
 
 	return ret;
 }
