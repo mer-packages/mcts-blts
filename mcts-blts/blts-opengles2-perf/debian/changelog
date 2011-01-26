@@ -1,3 +1,9 @@
+blts-opengles2-tests (0.0.15-2) unstable; urgency=low
+
+  * Add armel libgles dependency to packaging.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 26 Jan 2011 14:52:38 +0200
+
 blts-opengles2-tests (0.0.15-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.
