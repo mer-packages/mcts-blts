@@ -63,7 +63,7 @@ ENVIRONMENT REQUIREMENTS
 
 EXECUTING TESTS
 
-  mwts-gstreamer test execution is performed normally. Check the "General MWTS testing guide".
+  Tests are executed as normal user, for example "meego", not "root". Check the MWTS.README for general instructions. Start 'min' in the shell of the device.
 
 
 TEST RESULTS
