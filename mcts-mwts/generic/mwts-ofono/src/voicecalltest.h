@@ -25,7 +25,6 @@
 #define VOICECALLTEST_H
 
 #include "ofonotestinterface.h"
-#include <QtTest/QtTest>
 
 #include <ofono-qt/ofonocallforwarding.h>
 #include <ofono-qt/ofonocallbarring.h>
@@ -93,17 +92,6 @@ public:
      */
     bool setVoiceCallUnconditional(const QString &property);
 
-    /**
-     * Disables all call forwarding rules for type.
-     *	Type can be one of:
-     *			"all" or "" - Disables all rules
-     *			"conditional" - Disables all conditional rules,
-     *				e.g. busy, no reply and not reachable.
-     * @param the type is "all" or "conditional"
-     * @return TRUE on success, otherwise FALSE
-     */
-    bool disableAll(const QString &type);
-
     /************************************************************
      *
      * Voice call settings methods
@@ -152,11 +140,24 @@ public:
      */
     bool setVoiceCallOutgoing(const QString &barrings, const QString &pin);
 
+    /************************************************************
+     *
+     * Voice call TODO dial, answer call
+     *
+     */
+    //TODO
+    bool dial (const QString &phoneNumber);
+    //TODO
+    bool answer (void);
+
 private:
+    bool onSpySignals (QSignalSpy &complete, QSignalSpy &changed, QSignalSpy &failed, const QString &name);
+
     OfonoCallForwarding *mCallForwarding;
     OfonoCallSettings *mCallSettings;
     OfonoCallBarring *mCallBarring;
-    QVariantList list;
+
+    QVariantList list;    
 };
 
 #endif // VOICECALLTEST_H

@@ -119,9 +119,6 @@ MIN SCRIPTER INTERFACE
   DisableVoiceCallUnconditional
     Disables the voice "Unconditional" call forwarding rule, by setting to the value to empty
 
-  DisableVoiceCallForwarding
-    Disables all the voice call forwarding rules.
-
   #voice call waiting (settings)
   EnableVoiceCallWaiting
     Enables the call voice call waiting
@@ -144,21 +141,27 @@ MIN SCRIPTER INTERFACE
 
 KNOWN ISSUES
 
-#general
-- for some reason asset 'close' crashes sometime
-
-#sim manager
-- resetPin throws invalid argument dbus error:
+Sim manager:
+- resetPin throws invalid argument dbus error
   http://bugs.meego.com/show_bug.cgi?id=12337
 
-#voice call (forwarding, waiting, barring)
+Voice call (forwarding, waiting, barring):
+This part of the test asset (classes, test cases) are NOT SUPPORTED.
 - signal 'voice..Complete' signals do not get emitted,
   bug report should be issued at ofono-qt api
+
 - currently high FORWARDING_TIMEOUT (5 sec) is set
   for waiting for DBUS reply from the modem
+
 - barring incoming, outgoing calls fail on
   phonesim
-- on ncdk the methods sometime run, sometime no
+  http://bugs.meego.com/show_bug.cgi?id=12863
+
+- until ofono-qt api does not have coverage on
+  http://bugs.meego.com/show_bug.cgi?id=12858, you
+  might want to use directly ofono api to have
+  dialing and call answering
+
 
 
 
