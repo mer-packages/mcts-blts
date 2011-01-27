@@ -8,8 +8,11 @@ Build-Depends: debhelper (>= 5),
 	libxcomposite-dev (>= 1:0.4.0),
 	libxdamage-dev (>= 1:1.1.0),
 	libxext-dev, automake, pkg-config,
-	libgles2-sgx-img-dev [arm armel], opengles-sgx-img-common-dev [arm armel]
-# Note: GLES packages are vendor specific; consult your platform documentation
+	libgles2-sgx-img-dev [arm armel],
+	opengles-sgx-img-common-dev [arm armel],
+	libdgles2-dev [i386]
+# Note: GLES packages are vendor specific; consult your platform documentation.
+# i386 package is the emulated version, see MeeGo SDK.
 Standards-Version: 3.8.0
 
 Package: blts-opengles2-tests
