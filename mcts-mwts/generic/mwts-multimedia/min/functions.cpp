@@ -592,6 +592,9 @@ LOCAL int SetVolume (MinItemParser * item)
 
      test.fmRadio->PerformBandScan();
 
+     if (!test.IsPassed())
+         return 1;
+
      return ENOERR;
 }
 

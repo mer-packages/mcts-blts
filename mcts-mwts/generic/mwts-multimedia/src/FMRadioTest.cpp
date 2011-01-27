@@ -330,6 +330,9 @@ void FMRadioTest::PerformBandScan()
 {
     MWTS_ENTER;
 
+    if (!g_pResult->IsPassed())
+        return;
+
     QString msg = "Performing band scan, frequency from " + QString::number((double)minFrequency / 1000000) + " MHz to " + QString::number((double)maxFrequency / 1000000) + " MHz";
     qDebug() << msg;
     g_pResult->Write(msg);
