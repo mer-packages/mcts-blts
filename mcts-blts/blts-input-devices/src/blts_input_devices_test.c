@@ -136,13 +136,6 @@ static void *pointer_test_variant_set_arg_processor(struct boxed_value *args,
 	data->swap_xy = blts_config_boxed_value_get_int(args);
 
 	args = args->next;
-	if (sscanf(blts_config_boxed_value_get_string(args), "%dx%d",
-		&data->scr_width, &data->scr_height) != 2) {
-		BLTS_ERROR("Invalid value '%s' in configuration file\n",
-			blts_config_boxed_value_get_string(args));
-		return NULL;
-	}
-	args = args->next;
 
 	return data;
 }
@@ -217,7 +210,6 @@ static void* blts_input_argument_processor(int argc, char **argv)
 		pointer_test_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "pointer_device", "event4",
 		CONFIG_PARAM_INT, "scr_orientation", 0,
-		CONFIG_PARAM_STRING, "scr_size", "864x480",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		goto error_exit;
@@ -227,7 +219,6 @@ static void* blts_input_argument_processor(int argc, char **argv)
 		pointer_test_variant_set_arg_processor,
 		CONFIG_PARAM_STRING, "pointer_device", "event4",
 		CONFIG_PARAM_INT, "scr_orientation", 0,
-		CONFIG_PARAM_STRING, "scr_size", "864x480",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		goto error_exit;

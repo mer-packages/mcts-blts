@@ -7,23 +7,20 @@
 
 [parameter]
 	name input_devices
-	const "event1 event3 event4"
+	const "event1 event2 event3"
 [end_parameter]
 
+# 'event0' -> use /dev/input/event0
+# '*touchscreen' -> use the device whose name contains string 'touchscreen'
 [parameter]
 	name pointer_device
-	const "event4"
+	const "*touchscreen"
 [end_parameter]
 
 # todo: add more options later
 [parameter]
 	name scr_orientation
 	const 0
-[end_parameter]
-
-[parameter]
-	name scr_size
-	const "800x480"
 [end_parameter]
 
 ##############
@@ -37,11 +34,11 @@
 
 [test]
 	name "Input - Single touch"
-	params pointer_device scr_orientation scr_size
+	params pointer_device scr_orientation
 [end_test]
 
 [test]
 	name "Input - Multi-touch"
-	params pointer_device scr_orientation scr_size
+	params pointer_device scr_orientation
 [end_test]
 
