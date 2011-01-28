@@ -20,14 +20,14 @@
  */
 
 #include <QtCore>
-#include <QApplication>
+#include <QCoreApplication>
 #include <libsocialweb-qt/swclient.h>
 #include "lsw_testcases.h"
 
 const QString EXPECTED_DBUS_SERVICE_NAME("com.meego.libsocialweb");
 
 int main(int argc, char *argv[]) {
-	QApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 	qDebug("Going to invoke the static method 'GetSwServiceName'");
 
 	QString serviceName = SwClient::GetSwServiceName();
