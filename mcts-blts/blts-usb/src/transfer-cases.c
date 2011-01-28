@@ -65,6 +65,9 @@ struct usb_case_state {
 
 struct rw_thread_data {
 	pthread_t id;
+	pthread_cond_t cond;
+	pthread_mutex_t mutex;
+	struct timespec to;
 	int ret;
 	char *node_name;
 	unsigned transfer_size;
@@ -359,6 +362,11 @@ static void *read_thread_function(void *ptr)
 {
 	struct rw_thread_data *data = (struct rw_thread_data *)ptr;
 	data->ret = test_read_real(data->node_name, data->transfer_size);
+
+	pthread_mutex_lock(&data->mutex);
+	pthread_cond_signal(&data->cond);
+	pthread_mutex_unlock(&data->mutex);
+
 	return NULL;
 }
 
@@ -366,6 +374,11 @@ static void *write_thread_function(void *ptr)
 {
 	struct rw_thread_data *data = (struct rw_thread_data *)ptr;
 	data->ret = test_write_real(data->node_name, data->transfer_size);
+
+	pthread_mutex_lock(&data->mutex);
+	pthread_cond_signal(&data->cond);
+	pthread_mutex_unlock(&data->mutex);
+
 	return NULL;
 }
 
@@ -437,6 +450,11 @@ int test_read(unsigned buf_new_size)
 				print_ep_type(conf.endpoint_type[i]);
 				BLTS_DEBUG("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
 				nodes_found++;
+				pthread_mutex_init(&thread_data[i].mutex, NULL);
+				pthread_cond_init(&thread_data[i].cond, NULL);
+				clock_gettime(CLOCK_REALTIME, &thread_data[i].to);
+				thread_data[i].to.tv_sec += MAX_TEST_T + 5;
+				pthread_mutex_lock(&thread_data[i].mutex);
 				ret = pthread_create(&thread_data[i].id, NULL,
                                                      read_thread_function, &thread_data[i]);
 				if (ret) {
@@ -453,7 +471,18 @@ int test_read(unsigned buf_new_size)
 
 	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id) {
-			pthread_join(thread_data[i].id, NULL);
+			int e;
+
+			e = pthread_cond_timedwait(&thread_data[i].cond,
+				&thread_data[i].mutex, &thread_data[i].to);
+			pthread_mutex_unlock(&thread_data[i].mutex);
+			if (e == ETIMEDOUT) {
+				BLTS_DEBUG("Thread %d timed out!\n", i);
+				ret = -1;
+				pthread_cancel(thread_data[i].id);
+			} else {
+				pthread_join(thread_data[i].id, NULL);
+			}
 			thread_data[i].id = 0;
 
 			if (thread_data[i].ret && ret >= 0)
@@ -466,6 +495,8 @@ cleanup:
 	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id)
 			pthread_cancel(thread_data[i].id);
+		pthread_cond_destroy(&thread_data[i].cond);
+		pthread_mutex_destroy(&thread_data[i].mutex);
         }
 	if(nodes_found == 0)
 	{
@@ -519,6 +550,11 @@ int test_write(unsigned buf_new_size)
 				print_ep_type(conf.endpoint_type[i]);
 				BLTS_DEBUG("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
 				nodes_found++;
+				pthread_mutex_init(&thread_data[i].mutex, NULL);
+				pthread_cond_init(&thread_data[i].cond, NULL);
+				clock_gettime(CLOCK_REALTIME, &thread_data[i].to);
+				thread_data[i].to.tv_sec += MAX_TEST_T + 5;
+				pthread_mutex_lock(&thread_data[i].mutex);
 				ret = pthread_create(&thread_data[i].id, NULL,
                                                      write_thread_function, &thread_data[i]);
 				if (ret) {
@@ -535,7 +571,18 @@ int test_write(unsigned buf_new_size)
 
 	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id) {
-			pthread_join(thread_data[i].id, NULL);
+			int e = 0;
+
+			e = pthread_cond_timedwait(&thread_data[i].cond,
+				&thread_data[i].mutex, &thread_data[i].to);
+			pthread_mutex_unlock(&thread_data[i].mutex);
+			if (e == ETIMEDOUT) {
+				BLTS_DEBUG("Thread %d timed out!\n", i);
+				ret = -1;
+				pthread_cancel(thread_data[i].id);
+			} else {
+				pthread_join(thread_data[i].id, NULL);
+			}
 			thread_data[i].id = 0;
 
 			if (thread_data[i].ret && ret >= 0)
@@ -548,6 +595,8 @@ cleanup:
 	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++)
 		if (thread_data[i].id)
 			pthread_cancel(thread_data[i].id);
+		pthread_cond_destroy(&thread_data[i].cond);
+		pthread_mutex_destroy(&thread_data[i].mutex);
 	if(nodes_found == 0)
 	{
 		BLTS_DEBUG("No endpoints found for write testing\n");
