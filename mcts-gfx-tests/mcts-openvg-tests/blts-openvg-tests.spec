@@ -7,11 +7,8 @@ Group: Development/Testing
 URL: http://wiki.meego.com/Quality/TestSuite/
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel libX11-devel mesa-libOpenVG-devel
-# Disable checking BuildRequires due to bug 8919 & bug 10112
-#BuildRequires: libbltscommon-devel libX11-devel 
-BuildRequires: libEGL-devel
-#Requires: libbltscommon1 libX11 libEGL libOpenVG-devel
+BuildRequires: libbltscommon-devel libX11-devel pkgconfig(egl) pkgconfig(vg)
+Requires: libbltscommon1 libX11
 
 %description
 This package contains functional and performance tests for OpenVG
