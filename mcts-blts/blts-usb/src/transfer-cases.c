@@ -267,7 +267,8 @@ static int test_read_real(char *node_name, unsigned size)
 				continue;
 			BLTS_DEBUG("Data consistency error\n \tData[%i] = '%02X'\n \tShould be '%02X'\n", i, buf[i], i%63);
 			BLTS_DEBUG("Current transfer of data is therefore corrupted, data frame size %i bytes\n", size);
-			break;
+			ret = -1;
+			goto cleanup;
 		}
 		d_tot += ret;
 		left -= ret;
@@ -285,6 +286,7 @@ static int test_read_real(char *node_name, unsigned size)
 		ret = -EIO;
 	}
 
+cleanup:
 	free(buf);
 	close(fdr);
 
