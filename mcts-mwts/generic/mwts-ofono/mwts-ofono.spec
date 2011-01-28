@@ -12,7 +12,7 @@ Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
 BuildRequires:	qt-devel, min-devel, mwts-common-devel, libofono-qt-devel
-Requires:	mwts-common, ofono, libofono-qt
+Requires:	mwts-common, libofono-qt
 Source: 	%{name}-%{version}.tar.gz
 %description
 Test cases for ofono-qt
