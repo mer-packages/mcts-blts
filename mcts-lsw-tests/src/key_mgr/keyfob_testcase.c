@@ -29,10 +29,12 @@
 #define _TESTCASE_LIBSOCIALWEB_KEYFOB
 
 #include <glib.h>
+#include <ctype.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <glib-object.h>
 #include <libsocialweb-keyfob/sw-keyfob.h>
 #include <libsocialweb-keystore/sw-keystore.h>
 #include <rest/oauth-proxy.h>
@@ -120,6 +122,8 @@ int invoking_oauth_auth(const char* serviceName, const char* end_point_url,
 		printf("Successfully invoking the auth method.\n");
 		return 0;
 	}
+        printf("Fail to get the OAuthproxy with Key = %s; secret = %s\n", key, secret);
+        return 1;
 }
 
 int test_generic_key_fob_auth(const char* serviceName,
