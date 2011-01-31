@@ -10,8 +10,6 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libX11-devel libXdamage-devel
 BuildRequires: libXcomposite-devel libXrandr-devel libXrender-devel
 BuildRequires: libXtst-devel libXv-devel libXi-devel
-Requires: libbltscommon1 libX11 libXdamage libXcomposite libXrandr
-Requires: libXrender libXtst libXv libXi
 
 %description
 This package contains functional tests for X11.
@@ -32,6 +30,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
 /usr/lib/tests/%{name}/*
