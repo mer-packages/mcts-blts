@@ -594,11 +594,12 @@ int test_write(unsigned buf_new_size)
 
 cleanup:
 	close(fd);
-	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++)
+	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id)
 			pthread_cancel(thread_data[i].id);
 		pthread_cond_destroy(&thread_data[i].cond);
 		pthread_mutex_destroy(&thread_data[i].mutex);
+	}
 	if(nodes_found == 0)
 	{
 		BLTS_DEBUG("No endpoints found for write testing\n");
