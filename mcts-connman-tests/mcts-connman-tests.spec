@@ -7,6 +7,7 @@ Release: 4
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz
+BuildRequires: python
 Requires: connman
 Requires: connman-test
 Requires: pygobject2
@@ -33,7 +34,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 /opt/%name
 /usr/share/%name
 
 %changelog
+
