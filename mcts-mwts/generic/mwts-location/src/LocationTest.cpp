@@ -1,7 +1,7 @@
 /*
  * This file is part of MCTS
  *
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+ * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
  *
  * Contact: Tommi Toropainen; tommi.toropainen@nokia.com;
  *
@@ -29,14 +29,35 @@
 
 // 10 minutes, maximum time we wait for cold fix
 #define COLD_FIX_TIMEOUT 600000
+// Test 20 minutes, maximum time we wait accuracy fixes
+#define ACCURACY_FIX_TIMEOUT 1200000
 // 1 minute, maximum time we wait for warm fix
 #define WARM_FIX_TIMEOUT 60000
 // 20 seconds, maximum time we wait for hot fix
 #define HOT_FIX_TIMEOUT 20000
 // how many updates we wait for when measuring hot fix time
 #define UPDATE_COUNT_HOT_FIX 30
+// default how many fixes are waited in accuracy test
+#define NUM_OF_FIXES 100
+// default allowe radius in meters
+#define ALLOWED_RADIUS 5.0
+// default antenna location, is illegal, so must set in conf
+#define ANTENNA_X -1
+#define ANTENNA_Y -1
+#define ANTENNA_Z -1
+// default required procent in accurance test
+#define REQUIRED_PROS 90.0
+
+
+
 
 LocationTest::LocationTest()
+: m_numOfFixes(NUM_OF_FIXES),
+  m_allowedRadius(ALLOWED_RADIUS),
+  m_antennaX(ANTENNA_X),
+  m_antennaY(ANTENNA_Y),
+  m_antennaZ(ANTENNA_Z),
+  m_requiredProsent(REQUIRED_PROS)
 {
 
 	MWTS_ENTER;
@@ -201,17 +222,19 @@ void LocationTest::TestLocationFix()
 		return;
 	}
 
-	m_nFixCountLeft = 1;
+    m_nFixCountLeft = 1;
 
 	if(m_nHotMode == MODE_HOT)
 		m_nFixCountLeft += UPDATE_COUNT_HOT_FIX;
 
-	m_oElapsedSinceLastFix = QTime(); //invalid/null
+    m_oElapsedSinceLastFix = QTime(); //invalid/null
 	m_oElapsedFromStart.start();
 	m_pTimeout->start( COLD_FIX_TIMEOUT );
 	m_gpisLocationSource->startUpdates();
 
-	Start();
+    qDebug() << "LocationTest::TestLocationFix call Start()";
+    Start();
+    qDebug() << "LocationTest::TestLocationFix Start() returned, m_nFixCountLeft" << m_nFixCountLeft;
 
 	if( m_nFixCountLeft != 0 )
 	{
@@ -325,23 +348,81 @@ void LocationTest::TestAccuracy()
         return;
     }// fetch ap ssid from NetworkTest.conf
 
-    const double numOfFixes = g_pConfig->value("Accuracy/Number_of_fixes").toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Number_of_fixes" << numOfFixes;
+    m_numOfFixes = g_pConfig->value("Accuracy/Number_of_fixes", NUM_OF_FIXES).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Number_of_fixes" << m_numOfFixes;
 
-    const double allowedRadius = g_pConfig->value("Accuracy/Allowed_radius").toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Allowed_radius" << allowedRadius ;
+    m_allowedRadius = g_pConfig->value("Accuracy/Allowed_radius", ALLOWED_RADIUS).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Allowed_radius" << m_allowedRadius ;
 
-    const double antennaX = g_pConfig->value("Accuracy/Antenna_X").toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_X" << antennaX;
+    m_antennaX = g_pConfig->value("Accuracy/Antenna_X",ANTENNA_X).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_X" << m_antennaX;
 
-    const double antennaY = g_pConfig->value("Accuracy/Antenna_Y").toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Y" << antennaY;
+    m_antennaY = g_pConfig->value("Accuracy/Antenna_Y",ANTENNA_Y).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Y" << m_antennaY;
 
-    const double antennaZ = g_pConfig->value("Accuracy/Antenna_Z").toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Z" << antennaZ;
+    m_antennaZ = g_pConfig->value("Accuracy/Antenna_Z", ANTENNA_Z).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Z" << m_antennaZ;
 
-    const double requiredProsent = g_pConfig->value("Accuracy/Required_prosent").toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Required_prosent" << requiredProsent;
+    m_requiredProsent = g_pConfig->value("Accuracy/Required_prosent",REQUIRED_PROS).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Required_prosent" << m_requiredProsent;
+
+
+    if (!m_gpisLocationSource)
+    {
+        qCritical() << "No location source";
+        return;
+    }
+
+    m_nFixCountLeft = m_numOfFixes;
+
+
+    qDebug() << "LocationTest::TestAccuracy m_nFixCountLeft"  << m_nFixCountLeft;
+
+    m_oElapsedSinceLastFix = QTime(); //invalid/null
+    m_oElapsedFromStart.start();
+    //m_pTimeout->start( COLD_FIX_TIMEOUT );
+    m_gpisLocationSource->startUpdates();
+
+    qDebug() << "LocationTest::TestAccuracy call Start()";
+    Start();
+    qDebug() << "LocationTest::TestAccuracy Start() returned, m_nFixCountLeft" << m_nFixCountLeft;
+
+    if( m_nFixCountLeft != 0 )
+    {
+        g_pResult->Write("Has not received enough fix(es).");
+        g_pResult->StepPassed("LocationFix", false);
+// TEST		return;
+    }
+
+    if(m_nHotMode == MODE_HOT)
+    {
+        QString s= "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_HOT_FIX) + " fixes";
+        g_pResult->Write(s);
+        // REMOVED, we check all fixes got
+        //removing cold/warm fix
+        //m_listTimesToFix.takeFirst();
+        qSort(m_listTimesToFix);
+        int median = m_listTimesToFix.at( m_listTimesToFix.count() / 2 );
+        if( m_listTimesToFix.count() % 2 == 0 )
+        {
+            median = ( median + m_listTimesToFix.at( m_listTimesToFix.count() / 2 - 1 ) ) / 2;
+        }
+
+
+        // TODO Calculate here prosent of accurate enough fixex
+
+        g_pResult->AddMeasure("Hot fix time (med)", median, "ms");
+        g_pResult->AddMeasure("Hot fix time (min)", m_listTimesToFix.first(), "ms");
+        g_pResult->AddMeasure("Hot fix time (max)", m_listTimesToFix.last(), "ms");
+        g_pResult->StepPassed("Accuracy", true);
+    }
+    else // not hot
+    {
+        g_pResult->Write("Succesfully received cold (or warm) fix.");
+        g_pResult->AddMeasure("Cold fix time", m_listTimesToFix.first(), "ms");
+        g_pResult->StepPassed("Accuracy", true);
+    }
+
 
     MWTS_LEAVE;
 
@@ -354,7 +435,7 @@ void LocationTest::CalculateDistances()
 	bool result = false;
 
 
-	if(!m_listPositions.isEmpty())
+    if (m_listPositions.isEmpty())
 	{
 		qDebug() << "Positions list was empty, nothing to calculate";
 		g_pResult->Write("Calculate Distances: Positions list was empty, nothing to calculate");

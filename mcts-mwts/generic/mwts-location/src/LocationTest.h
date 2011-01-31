@@ -1,7 +1,7 @@
 /*
  * This file is part of MCTS
  *
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+ * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
  *
  * Contact: Tommi Toropainen; tommi.toropainen@nokia.com;
  *
@@ -52,7 +52,7 @@ public:
 	void SetPositioningMethod(int method);
 	void SetHotMode(int mode);
 
-	void TestLocationFix();
+    void TestLocationFix();
 	void GetLocationFix();
     void TestAccuracy();
 
@@ -71,6 +71,18 @@ private:
 	bool m_bGetLocFix;
 	QList<int> m_listTimesToFix;
 	QList<QGeoCoordinate> m_listPositions;
+
+    int m_numOfFixes;
+    double m_allowedRadius;
+
+    // antenna location
+    double m_antennaX;
+    double m_antennaY;
+    double m_antennaZ;
+
+    double m_requiredProsent;
+
+
 
 private slots:
 	void OnPositionUpdated(const QGeoPositionInfo &info);
