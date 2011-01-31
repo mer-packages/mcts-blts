@@ -7,8 +7,8 @@ Group: Development/Testing
 URL: http://wiki.meego.com/Quality/TestSuite/MCTS
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel libbltscommon-devel libX11-devel kernel-headers
-Requires: blts-input-devices-tests-config libbltscommon1 libX11
+BuildRequires: libbltscommon-devel libX11-devel kernel-headers
+Requires: blts-input-devices-tests-config
 
 %package config-example
 Summary: BLTS input devices test config example
@@ -36,9 +36,11 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
 
 %files config-example
-/etc/blts/blts-input-devices-tests.cnf
+%defattr(-,root,root,-)
+%config /etc/blts/blts-input-devices-tests.cnf
 /usr/share/blts-input-devices-tests/tests.xml
