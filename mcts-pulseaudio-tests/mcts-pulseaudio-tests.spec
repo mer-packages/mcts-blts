@@ -18,6 +18,7 @@ This is meego test suite package for common components
 %setup -q
 
 %build
+unset LD_AS_NEEDED   
 ./autogen
 ./configure --prefix=/usr
 make
