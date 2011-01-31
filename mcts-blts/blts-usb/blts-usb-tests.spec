@@ -49,15 +49,17 @@ rm -rf $RPM_BUILD_ROOT
 /usr/lib/tests/%{name}/*
 
 %files config-example
-/etc/blts/blts-usb-testrunner-default.cnf
-/etc/blts/ep-configuration-default.cfg
+%defattr(-,root,root,-)
+%config /etc/blts/blts-usb-testrunner-default.cnf
+%config /etc/blts/ep-configuration-default.cfg
 /usr/share/blts-usb-tests/tests.xml
 
 %files config-n900
-/etc/blts/blts-usb-testrunner-bulk.cnf
-/etc/blts/blts-usb-testrunner-isoc.cnf
-/etc/blts/blts-usb-testrunner-int.cnf
-/etc/blts/ep-configuration-bulk.cfg
-/etc/blts/ep-configuration-isoc.cfg
-/etc/blts/ep-configuration-int.cfg
+%defattr(-,root,root,-)
+%config /etc/blts/blts-usb-testrunner-bulk.cnf
+%config /etc/blts/blts-usb-testrunner-isoc.cnf
+%config /etc/blts/blts-usb-testrunner-int.cnf
+%config /etc/blts/ep-configuration-bulk.cfg
+%config /etc/blts/ep-configuration-isoc.cfg
+%config /etc/blts/ep-configuration-int.cfg
 /usr/share/blts-usb-tests/tests.xml
