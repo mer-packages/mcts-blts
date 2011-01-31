@@ -8,7 +8,7 @@ URL: http://wiki.meego.com/Quality/TestSuite/Audio_Driver_Test_Specification
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel kernel-headers dbus-glib-devel glib2-devel
-Requires: blts-alsa-core-tests-config dbus-glib glib2
+Requires: blts-alsa-core-tests-config
 
 %package config-example
 Summary: BLTS ALSA core test config example
@@ -36,10 +36,13 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
 /usr/lib/tests/%{name}/*
 
 %files config-example
-/etc/blts/blts-alsa-core-tests.cnf
+%defattr(-,root,root,-)
+%config /etc/blts/blts-alsa-core-tests.cnf
 /usr/share/blts-alsa-core-tests/tests.xml
+
