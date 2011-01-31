@@ -1,4 +1,4 @@
-AC_INIT([mnts-qtgfx-tests], [1.0.0], [])
+AC_INIT([mcts-qtgfx-tests], [1.0.0], [])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 # Checks for programs.

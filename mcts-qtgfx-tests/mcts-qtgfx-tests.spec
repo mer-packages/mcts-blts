@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 0 
 
-Summary: MeeGo 1.0 Netbook mnts-qtgfx-tests suite
-Name: mnts-qtgfx-tests
+Summary: MeeGo 1.0 Netbook mcts-qtgfx-tests suite
+Name: mcts-qtgfx-tests
 Version: 1.0.0
 Release: 2
 License: GPLv2

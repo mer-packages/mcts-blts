@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 0 
 
-Summary: MeeGo 1.0 Netbook mnts-gupnp-tests suite
-Name: mnts-gupnp-tests
+Summary: MeeGo 1.0 Netbook mcts-gupnp-tests suite
+Name: mcts-gupnp-tests
 Version: 1.0.0
 Release: 2
 License: GPLv2
