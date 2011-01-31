@@ -36,9 +36,11 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
 
 %files config-example
-/etc/blts/blts-wlan-core-tests.cnf
+%defattr(-,root,root,-)
+%config /etc/blts/blts-wlan-core-tests.cnf
 /usr/share/blts-wlan-core-tests/tests.xml
