@@ -7,6 +7,7 @@ Release: 2
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz
+BuildRequires: pulseaudio-devel
 #BuildRoot: %_topdir/%name-%version-buildroot
 
 %description
