@@ -33,7 +33,7 @@ This package contains a configuration for N900 USB functional tests.
 %build
 ./autogen.sh
 %configure
-KERNELDIR=`rpm -ql kernel-devel | grep -E '^\/usr\/src\/kernels\/[^\/]*/Makefile' | xargs dirname` make
+KERNELDIR=`rpm -ql --whatprovides kernel-devel | grep -m 1 -E '^\/usr\/src\/kernels\/[^\/]*/Makefile' | xargs dirname` make
 
 %install
 rm -rf $RPM_BUILD_ROOT
