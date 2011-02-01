@@ -1,5 +1,11 @@
-* Thu 20 Jan 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
-- initial version
+* Tue Jan 18 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.1.0
+ - Added classes for sim manager and voice call (forwarding, waiting, barring)
+ - Refactored package names in mwts-ofono.spec
+ - Added functionality test cases to mwts-ofono-call.cfg
+ - Added content to README
 
+* Fri Jan 07 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.0.2
+ - Added functionality test cases to mwts-ofono-sim.cfg
 
-
+* Wed Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
+ - Intial version

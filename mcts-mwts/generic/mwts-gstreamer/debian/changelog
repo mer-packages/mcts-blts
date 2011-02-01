@@ -27,4 +27,4 @@ mwts-gstreamer (0.0.2) unstable; urgency=low
 
 mwts-gstreamer (0.0.1) unstable; urgency=low
   * Initial version
- -- Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com>  Tue, 11 Aug 2010 15:11:00 +0200
+ -- Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com>  Tue, 11 May 2010 15:11:00 +0200
