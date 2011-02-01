@@ -42,9 +42,9 @@
 // default allowe radius in meters
 #define ALLOWED_RADIUS 5.0
 // default antenna location, is illegal, so must set in conf
-#define ANTENNA_X -1
-#define ANTENNA_Y -1
-#define ANTENNA_Z -1
+#define ANTENNA_LATITUDE -91
+#define ANTENNA_LONGITUDE -181
+#define ANTENNA_ALTITUDE -10001
 // default required procent in accurance test
 #define REQUIRED_PROS 90.0
 
@@ -54,9 +54,9 @@
 LocationTest::LocationTest()
 : m_numOfFixes(NUM_OF_FIXES),
   m_allowedRadius(ALLOWED_RADIUS),
-  m_antennaX(ANTENNA_X),
-  m_antennaY(ANTENNA_Y),
-  m_antennaZ(ANTENNA_Z),
+  m_antennaLatitude(ANTENNA_LATITUDE),
+  m_antennaLongitude(ANTENNA_LONGITUDE),
+  m_antennaAltitude(ANTENNA_ALTITUDE),
   m_requiredProsent(REQUIRED_PROS)
 {
 
@@ -96,7 +96,7 @@ void LocationTest::OnInitialize()
 	m_pTimeout=new QTimer(this);
 	m_nFixCountLeft = 0; //Initialize
 	m_bGetLocFix = false;
-
+    m_bAccuracyResult = false;
 }
 
 void LocationTest::OnUninitialize()
@@ -140,10 +140,8 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 	bool firstFix = m_oElapsedSinceLastFix.isNull();
 	int sinceLast = m_oElapsedSinceLastFix.elapsed();
 	m_oElapsedSinceLastFix.start();
-	m_nFixCountLeft--;
 
 	QGeoCoordinate coord = info.coordinate();
-	m_listPositions.append(coord);
 
 	//should we allow invalid timestamp and check only validity of the coordinates??
 	if(info.isValid())
@@ -151,7 +149,17 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 		qDebug() << ("Position updated: ")
 			 << info.coordinate().toString()
 			 << ("Timestamp: ")
-			 << info.timestamp().toString();
+             << info.timestamp().toString()
+             << ("Type: ")
+             << coord.type();
+
+        m_nFixCountLeft--;
+        m_listPositions.append(coord);
+
+        if  (coord.type() < m_CoordinateType)
+        {
+            m_CoordinateType = coord.type();
+        }
 
 		if(m_bGetLocFix)
 		{
@@ -341,6 +349,7 @@ void LocationTest::GetLocationFix()
 void LocationTest::TestAccuracy()
 {
     MWTS_ENTER;
+    m_bAccuracyResult = true;
 
     if (!m_gpisLocationSource)
     {
@@ -354,14 +363,14 @@ void LocationTest::TestAccuracy()
     m_allowedRadius = g_pConfig->value("Accuracy/Allowed_radius", ALLOWED_RADIUS).toDouble();
     qDebug() << "LocationTest::TestAccuracy Accuracy/Allowed_radius" << m_allowedRadius ;
 
-    m_antennaX = g_pConfig->value("Accuracy/Antenna_X",ANTENNA_X).toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_X" << m_antennaX;
+    m_antennaLatitude = g_pConfig->value("Accuracy/Antenna_latitude",ANTENNA_LATITUDE).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_latitude" << m_antennaLatitude;
 
-    m_antennaY = g_pConfig->value("Accuracy/Antenna_Y",ANTENNA_Y).toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Y" << m_antennaY;
+    m_antennaLongitude = g_pConfig->value("Accuracy/Antenna_longitude",ANTENNA_LONGITUDE).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_longitude" << m_antennaLongitude;
 
-    m_antennaZ = g_pConfig->value("Accuracy/Antenna_Z", ANTENNA_Z).toDouble();
-    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_Z" << m_antennaZ;
+    m_antennaAltitude = g_pConfig->value("Accuracy/Antenna_altitude", ANTENNA_ALTITUDE).toDouble();
+    qDebug() << "LocationTest::TestAccuracy Accuracy/Antenna_altitude" << m_antennaAltitude;
 
     m_requiredProsent = g_pConfig->value("Accuracy/Required_prosent",REQUIRED_PROS).toDouble();
     qDebug() << "LocationTest::TestAccuracy Accuracy/Required_prosent" << m_requiredProsent;
@@ -374,6 +383,9 @@ void LocationTest::TestAccuracy()
     }
 
     m_nFixCountLeft = m_numOfFixes;
+    m_CoordinateType = QGeoCoordinate::Coordinate3D; // Hope we gets coordinates with valid latitude and longitude values,
+                                                     // and also an altitude value.
+                                                     // Process will change this to lover is not
 
 
     qDebug() << "LocationTest::TestAccuracy m_nFixCountLeft"  << m_nFixCountLeft;
@@ -391,16 +403,11 @@ void LocationTest::TestAccuracy()
     {
         g_pResult->Write("Has not received enough fix(es).");
         g_pResult->StepPassed("LocationFix", false);
-// TEST		return;
+        return;
     }
 
     if(m_nHotMode == MODE_HOT)
     {
-        QString s= "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_HOT_FIX) + " fixes";
-        g_pResult->Write(s);
-        // REMOVED, we check all fixes got
-        //removing cold/warm fix
-        //m_listTimesToFix.takeFirst();
         qSort(m_listTimesToFix);
         int median = m_listTimesToFix.at( m_listTimesToFix.count() / 2 );
         if( m_listTimesToFix.count() % 2 == 0 )
@@ -409,19 +416,19 @@ void LocationTest::TestAccuracy()
         }
 
 
-        // TODO Calculate here prosent of accurate enough fixex
-
         g_pResult->AddMeasure("Hot fix time (med)", median, "ms");
         g_pResult->AddMeasure("Hot fix time (min)", m_listTimesToFix.first(), "ms");
         g_pResult->AddMeasure("Hot fix time (max)", m_listTimesToFix.last(), "ms");
-        g_pResult->StepPassed("Accuracy", true);
     }
     else // not hot
     {
         g_pResult->Write("Succesfully received cold (or warm) fix.");
         g_pResult->AddMeasure("Cold fix time", m_listTimesToFix.first(), "ms");
-        g_pResult->StepPassed("Accuracy", true);
     }
+
+    CalculateDistances();
+    CalculateAccuracy();
+    g_pResult->StepPassed("Accuracy", m_bAccuracyResult);
 
 
     MWTS_LEAVE;
@@ -515,3 +522,72 @@ void LocationTest::CalculateDistances()
 
 	MWTS_LEAVE;
 }
+
+void LocationTest::CalculateAccuracy()
+{
+    MWTS_ENTER;
+    int numOfAllowed = 0;
+    qreal sumDist = 0.0;
+    qreal resultPros = 0.0;
+    double sumAntennaLatitude = 0.0;
+    double sumAntennaLongitude = 0.0;
+    double sumAntennaAltitude = 0.0;
+
+
+    if (m_listPositions.isEmpty())
+    {
+        qDebug() << "Positions list was empty, nothing to calculate";
+        g_pResult->Write("Calculate Distances: Positions list was empty, nothing to calculate");
+        return;
+    }
+
+    //Not empty, total count is:
+    qDebug() << "Total count of positions:" << m_listPositions.size();
+
+    if(m_listPositions.size() > 1)
+    {
+        int numOfPositions = m_listPositions.size();
+
+        //Calculating sum of distances to each position and try to determinate
+        //which is the middle point
+
+        QGeoCoordinate anttennapoint(m_antennaLatitude, m_antennaLongitude, m_antennaAltitude);
+        for(int i = 0; i < numOfPositions; i++)
+        {
+            qreal dist = anttennapoint.distanceTo(m_listPositions.value(i));
+            sumAntennaLatitude += m_listPositions.value(i).latitude();
+            sumAntennaLongitude += m_listPositions.value(i).longitude();
+            if (m_CoordinateType == QGeoCoordinate::Coordinate3D)
+                sumAntennaAltitude += m_listPositions.value(i).altitude();
+
+            if (dist <= m_allowedRadius)
+            {
+                numOfAllowed++;
+            }
+            sumDist += dist;
+        }
+
+        resultPros =((qreal) 100.0) * ((qreal) numOfAllowed)/((qreal) numOfPositions);
+
+        m_bAccuracyResult = (resultPros >= m_allowedRadius);
+        g_pResult->Write("");
+        g_pResult->Write("Total count of positions: "  + QString::number(numOfPositions));
+        g_pResult->Write("Percent in allowed distance: "  + QString::number(resultPros));
+        g_pResult->Write("Mean distance of antenna of all fixes: "  + QString::number(sumDist/(qreal) numOfPositions));
+        g_pResult->Write("Mean latitude of antenna of all fixes: "  + QString::number(sumAntennaLatitude/(double) numOfPositions));
+        g_pResult->Write("Mean longitude of antenna of all fixes: "  + QString::number(sumAntennaLongitude/(double) numOfPositions));
+        if (m_CoordinateType == QGeoCoordinate::Coordinate3D)
+            g_pResult->Write("Mean altitude of antenna of all fixes: "  + QString::number(sumAntennaAltitude/(double) numOfPositions));
+        else
+            g_pResult->Write("2D coordinates got, so mean altitude of antenna of all fixes is not avalable");
+        g_pResult->Write("");
+
+    }
+    else
+    {
+        qDebug() << "At least one position is needed";
+        g_pResult->Write("Calculate Accuracy: At least one positions is needed");
+    }
+    MWTS_LEAVE;
+}
+

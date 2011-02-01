@@ -56,9 +56,10 @@ public:
 	void GetLocationFix();
     void TestAccuracy();
 
-	void CalculateDistances();
-	
+    void CalculateDistances();
 private:
+    void CalculateAccuracy();
+
 	QGeoPositionInfoSource *m_gpisLocationSource;
 	QTimer* m_pTimeout;
 	QTime m_oElapsedFromStart;
@@ -67,18 +68,20 @@ private:
 	int m_nHotMode;
 	int m_nPositioningMethod;
 	QGeoPositionInfoSource::PositioningMethod m_PositioningMethod;
+    QGeoCoordinate::CoordinateType m_CoordinateType;
 	int m_nFixCountLeft;
 	bool m_bGetLocFix;
-	QList<int> m_listTimesToFix;
+    bool m_bAccuracyResult;
+    QList<int> m_listTimesToFix;
 	QList<QGeoCoordinate> m_listPositions;
 
     int m_numOfFixes;
-    double m_allowedRadius;
+    qreal m_allowedRadius;
 
     // antenna location
-    double m_antennaX;
-    double m_antennaY;
-    double m_antennaZ;
+    double m_antennaLatitude;
+    double m_antennaLongitude;
+    double m_antennaAltitude;
 
     double m_requiredProsent;
 

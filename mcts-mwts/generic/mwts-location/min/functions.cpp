@@ -102,7 +102,6 @@ LOCAL int TestAccuracy (MinItemParser * item)
 {
     MWTS_ENTER;
     Test.TestAccuracy();
-    Test.CalculateDistances();
     return ENOERR;
 }
 
