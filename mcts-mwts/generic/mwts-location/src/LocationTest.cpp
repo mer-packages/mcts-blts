@@ -34,7 +34,9 @@
 // 20 seconds, maximum time we wait for hot fix
 #define HOT_FIX_TIMEOUT 20000
 // how many updates we wait for when measuring hot fix time
-#define UPDATE_COUNT_HOT_FIX 30
+#define UPDATE_COUNT_HOT_FIX 10
+// how many updates we wait for when measuring cold fix time
+#define UPDATE_COUNT_COLD_FIX 10
 
 LocationTest::LocationTest()
 {
@@ -137,12 +139,23 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 			m_listTimesToFix.append(fromStart);
 			qDebug() << "GetLocationFix, received in:" << fromStart << "ms";
 		}
-		else if( firstFix )
+                else if(firstFix)
 		{
-			m_listTimesToFix.append(fromStart);
-			qDebug() << "Cold or warm fix, received in:" << fromStart << "ms";
+                    qDebug() << "counts " << m_listTimesToFix.count();
+                    m_listTimesToFix.append(fromStart);
+                    qDebug() << "Cold or warm fix, received in:" << fromStart << "ms";
+                    //remove GPS data if that is cold fix case
+                    if (m_nHotMode == MODE_COLD)
+                        RemoveGPSData();
 		}
-		else
+                else if (m_nHotMode == MODE_COLD)
+                {
+                    qDebug() << "counts " << m_listTimesToFix.count();
+                    m_listTimesToFix.append(sinceLast);
+                    qDebug() << "Cold or warm fix, received in:" << sinceLast << "ms";
+                    RemoveGPSData();
+                }
+                else if (m_nHotMode == MODE_HOT)
 		{
 			m_listTimesToFix.append(sinceLast);
 			qDebug() << "Hot fix, received in:" << sinceLast << "ms";
@@ -203,11 +216,16 @@ void LocationTest::TestLocationFix()
 
 	m_nFixCountLeft = 1;
 
-	if(m_nHotMode == MODE_HOT)
+        if (m_nHotMode == MODE_HOT)
 		m_nFixCountLeft += UPDATE_COUNT_HOT_FIX;
+        else if (m_nHotMode == MODE_COLD)
+            m_nFixCountLeft += UPDATE_COUNT_COLD_FIX;
+
 
 	m_oElapsedSinceLastFix = QTime(); //invalid/null
 	m_oElapsedFromStart.start();
+        qDebug() << "Removing GPS data to be sure that first fix is cold.";
+        RemoveGPSData();
 	m_pTimeout->start( COLD_FIX_TIMEOUT );
 	m_gpisLocationSource->startUpdates();
 
@@ -220,31 +238,41 @@ void LocationTest::TestLocationFix()
 		return;
 	}
 
-	if(m_nHotMode == MODE_HOT)
-	{
-		QString s= "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_HOT_FIX) + " fixes";
-		g_pResult->Write(s);
-		//removing cold/warm fix
-		m_listTimesToFix.takeFirst();
-		qSort(m_listTimesToFix);
-		int median = m_listTimesToFix.at( m_listTimesToFix.count() / 2 );
-		if( m_listTimesToFix.count() % 2 == 0 )
-		{
-			median = ( median + m_listTimesToFix.at( m_listTimesToFix.count() / 2 - 1 ) ) / 2;
-		}
+        QString s;
+        if(m_nHotMode == MODE_HOT)
+            s = "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_HOT_FIX) + " hot fixes";
+            else if(m_nHotMode == MODE_COLD)
+                s = "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_COLD_FIX) + " cold fixes";
 
-		g_pResult->AddMeasure("Hot fix time (med)", median, "ms");
-		g_pResult->AddMeasure("Hot fix time (min)", m_listTimesToFix.first(), "ms");
-		g_pResult->AddMeasure("Hot fix time (max)", m_listTimesToFix.last(), "ms");
-		g_pResult->StepPassed("LocationFix", true);
-	}
-	else // not hot
-	{
-		g_pResult->Write("Succesfully received cold (or warm) fix.");
-		g_pResult->AddMeasure("Cold fix time", m_listTimesToFix.first(), "ms");
-		g_pResult->StepPassed("LocationFix", true);
-	}
+        g_pResult->Write(s);
+        //removing cold/warm fix
+        if (m_nHotMode == MODE_HOT)
+            m_listTimesToFix.takeFirst();
 
+        qSort(m_listTimesToFix);
+
+        int median = m_listTimesToFix.at( m_listTimesToFix.count() / 2 );
+        if( m_listTimesToFix.count() % 2 == 0 )
+        {
+            median = ( median + m_listTimesToFix.at( m_listTimesToFix.count() / 2 - 1 ) ) / 2;
+        }
+
+        if (m_nHotMode == MODE_HOT)
+        {
+            g_pResult->AddMeasure("Hot fix time (med)", median, "ms");
+            g_pResult->AddMeasure("Hot fix time (min)", m_listTimesToFix.first(), "ms");
+            g_pResult->AddMeasure("Hot fix time (max)", m_listTimesToFix.last(), "ms");
+            g_pResult->StepPassed("LocationFix", true);
+        }
+        else if (m_nHotMode == MODE_COLD)
+        {
+            g_pResult->AddMeasure("Cold fix time (med)", median, "ms");
+            g_pResult->AddMeasure("Cold fix time (min)", m_listTimesToFix.first(), "ms");
+            g_pResult->AddMeasure("Cold fix time (max)", m_listTimesToFix.last(), "ms");
+            g_pResult->StepPassed("LocationFix", true);
+        }
+
+        m_listTimesToFix.erase(m_listTimesToFix.begin(), m_listTimesToFix.end());
 }
 
 
@@ -400,4 +428,10 @@ void LocationTest::CalculateDistances()
 	}
 
 	MWTS_LEAVE;
+}
+
+void LocationTest::RemoveGPSData() const {
+    MWTS_ENTER;
+    qDebug() << "Removing GPS Data -- to implement -- ";
+    MWTS_LEAVE;
 }

@@ -56,6 +56,13 @@ public:
 	void GetLocationFix();
 
 	void CalculateDistances();
+
+        /**
+         *  This should remove GPS data, at least ephemerises
+         *  which is needed for cold fix
+         *  Good idea could be to specify in config file, which files/directories to erase/clear.
+         */
+        void RemoveGPSData() const;
 	
 private:
 	QGeoPositionInfoSource *m_gpisLocationSource;
