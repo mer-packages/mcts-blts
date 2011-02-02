@@ -36,17 +36,9 @@
 #include <QtDBus>
 #include <QDBusInterface>
 
-/*
-#include <QVariantMap>
-#include <QVariant>
-#include <QDBusInterface>
-#include <QDBusMessage>
-#include <QDBusReply>
-*/
-
 #include <MwtsCommon>
 
-//using QDBus
+
 
 class NetworkTest : public MwtsTest
 {
