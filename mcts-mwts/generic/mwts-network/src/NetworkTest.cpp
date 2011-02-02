@@ -116,13 +116,13 @@ void NetworkTest::OnUninitialize()
     MWTS_ENTER;
 
     if (networkSession) {
-            delete networkSession;
-            networkSession = NULL;
+        delete networkSession;
+        networkSession = NULL;
     }
 
     if (m_pProcess)	{
-            delete m_pProcess;
-            m_pProcess = NULL;
+        delete m_pProcess;
+        m_pProcess = NULL;
     }
 
     if (m_ConnmanManager) {
@@ -158,6 +158,7 @@ void NetworkTest::slotError(QProcess::ProcessError error)
     MWTS_ENTER;
     qCritical() << "Error: " << error;
     QString errorStr;
+
     switch(error) {
         case QProcess::FailedToStart:
             errorStr = "Failed to start process";
@@ -231,7 +232,6 @@ bool NetworkTest::ServerLaunchIperf(const char* time)
 
     ip = g_pConfig->value("SERVER/server_ip").toString();
     username = g_pConfig->value("SERVER/server_user").toString();
-    //identity = g_pConfig->value("SERVER/identity_file").toString();
 
     if(ip.isNull() || username.isNull()) {
             qCritical() << "Missing server information(ip, username), please check your NetworkTest.cfg";
@@ -257,9 +257,9 @@ bool NetworkTest::IsOnline()
     QNetworkConfigurationManager mgr;
     QList<QNetworkConfiguration> activeConfigs = mgr.allConfigurations(QNetworkConfiguration::Active);
     if (activeConfigs.count() > 0)
-            return true;
+        return true;
     else
-            return false;
+        return false;
 }
 
 bool NetworkTest::IsAccessPointFound(const QString ap_name)
@@ -278,7 +278,6 @@ bool NetworkTest::IsAccessPointFound(const QString ap_name)
             qDebug() << "Access point with name: " << ap << " was found!";
             return true;
         }
-
     }
 	
     qCritical() << "Access point was not found in scan. Aborting...";
@@ -341,7 +340,7 @@ bool NetworkTest::UploadFile(const QString strFilename)
     bool success = false;
 
     // if we are not online, then there is no point to go further
-    if(!IsOnline())	{
+    if(!IsOnline()) {
         qCritical() << "No connection available, aborting file Upload!";
         return false;
     }
@@ -389,12 +388,12 @@ void NetworkTest::CloseActiveSessions()
 
     QList<QNetworkConfiguration> configs = networkManager.allConfigurations();
     for (int i = 0; i < configs.size(); ++i) {
-            if (configs.at(i).state() == QNetworkConfiguration::Active) {
-               QNetworkSession session(configs.at(i));
-               session.disconnect();
-               session.stop();
-               session.close();
-            }
+        if (configs.at(i).state() == QNetworkConfiguration::Active) {
+           QNetworkSession session(configs.at(i));
+           session.disconnect();
+           session.stop();
+           session.close();
+        }
     }
 }
 
@@ -414,19 +413,16 @@ bool NetworkTest::SwitchWlan(const QString state)
         return false;
     }
 
-    //QDBusInterface manager("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
-
     QDBusReply<QVariantMap> reply = m_ConnmanManager->call("GetProperties");
 
-    if(!reply.isValid()) {
-        qCritical() << "Reply is inValid!";
-       return false;
+    if (!reply.isValid()) {
+        qCritical() << "Could not get manager properties, check connman-daemon. Aborting...";
+        return false;
     }
 
     QVariantMap map = reply;
     QVariant technologies;
 
-    // get the Services map value
     if (map.contains("Technologies")) {
         qDebug() << "Reply contains Technologies!";
         technologies = map.value("Technologies");
@@ -453,10 +449,10 @@ bool NetworkTest::SwitchWlan(const QString state)
         //qDebug() << "Got technology properties, proceeding to open device interface";
         QVariantMap tech_map = tech_reply;
 
-        if(tech_map.contains("Devices"))
+        if (tech_map.contains("Devices"))
         {
             //qDebug() << "Devices found";
-            if(tech_map.value("Type") == "wifi") {
+            if (tech_map.value("Type") == "wifi") {
                 qDebug() << "Proceeding the state change";
                 qDebug() << "type is : " << tech_map.value("Type");
 
@@ -538,13 +534,10 @@ bool NetworkTest::StopSession(const QString ap_name)
     MWTS_LEAVE;
 }
 
-
-
 void NetworkTest::RunIdle()
 {
     this->Start();
 }
-
 
 void NetworkTest::UpdateConfigs()
 {
