@@ -7,7 +7,7 @@ BuildRoot:	%{buildroot}
 Summary: 	Test libraries for GStreamer.
 License: 	LGPL
 Name: 		mwts-gstreamer
-Version: 	1.0.0
+Version: 	0.0.7
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
@@ -69,3 +69,22 @@ ldconfig
 
 %postun
 ldconfig
+
+%changelog
+* Thu Dec 09 2010 Jan Grela <jan.grela@digia.com> - 0.0.7
+- Added playback functionality, codecs and containers setting moved to .conf file, added new test cases
+* Tue Sep 29 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.6
+- Initial MeeGo version
+* Wed Sep 22 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> - 0.0.5
+- MeeGo Audio and Video test cases added
+* Wed Aug 11 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> - 0.0.4
+- FPS performance measurement functionality (max FPS)
+- Changed timeout to use mwts-gstreamer timeout, not mwts-common
+* Tue Jun 15 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> - 0.0.3
+- Added ART test cases
+- Fixed scripts, removed useless spaces and URI away
+- Fixed alltests.xml and tests.xml
+* Wed May 19 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> - 0.0.2
+- Fixed scripts
+* Tue May 11 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> - 0.0.1
+- Initial version

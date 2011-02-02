@@ -463,7 +463,7 @@ gboolean GCameraTest::bus_cb (GstBus *bus, GstMessage *msg, gpointer data)
     case GST_MESSAGE_WARNING:
         qDebug("GST_MESSAGE_WARNING");
         gst_message_parse_warning (msg, &err, &debug);
-        qCritical("Gst : %s", err->message);
+        qDebug("Gst : %s", err->message);
         break;
 
     case GST_MESSAGE_INFO:

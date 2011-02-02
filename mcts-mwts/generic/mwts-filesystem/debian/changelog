@@ -1,3 +1,10 @@
+mwts-filesystem (1.0.2) unstable; urgency=low
+  * Added utils to make Mass Storage functionality into device, it it does not support it by platform.
+    Checked and updated documentation abou Mass Storage Mode situation and testing.
+    Updated configution file to fit utils made Mass Storage.
+    Fuctionality is not changed.
+ -- Reijo Korhonen  <reijo.korhonen@digia.com>  Fri, 21 Jan 2011 12:50:00 +0200
+
 mwts-filesystem (1.0.1) unstable; urgency=low
   * Min script reorgasating as standard way to FUTE and NFT cases. Checked and updated documentation.
     Fuctionality is not changed.

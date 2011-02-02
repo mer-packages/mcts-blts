@@ -30,6 +30,23 @@
       </case>
     </set>
 
+<!--This set contains ACCURACY tests of mwts-location, script file: mwts-location-nft.cfg-->
+    <set name="ACCURACY-location" description="Location accuracy" feature="(A)-GPS" type="Iterative">
+      <case name="NFT-GPS-HotFix-ITER" timeout="1200" description=
+            "Purpose
+            Get GPS hot or gold fixes. Tests accuracy of the positioning engine
+            Method
+            Using Qt Mobility location API.
+            Pre-/Post-Conditions
+            Device antenna positon is set in assets configutation file.
+            Device located so that signal receivable from at least 4 satellites
+            Pass/Fail Criteria
+            Test runs successfully, fixes disrance to right antenna place is less than given value in prosent given in configuration file
+            ">
+            <step>min -c -t 'NFT-GPS-Accuracy'</step>
+      </case>
+    </set>
+
 <!--This set contains ITERATIVE tests of mwts-location, script file: mwts-location-nft.cfg-->
     <set name="ITER-location" description="Location reliability" feature="(A)-GPS" type="Iterative">
       <case name="NFT-GPS-HotFix-ITER" timeout="600" description=
