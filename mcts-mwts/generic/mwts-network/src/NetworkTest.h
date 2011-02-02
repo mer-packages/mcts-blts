@@ -33,8 +33,20 @@
 #include <QMap>
 #include <QtCore>
 #include <QSignalSpy>
+#include <QtDBus>
+#include <QDBusInterface>
+
+/*
+#include <QVariantMap>
+#include <QVariant>
+#include <QDBusInterface>
+#include <QDBusMessage>
+#include <QDBusReply>
+*/
+
 #include <MwtsCommon>
 
+//using QDBus
 
 class NetworkTest : public MwtsTest
 {
@@ -74,9 +86,6 @@ public:
 	*/ 
 	void CloseActiveSessions();	
 
-	bool AddApPassword(const QString ap_name);
-	bool AddApPasswords();
-
 	/*
 	* Turns wlan chip on/off
 	*/ 
@@ -86,6 +95,30 @@ public:
 	 * Create network session from target config
 	 */
 	bool ConnectToConfig(const QNetworkConfiguration& config);
+
+        /*
+         * helper method to get target service dbus object path from connman manager
+         * @param ap_name
+         */
+        QString GetServicePath(const QString ap_name);
+
+        /*
+         * Creates connection to wlan/psd access point. Uses connman
+         * @param ap_name target access point name
+         */
+        bool ConnmanConnection(const QString ap_name);
+
+        /*
+         * Removes available service configuration
+         * @param ap_name target access/service point name
+         */
+        bool RemoveService(const QString ap_name);
+
+        /*
+         * Sets tethering on/off
+         * @param mode on or off
+         */
+        bool SetTethering(const QString mode);
 
 	/**
 	 * Just to check if UpdateConfigurations signal is catched
@@ -128,7 +161,7 @@ public:
 	/*
 	 * Stops running networksession
 	 */
-	void StopSession();
+        bool StopSession(const QString ap_name);
 
 	/*
 	 * Returns the status network connection
@@ -162,6 +195,8 @@ public:
 	QString saveFileName(const QUrl &url);
 
 private:
+        QDBusInterface *m_ConnmanManager;
+
 	/*
 	 * Helper function to get file name from url
 	 */
@@ -181,6 +216,11 @@ protected slots:
 	void configurationsAdded(const QNetworkConfiguration& config);
 	void configurationsRemoved(const QNetworkConfiguration& config);
 	void configurationsChanged(const QNetworkConfiguration& config);
+
+        /*
+         * Connman manager slot
+         */
+        void slotConnmanStateChanged();
 
 	/*
 	 * Slots for roaming support.

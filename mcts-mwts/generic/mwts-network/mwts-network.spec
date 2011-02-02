@@ -6,7 +6,7 @@ BuildRoot:		%{buildroot}
 Summary: 		A wlan/psd networking test asset
 License: 		LGPL
 Name: 			mwts-network
-Version: 		0.0.7
+Version: 		1.0.1
 Release: 		0
 Prefix: 		/usr
 Group: 			Testing
@@ -38,7 +38,7 @@ mwts-network generic config
 Summary:                meta package for generic mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
-Requires:               mwts-network
+Requires:               mwts-network, mwts-network-generic-config, mwts-network-generic-tests
 %description            generic-all
 meta package for generic mwts-network
 

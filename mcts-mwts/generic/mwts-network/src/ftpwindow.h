@@ -95,6 +95,7 @@ private:
 
 	QFtp *ftp;
 
+        bool m_bResult;
 	qint64 		sizeOfFile;
 
 	QString		downloadPath;

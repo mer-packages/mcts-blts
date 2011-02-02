@@ -48,8 +48,8 @@ LOCAL int Scan( MinItemParser * item)
         if (ENOERR != mip_get_next_string(item, &ap_name))
         {
                 qCritical() << "Missing parameter: access point name";
-                MWTS_LEAVE;
                 return EINVAL;
+                MWTS_LEAVE;
         }
 
 	if(Test.IsUpdateComplete())
@@ -61,6 +61,7 @@ LOCAL int Scan( MinItemParser * item)
         g_pResult->StepPassed( __FUNCTION__, retval );
 
  	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -77,8 +78,8 @@ LOCAL int ConnectToDefault( MinItemParser * item)
 
 	g_pResult->StepPassed( __FUNCTION__, retval );
 
-	MWTS_LEAVE;
 	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -100,27 +101,99 @@ LOCAL int Connect( MinItemParser * item)
 	{
 		if (ENOERR != mip_get_next_string(item,&ap_name)) {
 			qCritical() << "Missing argument: access point identifier";
-			MWTS_LEAVE;
 			return EINVAL;
+                        MWTS_LEAVE;
 		}
 	}
 
 	QString qap_name = ap_name;
 	bool retval = false;
 
-	// stop session just to make sure. Disconnect function brings down the interface
-	Test.StopSession();
-
-	qDebug() << "connecting to " << qap_name;
-	retval = Test.ConnectToName(qap_name);
+        retval = Test.ConnmanConnection(ap_name);
 
 	free(ap_name);
 	ap_name = NULL;
 
-	g_pResult->StepPassed( __FUNCTION__, retval );
+        g_pResult->StepPassed( __FUNCTION__, retval );
 
-	MWTS_LEAVE;
 	return 0;
+        MWTS_LEAVE;
+}
+
+/*
+ * Removes access point configuration from device
+ */
+LOCAL int RemoveService( MinItemParser * item)
+{
+        MWTS_ENTER;
+
+        char * ap_name = NULL;
+
+        if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
+        {
+                //LDX_MESSAGE("");
+                qCritical() << "Error: cannot set parser to quote mode";
+
+        }
+        else
+        {
+                if (ENOERR != mip_get_next_string(item,&ap_name)) {
+                        qCritical() << "Missing argument: access point identifier";
+                        return EINVAL;
+                        MWTS_LEAVE;
+                }
+        }
+
+        QString qap_name = ap_name;
+        bool retval = false;
+
+        retval = Test.RemoveService(ap_name);
+
+        free(ap_name);
+        ap_name = NULL;
+
+        g_pResult->StepPassed( __FUNCTION__, retval );
+
+        return 0;
+        MWTS_LEAVE;
+}
+
+/*
+ * Removes access point configuration from device
+ */
+LOCAL int SetTethering( MinItemParser * item)
+{
+        MWTS_ENTER;
+
+        char * mode = NULL;
+
+        if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
+        {
+                //LDX_MESSAGE("");
+                qCritical() << "Error: cannot set parser to quote mode";
+
+        }
+        else
+        {
+                if (ENOERR != mip_get_next_string(item,&mode)) {
+                        qCritical() << "Missing argument: tethering mode";
+                        return EINVAL;
+                        MWTS_LEAVE;
+                }
+        }
+
+        QString tethering_mode = mode;
+        bool retval = false;
+
+        retval = Test.SetTethering(tethering_mode);
+
+        free(mode);
+        mode = NULL;
+
+        g_pResult->StepPassed( __FUNCTION__, retval );
+
+        return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -129,16 +202,34 @@ LOCAL int Connect( MinItemParser * item)
 LOCAL int Disconnect (__attribute__((unused)) MinItemParser * item)
 {
 	MWTS_ENTER;
-	Test.StopSession();
 
-	QProcess ifconfig;
+        char * ap_name = NULL;
+
+        if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
+        {
+                //LDX_MESSAGE("");
+                qCritical() << "Error: cannot set parser to quote mode";
+
+        }
+        else
+        {
+                if (ENOERR != mip_get_next_string(item,&ap_name)) {
+                        qCritical() << "Missing argument: access point identifier";
+                        return EINVAL;
+                        MWTS_LEAVE;
+                }
+        }
+
+        QString qap_name = ap_name;
+        bool retval = false;
 
 	// stop session just to make sure. Disconnect function brings down the interface
-	Test.StopSession();
+        retval = Test.StopSession(ap_name);
 
 	g_pResult->StepPassed( __FUNCTION__, true );
-	MWTS_LEAVE;
+
 	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -149,18 +240,27 @@ LOCAL int DownloadfileHttp( MinItemParser * item)
 	MWTS_ENTER;
 
 	char* filename = NULL;
+        bool success = false;
+
 	if (ENOERR != mip_get_next_string(item, &filename))
 	{
 		qCritical() << "Missing parameter: filename";
-		MWTS_LEAVE;
 		return EINVAL;
+                MWTS_LEAVE;
 	}
 
-	bool success = Test.DownloadfileHttp(filename);
+        // if we are not online, then there is no point to go further
+        if (!Test.IsOnline()) {
+                qCritical() << "No connection available, aborting http download!";
+                return 1;
+        } else {
+                success = Test.DownloadfileHttp(filename);
+        }
 
 	g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -168,21 +268,31 @@ LOCAL int DownloadfileHttp( MinItemParser * item)
  */
 LOCAL int Downloadfile( MinItemParser * item)
 {
-	MWTS_ENTER;
+        MWTS_ENTER;
 
 	char* filename = NULL;
+        bool success = false;
+
 	if (ENOERR != mip_get_next_string(item, &filename))
 	{
 		qCritical() << "Missing parameter: filename";
-		MWTS_LEAVE;
+
 		return EINVAL;
+                MWTS_LEAVE;
 	}
 
-	bool success = Test.Downloadfile(filename);
+        // if we are not online, then there is no point to go further
+        if (!Test.IsOnline()) {
+                qCritical() << "No connection available, aborting ftp download!";
+                return 1;
+        } else {
+                success = Test.Downloadfile(filename);
+        }
 
 	g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -193,18 +303,31 @@ LOCAL int UploadFile( MinItemParser * item)
 	MWTS_ENTER;
 
 	char* filename = NULL;
+        bool success = false;
+
 	if (ENOERR != mip_get_next_string(item, &filename))
 	{
-		qCritical() << "Missing parameter: filename";
-		MWTS_LEAVE;
-		return EINVAL;
+            qCritical() << "Missing parameter: filename";
+
+            return EINVAL;
+            MWTS_LEAVE;
 	}
 
-	bool success = Test.UploadFile(filename);
+        // if we are not online, then there is no point to go further
+        if (!Test.IsOnline()) {
+            qCritical() << "No connection available, aborting ftp download!";
+            return 1;
+        }
+        else {
+            success = Test.UploadFile(filename);
+        }
+
+
 
 	g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
+        MWTS_LEAVE;
 }
 
 
@@ -252,6 +375,7 @@ LOCAL int IperfServerRemote( MinItemParser * item)
 	//g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -296,8 +420,8 @@ LOCAL int ServerStartIperf( MinItemParser * item)
 		return 1;
 	}
 
-	MWTS_LEAVE;
 	return 0;
+        MWTS_LEAVE;
 }
 
 
@@ -342,8 +466,8 @@ LOCAL int ServerStartDownload( MinItemParser * item)
 		return 1;
 	}
 
-	MWTS_LEAVE;
 	return 0;
+        MWTS_LEAVE;
 }
 
 LOCAL int Idle (__attribute__((unused)) MinItemParser * item)
@@ -351,6 +475,7 @@ LOCAL int Idle (__attribute__((unused)) MinItemParser * item)
 	MWTS_ENTER;
 	Test.RunIdle();
 	return 0;
+        MWTS_LEAVE;
 }
 
 /*
@@ -373,6 +498,7 @@ LOCAL int SwitchWlan( MinItemParser * item)
         g_pResult->StepPassed( __FUNCTION__, success );
 
         return 0;
+        MWTS_LEAVE;
 }
 
 
@@ -393,6 +519,8 @@ int ts_get_test_cases (DLList ** list)
 	ENTRYTC(*list, "ServerStartDownload", ServerStartDownload);
 	ENTRYTC(*list, "Idle", Idle);
         ENTRYTC(*list, "SwitchWlan", SwitchWlan);
+        ENTRYTC(*list, "RemoveService", RemoveService);
+        ENTRYTC(*list, "SetTethering", SetTethering);
 
 	return 0;
 }
