@@ -84,8 +84,6 @@ protected slots:
 	void updateDataTransferProgress(qint64, qint64);
 
 private:
-	void destroy();
-
 	/**
 	 * Pointer to the common
 	 */
@@ -104,5 +102,7 @@ private:
 	bool		bResult;
 	// bytes/sec
 	double		fTransferSpeed;
+
+        void destroy();
 
 };
