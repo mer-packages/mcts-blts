@@ -120,7 +120,7 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 	int fromStart = m_oElapsedFromStart.elapsed();
 	bool firstFix = m_oElapsedSinceLastFix.isNull();
 	int sinceLast = m_oElapsedSinceLastFix.elapsed();
-	m_oElapsedSinceLastFix.start();
+        //m_oElapsedSinceLastFix.start();
 	m_nFixCountLeft--;
 
 	QGeoCoordinate coord = info.coordinate();
@@ -175,6 +175,9 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 		qWarning() << "Position update not valid, time: " << fromStart;
 		Stop();
 	}
+
+        //start to measure next fix
+        m_oElapsedSinceLastFix.start();
 }
 
 void LocationTest::OnTimeoutExpired()
@@ -241,8 +244,8 @@ void LocationTest::TestLocationFix()
         QString s;
         if(m_nHotMode == MODE_HOT)
             s = "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_HOT_FIX) + " hot fixes";
-            else if(m_nHotMode == MODE_COLD)
-                s = "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_COLD_FIX) + " cold fixes";
+        else if(m_nHotMode == MODE_COLD)
+            s = "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_COLD_FIX) + " cold fixes";
 
         g_pResult->Write(s);
         //removing cold/warm fix
@@ -257,6 +260,18 @@ void LocationTest::TestLocationFix()
             median = ( median + m_listTimesToFix.at( m_listTimesToFix.count() / 2 - 1 ) ) / 2;
         }
 
+        QString sFixType;
+        if(m_nHotMode == MODE_HOT)
+            sFixType = "Hot";
+        else if(m_nHotMode == MODE_COLD)
+            sFixType = "Cold";
+
+        g_pResult->AddMeasure(sFixType + " fix time (med)", median, "ms");
+        g_pResult->AddMeasure(sFixType + " fix time (min)", m_listTimesToFix.first(), "ms");
+        g_pResult->AddMeasure(sFixType + " fix time (max)", m_listTimesToFix.last(), "ms");
+        g_pResult->StepPassed("LocationFix", true);
+
+        /*
         if (m_nHotMode == MODE_HOT)
         {
             g_pResult->AddMeasure("Hot fix time (med)", median, "ms");
@@ -271,6 +286,7 @@ void LocationTest::TestLocationFix()
             g_pResult->AddMeasure("Cold fix time (max)", m_listTimesToFix.last(), "ms");
             g_pResult->StepPassed("LocationFix", true);
         }
+        */
 
         m_listTimesToFix.erase(m_listTimesToFix.begin(), m_listTimesToFix.end());
 }
