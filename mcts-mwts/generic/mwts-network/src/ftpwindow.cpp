@@ -50,9 +50,11 @@ FtpWindow::FtpWindow(MwtsTest *testAsset)
 			this, SLOT(updateDataTransferProgress(qint64, qint64)));
 
 
+        m_bResult = false;
+
 	this->downloadPath = g_pConfig->value("FTP/download_path").toString();
-	this->uploadPath = g_pConfig->value("FTP/upload_path").toString();
-	this->localPath = g_pConfig->value("FTP/local_path").toString();
+        this->uploadPath   = g_pConfig->value("FTP/upload_path").toString();
+        this->localPath    = g_pConfig->value("FTP/local_path").toString();
 
 	MWTS_LEAVE;
 }
@@ -99,7 +101,6 @@ bool FtpWindow::downloadFile(QString strFilename)
 		return false;
 	}
 
-	bResult = true;
 	fTransferSpeed = 0;
 
 	if(!this->downloadPath.isNull())
@@ -121,7 +122,9 @@ bool FtpWindow::downloadFile(QString strFilename)
 
 	fTransferSpeed = (sizeOfFile / 1024) / 1024 / (transTime/1000);
 
-	return bResult;
+        //bResult = true;
+
+        return m_bResult;
 }
 
 bool FtpWindow::uploadFile(QString strFilename)
@@ -132,15 +135,13 @@ bool FtpWindow::uploadFile(QString strFilename)
 	}
 
 	QString localPath = strFilename;
-	bResult = true;
-	fTransferSpeed = 0;
 
+	fTransferSpeed = 0;
 
 	if(!this->localPath.isNull())
 	{
 		localPath = this->localPath + "/" + strFilename;
 	}
-
 
 	qDebug() << "Reading file " << localPath;
 	file = new QFile(localPath);
@@ -160,7 +161,6 @@ bool FtpWindow::uploadFile(QString strFilename)
 
 	qDebug() << "Starting to upload file " << strFilename;
 
-
 	g_pTime->restart();
 	ftp->put( file, strFilename );
 
@@ -172,7 +172,7 @@ bool FtpWindow::uploadFile(QString strFilename)
 
 	fTransferSpeed = (sizeOfFile / 1024) / 1024 / (transTime/1000);
 
-	return bResult;
+        return m_bResult;
 }
 
 void FtpWindow::updateDataTransferProgress(qint64 readBytes,
@@ -233,11 +233,13 @@ void FtpWindow::ftp_commandFinished()
 		break;
 		case QFtp::Put:
 			qDebug() << "Put command finished";
+                        m_bResult = true;
 			// stop the event loop
 			testAsset->Stop();
 		break;
 		case QFtp::Get:
 			qDebug() << "Get command finished";
+                        m_bResult = true;
 			// stop the event loop
 			testAsset->Stop();
 			break;
@@ -280,18 +282,20 @@ void FtpWindow::ftp_done( bool error )
 		switch(error) {
 			case QFtp::HostNotFound:
 				qDebug() << "Error: host not found";
+                                m_bResult = false;
 			break;
 			case QFtp::ConnectionRefused:
 				qDebug() << "Error: connection refused";
+                                m_bResult = false;
 			break;
 			case QFtp::NotConnected:
 				qDebug() << "Error: not connected";
 			break;
 			case QFtp::UnknownError:
 				qDebug() << "Error: unknown";
+                                m_bResult = false;
 			break;
 		}
-		bResult = false;
 		// If we are connected, but not logged in, it is not meaningful to stay connected
 		if ( ftp->state() == QFtp::Connected )
 		{
@@ -319,7 +323,6 @@ bool FtpWindow::connectToHost(const QString ip, const QString username,const QSt
 	{
 		return true;
 	}
-
 	return false;
 }
 

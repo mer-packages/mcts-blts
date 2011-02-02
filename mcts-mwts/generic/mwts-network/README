@@ -4,9 +4,7 @@ Introduction
  
    MWTS-Network contains tests for QT Bearer Management API. Test asset is used for measuring the performance and reliability of wireless LAN and packet switched data transfers.
 
-   Usage of mwts-network is currently restricted to wlan-cases.
-
-   Using QtBearerManagement, you can list, connect and disconnect to already configured and known networks. You cannot configure a new connection. 
+   Usage of mwts-network is currently restricted to wlan-cases. 
 
    Contact: toivanen.pauli-pekka@digia.com 
 
@@ -19,8 +17,9 @@ These are MIN interface function used in cases.
    ConnectToDefault 	         Connect to default access point
    Disconnect 	                 Disconnect current session
    Downloadfile <filename>     	 Download file from ftp-server
-   UploadFile <filename>          Upload file to ftp-server
+   UploadFile <filename>         Upload file to ftp-server
    DownloadfileHttp <filename> 	 Download file via http
+   RemoveService <access point>  Removes existing access point configuration from system
    ServerStartIperf <time> 	 Start iperf upload measurement while given time
    ServerStartDownload <time> 	 Start iperf download measurement while given time
    Idle <time> 	                 Idle given time
@@ -52,20 +51,11 @@ Source code and compiling
 Requirements for environment
 
    For troughput measurements, Iperf 2.0.2 must be installed in device and server. With never versions (2.0.4) problems with troughput measurements might appear. 
-   In order to execute all tests on mwts-  network, you need to map access point names in the NetworkTest? .cfg (/usr/lib/NetworkTest.cfg)
+   In order to execute all tests on mwts-  network, you need to map access point names in the NetworkTest.cfg (/usr/lib/NetworkTest.cfg)
 
 Executing tests
 
    MWTS-Network test execution is performed normally. Check the "General MWTS testing guide".
-
-   IMPORTANT! Before running wlan cases, tester must add access point configurations to device. In example if you run cases on a fresh flashed device, debug gives you "invalid configuration" even 
-   though the access point is seen.
-
-   Currently the fastest way to do this is to first connect to a access point trough user interface. After that automated tests can be executed.
-
-   Also connman test-scripts can be used if no user interface available
-
-   connman-tests package /usr/lib/connman/test './connect-service <ssid> <passphrase> <encyption> example: ./connect-service MWTS-WPAtkip mwtswpatkip wpa 
 
 Test results
 
