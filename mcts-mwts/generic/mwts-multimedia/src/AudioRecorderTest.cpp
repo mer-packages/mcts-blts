@@ -108,6 +108,9 @@ bool AudioRecorderTest::Record()
 {
     MWTS_ENTER;
 
+    if (!g_pResult->IsPassed())
+        return false;
+
     bool result = false;
     QString output = recordingPath+QDir::separator()+NextOutputFilename();
 
@@ -249,6 +252,13 @@ bool AudioRecorderTest::SetCodec(QString codec)
             MWTS_DEBUG ("Set codec: " + codec);
         }
     }
+
+    if (!result)
+    {
+        qCritical() << "No such codec!";
+        g_pResult->StepPassed("No such codec!", false);
+    }
+
     MWTS_LEAVE;
 
     return result;
@@ -277,6 +287,13 @@ bool AudioRecorderTest::SetContainer(QString container) {
             MWTS_DEBUG ("Set container: " + container);
         }
     }
+
+    if (!result)
+    {
+        qCritical() << "No such container!";
+        g_pResult->StepPassed("No such container!", false);
+    }
+
     MWTS_LEAVE;
 
     return result;
@@ -420,20 +437,20 @@ void AudioRecorderTest::ShowSupportedCodecsAndContainers() const
 {
     MWTS_ENTER;
 
-    g_pResult->Write("-----------------------");
+    g_pResult->Write("+---------------------");
 
     g_pResult->Write("|Supported codecs:");
     foreach(QString s, recorder->supportedAudioCodecs())
     {
         g_pResult->Write(s);
     }
-    g_pResult->Write("-----------------------");
+    g_pResult->Write("+----------------------");
     g_pResult->Write("|Supported containers:");
     foreach(QString s, recorder->supportedContainers())
     {
         g_pResult->Write(s);
     }
-    g_pResult->Write("-----------------------");
+    g_pResult->Write("+----------------------");
 
     qDebug() << "+---------------------------------+";
     qDebug() << "| results saved to .result file   |";

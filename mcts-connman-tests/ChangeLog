@@ -1,6 +1,15 @@
+ver 1.0.0-4:
+        Add new test cases for ConnMan, including
+	+ Tethering
+	+ pacrunner
+	+ TTLS EAP
+	+ OpenVPN
+	+ Data Transfer
+
 ver 1.0.0-3:
 	ConnMan 0.64 uses net.connman dbus interface. org.moblin.connman
 	is obsolete. Changed test cases accordingly
+
 ver 1.0.0-2:
 	Enhance test suites including:
 	+ Remove Device interface

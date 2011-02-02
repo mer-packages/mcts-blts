@@ -20,12 +20,18 @@ SOURCE CODE AND COMPILING
 
 ENVIRONMENT REQUIREMENTS
 
+<<<<<<< HEAD
   Required HW & SW
     One test device with MeeGo
     Bluetooth hardware for bt syncing
     Internet connection for cloud syncing
 
   Most of the environment setups are explained in the MWTS.README.
+=======
+  This section explains specific setup which is necessary to
+  execute test cases. Most of the environment setups are 
+  explained in the MWTS.README.
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 
 
 EXECUTING TESTS
@@ -33,6 +39,7 @@ EXECUTING TESTS
   For local test cases you need to connect to device using ssh connection and
   start MIN tool using command 'min'.
 
+<<<<<<< HEAD
   First you need to specify your users home directory for the profiles (/usr/lib/tests/ButeoTest.conf). Default user name is 'meego'
 
   Before running cases you need to set LD_LIBRARY_PATH enviroment variable to '/lib'.
@@ -45,6 +52,9 @@ EXECUTING TESTS
   Bluetooth adresses etc need to be set in the config file first (/usr/lib/tests/ButeoTest.conf).
 
   Otherwise MWTS-Buteo test execution is performed normally. Check the "General MWTS testing guide".
+=======
+  Add here package specific instructions if needed. 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
   
 
 TEST RESULTS

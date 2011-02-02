@@ -15,106 +15,65 @@ Table of contents
 Introduction
 
   General test asset architecture and role of MIN
-  		
+
   MWTS test assets uses Min test framework. It provides command line interface,
   easy-to-use UI for manual testing and also interface for automated test running.
-  It also provides results, but there is additional log and result files also
+  It also provides results, but there is additional log and result files
   produced by mwts test assets themselves.
 
-  The using of Min is done as user friendly as possible. In normal situation, 
+  The using of Min is done as user friendly as possible. In normal situation,
   just install Min and test package and then start testing with Min. Situations
-  requiring special attention are listed in this document and in test asset READMEs.
+  requiring special attention are listed in this document and in test assets README.
 
-  Test cases are scripted by Min scripts and interpreted by the min framework 
-  script interface. This provides API for using actual test libraries. 
-  Each test asset provides its test scripts, and user may create new cases 
+  Test cases are scripted by Min scripts and interpreted by the min frameworks
+  script interface. This provides API for using actual test libraries.
+  Each test asset provides test scripts, and user may create new cases
   simply by writing more cases according to examples.
 
-  If user wants to create totally new test asset, or study how mwts-test asset 
-  are generally constructed without having to look through test specific 
-  implementation, look for test asset called 'mwts-template'.
 
+Source code compiling and installation
 
-Source code and compiling
-
-  Armel packages:
-  Requirement: Working Maemo development environment
-
-     * Download sources from Nokia repositories. Other option is to get data 
+  Deb-packages
+     * Download sources from Git repository. Other option is to get data
        with specially delivered test asset package.
-     * Extract source code from downloaded package to Maemo development environment.
-        * For Zip file use: unzip <file>
-        * For tar.gz file use: tar xzf <file>
-        * For tar.bz2 file use: tar zjf <file>
-     * Select unzipped directory and compile with command 'dpkg-buildpackage -rfakeroot'
-        * If you get an error about missing dependencies, install them by 
+     * Compile with command 'dpkg-buildpackage -rfakeroot'
+        * If you get an error about missing dependencies, install them by
           apt-get install <package name>
-        * After compiling, packages can be found from one folder up
-     * You have now mwts-[test_asset]_[version]_armel.deb and mwts-[test_asset]-scripts_[version]_armel.deb
+     * After compiling, packages can be found from one folder up
+     * Install compiled packages with command 'dpkg -i <package>.deb'
 
-  i386 packages:
+  RPM-packages:
+     * Download sources from Git repository. Other option is to get data
+       with specially delivered test asset package.
+     * Compile with command './pack.sh -r' 
+        * If you get an error about missing dependencies, install them by
+          zypper install <package name> or
+          yum install <package name>
+     * After compiling, packages can be found from one folder up
+     * Install compiled packages with command 'rpm -i <package>.rpm'
 
-     * Almost same steps as above, except extract source code to a desktop
-     * Compile source code in the desktop with 'dpkg-buildpackage -rfakeroot' 
 
-
-Installation of test cases
-
-  For setting up environment and performing tests, an access to device is required.
-  
-  Access to device:
-     * Connect USB cable between device and PC. 
-     * Configure usb0 in your PC side 'sudo ifconfig usb0 192.168.2.14'. 
-     * Connect from PC to device by giving 'ssh root@192.168.2.15'
-        * If connection doesn't work, use serial cable and use serial-console to setup USB
-        * Use serial terminal (like minicom), log in the device and give 'ifconfig usb0 192.168.2.15'
-
-  Use device as "user" not as "root", because most programs are in real situations in "user" role.
-     * Log in first as root
-     * In device, give 'passwd user'. Give password which you can remember.
-     * In PC, log again in as user 'ssh user@192.168.2.15'
-
-  Install packages to device:
-     * Copy compiled test packages from Maemo development environment directory 
-       by giving 'scp mwts-[test_asset]*.deb user@192.168.2.15:' .
-     * Log in as root
-     * Install packages to your device 'dpkg -i mwts-[test_asset]*.deb'
-        * If you get an error about missing dependencies, you need to upload 
-          necessary packages to the device and install them before
-
-  Install packages to desktop:
-     * Install packages to your desktop by 'sudo dpkg -i mwts-[test_asset]*.deb'
-        * If you get an error about missing dependencies, you need to install them before
-
-        
 Installation of test data
 
-  Different test assets use different test data and all are not mandatory to 
-  be installed. Here is described installation for various test sets.
-  
-  Install media test data to the device:
-     * Get media files from the projects.maemo.org repository or 
-       use data which was specially delivered test asset package.
-        * Download data from the repository by 
-          'svn co https://projects.maemo.org/svn/testdata/media'  
-     * In device create testdata directory 'mkdir /home/user/MyDocs/testdata'
-     * In PC go to directory where you have the test data and 
-       copy test data to phone 'scp -r media/* root@192.168.2.15:/home/user/MyDocs/testdata'
+  Different test assets use different test data and all are not mandatory to
+  be installed.
+
+  Test data location will be defined later.
 
 
 Master-slave setup between PC and device
 
   Requirements: Working SSH connection to the device
 
-  Master-slave test cases means that test case will command another 
+  Master-slave test cases means that test case will command another
   device/PC to do something. One device/PC is the master and another
   device/PC is the slave.
 
-  On the slave MIN daemon must be on. 
-     * To check that Min daemon is running by: 
+  On the slave MIN daemon must be on.
+     * To check that Min daemon is running by:
        ps aux | grep mind
-     * To start MIN daemon use: 
-       /etc/init.d/min start 
+     * To start MIN daemon use:
+       /etc/init.d/min start
        (on the PC you need to use sudo /etc/init.d/min start).
 
   On the master MIN must be started with extra parameter: min -s <ip>
@@ -125,7 +84,7 @@ Master-slave setup between two devices
 
   Requirements: Two test devices and a serial-console connection to one of devices
 
-  If you have only one serial-console connection, use that device as slave. 
+  If you have only one serial-console connection, use that device as slave.
   Both devices are connect to one desktop PC.
 
   Master is using IP 192.168.2.15 and slave 192.168.3.15.
@@ -137,16 +96,16 @@ Master-slave setup between two devices
   First device connection
      * Plug power and USB cable to the first device and turn the device on
      * Setup first device normally to use IP 192.168.2.15 (see installation caption above).
-     * Log in to the device as root and setup route tables by: 
+     * Log in to the device as root and setup route tables by:
        route add 192.168.3.15 gw 192.168.2.14 usb0
 
   Second device connection
      * Plug power and USB cable to the second device and turn the device on
-     * Use serial-console to log in as root and set new IP for the USB interface by: 
+     * Use serial-console to log in as root and set new IP for the USB interface by:
        ifconfig usb0 192.168.3.15
-     * In the desktop set IP for new USB interface by: 
+     * In the desktop set IP for new USB interface by:
        sudo ifconfig usb1 192.168.3.14
-     * Log in to the device as root (root@192.168.3.15) and setup route tables by: 
+     * Log in to the device as root (root@192.168.3.15) and setup route tables by:
        route add 192.168.2.15 gw 192.168.3.14 usb0
 
   Test connection between the devices by ping
@@ -162,11 +121,11 @@ Master-slave setup between two devices
 
 Executing tests
 
-  Start 'min' in the shell of the device.  Select a case, observe device, 
+  Start 'min' in the shell of the device.  Select a case, observe device,
   and check the test result from min and the log files.
 
   Or use command line format 'min -c -t <test case name>'.
-  
+
   If you want set debug logging on, give in shell where you will run the tests
   export MWTS_DEBUG=1
 
@@ -174,10 +133,10 @@ Executing tests
 Test results
 
   All MWTS test assets writes log and result files to /var/log/tests/.
-  Results are named as 'exact_test_case_name.result' and contains overall information 
+  Results are named as 'exact_test_case_name.result' and contains overall information
   about test run and measured values. If debug logging is on, you may check 'exact_test_case_name.log'.
 
 
 Known Issues
-   
+
    None

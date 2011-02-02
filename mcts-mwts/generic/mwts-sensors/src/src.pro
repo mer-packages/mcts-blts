@@ -25,7 +25,4 @@ LIBS += -lmwts-common
 	
 target.path = /usr/lib
 INSTALLS += target
-HEADERS.version = Versions
-HEADERS.files = SensorsTest.h
-HEADERS.path = /usr/include
 INSTALLS += HEADERS

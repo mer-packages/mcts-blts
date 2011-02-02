@@ -69,6 +69,7 @@ tuner_device* tuner_open(const char* name)
 	if(dev->fd == -1)
 	{
 		BLTS_ERROR("Failed to open device %s (%d)\n", name, errno);
+		free(dev);
 		return NULL;
 	}
 

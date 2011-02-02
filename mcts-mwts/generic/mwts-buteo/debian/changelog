@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 * Fri 21 Jan 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.4
 - Fixed connecting to TransferProgress-signal
@@ -10,6 +11,8 @@ mwts-buteo-tests (0.0.4) unstable; urgency=low
   * Fixed rpm-packaking due version mismatch problems
  -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed,21 Jan 2010 09:45:00 +0200
 
+=======
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 mwts-buteo-tests (0.0.3) unstable; urgency=low
   * Added nft-cases (iterative % latency)
   * cloud sync with ovi-contacts, memotoo & mobical

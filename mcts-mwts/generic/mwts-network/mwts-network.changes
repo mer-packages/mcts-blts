@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * Tue 7 Jan 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.9
 - Fixed bug concerning conf-file reading
 
@@ -6,5 +7,9 @@
 
 * Mon 8 Oct 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.7
 - ap configurations (encrypted ap passwords) now added via connman-service-api
+=======
+* Tue 17 Dec 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.7
+ - Initial MeeGo version - see debian changelog for earlier changes
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 
 

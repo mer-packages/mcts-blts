@@ -63,8 +63,7 @@ HEADERS += \
 	mwtsendurance.h \
 	stable.h
 
-#LIBS += -lminutils -lmintmapi -lminevent
-LIBS += -lminutils -lminevent
+LIBS += -lminutils -lmintmapi -lminevent
 target.path = /usr/lib
 INSTALLS += target
 HEADERS.version = Versions

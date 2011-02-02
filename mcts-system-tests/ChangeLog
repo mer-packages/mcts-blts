@@ -1,0 +1,4 @@
+ver 1.0.0-1:
+	Initial component:
+	+ process memory check: memory for each process is less than m%
+	+ process cpu check: cpu for each process is less than p%

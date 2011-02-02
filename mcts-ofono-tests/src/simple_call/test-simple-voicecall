@@ -40,8 +40,6 @@ for path, properties in modems:
 					'org.ofono.VoiceCallManager')	
 
 
-#vcmanager = dbus.Interface(bus.get_object('org.ofono', modems[0]),
-#					'org.ofono.VoiceCallManager')
 
 if len(sys.argv) < 2:
 	print """Usage: %s <command>
@@ -99,10 +97,7 @@ if sys.argv[1] == "answer":
 	if len(sys.argv) > 2:
 		p = int(sys.argv[2])
 
-#	calls = vcmanager.GetProperties()['Calls']
 
-#	call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
-#					       'org.ofono.VoiceCall')
         calls = vcmanager.GetCalls()
 	
 	print calls, p
@@ -128,7 +123,7 @@ if sys.argv[1] == "answer":
 						'org.ofono.VoiceCall')
 
 
-	#properties = call.GetProperties()
+
 	if properties['State'] == 'incoming' and sys.argv[1] == "answer" :
 		try:
 			call.Answer()
@@ -151,17 +146,10 @@ if sys.argv[1] == "deflect":
 		sys.exit(1)
 
 if sys.argv[1] == "hangup":
-	#calls = vcmanager.GetProperties()['Calls']
-	#p = 0
-	#if len(sys.argv) > 2:
-	#	p = int(sys.argv[2])
 
-	#call = dbus.Interface(bus.get_object('org.ofono', calls[p]),
-	#				       'org.ofono.VoiceCall')
 	calls = vcmanager.GetCalls()
 	p = 0
-        #if len(sys.argv) > 2:
-        #        p = int(sys.argv[2])
+
 	
 	if (len(calls) == 0):
 		print "No calls available"

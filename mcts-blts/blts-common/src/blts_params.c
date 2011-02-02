@@ -910,8 +910,10 @@ static void symbol_table_free()
 /* Return symbol table entry with given key, or null. */
 struct symbol_table_entry *_blts_conf_symbol_table_lookup(char *key)
 {
-	assert(symbol_table);
 	int i;
+
+	if(!symbol_table)
+		return NULL;
 
 	for (i = 0; i < SYMBOL_TABLE_MAX; ++i) {
 		if (!symbol_table[i])

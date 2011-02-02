@@ -1,3 +1,6 @@
+* Tue 11 Jan 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.5
+- Trivial resource leak fix in phy lookup failure path
+
 * Thu 16 Dec 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.4
 - Fix crash when nl80211 driver loaded but no devices present
 - [Kimmo Myllyvirta] Tests.xml update

@@ -2,7 +2,7 @@
  *
  * This file is part of MCTS 
  * 
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies). 
+ * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies). 
  * 
  * Contact: Tommi Toropainen; tommi.toropainen@nokia.com; 
  * 

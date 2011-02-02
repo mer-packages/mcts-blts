@@ -1,13 +1,13 @@
 # spec file for mwts-pim
 
 %define release         0
-%define buildroot       %{_topdir}/%{name}-%{version}-root
+%define buildroot       %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRoot:              %{buildroot}
-Summary:                mwts-pim is a test asset for testing personal information managagement in qt mobility 
+Summary:                Test asset for testing personal information managagement in qt mobility 
 License:                LGPL
-Name:                   %{name}
-Version:                %{version}
+Name:                   mwts-pim
+Version:                0.0.2
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -18,13 +18,29 @@ Source:                 %{name}-%{version}.tar.gz
 %description
 mwts-pim is a test asset for testing personal information managagement in qt mobility. It provides tool for pim testing, logging and reporting results.
 
-%package                scripts
-Summary:                mwts-pim MIN files
+%package                generic-tests
+Summary:                Test case files
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               min, mwts-pim
-%description            scripts
+%description            generic-tests
 MIN test cases for mwts-pim
+
+%package                generic-config
+Summary:                mwts-pim generic config
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               mwts-pim
+%description            generic-config
+mwts-pim generic config
+
+%package                generic-all
+Summary:                mwts-pim generic meta package
+Prefix:                 /usr
+Group:                  Development/Tools
+Requires:               mwts-pim, mwts-pim-generic-config, mwts-pim-generic-tests
+%description            generic-all
+mwts-pim generic meta package
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -41,19 +57,23 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/*.so*
-/usr/lib/min/*.so*
-/usr/lib/tests/PimTest.conf
+/usr/lib/*.so.*
+/usr/lib/min/*.so
 /usr/lib/tests/mwts-pim/*.vcf
+/usr/lib/tests/mwts-pim/*.ics
 
-%files scripts
-%doc README
-%doc COPYING
-%doc DEPENDENCIES.png
-%doc doc/MWTS.README
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/user/share/mwts-pim-tests/tests.xml
+/usr/share/mwts-pim-tests/tests.xml
+
+%files generic-config
+/usr/lib/tests/PimTest.conf
+
+%files generic-all
+
+%post
+ldconfig
 
 %postun
 ldconfig

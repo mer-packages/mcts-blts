@@ -545,6 +545,13 @@ class Service:
             if ip != None:
                 break
             time.sleep(5)
+            if count == 5:
+                print "Try to connect again"
+                try:
+                    self.svc.Connect()
+                except dbus.DBusException, e:
+                    pass
+                time.sleep(5)
             count += 1
         if ip == None:
             return False
@@ -612,6 +619,7 @@ class Device:
 
     def __init__(self, name, nth):
         self.device = None
+        self.intf = None
         for path in manager.properties['Technologies']:
             technology = manager.GetSubObject(path, 'Technology')
             properties = technology.GetProperties()
@@ -657,13 +665,17 @@ class Device:
         return self.tech
 
     def GetInterface(self):
+        if self.intf:
+            return self.intf
         svc = self.GetService()
-        props = svc.GetProperties()
+        props1 = svc.GetProperties()
+        props = props1['Ethernet']
         print props
         key = 'Interface'
         if key in props.keys():
+            self.intf = props['Interface']
             print 'There is the key Interface'
-            return props['Interface']
+            return self.intf
         return None
 
     def ifconfigUP(self):

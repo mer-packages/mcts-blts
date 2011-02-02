@@ -12,13 +12,11 @@ INTRODUCTION
     - L2CAP
     - RFCOMM
     - OBeX
-    
+
   Test asset also includes functionality for device pairing
   and device scanning.
-     
-  The package is for Meego platform.
 
-  Questions: MWTSSupport@nokia.com
+  The package is for Meego platform.
 
   See document MWTS.README under doc directory for detailed general 
   information about mwts test modules.
@@ -26,14 +24,7 @@ INTRODUCTION
   
 SOURCE CODE AND COMPILING
 
-  mwts-bluetooth compiles on scratchbox by executing
-
-          dpkg-buildpackage -rfakeroot
-
-  if you have missing dependencies, add them with
-
-          apt-get install <package1> <package2> ..
-  
+  See doc/MWTS.README for instructions.
 
 ENVIRONMENT REQUIREMENTS
 
@@ -41,14 +32,31 @@ ENVIRONMENT REQUIREMENTS
   cases are using -MS suffix. Bluetooth device is required in the
   hardware.  
   
-  The master-slave environment setups are explained in the MWTS.README.
+  The master-slave environment setups are explained in the doc/MWTS.README.
 
+  Edit configuration file under /usr/lib/tests/BluetoothTest.conf,
+  so that it contains your MAC addresses:
+
+    * host_mac: mac of the other device/pc
+    * master_mac: mac of master device
+    * slave_mac: mac of slave device
+    * headset_mac: mac of the BT headset
+    * gps_mac: mac of a gps device or similar
 
 EXECUTING TESTS
 
   For local test cases you need to connect to device using ssh connection and
-  start MIN tool using command 'min'. 
+  start MIN tool using command 'min'.
+  From command line: min -c -t <test case name>
   
+  If you are running a master-slave case (-MS suffix), you will need to
+  specify the slave device IP address
+  e.g. min -s 192.168.3.15 -c -t <test case name>
+
+  Some cases require receive case to be started first on the other device.
+  See scripts/tests.xml for information.
+  Master-slave cases require that you start mind on the slave device:
+  /etc/init.d/min start
 
 TEST RESULTS
 
@@ -103,7 +111,8 @@ MIN SCRIPTER INTERFACE
     Filename specified is the name used during the transfer. It will be created from
     proto file declared in config. It will appear to /var/log/tests/data/ when transfer
     complete.
-
+  PowerLatency mode <off|on>
+    Measures the latency of turning BT device power on or off
 
 KNOWN ISSUES
 

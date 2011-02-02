@@ -35,6 +35,22 @@
 		 ">
       	<step>min -c -t 'FUTE-PIM-Export_contact_to_vcard'</step>
       </case>
+      <case name="FUTE-PIM-Import_calendar_item_from_icalendar" subfeature="Test" timeout="20" description=
+      		"Purpose: Tests importing calendar item from icalendar
+		 Method: Test creates calendar item from iCalendar and saves the item to data store. Item is then removed.
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Item can be created from iCalendar and saved to calendar datastore without crashing
+	         ">
+      	<step>min -c -t 'FUTE-PIM-Import_calendar_item_from_icalendar'</step>
+      </case>
+      <case name="FUTE-PIM-Export_calendar_item_to_icalendar" subfeature="Test" timeout="20" description=
+      		"Purpose: Tests exporting calendar item to iCalendar
+		 Method: Tests creates calendar item and exports it to iCalendar
+		 Pre-/Post-Conditions: Test asset is installed to the device.
+		 Pass/Fail Criteria: Item is created and exported to valid iCalendar without crashing
+		 ">
+      	<step>min -c -t 'FUTE-PIM-Export_calendar_item_to_icalendar'</step>
+      </case>
       <case name="FUTE-PIM-Create_and_delete_contact" subfeature="Test" timeout="60" description=
       		"Purpose: Tests creating a new contact to contact data store
 		 Method: Creates a new contact to contact data store and deletes it.

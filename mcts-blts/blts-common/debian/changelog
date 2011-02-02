@@ -1,3 +1,15 @@
+blts-common (0.4.1-1) unstable; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
+blts-common (0.4.1) unstable; urgency=low
+
+  * Remove assert from missing configuration when using global config section
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 11 Jan 2011 11:32:42 +0200
+
 blts-common (0.4.0) unstable; urgency=low
 
   [ Mika Niinistö, Kimmo Myllyvirta, Jussi Saavalainen ]

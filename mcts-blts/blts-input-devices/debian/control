@@ -2,12 +2,11 @@ Source: blts-input-devices-tests
 Section: devel
 Priority: extra
 Maintainer: Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>
-Build-Depends:
-	debhelper (>= 5),
+Build-Depends: debhelper (>= 5),
 	cdbs,
 	libbltscommon-dev (>= 0.2.4),
 	libx11-dev,
-	linux-kernel-headers
+	linux-kernel-headers, automake, pkg-config
 Standards-Version: 3.8.0
 Homepage: http://wiki.meego.com/Quality/TestSuite/MCTS
 

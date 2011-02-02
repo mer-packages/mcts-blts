@@ -26,73 +26,122 @@
         <step>min -c -t 'FUTE-Accounts_list_services'</step>
       </case>
 
+<<<<<<< HEAD
       <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
         "Purpose
 	Creates a facebook account 
+=======
+      <case name="FUTE-Accounts_create_account_google" timeout="10" description=
+        "Purpose
+	Creates a google account 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         Method
         Uses accounts-qt api to create account to device
         Pre-/Post-conditions
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
+<<<<<<< HEAD
         <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
       </case>
 
       <case name="FUTE-Accounts_create_account_google" timeout="10" description=
         "Purpose
 	Creates a google account 
-        Method
-        Uses accounts-qt api to create account to device
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
-        test runs successfully, test does not crash
-        ">
+=======
         <step>min -c -t 'FUTE-Accounts_create_account_google'</step>
       </case>
 
       <case name="FUTE-Accounts_create_account_ovi" timeout="10" description=
         "Purpose
 	Creates a ovi account 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         Method
         Uses accounts-qt api to create account to device
         Pre-/Post-conditions
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
+<<<<<<< HEAD
+        <step>min -c -t 'FUTE-Accounts_create_account_google'</step>
+      </case>
+
+      <case name="FUTE-Accounts_create_account_ovi" timeout="10" description=
+        "Purpose
+	Creates a ovi account 
+=======
         <step>min -c -t 'FUTE-Accounts_create_account_ovi'</step>
       </case>
 
       <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
         "Purpose
 	Creates a facebook account 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         Method
         Uses accounts-qt api to create account to device
         Pre-/Post-conditions
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
+<<<<<<< HEAD
+        <step>min -c -t 'FUTE-Accounts_create_account_ovi'</step>
+      </case>
+
+      <case name="FUTE-Accounts_create_account_facebook" timeout="10" description=
+        "Purpose
+	Creates a facebook account 
+=======
         <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
       </case>
       <case name="FUTE-Accounts_create_account_msn" timeout="10" description=
         "Purpose
 	Creates a msn account 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         Method
         Uses accounts-qt api to create account to device
         Pre-/Post-conditions
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
+<<<<<<< HEAD
+        <step>min -c -t 'FUTE-Accounts_create_account_facebook'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_msn" timeout="10" description=
+        "Purpose
+	Creates a msn account 
+=======
         <step>min -c -t 'FUTE-Accounts_create_account_msn'</step>
       </case>
       <case name="FUTE-Accounts_create_account_twitter" timeout="10" description=
         "Purpose
 	Creates a twitter account 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         Method
         Uses accounts-qt api to create account to device
         Pre-/Post-conditions
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
+<<<<<<< HEAD
+        <step>min -c -t 'FUTE-Accounts_create_account_msn'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_twitter" timeout="10" description=
+        "Purpose
+	Creates a twitter account 
+=======
+        <step>min -c -t 'FUTE-Accounts_create_account_twitter'</step>
+      </case>
+      <case name="FUTE-Accounts_create_account_flickr" timeout="10" description=
+        "Purpose
+	Creates a flickr account 
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
+        Method
+        Uses accounts-qt api to create account to device
+        Pre-/Post-conditions
+        Pass-/Fail Criteria
+        test runs successfully, test does not crash
+        ">
+<<<<<<< HEAD
         <step>min -c -t 'FUTE-Accounts_create_account_twitter'</step>
       </case>
       <case name="FUTE-Accounts_create_account_flickr" timeout="10" description=
@@ -104,6 +153,8 @@
         Pass-/Fail Criteria
         test runs successfully, test does not crash
         ">
+=======
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         <step>min -c -t 'FUTE-Accounts_create_account_flickr'</step>
       </case>
       <case name="FUTE-Accounts_create_account_skype" timeout="10" description=

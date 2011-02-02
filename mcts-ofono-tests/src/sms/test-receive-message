@@ -70,7 +70,7 @@ if __name__ == "__main__":
 	cb = dbus.Interface(bus.get_object('org.ofono', path),
                                                 'org.ofono.CellBroadcast')
 
-        cb.SetProperty("Powered",dbus.Boolean(1));
+        #cb.SetProperty("Powered",dbus.Boolean(1));
 
 	sms.connect_to_signal("IncomingMessage", receive_incoming_message)
 	sms.connect_to_signal("ImmediateMessage", receive_immediate_message)

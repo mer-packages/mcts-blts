@@ -2,7 +2,7 @@ TARGET = min-mwts-sensors
 TEMPLATE = lib
 VERSION = 0.0.1
 
-CONFIG += dll
+CONFIG += plugin
 CONFIG += debug
 CONFIG += warn_on
 QT += network
@@ -32,7 +32,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-sensors-scripts
+TESTS.path = /usr/share/mwts-sensors-tests
 INSTALLS += TESTS
 
 target.path = /usr/lib/min

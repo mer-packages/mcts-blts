@@ -248,7 +248,7 @@ ensure_calls_cleared(my_ofono_data *data)
 
 	if (!data)
 		return 0;
-	if (data->fl_dontcleanup)
+	if (!data->fl_cleanup)
 		return 0;
 	if (!data->number_modems)
 		return 0;
@@ -302,9 +302,12 @@ reset_supplementary_services(my_ofono_data* data)
 	DBusGProxy *proxy = NULL;
 	char *condition = "all";
 	int i, ret = 0;
+	if (!data->fl_cleanup)
+		return 0;
 	if (!data->number_modems)
 		return -1;
 
+	BLTS_DEBUG("{Disabling barrings using PIN number %s}\n", data->barrings_pin);
 	for (i = 0; i < data->number_modems; ++i)
 	{
 
@@ -322,7 +325,7 @@ reset_supplementary_services(my_ofono_data* data)
 			error = NULL;
 		}
 
-		if (!data->old_pin)
+		if (!data->barrings_pin)
 		{
 			BLTS_WARNING(
 			    "No pin code given, can't initially reset supplementary services\n");
@@ -336,7 +339,7 @@ reset_supplementary_services(my_ofono_data* data)
 			BLTS_WARNING("Failed to open proxy for org.ofono.CallBarring\n");
 		}
 
-		if (!org_ofono_CallBarring_disable_all(proxy, data->old_pin, &error))
+		if (!org_ofono_CallBarring_disable_all(proxy, data->barrings_pin, &error))
 		{
 			ret = -1;
 			g_error_free(error);
@@ -363,7 +366,7 @@ set_modems_power_on(my_ofono_data *data)
 	for (i = 0; i < data->number_modems; i++)
 	{
 
-		//BLTS_DEBUG("{Powering up modem %s}\n", data->modem[i]);
+		BLTS_DEBUG("{Powering up modem %s}\n", data->modem[i]);
 		proxy = dbus_g_proxy_new_for_name(data->connection, OFONO_BUS,
 		    data->modem[i], OFONO_MODEM_INTERFACE);
 		if (!proxy)
@@ -408,6 +411,7 @@ set_modems_online(my_ofono_data *data)
 
 	for (i = 0; i < data->number_modems; i++)
 	{
+		BLTS_DEBUG("{Checking modem %s online status}\n", data->modem[i]);
 		GHashTable *properties = NULL;
 		GError *error = NULL;
 		gboolean online = FALSE;
@@ -416,7 +420,7 @@ set_modems_online(my_ofono_data *data)
 		proxy = dbus_g_proxy_new_for_name(data->connection, OFONO_BUS,
 		    data->modem[i], OFONO_MODEM_INTERFACE);
 
-		/* This only happens when we're out of memory, so no point continying */
+		/* This only happens when we're out of memory, so no point to continue */
 		if (!proxy)
 		{
 			BLTS_ERROR("Failed to create proxy on object %s using iface %s\n",

@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-systeminfo
 Summary:        systeminfo test asset
 License:        LGPL
-Version:        %{version}
+Version:        1.0.0
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -17,25 +17,25 @@ Source:         %{name}-%{version}.tar.gz
 %description
 systeminfo test asset.
             
-%package        scripts-generic
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-systeminfo
 Requires:       min, mwts-systeminfo
 Prefix:          /usr
 Group:          Development/Tools
-%description    scripts-generic
+%description    generic-tests
 MIN test case scripts for mwts-systeminfo
 
 
-%package        config-generic
+%package        generic-config
 Summary:        Generic configuration file for mwts-systeminfo
 Requires:       mwts-systeminfo
-%description    config-generic
+%description    generic-config
 Generic configuration file for mwts-systeminfo
 
-%package	all-generic
+%package	generic-all
 Summary:	meta package containing everything for mwts-systeminfo (generic)
-Requires:	mwts-systeminfo, mwts-systeminfo-scripts-generic, mwts-systeminfo-config-generic
-%description	all-generic
+Requires:	mwts-systeminfo, mwts-systeminfo-generic-tests, mwts-systeminfo-generic-config
+%description	generic-all
 Meta package for installing all needed packages for generic version of mwts-systeminfo
 
 
@@ -43,7 +43,7 @@ Meta package for installing all needed packages for generic version of mwts-syst
 %setup -q
 
 %build
-qmake "CONFIG+=plugin"
+qmake
 make
 
 %install
@@ -55,15 +55,20 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 /usr/lib/libmwts-systeminfo.*
+/usr/lib/min/*.so
 
-
-%files scripts-generic
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/share/mwts-systeminfo-scripts/tests.xml
 /usr/lib/min/*.cfg
-/usr/lib/min/*.so*
 
-%files config-generic
+%files generic-config
 /usr/lib/tests/*
 
-%files all-generic
+%files generic-all
+
+%post
+ldconfig
+
+%postun
+ldconfig

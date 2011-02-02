@@ -124,6 +124,16 @@ public: // new functions
      */
     void RemoveCalendarItems(bool ignoreErrors = false);
 
+    /**
+     * Imports calendar item from iCalendar file
+     */
+    void ImportCalendarItemFromIcalendar();
+
+    /**
+     * Exports created calendar item to iCalendar format
+     */
+    void ExportCalendarItemToIcalendar();
+
 private: // new methods
 
      /**

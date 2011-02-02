@@ -122,8 +122,8 @@ void ImageViewerTest::stateChanged(QMediaImageViewer::State state)
         case QMediaImageViewer::StoppedState:
             qDebug() << "Stopped state";
             g_pTest->Stop();
-            g_pResult->Write("Succesfully shown the image!");
-            g_pResult->StepPassed("show", true);
+            //g_pResult->Write("Succesfully shown the image!");
+            //g_pResult->StepPassed("show", true);
             break;
         case QMediaImageViewer::PlayingState:
             qDebug() << "Playing state";

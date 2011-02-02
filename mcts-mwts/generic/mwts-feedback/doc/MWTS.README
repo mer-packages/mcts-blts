@@ -45,9 +45,9 @@ Source code compiling and installation
   RPM-packages:
      * Download sources from Git repository. Other option is to get data
        with specially delivered test asset package.
-     * Compile with command 'rpmbuild -bb --clean <.spec>' or in the root folder
-       use the 'sh rpmbuild.sh'.
+     * Compile with command './pack.sh -r' 
         * If you get an error about missing dependencies, install them by
+          zypper install <package name> or
           yum install <package name>
      * After compiling, packages can be found from one folder up
      * Install compiled packages with command 'rpm -i <package>.rpm'

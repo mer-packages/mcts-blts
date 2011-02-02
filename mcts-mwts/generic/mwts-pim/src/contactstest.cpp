@@ -437,13 +437,9 @@ void ContactsTest::CreateContacts()
                  qCritical()<<"Contact fetching failed, error: "<<manager->error();
                  break;
              }
-
-             // verify
-             if(tmp!=contact)
-             {
-                 qCritical()<<"Saved contact doesn't match to fetched contact";
-             }
-             qDebug()<<"Contact no. "<<counter<<" data verified and saving succeeded";
+             // verify details. (false parameter means that details modified by the database are not verified. e.g. time stamp, guid))
+             m_detailManager->verifyContactDetails(tmp,false);
+             qDebug()<<"Contact no. "<<counter<<" saved successfully";
 
              // add to cache
              m_items.append(PimItem(QOrganizerItemId(),contact.localId(),m_contactStore));

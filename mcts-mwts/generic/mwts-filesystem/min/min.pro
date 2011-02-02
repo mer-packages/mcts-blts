@@ -3,6 +3,7 @@ TEMPLATE = lib
 VERSION = 0.0.1
 
 CONFIG += dll
+CONFIG += plugin
 CONFIG += warn_on
 CONFIG += debug
 
@@ -30,7 +31,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-filesystem-scripts
+TESTS.path = /usr/share/mwts-filesystem-tests
 INSTALLS += TESTS
 
 target.path = /usr/lib/min
