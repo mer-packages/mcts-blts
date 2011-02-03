@@ -248,7 +248,7 @@ ensure_calls_cleared(my_ofono_data *data)
 
 	if (!data)
 		return 0;
-	if (data->fl_dontcleanup)
+	if (!data->fl_cleanup)
 		return 0;
 	if (!data->number_modems)
 		return 0;
@@ -302,7 +302,7 @@ reset_supplementary_services(my_ofono_data* data)
 	DBusGProxy *proxy = NULL;
 	char *condition = "all";
 	int i, ret = 0;
-	if (data->fl_dontcleanup)
+	if (!data->fl_cleanup)
 		return 0;
 	if (!data->number_modems)
 		return -1;

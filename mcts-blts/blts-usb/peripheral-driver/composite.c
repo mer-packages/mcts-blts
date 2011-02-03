@@ -1094,7 +1094,9 @@ composite_resume(struct usb_gadget *gadget)
 static struct usb_gadget_driver composite_driver = {
 	.speed		= USB_SPEED_HIGH,
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 37)
 	.bind		= composite_bind,
+#endif
 	.unbind		= __exit_p(composite_unbind),
 
 	.setup		= composite_setup,
@@ -1134,8 +1136,11 @@ int usb_composite_register(struct usb_composite_driver *driver)
 	composite_driver.driver.name = driver->name;
 	composite_driver.speed = driver->speed;
 	composite = driver;
-
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 37)
 	return usb_gadget_register_driver(&composite_driver);
+#else
+	return usb_gadget_probe_driver(&composite_driver, composite_bind);
+#endif
 }
 
 /**

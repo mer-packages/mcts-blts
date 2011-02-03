@@ -1,3 +1,9 @@
+libbltssensorplugin-example (0.1.4-1) UNRELEASED; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
 libbltssensorplugin-example (0.1.4) UNRELEASED; urgency=low
 
   * Package name in configure.ac and debian/control changed to

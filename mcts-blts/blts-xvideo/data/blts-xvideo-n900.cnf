@@ -6,7 +6,7 @@
 
 [parameter]
 	name input_resolution
-	const "800x480" "1280x720"
+	const "352x288" "800x480"
 [end_parameter]
 
 # if output resolution is 0x0, resolution will be root window's size
@@ -42,7 +42,7 @@
 # graygradient_scroll: full screen grayscale, moves from left to right
 [parameter]
 	name test_images
-	const "checkerboard"
+	const "colorgradient_scroll"
 [end_parameter]
 
 [parameter]

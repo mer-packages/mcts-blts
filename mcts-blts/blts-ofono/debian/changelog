@@ -1,11 +1,26 @@
+blts-ofono-tests (0.1.17) unstable; urgency=low
+
+  * Added radio technology change test
+
+ -- Mikko Ojala <mikko.ojala@digia.com>  Mon, 17 Jan 2011 14:44:06 +0200
+
+blts-ofono-tests (0.1.16-1) unstable; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
 blts-ofono-tests (0.1.16) unstable; urgency=low
 
+  [ Mikko Ojala, Kari Laakso ]
   * Fixes to PIN lock and unlock cases
   * Timeouts increased to 60 seconds in several network-facing cases
   * "dontcleanup" flag now also affects supplementary service resets
   * PIN Reset default configuration now matches Phonesim interface
+  * "--doncleanup" changed to "--cleanup" and removed mandatory environment check
+  * Improved command line help
 
- -- Mikko Ojala <mikko.ojala@digia.com>  Tue, 11 Jan 2011 11:47:58 +0200
+ -- Kari Laakso <kari.laakso@digia.com>  Thu, 20 Jan 2011 10:18:53 +0200
 
 blts-ofono-tests (0.1.15) unstable; urgency=low
 
