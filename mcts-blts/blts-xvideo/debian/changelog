@@ -1,3 +1,16 @@
+blts-xvideo-tests (0.0.9) unstable; urgency=low
+
+  * Simplify the example configuration file. Fixes: BMC#10455
+  * Update n900 config file and put it into the example config package. Fixes: BMC#10432
+
+ -- Kimmo Myllyvirta <kimmo.myllyvirta@digia.com>  Thu, 20 Jan 2011 10:51:54 +0200
+
+blts-xvideo-tests (0.0.8-1) unstable; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
 blts-xvideo-tests (0.0.8) unstable; urgency=low
 
   * Remove obsolete Min support code

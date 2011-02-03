@@ -2,11 +2,10 @@ Source: blts-usb-tests
 Section: devel
 Priority: extra
 Maintainer: Mikko Ojala <mikko.ojala@digia.com>
-Build-Depends:
-        debhelper (>= 5),
+Build-Depends: debhelper (>= 5),
         cdbs,
         libbltscommon-dev (>= 0.3.0),
-        libc6-dev (>= 2.5.0)
+        libc6-dev (>= 2.5.0), automake, pkg-config
 Standards-Version: 3.8.0
 
 Package: blts-usb-tests

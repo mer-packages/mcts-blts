@@ -2,11 +2,10 @@ Source: blts-bluetooth-tests
 Section: devel
 Priority: extra
 Maintainer: Jussi Saavalainen <jussi.saavalainen@digia.com>
-Build-Depends:
-        debhelper (>= 5),
+Build-Depends: debhelper (>= 5),
         cdbs,
         libbluetooth-dev (>= 4.12) | libbluetooth3-dev (>= 4.12),
-        libbltscommon-dev (>= 0.3.8)
+        libbltscommon-dev (>= 0.3.8), automake, pkg-config
 Standards-Version: 3.8.0
 
 Package: blts-bluetooth-tests

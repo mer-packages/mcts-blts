@@ -1,6 +1,6 @@
 Summary: BLTS XVideo test set
 Name: blts-xvideo-tests
-Version: 0.0.8
+Version: 0.0.9
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -44,4 +44,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files config-example
 /etc/blts/blts-xvideo-tests.cnf
+/etc/blts/blts-xvideo-n900.cnf
 /usr/share/blts-xvideo-tests/tests.xml

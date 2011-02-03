@@ -2,14 +2,13 @@ Source: blts-v4l2-tests
 Section: devel
 Priority: extra
 Maintainer: Mikko Ojala <mikko.ojala@digia.com>
-Build-Depends:
-	debhelper (>= 5.0.0),
+Build-Depends: debhelper (>= 5.0.0),
 	cdbs,
 	libjpeg62-dev,
 	libbltscommon-dev (>= 0.3.0),
 	libbltspixelformat-dev (>= 0.1.0),
 	libxv-dev (>= 2:1.0.4),
-	libx11-dev (>= 2:1.1.5)
+	libx11-dev (>= 2:1.1.5), automake, pkg-config
 Standards-Version: 3.8.0
 
 Package: blts-v4l2-tests

@@ -7,6 +7,7 @@ Release: 1
 License: GPLv2
 Group: System/Libraries
 Source: %name-%version.tar.gz
+BuildRequires: xorg-x11-util-macros libX11-devel libXrender-devel
 #Requires: x11perf
 
 %description
