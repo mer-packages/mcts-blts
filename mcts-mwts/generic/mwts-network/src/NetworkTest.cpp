@@ -914,8 +914,20 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     g_pTime->start();
 
     qDebug() << "Trying to connect to service";
-    QDBusMessage connect_reply = iface.call("Connect");
-    qDebug() << "Reply was: " << connect_reply;
+
+    QDBusReply<QDBusVariant> connect_reply = iface.call("Connect");
+
+    if (!connect_reply.isValid()) {
+        QDBusError error = connect_reply.error();
+
+        if (error.message() == "Already connected") {
+            qCritical() << "Already connected. Disconnect previous session before attempting another...";
+            return false;
+        }
+    }
+
+    //QDBusMessage connect_reply = iface.call("Connect");
+    //qDebug() << "Reply was: " << connect_reply;
 
     qDebug() << "Waiting for the Connman state change....";
     this->Start();
