@@ -118,9 +118,8 @@ void LocationTest::SetHotMode(int mode)
 void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 {
 	int fromStart = m_oElapsedFromStart.elapsed();
-	bool firstFix = m_oElapsedSinceLastFix.isNull();
+        //bool firstFix = m_oElapsedSinceLastFix.isNull();
 	int sinceLast = m_oElapsedSinceLastFix.elapsed();
-        //m_oElapsedSinceLastFix.start();
 	m_nFixCountLeft--;
 
 	QGeoCoordinate coord = info.coordinate();
@@ -141,7 +140,6 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 		}
                 else if(firstFix)
 		{
-                    qDebug() << "counts " << m_listTimesToFix.count();
                     m_listTimesToFix.append(fromStart);
                     qDebug() << "Cold or warm fix, received in:" << fromStart << "ms";
                     //remove GPS data if that is cold fix case
@@ -163,7 +161,10 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 
 		if( m_nFixCountLeft == 0 )
 		{
-			Stop();
+                    //set m_oElapsedSinceLastFix to invalid for next iteration
+                    m_oElapsedSinceLastFix = QTime();
+                    m_gpisLocationSource->stopUpdates();
+                    Stop();
 		}
 		else
 		{
@@ -175,6 +176,9 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 		qWarning() << "Position update not valid, time: " << fromStart;
 		Stop();
 	}
+
+        //set that fix is not first
+        firstFix = false;
 
         //start to measure next fix
         m_oElapsedSinceLastFix.start();
@@ -217,6 +221,7 @@ void LocationTest::TestLocationFix()
 		return;
 	}
 
+        firstFix = true;
 	m_nFixCountLeft = 1;
 
         if (m_nHotMode == MODE_HOT)
@@ -252,6 +257,14 @@ void LocationTest::TestLocationFix()
         if (m_nHotMode == MODE_HOT)
             m_listTimesToFix.takeFirst();
 
+        /* counting mean
+        int mean
+        QList<int>::iterator iter;
+        for (iter = m_listTimesToFix.begin(); iter != m_listTimesToFix.end(); ++i)*/
+
+        //no need to do below, count mean from got fixes values
+        ////////////////////////////////////////////////////////
+
         qSort(m_listTimesToFix);
 
         int median = m_listTimesToFix.at( m_listTimesToFix.count() / 2 );
@@ -271,22 +284,7 @@ void LocationTest::TestLocationFix()
         g_pResult->AddMeasure(sFixType + " fix time (max)", m_listTimesToFix.last(), "ms");
         g_pResult->StepPassed("LocationFix", true);
 
-        /*
-        if (m_nHotMode == MODE_HOT)
-        {
-            g_pResult->AddMeasure("Hot fix time (med)", median, "ms");
-            g_pResult->AddMeasure("Hot fix time (min)", m_listTimesToFix.first(), "ms");
-            g_pResult->AddMeasure("Hot fix time (max)", m_listTimesToFix.last(), "ms");
-            g_pResult->StepPassed("LocationFix", true);
-        }
-        else if (m_nHotMode == MODE_COLD)
-        {
-            g_pResult->AddMeasure("Cold fix time (med)", median, "ms");
-            g_pResult->AddMeasure("Cold fix time (min)", m_listTimesToFix.first(), "ms");
-            g_pResult->AddMeasure("Cold fix time (max)", m_listTimesToFix.last(), "ms");
-            g_pResult->StepPassed("LocationFix", true);
-        }
-        */
+        ////////////////////////////////////////////////////////
 
         m_listTimesToFix.erase(m_listTimesToFix.begin(), m_listTimesToFix.end());
 }
@@ -294,69 +292,66 @@ void LocationTest::TestLocationFix()
 
 void LocationTest::GetLocationFix()
 {
-	MWTS_ENTER;
-	if (!m_gpisLocationSource)
-	{
-		qCritical() << "No location source";
-		return;
-	}
+    MWTS_ENTER;
 
+    if (!m_gpisLocationSource)
+    {
+        qCritical() << "No location source";
+        return;
+    }
 
-	if (m_nFixCountLeft == 0) //First time, select positioning method only once
-	{
+    //setting that this will be first fix
+    //it is important because first fix will be always cold
+    firstFix = true;
 
-		m_bGetLocFix = true;
+    qDebug() << "Removing GPS data to be sure that first fix is cold.";
+    RemoveGPSData();
 
-		if(m_nHotMode == MODE_HOT)
-		{
-			m_nFixCountLeft = 1;
-			qDebug() << "HOT mode selected, creating one fix and ignoring results completely";
-			m_pTimeout->start( COLD_FIX_TIMEOUT );
-			m_oElapsedFromStart.start();
-			m_gpisLocationSource->startUpdates();
-			Start();
-			if(!m_listTimesToFix.isEmpty())
-			{
-				qDebug() << "First fix was done (Warm or Cold) and result is ignored: " << m_listTimesToFix.first() << "ms";
-				m_listTimesToFix.clear();
-				m_listPositions.clear();
-			}
-		}
-		else
-		{
-			qDebug() << "COLD mode enabled, first result is either COLD or WARM fix";
-		}
+    // fix will be taken once (cold) or twice (for hot fix, second will be hot)
+    QString s = "Starting to measure fix time...";
+    if(m_nHotMode == MODE_HOT)
+    {
+        qDebug() << s;
+        g_pResult->Write(s);
+        m_nFixCountLeft = 2;
+    }
+    else if(m_nHotMode == MODE_COLD)
+    {
+        qDebug() << s;
+        g_pResult->Write(s);
+        m_nFixCountLeft = 1;
+    }
 
-	}
+    m_pTimeout->start( COLD_FIX_TIMEOUT );
 
-	m_nFixCountLeft = 1; //only one fix
-	m_pTimeout->start( COLD_FIX_TIMEOUT );
+    m_oElapsedFromStart.start();
+    m_gpisLocationSource->startUpdates();
+    Start();
 
-	m_oElapsedFromStart.start();
-	m_gpisLocationSource->startUpdates();
-	Start();
+    if (m_nHotMode == MODE_HOT && m_listTimesToFix.count() != 2)
+    {
+        qCritical() << "No hot fix got";
+        g_pResult->Write("No hot fix got");
+        g_pResult->StepPassed("GetLocation", false);
+        return;
+    }
+    else if (m_nHotMode == MODE_COLD && m_listTimesToFix.count() != 1)
+    {
+        qCritical() << "No cold fix got";
+        g_pResult->Write("No cold fix got");
+        g_pResult->StepPassed("GetLocation", false);
+        return;
+    }
 
-	if(!m_listTimesToFix.isEmpty())
-	{
-		//Take first result and write it
-		g_pResult->AddMeasure("Fix got in time", m_listTimesToFix.first(), "ms");
-		g_pResult->StepPassed("GetLocation", true);
+    if (m_nHotMode == MODE_HOT)
+        g_pResult->AddMeasure("Time To First Fix (Hot)", m_listTimesToFix.at(1), "ms");
+    else if (m_nHotMode == MODE_COLD)
+        g_pResult->AddMeasure("Time To First Fix (Cold)", m_listTimesToFix.at(0), "ms");
 
-		m_listTimesToFix.clear();
-	}
-	else
-	{
-		//List was empty, no fix time got
-		g_pResult->Write("No fix got");
-		g_pResult->StepPassed("GetLocation", false);
-	}
+    g_pResult->StepPassed("GetLocation", true);
+    m_listTimesToFix.clear();
 
-	//For iterative usage, reset counter to one
-	m_nFixCountLeft = 1;
-
-
-	MWTS_LEAVE;
-
+    MWTS_LEAVE;
 }
 
 void LocationTest::CalculateDistances()
