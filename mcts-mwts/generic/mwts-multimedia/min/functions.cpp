@@ -507,6 +507,98 @@ LOCAL int SetVolume (MinItemParser * item)
     return ENOERR;
 }
 
+ /**
+   Sets the mode of radio scanning
+   Usage: SetScanMode [mode]
+   @param mode scan mode
+   @return ENOERR
+  */
+ LOCAL int SetScanMode(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     char *mode = NULL;
+
+     if (mip_get_next_string(item, &mode))
+     {
+         qCritical() << "The name must contain chars.";
+         return 1;
+     }
+     else
+     {
+         QString s(mode);
+         if (s == "StopMode")
+         {
+             test.fmRadio->SetScanMode(FMRadioTest::StopMode);
+         }
+         else if (s == "ContinueMode")
+         {
+            test.fmRadio->SetScanMode(FMRadioTest::ContinueMode);
+         }
+         else
+         {
+            qCritical() << "No such mode";
+            return 1;
+         }
+     }
+     free(mode);
+
+     return ENOERR;
+}
+
+ /**
+   Sets the band of radio
+   Usage: SetRadioBand [band]
+   @param band radio band
+   @return ENOERR
+  */
+ LOCAL int SetRadioBand(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     char *mode = NULL;
+
+     if (mip_get_next_string(item, &mode))
+     {
+         qCritical() << "The band must contain chars.";
+         return 1;
+     }
+     else
+     {
+         QString s(mode);
+         if (s == "FM")
+         {
+             test.fmRadio->SetBand(QRadioTuner::FM);
+         }
+         else
+         {
+            qCritical() << "Band not supported";
+            return 1;
+         }
+     }
+     free(mode);
+
+     return ENOERR;
+}
+
+ /**
+   Perform scan of whole range of band frequency
+   Usage: PerformBandScan
+   @return ENOERR
+  */
+ LOCAL int PerformBandScan(__attribute__((unused)) MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     test.fmRadio->PerformBandScan();
+
+     if (!test.IsPassed())
+         return 1;
+
+     return ENOERR;
+}
+
+
 /**
  *  Player functions
  */
@@ -644,6 +736,9 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "SetVolume", SetVolume);
     ENTRYTC (*list, "PlayRadio", PlayRadio);
     ENTRYTC (*list, "SetRadioDuration", SetRadioDuration);
+    ENTRYTC (*list, "SetScanMode", SetScanMode);
+    ENTRYTC (*list, "SetRadioBand", SetRadioBand);
+    ENTRYTC (*list, "PerformBandScan", PerformBandScan);
 
     //multimedia audio player
     ENTRYTC (*list, "PlayRecordedAudio", PlayRecordedAudio);
