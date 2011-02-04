@@ -48,7 +48,7 @@ dev = WiFiDevice()
 
 count=1
 
-while count < round:
+while count <= round:
     print "At the %s round" % (count)
     print "Enable device"
     dev.Enable()
@@ -71,5 +71,4 @@ while count < round:
     time.sleep(40)
     count += 1
     
-print "Test Case success"
-
+EXIT(True)

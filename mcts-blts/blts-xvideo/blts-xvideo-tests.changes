@@ -1,3 +1,7 @@
+* Thu 20 Jan 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.9
+- Simplify the example configuration file. Fixes: BMC#10455
+- Update n900 config file and put it into the example config package. Fixes: BMC#10432
+
 * Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.8
 - Remove obsolete Min support code
 

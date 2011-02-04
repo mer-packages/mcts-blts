@@ -52,9 +52,11 @@ typedef struct
 
 	char* dtmf_tone;	//dtmf case variable data
 
+	char *RAT;			// radio access technology
+
 	/* Option flags */
 
-	unsigned fl_dontcleanup;  /* When set, skip call cleanups */
+	unsigned fl_cleanup;  /* When set, skip call cleanups */
 
 } my_ofono_data;
 

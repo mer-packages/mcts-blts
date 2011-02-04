@@ -1,3 +1,18 @@
+blts-usb-tests (0.0.16) unstable; urgency=low
+
+  * [ Mika Niinistö ] Bugfix: When any of the endpoints fails in read / write
+    cases, the test case will fail from now on.
+  * [ Kimmo Myllyvirta ] Fix build with Linux 2.6.37+
+
+ -- Mika Niinistö <mika.niinisto@digia.com>  Mon, 17 Jan 2011 18:28:34 +0200
+
+blts-usb-tests (0.0.15-1) unstable; urgency=low
+
+  * Debian packaging build-dependency update.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 19 Jan 2011 16:31:40 +0200
+
+
 blts-usb-tests (0.0.15) unstable; urgency=low
 
   [ Kimmo Myllyvirta ]
