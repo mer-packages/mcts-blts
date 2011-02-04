@@ -73,8 +73,10 @@ void MwtsThroughput::Stop()
 	MWTS_ENTER;
 	if ( m_pProcess->pid() != 0 )
 	{
-		qDebug() << "Killing the process...";
-		m_pProcess->kill();
+	    // Using kill() causes an error() signal with "Crashed" error code
+	    // The finished() signal is also emited with exit status "CrashExit"
+		qDebug() << "Terminating the process...";
+		m_pProcess->terminate();
 		m_pProcess->waitForFinished();
 	}
 	else
@@ -109,7 +111,7 @@ bool MwtsIPerfThroughput::Exec()
 	if ( m_pIperfRole == IPERF_CLIENT )
 	{
 		qDebug() << "Starting iperf in client role.";
-		m_pProcess->start("/usr/bin/iperf", m_params);
+		m_pProcess->start("iperf", m_params);
 		qDebug() << "Wating for iperf to finish...";
 		// We might use waitForFinished, but then we'd loose the ability to
 		// use fail timeout
@@ -121,7 +123,7 @@ bool MwtsIPerfThroughput::Exec()
 	else
 	{
 		qDebug() << "Starting iperf in server role.";
-		m_pProcess->start("/usr/bin/iperf", m_params);
+		m_pProcess->start("iperf", m_params);
 		qDebug() << "Wating for iperf to start...";
 		// We might use waitForStarted, but then we'd loose the ability to
 		// use fail timeout
@@ -337,25 +339,26 @@ void MwtsIPerfThroughput::onError( QProcess::ProcessError error )
 {
 	MWTS_ENTER;
 	m_pReturnValue = false;
+	qCritical() << "An error occurred in running the iperf process";
 	switch ( error )
 	{
 		case QProcess::FailedToStart:
-			qDebug() << "The process failed to start.";
+			qWarning() << "The iperf process failed to start.";
 			break;
 		case QProcess::Crashed:
-			qDebug() << "The process crashed.";
+			qWarning() << "The iperf process crashed.";
 			break;
 		case QProcess::Timedout:
-			qDebug() << "The last waitFor...() function timed out.";
+			qWarning() << "The last waitFor...() function for the iperf process timed out.";
 			break;
 		case QProcess::WriteError:
-			qDebug() << "An error occurred when attempting to write to the process.";
+			qWarning() << "An error occurred when attempting to write to the iperf process.";
 			break;
 		case QProcess::ReadError:
-			qDebug() << "An error occurred when attempting to read from the process.";
+			qWarning() << "An error occurred when attempting to read from the iperf process.";
 			break;
 		case QProcess::UnknownError:
-			qDebug() << "An unknown error occurred.";
+			qWarning() << "An unknown error occurred with the iperf process.";
 			break;
 	}
 
@@ -370,11 +373,11 @@ void MwtsIPerfThroughput::onFinished( int exitCode, QProcess::ExitStatus exitSta
 	switch ( exitStatus )
 	{
 		case QProcess::NormalExit:
-			qDebug() << "The process exited normally.";
+			qDebug() << "The iperf process exited normally.";
 			m_pReturnValue = true;
 			break;
 		case QProcess::CrashExit:
-			qDebug() << "The process crashed.";
+			qCritical() << "The iperf process crashed.";
 			m_pReturnValue = false;
 			break;
 	}
@@ -387,7 +390,7 @@ void MwtsIPerfThroughput::onFinished( int exitCode, QProcess::ExitStatus exitSta
 void MwtsIPerfThroughput::onStarted()
 {
 	MWTS_ENTER;
-	qDebug() << "The process has started.";
+	qDebug() << "The iperf process has started.";
 	if (m_pIperfRole == IPERF_SERVER)
 	{
 		g_pTest->Stop();
@@ -402,18 +405,15 @@ void MwtsIPerfThroughput::onStateChanged( QProcess::ProcessState newState )
 	switch ( newState )
 	{
 		case QProcess::NotRunning:
-			qDebug() << "The process is not running.";
+			qDebug() << "The iperf process is not running.";
 			break;
 		case QProcess::Starting:
-			qDebug() << "The process is starting, but the program has not yet been invoked.";
+			qDebug() << "The iperf process is starting, but the program has not yet been invoked.";
 			break;
 		case QProcess::Running:
-			qDebug() << "The process is running and is ready for reading and writing.";
+			qDebug() << "The iperf process is running and is ready for reading and writing.";
 			break;
 	}
 	MWTS_LEAVE;
 }
-
-
-
 
