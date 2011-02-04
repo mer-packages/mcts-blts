@@ -128,6 +128,8 @@ private:
     //min and max frequecies of band
     int minFrequency;
     int maxFrequency;
+    //for counting radio stations
+    int radioStationCount;
 
 
 private slots:
