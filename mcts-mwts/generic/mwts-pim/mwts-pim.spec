@@ -57,7 +57,7 @@ make install INSTALL_ROOT=%{buildroot}
 %doc COPYING
 %doc DEPENDENCIES.png
 %doc doc/MWTS.README
-/usr/lib/*.so.*
+/usr/lib/*.so*
 /usr/lib/min/*.so
 /usr/lib/tests/mwts-pim/*.vcf
 /usr/lib/tests/mwts-pim/*.ics
