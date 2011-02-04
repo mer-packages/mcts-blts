@@ -34,6 +34,8 @@ EXECUTING TESTS
     - it is possible that the positioning daemon is not running by default on the device,
       in which case tester needs to start the daemon manually, how to do that
       depends on tested platform
+    - To test accuracy, devices antenna point must be set into assets configuration file.
+      Look method TestAccuracy below.
 
 TEST RESULTS
 
@@ -53,5 +55,12 @@ MIN SCRIPTER INTERFACE
     Calculates center point, median distance, distance to nearest and most faraway point
     from results received by RunGetLocation. This method works only if RunGetLocation has
     been successfully called previously at least 2 times.
+  TestAccuracy
+    Runs "hot and gold fix" test using the GPS | A-GPS method.
+    Calculates accuracy how many fixex are in radius given in configuration file.
+    In configuration file you must set exact antenna point, allowed radius to that and
+    what is prosent of fixes that should be inside that circle to pass the test.
 
 KNOWN ISSUES
+   When this was written, there was not known a MeeGo device, where GPS works using
+   QT Mibility API Class QGeoPositionInfoSource.
