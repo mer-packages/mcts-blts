@@ -1,3 +1,7 @@
+mwts-location (0.0.4) unstable; urgency=low
+  * Added functionality to performing measure of cold test fixing
+ -- Jan Grela <jan.grela@digia.com>  Fri, 04 Feb 2011 10:00:00 +0300
+
 mwts-location (0.0.3) unstable; urgency=low
   * More clear scripter interface
   * Refactoring
