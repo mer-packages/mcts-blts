@@ -148,7 +148,7 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
 		}
                 else if (m_nHotMode == MODE_COLD)
                 {
-                    qDebug() << "counts " << m_listTimesToFix.count();
+                    //qDebug() << "counts " << m_listTimesToFix.count();
                     m_listTimesToFix.append(sinceLast);
                     qDebug() << "Cold or warm fix, received in:" << sinceLast << "ms";
                     RemoveGPSData();
@@ -253,17 +253,10 @@ void LocationTest::TestLocationFix()
             s = "Succesfully received " + QString().setNum(1 + UPDATE_COUNT_COLD_FIX) + " cold fixes";
 
         g_pResult->Write(s);
+
         //removing cold/warm fix
         if (m_nHotMode == MODE_HOT)
             m_listTimesToFix.takeFirst();
-
-        /* counting mean
-        int mean
-        QList<int>::iterator iter;
-        for (iter = m_listTimesToFix.begin(); iter != m_listTimesToFix.end(); ++i)*/
-
-        //no need to do below, count mean from got fixes values
-        ////////////////////////////////////////////////////////
 
         qSort(m_listTimesToFix);
 
@@ -273,18 +266,27 @@ void LocationTest::TestLocationFix()
             median = ( median + m_listTimesToFix.at( m_listTimesToFix.count() / 2 - 1 ) ) / 2;
         }
 
+        // calculate the average time for fixes
+        double average = 0.0;
+        for( int i = 0; i < m_listTimesToFix.count(); i++ )
+        {
+            average += m_listTimesToFix.at(i);
+        }
+        average /= m_listTimesToFix.count();
+
         QString sFixType;
         if(m_nHotMode == MODE_HOT)
             sFixType = "Hot";
         else if(m_nHotMode == MODE_COLD)
             sFixType = "Cold";
 
-        g_pResult->AddMeasure(sFixType + " fix time (med)", median, "ms");
-        g_pResult->AddMeasure(sFixType + " fix time (min)", m_listTimesToFix.first(), "ms");
-        g_pResult->AddMeasure(sFixType + " fix time (max)", m_listTimesToFix.last(), "ms");
-        g_pResult->StepPassed("LocationFix", true);
+        g_pResult->Write(sFixType + " fix time (med): "+ QString().setNum(median) +" ms");
+        g_pResult->Write(sFixType + " fix time (min): "+ QString().setNum(m_listTimesToFix.first()) +" ms");
+        g_pResult->Write(sFixType + " fix time (max): "+ QString().setNum(m_listTimesToFix.last()) +" ms");
 
-        ////////////////////////////////////////////////////////
+        g_pResult->AddMeasure(sFixType + " fix time (avg)", average, "ms");
+
+        g_pResult->StepPassed("LocationFix", true);
 
         m_listTimesToFix.erase(m_listTimesToFix.begin(), m_listTimesToFix.end());
 }
