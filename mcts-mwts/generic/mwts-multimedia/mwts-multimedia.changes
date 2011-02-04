@@ -1,3 +1,6 @@
+* Wed 02 Feb 2011 Jan Grela <jan.grela@digia.com> - 0.1.2
+ - Added functionality to perform scan of whole band range, added script for measuring latency of scanning band
+
 * Fri 14 Jan 2011 Jan Grela <jan.grela@digia.com> - 0.1.1
  - Added bug fix for FM radio test cases, UnInitialize fails fixed (QRadioTuner pointer issue), minor changes to codecs and containers setting
 
