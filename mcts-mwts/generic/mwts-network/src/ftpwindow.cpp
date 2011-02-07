@@ -315,12 +315,13 @@ bool FtpWindow::connectToHost(const QString ip, const QString username,const QSt
 
 void FtpWindow::destroy()
 {
-    qDebug() << "Closing FTP connection....";
+        qDebug() << "Closing FTP connection....";
 
-    if ( ftp->state() != QFtp::Unconnected ) {
-        ftp->close();
-        testAsset->Start();
-    }
+        if ( ftp->state() != QFtp::Unconnected )
+        {
+                ftp->close();
+                testAsset->Start();
+        }
 }
 
 

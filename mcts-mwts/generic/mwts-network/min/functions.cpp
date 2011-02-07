@@ -38,8 +38,6 @@ NetworkTest Test;
  */
 LOCAL int Scan( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	Test.UpdateConfigs();
 
         bool retval = false;
@@ -49,7 +47,7 @@ LOCAL int Scan( MinItemParser * item)
         {
                 qCritical() << "Missing parameter: access point name";
                 return EINVAL;
-                MWTS_LEAVE;
+
         }
 
 	if(Test.IsUpdateComplete())
@@ -61,7 +59,6 @@ LOCAL int Scan( MinItemParser * item)
         g_pResult->StepPassed( __FUNCTION__, retval );
 
  	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -69,8 +66,6 @@ LOCAL int Scan( MinItemParser * item)
  */
 LOCAL int ConnectToDefault( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	qDebug() << "connecting to default ap";
 
 	bool retval = false;
@@ -79,7 +74,6 @@ LOCAL int ConnectToDefault( MinItemParser * item)
 	g_pResult->StepPassed( __FUNCTION__, retval );
 
 	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -87,8 +81,6 @@ LOCAL int ConnectToDefault( MinItemParser * item)
  */
 LOCAL int Connect( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	char * ap_name = NULL;
 
 	if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
@@ -102,7 +94,7 @@ LOCAL int Connect( MinItemParser * item)
 		if (ENOERR != mip_get_next_string(item,&ap_name)) {
 			qCritical() << "Missing argument: access point identifier";
 			return EINVAL;
-                        MWTS_LEAVE;
+
 		}
 	}
 
@@ -117,7 +109,6 @@ LOCAL int Connect( MinItemParser * item)
         g_pResult->StepPassed( __FUNCTION__, retval );
 
 	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -125,8 +116,6 @@ LOCAL int Connect( MinItemParser * item)
  */
 LOCAL int RemoveService( MinItemParser * item)
 {
-        MWTS_ENTER;
-
         char * ap_name = NULL;
 
         if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
@@ -140,7 +129,7 @@ LOCAL int RemoveService( MinItemParser * item)
                 if (ENOERR != mip_get_next_string(item,&ap_name)) {
                         qCritical() << "Missing argument: access point identifier";
                         return EINVAL;
-                        MWTS_LEAVE;
+
                 }
         }
 
@@ -155,7 +144,6 @@ LOCAL int RemoveService( MinItemParser * item)
         g_pResult->StepPassed( __FUNCTION__, retval );
 
         return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -163,8 +151,6 @@ LOCAL int RemoveService( MinItemParser * item)
  */
 LOCAL int SetTethering( MinItemParser * item)
 {
-        MWTS_ENTER;
-
         char * mode = NULL;
 
         if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
@@ -178,7 +164,7 @@ LOCAL int SetTethering( MinItemParser * item)
                 if (ENOERR != mip_get_next_string(item,&mode)) {
                         qCritical() << "Missing argument: tethering mode";
                         return EINVAL;
-                        MWTS_LEAVE;
+
                 }
         }
 
@@ -193,7 +179,6 @@ LOCAL int SetTethering( MinItemParser * item)
         g_pResult->StepPassed( __FUNCTION__, retval );
 
         return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -201,8 +186,6 @@ LOCAL int SetTethering( MinItemParser * item)
  */
 LOCAL int Disconnect (__attribute__((unused)) MinItemParser * item)
 {
-	MWTS_ENTER;
-
         char * ap_name = NULL;
 
         if ( mip_set_parsing_type( item, EQuoteStyleParsing ) != 0)
@@ -216,7 +199,7 @@ LOCAL int Disconnect (__attribute__((unused)) MinItemParser * item)
                 if (ENOERR != mip_get_next_string(item,&ap_name)) {
                         qCritical() << "Missing argument: access point identifier";
                         return EINVAL;
-                        MWTS_LEAVE;
+
                 }
         }
 
@@ -229,7 +212,7 @@ LOCAL int Disconnect (__attribute__((unused)) MinItemParser * item)
 	g_pResult->StepPassed( __FUNCTION__, true );
 
 	return 0;
-        MWTS_LEAVE;
+
 }
 
 /*
@@ -237,8 +220,6 @@ LOCAL int Disconnect (__attribute__((unused)) MinItemParser * item)
  */
 LOCAL int DownloadfileHttp( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	char* filename = NULL;
         bool success = false;
 
@@ -246,7 +227,7 @@ LOCAL int DownloadfileHttp( MinItemParser * item)
 	{
 		qCritical() << "Missing parameter: filename";
 		return EINVAL;
-                MWTS_LEAVE;
+
 	}
 
         // if we are not online, then there is no point to go further
@@ -260,7 +241,6 @@ LOCAL int DownloadfileHttp( MinItemParser * item)
 	g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -268,8 +248,6 @@ LOCAL int DownloadfileHttp( MinItemParser * item)
  */
 LOCAL int Downloadfile( MinItemParser * item)
 {
-        MWTS_ENTER;
-
 	char* filename = NULL;
         bool success = false;
 
@@ -278,7 +256,7 @@ LOCAL int Downloadfile( MinItemParser * item)
 		qCritical() << "Missing parameter: filename";
 
 		return EINVAL;
-                MWTS_LEAVE;
+
 	}
 
         // if we are not online, then there is no point to go further
@@ -292,7 +270,6 @@ LOCAL int Downloadfile( MinItemParser * item)
 	g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -300,8 +277,6 @@ LOCAL int Downloadfile( MinItemParser * item)
  */
 LOCAL int UploadFile( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	char* filename = NULL;
         bool success = false;
 
@@ -310,7 +285,7 @@ LOCAL int UploadFile( MinItemParser * item)
             qCritical() << "Missing parameter: filename";
 
             return EINVAL;
-            MWTS_LEAVE;
+
 	}
 
         // if we are not online, then there is no point to go further
@@ -327,7 +302,6 @@ LOCAL int UploadFile( MinItemParser * item)
 	g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
-        MWTS_LEAVE;
 }
 
 
@@ -337,8 +311,6 @@ LOCAL int UploadFile( MinItemParser * item)
  */
 LOCAL int IperfServerRemote( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	char* time = NULL;
 	if (ENOERR != mip_get_next_string(item, &time))
 	{
@@ -375,7 +347,6 @@ LOCAL int IperfServerRemote( MinItemParser * item)
 	//g_pResult->StepPassed( __FUNCTION__, success );
 
  	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -383,8 +354,6 @@ LOCAL int IperfServerRemote( MinItemParser * item)
  */
 LOCAL int ServerStartIperf( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	int time = 0;
 	if (ENOERR != mip_get_next_int(item, &time))
 	{
@@ -421,7 +390,6 @@ LOCAL int ServerStartIperf( MinItemParser * item)
 	}
 
 	return 0;
-        MWTS_LEAVE;
 }
 
 
@@ -430,8 +398,6 @@ LOCAL int ServerStartIperf( MinItemParser * item)
  */
 LOCAL int ServerStartDownload( MinItemParser * item)
 {
-	MWTS_ENTER;
-
 	int time = 0;
 	if (ENOERR != mip_get_next_int(item, &time))
 	{
@@ -467,15 +433,12 @@ LOCAL int ServerStartDownload( MinItemParser * item)
 	}
 
 	return 0;
-        MWTS_LEAVE;
 }
 
 LOCAL int Idle (__attribute__((unused)) MinItemParser * item)
 {
-	MWTS_ENTER;
 	Test.RunIdle();
 	return 0;
-        MWTS_LEAVE;
 }
 
 /*
@@ -483,13 +446,11 @@ LOCAL int Idle (__attribute__((unused)) MinItemParser * item)
 */ 
 LOCAL int SwitchWlan( MinItemParser * item)
 {
-        MWTS_ENTER;
-
         char* state = NULL;
         if (ENOERR != mip_get_next_string(item, &state))
         {
                 qCritical() << "Missing parameter: on/off";
-                MWTS_LEAVE;
+
                 return EINVAL;
         }
 
@@ -497,8 +458,7 @@ LOCAL int SwitchWlan( MinItemParser * item)
 
         g_pResult->StepPassed( __FUNCTION__, success );
 
-        return 0;
-        MWTS_LEAVE;
+        return 0;  
 }
 
 
