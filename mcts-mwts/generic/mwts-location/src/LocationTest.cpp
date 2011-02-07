@@ -442,6 +442,8 @@ void LocationTest::TestAccuracy()
     MWTS_ENTER;
     m_bAccuracyResult = true;
 
+    firstFix = true;
+
     if (!m_gpisLocationSource)
     {
         qCritical() << "No location source";
@@ -649,6 +651,7 @@ void LocationTest::CalculateAccuracy()
         for(int i = 0; i < numOfPositions; i++)
         {
             qreal dist = anttennapoint.distanceTo(m_listPositions.value(i));
+            qDebug() << "dist " << dist;
             sumAntennaLatitude += m_listPositions.value(i).latitude();
             sumAntennaLongitude += m_listPositions.value(i).longitude();
             if (m_CoordinateType == QGeoCoordinate::Coordinate3D)
