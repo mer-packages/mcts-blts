@@ -207,7 +207,6 @@ void LocationTest::OnPositionUpdated(const QGeoPositionInfo &info)
              << ("Type: ")
              << coord.type();
 
-        m_nFixCountLeft--;
         m_listPositions.append(coord);
 
         if  (coord.type() < m_CoordinateType)
