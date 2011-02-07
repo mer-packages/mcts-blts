@@ -69,7 +69,7 @@ LOCAL int ConnectToDefault( MinItemParser * item)
 	qDebug() << "connecting to default ap";
 
 	bool retval = false;
-	retval = Test.ConnectToDefault();
+        retval = Test.ConnectToDefault();
 
 	g_pResult->StepPassed( __FUNCTION__, retval );
 
