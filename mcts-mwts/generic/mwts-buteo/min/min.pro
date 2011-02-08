@@ -2,11 +2,7 @@ TARGET = min-mwts-buteo
 TEMPLATE = lib
 VERSION = 0.0.1
 
-CONFIG += dll
-<<<<<<< HEAD
-=======
 CONFIG += plugin
->>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 CONFIG += warn_on
 CONFIG += debug
 CONFIG += link_pkgconfig
