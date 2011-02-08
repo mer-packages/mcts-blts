@@ -46,11 +46,11 @@ const int CALL_TIMEOUT = 120000;
 #define MESSAGE_180 "message180message180message180message180message180message180message180message180"\
 		"message180message180message180message180message180message180message180message180"\
 		"message180message180"
-#define MESSAGE_370 "message370message370message370message370message370message370message370"\
-		"message370message370message370message370message370message370message370message370"\
-		"message370message370message370message370message370message370message370message370"\
-		"message370message370message370message370message370message370message370message370"\
-		"message370message370message370message370message370message370"
+#define MESSAGE_380 "message380message380message380message380message380message380message380"\
+		"message380message380message380message380message380message380message380message380"\
+		"message380message380message380message380message380message380message380message380"\
+		"message380message380message380message380message380message380message380message380"\
+		"message380message380message380message380message380message380message380"
 #define MESSAGE_1000 "messag1000messag1000messag1000messag1000messag1000"\
 		"messag1000messag1000messag1000messag1000messag1000"\
 		"messag1000messag1000messag1000messag1000messag1000"\
@@ -222,9 +222,9 @@ bool TextChat::SendMessage( const QString& message,
 	{
 		mSentMessage = MESSAGE_180;		
 	}
-	else if (length == "370")
+	else if (length == "380")
 	{
-		mSentMessage = MESSAGE_370;
+		mSentMessage = MESSAGE_380;
 	}
 	else if (length == "1000")
 	{
@@ -263,6 +263,95 @@ bool TextChat::SendMessage( const QString& message,
 	MWTS_LEAVE;
 	return ret;
 }
+
+
+bool TextChat::VerifyReceivedMessage( const QString& sentMessage,
+                                      const QString& sentLength,
+                                      const QString& sentCoding,
+                                      const QString& sentClasstype )
+{
+	MWTS_ENTER;
+
+	mRetValue = false;
+	mSentMessage = sentMessage;
+	bool hasPendingMessages = false;
+	QList<Tp::ReceivedMessage> acknowledgeMessageList;
+
+
+	//check if the message has already arrived
+	if( mChannel->messageQueue().isEmpty() == false )
+	{
+		qDebug() << "Messages in the queue: " << mChannel->messageQueue().count();
+		foreach(const Tp::ReceivedMessage& message,mChannel->messageQueue())
+		{
+			qDebug() << "MessageParts in message: " << message.parts().count();
+			qDebug() << "Expected message parts: " << message.size();
+			// check if message is complete
+			if(message.parts().count() == message.size())
+			{
+				if ( mRetValue == false )
+				{
+					mRetValue = parseSms( message,sentMessage );
+				}
+				acknowledgeMessageList.append(message);
+			}
+			else
+				hasPendingMessages = true;
+		}
+		if ( mRetValue == false )
+		{
+			if ( mTimer->isActive() )
+			{
+				mTimer->stop();
+			}
+			if ( mEventLoop->isRunning() )
+			{
+				qDebug() << "Event loop running! Stopping...";
+				mEventLoop->exit();
+			}
+			mTimer->start( CALL_TIMEOUT );
+			mEventLoop->exec();
+		}
+	}
+	else
+	{
+		if ( mTimer->isActive() )
+		{
+			mTimer->stop();
+		}
+		if ( mEventLoop->isRunning() )
+		{
+			qDebug() << "Event loop running! Stopping...";
+			mEventLoop->exit();
+		}
+		mTimer->start( CALL_TIMEOUT );
+		mEventLoop->exec();
+	}
+	qDebug() << "Messages in the queue: " << mChannel->messageQueue().count();
+	foreach(const Tp::ReceivedMessage& message,mChannel->messageQueue())
+	{
+		qDebug() << "MessageParts in message: " << message.parts().count();
+		qDebug() << "Expected message parts: " << message.size();
+		// check if message is complete
+		if(message.parts().count() == message.size())
+		{
+			if ( mRetValue == false )
+			{
+				mRetValue = parseSms( message,sentMessage );
+			}
+			acknowledgeMessageList.append(message);
+		}
+		else
+			hasPendingMessages = true;
+	}
+
+	// aknowledge message as received
+	mChannel->acknowledge( acknowledgeMessageList );
+
+	MWTS_LEAVE;
+	return mRetValue;
+}
+
 
 
 bool TextChat::VerifyReceivedIM()
@@ -328,6 +417,76 @@ bool TextChat::VerifyReceivedIM()
 
     mChannel->acknowledge( acknowledgeMessageList );
 
+
+    MWTS_LEAVE;
+    return mRetValue;
+}
+
+
+
+bool TextChat::parseSms(const Tp::ReceivedMessage& message,const QString& sentMessage)
+{
+    MWTS_ENTER;
+
+    switch ( message.messageType() )
+    {
+        case Tp::ChannelTextMessageTypeNormal:
+            qDebug() << "Message type: Normal";
+            break;
+        case Tp::ChannelTextMessageTypeAction:
+            qDebug() << "Message type: Action";
+            break;
+        case Tp::ChannelTextMessageTypeNotice:
+            qDebug() << "Message type: Notice";
+            break;
+        case Tp::ChannelTextMessageTypeAutoReply:
+            qDebug() << "Message type: Auto-Reply";
+            break;
+        case Tp::ChannelTextMessageTypeDeliveryReport:
+            qDebug() << "Message type: Delivery Report";
+            break;
+    }
+
+    if ( message.messageType() == Tp::ChannelTextMessageTypeDeliveryReport )
+    {
+        Tp::MessagePart header = message.header();
+        if ( header.contains( "delivery-status" ) == true )
+        {
+            QDBusVariant deliveryStatusVariant = header.value( "delivery-status" );
+            if ( deliveryStatusVariant.variant().canConvert( QVariant::UInt ) )
+            {
+                bool ok = false;
+                uint deliveryStatus = deliveryStatusVariant.variant().toUInt( &ok );
+                if ( ok )
+                {
+                    switch ( deliveryStatus )
+                    {
+                        case 0:
+                            qDebug() << "Delivery status: Unknown (0)";
+                            break;
+                        case 1:
+                            qDebug() << "Delivery status: Delivered (1)";
+                            break;
+                        case 2:
+                            qCritical() << "Delivery status: Temporarily_Failed (2)";
+                            break;
+                        case 3:
+                            qCritical() << "Delivery status: Permanently_Failed (3)";
+                            break;
+                        case 4:
+                            qDebug() << "Delivery status: Accepted (4)";
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    else if ( message.messageType() == Tp::ChannelTextMessageTypeNormal )
+    {
+            qDebug() << "Sent message: " << sentMessage;
+            qDebug() << "Received message: " << message.text();
+            mRetValue = ( QString::compare( sentMessage, message.text() ) == 0 ? true : false );
+    }
 
     MWTS_LEAVE;
     return mRetValue;
@@ -468,7 +627,7 @@ void TextChat::onMessageReceived(const Tp::ReceivedMessage &message)
 void TextChat::onPendingMessageRemoved(const Tp::ReceivedMessage &message)
 {
 	MWTS_ENTER;
-	if ( mTimer->isActive() )
+	/*if ( mTimer->isActive() )
 	{
 		mTimer->stop();
 	}
@@ -476,7 +635,7 @@ void TextChat::onPendingMessageRemoved(const Tp::ReceivedMessage &message)
 	{
 		qDebug() << "Event loop running! Stopping...";
 		mEventLoop->exit();
-	}
+	}*/
 	qDebug() << "Message: " << message.text();
 
 	MWTS_LEAVE;
@@ -485,7 +644,7 @@ void TextChat::onPendingMessageRemoved(const Tp::ReceivedMessage &message)
 void TextChat::onMessageLost()
 {
     MWTS_ENTER;
-    if ( mTimer->isActive() )
+    /*if ( mTimer->isActive() )
     {
         mTimer->stop();
     }
@@ -493,7 +652,7 @@ void TextChat::onMessageLost()
     {
         qDebug() << "Event loop running! Stopping...";
         mEventLoop->exit();
-    }
+    }*/
     qWarning() << "Message Lost!";
 
     MWTS_LEAVE;
