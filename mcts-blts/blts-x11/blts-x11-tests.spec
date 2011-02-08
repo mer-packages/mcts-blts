@@ -1,6 +1,6 @@
 Summary: BLTS X11 test set
 Name: blts-x11-tests
-Version: 0.0.15
+Version: 0.0.16
 Release: 1
 License: GPLv2
 Group: Development/Testing
