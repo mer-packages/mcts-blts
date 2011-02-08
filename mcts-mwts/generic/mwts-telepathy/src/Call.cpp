@@ -208,7 +208,12 @@ Tp::LocalHoldState Call::LocalHoldState()
 {
 	MWTS_ENTER;
 	MWTS_LEAVE;
-	return mChannel->localHoldState();
+	if ( !mChannel.isNull() || mChannel->isReady() )
+	{
+		return mChannel->localHoldState();
+	}
+	qWarning() << "Channel is unusable! Returning unheld state...";
+	return Tp::LocalHoldStateUnheld;
 }
 
 
@@ -369,6 +374,8 @@ bool Call::Close()
 	{
 		mTimer->stop();
 	}
+	mTimer->start( CALL_TIMEOUT );
+	mEventLoop->exec();
 
 	MWTS_LEAVE;
 	return ret;
@@ -719,6 +726,15 @@ void Call::onStreamRemoved( const Tp::MediaStreamPtr& stream )
 		"stream removed";
 	qDebug() << "Direction: None";
 	qDebug() << "State: Disconnected";
+	if ( mEventLoop->isRunning() )
+	{
+		qDebug() << "Event loop running and stream is connected! Stopping...";
+		mRetValue = true;
+		mTimer->stop();
+		mEventLoop->exit();
+
+	}
+
 	mHaveErrors = false;
 	MWTS_LEAVE;
 }
@@ -785,14 +801,14 @@ void Call::onStreamStateChanged(	const Tp::MediaStreamPtr &stream,
 	{
 		qDebug() << "State: Connected";
 		mHaveErrors = false;
-                if ( mEventLoop->isRunning() && mDirection == Tp::MediaStreamDirectionBidirectional )
+		/*if ( mEventLoop->isRunning() )
 		{
-                        qDebug() << "Event loop running and stream is bidirectional! Stopping...";
+			qDebug() << "Event loop running and stream is connected! Stopping...";
 			mRetValue = true;
 			mTimer->stop();
 			mEventLoop->exit();
 			
-		}
+		}*/
 	}
 	MWTS_LEAVE;
 }
@@ -924,7 +940,7 @@ void Call::onGroupMembersChanged( const Tp::Contacts& aGroupMembersAdded,
 	}
 	if ( aDetails.hasError() )
 	{
-		qDebug() << "Error: " << aDetails.error();
+		qCritical() << "Error: " << aDetails.error();
 	}
 	if ( aDetails.hasDebugMessage() )
 	{
@@ -958,13 +974,13 @@ void Call::onGroupMembersChanged( const Tp::Contacts& aGroupMembersAdded,
 	qDebug() << "Group contact count: " << mChannel->groupContacts().count();
 
 	// check if the call was answered or ended
-	if ( !aGroupMembersAdded.isEmpty() &&
-	     mChannel->groupContacts().count() >= 2 )
+	if ( mChannel->groupContacts().count() >= 2 )
 	{
 		// contacts were added and there is now more than 2
 		// participants --> the call is now active
 		qDebug() << "Call was answered";
-		if ( mEventLoop->isRunning() )
+		if ( mEventLoop->isRunning() /*&&
+			 mState == Tp::MediaStreamStateConnected*/ )
 		{
 			qDebug() << "Event loop is running! Stopping...";
 			mRetValue = true;
