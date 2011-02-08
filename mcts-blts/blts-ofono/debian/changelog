@@ -1,3 +1,11 @@
+blts-ofono-tests (0.1.18) unstable; urgency=low
+
+  * [ Kari Laakso ] Improved all voice call, dual call and multiparty case run
+    time instructions
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 15:21:24 +0200
+
 blts-ofono-tests (0.1.17) unstable; urgency=low
 
   [ Mikko Ojala, Kari Laakso ]
