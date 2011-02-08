@@ -79,8 +79,6 @@ void NetworkTest::OnInitialize()
 
     // connman dbus manager
     m_ConnmanManager = new QDBusInterface("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
-    m_ConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
-                                          this, SLOT(slotConnmanStateChanged()));
 
     connect(&httpmanager, SIGNAL(finished(QNetworkReply*)),
                     this, SLOT(downloadFinished(QNetworkReply*)));
@@ -501,6 +499,10 @@ bool NetworkTest::StopSession(const QString ap_name)
 
     qDebug() << "service path is: " << service_path;
 
+    //make sure the signal is connected
+    m_ConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
+                                          this, SLOT(slotConnmanStateChanged()));
+
     // open interface to the service
     QDBusInterface iface("net.connman", service_path, "net.connman.Service", QDBusConnection::systemBus());
 
@@ -508,10 +510,9 @@ bool NetworkTest::StopSession(const QString ap_name)
     QDBusMessage disconnect_reply = iface.call("Disconnect");
     qDebug() << "Reply was: " << disconnect_reply;
 
-    qDebug() << "Waiting for the Manager state change...";
+    qDebug() << "Disconnecting....";
     this->Start();
 
-    /*
     if(networkSession != 0)
     {
             qDebug() << "Session was open, now closing it!";
@@ -528,7 +529,7 @@ bool NetworkTest::StopSession(const QString ap_name)
     {
             // no session available. Go trough configurations and close all active sessions
             CloseActiveSessions();
-    } */
+    }
 
     return m_bResult;
     MWTS_LEAVE;
@@ -584,6 +585,8 @@ bool NetworkTest::DownloadfileHttp(const QString strUrl)
              this, SLOT(slotError(QNetworkReply::NetworkError)));
 
     qDebug() << "Waiting for the download to finish...";
+
+    g_pTime->start();
 
     this->Start();
 
@@ -645,6 +648,12 @@ void NetworkTest::downloadFinished(QNetworkReply *reply)
             qDebug() << "Download failed!";
             qDebug() << "Error: " << reply->errorString();
     } else {
+        // we got the reply
+        double elapsed=g_pTime->elapsed();
+        qDebug() << "Http file download laster: " << elapsed << " ms";
+
+        g_pResult->AddMeasure("File download", elapsed, "ms");
+
         QString filename = saveFileName(url);
         if (saveToDisk(filename, reply)) {
             qDebug() << "Download success. Saved to file: " << filename;
@@ -885,6 +894,10 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
         return false;
     }
 
+    // connect the connman state signal to slot
+    m_ConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
+                                          this, SLOT(slotConnmanStateChanged()));
+
     // open interface to the service
     QDBusInterface iface("net.connman", service_path, "net.connman.Service", QDBusConnection::systemBus());
 
@@ -929,7 +942,7 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     //QDBusMessage connect_reply = iface.call("Connect");
     //qDebug() << "Reply was: " << connect_reply;
 
-    qDebug() << "Waiting for the Connman state change....";
+    qDebug() << "Waiting for the connection state change....";
     this->Start();
 
     return m_bResult;
@@ -1207,6 +1220,10 @@ void NetworkTest::slotConnmanStateChanged()
     g_pResult->AddMeasure("Latency", elapsed, "ms");
 
     m_bResult = true;
+
+    // we can disconnect the signal for now
+    m_ConnmanManager->connection().disconnect("net.connman", "/", "net.connman.Manager", "StateChanged",
+                                          this, SLOT(slotConnmanStateChanged()));
 
     MWTS_LEAVE;
 }
