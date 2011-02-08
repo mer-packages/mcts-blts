@@ -30,6 +30,9 @@ static int parse_input_dev_list(struct input_data *data, char *list)
 {
 	char *tmp, *ptr;
 
+	if (!strlen(list))
+		return 0;
+
 	tmp = strdup(list);
 	if(!tmp)
 		return -ENOMEM;

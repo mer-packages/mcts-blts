@@ -370,16 +370,51 @@ static int read_input_events(int fd, struct input_event *evs, int size)
 	return rb;
 }
 
+static int enumerate_all_devices()
+{
+	int ret = 0;
+	DIR *dir;
+	struct dirent *dirent;
+	char *path = "/dev/input/";
+	char *evdev = "event";
+	char full_name[PATH_MAX];
+
+	dir = opendir(path);
+	if (!dir) {
+		BLTS_ERROR("Cannot open directory '%s\n", dir);
+		return -EFAULT;
+	}
+
+	while ((dirent = readdir(dir))) {
+		char *name = dirent->d_name;
+
+		if (strncmp(name, evdev, strlen(evdev)) != 0)
+			continue;
+
+		strcpy(full_name, path);
+		strcat(full_name, name);
+
+		BLTS_TRACE("Checking device %s\n", full_name);
+		if (print_device_info(full_name)) {
+			BLTS_ERROR("Could not read device info from '%s'\n", full_name);
+			ret = -1;
+		}
+	}
+
+	closedir(dir);
+
+	return ret;
+}
+
+
 int input_enumerate_test(void *user_ptr, int test_num)
 {
 	BLTS_UNUSED_PARAM(test_num)
 	unsigned t, ret = 0;
 	struct input_data *data = (struct input_data *)user_ptr;
 
-	if (!data->num_devices) {
-		BLTS_ERROR("No devices to test!\n");
-		return -EINVAL;
-	}
+	if (!data->num_devices)
+		return enumerate_all_devices();
 
 	for (t = 0; t < data->num_devices; t++) {
 		if (print_device_info(data->devices[t])) {

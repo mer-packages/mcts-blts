@@ -5,13 +5,15 @@
 # General parameters #
 ######################
 
+# "event1 event2 event3" -> check devices /dev/input/event0, 1 and 2
+# "" -> check all devices under /dev/input
 [parameter]
 	name input_devices
-	const "event1 event2 event3"
+	const ""
 [end_parameter]
 
-# 'event0' -> use /dev/input/event0
-# '*touchscreen' -> use the device whose name contains string 'touchscreen'
+# "event0" -> use /dev/input/event0
+# "*touchscreen" -> use the device whose name contains string 'touchscreen'
 [parameter]
 	name pointer_device
 	const "*touchscreen"
