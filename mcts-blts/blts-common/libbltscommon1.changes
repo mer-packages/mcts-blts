@@ -1,3 +1,6 @@
+* Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.2
+- Version update due to packaging change.
+
 * Tue 11 Jan 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.1
 - Remove assert from missing configuration when using global config section
 
