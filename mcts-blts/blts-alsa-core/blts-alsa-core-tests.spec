@@ -1,6 +1,6 @@
 Summary: BLTS ALSA core test set
 Name: blts-alsa-core-tests
-Version: 0.0.11
+Version: 0.0.12
 Release: 1
 License: GPLv2
 Group: Development/Testing
