@@ -1,3 +1,9 @@
+blts-opengles2-tests (0.0.16) unstable; urgency=low
+
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 15:35:31 +0200
+
 blts-opengles2-tests (0.0.15-2) unstable; urgency=low
 
   * Add armel libgles dependency to packaging.
