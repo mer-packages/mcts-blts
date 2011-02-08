@@ -45,10 +45,27 @@ class LocationTest : public MwtsTest
 {
 	Q_OBJECT
 public:
-	LocationTest();
-	virtual ~LocationTest();
 
+    /**
+     * Constructor for LocationTest class
+     */
+    LocationTest();
+
+    /**
+     * Destructor for LocationTest class
+     */
+    virtual ~LocationTest();
+
+        /**
+         * Function for LocationTest class
+         * OnInitialize is called before test execution
+         */
 	void OnInitialize();
+
+        /**
+         * Function for LocationTest class
+         * OnUninitialize is called after test execution
+         */
 	void OnUninitialize();
 
         /**
@@ -78,8 +95,21 @@ public:
          *  Gets only one fix, either cold or hot and add it as a measure.
          */
 	void GetLocationFix();
-    void TestAccuracy();
 
+        /**
+         *  Gets position coordinates
+         *  @param count amount of coordinates to get
+         */
+        void GetCoordinates(int count);
+
+        /**
+         *
+         */
+        void TestAccuracy();
+
+        /**
+         *
+         */
 	void CalculateDistances();
 
         /**
@@ -91,25 +121,25 @@ public:
 	
 private:
     void CalculateAccuracy();
-        // object for getting position info
-	QGeoPositionInfoSource *m_gpisLocationSource;
-	QTimer* m_pTimeout;
-        // elapsed time from beginning of latency measure
-	QTime m_oElapsedFromStart;
-        // elapsed time from last got fix
-	QTime m_oElapsedSinceLastFix;
-        //indicates if fix is done for the first time
-        bool firstFix;
+    // object for getting position info
+    QGeoPositionInfoSource *m_gpisLocationSource;
+    QTimer* m_pTimeout;
+    // elapsed time from beginning of latency measure
+    QTime m_oElapsedFromStart;
+    // elapsed time from last got fix
+    QTime m_oElapsedSinceLastFix;
+    //indicates if fix is done for the first time
+    bool firstFix;
 
-	int m_nHotMode;
-	int m_nPositioningMethod;
-	QGeoPositionInfoSource::PositioningMethod m_PositioningMethod;
+    int m_nHotMode;
+    int m_nPositioningMethod;
+    QGeoPositionInfoSource::PositioningMethod m_PositioningMethod;
     QGeoCoordinate::CoordinateType m_CoordinateType;
-	int m_nFixCountLeft;
-	bool m_bGetLocFix;
+    int m_nFixCountLeft;
+    bool m_bGetLocFix;
     bool m_bAccuracyResult;
-	QList<int> m_listTimesToFix;
-	QList<QGeoCoordinate> m_listPositions;
+    QList<int> m_listTimesToFix;
+    QList<QGeoCoordinate> m_listPositions;
 
     int m_numOfFixes;
     qreal m_allowedRadius;
