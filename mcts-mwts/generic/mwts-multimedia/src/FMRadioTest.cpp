@@ -60,12 +60,6 @@ void FMRadioTest::OnInitialize()
     {
         qDebug() << "Radio available";
     }
-    /*else
-    {
-        qCritical() << "No radio found";
-        g_pResult->StepPassed("No radio found", false);
-        return;
-    }*/
 
     //this is workaround, because it seems that searchingChanged is not emmited
     QTimer* t = new QTimer();
