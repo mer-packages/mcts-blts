@@ -129,6 +129,8 @@ private:
     int minFrequency;
     int maxFrequency;
 
+    bool IsRadioAvailable() const;
+
 
 private slots:
     //slots for QRadioTuner signals

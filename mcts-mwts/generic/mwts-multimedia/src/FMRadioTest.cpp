@@ -60,12 +60,12 @@ void FMRadioTest::OnInitialize()
     {
         qDebug() << "Radio available";
     }
-    else
+    /*else
     {
         qCritical() << "No radio found";
         g_pResult->StepPassed("No radio found", false);
         return;
-    }
+    }*/
 
     //this is workaround, because it seems that searchingChanged is not emmited
     QTimer* t = new QTimer();
@@ -141,6 +141,9 @@ void FMRadioTest::SetRadioDuration (int millisecond)
 void FMRadioTest::PlayRadio()
 {
     MWTS_ENTER;
+
+    if (!IsRadioAvailable())
+        return;
 
     radio->start();
     QTimer::singleShot(duration, g_pTest, SLOT(Stop()));
@@ -330,6 +333,9 @@ void FMRadioTest::PerformBandScan()
 {
     MWTS_ENTER;
 
+    if (!IsRadioAvailable())
+        return;
+
     if (!g_pResult->IsPassed())
         return;
 
@@ -356,5 +362,21 @@ void FMRadioTest::PerformBandScan()
     g_pResult->Write(msg);
 
     MWTS_LEAVE;
+}
+
+bool FMRadioTest::IsRadioAvailable() const
+{
+    bool ret;
+    if (!radio->isAvailable())
+    {
+        qCritical() << "No radio found";
+        g_pResult->StepPassed("No radio found", false);
+        ret = false;
+    }
+    else
+    {
+        ret = true;
+    }
+    return ret;
 }
 
