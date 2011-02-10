@@ -710,7 +710,7 @@ void LocationTest::GetCoordinates(int count) {
     m_gpisLocationSource->startUpdates();
     Start();
 
-    if ( m_nFixCountLeft != 0 || m_listPositions.count() != 0)
+    if (m_nFixCountLeft == 0 && m_listPositions.count() == 10)
     {
         g_pResult->Write("Received " + QString::number(count) + " coordinates:");
         QList<QGeoCoordinate>::iterator it;
@@ -723,10 +723,10 @@ void LocationTest::GetCoordinates(int count) {
     }
     else
     {
-        qCritical() << "Got not enough coordinates";
-        g_pResult->Write("Got not enough coordinates");
-        //g_pResult->StepPassed("GetLocation", false);
-        g_pResult->StepPassed(__FUNCTION__, true);
+        QString s = "Got not enough coordinates (" + QString::number(m_listPositions.count()) + ")";
+        qCritical() << s;
+        g_pResult->Write(s);
+        g_pResult->StepPassed(__FUNCTION__, false);
         return;
     }
 
