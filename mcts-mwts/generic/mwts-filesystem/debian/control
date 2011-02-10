@@ -28,10 +28,17 @@ Depends: ${shlibs:Depends}, mwts-filesystem, min(>=2009w40)
 Description: MWTS-Filesystem Generic Test case scripts for min
  Min test cases
  
+Package: mwts-filesystem-utils
+Section: apps
+Architecture: any
+Depends: ${shlibs:Depends}, dosfstools
+Description: Utils to make Mass Storage functionality into device, if it is not supported by platform.
+ Application
+
 Package: mwts-filesystem-cli
 Section: apps
 Architecture: any
 Depends: ${shlibs:Depends},  mwts-filesystem, min
-Description: Test cases for MWTS-Filesystem by command line
+Description: MWTS-Filesystem by command line tool for some functionality, for developers only
  Application
 

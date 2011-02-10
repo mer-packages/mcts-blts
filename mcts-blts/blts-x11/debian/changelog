@@ -1,3 +1,9 @@
+blts-x11-tests (0.0.16) unstable; urgency=low
+
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 17:51:53 +0200
+
 blts-x11-tests (0.0.15-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.

@@ -12,7 +12,7 @@ Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
 BuildRequires:	qt-devel, min-devel, mwts-common-devel, libofono-qt-devel
-Requires:	mwts-common, ofono, libofono-qt
+Requires:	mwts-common, libofono-qt
 Source: 	%{name}-%{version}.tar.gz
 %description
 Test cases for ofono-qt
@@ -71,13 +71,14 @@ ldconfig
 ldconfig
 
 %changelog
-* Wed Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
-- Intial version
-* Fri Jan 07 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.0.2
-- Added functionality test cases to mwts-ofono-sim.cfg
 * Tue Jan 18 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.1.0
 - Added classes for sim manager and voice call (forwarding, waiting, barring)
 - Refactored package names in mwts-ofono.spec
 - Added functionality test cases to mwts-ofono-call.cfg
 - Added content to README
+* Fri Jan 07 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.0.2
+- Added functionality test cases to mwts-ofono-sim.cfg
+* Wed Dec 22 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
+- Intial version
+
 

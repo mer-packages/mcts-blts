@@ -70,4 +70,8 @@ ldconfig
 %postun
 ldconfig
 
+%changelog
+* Tue Nov 02 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.1
+- Initial MeeGo version
+
 

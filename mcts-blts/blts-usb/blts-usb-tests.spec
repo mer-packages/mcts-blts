@@ -1,6 +1,6 @@
 Summary: BLTS USB low-level tests
 Name: blts-usb-tests
-Version: 0.0.16
+Version: 0.0.17
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -33,7 +33,7 @@ This package contains a configuration for N900 USB functional tests.
 %build
 ./autogen.sh
 %configure
-KERNELDIR=`rpm -ql kernel-devel | grep -E '^\/usr\/src\/kernels\/[^\/]*/Makefile' | xargs dirname` make
+KERNELDIR=`rpm -ql --whatprovides kernel-devel | grep -m 1 -E '^\/usr\/src\/kernels\/[^\/]*/Makefile' | xargs dirname` make
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -49,15 +49,17 @@ rm -rf $RPM_BUILD_ROOT
 /usr/lib/tests/%{name}/*
 
 %files config-example
-/etc/blts/blts-usb-testrunner-default.cnf
-/etc/blts/ep-configuration-default.cfg
+%defattr(-,root,root,-)
+%config /etc/blts/blts-usb-testrunner-default.cnf
+%config /etc/blts/ep-configuration-default.cfg
 /usr/share/blts-usb-tests/tests.xml
 
 %files config-n900
-/etc/blts/blts-usb-testrunner-bulk.cnf
-/etc/blts/blts-usb-testrunner-isoc.cnf
-/etc/blts/blts-usb-testrunner-int.cnf
-/etc/blts/ep-configuration-bulk.cfg
-/etc/blts/ep-configuration-isoc.cfg
-/etc/blts/ep-configuration-int.cfg
+%defattr(-,root,root,-)
+%config /etc/blts/blts-usb-testrunner-bulk.cnf
+%config /etc/blts/blts-usb-testrunner-isoc.cnf
+%config /etc/blts/blts-usb-testrunner-int.cnf
+%config /etc/blts/ep-configuration-bulk.cfg
+%config /etc/blts/ep-configuration-isoc.cfg
+%config /etc/blts/ep-configuration-int.cfg
 /usr/share/blts-usb-tests/tests.xml

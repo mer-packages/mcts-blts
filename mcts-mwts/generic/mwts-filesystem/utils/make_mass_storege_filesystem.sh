@@ -30,20 +30,21 @@
 # valiables
 DIRECTORY="/root/data"
 FILE=$DIRECTORY"/backing_file"
-#filesystem size in Megabytes, so 1024= 1 GB
-SIZE=1024
-#SIZE=64
-CYLINDERS=16384
+#filesystem size in Megabytes, so 1024 = 1 GB
+SIZE=2048
+# NOTE could use bc and allow filsystem size as parameter (CYLINDERS=MB * 16)
+# but not bc present in tiny MeeGo images
+CYLINDERS=32768
 
-# 1 GB filesysten
+# 2 GB filesysten
 echo
-echo "Making 1 GB file for filesystem, please wait"
+echo "Making 2 GB file for filesystem, please wait"
 mkdir -p $DIRECTORY
 dd bs=1M count=$SIZE if=/dev/zero of=$FILE
 
 # make partion on a file
 
-echo "Making vfat 32 filesystem in 1 GB file, please wait"
+echo "Making vfat 32 filesystem in 2 GB file, please wait"
 {
 echo x
 echo s
@@ -52,7 +53,6 @@ echo h
 echo 16
 echo c
 echo $CYLINDERS
-#echo 1024
 echo r
 echo n
 echo p

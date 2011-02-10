@@ -15,7 +15,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.59)
-AC_INIT(blts-v4l2-tests, 0.3.9, mikko.ojala@digia.com)
+AC_INIT(blts-v4l2-tests, 0.3.10, mikko.ojala@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/camera.c])
