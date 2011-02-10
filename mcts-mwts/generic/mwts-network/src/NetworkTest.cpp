@@ -510,6 +510,9 @@ bool NetworkTest::StopSession(const QString ap_name)
     QDBusMessage disconnect_reply = iface.call("Disconnect");
     qDebug() << "Reply was: " << disconnect_reply;
 
+    // set this to false, we dont know if disconnecting works yet
+    m_bResult = false;
+
     qDebug() << "Disconnecting....";
     this->Start();
 
@@ -901,22 +904,54 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     // open interface to the service
     QDBusInterface iface("net.connman", service_path, "net.connman.Service", QDBusConnection::systemBus());
 
+    if( ap_name == "psd_network") {
+        qDebug() << "You are connecting to a psd-network. Lets set the apn...";
+        QString apnName = g_pConfig->value(ap_name + "/apn").toString();
+
+        if ( apnName == ""){
+            qCritical() << "Apn returned null from config-file. apn must be set! Aborting...";
+            return false;
+        }
+        qDebug() << "apn: " << apnName;
+
+        QString property = "APN";
+        QList<QVariant> args;
+
+        args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(apnName));
+        //QDBusMessage pass_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+
+        QDBusReply<QVariant> apn_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+
+        /*
+        if ( !apn_reply.isValid() ) {
+            QDBusError error = apn_reply.error();
+            qCritical() << "Apn set error: " << error.message();
+            return false;
+        } */
+
+        qDebug() << "Apn set for " << ap_name << " . Proceeding";
+
+    }
+
     QString name     = g_pConfig->value(ap_name + "/name").toString();
     QString security = g_pConfig->value(ap_name + "/wlan_security").toString();
     QString pass     = "";
 
-    // if null, then it is wepkey
-    if (security == "wpa" ) {
-        qDebug() << "Encryption type wpa";
-        pass = g_pConfig->value(ap_name + "/EAP_wpa_preshared_passphrase").toString();
+    if ( ap_name != "psd_network") {
+        // if null, then it is wepkey
+        if (security == "wpa" ) {
+            qDebug() << "Encryption type wpa";
+            pass = g_pConfig->value(ap_name + "/EAP_wpa_preshared_passphrase").toString();
+        }
+        else if ( security == "wep") {
+            qDebug() << "Encryption type: wep.";
+            pass = g_pConfig->value(ap_name + "/wlan_wepkey1").toString();
+        }
+        else {
+            qDebug() << "Ap is open, no need to add passphrase";
+        }
     }
-    else if ( security == "wep") {
-        qDebug() << "Encryption type: wep.";
-        pass = g_pConfig->value(ap_name + "/wlan_wepkey1").toString();
-    }
-    else {
-        qDebug() << "Ap is open, no need to add passphrase";
-    }
+
 
     QString property = "Passphrase";
     QList<QVariant> args;

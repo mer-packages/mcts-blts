@@ -389,6 +389,14 @@
    <case description="Purpose: tests connection creation latency with saved WPA tkip ap&#xa;        Method: Connection is made, latency is measured&#xa;        Pre/Post-conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="250" name="NFT-WLAN-Connect_to_saved_WPA_PSK_Access_Point-LATE">
     <step>min -c -t 'NFT-WLAN-Connect_to_saved_WPA_PSK_Access_Point-LATE'</step>
    </case>
+   <case timeout="20" name="NFT-WLAN-Application_link_opening_time-LATE">
+    <description>Purpose: tests connection creation latency with saved WPA tkip ap
+        Method: Connects to a access point, downloads html file via http
+        Pre/Post-conditions: 
+        Pass/Fail Criteria: connection to wlan ap is made, file is downloaded
+        References: 
+        Required test data: None.</description>
+   </case>
   </set>
   <set description="Networking performance" type="Long lasting" feature="WLAN" name="NFT-WLAN-LOLA">
    <case description="Purpose: Test upload 2 hour upload troughput via wlan connection&#xa;        Method: Iperf network tool is used to measure the performance, the test measures for 2 hours.&#xa;        Pre/Post-conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, iperf client executed 2 hours, test does not crash &#xa;        References: &#xa;        Required test data: None." name="NFT-WLAN-Upload_troughput-LOLA">
