@@ -1,3 +1,7 @@
+* Mon 14 Jan 2011 Jan Grela <jan.grela@digia.com> - 0.1.2
+ - Changes for assuring that test cases will fail if radio is not available.
+ - Test cases names changed.
+
 * Fri 14 Jan 2011 Jan Grela <jan.grela@digia.com> - 0.1.1
  - Added bug fix for FM radio test cases, UnInitialize fails fixed (QRadioTuner pointer issue), minor changes to codecs and containers setting
 
