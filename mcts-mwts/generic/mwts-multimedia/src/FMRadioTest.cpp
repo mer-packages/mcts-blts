@@ -220,6 +220,7 @@ void FMRadioTest::onFrequencyChanged(int freqency)
     if (scanMode == ContinueMode && freqency == maxFrequency)
     {
         g_pTest->Stop();
+        radio->	cancelSearch();
         radio->stop();
     }
 
@@ -315,6 +316,7 @@ void FMRadioTest::checkSearching()
             QString msg = "Station found on " + QString::number((double)radio->frequency() / 1000000.0, 'f', 3) + " MHz, signal strength " + QString::number(radio->signalStrength());
             qDebug() << msg;
             g_pResult->Write(msg);
+            radioStationCount++;
             ScanUp();
         }
         else if (scanMode == StopMode)
@@ -332,6 +334,8 @@ void FMRadioTest::PerformBandScan()
 
     if (!g_pResult->IsPassed())
         return;
+
+    radioStationCount = 0;
 
     QString msg = "Performing band scan, frequency from " + QString::number((double)minFrequency / 1000000) + " MHz to " + QString::number((double)maxFrequency / 1000000) + " MHz";
     qDebug() << msg;
@@ -353,7 +357,15 @@ void FMRadioTest::PerformBandScan()
     int elapsedTime = g_pTime->elapsed();
     msg = "Time elapsed during scanning: " + QString::number(elapsedTime) + " ms";
     qDebug() << msg;
-    g_pResult->Write(msg);
+    g_pResult->Write("Found " + QString::number(radioStationCount) + " radio stations during scan");
+    g_pResult->AddMeasure("Elapsed time", elapsedTime, "ms");
+
+    if (radioStationCount == 0)
+    {
+        qCritical() << "No radio stations faund";
+        g_pResult->StepPassed("No radio stations faund", false);
+        return;
+    }
 
     MWTS_LEAVE;
 }
