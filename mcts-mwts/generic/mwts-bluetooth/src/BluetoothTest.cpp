@@ -503,9 +503,16 @@ const QString& BluetoothTest::GetAddress() const
 void BluetoothTest::transferStopped()
 {
     MWTS_ENTER;
-    MWTS_DEBUG("transfer stopped");
+    qDebug() << "transfer stopped";
     if(m_pSocket)
+    {
+        qDebug() << "Terminating the BluetoothSocket thread";
         m_pSocket->terminate();
+
+        qDebug() << "Waiting the BluetoothSocket thread to terminate...";
+        m_pSocket->wait();
+        qDebug() << "BluetoothSocket thread terminated";
+    }
     Stop();
     MWTS_LEAVE;
 }
@@ -516,7 +523,7 @@ void BluetoothTest::transferStopped()
 void BluetoothTest::periodicThroughput(double sampleTime, double bytesPerSecond)
 {
     MWTS_ENTER;
-    MWTS_DEBUG("Periodic Throughput");
+    qDebug() << "Periodic Throughput";
     qDebug() << "Periodic Throughput" << sampleTime << bytesPerSecond;
     g_pResult->AddMeasure( "Periodic Sample Time", sampleTime, "s" );
     g_pResult->AddMeasure( "Periodic Throughput", (bytesPerSecond/1024.0)/1024.0*8, "Mbit/s" );
@@ -529,7 +536,7 @@ void BluetoothTest::periodicThroughput(double sampleTime, double bytesPerSecond)
 void BluetoothTest::transferFinished(double bytesPerSecond,bool isSuccessfull)
 {
     MWTS_ENTER;
-    qDebug() << "Transfer finished: "<<isSuccessfull;
+    qDebug() << "Transfer finished: "<< isSuccessfull;
     g_pResult->StepPassed(this->CaseName(), isSuccessfull);
     g_pResult->AddMeasure( "Transfer Throughput", (bytesPerSecond/1024.0)/1024.0*8, "Mbit/s" );
     MWTS_LEAVE;
@@ -541,12 +548,18 @@ void BluetoothTest::transferFinished(double bytesPerSecond,bool isSuccessfull)
 void BluetoothTest::transferError(QString error)
 {
     MWTS_ENTER;
-    MWTS_DEBUG("transfer error");
+    qDebug() << "Transfer error: " << error;
     g_pResult->StepPassed(this->CaseName(), false);
     g_pResult->Write(error);
-    qCritical() << "transfer error" << error;
     if(m_pSocket)
+    {
+        qDebug() << "Terminating the BluetoothSocket thread";
         m_pSocket->terminate();
+
+        qDebug() << "Waiting the BluetoothSocket thread to terminate...";
+        m_pSocket->wait();
+        qDebug() << "BluetoothSocket thread terminated";
+    }
     Stop();
     MWTS_LEAVE;
 }
@@ -557,8 +570,7 @@ void BluetoothTest::transferError(QString error)
 void BluetoothTest::transferWarning(QString warning)
 {
     MWTS_ENTER;
-    MWTS_DEBUG("transfer warning");
+    qDebug() << "Transfer warning: " << warning;
     g_pResult->Write(warning);
-    qWarning() << "transfer error" << warning;
     MWTS_LEAVE;
 }
