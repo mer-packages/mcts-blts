@@ -1,2 +1,16 @@
+* Fri, 04 Feb 2011 Reijo Korhonen <reijo.korhonen@digia.com> - 0.0.5
+- Added Accuracy test
+- conf file new variables to define anteenna position and accuracy limits wanted
+- new code
+- new min script test case and tests.xml updated
+- updated README
+- schecked version numbering to support our new way
+- Added EXPERIMENTAL way to verify assets using Test Driver
+- still experimental, no offical support yet
+- set off in conf file by default
+
+* Fri 04 Feb 2011 Jan Grela <jan.grela@digia.com> - 0.0.4
+- Added functionality to performing measure of cold test fixing
+
 * Thu 16 Dec 2010 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 0.0.3
 - Initial version

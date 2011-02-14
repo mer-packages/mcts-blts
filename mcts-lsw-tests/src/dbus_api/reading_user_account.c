@@ -24,7 +24,10 @@
 #include <glib.h>
 #include <gnome-keyring.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <glib-object.h>
 
 const char
 		* USAGE =
@@ -132,6 +135,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	g_hash_table_destroy(service_url_hash);
+        return 0;
 }
 
 #endif /* _READING_USER_ACCOUNT */

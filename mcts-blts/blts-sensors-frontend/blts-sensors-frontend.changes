@@ -1,3 +1,6 @@
+* Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.5
+- Version update due to packaging change.
+
 * Tue 16 Nov 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.1.4
 - Packaging script updated.
 - Logging updated to new common library standard.

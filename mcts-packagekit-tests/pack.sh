@@ -24,7 +24,7 @@
 
 
 # parse spec required name
-NAME=`grep "Name:" test.spec | awk '{print $2}'`
+NAME=`grep "Name:" *.spec | awk '{print $2}'`
 if [ -z "$NAME" ];then
 	echo "Name not specified in spec file"
 	exit 1
@@ -32,7 +32,7 @@ fi
 
 
 # parse spec required version
-VERSION=`grep "Version:" test.spec | awk '{print $2}'`
+VERSION=`grep "Version:" ${NAME}.spec | awk '{print $2}'`
 if [ -z "$VERSION" ];then
 	echo "Version not specified in spec file"
 	exit 1
@@ -71,7 +71,7 @@ rm -rf *.rpm *.tar.bz2 *.tar.gz
 cp -a $SRC_ROOT/* $RPM_ROOT/src_tmp/$NAME-$VERSION
 # create Makefile in top src folder
 #cp $SRC_ROOT/top_Makefile $RPM_ROOT/src_tmp/$NAME-$VERSION/Makefile
-cp $PWD/test.spec $RPM_ROOT/SPECS
+cp $PWD/${NAME}.spec $RPM_ROOT/SPECS
 cd $RPM_ROOT/src_tmp
 tar $ARCHIVE_OPTION $RPM_ROOT/SOURCES/$NAME-$VERSION.$ARCHIVE_TYPE $NAME-$VERSION
 cd -
@@ -79,7 +79,7 @@ cd -
 # build
 echo "build from workspace... >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 cd  $RPM_ROOT/SPECS
-rpmbuild -ba test.spec --clean --define "_topdir $RPM_ROOT"
+rpmbuild -ba ${NAME}.spec --clean --define "_topdir $RPM_ROOT"
 cd -
 
 # copy rpm

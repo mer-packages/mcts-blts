@@ -1,6 +1,6 @@
 Summary: BLTS V4L2 test set
 Name: blts-v4l2-tests
-Version: 0.3.9
+Version: 0.3.10
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -9,8 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libbltspixelformat-devel
 BuildRequires: libjpeg-devel libX11-devel libXv-devel
-Requires: blts-v4l2-tests-config libbltscommon1 libbltspixelformat1
-Requires: libjpeg libX11 libXv
+Requires: blts-v4l2-tests-config
 
 %package config-example
 Summary: BLTS V4L2 test config example
@@ -38,10 +37,12 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
 /usr/lib/tests/%{name}/*
 
 %files config-example
-/etc/blts/blts-v4l2-tests.cnf
+%defattr(-,root,root,-)
+%config /etc/blts/blts-v4l2-tests.cnf
 /usr/share/blts-v4l2-tests/tests.xml

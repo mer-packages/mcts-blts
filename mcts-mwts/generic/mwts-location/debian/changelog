@@ -1,3 +1,18 @@
+mwts-location (0.0.5) unstable; urgency=low
+  * Added Accuracy test
+  * - conf file new variables to define anteenna position and accuracy limits wanted
+  * - new code
+  * - new min script test case and tests.xml updated
+  * - updated README
+  * - schecked version numbering to support our new way
+  * Added EXPERIMENTAL way to verify assets using Test Driver
+  * - still experimental, no offical support yet
+ -- Reijo Korhonen <reijo.korhonen@digia.com>  Fri, 4 Feb 2011 13:08:00 +0300
+
+mwts-location (0.0.4) unstable; urgency=low
+  * Added functionality to performing measure of cold test fixing
+ -- Jan Grela <jan.grela@digia.com>  Fri, 4 Feb 2011 10:00:00 +0300
+
 mwts-location (0.0.3) unstable; urgency=low
   * More clear scripter interface
   * Refactoring

@@ -308,6 +308,13 @@ class TelepathyTest : public MwtsTest
 				  const QString& classtype );
 		
 		/**
+		 *  @fn bool WaitForIncomingMessage()
+		 *  @brief Waits until incoming message is received or timeout occurs.
+		 *  @return True, if successfull. False otherwise.
+		 */
+		bool WaitForIncomingMessage();
+
+		/**
 		 *  @fn bool WaitForIncomingIM()
 		 *  @brief Waits until incoming IM is received or timeout occurs.
 		 *  @return True, if successfull. False otherwise.

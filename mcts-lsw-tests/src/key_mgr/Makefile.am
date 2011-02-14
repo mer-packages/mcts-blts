@@ -18,7 +18,12 @@
 #AUTOMAKE_OPTIONS=foreign
 lsw_SCRIPTS = 
 lswdir = /opt/$(PACKAGE)/key_mgr
-CFLAGS=`pkg-config --cflags glib-2.0 gobject-2.0 libsocialweb-keystore libsocialweb-keyfob`
-LDFLAGS+=`pkg-config --libs glib-2.0 gobject-2.0 libsocialweb-keystore libsocialweb-keyfob`
+#CFLAGS=`pkg-config --cflags glib-2.0 gobject-2.0 libsocialweb-keystore libsocialweb-keyfob`
+#LDFLAGS+=`pkg-config --libs glib-2.0 gobject-2.0 libsocialweb-keystore libsocialweb-keyfob`
+
+AM_CFLAGS = $(LSW_CFLAGS)
+
+LDADD = $(LSW_LIBS)
+
 lsw_PROGRAMS = keystore_testcase keyfob_sync_testcase keyfob_testcase
 EXTRA_DIST = $(lsw_SCRIPTS) $(lsw_PROGRAMS)

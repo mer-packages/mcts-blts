@@ -40,6 +40,14 @@ To build debian package
 
  $ dpkg-buildpackage -rfakeroot
 
+or;
+
+ $ ./pack.sh -d
+
+To build RPM package
+
+ $ ./pack.sh -r
+
 Running the tests
 =================
 
@@ -90,14 +98,16 @@ input devices and settings if needed;
 # name of the device node (for example, "event1").
 [parameter]
 	name input_devices
-	const "event1 event3 event4"
+	const "event1 event2 event3"
 [end_parameter]
 
 # Used pointer device (currently only touchscreen devices are supported, for
 # example mice will not work)
+# 'event0' -> use /dev/input/event0
+# '*touchscreen' -> use the device whose name contains string 'touchscreen'
 [parameter]
 	name pointer_device
-	const "event4"
+	const "*touchscreen"
 [end_parameter]
 
 # Screen orientation; 0 = TS and screen coordinate system is the same,
@@ -105,11 +115,5 @@ input devices and settings if needed;
 [parameter]
 	name scr_orientation
 	const 0
-[end_parameter]
-
-# Screen size in pixels
-[parameter]
-	name scr_size
-	const "800x480"
 [end_parameter]
 

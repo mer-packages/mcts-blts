@@ -1,6 +1,6 @@
 Summary: BLTS Sensor test front-end module
 Name: blts-sensors-frontend
-Version: 0.1.4
+Version: 0.1.5
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -8,7 +8,6 @@ URL: http://wiki.meego.com/Quality/TestSuite/MCTS
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
-Requires: libbltscommon1
 
 %description
 Main package for the BLTS sensor test module, containing the test runner
@@ -30,6 +29,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README README.api COPYING
 /usr/bin/*
 # TODO: Create separate devel package

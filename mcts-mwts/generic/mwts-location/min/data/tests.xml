@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <testdefinition version="0.1">
-  <suite name="mwts-location-tests" domain="Location">
-
-<!--This set contains FUNCTIONAL tests of mwts-location, script file: mwts-location.cfg-->
-    <set name="FUTE-location" description="Location Functionality" feature="(A)-GPS" type="Functional">
+ <suite domain="Location" name="mwts-location-tests">
+  <!--This set contains FUNCTIONAL tests of mwts-location, script file: mwts-location.cfg-->
+  <set description="Location Functionality" feature="(A)-GPS" type="Functional" name="FUTE-location">
+   <!--
       <case name="FUTE-GPS-TestColdFix" timeout="600" description=
             "Purpose
             Get GPS cold fix 
@@ -28,26 +28,28 @@
             ">
             <step>min -c -t 'FUTE-GPS-TestGPSHotFix'</step>
       </case>
-    </set>
-
-<!--This set contains ITERATIVE tests of mwts-location, script file: mwts-location-nft.cfg-->
-    <set name="ITER-location" description="Location reliability" feature="(A)-GPS" type="Iterative">
-      <case name="NFT-GPS-HotFix-ITER" timeout="600" description=
-            "Purpose
-            Get GPS hot fix. Tests reliability of the positioning engine
-            Method
-            Using Qt Mobility location API.
-            Pre-/Post-Conditions
-            Device located so that signal receivable from at least 4 satellites
-            Pass/Fail Criteria
-            Test runs successfully, test does not crash
-            ">
-            <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-ITER'</step>
-      </case>
-    </set>
-
-<!--This set contains LONG-LASTING tests of mwts-location, script file: mwts-location-nft.cfg-->
-    <set name="LOLA-location" description="Location reliability" feature="(A)-GPS" type="Long-lasting">
+      -->
+   <case name="FUTE-GPS-TestFix" state="Design">
+    <description>Purpose
+  Get GPS cold fix 
+Method
+  Using Qt Mobility location API
+Pre-/Post-Conditions
+   Device located so that signal receivable from at least 4 satellites
+Pass/Fail Criteria
+   Test runs successfully, test does not crash</description>
+    <step>min -c -t FUTE-GPS-TestFix</step>
+   </case>
+  </set>
+  <!--This set contains ITERATIVE tests of mwts-location, script file: mwts-location-nft.cfg-->
+  <set description="Location reliability" feature="(A)-GPS" type="Iterative" name="ITER-location">
+   <case description="Purpose&#xa;            Get GPS hot fix. Tests reliability of the positioning engine&#xa;            Method&#xa;            Using Qt Mobility location API.&#xa;            Pre-/Post-Conditions&#xa;            Device located so that signal receivable from at least 4 satellites&#xa;            Pass/Fail Criteria&#xa;            Test runs successfully, test does not crash&#xa;            " timeout="600" name="NFT-GPS-HotFix-ITER">
+    <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-ITER'</step>
+   </case>
+  </set>
+  <!--This set contains LONG-LASTING tests of mwts-location, script file: mwts-location-nft.cfg-->
+  <set description="Location reliability" feature="(A)-GPS" type="Long-lasting" name="LOLA-location">
+   <!--
       <case name="NFT-GPS-HotFix-LOLA" timeout="4200" description=
             "Purpose
             Get GPS hot fix. Tests reliability of the positioning engine
@@ -60,10 +62,11 @@
             ">
             <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-LOLA'</step>
       </case>
-    </set>
-
-<!--This set contains LATENCY tests of mwts-location, script file: mwts-location-nft.cfg-->
-    <set name="LATE-location" description="Location performance" feature="(A)-GPS" type="Latency">
+      -->
+  </set>
+  <!--This set contains LATENCY tests of mwts-location, script file: mwts-location-nft.cfg-->
+  <set description="Location performance" feature="(A)-GPS" type="Latency" name="LATE-location">
+   <!--
       <case name="NFT-GPS-HotFix-LATE" timeout="4200" description=
             "Purpose
             Get GPS hot fix. Tests performance of the positioning engine.
@@ -76,7 +79,22 @@
             ">
             <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-LATE'</step>
       </case>
-    </set>
-    
-  </suite>
+      -->
+   <case description="Purpose&#xa;  Get GPS hot fix. Tests performance of the positioning engine.&#xa;Method&#xa;  Using Qt Mobility location API.&#xa;Pre-/Post-Conditions&#xa;  Device located so that signal receivable from at least 4 satellites&#xa;Pass/Fail Criteria&#xa; Test runs successfully, test does not crash&#xa;            " timeout="4200" name="NFT-GPS-HotFix-LATE">
+    <step>min -c -t 'NFT-GPS-HotFix-LATE'</step>
+   </case>
+   <case description="Purpose&#xa;  Get GPS cold fix. Tests performance of the positioning engine.&#xa;Method&#xa;  Using Qt Mobility location API.&#xa;Pre-/Post-Conditions&#xa;  Device located so that signal receivable from at least 4 satellites.&#xa;Pass/Fail Criteria&#xa;  Test runs successfully, test does not crash&#xa;            " timeout="4200" name="NFT-GPS-ColdFix-LATE" state="Design">
+    <step>min -c -t 'NFT-GPS-ColdFix-LATE'</step>
+   </case>
+   <case description="Purpose&#xa;  Get GPS cold fix. Tests performance of the positioning engine.&#xa;Method&#xa;  Using Qt Mobility location API.&#xa;Pre-/Post-Conditions&#xa;  Device located so that signal receivable from at least 4 satellites.&#xa;  Sim card should be in device and networ should be available&#xa;Pass/Fail Criteria&#xa;  Test runs successfully, test does not crash&#xa;            " timeout="4200" name="NFT-GPS-ColdFix_with_network_access-LATE" state="Design">
+    <step>min -c -t 'NFT-GPS-ColdFix_with_network_access-LATE'</step>
+   </case>
+  </set>
+  <!--This set contains ACCURACY tests of mwts-location, script file: mwts-location-nft.cfg-->
+  <set description="Location accuracy" feature="(A)-GPS" type="Iterative" name="ACCURACY-location">
+   <case description="Purpose&#xa;            Get GPS hot or gold fixes. Tests accuracy of the positioning engine&#xa;            Method&#xa;            Using Qt Mobility location API.&#xa;            Pre-/Post-Conditions&#xa;            Device antenna positon is set in assets configuration file.&#xa;            Device located so that signal receivable from at least 4 satellites&#xa;            Pass/Fail Criteria&#xa;            Test runs successfully, fixes disrance to right antenna place is less than given value in prosent given in configuration file&#xa;            " timeout="1200" name="NFT-GPS-Accuracy">
+    <step>min -c -t 'NFT-GPS-Accuracy'</step>
+   </case>
+  </set>
+ </suite>
 </testdefinition>

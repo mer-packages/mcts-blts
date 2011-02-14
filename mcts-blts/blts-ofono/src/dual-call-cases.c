@@ -337,7 +337,7 @@ static void handle_first_call(gchar* path, GHashTable* properties, gpointer user
 							state->signalcb_VoiceCall1_PropertyChanged, state, 0);
 	}
 
-	BLTS_DEBUG("Answer the call...\n");
+	BLTS_DEBUG("Expecting an incoming call...\n");
 	state->retries = 10;
 	org_ofono_VoiceCall_get_properties_async(state->voice_calls[call_index],
 	pending_call_answerable_check_complete, state);
@@ -800,7 +800,7 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 {
 	FUNC_ENTER();
 
-	BLTS_DEBUG("Start listening calls...\n");
+	BLTS_DEBUG("Waiting for incoming calls...\n");
 
 	FUNC_LEAVE();
 	return FALSE;

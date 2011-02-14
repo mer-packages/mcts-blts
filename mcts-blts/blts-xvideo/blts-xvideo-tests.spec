@@ -1,6 +1,6 @@
 Summary: BLTS XVideo test set
 Name: blts-xvideo-tests
-Version: 0.0.9
+Version: 0.0.10
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -9,8 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libbltspixelformat-devel
 BuildRequires: libX11-devel libXv-devel
-Requires: blts-xvideo-tests-config libbltscommon1 libbltspixelformat1
-Requires: libX11 libXv
+Requires: blts-xvideo-tests-config
 
 %package config-example
 Summary: BLTS XVideo test config example
@@ -38,11 +37,13 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root,-)
 %doc README COPYING
 /usr/bin/*
 /usr/lib/tests/%{name}/*
 
 %files config-example
-/etc/blts/blts-xvideo-tests.cnf
-/etc/blts/blts-xvideo-n900.cnf
+%defattr(-,root,root,-)
+%config /etc/blts/blts-xvideo-tests.cnf
+%config /etc/blts/blts-xvideo-n900.cnf
 /usr/share/blts-xvideo-tests/tests.xml

@@ -20,7 +20,7 @@
  */
 
 #include <QtCore>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QtDBus>
 #include <libsocialweb-qt/swclient.h>
 #include "lsw_testcases.h"
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 			abort();
 		}
 
-	QApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 
 	if(NULL == service_name){
 		service_name = "lastfm";
