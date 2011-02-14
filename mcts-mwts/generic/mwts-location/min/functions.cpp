@@ -126,7 +126,7 @@ LOCAL int GetCoordinates (MinItemParser * item)
 
     if(mip_get_next_int(item, &count))
     {
-        qCritical() << "The volume is an integer number.";
+        qCritical() << "The number of coordinates is an integer number.";
         return 1;
     }
     else
