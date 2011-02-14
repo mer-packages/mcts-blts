@@ -40,6 +40,17 @@ Pass/Fail Criteria
    Test runs successfully, test does not crash</description>
     <step>min -c -t FUTE-GPS-TestFix</step>
    </case>
+   <case name="FUTE-GPS-GetCoordinate">
+    <description>Purpose
+  Get GPS device coordicates
+Method
+  Using Qt Mobility location API
+Pre-/Post-Conditions
+   Device located so that signal receivable from at least 4 satellites
+Pass/Fail Criteria
+   Test runs successfully, test does not crash</description>
+    <step>min -c -t FUTE-GPS-GetCoordinate</step>
+   </case>
   </set>
   <!--This set contains ITERATIVE tests of mwts-location, script file: mwts-location-nft.cfg-->
   <set description="Location reliability" feature="(A)-GPS" type="Iterative" name="ITER-location">
