@@ -1,7 +1,7 @@
 /*
  * This file is part of MCTS
  *
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+ * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
  *
  * Contact: Tommi Toropainen; tommi.toropainen@nokia.com;
  *
@@ -38,6 +38,8 @@ QTM_USE_NAMESPACE
 #define METHOD_ALL 0
 #define METHOD_SATELLITE  1
 #define METHOD_NON_SATELLITE  2
+
+class TestDriver;
 
 class LocationTest : public MwtsTest
 {
@@ -76,6 +78,7 @@ public:
          *  Gets only one fix, either cold or hot and add it as a measure.
          */
 	void GetLocationFix();
+    void TestAccuracy();
 
 	void CalculateDistances();
 
@@ -87,6 +90,7 @@ public:
         void RemoveGPSData() const;
 	
 private:
+    void CalculateAccuracy();
         // object for getting position info
 	QGeoPositionInfoSource *m_gpisLocationSource;
 	QTimer* m_pTimeout;
@@ -100,10 +104,30 @@ private:
 	int m_nHotMode;
 	int m_nPositioningMethod;
 	QGeoPositionInfoSource::PositioningMethod m_PositioningMethod;
+    QGeoCoordinate::CoordinateType m_CoordinateType;
 	int m_nFixCountLeft;
 	bool m_bGetLocFix;
+    bool m_bAccuracyResult;
 	QList<int> m_listTimesToFix;
 	QList<QGeoCoordinate> m_listPositions;
+
+    int m_numOfFixes;
+    qreal m_allowedRadius;
+
+    // antenna location
+    double m_antennaLatitude;
+    double m_antennaLongitude;
+    double m_antennaAltitude;
+
+    double m_requiredProsent;
+
+    // test driver/(A)GPSemulation
+    TestDriver *m_pTestDriver;
+
+    bool m_useTestDriver;
+    bool m_allow3Demulation;
+    qreal m_emulatedRadius;
+
 
 private slots:
 	void OnPositionUpdated(const QGeoPositionInfo &info);

@@ -90,5 +90,11 @@ Pass/Fail Criteria
     <step>min -c -t 'NFT-GPS-ColdFix_with_network_access-LATE'</step>
    </case>
   </set>
+  <!--This set contains ACCURACY tests of mwts-location, script file: mwts-location-nft.cfg-->
+  <set description="Location accuracy" feature="(A)-GPS" type="Iterative" name="ACCURACY-location">
+   <case description="Purpose&#xa;            Get GPS hot or gold fixes. Tests accuracy of the positioning engine&#xa;            Method&#xa;            Using Qt Mobility location API.&#xa;            Pre-/Post-Conditions&#xa;            Device antenna positon is set in assets configuration file.&#xa;            Device located so that signal receivable from at least 4 satellites&#xa;            Pass/Fail Criteria&#xa;            Test runs successfully, fixes disrance to right antenna place is less than given value in prosent given in configuration file&#xa;            " timeout="1200" name="NFT-GPS-Accuracy">
+    <step>min -c -t 'NFT-GPS-Accuracy'</step>
+   </case>
+  </set>
  </suite>
 </testdefinition>

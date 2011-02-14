@@ -16,10 +16,12 @@ OBJECTS_DIR = ../tmp
 PRECOMPILED_HEADER = stable.h
 
 SOURCES += \
-	LocationTest.cpp
+    LocationTest.cpp \
+    TestDriver.cpp
 
 HEADERS += \
-	LocationTest.h
+    LocationTest.h \
+    TestDriver.h
 
 LIBS += -lmwts-common
 	
