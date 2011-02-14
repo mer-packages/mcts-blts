@@ -55,6 +55,10 @@ Requirements for environment
 
 Executing tests
 
+   For PSD-cases you need to set the service name and internet access point to the config file (/usr/lib/tests/NetworkTest.cfg) befofe executing tests. 
+   The internet access point name is usually 'internet' and the psd_network name can be checked with using connman test-scripts 
+    * give  '/usr/lib/connman/test/test-connman services'
+
    MWTS-Network test execution is performed normally. Check the "General MWTS testing guide".
 
 Test results
