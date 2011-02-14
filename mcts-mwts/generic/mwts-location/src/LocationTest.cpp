@@ -710,7 +710,7 @@ void LocationTest::GetCoordinates(int count) {
     m_gpisLocationSource->startUpdates();
     Start();
 
-    if (m_nFixCountLeft == 0 && m_listPositions.count() == 10)
+    if (m_nFixCountLeft == 0 && m_listPositions.count() == count)
     {
         g_pResult->Write("Received " + QString::number(count) + " coordinates:");
         QList<QGeoCoordinate>::iterator it;
