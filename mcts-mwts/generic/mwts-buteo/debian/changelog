@@ -1,0 +1,20 @@
+mwts-buteo-tests (0.0.4) unstable; urgency=low
+  * Fixed connecting to TransferProgress-signal
+  * Added dependencies to service plugins in spec file
+  * Fixed rpm-packaking due version mismatch problems
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed,21 Jan 2010 09:45:00 +0200
+
+mwts-buteo-tests (0.0.3) unstable; urgency=low
+  * Added nft-cases (iterative % latency)
+  * cloud sync with ovi-contacts, memotoo & mobical
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed,13 Jan 2010 11:00:00 +0200
+
+mwts-buteo-tests (0.0.2) unstable; urgency=low
+  * Added nft-cases
+  * cloud sync with google working (contacts only)
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed, 22 Nov 2010 09:00:00 +0200
+
+mwts-buteo-tests (0.0.1) unstable; urgency=low
+  * Initial version
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Wed, 22 Nov 2010 09:00:00 +0200
+

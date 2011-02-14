@@ -3,204 +3,204 @@
   <suite name="mwts-buteo-tests" domain="System">
     <set name="FUTE-Buteo" feature="Sync" type="Functional">
       <case name="FUTE-Buteo_list_profiles" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Lists available sync profiles
-        Method
+        Method:
         Syncfw-API call lists available profiles
-        Pre-/Post-conditions
-        Pass-/Fail Criteria
+        Pre/Post-conditions:
+        Pass/Fail Criteria:
         test runs successfully, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_list_profiles'</step>
       </case>
       <case name="FUTE-Buteo_create_btprofile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Creates bluetooth sync profile
-        Method
+        Method:
         Syncfw-API call creates a bluetooth profile
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	bluetooth profile template existing and passed as parameter (/etc/sync/profiles/sync)
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is created, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_create_btprofile'</step>
       </case>
       <case name="FUTE-Buteo_create_google_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Creates google sync profile
-        Method
+        Method:
         Syncfw-API call creates a google sync profile and enables sync services (contacts, calendar etc)
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	google.com profile template existing and passed as parameter (/etc/sync/profiles/sync)
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is created, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_create_google_profile'</step>
       </case>
       <case name="FUTE-Buteo_create_memotoo_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Creates memotoo sync profile
-        Method
+        Method:
         Syncfw-API call creates a memotoo sync profile and enables sync services (contacts, calendar etc)
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	google.com profile template existing and passed as parameter (/etc/sync/profiles/sync)
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is created, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_create_memotoo_profile'</step>
       </case>
       <case name="FUTE-Buteo_create_mobical_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Creates memotoo sync profile
-        Method
+        Method:
         Syncfw-API call creates a memotoo sync profile and enables sync services (contacts, calendar etc)
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	google.com profile template existing and passed as parameter (/etc/sync/profiles/sync)
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is created, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_create_mobical_profile'</step>
       </case>
       <case name="FUTE-Buteo_create_ovi_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Creates ovi sync profile
-        Method
+        Method:
         Syncfw-API call creates a ovi sync profile and enables sync services (contacts, calendar etc)
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	google.com profile template existing and passed as parameter (/etc/sync/profiles/sync)
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is created, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_create_ovi_profile'</step>
       </case>
       <case name="FUTE-Buteo_remove_bt_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Removes bt sync profile
-        Method
+        Method:
         Syncfw-API call removes a bt sync profile from device
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is removed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_remove_bt_profile'</step>
       </case>
       <case name="FUTE-Buteo_remove_google_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Removes google sync profile
-        Method
+        Method:
         Syncfw-API call removes a google sync profile from device
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is removed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_remove_google_profile'</step>
       </case>
       <case name="FUTE-Buteo_remove_memotoo_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Removes memotoo sync profile
-        Method
+        Method:
         Syncfw-API call removes a memotoo sync profile from device
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is removed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_remove_memotoo_profile'</step>
       </case>
       <case name="FUTE-Buteo_remove_mobical_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Removes mobical sync profile
-        Method
+        Method:
         Syncfw-API call removes a mobical sync profile from device
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is removed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_remove_mobical_profile'</step>
       </case>
       <case name="FUTE-Buteo_remove_ovi_profile" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Removes ovi sync profile
-        Method
+        Method:
         Syncfw-API call removes a ovi sync profile from device
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profile is removed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_remove_ovi_profile'</step>
       </case>
       <case name="FUTE-Buteo_remove_profiles" timeout="10" description=
-        "Purpose
+        "Purpose:
 	Removes profiles
-        Method
+        Method:
         Syncfw-API call removes all profiles from device
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, profiles are removed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_remove_profiles'</step>
       </case>
       <case name="FUTE-Buteo_sync_bt" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Syncs with bluetooth profile
-        Method
+        Method:
         Syncfw-API call starts bluetooth sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, devices are paired, needed device parameters filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_bt'</step>
       </case>
       <case name="FUTE-Buteo_sync_google" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Syncs with google profile
-        Method
+        Method:
         Syncfw-API call starts google sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_google'</step>
       </case>
       <case name="FUTE-Buteo_sync_ovi" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Syncs with ovi profile
-        Method
+        Method:
         Syncfw-API call starts ovi sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_ovi'</step>
       </case>
       <case name="FUTE-Buteo_sync_memotoo" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Syncs with memotoo profile
-        Method
+        Method:
         Syncfw-API call starts memotoo sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_memotoo'</step>
       </case>
       <case name="FUTE-Buteo_sync_mobical" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Syncs with mobical profile
-        Method
+        Method:
         Syncfw-API call starts mobical sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_mobical'</step>
@@ -209,62 +209,62 @@
 
     <set name="NFT-Buteo" feature="Sync" type="Iterative">
       <case name="FUTE-Buteo_sync_bt-ITER" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Iterative sync with bluetooth profile
-        Method
+        Method:
         Syncfw-API call starts bluetooth sync, 120 iterations.
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, devices are paired, needed device parameters filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_bt-ITER'</step>
       </case>
       <case name="FUTE-Buteo_sync_google-ITER" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Iteratively syncs with google profile
-        Method
+        Method:
         Syncfw-API call starts google sync, 120 iterations.
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_google-ITER'</step>
       </case>
 
       <case name="FUTE-Buteo_sync_memotoo-ITER" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Iteratively syncs with memotoo profile
-        Method
+        Method:
         Syncfw-API call starts memotoo sync, 120 iterations.
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_memotoo-ITER'</step>
       </case>
       <case name="FUTE-Buteo_sync_mobical-ITER" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Iteratively syncs with mobical profile
-        Method
+        Method:
         Syncfw-API call starts mobical sync, 120 iterations.
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_mobical-ITER'</step>
       </case>
       <case name="FUTE-Buteo_sync_ovi-ITER" timeout="120" description=
-        "Purpose
+        "Purpose:
 	Iteratively syncs with ovi profile
-        Method
+        Method:
         Syncfw-API call starts ovi sync, 120 iterations.
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_ovi-ITER'</step>
@@ -273,61 +273,61 @@
 
     <set name="NFT-Buteo-LATE" feature="Sync" type="Latency">
       <case name="FUTE-Buteo_sync_bt-LATE" timeout="160" description=
-        "Purpose
+        "Purpose:
 	Syncs with bluetooth profile. Measures sync latency.
-        Method
+        Method:
         Syncfw-API call starts bluetooth sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, devices are paired, bluetooth setting correct in the config file.
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_bluetooth-LATE'</step>
       </case>
       <case name="FUTE-Buteo_sync_google-LATE" timeout="160" description=
-        "Purpose
+        "Purpose:
 	Syncs with google profile. Measures sync latency.
-        Method
+        Method:
         Syncfw-API call starts google sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_google-LATE'</step>
       </case>
       <case name="FUTE-Buteo_sync_memotoo-LATE" timeout="160" description=
-        "Purpose
+        "Purpose:
 	Syncs with memotoo profile. Measures sync latency.
-        Method
+        Method:
         Syncfw-API call starts memotoo sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_memotoo-LATE'</step>
       </case>
       <case name="FUTE-Buteo_sync_mobical-LATE" timeout="160" description=
-        "Purpose
+        "Purpose:
 	Syncs with mobical profile. Measures sync latency.
-        Method
+        Method:
         Syncfw-API call starts mobical sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_mobical-LATE'</step>
       </case>
       <case name="FUTE-Buteo_sync_ovi-LATE" timeout="160" description=
-        "Purpose
+        "Purpose:
 	Syncs with ovi profile. Measures sync latency.
-        Method
+        Method:
         Syncfw-API call starts ovi sync
-        Pre-/Post-conditions
+        Pre/Post-conditions:
 	Profile exists, internet connection on, account credentials filled in config file
-        Pass-/Fail Criteria
+        Pass/Fail Criteria:
         test runs successfully, sync completed, test does not crash
         ">
         <step>min -c -t 'FUTE-Buteo_sync_bluetooth-LATE'</step>
