@@ -1,3 +1,5 @@
+/* -*- mode: C; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
+
 /* transfer-cases.c -- Data transfer cases
 
    Copyright (C) 2000-2010, Nokia Corporation.
@@ -162,7 +164,7 @@ static struct usb_case_state *usb_state_init(my_usb_data *data, dev_t dev)
 	for (t = 0; t < USBDRV_MAX_ENDPOINTS; t++) {
 		sprintf(node_names[t], EPNODE_FMT, t);
 		ret = mknodat(AT_FDCWD, node_names[t], S_IFCHR | 0600,
-			makedev(major(dev), t));
+                              makedev(major(dev), t));
 		if (ret)
 			BLTS_DEBUG("mknodat (%s) failed.\n", node_names[t]);
 	}
@@ -305,7 +307,7 @@ static int test_write_real(char *node_name, unsigned size)
 		return -ENOMEM;
 	memset(buf, 0, size);
 	for (i = 0; i < size; i++)
-  	buf[i] = (char) (i % 63);
+                buf[i] = (char) (i % 63);
 
 	fdw = open(node_name, O_WRONLY);
 	if (fdw < 0) {
@@ -323,7 +325,7 @@ static int test_write_real(char *node_name, unsigned size)
 		if (ret < 0) {
 			if (errno == EOVERFLOW) {
 				BLTS_DEBUG("Write: Overflow.\n");
-				 //Try to continue
+                                //Try to continue
 			} else {
 				BLTS_LOGGED_PERROR("write");
 				break;
@@ -372,21 +374,21 @@ void print_ep_type(int type)
 {
 	switch (type)
 	{
-		case USBDRV_EP_TYPE_BULK:
-			BLTS_DEBUG("\tBulk endpoint\n");
-			break;
-		case USBDRV_EP_TYPE_CONTROL:
-			BLTS_DEBUG("\tControl endpoint\n");
-			break;
-		case USBDRV_EP_TYPE_INT:
-			BLTS_DEBUG("\tInterrupt endpoint\n");
-			break;
-		case USBDRV_EP_TYPE_ISOC:
-			BLTS_DEBUG("\tIsochronous endpoint\n");
-			break;
-		default:
-			BLTS_DEBUG("\tUnknown endpoint type\n");
-			break;
+        case USBDRV_EP_TYPE_BULK:
+                BLTS_DEBUG("\tBulk endpoint\n");
+                break;
+        case USBDRV_EP_TYPE_CONTROL:
+                BLTS_DEBUG("\tControl endpoint\n");
+                break;
+        case USBDRV_EP_TYPE_INT:
+                BLTS_DEBUG("\tInterrupt endpoint\n");
+                break;
+        case USBDRV_EP_TYPE_ISOC:
+                BLTS_DEBUG("\tIsochronous endpoint\n");
+                break;
+        default:
+                BLTS_DEBUG("\tUnknown endpoint type\n");
+                break;
 	}
 }
 
@@ -407,12 +409,13 @@ int test_read(unsigned buf_new_size)
 		return -errno;
 	}
 
-	if (buf_new_size)
+	if (buf_new_size) {
 		if (buf_ch_size(fd, 1, buf_new_size) < 0)
 		{
 			close(fd);
 			return -1;
 		}
+        }
 
 	if (ioctl(fd, HOSTDRV_IOCGCONF, &conf) < 0)
 	{
@@ -425,7 +428,7 @@ int test_read(unsigned buf_new_size)
 		if (conf.endpoint_type[i] != USBDRV_EP_TYPE_NONE)
 		{
 			thread_data[i].transfer_size =
-				conf.transfer_size[i];
+                        conf.transfer_size[i];
 			thread_data[i].node_name = node_names[i];
 
 			if (conf.endpoint_state[i] == USBDRV_EP_IN)
@@ -435,32 +438,35 @@ int test_read(unsigned buf_new_size)
 				BLTS_DEBUG("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
 				nodes_found++;
 				ret = pthread_create(&thread_data[i].id, NULL,
-					read_thread_function, &thread_data[i]);
+                                                     read_thread_function, &thread_data[i]);
 				if (ret) {
 					BLTS_DEBUG("Failed to create read thread "\
-						"(%d)!\n", ret);
+                                                   "(%d)!\n", ret);
 					goto cleanup;
 				}
 			} else {
 				// just read test
 				BLTS_DEBUG("NOT Starting write thread for ep %d...\n", i);
-				}
-			}
-		}
+                        }
+                }
+        }
 
-	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++)
+	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id) {
 			pthread_join(thread_data[i].id, NULL);
 			thread_data[i].id = 0;
-			if (thread_data[i].ret)
+
+			if (thread_data[i].ret && ret >= 0)
 				ret = thread_data[i].ret;
 		}
+        }
 
 cleanup:
 	close(fd);
-	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++)
+	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id)
 			pthread_cancel(thread_data[i].id);
+        }
 	if(nodes_found == 0)
 	{
 		BLTS_DEBUG("No endpoints found for read testing\n");
@@ -504,7 +510,7 @@ int test_write(unsigned buf_new_size)
 		if (conf.endpoint_type[i] != USBDRV_EP_TYPE_NONE)
 		{
 			thread_data[i].transfer_size =
-				conf.transfer_size[i];
+                        conf.transfer_size[i];
 			thread_data[i].node_name = node_names[i];
 
 			if (conf.endpoint_state[i] == USBDRV_EP_OUT)
@@ -514,24 +520,28 @@ int test_write(unsigned buf_new_size)
 				BLTS_DEBUG("\tEndpoint transfer size: %i\n", conf.transfer_size[i]);
 				nodes_found++;
 				ret = pthread_create(&thread_data[i].id, NULL,
-					write_thread_function, &thread_data[i]);
+                                                     write_thread_function, &thread_data[i]);
 				if (ret) {
 					BLTS_DEBUG("failed to create write thread "\
-						"(%d)!\n", ret);
+                                                   "(%d)!\n", ret);
 					goto cleanup;
-			} else {
-				// just write test
-				BLTS_DEBUG("NOT Starting read thread for ep %d...\n", i);
+                                } else {
+                                        // just write test
+                                        BLTS_DEBUG("NOT Starting read thread for ep %d...\n", i);
 				}
 			}
 		}
 	}
 
-	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++)
+	for (i = 0; i < USBDRV_MAX_ENDPOINTS; i++) {
 		if (thread_data[i].id) {
 			pthread_join(thread_data[i].id, NULL);
 			thread_data[i].id = 0;
+
+			if (thread_data[i].ret && ret >= 0)
+				ret = thread_data[i].ret;
 		}
+        }
 
 cleanup:
 	close(fd);

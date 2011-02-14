@@ -1,7 +1,7 @@
 TARGET = min-mwts-telepathy
 TEMPLATE = lib
 
-CONFIG = plugin
+CONFIG = dll
 CONFIG += qt
 
 CONFIG += qdbus

@@ -1794,6 +1794,78 @@ bool TelepathyTest::SendMessage(const QString& message,
 }
 
 
+/**
+ * WaitForIncomingMessage
+ *
+ * Waits for new channel to be created.
+ * If it is text channel, it gets the message form the text channel.
+ *
+ * @return bool success of the method
+ */
+bool TelepathyTest::WaitForIncomingMessage()
+{
+	MWTS_ENTER;
+	mRetValue = false;
+	qDebug() << "Waiting for incoming message...";
+
+	if ( mHaveConnection )
+	{
+		Tp::ConnectionPtr conn = mAccount->connection();
+		if ( conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
+		{
+			qDebug() << "Connecting to NewChannels...";
+			connect(conn->requestsInterface(),
+					SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
+					SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
+		}
+	}
+
+	// Timeout for handling error situations where channels are not got
+	mTimer->start( TEST_TIMEOUT );
+	mEventLoop->exec();
+
+	// After event loop is exited, there should be proper channel creater or already existing
+	if(!mTextChat && mChannelHandler->mChannels.size() > 0 )
+	{
+	  	qDebug() << "Creating new textchat. Getting new text channel.";
+		Tp::TextChannelPtr chan =
+			Tp::TextChannelPtr( qobject_cast<Tp::TextChannel*>( mChannelHandler->mChannels.at( 0 ).data() ) );
+		mTextChat = new TextChat( chan );
+
+        qDebug() << "Channel amount == " << mChannelHandler->mChannels.size();
+        //qDebug() << "TextChannel amount == " << mTextHandler->mChannels.size();
+
+		mChannelHandler->mChannels.removeAt( 0 );
+
+        qDebug() << "Has message interface == "<< chan.data()->hasMessagesInterface();
+
+        mRetValue = mTextChat->VerifyReceivedMessage(mSentMessageContent,
+                        mSentMessageLength,
+                        mSentMessageCoding,
+                        mSentMessageClassType);
+
+        delete mTextChat;
+		mTextChat = NULL;
+
+	}
+	// Here is the message requested and processed.
+	// Finally determines the success of the case
+
+	Tp::ConnectionPtr conn = mAccount->connection();
+	if ( conn.data() && conn->isValid() &&conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
+	{
+		qDebug() << "Disconnecting from NewChannels";
+		disconnect(conn->requestsInterface(),
+			SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
+			this,
+			SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
+	}
+
+	MWTS_LEAVE;
+	return mRetValue;
+}
+
+
 bool TelepathyTest::WaitForIncomingIM()
 {
 	MWTS_ENTER;

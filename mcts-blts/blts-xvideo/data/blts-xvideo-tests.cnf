@@ -17,7 +17,7 @@
 
 [parameter]
 	name duration
-	const 5
+	const 10
 [end_parameter]
 
 [parameter]
@@ -52,7 +52,7 @@
 
 [parameter]
 	name port_attributes
-	const "XV_VSYNC 1 XV_BRIGHTNESS 0 XV_CONTRAST 0"
+	const "XV_BRIGHTNESS 0 XV_CONTRAST 0"
 [end_parameter]
 
 # These are for QueryBestSize and Notify events -tests
@@ -64,7 +64,7 @@
 
 [parameter]
 	name fute_port_attributes
-	const "XV_VSYNC 0"
+	const "XV_BRIGHTNESS 0"
 [end_parameter]
 
 ##############

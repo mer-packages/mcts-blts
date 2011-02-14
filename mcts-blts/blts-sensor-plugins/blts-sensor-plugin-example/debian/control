@@ -2,11 +2,10 @@ Source: libbltssensorplugin-example
 Section: devel
 Priority: extra
 Maintainer: Pasi Matilainen <pasi.matilainen@digia.com>
-Build-Depends:
-	debhelper (>= 5),
+Build-Depends: debhelper (>= 5),
 	libbltscommon-dev (>= 0.3.0),
 	blts-sensors-frontend (>= 0.1.1),
-	linux-libc-dev | linux-kernel-headers
+	linux-libc-dev | linux-kernel-headers, automake, pkg-config
 Standards-Version: 3.8.0
 
 Package: libbltssensorplugin-example

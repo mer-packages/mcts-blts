@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Generic File system test asset
 License:                LGPL
 Name:                   mwts-filesystem
-Version:                1.1.1
+Version:                1.0.2
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -43,7 +43,7 @@ Requires:               mwts-filesystem
 mwts-filesystem generic config file
 
 %package                generic-utils
-Summary:                mwts-filesystem generic config file
+Summary:                mwts-filesystem generic utils
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               dosfstools
@@ -59,12 +59,12 @@ Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mw
 mwts-filesystem meta package for generic version
 
 
-%package                cli
+%package                generic-cli
 Summary:                mwts-filesystem command line tool
 Prefix:                 /usr/bin
 Group:                  Development/Tools
 Requires:               mwts-filesystem
-%description            cli
+%description            generic-cli
 mwts-filesystem command line tool
 
 %prep
@@ -99,12 +99,11 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/tests/FilesystemTest.conf
 
 %files generic-utils
-/usr/bin/make_mass_storege_filesystem.sh
-/usr/bin/set_mass_storege_mode.sh
+/usr/bin/*.sh
 
 %files generic-all
 
-%files cli
+%files generic-cli
 /usr/bin/mwts-filesystem-cli
 
 %post

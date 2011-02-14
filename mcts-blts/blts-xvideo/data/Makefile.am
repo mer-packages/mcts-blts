@@ -19,7 +19,8 @@ minconfig_DATA = \
 	blts-xvideo-req-files.cfg
 
 config_DATA = \
-	blts-xvideo-tests.cnf
+	blts-xvideo-tests.cnf \
+	blts-xvideo-n900.cnf
 
 EXTRA_DIST = \
 	$(config_DATA) \
