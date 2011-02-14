@@ -23,8 +23,13 @@ dbus_lastfm_banishable.py dbus_lastfm_itemview.py dbus_user_changed_signal.py  s
 lastfm_banishable_main.py lastfm_constant.py lastfm_main.py lastfm_newitem_main.py\
 qt_hide_item_item_hidden_signal.py qt_lastfm_swclientitemview_monitor_comparing_with_dbus.py qt_userchanged_signal.py
 lswdir = /opt/$(PACKAGE)/dbus_api
-#LDFLAGS = -l glib-2.0 gobject-2.0 gnome-keyring-1
-CFLAGS=`pkg-config --cflags glib-2.0 gobject-2.0 gnome-keyring-1`
-LDFLAGS+=`pkg-config --libs glib-2.0 gobject-2.0 gnome-keyring-1`
+#CFLAGS=`pkg-config --cflags glib-2.0 gobject-2.0 gnome-keyring-1`
+#LDFLAGS+=`pkg-config --libs glib-2.0 gobject-2.0 gnome-keyring-1`
+
+AM_CFLAGS = $(LSW_CFLAGS)
+
+LDADD = $(LSW_LIBS)
+
+
 lsw_PROGRAMS = reading_user_account setting_user_account
 EXTRA_DIST = $(lsw_SCRIPTS) $(lsw_PROGRAMS)

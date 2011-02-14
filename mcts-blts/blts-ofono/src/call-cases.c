@@ -251,7 +251,7 @@ static void handle_incoming_call(gchar* path, GHashTable* properties, gpointer u
 		if(state->call_hangup_method != do_cancel &&
 		   state->call_hangup_method != do_deflect)
 		{
-			BLTS_DEBUG("Answer the call...\n");
+			BLTS_DEBUG("Answering the call...\n");
 
 			state->retries = 10;
 			org_ofono_VoiceCall_get_properties_async(state->voice_call,
@@ -271,7 +271,7 @@ static void handle_incoming_call(gchar* path, GHashTable* properties, gpointer u
 			}
 			else
 			{
-				BLTS_DEBUG("Expecting another call...\n");
+				BLTS_DEBUG("Expecting another incoming call...\n");
 			}
 		}
 	}
@@ -770,7 +770,7 @@ static gboolean call_answer_start(__attribute__((unused))gpointer data)
 {
 	FUNC_ENTER();
 
-	BLTS_DEBUG("Start listening calls\n");
+	BLTS_DEBUG("Expecting an incoming call...\n");
 
 	FUNC_LEAVE();
 	return FALSE;

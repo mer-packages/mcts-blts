@@ -1,3 +1,10 @@
+blts-wlan-core-tests (0.1.6) unstable; urgency=low
+
+  * Connman incompatibility note added to README.
+  * Packaging updated.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 17:49:36 +0200
+
 blts-wlan-core-tests (0.1.5-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.

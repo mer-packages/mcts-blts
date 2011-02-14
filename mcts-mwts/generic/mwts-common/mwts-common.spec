@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Mwts-common is a Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-common
-Version:                1.0.2
+Version:                1.0.3
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools

@@ -37,8 +37,6 @@ struct input_data {
 	struct key_mapping key;
 	int no_grab;
 	int swap_xy;
-	int scr_width;
-	int scr_height;
 };
 
 int test_device(const char *device);

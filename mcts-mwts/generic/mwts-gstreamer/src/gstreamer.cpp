@@ -539,7 +539,7 @@ gboolean GstreamerTest::bus_cb (__attribute__((unused)) GstBus *bus, GstMessage 
     case GST_MESSAGE_WARNING:
         qDebug("GST_MESSAGE_WARNING");
         gst_message_parse_warning (msg, &err, &debug);
-        qCritical("Gst : %s", err->message);
+        qDebug("Gst : %s", err->message);
         break;
 
     case GST_MESSAGE_INFO:
@@ -786,7 +786,7 @@ void GstreamerTest::log_errors()
         if(GST_MESSAGE_WARNING == GST_MESSAGE_TYPE(msg))
         {
             gst_message_parse_warning(msg, &err, NULL);
-            qCritical("%s",err->message);
+            qDebug("%s",err->message);
         }
         g_error_free (err);
         gst_message_unref (msg);

@@ -20,7 +20,7 @@
  */
 
 #include <QtCore>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QtDBus>
 #include <libsocialweb-qt/swclient.h>
 #include <libsocialweb-qt/swclientdbustypes.h>
@@ -34,7 +34,7 @@ const QString LASTFM_QUERY("feed");
 const SwParams EMPTY_PARAMS;
 
 int main(int argc, char *argv[]) {
-	QApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 	qDebug() << "Going to invoke the method 'getService' for the "
 			<< LASTFM_SERVICE_NAME << " instance of 'SwClientService'";
 

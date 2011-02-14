@@ -29,6 +29,8 @@ SOURCE CODE AND COMPILING
 ENVIRONMENT REQUIREMENTS
 
   In order to execute all tests on mwts-usb, you need following:
+     * iperf tool
+        * iperf must be installed into a location available in PATH variable
   
      * Master-slave setup between desktop and device (see doc/MWTS.README )
         * Desktop is the master and device is the slave

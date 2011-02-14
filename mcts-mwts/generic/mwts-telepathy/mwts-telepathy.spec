@@ -6,12 +6,12 @@ BuildRoot:		%{buildroot}
 Summary: 		A MWTS test asset for Telepathy-QT4
 License: 		LGPL
 Name: 			mwts-telepathy
-Version: 		0.1.3
+Version: 		0.1.4
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
-BuildRequires:		qt-devel, min-devel, min, telepathy-qt4-devel, mwts-common-devel
-Requires:		min, telepathy-qt4, mwts-common
+BuildRequires:		libqt-devel, min-devel, min, compat-telepathy-qt4-devel, mwts-common-devel
+Requires:		min, compat-telepathy-qt4, mwts-common
 Source: 		%{name}-%{version}.tar.gz
 
 %description
@@ -22,7 +22,7 @@ Summary:		Mwts-telepathy MIN files
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		min, mwts-telepathy
-%description		generic-tests
+%description	generic-tests
 MIN test cases for mwts-telepathy
 
 
@@ -31,7 +31,7 @@ Summary:		Mwts-telepathy generic config
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		mwts-telepathy
-%description		generic-config
+%description	generic-config
 Mwts-telepathy generic config
 
 
@@ -40,17 +40,8 @@ Summary:		Mwts-telepathy generic meta package
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		mwts-telepathy, mwts-telepathy-generic-config, mwts-telepathy-generic-tests
-%description		generic-all
+%description	generic-all
 Mwts-telepathy generic meta package
-
-
-%package		cli
-Summary:		Command line interface for mwts-telepathy
-Prefix: 		/usr
-Group: 			Development/Tools
-Requires:		mwts-telepathy
-%description		cli
-Command line interface for mwts-telepathy.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -65,10 +56,10 @@ make install INSTALL_ROOT=%{buildroot}
 %files 
 %doc README
 /usr/lib/libmwts-telepathy.*
-/usr/lib/min/libmin-mwts-telepathy.so
 /usr/share/telepathy/clients/*.client
 
 %files generic-tests
+/usr/lib/min/libmin-mwts-telepathy.*
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
 /usr/share/mwts-telepathy-tests/tests.xml
@@ -77,9 +68,6 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/tests/*.conf
 
 %files generic-all
-
-%files cli
-/usr/bin/mwts-telepathy-cli
 
 %post
 ldconfig

@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-alsa-core-tests, 0.0.11, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-alsa-core-tests, 0.0.12, kimmo.myllyvirta@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts_alsa_core_test.c])

@@ -1,5 +1,0 @@
-#!/bin/sh
-mount|grep usbfs
-if [ $? -ne 0 ]; then
-	mount -t usbfs usbfs /proc/bus/usb
-fi

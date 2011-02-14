@@ -20,7 +20,7 @@
  */
 
 #include <QtCore>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QtDBus>
 #include <libsocialweb-qt/swclient.h>
 #include "lsw_testcases.h"
@@ -28,7 +28,7 @@
 const QString LASTFM_SERVICE_NAME("lastfm");
 
 int main(int argc, char *argv[]) {
-	QApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 	qDebug(
 			"Going to invoke the method 'getService' for the 'lastfm' instance of 'SwClientService'");
 

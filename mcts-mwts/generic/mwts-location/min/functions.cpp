@@ -1,7 +1,7 @@
 /*
  * This file is part of MCTS
  *
- * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+ * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
  *
  * Contact: Tommi Toropainen; tommi.toropainen@nokia.com;
  *
@@ -98,6 +98,14 @@ LOCAL int TestLocationFix (MinItemParser * item)
 	return ENOERR;
 }
 
+LOCAL int TestAccuracy (MinItemParser * item)
+{
+    MWTS_ENTER;
+    Test.TestAccuracy();
+    return ENOERR;
+}
+
+
 
 LOCAL int CalculateDistances (MinItemParser * item)
 {
@@ -115,7 +123,8 @@ int ts_get_test_cases (DLList ** list)
 	ENTRYTC (*list, "SetHotMode", SetHotMode);
 	ENTRYTC (*list, "GetLocationFix", GetLocationFix);
 	ENTRYTC (*list, "TestLocationFix", TestLocationFix);
-	ENTRYTC (*list, "CalculateDistances", CalculateDistances);
+    ENTRYTC (*list, "CalculateDistances", CalculateDistances);
+    ENTRYTC (*list, "TestAccuracy", TestAccuracy);
 
 	return ENOERR;
 }

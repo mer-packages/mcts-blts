@@ -25,6 +25,9 @@
 #include <gnome-keyring.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <glib-object.h>
 
 /*
  * Callback from the keyring lookup in refresh_credentials.
@@ -140,6 +143,8 @@ int main(int argc, char *argv[]) {
 	loop = g_main_loop_new(NULL, TRUE);
 	g_main_loop_run(loop);
 	g_main_loop_unref(loop);
+        
+        return 0;
 }
 
 #endif /* _SETTING_USER_ACCOUNT */

@@ -1,3 +1,10 @@
+blts-usb-tests (0.0.17) unstable; urgency=low
+
+  * [ Timo-Pekka Launonen ] Add timeouts and fix single IO thread failure
+    handling
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 17:34:37 +0200
+
 blts-usb-tests (0.0.16) unstable; urgency=low
 
   * [ Mika Niinistö ] Bugfix: When any of the endpoints fails in read / write

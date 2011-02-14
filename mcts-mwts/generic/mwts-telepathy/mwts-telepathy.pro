@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = src min doc cli
+SUBDIRS = src min
 
 CONF.files = data/*.conf
 CONF.path = /usr/lib/tests

@@ -711,6 +711,7 @@ void on_voice_call_manager_private_chat_reply (__attribute__((unused))DBusGProxy
 static gboolean call_listen_start(__attribute__((unused))gpointer data)
 {
 	FUNC_ENTER();
+	BLTS_DEBUG("Expecting total of two incoming calls...\n");
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) data;
 	const char* stage_str = get_multiparty_stage_str(state->test_stage);
 
@@ -747,7 +748,7 @@ static gboolean call_listen_start(__attribute__((unused))gpointer data)
 	}	
 	else
 	{
-		BLTS_DEBUG("%s: Waiting for two calls...\nCalls currently in system: %i\n", 
+		BLTS_DEBUG("%s: Waiting for another call...\nCalls currently in system: %i\n", 
 		stage_str, state->number_voice_calls);
 	}
 
@@ -766,7 +767,8 @@ error:
  */
 static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 {
-	FUNC_ENTER();	
+	FUNC_ENTER();
+	BLTS_DEBUG("Expecting total of three incoming calls...\n");
 	struct multipart_call_case_state *state = (struct multipart_call_case_state *) data;
 	const char* stage_str = get_multiparty_stage_str(state->test_stage); 
 
@@ -825,7 +827,7 @@ static gboolean call_listen_start_private(__attribute__((unused))gpointer data)
 	}
 	else
 	{
-		BLTS_DEBUG("%s: Waiting for three calls...\nCalls currently in system: %i\n", 
+		BLTS_DEBUG("%s: Waiting for another call...\nCalls currently in system: %i\n", 
 		stage_str, state->number_voice_calls);	
 	}
 
@@ -897,7 +899,7 @@ int blts_ofono_case_private_chat(void* user_ptr, __attribute__((unused))int test
 		G_CALLBACK(on_voice_call_manager_call_added);
 	test->signalcb_VoiceCallManager_CallRemoved = 
 		G_CALLBACK(on_voice_call_manager_call_removed);
-		
+
 	for(i=0; i<MAX_VOICECALLS; i++)
 	{
 		test->signalcb_VoiceCall_PropertyChanged[i] =

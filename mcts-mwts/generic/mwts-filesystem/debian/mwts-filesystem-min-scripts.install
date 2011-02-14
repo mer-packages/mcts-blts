@@ -1,4 +1,4 @@
 usr/lib/min/*.so*
 etc/min.d/mwts-filesystem.min.conf
-usr/share/mwts-filesystem-scripts/tests.xml
+usr/share/mwts-filesystem-tests/tests.xml
 usr/lib/min/*.cfg

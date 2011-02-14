@@ -1,3 +1,15 @@
+blts-common (0.4.2) unstable; urgency=low
+
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 14:55:55 +0200
+
+blts-common (0.4.1-2) unstable; urgency=low
+
+  * Debian packaging build-dependency update: Add libxml build-dep to dev package.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 26 Jan 2011 14:51:37 +0200
+
 blts-common (0.4.1-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.
