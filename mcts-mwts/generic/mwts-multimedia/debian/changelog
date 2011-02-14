@@ -1,3 +1,8 @@
+mwts-multimedia (0.1.2) unstable; urgency=low
+  * Changes for actual test cases fails if there is no radio device
+  * Test cases names changed
+ -- Jan Grela <jan.grela@digia.com>  Mon, 14 Jan 2011 10:00:00 +0300
+
 mwts-multimedia (0.1.1) unstable; urgency=low
   * Added bug fix for FM radio test cases
   * UnInitialize fails fixed (QRadioTuner pointer issue)
