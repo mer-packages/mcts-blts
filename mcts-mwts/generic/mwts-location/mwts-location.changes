@@ -1,3 +1,6 @@
+* Mon, 14 Feb 2011 Jan Grela <jan.grela@digia.com> - 0.0.6
+- Added functionality and test case for getting GPS coordinates
+
 * Fri, 04 Feb 2011 Reijo Korhonen <reijo.korhonen@digia.com> - 0.0.5
 - Added Accuracy test
 - conf file new variables to define anteenna position and accuracy limits wanted

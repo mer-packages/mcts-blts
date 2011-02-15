@@ -688,6 +688,52 @@ void LocationTest::CalculateAccuracy()
     MWTS_LEAVE;
 }
 
+void LocationTest::GetCoordinates(int count) {
+
+    if (!m_gpisLocationSource)
+    {
+        qCritical() << "No location source";
+        return;
+    }
+
+    m_nHotMode = MODE_HOT;
+
+    m_bGetLocFix = true;
+
+    m_nFixCountLeft = count;
+
+    QString s = "Starting to measure fix time...";
+    qDebug() << s;
+    g_pResult->Write(s);
+
+    m_oElapsedFromStart.start();
+    m_gpisLocationSource->startUpdates();
+    Start();
+
+    if (m_nFixCountLeft == 0 && m_listPositions.count() == count)
+    {
+        g_pResult->Write("Received " + QString::number(count) + " coordinates:");
+        QList<QGeoCoordinate>::iterator it;
+
+        for (it = m_listPositions.begin(); it != m_listPositions.end(); ++it)
+        {
+            g_pResult->Write(it->toString());
+        }
+        g_pResult->StepPassed(__FUNCTION__, true);
+    }
+    else
+    {
+        QString s = "Got not enough coordinates (" + QString::number(m_listPositions.count()) + ")";
+        qCritical() << s;
+        g_pResult->Write(s);
+        g_pResult->StepPassed(__FUNCTION__, false);
+        return;
+    }
+
+
+
+}
+
 void LocationTest::RemoveGPSData() const {
     MWTS_ENTER;
     qDebug() << "Removing GPS Data -- to implement -- ";

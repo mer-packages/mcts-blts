@@ -114,18 +114,49 @@ LOCAL int CalculateDistances (MinItemParser * item)
 	return ENOERR;
 }
 
+
+/**
+ * Gets numbers of coordinates and log them
+ */
+LOCAL int GetCoordinates (MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    int count = 70;
+
+    if(mip_get_next_int(item, &count))
+    {
+        qCritical() << "The number of coordinates is an integer number.";
+        return 1;
+    }
+    else
+    {
+        if (count < 1)
+        {
+            qCritical() << "Set at least one coordinate to get";
+        }
+        else
+        {
+            Test.GetCoordinates(count);
+        }
+    }
+    MWTS_LEAVE;
+    return ENOERR;
+}
+
 int ts_get_test_cases (DLList ** list)
 {
-	// declare common functions like Init, Close, SetTestTimeout ...
-	MwtsMin::DeclareFunctions(list);
+    // declare common functions like Init, Close, SetTestTimeout ...
+    MwtsMin::DeclareFunctions(list);
 
-	ENTRYTC (*list, "SetPositioningMethod", SetPositioningMethod);
-	ENTRYTC (*list, "SetHotMode", SetHotMode);
-	ENTRYTC (*list, "GetLocationFix", GetLocationFix);
-	ENTRYTC (*list, "TestLocationFix", TestLocationFix);
+    ENTRYTC (*list, "SetPositioningMethod", SetPositioningMethod);
+    ENTRYTC (*list, "SetHotMode", SetHotMode);
+    ENTRYTC (*list, "GetLocationFix", GetLocationFix);
+    ENTRYTC (*list, "TestLocationFix", TestLocationFix);
     ENTRYTC (*list, "CalculateDistances", CalculateDistances);
     ENTRYTC (*list, "TestAccuracy", TestAccuracy);
+    ENTRYTC (*list, "GetCoordinates", GetCoordinates);
 
-	return ENOERR;
+    return ENOERR;
 }
 
