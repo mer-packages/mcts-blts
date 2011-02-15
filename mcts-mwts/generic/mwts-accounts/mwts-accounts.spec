@@ -3,7 +3,11 @@
 %define buildroot	%{_topdir}/%{name}-%{version}-root
 
 BuildRoot:      %{buildroot}
+<<<<<<< HEAD
+Name:           mwts-accounts-tests
+=======
 Name:           mwts-accounts
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 Summary:        Test asset for testing SSO and account management
 License:        LGPL
 Version:        0.0.1
@@ -17,22 +21,39 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Accounts test asset.
             
+<<<<<<< HEAD
+%package        scripts
+Summary:        MIN test case scripts for mwts-accounts
+Requires:       mwts-accounts-tests
+%description    scripts-generic
+=======
 %package        generic-tests
 Summary:        MIN test case scripts for mwts-accounts
 Requires:       mwts-accounts
 %description    generic-tests
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 MIN test case scripts for mwts-accounts
 
 %package        generic-config
 Summary:        Generic configuration file for mwts-accounts
+<<<<<<< HEAD
+Requires:       mwts-accounts-tests
+%description    config-generic
+=======
 Requires:       mwts-accounts
 %description    generic-config
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 Generic configuration file for mwts-accounts
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-accounts (generic)
+<<<<<<< HEAD
+Requires:	mwts-accounts-tests, mwts-accounts-scripts-generic, mwts-accounts-config-generic
+%description	all-generic
+=======
 Requires:	mwts-accounts, mwts-accounts-generic-tests, mwts-accounts-generic-config
 %description	generic-all
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
 Meta package for installing all needed packages for generic version of mwts-accounts
 
 %prep
@@ -50,7 +71,19 @@ make install INSTALL_ROOT=%{buildroot}
 %doc doc/MWTS.README
 /usr/lib/libmwts-accounts*
 /usr/lib/min/*.so*
+/usr/lib/tests/*
+/etc/min.d/mwts-accounts.min.conf 
 
+<<<<<<< HEAD
+
+%files scripts
+%doc README
+%doc doc/MWTS.README
+#/etc/min.d/*.min.conf
+/usr/share/mwts-accounts-scripts/tests.xml
+/usr/lib/min/*.cfg
+
+=======
 %files generic-tests
 /etc/min.d/mwts-accounts.min.conf 
 /usr/share/mwts-accounts-generic-tests/tests.xml
@@ -66,3 +99,4 @@ ldconfig
 
 %postun
 ldconfig
+>>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
