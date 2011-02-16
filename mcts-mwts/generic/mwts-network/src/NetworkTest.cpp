@@ -938,7 +938,6 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     QString pass     = "";
 
     if ( ap_name != "psd_network") {
-        // if null, then it is wepkey
         if (security == "wpa" ) {
             qDebug() << "Encryption type wpa";
             pass = g_pConfig->value(ap_name + "/EAP_wpa_preshared_passphrase").toString();
@@ -951,7 +950,6 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
             qDebug() << "Ap is open, no need to add passphrase";
         }
     }
-
 
     QString property = "Passphrase";
     QList<QVariant> args;
@@ -973,9 +971,6 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
             return false;
         }
     }
-
-    //QDBusMessage connect_reply = iface.call("Connect");
-    //qDebug() << "Reply was: " << connect_reply;
 
     qDebug() << "Waiting for the connection state change....";
     this->Start();
