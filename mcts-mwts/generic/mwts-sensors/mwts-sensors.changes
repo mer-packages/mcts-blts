@@ -1,3 +1,7 @@
+* Fri 14 Jan 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.2
+- Updated documentation. Added QT API call in implementation to chech if backend are connected.
+- Fuctionality is not changed other way.
+
 * Fri 03 Dec 2010 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.1
 - Renaming FUTE and NFT cases in standard way.
 
