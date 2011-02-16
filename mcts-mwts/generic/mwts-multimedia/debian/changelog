@@ -1,7 +1,12 @@
-mwts-multimedia (0.1.2) unstable; urgency=low
+mwts-multimedia (0.1.3) unstable; urgency=low
   * Changes for assuring that test cases will fail if radio is not available.
   * Test cases names changed.
- -- Jan Grela <jan.grela@digia.com>  Mon, 14 Jan 2011 10:00:00 +0300
+ -- Jan Grela <jan.grela@digia.com>  Mon, 14 Feb 2011 10:00:00 +0300
+
+mwts-multimedia (0.1.2) unstable; urgency=low
+  * Added functionality to perform scan of whole band range
+  * Added script for measuring latency of scanning band
+ -- Jan Grela <jan.grela@digia.com>  Wed, 02 Feb 2011 17:00:00 +0300
 
 mwts-multimedia (0.1.1) unstable; urgency=low
   * Added bug fix for FM radio test cases
