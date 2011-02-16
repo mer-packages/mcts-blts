@@ -11,17 +11,14 @@ MIN_CONFIG.path = /etc/min.d
 MIN_SCRIPTS.files = min/data/*.cfg
 MIN_SCRIPTS.path = /usr/lib/min
 
-ALLTESTS.files = data/tests.xml
-ALLTESTS.path = /usr/share/mwts-accounts-scripts
-
+TESTS.files = min/data/tests.xml
+TESTS.path = /usr/share/mwts-accounts-generic-tests
 
 INSTALLS += MIN_CONFIG
 INSTALLS += MIN_SCRIPTS
+INSTALLS += TESTS
 INSTALLS += CONF
 
-<<<<<<< HEAD
-=======
-TESTS.files = min/data/tests.xml
-TESTS.path = /usr/share/mwts-accounts-generic-tests
-INSTALLS +=TESTS
->>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
+
+
+
