@@ -114,13 +114,9 @@ bool SignonClient::queryIdents()
 {
     MWTS_ENTER;
 
-<<<<<<< HEAD
-=======
     connect(m_service, SIGNAL(mechanismsAvailable(const QString &, const QStringList &)),
         this, SLOT(mechanismsAvailable(const QString &, const QStringList &)));
 
-
->>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
     qDebug() << "Querying identities...";
     m_service->queryIdentities();
     m_testObj->Start();
@@ -129,17 +125,6 @@ bool SignonClient::queryIdents()
     m_service->queryMethods();
     m_testObj->Start();
 
-<<<<<<< HEAD
-=======
-    qDebug() << "Querying mechanisms for facebook...";
-    m_service->queryMechanisms("facebook");
-    m_testObj->Start();
-
-    qDebug() << "Querying mechanisms for googlek...";
-    m_service->queryMechanisms("google");
-    m_testObj->Start();
-
->>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
     return m_bSuccess;
     MWTS_LEAVE;
 }
@@ -270,17 +255,6 @@ bool SignonClient::CreateSession(const QString name)
 
         //m_testObj->Start();
 
-<<<<<<< HEAD
-=======
-
-        m_session->queryAvailableMechanisms();
-
-        connect(m_session, SIGNAL(mechanismsAvailable(const QStringList &)),
-            this, SLOT(slotMechanismsAvailable(const QStringList &)));
-
-        m_testObj->Start();
-
->>>>>>> 308e180f60e37c8ba0688d1b18807b55ff28c9f8
         connect(m_session, SIGNAL(response(const SignOn::SessionData&)),
             this, SLOT(response(const SignOn::SessionData&)));
 
