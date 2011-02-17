@@ -131,6 +131,7 @@ private:
     //for counting radio stations
     int radioStationCount;
 
+    bool IsRadioAvailable() const;
 
 private slots:
     //slots for QRadioTuner signals
