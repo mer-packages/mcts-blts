@@ -35,8 +35,7 @@
 #include <stdint.h>
 #include <pthread.h>
 #include <fcntl.h>
-#include <linux/ioctl.h>
-#include <stropts.h>
+#include <sys/ioctl.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
