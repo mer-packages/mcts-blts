@@ -48,7 +48,10 @@ enum {
 	CORE_BT_READ_CONNECTED_LINK_INFO_LOCAL,
 	CORE_BT_READ_CONNECTED_LINK_INFO_REMOTE,
 	CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_MASTER,
-	CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_SLAVE
+	CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_SLAVE,
+	CORE_BT_LE_SCAN,
+	CORE_BT_LE_ADVERTISE,
+	CORE_BT_LE_CONNECT
 };
 
 typedef struct
@@ -76,5 +79,9 @@ int fute_bt_hci_ctrl_info_remote(char *remote_mac);
 int fute_bt_hci_link_info_local();
 int fute_bt_hci_link_info_remote(char *remote_mac);
 int fute_bt_hci_ll_pairing(char* remote_mac, int master);
+
+int fute_bt_le_scan();
+int fute_bt_le_advertise();
+int fute_bt_le_connect_disconnect(char *remote_mac);
 
 #endif /* BT_FUTE_H */

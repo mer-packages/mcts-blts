@@ -296,3 +296,11 @@ Core-Bluetooth authentication with pairing as slave
    * This test can be run with "Core-Bluetooth authentication with pairing as master" as counterpart
      and is run first.
    $ blts-bluetooth-tests -en "Core-Bluetooth authentication with pairing as slave"
+
+
+Core-Bluetooth LE scan
+
+Core-Bluetooth LE advertise
+
+Core-Bluetooth LE connect
+

@@ -185,6 +185,16 @@ static int bt_run_case(void* user_ptr, int test_num)
 		ret = fute_bt_hci_ll_pairing("00:00:00:00:00:00", 0);
 		break;
 
+	case CORE_BT_LE_SCAN:
+		ret = fute_bt_le_scan();
+		break;
+	case CORE_BT_LE_ADVERTISE:
+		ret = fute_bt_le_advertise();
+		break;
+	case CORE_BT_LE_CONNECT:
+		ret = fute_bt_le_connect_disconnect(data->mac_address);
+		break;
+
 	default:
 		BLTS_DEBUG("Not supported case number %d\n", test_num);
 	}
@@ -221,6 +231,9 @@ static blts_cli_testcase bt_cases[] =
 	{ "Core-Bluetooth Read connected link information remote", bt_run_case, 35000 },
 	{ "Core-Bluetooth authentication with pairing as master", bt_run_case, 10000 },
 	{ "Core-Bluetooth authentication with pairing as slave", bt_run_case, 35000 },
+	{ "Core-Bluetooth LE scan", bt_run_case, 60000 },
+	{ "Core-Bluetooth LE advertise", bt_run_case, 60000 },
+	{ "Core-Bluetooth LE connect", bt_run_case, 60000 },
 
 	BLTS_CLI_END_OF_LIST
 };
