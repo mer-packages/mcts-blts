@@ -1,3 +1,8 @@
+* Thu 24 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.2.12
+- [ Mika Niinistö ] Add HCI tracer to remove hcidump dependency
+- [ Kimmo Myllyvirta ] Add basic Bluetooth LE functional tests
+- [ Jussi Saavalainen ] Make LE compile optional to support old Bluez versions
+
 * Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.2.11
 - Version update due to packaging change.
 

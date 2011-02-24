@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([blts-bluetooth-tests], [0.2.11], [jussi.saavalainen@digia.com])
+AC_INIT([blts-bluetooth-tests], [0.2.12], [jussi.saavalainen@digia.com])
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/hci.c])

@@ -1,6 +1,6 @@
 Summary: BLTS Bluetooth functional tests
 Name: blts-bluetooth-tests
-Version: 0.2.11
+Version: 0.2.12
 Release: 1
 License: GPLv2
 Group: Development/Testing
