@@ -1515,6 +1515,7 @@ error:
 
 
 /* -------------------- BT LE ----------------- */
+#ifdef HAVE_BTLE_API
 
 static int print_advertising_devices(int fd)
 {
@@ -1739,3 +1740,26 @@ int le_disconnect_remote(struct bt_ctx *ctx)
 	return retval;
 }
 
+#else /* !HAVE_BTLE_API */
+
+int do_le_scan(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+int le_set_advertise_mode(__attribute__((unused)) struct bt_ctx *ctx, __attribute__((unused)) int adv_on)
+{
+	return -1;
+}
+
+int le_connect_remote(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+int le_disconnect_remote(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+#endif /* HAVE_BTLE_API */

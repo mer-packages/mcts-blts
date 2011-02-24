@@ -185,6 +185,7 @@ static int bt_run_case(void* user_ptr, int test_num)
 		ret = fute_bt_hci_ll_pairing("00:00:00:00:00:00", 0);
 		break;
 
+#ifdef HAVE_BTLE_API
 	case CORE_BT_LE_SCAN:
 		ret = fute_bt_le_scan();
 		break;
@@ -194,7 +195,15 @@ static int bt_run_case(void* user_ptr, int test_num)
 	case CORE_BT_LE_CONNECT:
 		ret = fute_bt_le_connect_disconnect(data->mac_address);
 		break;
-
+#else
+	case CORE_BT_LE_SCAN:
+	case CORE_BT_LE_ADVERTISE:
+	case CORE_BT_LE_CONNECT:
+		ret = -1;
+		BLTS_ERROR("ERROR: Bluetooth LE support was not compiled in.\n");
+		BLTS_ERROR("Use a newer version of Bluez when building the tests.\n");
+		break;
+#endif
 	default:
 		BLTS_DEBUG("Not supported case number %d\n", test_num);
 	}
