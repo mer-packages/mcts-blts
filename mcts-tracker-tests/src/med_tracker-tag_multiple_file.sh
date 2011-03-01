@@ -27,6 +27,8 @@
 
 cp -r /tmp/data/test_tracks/meego_i*.jpg ~/Pictures/
 
+sleep 10
+
 echo "Test case: med_tracker-tag_multiple_file"
 
 tracker-tag -d test

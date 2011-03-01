@@ -29,7 +29,7 @@ echo "Test case: med_tracker-search_folder"
 
 cp -rf /tmp/data/test_tracks ~/
 
-sleep 15
+sleep 10
 
 if tracker-search -s | grep "test_tracks">/dev/null 2>&1
 then

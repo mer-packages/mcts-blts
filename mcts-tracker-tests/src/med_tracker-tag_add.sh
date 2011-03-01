@@ -27,6 +27,8 @@
 
 cp -r /tmp/data/test_tracks/meego_v.ogv ~/Videos/
 
+sleep 5
+
 echo "Test case: med_tracker-tag_add"
 
 tracker-tag -d test
