@@ -43,6 +43,8 @@ sleep 2
 
 export DISPLAY=:0.0
 tmp_folder_name="tmp_folder_name1"
+tmp_file_name="tmp_ftp"
+
 # Create a folder on server's root directory
 ${FTP_CLIENT} -d $SERV_BD_ADDR -C $tmp_folder_name
 
@@ -57,20 +59,36 @@ if [ $created -le 0 ]; then
     exit 1
 fi
 
-# Remove the folder we just created
-${FTP_CLIENT} -d $SERV_BD_ADDR -r $tmp_folder_name
+# Create a temporary file
+echo "This is a temporary file used to test FTP file remove under new folder."> $tmp_file_name
+
+# Upload this file to FTP server
+${FTP_CLIENT} -d $SERV_BD_ADDR -c $tmp_folder_name -p `pwd`/$tmp_file_name
 
 # List the root folder again and check if the folder really got removed
-${FTP_CLIENT} -d $SERV_BD_ADDR -l > tmp_ftp_folder.log
-exist=`grep "$tmp_folder_name" ./tmp_ftp_folder.log -c`
+${FTP_CLIENT} -d $SERV_BD_ADDR -c $tmp_folder_name -l > tmp_ftp_folder.log
+exist=`grep "$tmp_file_name" ./tmp_ftp_folder.log -c`
+if [ $exist -ne 1 ]; then
+    echo "Failed to create the file $tmp_file_name under folder $tmp_folder_name!"
+    rm -rf ./tmp_ftp_folder.log
+    exit 1
+fi
+
+# Remove the folder we just created
+${FTP_CLIENT} -d $SERV_BD_ADDR -c $tmp_folder_name -r $tmp_file_name
+
+# List the root folder again and check if the folder really got removed
+${FTP_CLIENT} -d $SERV_BD_ADDR -c $tmp_folder_name -l > tmp_ftp_folder.log
+exist=`grep "$tmp_file_name" ./tmp_ftp_folder.log -c`
 if [ $exist -gt 0 ]; then
-    echo "Failed to delete the folder $tmp_folder_name!"
-    echo "Check FTP folder remove: Failed"
+    echo "Failed to delete the file $tmp_file_name under folder $tmp_folder_name!"
+    echo "Check FTP new folder file remove: Failed"
     rm -rf ./tmp_ftp_folder.log
     exit 1
 fi
 
 rm -rf ./tmp_ftp_folder.log
+rm -f $tmp_file_name
 
-echo "Check FTP folder create & remove: successfully"
+echo "Check FTP new folder file create & remove: successfully"
 exit 0
