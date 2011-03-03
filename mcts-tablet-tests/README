@@ -1,0 +1,37 @@
+
+---------------------
+Introduction
+---------------------
+mcts-tablet-tests is an collection of mcts test cases for tablet testing. It depens on mcts components.
+
+Before running mcts-tablet-tests, you need first install required mcts components.
+
+
+---------------------
+Build and Run
+---------------------
++ Build in meego system, you need install build system and rpmbuild
+cd mcts-tablet-tests
+./pack.sh
+
+This will generate mcts-tablet-tests-0.1-1.i386.rpm
+
++ Install
+rpm -ivh mcts-tablet-tests-0.1-1.i386.rpm --nodeps
+
++ Test environment setup
+Refer the section Test environment setup for all related mcts components
+
++ Run
+testrunner-lite -a -f /usr/share/mcts-tablet-tests/tests.xml -o results.xml
+Please refer to the section Test Envrionment setup for what to test
+
+
+---------------------
+Common Install
+---------------------
+./autogen
+./configure prefix=/usr
+make && make install
+
+
