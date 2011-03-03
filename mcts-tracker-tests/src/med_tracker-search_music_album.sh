@@ -27,6 +27,8 @@
 
 cp -rf /tmp/data/test_tracks/meego_m3.ogg ~/Music/
 
+sleep 10
+
 echo "Test case: med_tracker-search_album"
 
 if tracker-search --music-albums | grep "Albums">/dev/null 2>&1

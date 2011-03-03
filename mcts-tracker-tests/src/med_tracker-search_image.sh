@@ -29,6 +29,8 @@ echo "Test case: med_tracker-search_image"
 
 cp -rf /tmp/data/test_tracks/meego_i*.jpg ~/Pictures/
 
+sleep 10
+
 if tracker-search -i | grep "Files">/dev/null 2>&1
 then
   echo "Not Null Value for grep output"
