@@ -563,6 +563,16 @@ class Service:
             ping_string = 'ping -c 5 -b %s' % bip
         ret = commands.getstatusoutput(ping_string)
         print '%s  return %s' % (ping_string, ret[0])
+        if ret[0] == 0:
+            return True
+        # Guess if there is a machine xxx.xxx.xxx.1
+        bip = ip1[0] + '.' + ip1[1] + '.' + ip1[2] + '.1'
+        if size != 0:
+            ping_string = 'ping -c 5 -s %s -b %s' % (size, bip)
+        else:
+            ping_string = 'ping -c 5 -b %s' % bip
+        ret = commands.getstatusoutput(ping_string)
+        print '%s  return %s' % (ping_string, ret[0])
         return ret[0] == 0
 
     # If connected to Internet, we can always connect to www.intel.com
@@ -623,7 +633,7 @@ class Device:
         for path in manager.properties['Technologies']:
             technology = manager.GetSubObject(path, 'Technology')
             properties = technology.GetProperties()
-            if properties['Name'] != name:
+            if "Name" in properties.keys() and properties['Name'] != name:
                 continue
             i = 1
             self.manager = manager
@@ -631,6 +641,7 @@ class Device:
             self.name = name
             self.type = properties['Type']
             print 'Got it: %s' % path
+            manager.EnableTechnology(self.type)
             return
         print 'No such device!'
 
