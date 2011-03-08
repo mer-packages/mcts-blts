@@ -24,6 +24,7 @@
 #include <getopt.h>
 #include <blts_cli_frontend.h>
 #include <blts_params.h>
+#include <blts_reporting.h>
 
 typedef struct
 {
@@ -219,6 +220,18 @@ static int my_example_case_7(void* user_ptr, int test_num)
 	}
 }
 
+
+static int my_example_case_with_measurement(void* user_ptr, int test_num)
+{
+	int ret;
+	BLTS_DEBUG("in my_example_case_with_measurement\n");
+	BLTS_DEBUG("This case will produce a result entry in a CSV file (if available)\n");
+	ret = blts_report_extended_result("demo_measurement", 42.0, "fish/s", 0);
+	return ret;
+}
+
+
+
 /* Your test definitions */
 
 static blts_cli_testcase my_example_cases[] =
@@ -233,6 +246,7 @@ static blts_cli_testcase my_example_cases[] =
 	{ "My example E", my_example_case_5, 2000 },
 	{ "My example variant test A", my_example_case_6, 2000 },
 	{ "My example variant test B", my_example_case_7, 2000 },
+	{ "My example test with measurement", my_example_case_with_measurement, 2000 },
 	BLTS_CLI_END_OF_LIST
 };
 
