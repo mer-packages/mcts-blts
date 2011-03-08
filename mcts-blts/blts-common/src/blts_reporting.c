@@ -17,6 +17,44 @@
 */
 
 #include "blts_reporting.h"
+#include "blts_log.h"
 
+
+
+int blts_report_extended_result(char *tag, double value, char *unit, int use_limits)
+{
+	return -1;
+}
+
+int blts_report_load_fail_limits(__attribute__((unused)) char *filename)
+{
+	BLTS_ERROR("Error: %s not implemented\n", __FUNCTION__);
+	return -1;
+}
+
+int blts_report_set_fail_limit(__attribute__((unused)) char *tag,
+			       __attribute__((unused)) double fail,
+			       __attribute__((unused)) double *target,
+			       __attribute__((unused)) int *low_is_good)
+{
+	BLTS_ERROR("Error: %s not implemented\n", __FUNCTION__);
+	return -1;
+}
+
+int blts_report_get_fail_limit(__attribute__((unused)) char *tag,
+			       __attribute__((unused)) double *fail,
+			       __attribute__((unused)) double *target,
+			       __attribute__((unused)) int *low_is_good)
+{
+	BLTS_ERROR("Error: %s not implemented\n", __FUNCTION__);
+	return -1;
+}
+
+int blts_report_is_result_fail(__attribute__((unused)) char *tag,
+			       __attribute__((unused)) double value)
+{
+	BLTS_ERROR("Error: %s not implemented\n", __FUNCTION__);
+	return -1;
+}
 
 

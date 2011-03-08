@@ -19,5 +19,12 @@
 #ifndef BLTS_REPORTING_H
 #define BLTS_REPORTING_H
 
+int blts_report_extended_result(char *tag, double value, char *unit, int use_limits);
+
+int blts_report_load_fail_limits(char *filename);
+int blts_report_set_fail_limit(char *tag, double fail, double *target, int *low_is_good);
+int blts_report_get_fail_limit(char *tag, double *fail, double *target, int *low_is_good);
+int blts_report_is_result_fail(char *tag, double value);
+
 #endif /* BLTS_REPORTING_H */
 
