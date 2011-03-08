@@ -80,8 +80,9 @@ static int manual_execution = 1;
 static void show_help(char* bin_name, blts_cli* cli)
 {
 	const char* help_msg_base =
-		"USAGE: %s [-l mylog.txt] [-e test1,test2...] [-en \"my test\"] [-s] "
-		"[-?] [-v] [-C variation_config.cnf] [-auto|-v|-vv] [-xml|-axml filename] %%s\n"
+		"USAGE: %s [-l mylog.txt] [-e test1,test2...] [-en \"my test\"] [-s] [-?] [-v]\n"
+		"                [-C variation_config.cnf] [-auto|-v|-vv] [-xml|-axml filename]\n"
+		"                [-csv|-acsv filename] %%s\n"
 		"  -l: Used log file, default %s\n"
 		"  -e: Execute single or multiple selected tests, for example -e 1,4,5.\n"
 		"  -en: Execute test by name, for example -en \"My test X\"\n"
@@ -89,7 +90,8 @@ static void show_help(char* bin_name, blts_cli* cli)
 		"  -C: Used parameter configuration file\n"
 		"  -?: This message\n"
 		"  -xml, -axml: Create result XML. -axml appends results to an existing XML file.\n"
-		"  -auto: Silent logging for test automation. Only the results are printed to stdout.\n"
+		"  -csv, -acsv: Write measurement result to CSV file. -acsv appends result.\n"
+		"  -auto: Silent logging for test automation. Only the results are printed.\n"
 		"  -v: Verbose logging (default)\n"
 		"  -vv: Even more verbose logging\n%%s";
 	int log_file_len = cli->log_file?strlen(cli->log_file):0;
@@ -537,6 +539,8 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	char *bin_fname = NULL;
 	char *xml_result_file = NULL;
 	int xml_append_results = 0;
+	char *csv_result_file = NULL;
+	int csv_append_results = 0;
 	int config_file_given = 0;
 
 	timout_override = 0;
@@ -684,6 +688,27 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			xml_result_file = argv[t];
 			xml_append_results = 1;
 		}
+		else if(strcmp(argv[t], "-csv") == 0)
+		{
+			if(++t >= argc)
+			{
+				invalid_arguments(argv[0], cli);
+				result = -EINVAL;
+				goto cleanup;
+			}
+			csv_result_file = argv[t];
+		}
+		else if(strcmp(argv[t], "-acsv") == 0)
+		{
+			if(++t >= argc)
+			{
+				invalid_arguments(argv[0], cli);
+				result = -EINVAL;
+				goto cleanup;
+			}
+			csv_result_file = argv[t];
+			csv_append_results = 1;
+		}
 		else
 		{
 			if(processed_argc >= MAX_ARGS)
@@ -797,6 +822,16 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			xml_append_results)) {
 			fprintf(stderr, "Could not open XML result file '%s'\n",
 				xml_result_file);
+			result = -EINVAL;
+			goto cleanup;
+		}
+	}
+
+	if (csv_result_file) {
+		if (csv_result_open(csv_result_file, bin_fname, bin_fname,
+			csv_append_results)) {
+			fprintf(stderr, "Could not open CSV result file '%s'\n",
+				csv_result_file);
 			result = -EINVAL;
 			goto cleanup;
 		}
