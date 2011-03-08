@@ -16,14 +16,30 @@
 
 */
 
+#define _GNU_SOURCE
+
+#include <string.h>
+#include <stdlib.h>
 #include "blts_reporting.h"
 #include "blts_log.h"
+#include "csv_file.h"
 
-
-
-int blts_report_extended_result(char *tag, double value, char *unit, int use_limits)
+int blts_report_extended_result(char *tag, double value, char *unit, __attribute__((unused)) int use_limits)
 {
-	return -1;
+	int ret;
+	char *s = NULL;
+
+	/* TODO: add limits if needed */
+	ret = asprintf(&s, "%s;%lf;%s\n", tag, value, unit);
+	if(ret < 0) {
+		BLTS_LOGGED_PERROR("malloc");
+		return ret;
+	}
+
+	ret = csv_result_add(s);
+	if(s)
+		free(s);
+	return ret;
 }
 
 int blts_report_load_fail_limits(__attribute__((unused)) char *filename)

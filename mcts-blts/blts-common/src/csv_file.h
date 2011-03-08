@@ -19,5 +19,9 @@
 #ifndef CSV_FILE_H
 #define CSV_FILE_H
 
+int csv_result_file_open(char *path, int append_mode);
+int csv_result_add(char *str);
+int csv_result_file_close();
+
 #endif /* CSV_FILE_H */
 

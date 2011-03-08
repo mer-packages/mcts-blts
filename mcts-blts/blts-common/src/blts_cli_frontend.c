@@ -41,6 +41,7 @@
 #include "blts_params.h"
 #include "blts_params_local.h"
 #include "blts_results_xml.h"
+#include "csv_file.h"
 
 #define MAX_ARGS 256
 
@@ -828,8 +829,7 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	}
 
 	if (csv_result_file) {
-		if (csv_result_open(csv_result_file, bin_fname, bin_fname,
-			csv_append_results)) {
+		if (csv_result_file_open(csv_result_file, csv_append_results)) {
 			fprintf(stderr, "Could not open CSV result file '%s'\n",
 				csv_result_file);
 			result = -EINVAL;
@@ -876,6 +876,8 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 
 	if (xml_result_file)
 		xml_result_close();
+	if (csv_result_file)
+		csv_result_file_close();
 
 cleanup:
 
