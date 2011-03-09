@@ -24,6 +24,8 @@
 #include <sys/resource.h>
 #include <sys/time.h>
 #include <errno.h>
+#include <blts_reporting.h>
+
 #include "ogles2_helper.h"
 
 static const EGLint default_config_attr[] =
@@ -624,6 +626,10 @@ int glesh_execute_main_loop(glesh_context* context,
 	{
 		BLTS_DEBUG("CPU usage (all processes, all CPUs): N/A\n");
 	}
+
+	blts_report_extended_result("framerate", context->perf_data.fps, "1/s", 0);
+	blts_report_extended_result("cpu_use_test_process", context->perf_data.cpu_usage, "%", 0);
+	blts_report_extended_result("cpu_use_all_processes", context->perf_data.total_load, "%", 0);
 
 	return 1;
 }
