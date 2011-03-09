@@ -30,7 +30,7 @@ int blts_report_extended_result(char *tag, double value, char *unit, __attribute
 	char *s = NULL;
 
 	/* TODO: add limits if needed */
-	ret = asprintf(&s, "%s;%lf;%s\n", tag, value, unit);
+	ret = asprintf(&s, "%s;%lf;%s;\n", tag, value, unit);
 	if(ret < 0) {
 		BLTS_LOGGED_PERROR("malloc");
 		return ret;
