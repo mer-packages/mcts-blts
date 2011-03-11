@@ -134,14 +134,16 @@ test_geoclue_master_client_get_address_provider_info()
 	GeoclueMasterClient* client = create_geoclue_master_client();
 	g_assert ( client != NULL );
 
-	gchar *name;
-	gchar *description;
-	gchar *service;
-	gchar *path;
+	gchar *name= NULL;
+	gchar *description= NULL;
+	gchar *service= NULL;
+	gchar *path= NULL;
 	GError* error = NULL;
+	geoclue_test_provider_address_start(client);
+  geoclue_test_provider_position_start(client);
 	geoclue_master_client_get_address_provider ( client, &name, &description,
 &service, &path, &error );
-	
+
 	/*assert no error occurs*/
 	if ( error ) {
 		g_test_message ( "Error in geocode_master_client: %s.\n", error->message
@@ -168,7 +170,10 @@ test_geoclue_master_client_get_position_provider_info()
 	g_assert ( client != NULL );
 
 	gchar *name, *description, *service, *path;
-	GError* error = NULL;
+	GError* error = NULL;	
+  
+  geoclue_test_provider_address_start(client);
+  geoclue_test_provider_position_start(client);
 	geoclue_master_client_get_position_provider ( client, &name, &description,
 &service, &path, &error );
 	

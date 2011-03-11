@@ -17,12 +17,23 @@ inline
 #define GEOCLUE_TEST_PATH	"/org/freedesktop/Geoclue/Providers/Test"
 #define GEOCLUE_TEST_INTERFACE	"org.freedesktop.Geoclue.Test"
 
-
-gboolean
+inline gboolean
 org_freedesktop_Geoclue_Test_set_address ( DBusGProxy *proxy, const gint IN_valid_for, const GHashTable* IN_address, GError **error )
 
 {
 	return dbus_g_proxy_call ( proxy, "SetAddress", error, G_TYPE_INT, IN_valid_for, dbus_g_type_get_map ( "GHashTable", G_TYPE_STRING, G_TYPE_STRING ), IN_address, G_TYPE_INVALID, G_TYPE_INVALID );
+}
+
+//start Address, when create client from mast, it must start address or position
+void 
+org_freedesktop_Geoclue_Test_address_start( DBusGProxy *proxy,  GError **error)
+{
+	 dbus_g_proxy_call ( proxy, "AddressStart" , error, G_TYPE_INVALID);
+}
+void 
+org_freedesktop_Geoclue_Test_position_start( DBusGProxy *proxy,  GError **error)
+{
+	 dbus_g_proxy_call ( proxy, "PositionStart" , error, G_TYPE_INVALID);
 }
 
 typedef void ( *org_freedesktop_Geoclue_Test_set_address_reply ) ( DBusGProxy *proxy, GError *error, gpointer userdata );
