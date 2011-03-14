@@ -243,6 +243,8 @@ static blts_cli_testcase bt_cases[] =
 	{ "Core-Bluetooth LE scan", bt_run_case, 60000 },
 	{ "Core-Bluetooth LE advertise", bt_run_case, 60000 },
 	{ "Core-Bluetooth LE connect", bt_run_case, 60000 },
+	{ "Core-Bluetooth LE transmit data", fute_bt_le_tx_data, 60000 },
+	{ "Core-Bluetooth LE receive data", fute_bt_le_rx_data, 60000 },
 
 	BLTS_CLI_END_OF_LIST
 };

@@ -528,3 +528,47 @@ int fute_bt_le_connect_disconnect(char *remote_mac)
 	return retval;
 }
 
+
+int fute_bt_le_tx_data(void *user_ptr, __attribute__((unused)) int test_num)
+{
+	struct bt_data *data = (struct bt_data *) user_ptr;
+	struct bt_ctx *ctx;
+	int ret = -1;
+
+	if(!data || !data->mac_address)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	ctx = bt_ctx_new();
+	if(ctx)	{
+		str2ba(data->mac_address, &ctx->remote_mac);
+		ret = le_tx_data(ctx);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", ret ? "FAILED" : "PASSED");
+	return ret;
+}
+
+int fute_bt_le_rx_data(void *user_ptr, __attribute__((unused)) int test_num)
+{
+	struct bt_data *data = (struct bt_data *) user_ptr;
+	struct bt_ctx *ctx;
+	int ret = -1;
+
+	if(!data || !data->mac_address)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	ctx = bt_ctx_new();
+	if(ctx)	{
+		str2ba(data->mac_address, &ctx->remote_mac);
+		ret = le_rx_data(ctx);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", ret ? "FAILED" : "PASSED");
+	return ret;
+}

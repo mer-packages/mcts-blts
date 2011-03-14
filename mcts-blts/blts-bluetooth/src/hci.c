@@ -1740,7 +1740,23 @@ int le_disconnect_remote(struct bt_ctx *ctx)
 	return retval;
 }
 
+int le_tx_data(struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+int le_tx_data(struct bt_ctx *ctx)
+{
+	return -1;
+}
+
 #else /* !HAVE_BTLE_API */
+
+static void le_error_not_built()
+{
+	BLTS_ERROR("ERROR: Bluetooth LE support was not compiled in.\n");
+	BLTS_ERROR("Use a newer version of Bluez when building the tests.\n");
+}
 
 int do_le_scan(__attribute__((unused)) struct bt_ctx *ctx)
 {
@@ -1759,6 +1775,18 @@ int le_connect_remote(__attribute__((unused)) struct bt_ctx *ctx)
 
 int le_disconnect_remote(__attribute__((unused)) struct bt_ctx *ctx)
 {
+	return -1;
+}
+
+int le_tx_data(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	le_error_not_built();
+	return -1;
+}
+
+int le_rx_data(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	le_error_not_built();
 	return -1;
 }
 
