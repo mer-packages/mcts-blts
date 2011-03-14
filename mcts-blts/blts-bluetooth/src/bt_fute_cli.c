@@ -53,8 +53,8 @@ static void* bt_argument_processor(int argc, char **argv)
 {
 	int c;
 	int ret;
-	bt_data* my_data = malloc(sizeof(bt_data));
-	memset(my_data, 0, sizeof(bt_data));
+	struct bt_data *my_data = malloc(sizeof(*my_data));
+	memset(my_data, 0, sizeof(*my_data));
 
 	while ((c = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1)
 	{
@@ -92,7 +92,7 @@ static void bt_teardown(void *user_ptr)
 {
 	if(user_ptr)
 	{
-		bt_data* data = (bt_data*)user_ptr;
+		struct bt_data *data = (struct bt_data *)user_ptr;
 
 		if (data->mac_address)
 			free(data->mac_address);
@@ -109,7 +109,7 @@ static void bt_teardown(void *user_ptr)
 static int bt_run_case(void* user_ptr, int test_num)
 {
 	int ret = 0;
-	bt_data* data = (bt_data*)user_ptr;
+	struct bt_data *data = (struct bt_data *)user_ptr;
 
 	BLTS_DEBUG("Test number %i:\n", test_num);
 

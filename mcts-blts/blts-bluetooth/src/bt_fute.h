@@ -54,10 +54,9 @@ enum {
 	CORE_BT_LE_CONNECT
 };
 
-typedef struct
-{
+struct bt_data {
 	char *mac_address;
-} bt_data;
+};
 
 int fute_bt_drivers_depcheck();
 int fute_bt_scan();
