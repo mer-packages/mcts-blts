@@ -494,7 +494,7 @@ int fute_bt_le_advertise()
 	if ((ctx = bt_ctx_new())) {
 		ctx->local_mac = *BDADDR_ANY;
 		retval = le_set_advertise_mode(ctx, 1);
-		sleep(WAIT_TIME_CONNECT_DISCONNECT);
+		sleep(10 * (WAIT_TIME_CONNECT_DISCONNECT));
 		retval |= le_set_advertise_mode(ctx, 0);
 		bt_ctx_free(ctx);
 	}

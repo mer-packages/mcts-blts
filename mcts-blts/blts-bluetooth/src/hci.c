@@ -1531,7 +1531,7 @@ static int print_advertising_devices(int fd)
 	unsigned char buf[HCI_MAX_EVENT_SIZE];
 	struct hci_filter nf, of;
 	socklen_t olen = sizeof(of);
-	int len, num = 10;
+	int len, num = 4;
 	int rssi;
 	evt_le_meta_event *meta;
 	le_advertising_info *info;
@@ -1552,6 +1552,7 @@ static int print_advertising_devices(int fd)
 	}
 
 	while(num--) {
+		/* TODO: Add graceful timeout for this */
 		while((len = read(fd, buf, sizeof(buf))) < 0) {
 			if (errno == EAGAIN || errno == EINTR)
 				continue;
