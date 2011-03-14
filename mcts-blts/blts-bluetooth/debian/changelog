@@ -1,3 +1,11 @@
+blts-bluetooth-tests (0.2.13) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Fix LE build on mainline Bluez 4.89
+  * [ Jussi Saavalainen ] Allow LE advertising case use as LE scan pair
+  * [ Jussi Saavalainen ] Add basic LE data transmit/receive cases
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Mon, 14 Mar 2011 17:25:59 +0200
+
 blts-bluetooth-tests (0.2.12) unstable; urgency=low
 
   * [ Mika Niinistö ] Add HCI tracer to remove hcidump dependency
