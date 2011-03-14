@@ -1517,12 +1517,22 @@ error:
 /* -------------------- BT LE ----------------- */
 #ifdef HAVE_BTLE_API
 
+
+/* See BT4 spec: 2.E.7.7.65.2 */
+static int le_get_adv_info_rssi(le_advertising_info *info)
+{
+	if(!info)
+		return 127;  /* "RSSI not available" */
+	return *(((int8_t *) info->data) + info->length);
+}
+
 static int print_advertising_devices(int fd)
 {
 	unsigned char buf[HCI_MAX_EVENT_SIZE];
 	struct hci_filter nf, of;
 	socklen_t olen = sizeof(of);
 	int len, num = 10;
+	int rssi;
 	evt_le_meta_event *meta;
 	le_advertising_info *info;
 	char addr[18];
@@ -1558,7 +1568,16 @@ static int print_advertising_devices(int fd)
 		info = (le_advertising_info *) (meta->data + 1);
 		ba2str(&info->bdaddr, addr);
 
-		BLTS_DEBUG("address: %s (rssi: %u)\n", addr, info->rssi);
+		rssi = le_get_adv_info_rssi(info);
+		if(-127 <= rssi && rssi <= 20) {
+			BLTS_DEBUG("address: %s (RSSI: %d) \n", addr, rssi);
+		} else if (rssi == 127) {
+			BLTS_DEBUG("address: %s (RSSI not available)\n", addr);
+		} else {
+			/* TODO: Maybe we should error on this? */
+			BLTS_DEBUG("address: %s (Bad RSSI)\n", addr);
+			BLTS_ERROR("Warning: Reserved RSSI '%d' in advertising report for device %s !\n", rssi, addr);
+		}
 	}
 
 cleanup:
