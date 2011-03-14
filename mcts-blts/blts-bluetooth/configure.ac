@@ -63,7 +63,7 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([clock_gettime memset strdup strerror strtol])
 
 # Check for BTLE API support in Bluez
-AC_CHECK_FUNC([hci_le_create_conn],[AC_DEFINE([HAVE_BTLE_API], [1], [Defined if BTLE API available])],[],[])
+AC_SEARCH_LIBS([hci_le_create_conn], [bluetooth], [AC_DEFINE([HAVE_BTLE_API], [1], [Defined if BTLE API available])],[],[])
 
 
 AC_SUBST(configdir)
