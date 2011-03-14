@@ -1761,10 +1761,38 @@ int le_disconnect_remote(struct bt_ctx *ctx)
 
 int le_tx_data(struct bt_ctx *ctx)
 {
-	return -1;
+	int ret, bytes;
+	struct acl_test_packet p;
+	if(!ctx)
+		return -EINVAL;
+
+	ret = le_connect_remote(ctx);
+	if(ret) {
+		BLTS_ERROR("Could not connect to remote device, cannot continue.\n");
+		return ret;
+	}
+
+	memset(&p, 0, sizeof(struct acl_test_packet));
+	p.type = HCI_ACLDATA_PKT;
+	p.hdr.handle = htobs(acl_handle_pack(ctx->conn_handle, ACL_START));
+	p.hdr.dlen = htobs(strlen(acl_test_data));
+	memcpy(p.data, acl_test_data, p.hdr.dlen);
+
+	bytes = write(ctx->hci_fd, &p, 1 + HCI_ACL_HDR_SIZE + p.hdr.dlen);
+
+	if(bytes <= 0) {
+		BLTS_ERROR("Could not send data\n");
+		ret = errno ? -errno : -1;
+	}
+
+	sleep(WAIT_TIME_CONNECT_DISCONNECT);
+
+	le_disconnect_remote(ctx);
+
+	return ret;
 }
 
-int le_tx_data(struct bt_ctx *ctx)
+int le_rx_data(struct bt_ctx *ctx)
 {
 	return -1;
 }
