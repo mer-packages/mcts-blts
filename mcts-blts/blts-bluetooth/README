@@ -304,6 +304,8 @@ Core-Bluetooth LE scan
 
    * Perform Bluetooth LE scan operation with first available Bluetooth
      adapter, reading advertising data for each found device.
+   * Try "hciconfig hci0 leadv" on another device to enable advertising if
+     nothing found, or run the "Core-Bluetooth LE advertise" case there.
    $ blts-bluetooth-tests -en "Core-Bluetooth LE scan"
 
 Core-Bluetooth LE advertise
@@ -319,4 +321,16 @@ Core-Bluetooth LE connect
    * Connect just the Bluetooth LE link to device <remote-mac>, wait a
      while, the disconnect.
    $ blts-bluetooth-tests -en "Core-Bluetooth LE connect"
+
+Core-Bluetooth LE transmit data
+  Parameters: <remote-mac>
+   * Connect Bluetooth LE link to device <remote-mac>, transmit test data,
+     and disconnect.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE transmit data"
+
+Core-Bluetooth LE receive data
+  Parameters: (none)
+   * Wait for incoming LE connection, receive test data packet, and verify
+     it.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE receive data"
 
