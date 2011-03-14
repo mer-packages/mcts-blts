@@ -1795,7 +1795,7 @@ int le_tx_data(struct bt_ctx *ctx)
 
 int le_rx_data(struct bt_ctx *ctx)
 {
-	return -1;
+	return hci_receive_acl_data(ctx);
 }
 
 #else /* !HAVE_BTLE_API */
