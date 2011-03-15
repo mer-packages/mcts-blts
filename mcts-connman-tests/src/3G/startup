@@ -26,19 +26,5 @@ dir=os.path.dirname(sys.argv[0])+"/../common"
 sys.path.append(dir)
 from common import *
 
-manager.Cleanup()
+#manager.Cleanup()
 manager.Startup3G()
-loop = 0
-while loop < 5:
-    dev = C3GDevice()
-    dev.Connect()
-    svc=dev.GetService()
-    if svc != None:
-        prop=svc.GetProperties()
-        print prop
-        break
-    dev.PoweredOff()
-    time.sleep(5)
-    dev.PoweredOn()
-    time.sleep(10)
-    loop = loop + 1

@@ -178,6 +178,9 @@ class Manager:
 
     def StartupBT(self):
         self.DisableTechnology('')
+        self.EnableTechnology('ethernet')
+        eth = EthDevice()
+        time.sleep(10)
         self.EnableTechnology('bluetooth')
         time.sleep(10)
 
@@ -540,18 +543,11 @@ class Service:
     # Basically we can get response through broadcast
     def BroadcastPing(self, size=0):
         count = 0
-        while count < 10:
+        while count < 5:
             ip = self.GetIP()
             if ip != None:
                 break
             time.sleep(5)
-            if count == 5:
-                print "Try to connect again"
-                try:
-                    self.svc.Connect()
-                except dbus.DBusException, e:
-                    pass
-                time.sleep(5)
             count += 1
         if ip == None:
             return False

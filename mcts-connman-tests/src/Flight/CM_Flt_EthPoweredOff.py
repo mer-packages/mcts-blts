@@ -28,8 +28,11 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
+manager.Online()
+time.sleep(3)
 dev = EthDevice()
 ASSERT(dev.IsExist(), "No device found", manager.Online)
+time.sleep(3)
 dev.PoweredOff()
 time.sleep(2)
 ret=dev.IsPoweredOff()

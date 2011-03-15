@@ -28,11 +28,12 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
-manager.Offline()
-time.sleep(3)
 dev = WiFiDevice()
 ASSERT(dev.IsExist(), "No device found", manager.Online)
+manager.Offline()
+time.sleep(3)
 dev.PoweredOff()
+time.sleep(3)
 ret = dev.IsPoweredOff()
 manager.Online()
 time.sleep(1)

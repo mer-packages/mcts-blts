@@ -30,10 +30,11 @@ from common import *
 
 manager.Online()
 time.sleep(3)
-manager.Offline()
-time.sleep(3)
 eth = EthDevice()
 ASSERT(eth.IsExist(), "No device found", manager.Online)
+time.sleep(3)
+manager.Offline()
+time.sleep(3)
 eth.PoweredOn()
 time.sleep(10)
 svc = eth.GetService()
