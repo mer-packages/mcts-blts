@@ -1,3 +1,9 @@
+blts-opengles2-tests (0.0.17) unstable; urgency=low
+
+  * Add CSV measurement result reporting.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 16 Mar 2011 14:14:45 +0200
+
 blts-opengles2-tests (0.0.16) unstable; urgency=low
 
   * Version update due to packaging change.

@@ -1,6 +1,6 @@
 Summary: BLTS OpenGL ES2 test set
 Name: blts-opengles2-tests
-Version: 0.0.16
+Version: 0.0.17
 Release: 1
 License: GPLv2
 Group: Development/Testing
