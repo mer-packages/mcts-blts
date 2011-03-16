@@ -118,13 +118,20 @@ Known issues
   prevent this, shut down Connman and wpa_supplicant before testing with (as
   root):
 
+  1)
   killall connmand
   killall wpa_supplicant
 
   Reboot the device when finished to restore WLAN functionality. (Note: this
   applies to current Meego; future versions may differ.)
 
+  OR
 
+  2)
+  The example configuration file has global parameters 'stopped_processes' 
+  and 'restarted_processes' these can be used to stop/restart defined processes.
+  NOTE: These parameters can be empty if 'killall' commands are used.
+ 
 Test cases
 
 * Core-WLAN-Enumerate hardware
