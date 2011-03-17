@@ -1,6 +1,6 @@
 Summary: BLTS WLAN low-level test set
 Name: blts-wlan-core-tests
-Version: 0.1.6
+Version: 0.1.7
 Release: 1
 License: GPLv2
 Group: Development/Testing

@@ -1,7 +1,8 @@
 blts-wlan-core-tests (0.1.7) unstable; urgency=low
 
-  * Stop and restart conflicting processes functionality added to configuration file.
- 
+  * Stop and restart conflicting processes functionality added to configuration
+    file.
+
  -- Aki Nyman <aki.nyman@digia.com>  Thu, 17 Mar 2011 11:00:00 +0200
 
 blts-wlan-core-tests (0.1.6) unstable; urgency=low
