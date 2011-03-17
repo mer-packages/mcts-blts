@@ -349,7 +349,7 @@ Pass/Fail Criteria:</p>
 Run Instructions:<br />
 <br />
 1. launch netbook device with 3G modem embedded or plugged in<br />
-2. list-devices<br />
+2. list-services<br />
 3. check there are ethernet, wifi and 3G devices<br />
 Pass/Fail Criteria:<br />
 <br />
@@ -408,7 +408,7 @@ Run Instructions:<br />
 <br />
 1. launch netbook device with 3G modem embedded or plugged in<br />
 2. Run Test-manager to&nbsp;make sure the 3G device is enabled<br />
-3. Switch 3G&nbsp;device state&nbsp;On/OFF via test-connman (test-connman dev wwan0 powered on/off)<br />
+3. Switch 3G&nbsp;device state&nbsp;On/OFF via test-connman (test-connman enable/disable cellular)<br />
 4. reboot system check the state 3G device can be kept.<br />
 Pass/Fail Criteria:<br />
 <br />
@@ -439,7 +439,7 @@ Pass/Fail Criteria:</p>
 Run Instructions:<br />
 <br />
 1. launch netbook device with 3G modem embedded or plugged in<br />
-2. Run test-manager, make sure 3G device is enabled. (test-connman dev wwan0)<br />
+2. Run test-manager, make sure 3G device is enabled. (test-connman enable cellular)<br />
 3.&nbsp;Set&nbsp;Offline-mode to &quot;ON&quot;. (test-connman offlinemode on)</p>
 <p>4. Check 3G device state. (test-manger )<br />
 Pass/Fail Criteria:<br />
@@ -576,7 +576,7 @@ Run Instructions:<br />
 1. launch netbook device with 3G modem embedded or plugged in<br />
 2. Run test-manager, make sure 3G device is enabled.</p>
 <p>3. Connect to 3G network by test-connman, make sure the 3G network is connected successfully.<br />
-4. launch moblin browser in application launcher, and try to surfing on web<br />
+4. launch browser in application launcher, and try to surfing on web<br />
 Pass/Fail Criteria:<br />
 <br />
 After 3G connected, user can surfing web freely.</p>]]></description>
@@ -605,7 +605,7 @@ Run Instructions:<br />
 1. launch netbook device with 3G modem embedded or plugged in<br />
 2. Run test-manager, make sure 3G device is enabled.<br />
 3.&nbsp;Connect to&nbsp;3G network in service list by test-connman, make sure the 3G network is connected successfully.<br />
-4. launch moblin browser in application launcher, and try to surfing on web and download a big file bigger then 256M<br />
+4. launch browser in application launcher, and try to surfing on web and download a big file bigger then 256M<br />
 Pass/Fail Criteria:<br />
 <br />
 After 3G connected, user can download big file stable</p>]]></description>
@@ -665,7 +665,7 @@ Run Instructions:<br />
 1. launch netbook device with 3G modem embedded or plugged in<br />
 2. Run test-manager, maker sure 3G device is enabled.</p>
 <p>3.&nbsp;Connect to&nbsp;3G network in service list by test-connman, make sure the 3G network is connected successfully.<br />
-4. launch moblin browser in application launcher, and try to surfing on web</p>
+4. launch browser in application launcher, and try to surfing on web</p>
 <p>5. Try to moving acrose the areas of several kilemeters<br />
 Pass/Fail Criteria:<br />
 <br />
@@ -1507,8 +1507,8 @@ For exampel: connect-vpn openvpn openvpn openvpn-server mydomain.org /root/.open
 Disabled WiFI device by setting &quot;Powered&quot; off<br />
 Run Instructions:<br />
 1. boot system<br />
-2. Disable WiFI device (disable-device)<br />
-3. Check if WiFi device is disabled (list-devices)</p>
+2. Disable WiFI device (test-connman disable wifi)<br />
+3. Check if WiFi device is disabled (test-manager)</p>
 <p>Pass/Fail Criteria:<br />
 Powered == 0</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
@@ -1520,7 +1520,7 @@ Enable&nbsp;WiFI device by setting &quot;Powered&quot; on<br />
 Run Instructions:<br />
 1. boot system<br />
 2. Enable WiFI device (enable-device)<br />
-3. Check if WiFi device is enabled (list-devices)<br />
+3. Check if WiFi device is enabled (list-services)<br />
 Pass/Fail Criteria:<br />
 Powered == 1</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
@@ -3424,13 +3424,11 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 </set>
-<set name="Info" description="
+<set name="Info" description="    ">
 
- 
-">
-
-<case name="CM_INFO_ManagerStateEthOnline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ManagerStateEthOnline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the connman's state is &quot;online&quot; when there is ethernet connection<br />
 &nbsp;</p>
 <p><br />
@@ -3442,11 +3440,12 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p><br />
 the status should be &quot;online&quot;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_ManagerStateEthOffline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ManagerStateEthOffline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check state of manager is offline when ethernet is disconnected</p>
 <p><br />
 Run Instructions:</p>
@@ -3458,11 +3457,12 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p><br />
 the &quot;State&quot; property of manager is &quot;offline&quot; and ethernet can't ping with othere IP address</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_ManagerStateWiFiOnline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ManagerStateWiFiOnline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check state of manager is online when wifi is connected</p>
 <p><br />
 Run Instructions:</p>
@@ -3475,11 +3475,12 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p><br />
 the state of manager is &quot;online&quot;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_ManagerStateWiFiOffline" manual="true" timeout="90" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ManagerStateWiFiOffline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check state of manager is offline when wifi is disconnected after connected</p>
 <p><br />
 Run Instructions:</p>
@@ -3488,17 +3489,18 @@ Run Instructions:</p>
 2. make sure connman can get IP for wifi and can ping with other wifi IP address by &quot;connect-service [ssid]&quot;<br />
 3. make sure ethernet and bt are disconnected<br />
 4. call test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;<br />
-5. disable wifi device by calling &quot;test-manager dev&nbsp;wlan0 powered off&quot;<br />
+5. disable wifi device by calling &quot;test-connman disable wifi&quot;<br />
 6. call test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 the &quot;State&quot; property of manager is &quot;offline&quot; and wifi can't ping with other IP address</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_ManagerStateBTOnline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ManagerStateBTOnline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check state of manager is online when bt is connected</p>
 <p><br />
 Run Instructions:</p>
@@ -3511,11 +3513,12 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p><br />
 the state of manager is &quot;online&quot;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_ManagerStateBTOffline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ManagerStateBTOffline" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check state of manager is offline when bt is disconnected after connected</p>
 <p><br />
 Run Instructions:</p>
@@ -3524,17 +3527,18 @@ Run Instructions:</p>
 2. make sure bluetooth can set IP and can ping with other bluetooth IP address in PAN mode<br />
 3. make sure ethernet and wifi are disconnected<br />
 4.&nbsp; test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;<br />
-5. disable bluetooth device by calling &quot;test-connman dev pan0 powered off&quot;<br />
+5. disable bluetooth device by calling &quot;test-connman disable bluetooth&quot;<br />
 6. test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 the state of manger is &quot;offline&quot; and bluetooth can't ping with other peers</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_ProfileDefault" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_ProfileDefault" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the profile is default</p>
 <p><br />
 Run Instructions:</p>
@@ -3544,73 +3548,78 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p><br />
 can get profile property to be default</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_EthDevInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_EthDevInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check if the ethernet device information are correct</p>
 <p><br />
 Run Instructions:</p>
 <p>pre-condition: connmand is launched<br />
 1. ethernet is enabled<br />
-2. list-devices to show the properties of ethernet<br />
+2. list-services to show the properties of ethernet<br />
 3. check all the properties listed</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 Name = Ethernet, Type = ethernet, Powered = 1</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_WiFiDevInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_WiFiDevInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the wifi device information are correct</p>
 <p><br />
 Run Instructions:</p>
 <p>pre-condition: connmand is launched<br />
 1. wifi device is plugged and wpa_supplicant is running in background<br />
-2.&nbsp;list-devices to show the properties of wifi<br />
+2.&nbsp;list-services to show the properties of wifi<br />
 3. check all the properties listed</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 can list all the properties of wifi device, including Name, Type, Policy, Priority, Powered, Scanning and Networks</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_BTDevInfo" manual="true" timeout="90" type="Functional" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_BTDevInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the Bluetooht device information are correct</p>
 <p><br />
 Run Instructions:</p>
 <p>pre-condition: connmand is launched<br />
 1. bluetooth is enabled<br />
-2. list-devices to show the properties of bluetooth<br />
+2. list-services to show the properties of bluetooth<br />
 3. check all the properties listed</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 can list all the bluetooth properties, including Name, Type, Policy, Priority, Powered, Scanning and Networks</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_EthConnInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_EthConnInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the ethernet connection information are correct</p>
 <p><br />
 Run Instructions:</p>
 <p>pre-condition: connmand is launched<br />
 1. ethernet cable is plugged and make sure can get IP address <br />
-2.&nbsp;list-devices to show the connection status of ethernet</p>
+2.&nbsp;list-services to show the connection status of ethernet</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Type, Strength, Default, IPv4.Method and IPv4.Address are correct</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_WiFiConnInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_WiFiConnInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the wifi connection properties are correct</p>
 <p><br />
 Run Instructions:</p>
@@ -3624,11 +3633,12 @@ Type = wifi</p>
 <p>Default = 1</p>
 <p>IPv4.Address, IPv4.Gateway are correct according with the testing enviroment</p>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_BtConnInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_BtConnInfo" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check the bluetooth connection information are correct</p>
 <p><br />
 Run Instructions:</p>
@@ -3636,15 +3646,16 @@ Run Instructions:</p>
 1. bluetooth device is plugged and make sure bluetoothd is running in background&nbsp; and have paired in PANU<br />
 2. list-service to get all the bluetooth service around<br />
 3. test-connman connect&nbsp;to select one Peer to connect as PAN<br />
-4. &quot;list-networks&quot; to show the connection status of bluetooth network</p>
+4. &quot;list-services&quot; to show the connection status of bluetooth network</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Type, Strength, Default, IPv4.Method and IPv4.Address are correct</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_NoConnList" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_NoConnList" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>check there is no connection listed when no network connected</p>
 <p><br />
 Run Instructions:</p>
@@ -3654,28 +3665,30 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>All&nbsp;state&nbsp;is idle</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_SetIPBT" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_SetIPBT" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>set IP address for bluetooth</p>
 <p><br />
 Run Instructions:</p>
 <p><br />
 pre-condition: connmand is launched<br />
 1. make sure bluetooth is plugged.<br />
-2. call &quot;set-address pan0 [IP ADDR]&quot; to set static IP address<br />
-3. call &quot;get-services&quot; to check the IP address</p>
+2. call &quot;set-address &lt;address&gt; &lt;netmask&gt; &lt;gateway&gt;&quot; to set static IP address</p>
+<p>3. call &quot;get-services&quot; to check the IP address</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 can set static IP address to bluetooth</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_TurnOn_FlightMode" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_TurnOn_FlightMode" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p><br />
 can change the FlightMode of connman from off to on</p>
 <p><br />
@@ -3684,30 +3697,29 @@ Run Instructions:</p>
 Pre-condition: connmand is running background<br />
 1. get &quot;FlightMode&quot; of connman manager it should be &quot;off&quot; by test-connman<br />
 2. call test-connman to enable offline mode<br />
-3. call&nbsp;test-connman to check the &quot;FlightMode&quot; property to be &quot;on&quot;<br />
-4. check&nbsp;bluetooth and wifi devices by calling list-devices to check all of the &quot;Powered&quot; information of these devices should be &quot;0&quot;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p><br />
+3. call&nbsp;test-manager to check the &quot;offlineMode&quot; property to be &quot;false&quot;<br />
+4.check if both technologies are in Available Technologies section</p>
+<p>Pass/Fail Criteria:<br />
 1. the &quot;FlightMode&quot; of manager is &quot;on&quot;<br />
-2. the &quot;Powered&quot; information of&nbsp;bluetooth and wifi should be &quot;0&quot;<br />
+2. the &quot;State&quot; information of&nbsp;bluetooth and wifi should be &quot;available&quot; not &quot;enable&quot;<br />
 &nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_Exit_FlightMode" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_Exit_FlightMode" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>can set connman&nbsp;exit from&nbsp;flight mode</p>
 <p><br />
 Run Instructions:</p>
 <p><br />
 Pre-condition: connmand is running background<br />
-1. call&nbsp;test-connman to set in flightmode<br />
-2. make sure bluetooth and wifi are powered off by calling list-devices<br />
-3. call&nbsp;test-connman to exit from flightmode<br />
-4. make sure the &quot;FlightMode&quot; of connman manger is &quot;off&quot;<br />
-by calling test-connman<br />
-5. make sure the bluetooth and wifi device are all powered on by calling list-devices</p>
+1. call&nbsp;&quot;test-connman offlinemode on&quot; to set in offline mode<br />
+2. make sure bluetooth and wifi are&nbsp;not enable&nbsp;by calling test-manager<br />
+3. call&nbsp;&quot;test-connman offlinemode off&quot; to exit from flightmode<br />
+4. make sure the &quot;offline mode&quot; of connman manger is &quot;0&quot;<br />
+by calling &quot;test-connman offlinemode&quot;<br />
+5. make sure the bluetooth and wifi technologies are all enable by calling test-manager</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
@@ -3715,11 +3727,12 @@ Pass/Fail Criteria:</p>
 2. devices' property &quot;Powered&quot; are all &quot;on&quot;<br />
 3. make sure bluetooth and wifi all can scanning by calling &quot;hcitool scan&quot; and &quot;iwlist wlan0 scanning&quot;<br />
 &nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_INFO_MultiConnection" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_INFO_MultiConnection" manual="true" timeout="90" type="Functional" subfeature="ConnMan Info" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>when set manager policy to &quot;multiple&quot;, can connect with several kind of networks at one time.</p>
 <p><br />
 Run Instructions:</p>
@@ -3727,13 +3740,13 @@ Run Instructions:</p>
 1. boot system<br />
 2. &quot;connMan_set_policy &lt;multiple&gt;&quot;<br />
 3. make sure ethernet is enabled, and wifi has available APs to be connected<br />
-4. &quot;ifconfig -a&quot; to check if eth0 and wlan0 are both connected and get IP address. Or &quot;list-devices&quot; to show all the connection status<br />
+4. &quot;ifconfig -a&quot; to check if eth0 and wlan0 are both connected and get IP address. Or &quot;test-manager&quot; to show all the connection status<br />
 &nbsp;</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p><br />
 both eth0 and wlan0 has connected.</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 </set>
 <set name="Launch" description="
@@ -4388,206 +4401,211 @@ connman should connect to the AP automatically, and get an available IP address<
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 </set>
-<set name="Device" description=" 
-">
+<set name="Device" description="  ">
 
-<case name="CM_Device_WIFI" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_WIFI" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can disabe and enable wifi device<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable wifi device<br />
-2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable wifi device<br />
-4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+1. call test-connmand disable wifi<br />
+2. call&nbsp;test-manager to check if the &quot;State&quot; of the device is set to &quot;available&quot;<br />
+3. call test-connman enable wifi<br />
+4. call&nbsp;test-manager to check if the &quot;State&quot; property of the device is set to &quot;enable&quot;<br />
 <br />
 Pass/Fail Criteria:<br />
 <br />
-connman should set the &quot;Powered&quot; of WIFI device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+connman should set the &quot;State&quot; of WIFI device correcly</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_WIFI_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_WIFI_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can remember the WIFI device setting<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable wifi device<br />
-2. reboot system and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable wifi device<br />
-4. reboot and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
+1. call test-connman disable wifi<br />
+2. reboot system and call&nbsp;test-manager to check if the &quot;State&quot; of the device is set to &quot;available&quot;<br />
+3. call test-connman enable wifi<br />
+4. reboot and call&nbsp;test-manager to check if the &quot;State&quot; property of the device is set to &quot;enable&quot;<br />
 <br />
 Pass/Fail Criteria:<br />
 <br />
-connman should set the &quot;Powered&quot; of WIFI device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+connman should set the &quot;State&quot; of WIFI device correcly</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_WIFI_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_WIFI_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can break the connection when disable the wifi device, then enable wifi device, connman can resume wifi connection.<br />
 Run Instructions:<br />
 <br />
-1. Connect a WIFI network and then call disable_device to disable wifi device<br />
+1. Connect a WIFI network and then call&nbsp;&quot;test-connman disable wifi&quot;&nbsp; to &nbsp;disable wifi device<br />
 2. List all WIFI networks in connman to check wifi connection is broken.</p>
-<p>3. Call enable-device to enable wifi device.</p>
-<p>4. List-service to check WiFi connection.<br />
+<p>3. Call&nbsp;&quot;test-connman enable wifi&quot; to enable wifi device.</p>
+<p>4. List-services to check WiFi connection.<br />
 Pass/Fail Criteria:<br />
 <br />
 Disable wifi device, there should be no any WIFI network be listed and the connection is breaked; enable wifi device, wifi connection could&nbsp;be resumed.</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_BT" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_BT" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can disabe and enable BT device<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable BT device<br />
-2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable BT device<br />
-4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
-<br />
+1. call&nbsp;&quot;test-connman disable bluetooth&quot; to disable BT device<br />
+2. call test-manager to check if the state of the bluetooth technology is &quot;available&quot; <br />
+3. call&nbsp;&quot;test-connman enable bluetooth&quot;&nbsp;to enable BT device<br />
+4. call test-manager to check if the state of the bluetooth technology is &quot;enable&quot;<br />
 Pass/Fail Criteria:<br />
 <br />
-connman should set the &quot;Powered&quot; of BT device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+connman should set the &quot;State&quot; of BT device correcly</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_BT_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_BT_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can remember the BT device setting<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable BT device<br />
-2. Reboot and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable BT device<br />
-4. Reboot system and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
-<br />
+1. call &quot;test-connman disable bluetooth&quot; to disable BT device<br />
+2. reboot and call test-manager to check if the state of the bluetooth technology is &quot;available&quot; <br />
+3. call &quot;test-connman enable bluetooth&quot; to enable BT device<br />
+4. reboot and call test-manager to check if the state of the bluetooth technology is &quot;enable&quot;<br />
 Pass/Fail Criteria:<br />
 <br />
-connman should remember the setting of the &quot;Powered&quot; of BT device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+connman should remember the setting of the &quot;State&quot; of BT device correcly</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_BT_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_BT_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can break the connection when disable the BT device<br />
 Run Instructions:<br />
 <br />
-1. Connect a BT PANU network and then call disable_device to disable BT device<br />
-2. List all networks in connman to check<br />
+1. Connect a BT PANU network and then call&nbsp;&quot;test-conn&quot; to disable BT device<br />
+2. list-services to check if there are any PANU network<br />
 Pass/Fail Criteria:<br />
 <br />
 There should be no any BT PANU network can be listed and the connection is breaked</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_3G" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_3G" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can disabe and enable 3G device<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable 3G device<br />
-2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable 3G device<br />
-4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
-<br />
+1. call test-connman disable cellular<br />
+2. and call test-manager to check if the &quot;State&quot; of the device is set to &quot;available&quot;<br />
+3. call test-connman enable cellular<br />
+4. call test-manager to check if the &quot;State&quot; property of the device is set to &quot;enable&quot;<br />
 Pass/Fail Criteria:<br />
 <br />
-connman should set the &quot;Powered&quot; of 3G device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+connman should set the &quot;State&quot; of 3G device correcly</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_3G_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_3G_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can remember the setting of 3G device<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable 3G device<br />
-2. Reboot the system and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable 3G device<br />
-4. Reboot the system and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
-<br />
+1. call &quot;test-connman disable cellular&quot; to disable 3G<br />
+2. reboot and call test-manager to check if the &quot;State&quot; of the device is set to &quot;available&quot;<br />
+3. call test-connman enable cellular<br />
+4. reboot and call test-manager to check if the &quot;State&quot; property of the device is set to &quot;enable&quot;<br />
 Pass/Fail Criteria:<br />
 <br />
 connman should remember the setting of 3g device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_3G_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_3G_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can break the connection when disable the 3G device, and connection could be resumed when enable 3G device.<br />
 Run Instructions:<br />
 <br />
-1. Connect a 3G network and then call disable_device to disable 3G device<br />
+1. Connect a 3G network and then call&nbsp;&quot;test-connman disable cellular&quot; to disable 3G device<br />
 2. List all networks in connman to check the connection is broken.</p>
-<p>3. Call enable-device to enable 3G device.</p>
+<p>3. Call&nbsp;&quot;test-connman enable cellular&quot; to enable 3G device.</p>
 <p>4. list-service to check the connection can be resumed.<br />
 Pass/Fail Criteria:<br />
 <br />
 Disable 3G device, There should be no any 3G network be listed and the connection is breaked; when enable 3G device, 3G network should be resume.</p>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_Wired" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_Wired" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can disabe and enable Wired device<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable wired device<br />
-2. call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable wired device<br />
-4. call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
-<br />
+1. call test-connmand disable ethernet<br />
+2. call test-manager to check if the &quot;State&quot; of the device is set to &quot;available&quot;<br />
+3. call test-connman enable ethernet<br />
+4. call test-manager to check if the &quot;State&quot; property of the device is set to &quot;enable&quot;<br />
 Pass/Fail Criteria:<br />
 <br />
-connman should set the &quot;Powered&quot; of wired device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+connman should set the &quot;State&quot; of wired device correcly</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_Wired_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_Wired_Conn" manual="true" timeout="90" type="Functional" subfeature="Device" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can break the connection when disable the wired device, and connman can resume&nbsp;the connection when enable wired device.<br />
 Run Instructions:<br />
 <br />
-1. Connect a wired network and then call disable_device to disable wired device<br />
+1. Connect a wired network and then call&nbsp;&quot;test-connman disable ethernet&quot; to disable wired device<br />
 2. List all networks in connman to check</p>
-<p>3. Call enable-device to enable ethernet device.</p>
+<p>3. Call&nbsp;&quot;test-connman enable ethernet&quot; to enable ethernet device.</p>
 <p>4. list-service to check ethernet network.<br />
 Pass/Fail Criteria:<br />
 <br />
 Disable ethernet device, there should be no any wired network be listed and the connection is breaked; enabled ethernet device, ethernet connection could be resumed.</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Device_Wired_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Device_Wired_Reboot" manual="true" timeout="90" type="Functional" subfeature="Device On/Off Status after Reboot" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman can remember the setting of wired device<br />
 Run Instructions:<br />
 <br />
-1. call disable_device to disable wired device<br />
-2. Reboot system and call list_device to check if the &quot;Powered&quot; of the device is set to &quot;0&quot;<br />
-3. call enable_device to enable wired device<br />
-4. Reboot system and call list_device to check if the &quot;Powered&quot; property of the device is set to &quot;1&quot;<br />
-<br />
+1. call &quot;test-connmand disable ethernet&quot;<br />
+2. reboot and call test-manager to check if the &quot;State&quot; of the device is set to &quot;available&quot;<br />
+3. call test-connman enable ethernet<br />
+4. reboot and call test-manager to check if the &quot;State&quot; property of the device is set to &quot;enable&quot;<br />
 Pass/Fail Criteria:<br />
 <br />
 connman should remember the setting of of wired device correcly</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 </set>
 <set name="NetworkSel" description="&lt;p&gt;Select a service to connect. Basically we use &amp;quot;test-connman&amp;quot; to connect to a service:&lt;/p&gt;
@@ -5670,7 +5688,7 @@ Pass/Fail Criteria:</p>
 <p><br />
 Run Instructions:</p>
 <p>1. boot system<br />
-2. launch &quot;connMan_monitor&quot;<br />
+2. launch monitor-connman<br />
 3. remove ethernet cable</p>
 <p><br />
 Pass/Fail Criteria:</p>
@@ -5687,7 +5705,7 @@ Run Instructions:</p>
 <p><br />
 1. boot system<br />
 2. launch &quot;connMan_monitor&quot;<br />
-3. &quot;connMan_disable_device wlan0&quot;<br />
+3. &quot;test-connman disable wifi&quot;<br />
 &nbsp;</p>
 <p><br />
 Pass/Fail Criteria:</p>
@@ -6350,14 +6368,11 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Prof_ActiveProfile.py</step>
 </case>
 </set>
-<set name="Flight" description="&lt;p&gt;Test cases for offline mode.&lt;/p&gt;
-&lt;p&gt;connman-test package contains utility test-connman. test-connman offlinemode can set/unset offlinemode like:&lt;/p&gt;
-&lt;p&gt;test-connman offlinemode: show current offlinemode. 1: offlinemode on, 0: offlinemode off&lt;/p&gt;
-&lt;p&gt;test-connman offlinemode on: Set offlinemode on&lt;/p&gt;
-&lt;p&gt;test-connman offlinemode off: Turn offlinemode off&lt;/p&gt;">
+<set name="Flight" description="&lt;p&gt;Test cases for offline mode.&lt;/p&gt; &lt;p&gt;connman-test package contains utility test-connman. test-connman offlinemode can set/unset offlinemode like:&lt;/p&gt; &lt;p&gt;test-connman offlinemode: show current offlinemode. 1: offlinemode on, 0: offlinemode off&lt;/p&gt; &lt;p&gt;test-connman offlinemode on: Set offlinemode on&lt;/p&gt; &lt;p&gt;test-connman offlinemode off: Turn offlinemode off&lt;/p&gt;">
 
-<case name="CM_Flt_Persistance" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_Persistance" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 Offline setting should be persistance<br />
 Run Instructions:<br />
@@ -6369,11 +6384,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 Offline mode setting should be persistance</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_Conn3G" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_Conn3G" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman offline mode on can break 3G cnnection<br />
 Run Instructions:<br />
@@ -6384,11 +6400,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 offlinemode on can break 3G connection and offlinemode off can resume the connection automatically</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_ConnWired" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_ConnWired" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman offline mode on can break wired cnnection<br />
 Run Instructions:<br />
@@ -6399,11 +6416,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 offlinemode on can break wired connection and offlinemode off can resume the connection automatically</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_Offline" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_Offline" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if Offline works</p>
 <p><br />
 Run Instructions:</p>
@@ -6412,11 +6430,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>all devices are powered off</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_Offline.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_Offline.py</step>
 </case>
 
-<case name="CM_Flt_Service" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_Service" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if service is empty in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6425,11 +6444,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is no service in default offline mode</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_Service.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_Service.py</step>
 </case>
 
-<case name="CM_Flt_set" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_set" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman offline mode works<br />
 Run Instructions:<br />
@@ -6439,11 +6459,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 offlinemode on can disable all the devices and offlinemode off can resume the power status of all the devices</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_ConnWIFI" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_ConnWIFI" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman offline mode on can break the wifi connection<br />
 Run Instructions:<br />
@@ -6454,11 +6475,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 offlinemode on can break WIFI connection and offlinemode off can resume the connection automatically</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_EthNoPing" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_EthNoPing" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Ethernet cannot ping</p>
 <p><br />
 Run Instructions:</p>
@@ -6467,11 +6489,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>There is no service in default offline mode</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_EthNoPing.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_EthNoPing.py</step>
 </case>
 
-<case name="CM_Flt_EthIsPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_EthIsPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Ethernet device&nbsp;is powered off&nbsp;in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6480,11 +6503,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ethernet device&nbsp;is powered off&nbsp;in offline mode</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_EthIsPoweredOff.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_EthIsPoweredOff.py</step>
 </case>
 
-<case name="CM_Flt_WiFiNoPing" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_WiFiNoPing" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if WiFi cannot ping in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6493,11 +6517,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi cannot ping in offline mode</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_WiFiNoPing.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_WiFiNoPing.py</step>
 </case>
 
-<case name="CM_Flt_WiFiIsPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_WiFiIsPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if WiFi device is Powered off in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6506,11 +6531,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi device is Powered off in offline mode</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_WiFiIsPoweredOff.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_WiFiIsPoweredOff.py</step>
 </case>
 
-<case name="CM_Flt_EthPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_EthPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if Ethernet device can be powered on in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6519,11 +6545,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ethernet device can be powered on in default offline mode</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_EthPoweredOn.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_EthPoweredOn.py</step>
 </case>
 
-<case name="CM_Flt_EthPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_EthPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if Ethernet can be powered off again in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6532,11 +6559,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ethernet can be powered off again</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_EthPoweredOff.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_EthPoweredOff.py</step>
 </case>
 
-<case name="CM_Flt_WiFiPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_WiFiPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if WiFi device can be powered on in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6545,11 +6573,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi device can be powered on</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOn.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOn.py</step>
 </case>
 
-<case name="CM_Flt_WiFiPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_WiFiPoweredOff" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if WiFi device can be powered off again in offline mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6558,11 +6587,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi device can be powered off again</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOff.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_WiFiPoweredOff.py</step>
 </case>
 
-<case name="CM_Flt_Online" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_Online" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if can set to online mode</p>
 <p><br />
 Run Instructions:</p>
@@ -6572,11 +6602,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Manager is in Online mode and all devices are powered on</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_Online.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_Online.py</step>
 </case>
 
-<case name="CM_Flt_WiFiOnline" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_WiFiOnline" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if WiFi works after online again</p>
 <p><br />
 Run Instructions:</p>
@@ -6585,11 +6616,12 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>WiFi works after online again</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_WiFiOnline.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_WiFiOnline.py</step>
 </case>
 
-<case name="CM_Flt_EthOnline" manual="false" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="CM_Flt_EthOnline" manual="false" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Check if Ehternet works after online again</p>
 <p><br />
 Run Instructions:</p>
@@ -6598,56 +6630,59 @@ Run Instructions:</p>
 <p><br />
 Pass/Fail Criteria:</p>
 <p>Ehternet works after online again</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Flt_EthOnline.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Flt_EthOnline.py</step>
 </case>
 
-<case name="CM_Flt_set_eth_device" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_set_eth_device" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
-1. Set offlinemode on (test-connman offlinemode)<br />
-2. device is off (list-devices)<br />
-3. enable-device eth0<br />
-4. test-connman offlinemode<br />
-Pass/Fail Criteria:<br />
+1. Set offlinemode on (test-connman offlinemode on )<br />
+2. device is off (test-manager)<br />
+3. test-connman enable ethernet<br />
+4. test-connman offlinemode</p>
+<p>Pass/Fail Criteria:<br />
 <br />
 step 4 return 0</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_eth_autoconn" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_eth_autoconn" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
 1. Keep only eth connected, disable all other devices<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
+3. test-connman offlinemode off<br />
 4. eth will automatically connected<br />
 Pass/Fail Criteria:<br />
 <br />
 eth will automatically connected</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_eth_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_eth_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:</p>
-<p>1. disable-device eth0<br />
+<p>1. test-connman disable ethernet<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
-4. test-connman dev eth0<br />
+3. test-connman offlinemode off<br />
+4. test-manager<br />
 Pass/Fail Criteria:<br />
-<br />
-the device is off</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+the state of ethernet should be &quot;available&quot; not enable</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_WF_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_WF_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
@@ -6658,11 +6693,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 2/4 switchs</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_WF_unset_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_WF_unset_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
@@ -6673,11 +6709,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 step 4 return 0</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_BT_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_BT_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
@@ -6688,11 +6725,12 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 2/4 switchs</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_BT_unset_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_BT_unset_rfkill" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
@@ -6703,26 +6741,28 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 step 4 return 0</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_set_BT_device" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_set_BT_device" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
 1. Set offlinemode on<br />
 2. device is off<br />
-3. enable-device bnep0<br />
+3. test-connman enable bluetooth<br />
 4. test-connman offlinemode<br />
 Pass/Fail Criteria:<br />
 <br />
 step 4 return 0</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_BT_autoconn" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_BT_autoconn" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
@@ -6733,41 +6773,44 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 bluetooth&nbsp;will automatically connected</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_BT_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_BT_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:</p>
-<p>1. disable-device bnep0<br />
+<p>1. test-connman disable bluetooth<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
-4. test-connman dev bnep0<br />
+3. test-connman offlinemode off<br />
+4. test-manager<br />
 Pass/Fail Criteria:<br />
 <br />
 the device is off</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_set_WF_device" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_set_WF_device" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
 1. Set offlinemode on<br />
 2. device is off<br />
-3. enable-device wlan0<br />
+3. test-connman enable wifi<br />
 4. test-connman offlinemode<br />
 Pass/Fail Criteria:<br />
 <br />
 step 4 return 0</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_WF_autoconn" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_WF_autoconn" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
@@ -6778,41 +6821,44 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 eth will automatically connected</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_WF_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_WF_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:</p>
-<p>1. disable-device wlan0<br />
+<p>1. test-connman disable wifi<br />
 2. test-connman offlinemode on<br />
-3.  test-connman offlinemode off<br />
-4. test-connman dev wlan0<br />
+3. test-connman offlinemode off<br />
+4. test-manager<br />
 Pass/Fail Criteria:<br />
 <br />
 the device is off</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_set_3G_device" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_set_3G_device" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:<br />
 1. Set offlinemode on<br />
 2. device is off<br />
-3. enable-device wwan0<br />
-4. test-connman offlinemode<br />
+3. test-connman enable cellular</p>
+<p>4. test-connman offlinemode<br />
 Pass/Fail Criteria:<br />
 <br />
 step 4 return 0</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_3G_autoconn" manual="true" timeout="90" type="Functional" subfeature="Auto connect from Offline" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_3G_autoconn" manual="true" timeout="90" type="Functional" subfeature="Auto connect from Offline" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if connman will auto connect to a service whenever the offline mode is off<br />
 Run Instructions:<br />
@@ -6823,22 +6869,23 @@ Run Instructions:<br />
 Pass/Fail Criteria:<br />
 <br />
 3G will automatically connected</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 
-<case name="CM_Flt_3G_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" insignificant="false">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="CM_Flt_3G_remember_off" manual="true" timeout="90" type="Functional" subfeature="Flight" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 check if power on device will make offline mode off<br />
 Run Instructions:</p>
-<p>1. disable-device wwan0<br />
+<p>1. test-connman disable cellular<br />
 2. test-connman offlinemode on<br />
 3. test-connman offlinemode off<br />
-4. test-connman dev wwan0<br />
+4. test-manager<br />
 Pass/Fail Criteria:<br />
 <br />
 the device is off</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 </set>
 </suite>
