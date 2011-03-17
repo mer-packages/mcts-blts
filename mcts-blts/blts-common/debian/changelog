@@ -1,3 +1,9 @@
+blts-common (0.4.3) unstable; urgency=low
+
+  * Added CSV measurement output support: CLI switch, API for reporting
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Mar 2011 17:22:28 +0200
+
 blts-common (0.4.2) unstable; urgency=low
 
   * Version update due to packaging change.

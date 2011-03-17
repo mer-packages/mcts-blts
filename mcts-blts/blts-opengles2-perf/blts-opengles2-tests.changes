@@ -1,3 +1,6 @@
+* Wed 16 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.17
+- Add CSV measurement result reporting.
+
 * Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.16
 - Version update due to packaging change.
 

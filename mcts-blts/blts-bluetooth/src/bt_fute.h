@@ -54,10 +54,9 @@ enum {
 	CORE_BT_LE_CONNECT
 };
 
-typedef struct
-{
+struct bt_data {
 	char *mac_address;
-} bt_data;
+};
 
 int fute_bt_drivers_depcheck();
 int fute_bt_scan();
@@ -83,5 +82,8 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master);
 int fute_bt_le_scan();
 int fute_bt_le_advertise();
 int fute_bt_le_connect_disconnect(char *remote_mac);
+int fute_bt_le_tx_data(void*, int);
+int fute_bt_le_rx_data(void*, int);
+
 
 #endif /* BT_FUTE_H */

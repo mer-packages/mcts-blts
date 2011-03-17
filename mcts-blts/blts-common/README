@@ -101,7 +101,19 @@ Using logging functions
    where
       level == debuglevel (0-5)
       format == message
-      
+
+
+Extended result/measurement reporting
+
+ * #include <blts_reporting.h>
+ * int blts_report_extended_result(char *tag, double value, char *unit,
+					int use_limits);
+   - Outputs a single result entry. See example code.
+
+ * CSV output is turned on/off via -csv/-acsv switch in CLI frontend.
+
+
+
 CLI frontend
 
  * See src/blts-cli-example
