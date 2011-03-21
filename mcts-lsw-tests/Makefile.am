@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
  
-#AUTOMAKE_OPTIONS=foreign
+AUTOMAKE_OPTIONS=foreign
 SUBDIRS = src utils 
 
 testdir = $(TEST_BIN_DIR)
@@ -24,4 +24,5 @@ defdir = $(datadir)/$(PACKAGE)
 dist_def_DATA = tests.xml
 
 docdir = /opt/$(PACKAGE)
-dist_doc_DATA = README LICENSE ChangeLog 
+dist_doc_DATA = README LICENSE ChangeLog mcts-lsw-tests.rpmlintrc
+

@@ -78,7 +78,7 @@ get_debian_packages()
 
     source_package=`grep "Source:" debian/control | awk '{print $2}'`
     deb_packages=`grep "Package:" debian/control | awk '{print $2}'`
-    package_version=`grep 'blts' debian/changelog | awk '{print $2; exit}' | sed -e "s/[()]//g;s/-.*//g"`
+    package_version=`grep 'mwts' debian/changelog | awk '{print $2; exit}' | sed -e "s/[()]//g;s/-.*//g"`
 
     return 0
 }

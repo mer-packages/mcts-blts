@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([blts-pixelformat], [0.1.4], [pasi.matilainen@digia.com])
+AC_INIT([blts-pixelformat], [0.1.5], [pasi.matilainen@digia.com])
 AC_CONFIG_SRCDIR([src/libswscale/swscale.c])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE

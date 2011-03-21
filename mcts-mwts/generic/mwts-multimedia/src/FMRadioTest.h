@@ -39,6 +39,12 @@ class FMRadioTest : public QObject
 public:
 
     /**
+     *  This enum indicates if scanning will be stoped if signal is strong
+     *  or will continue searching just after stopping.
+     */
+    enum ScanMode {StopMode, ContinueMode};
+
+    /**
      * Constructor for FMRadioTest class
      */
     FMRadioTest();
@@ -64,7 +70,7 @@ public:
      * Sets the frequency in Hertz.
      * @param frequency Hz
      */
-    void SetFrequency(int freq);
+    void SetFrequency(int frequency);
 
     /**
      * Starts a foreward scan for a signal, starting from the current frequency
@@ -94,35 +100,52 @@ public:
      */
     void SetRadioDuration(int millisecond);
 
+    /**
+     * Sets radio band. This also sets minFrequency and maxFrequency values.
+     * @param band to set
+     */
+    void SetBand(QRadioTuner::Band band);
+
+    /**
+     * Sets scan mode.
+     * @param mode mode to set
+     */
+    void SetScanMode(ScanMode mode);
+
+    /**
+     * Starts scanning the whole renge of set band.
+     * Log founded radio stations (freqency and signal stregth)
+     */
+    void PerformBandScan();
+
 private:
     //The main object used for radio playing
     QRadioTuner* radio;
-    //Integer holds the the initial, later set volume value
-    int vol;
-    //Integer holds the the initial, later set frequency value
-    int freq;
-    //Integer holds the the initial, later set frequency value
+    //Integer holds the the initial, later set duration value
     int duration;
+    //scan mode
+    ScanMode scanMode;
+    //min and max frequecies of band
+    int minFrequency;
+    int maxFrequency;
+    //for counting radio stations
+    int radioStationCount;
+
 
 private slots:
-    /**
-     * Outputs the current frequency in kHz
-     */
-    void freqChanged(int);
-    /**
-     * Based on signal strength, outputs if signal exists or not
-     */
-    void signalChanged(int);
-    /**
-    * Displays the emited error
-    * @param error
-    */
-    void error(QRadioTuner::Error error);
-    /**
-    * Displays the current QRadioTuner state
-    * @param state
-    */
-    void stateChanged(QRadioTuner::State state);
+    //slots for QRadioTuner signals
+    void onBandChanged(QRadioTuner::Band band);
+    void onFrequencyChanged(int freqency);
+    void onStateChanged(QRadioTuner::State state);
+    void onMutedChanged(bool muted);
+    void onError(QRadioTuner::Error error);
+    void onSignalStrengthChanged(int strength);
+    void onSearchingChanged(bool searching);
+    void onVolumeChanged(int volume);
+    void onStereoStatusChanged(bool stereo);
+    //slot for searching changed signal emitting workaround
+    void checkSearching();
+
 };
 
 

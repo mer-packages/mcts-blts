@@ -29,6 +29,8 @@ echo "Test case: med_tracker-search_single_file"
 
 cp -rf /tmp/data/test_tracks/meego_v.ogv ~/Videos/
 
+sleep 10
+
 if tracker-search -f | grep "File">/dev/null 2>&1
 then
   echo "Not Null Value"

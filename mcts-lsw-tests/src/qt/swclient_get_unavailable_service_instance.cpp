@@ -20,13 +20,13 @@
  */
 
 #include <QtCore>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QtDBus>
 #include <libsocialweb-qt/swclient.h>
 #include "lsw_testcases.h"
 
 int main(int argc, char *argv[]) {
-	QApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 	qDebug(
 			"Going to invoke the method 'getService' to try to get a unavailable service!");
 

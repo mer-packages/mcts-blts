@@ -29,6 +29,8 @@ echo "Test case: med_tracker-search_music"
 
 cp -rf /tmp/data/test_tracks/meego_m*.ogg ~/Music/
 
+sleep 10
+
 if tracker-search -m | grep "Files">/dev/null 2>&1
 then
   echo "Not Null Value for grep output"

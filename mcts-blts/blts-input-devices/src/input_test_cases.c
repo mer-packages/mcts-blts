@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <dirent.h>
 #include <linux/input.h>
 #include <asm/bitsperlong.h>
 
@@ -35,6 +36,7 @@
 
 #define BIT_WORD(nr) ((nr) / __BITS_PER_LONG)
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof *(a))
+#define REL_MUL 0xFFFF
 
 const char str_unknown[] = "unknown";
 
@@ -210,7 +212,7 @@ static int print_device_info(const char *dev_name)
 	BLTS_DEBUG("\nDevice %s\n", dev_name);
 
 	fd = open(dev_name, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -266,6 +268,84 @@ cleanup:
 	return ret;
 }
 
+static char *check_device_name(const char *node_name, const char *dev_name)
+{
+	int fd;
+	char name[256];
+
+	if (!node_name || !dev_name)
+		return NULL;
+
+	fd = open(node_name, O_RDWR);
+	if (fd < 0) {
+		BLTS_LOGGED_PERROR("Failed to open device");
+		return NULL;
+	}
+
+	if (ioctl(fd, EVIOCGNAME(sizeof(name)), name) < 0) {
+		BLTS_LOGGED_PERROR("EVIOCGNAME");
+		close(fd);
+		return NULL;
+	}
+
+	close(fd);
+
+	if (strstr(name, dev_name))
+		return strdup(name);
+
+	return NULL;
+}
+
+static char *find_device_by_name(const char *dev_name)
+{
+	char *ret = NULL;
+	DIR *dir;
+	struct dirent *dirent;
+	char *path = "/dev/input/";
+	char *evdev = "event";
+	const char *dev_to_search;
+	char full_name[PATH_MAX];
+
+	if (!dev_name)
+		return NULL;
+
+	if (dev_name[0] != '*')
+		return strdup(dev_name);
+
+	dev_to_search = &dev_name[1];
+
+	dir = opendir(path);
+	if (!dir) {
+		BLTS_ERROR("Cannot open directory '%s\n", dir);
+		return NULL;
+	}
+
+	while ((dirent = readdir(dir))) {
+		char *name = dirent->d_name;
+
+		if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
+			continue;
+
+		if (strncmp(name, evdev, strlen(evdev)) != 0)
+			continue;
+
+		strcpy(full_name, path);
+		strcat(full_name, name);
+
+		BLTS_TRACE("Checking device %s\n", full_name);
+		if ((ret = check_device_name(full_name, dev_to_search))) {
+			BLTS_TRACE("Device found '%s', '%s'\n", full_name, ret);
+			free(ret);
+			ret = strdup(full_name);
+			break;
+		}
+	}
+
+	closedir(dir);
+
+	return ret;
+}
+
 static int read_input_events(int fd, struct input_event *evs, int size)
 {
 	int rb, ret;
@@ -290,16 +370,51 @@ static int read_input_events(int fd, struct input_event *evs, int size)
 	return rb;
 }
 
+static int enumerate_all_devices()
+{
+	int ret = 0;
+	DIR *dir;
+	struct dirent *dirent;
+	char *path = "/dev/input/";
+	char *evdev = "event";
+	char full_name[PATH_MAX];
+
+	dir = opendir(path);
+	if (!dir) {
+		BLTS_ERROR("Cannot open directory '%s\n", dir);
+		return -EFAULT;
+	}
+
+	while ((dirent = readdir(dir))) {
+		char *name = dirent->d_name;
+
+		if (strncmp(name, evdev, strlen(evdev)) != 0)
+			continue;
+
+		strcpy(full_name, path);
+		strcat(full_name, name);
+
+		BLTS_TRACE("Checking device %s\n", full_name);
+		if (print_device_info(full_name)) {
+			BLTS_ERROR("Could not read device info from '%s'\n", full_name);
+			ret = -1;
+		}
+	}
+
+	closedir(dir);
+
+	return ret;
+}
+
+
 int input_enumerate_test(void *user_ptr, int test_num)
 {
 	BLTS_UNUSED_PARAM(test_num)
 	unsigned t, ret = 0;
 	struct input_data *data = (struct input_data *)user_ptr;
 
-	if (!data->num_devices) {
-		BLTS_ERROR("No devices to test!\n");
-		return -EINVAL;
-	}
+	if (!data->num_devices)
+		return enumerate_all_devices();
 
 	for (t = 0; t < data->num_devices; t++) {
 		if (print_device_info(data->devices[t])) {
@@ -320,7 +435,7 @@ int test_device(const char *device)
 	struct input_event ev[64];
 
 	fd = open(device, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -367,7 +482,7 @@ int input_key_test(void *user_ptr, int test_num)
 	}
 
 	fd = open(key->device, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -446,7 +561,7 @@ int input_pointer_test(void *user_ptr, int test_num)
 	struct window_struct ws;
 
 	fd = open(data->pointer_device, O_RDWR);
-	if (!fd) {
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
 		return -errno;
 	}
@@ -550,20 +665,77 @@ cleanup:
 
 }
 
+static int get_absolute_limits(int fd, struct input_absinfo *abs_x,
+	struct input_absinfo *abs_y, int *is_multi_touch)
+{
+	int mt = 1;
+
+	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_X), abs_x)) {
+		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_X)");
+		return -errno;
+	}
+
+	if (!abs_x->minimum && !abs_x->maximum) {
+		mt = 0;
+		if (ioctl(fd, EVIOCGABS(ABS_X), abs_x)) {
+			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_X)");
+			return -errno;
+		}
+	}
+
+	BLTS_TRACE("X limits: %d - %d\n", abs_x->minimum, abs_x->maximum);
+	if (abs_x->maximum - abs_x->minimum <= 0) {
+		BLTS_ERROR("Invalid X coordinate limits (%d - %d)\n",
+			abs_x->minimum, abs_x->maximum);
+		return -EINVAL;
+	}
+
+	if (mt) {
+		if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_Y), abs_y)) {
+			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_Y)");
+			return -errno;
+		}
+	} else {
+		if (ioctl(fd, EVIOCGABS(ABS_Y), abs_y)) {
+			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_Y)");
+			return -errno;
+		}
+	}
+
+	BLTS_TRACE("Y limits: %d - %d\n", abs_y->minimum, abs_y->maximum);
+	if (abs_y->maximum - abs_y->minimum <= 0) {
+		BLTS_ERROR("Invalid Y coordinate limits (%d - %d)\n",
+			abs_y->minimum, abs_y->maximum);
+		return -EINVAL;
+	}
+
+	if (is_multi_touch)
+		*is_multi_touch = mt;
+
+	return 0;
+}
+
 static int wait_for_st_event(struct input_data *data,
 	int x_min, int y_min, int x_max, int y_max)
 {
 	int fd, rb, t, ret = -1;
-	int x, y, got_x, got_y, got_press, abs_min_x, abs_min_y;
-	float x_scale, y_scale;
-	int st = 0;
+	int x, y, w,h, got_x, got_y, got_press;
+	int mt = 0;
 	struct input_event ev[64];
-	struct input_absinfo abs;
+	struct input_absinfo abs_x, abs_y;
+	char *used_device;
 
-	fd = open(data->pointer_device, O_RDWR);
-	if (!fd) {
+	used_device = find_device_by_name(data->pointer_device);
+	if (!used_device) {
+		BLTS_ERROR("Could not find device '%s'\n", data->pointer_device);
+		return -ENODEV;
+	}
+
+	fd = open(used_device, O_RDWR);
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
-		return -errno;
+		ret = -errno;
+		goto cleanup;
 	}
 
 	if (!data->no_grab) {
@@ -574,64 +746,22 @@ static int wait_for_st_event(struct input_data *data,
 		}
 	}
 
-	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_X), &abs)) {
-		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_X)");
-		ret = -errno;
-		goto  cleanup;
+	ret = get_absolute_limits(fd, &abs_x, &abs_y, &mt);
+	if (ret)
+		goto cleanup;
+
+	if (data->swap_xy) {
+		h = abs_x.maximum - abs_x.minimum;
+		w = abs_y.maximum - abs_y.minimum;
+	} else {
+		w = abs_x.maximum - abs_x.minimum;
+		h = abs_y.maximum - abs_y.minimum;
 	}
 
-	if (!abs.minimum && !abs.maximum) {
-		st = 1;
-		if (ioctl(fd, EVIOCGABS(ABS_X), &abs)) {
-			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_X)");
-			ret = -errno;
-			goto  cleanup;
-		}
-	}
-	BLTS_TRACE("X limits: %d - %d\n", abs.minimum, abs.maximum);
-	if (abs.maximum - abs.minimum == 0) {
-		BLTS_ERROR("Invalid X coordinate limits (%d - %d)\n",
-			abs.minimum, abs.maximum);
-		ret = -EINVAL;
-		goto cleanup;
-	}
-	abs_min_x = abs.minimum;
-	if (data->swap_xy) {
-		x_scale = (float) data->scr_height /
-			(float)(abs.maximum - abs.minimum);
-	} else {
-		x_scale = (float) data->scr_width /
-			(float)(abs.maximum - abs.minimum);
-	}
-
-	if (st) {
-		if (ioctl(fd, EVIOCGABS(ABS_Y), &abs)) {
-			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_Y)");
-			ret = -errno;
-			goto  cleanup;
-		}
-	} else {
-		if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_Y), &abs)) {
-			BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_Y)");
-			ret = -errno;
-			goto  cleanup;
-		}
-	}
-	BLTS_TRACE("Y limits: %d - %d\n", abs.minimum, abs.maximum);
-	if (abs.maximum - abs.minimum == 0) {
-		BLTS_ERROR("Invalid Y coordinate limits (%d - %d)\n",
-			abs.minimum, abs.maximum);
-		ret = -EINVAL;
-		goto cleanup;
-	}
-	abs_min_y = abs.minimum;
-	if (data->swap_xy) {
-		y_scale = (float) data->scr_width /
-			(float)(abs.maximum - abs.minimum);
-	} else {
-		y_scale = (float) data->scr_height /
-			(float)(abs.maximum - abs.minimum);
-	}
+	x_min = w * x_min / REL_MUL;
+	y_min = h * y_min / REL_MUL;
+	x_max = w * x_max / REL_MUL;
+	y_max = h * y_max / REL_MUL;
 
 	timing_start();
 
@@ -654,7 +784,7 @@ static int wait_for_st_event(struct input_data *data,
 			BLTS_TRACE("type 0x%x code 0x%x value %d\n", ev[t].type,
 				ev[t].code, ev[t].value);
 
-			if (st) {
+			if (!mt) {
 				if (ev[t].type == EV_KEY &&
 					ev[t].code == BTN_TOUCH) {
 					got_press = 1;
@@ -686,20 +816,18 @@ static int wait_for_st_event(struct input_data *data,
 		if (got_x && got_y && got_press) {
 			if (data->swap_xy) {
 				t = y;
-				y = (float)(x - abs_min_x) * x_scale;
-				x = (float)(t - abs_min_y) * y_scale;
+				y = (float)(x - abs_x.minimum);
+				x = (float)(t - abs_y.minimum);
 			} else {
-				x = (float)(x - abs_min_x) * x_scale;
-				y = (float)(y - abs_min_y) * y_scale;
+				x = (float)(x - abs_x.minimum);
+				y = (float)(y - abs_y.minimum);
 			}
 
 			if (x >= x_min && x <= x_max && y >= y_min && y <= y_max) {
-				BLTS_DEBUG("Inside the area (x: %d, y: %d)\n",
-					x, y);
+				BLTS_DEBUG("Inside the area (x: %d, y: %d)\n", x, y);
 				ret = 0;
 			} else {
-				BLTS_DEBUG("Outside the area (x: %d, y: %d)\n",
-					x, y);
+				BLTS_DEBUG("Outside the area (x: %d, y: %d)\n", x, y);
 				ret = -1;
 			}
 			goto cleanup;
@@ -710,13 +838,20 @@ static int wait_for_st_event(struct input_data *data,
 cleanup:
 	timing_stop();
 
-	if (!data->no_grab) {
-		if (ioctl(fd, EVIOCGRAB, 0)) {
-			BLTS_LOGGED_PERROR("EVIOCGRAB");
-			ret = -errno;
+	if (fd != -1) {
+		if (!data->no_grab) {
+			if (ioctl(fd, EVIOCGRAB, 0)) {
+				BLTS_LOGGED_PERROR("EVIOCGRAB");
+				ret = -errno;
+			}
 		}
+
+		close(fd);
 	}
-	close(fd);
+
+	if (used_device)
+		free(used_device);
+
 	return ret;
 }
 
@@ -746,8 +881,7 @@ int input_single_touch_test(void *user_ptr, int test_num)
 
 	BLTS_DEBUG("Touch upper left corner (white box) within 30 seconds\n");
 
-	ret = wait_for_st_event(data, 0, 0,
-		data->scr_width / 2, data->scr_height / 2);
+	ret = wait_for_st_event(data, 0, 0, REL_MUL / 2, REL_MUL / 2);
 	if (ret)
 		goto cleanup;
 
@@ -764,8 +898,7 @@ int input_single_touch_test(void *user_ptr, int test_num)
 
 	BLTS_DEBUG("Touch upper right corner (white box) within 30 seconds\n");
 
-	ret = wait_for_st_event(data, data->scr_width / 2, 0,
-		data->scr_width, data->scr_height / 2);
+	ret = wait_for_st_event(data, REL_MUL / 2, 0, REL_MUL, REL_MUL / 2);
 	if (ret)
 		goto cleanup;
 
@@ -782,8 +915,7 @@ int input_single_touch_test(void *user_ptr, int test_num)
 
 	BLTS_DEBUG("Touch lower right corner (white box) within 30 seconds\n");
 
-	ret = wait_for_st_event(data, data->scr_width / 2, data->scr_height / 2,
-		data->scr_width, data->scr_height);
+	ret = wait_for_st_event(data, REL_MUL / 2, REL_MUL / 2, REL_MUL, REL_MUL);
 	if (ret)
 		goto cleanup;
 
@@ -800,8 +932,7 @@ int input_single_touch_test(void *user_ptr, int test_num)
 
 	BLTS_DEBUG("Touch lower left corner (white box) within 30 seconds\n");
 
-	ret = wait_for_st_event(data, 0, data->scr_height / 2,
-		data->scr_width / 2, data->scr_height);
+	ret = wait_for_st_event(data, 0, REL_MUL / 2, REL_MUL / 2, REL_MUL);
 	if (ret)
 		goto cleanup;
 
@@ -817,19 +948,29 @@ cleanup:
 int input_multi_touch_test(void *user_ptr, int test_num)
 {
 	BLTS_UNUSED_PARAM(test_num)
-	int ret, rb, fd, t, x, y, current_tp;
-	int num_tps, got_x, got_y, abs_min_x, abs_min_y;
-	float x_scale, y_scale;
+	int ret, rb, fd, t, x, y, w, h, current_tp;
+	int num_tps, got_x, got_y;
+	int mt = 0;
 	struct input_data *data = (struct input_data *)user_ptr;
 	struct window_struct ws;
 	struct input_event ev[64];
 	struct mt_touchpoint tps[64];
-	struct input_absinfo abs;
+	struct input_absinfo abs_x, abs_y;
+	char *used_device;
 
-	fd = open(data->pointer_device, O_RDWR);
-	if (!fd) {
+	memset(&ws, 0, sizeof(ws));
+
+	used_device = find_device_by_name(data->pointer_device);
+	if (!used_device) {
+		BLTS_ERROR("Could not find device '%s'\n", data->pointer_device);
+		return -ENODEV;
+	}
+
+	fd = open(used_device, O_RDWR);
+	if (fd < 0) {
 		BLTS_LOGGED_PERROR("Failed to open device");
-		return -errno;
+		ret = -errno;
+		goto cleanup;
 	}
 
 	if (!data->no_grab) {
@@ -859,47 +1000,23 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 		XSync(ws.display, False);
 	}
 
-	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_X), &abs)) {
-		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_X)");
-		ret = -errno;
-		goto  cleanup;
-	}
+	ret = get_absolute_limits(fd, &abs_x, &abs_y, &mt);
+	if (ret)
+		goto cleanup;
 
-	BLTS_TRACE("X limits: %d - %d\n", abs.minimum, abs.maximum);
-	if (abs.maximum - abs.minimum == 0) {
-		BLTS_ERROR("Invalid X coordinate limits (%d - %d)\n",
-			abs.minimum, abs.maximum);
-		ret = -EINVAL;
+	if (!mt) {
+		BLTS_ERROR("Not a multi-touch device. Cannot get valid values with "
+			"EVIOCGABS(ABS_MT_POSITION_*)\n");
+		ret = -ENODEV;
 		goto cleanup;
 	}
-	abs_min_x = abs.minimum;
-	if (data->swap_xy) {
-		x_scale = (float) data->scr_height /
-			(float)(abs.maximum - abs.minimum);
-	} else {
-		x_scale = (float) data->scr_width /
-			(float)(abs.maximum - abs.minimum);
-	}
 
-	if (ioctl(fd, EVIOCGABS(ABS_MT_POSITION_Y), &abs)) {
-		BLTS_LOGGED_PERROR("EVIOCGABS(ABS_MT_POSITION_Y)");
-		ret = -errno;
-		goto  cleanup;
-	}
-	BLTS_TRACE("Y limits: %d - %d\n", abs.minimum, abs.maximum);
-	if (abs.maximum - abs.minimum == 0) {
-		BLTS_ERROR("Invalid Y coordinate limits (%d - %d)\n",
-			abs.minimum, abs.maximum);
-		ret = -EINVAL;
-		goto cleanup;
-	}
-	abs_min_y = abs.minimum;
 	if (data->swap_xy) {
-		y_scale = (float) data->scr_width /
-			(float)(abs.maximum - abs.minimum);
+		h = abs_x.maximum - abs_x.minimum;
+		w = abs_y.maximum - abs_y.minimum;
 	} else {
-		y_scale = (float) data->scr_height /
-			(float)(abs.maximum - abs.minimum);
+		w = abs_x.maximum - abs_x.minimum;
+		h = abs_y.maximum - abs_y.minimum;
 	}
 
 	BLTS_DEBUG("Touch upper left and lower right corners (white boxes) "\
@@ -963,15 +1080,12 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 				ev[t].code == SYN_MT_REPORT) {
 				if (got_x && got_y) {
 					if (data->swap_xy) {
-						t = y;
-						y = (float)(x - abs_min_x) * x_scale;
-						x = (float)(t - abs_min_y) * y_scale;
+						tps[current_tp].y = (float)(x - abs_x.minimum);
+						tps[current_tp].x = (float)(y - abs_y.minimum);
 					} else {
-						x = (float)(x - abs_min_x) * x_scale;
-						y = (float)(y - abs_min_y) * y_scale;
+						tps[current_tp].x = (float)(x - abs_x.minimum);
+						tps[current_tp].y = (float)(y - abs_y.minimum);
 					}
-					tps[current_tp].x = x;
-					tps[current_tp].y = y;
 					tps[current_tp].id = current_tp;
 					current_tp++;
 					got_x = got_y = 0;
@@ -996,30 +1110,38 @@ int input_multi_touch_test(void *user_ptr, int test_num)
 
 	ret = -2;
 	for (t = 0; t < num_tps; t++) {
-		if (tps[t].x > 0 &&
-			tps[t].y > 0 &&
-			tps[t].x < (int)data->scr_width / 2 &&
-			tps[t].y < (int)data->scr_height / 2) {
+		if (tps[t].x > 0 && tps[t].y > 0 &&
+			tps[t].x < (int)w / 2 && tps[t].y < (int)h / 2) {
 			BLTS_DEBUG("Touchpoint %d is inside upper left area (x: %d, y: %d)\n",
-				tps[t].id, x, y);
+				tps[t].id, tps[t].x, tps[t].y);
 			ret++;
-		} else if (tps[t].x > (int)data->scr_width / 2 &&
-			tps[t].y > (int)data->scr_height / 2 &&
-			tps[t].x < (int)data->scr_width &&
-			tps[t].y < (int)data->scr_height) {
+		} else if (tps[t].x > (int)w / 2 && tps[t].y > (int)h / 2 &&
+			tps[t].x < w && tps[t].y < h) {
 			BLTS_DEBUG("Touchpoint %d is inside lower right area (x: %d, y: %d)\n",
-				tps[t].id, x, y);
+				tps[t].id, tps[t].x, tps[t].y);
 			ret++;
 		} else {
 			BLTS_DEBUG("Touchpoint %d is outside both areas (x: %d, y: %d)\n",
-				tps[t].id, x, y);
+				tps[t].id, tps[t].x, tps[t].y);
 		}
 	}
 
 cleanup:
 	input_close_window(&ws);
 
-	close(fd);
+	if (fd != -1) {
+		if (!data->no_grab) {
+			if (ioctl(fd, EVIOCGRAB, 0)) {
+				BLTS_LOGGED_PERROR("EVIOCGRAB");
+				ret = -errno;
+			}
+		}
+
+		close(fd);
+	}
+
+	if (used_device)
+		free(used_device);
 
 	return ret;
 }

@@ -29,7 +29,7 @@ echo "Test case: med_tracker-live-update_folder"
 
 cp -rf /tmp/data/test_tracks /home/$LOGNAME/Downloads/
 
-sleep 15
+sleep 10
 
 if tracker-search -m | grep "meego_m1.ogg">/dev/null 2>&1
 then
@@ -91,7 +91,7 @@ else
   exit 1
 fi
 
-sleep 15
+sleep 10
 
 if tracker-search -s | grep "test_tracks">/dev/null 2>&1
 then

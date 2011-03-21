@@ -323,6 +323,9 @@ This commands basically do:<br />
 </set>
 <set name="3G" description="&lt;p&gt;Test suites for 3G device.&lt;/p&gt;
 &lt;p&gt;We use China Unicom service, if you use other service, the script might need some changes.&lt;/p&gt;">
+<pre_steps>
+<step expected_result="0">/opt/mcts-connman-tests/3G/startup </step>
+</pre_steps>
 
 <case name="CM_3G_DeviceIsExist" manual="false" timeout="90" type="Functional" subfeature="3G" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
@@ -746,6 +749,20 @@ This commands basically do:<br />
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_Download.py</step>
 </case>
 
+<case name="CM_3G_PPP" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
+<p>Check if we can ping local 3G nework</p>
+<p><br />
+Run Instructions:</p>
+<p>1. Use PPP modem</p>
+<p>2. Run CM_3G_BigPing.py</p>
+<p>Pass/Fail Criteria: The script returns 0</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_3G_BigPing.py</step>
+</case>
+<post_steps>
+<step expected_result="0">/opt/mcts-connman-tests/3G/cleanup </step>
+</post_steps>
 </set>
 <set name="Tethering">
 
@@ -765,20 +782,6 @@ This commands basically do:<br />
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_Tethering_connection" manual="true" timeout="90" type="Functional" insignificant="false">
-	<description><![CDATA[<p>Purpose (Mandatory):<br />
-<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Check ConnMan tethering connection<o:p></o:p></span></p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory):<br />
-<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">1. Run enable-tethering&nbsp;on MeeGo box.<br />
-</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">2. test-connman connect &lt;service&gt; to connect to the MeeGo box on another BT device.<br />
-</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">3. ping MeeGo box IP.<o:p></o:p></span></p>
-<p>Pass/Fail criteria (Mandatory):<br />
-<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Can send and receive <span style="color: #002060">p</span>ing packages from MeeGo box.<o:p></o:p></span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
-</case>
 
 <case name="CM_Tethering_multiple_connection" manual="true" timeout="90" type="Functional" insignificant="false">
 	<description><![CDATA[<p>Purpose (Mandatory):<br />
@@ -880,6 +883,53 @@ Run instructions (Mandatory):<br />
 <p>&nbsp;</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
+<case name="CM_Tethering_BT_connection" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Check ConnMan tethering connection<o:p></o:p></span></p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">1. Run enable-tethering&nbsp;on MeeGo box.<br />
+</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">2. test-connman connect &lt;service&gt; to connect to the MeeGo box on another BT device.<br />
+</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">3. ping MeeGo box IP.<o:p></o:p></span></p>
+<p>Pass/Fail criteria (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Can send and receive <span style="color: #002060">p</span>ing packages from MeeGo box.<o:p></o:p></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
+</case>
+
+<case name="CM_Tethering_wifi_connection" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Check ConnMan tethering connection<o:p></o:p></span></p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">1. Run &quot;enable-tethering wifi &lt;essid&gt; 123456789&quot;&nbsp;on MeeGo box.<br />
+</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">2. &quot;connect-service &lt;essid&gt; 123456789 psk&quot;&nbsp;to connect to the MeeGo box on another wifi device.<br />
+</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">3. ping MeeGo box IP.<o:p></o:p></span></p>
+<p>Pass/Fail criteria (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Can send and receive <span style="color: #002060">p</span>ing packages from MeeGo box.<o:p></o:p></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
+</case>
+
+<case name="CM_Tethering_usb_connection" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Check ConnMan tethering connection<o:p></o:p></span></p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">1. Run &quot;enable-tethering usg&quot;&nbsp;on MeeGo box.<br />
+</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">2. &quot;test-connman connect &lt;service&gt;&quot; to connect to the MeeGo box on&nbsp;peer USB&nbsp;device.<br />
+</span><span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">3. ping MeeGo box IP.<o:p></o:p></span></p>
+<p>Pass/Fail criteria (Mandatory):<br />
+<span style="font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; font-size: 10.5pt" lang="EN-US">Can send and receive <span style="color: #002060">p</span>ing packages from MeeGo box.<o:p></o:p></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
+</case>
 </set>
 <set name="Stress" description="&lt;p&gt;Stress Test&lt;/p&gt;">
 
@@ -968,8 +1018,7 @@ Password = whatever</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
 </case>
-
-<case name="CM_WS_EAP_TLS_MSCHAPV2" manual="true" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_WS_EAP_TTLS_MSCHAPV2" manual="false" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MSCHAPV2</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -995,10 +1044,10 @@ Password = whatever</p>
 <p>Test Environment (Optional):</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAPV2.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAPV2.py</step>
 </case>
 
-<case name="CM_WS_EAP_TLS_MSCHAP" manual="true" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_WS_EAP_TTLS_MSCHAP" manual="false" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MSCHAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1024,10 +1073,10 @@ Password = whatever</p>
 <p>Test Environment (Optional):</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAP.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAP.py</step>
 </case>
 
-<case name="CM_WS_EAP_TLS_CHAP" manual="true" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_WS_EAP_TTLS_CHAP" manual="false" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS CHAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1053,10 +1102,10 @@ Password = whatever</p>
 <p>Test Environment (Optional):</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_EAP_TLS_CHAP.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_CHAP.py</step>
 </case>
 
-<case name="CM_WS_EAP_TLS_MD5" manual="true" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_WS_EAP_TTLS_MD5" manual="false" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MD5</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1082,10 +1131,10 @@ Password = whatever</p>
 <p>Test Environment (Optional):</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MD5.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MD5.py</step>
 </case>
 
-<case name="CM_WS_EAP_TLS_PAP" manual="true" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_WS_EAP_TTLS_PAP" manual="false" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS PAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1111,8 +1160,9 @@ Password = whatever</p>
 <p>Test Environment (Optional):</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_EAP_TLS_PAP.py</step>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_PAP.py</step>
 </case>
+
 </set>
 <set name="Pacrunner" description="&lt;p&gt;Pacrunner run a script to get the proxy for a web page automatically. There are two interface for pacrunner&lt;/p&gt;
 &lt;p&gt;1. pacrunner dbus service. We use the test utility find-proxy-for-url for this&lt;/p&gt;
@@ -1858,6 +1908,47 @@ This commands basically do:<br />
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_RSN_Download.py</step>
+</case>
+<case name="CM_WF_wps_pbc" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>Purpose (Mandatory): Associate with WPS&nbsp;PBC</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>pkill -9 connmand<br />
+pkill -9 wpa_supplicant<br />
+rm -f /var/lib/connman/default.profile<br />
+connmand</p>
+<p>Run instructions (Mandatory):</p>
+<p>1). Push the WPS button on the AP<br />
+2). Start simple-agent<br />
+3). Connect to the AP from ConnMan using &quot;test-connman connect &lt;The ap service path&gt;&quot;&nbsp;in another console<br />
+4). simple-agent should print a &quot;Answer:&quot; string, reply with &quot;WPS=&quot;&nbsp;</p>
+<p>Pass/Fail criteria (Mandatory): Associated to the AP. Ping to the AP responses</p>
+<p>Test Environment (Optional):</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
+
+<case name="CM_WF_wps_pin" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>Purpose (Mandatory): Associate with WPS&nbsp;PIN</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>pkill -9 connmand<br />
+pkill -9 wpa_supplicant<br />
+rm -f /var/lib/connman/default.profile<br />
+connmand</p>
+<p>Run instructions (Mandatory):</p>
+<p>1). Start broswer and login into AP web page, enter WPS setting, select PIN method, and set a PIN, for example 1234<br />
+2). Start simple-agent<br />
+3). Connect to the AP from ConnMan using &quot;test-connman connect &lt;The ap service path&gt;&quot;&nbsp;in another console<br />
+4). simple-agent should print a &quot;Answer:&quot; string, reply with &quot;WPS=1234&quot;&nbsp;</p>
+<p>Pass/Fail criteria (Mandatory): Associated to the AP. Ping to the AP responses</p>
+<p>Test Environment (Optional):</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
 </set>
@@ -4047,6 +4138,20 @@ There are two properties:</p>
 <p>Tester need to decide the correct values.</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
+<case name="CM_Advance_Regulatory" manual="true" timeout="90" type="Functional" level="Component">
+	<description><![CDATA[<p>Purpose (Mandatory): Test if can get regulatory code from 3G network</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional): Need both wireless card and 3G card</p>
+<p>Run instructions (Mandatory):</p>
+<p>1. Connect to 3G network</p>
+<p>2. iw reg get</p>
+<p>Pass/Fail criteria (Mandatory): iw shows the country code, for example, &quot;country CN&quot; showed if the 3G network is in China.</p>
+<p>Test Environment (Optional):</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+</case>
 </set>
 <set name="AutoConn" description=" 
 ">
@@ -4229,7 +4334,7 @@ connman should reconnect with the network</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_Autoconn_HIDDEN_Rem WEP128" manual="true" timeout="90" type="Functional" subfeature="Remember Paswd" insignificant="false">
+<case name="CM_Autoconn_HIDDEN_Rem_WEP128" manual="true" timeout="90" type="Functional" subfeature="Remember Paswd" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>check if connman can connect to the &quot;Remembered&quot; network with hidden WEP128bit automatically.</p>
 <p><br />
@@ -4247,7 +4352,7 @@ connman should connect to the AP automatically, and get an available IP address<
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_Autoconn_HIDDEN_Rem NoSecu" manual="true" timeout="90" type="Functional" subfeature="Remember Paswd" insignificant="false">
+<case name="CM_Autoconn_HIDDEN_Rem_NoSecu" manual="true" timeout="90" type="Functional" subfeature="Remember Paswd" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>check if connman can connect to the &quot;Remembered&quot; network with hidden Nosecurity automatically.</p>
 <p><br />
@@ -4264,7 +4369,7 @@ connman should connect to the AP automatically, and get an available IP address<
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_Autoconn_HIDDEN_Rem WPAPSKAES" manual="true" timeout="90" type="Functional" subfeature="Remember Paswd" insignificant="false">
+<case name="CM_Autoconn_HIDDEN_Rem_WPAPSKAES" manual="true" timeout="90" type="Functional" subfeature="Remember Paswd" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p><br />
 check if connman can connect to the &quot;Remembered&quot; network with WPAPSKAES automatically.</p>

@@ -181,6 +181,28 @@
         <file>/var/log/tests/Core-Bluetooth_authentication_with_pairing_as_slave.log</file>
       </get>
     </set>
+
+    <set name="bt-le-tests" feature="Bluetooth">
+      <case name="Core-Bluetooth LE scan"
+        type="Functional">
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_scan.log -en "Core-Bluetooth LE scan"</step>
+      </case>
+      <case name="Core-Bluetooth LE advertise"
+        type="Functional">
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_advertise.log -en "Core-Bluetooth LE advertise"</step>
+      </case>
+      <case name="Core-Bluetooth LE connect"
+        type="Functional">
+        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_connect.log -en "Core-Bluetooth LE connect"</step>
+      </case>
+      <get>
+        <file>/var/log/tests/Core-Bluetooth_LE_scan.log</file>
+        <file>/var/log/tests/Core-Bluetooth_LE_advertise.log</file>
+        <file>/var/log/tests/Core-Bluetooth_LE_connect.log</file>
+      </get>
+    </set>
+
+
   </suite>
 </testdefinition>
 

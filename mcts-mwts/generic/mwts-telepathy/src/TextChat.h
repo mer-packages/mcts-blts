@@ -57,10 +57,18 @@ class TextChat : public QObject
 
 		QString SentMessageText() const { return mSentMessage; }
 
+		bool VerifyReceivedMessage( const QString& sentMessage,
+					const QString& sentLength,
+					const QString& sentCoding,
+					const QString& sentClasstype);
+
 		bool VerifyReceivedIM();
 
 
 	private Q_SLOTS:
+
+		bool parseSms(const Tp::ReceivedMessage& message,const QString& sentMessage);
+
 		    // From Text channel 
 		void onMessageSent(const Tp::Message&,
 				Tp::MessageSendingFlags,

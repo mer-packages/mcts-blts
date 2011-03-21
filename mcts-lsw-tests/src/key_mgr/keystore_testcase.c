@@ -29,13 +29,15 @@
 #define BUFFER_LENGTH 1024
 
 #include <glib.h>
+#include <glib-object.h>
+#include <ctype.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <libsocialweb-keystore/sw-keystore.h>
 
-int read_key_secret_from_keys(const char *service, const char **key,
+void read_key_secret_from_keys(const char *service, const char **key,
 		const char **secret) {
 	FILE *fp;
 	int i = 0;

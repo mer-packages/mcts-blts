@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([blts-bluetooth-tests], [0.2.10], [jussi.saavalainen@digia.com])
+AC_INIT([blts-bluetooth-tests], [0.2.12], [jussi.saavalainen@digia.com])
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/hci.c])
@@ -61,6 +61,10 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([clock_gettime memset strdup strerror strtol])
+
+# Check for BTLE API support in Bluez
+AC_CHECK_FUNC([hci_le_create_conn],[AC_DEFINE([HAVE_BTLE_API], [1], [Defined if BTLE API available])],[],[])
+
 
 AC_SUBST(configdir)
 
