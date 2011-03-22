@@ -1,3 +1,6 @@
+* Tue 08 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.3
+- Added CSV measurement output support: CLI switch, API for reporting
+
 * Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.2
 - Version update due to packaging change.
 

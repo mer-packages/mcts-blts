@@ -2,6 +2,22 @@
 # This configuration should work with most hardware, but access point SSIDs and
 # encryption keys need to be changed to match the test environment.
 
+# Some programs (connman, wpa_supplicant) and the test asset use similar methods of
+# accessing the WLAN adapter. Consequently, many tests will fail due to
+# conflicting commands from the test cases and other device users. To
+# prevent this 'stopped_processes' parameter can be defined. After testing is done these 
+# stopped processes can be restarted by defining 'restarted_processes' parameter.
+# These parameters can also be empty if e.g "killall connmand" and "killall wpa_supplicant" 
+# commands are executed manually before testing. The format for these semicolon separated
+# parameters is the following: "program1 p1;program2 p1 p2"
+# NOTE: Some restrictions: max process and parameter count is 10 and whole process name 
+# to stop/restart must be less than 255 characters
+
+[globals]
+	stopped_processes "/usr/sbin/connmand;/sbin/wpa_supplicant"
+    restarted_processes "/usr/sbin/connmand -W nl80211,wext;/sbin/wpa_supplicant -u"
+[end_globals]
+
 # expected phys for HW. (space separated) e.g. "phy0 phy1 phy2"
 [parameter]
 	name expected_phys
