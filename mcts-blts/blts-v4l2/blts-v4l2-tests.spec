@@ -45,4 +45,6 @@ rm -rf $RPM_BUILD_ROOT
 %files config-example
 %defattr(-,root,root,-)
 %config /etc/blts/blts-v4l2-tests.cnf
+%config /etc/blts/blts-v4l2-n900.cnf
+%config /etc/blts/blts-v4l2-vivi.cnf
 /usr/share/blts-v4l2-tests/tests.xml

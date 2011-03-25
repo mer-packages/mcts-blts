@@ -19,7 +19,9 @@ minconfig_DATA = \
 	blts-v4l2-req_file.cfg
 
 config_DATA = \
-	blts-v4l2-tests.cnf
+	blts-v4l2-tests.cnf \
+	blts-v4l2-n900.cnf \
+	blts-v4l2-vivi.cnf
 
 EXTRA_DIST = \
 	$(config_DATA) \
