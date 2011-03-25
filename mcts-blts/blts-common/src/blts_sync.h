@@ -20,15 +20,16 @@
 #define BLTS_SYNC_H
 
 int blts_sync_anon();
-int blts_sync_anon_to(unsigned long msecs);
+int blts_sync_anon_to(unsigned long msec);
 
 int blts_sync_add_tag(char *tag);
 int blts_sync_del_tag(char *tag);
 int blts_sync_tagged(char *tag);
-int blts_sync_tagged_to(char *tag, unsigned long msecs);
+int blts_sync_tagged_to(char *tag, unsigned long msec);
 
-int blts_sync_prepare(char *sem_name, unsigned client_count);
-void blts_sync_cleanup();
+int blts_sync_master_init(unsigned client_count);
+int blts_sync_client_init();
+void blts_sync_client_cleanup();
 
 #endif /* BLTS_SYNC_H */
 

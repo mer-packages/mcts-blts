@@ -42,6 +42,7 @@
 #include "blts_params_local.h"
 #include "blts_results_xml.h"
 #include "csv_file.h"
+#include "blts_sync.h"
 
 #define MAX_ARGS 256
 
@@ -83,7 +84,7 @@ static void show_help(char* bin_name, blts_cli* cli)
 	const char* help_msg_base =
 		"USAGE: %s [-l mylog.txt] [-e test1,test2...] [-en \"my test\"] [-s] [-?] [-v]\n"
 		"                [-C variation_config.cnf] [-auto|-v|-vv] [-xml|-axml filename]\n"
-		"                [-csv|-acsv filename] %%s\n"
+		"                [-csv|-acsv filename] [-syncprep count] [-sync] %%s\n"
 		"  -l: Used log file, default %s\n"
 		"  -e: Execute single or multiple selected tests, for example -e 1,4,5.\n"
 		"  -en: Execute test by name, for example -en \"My test X\"\n"
@@ -94,7 +95,9 @@ static void show_help(char* bin_name, blts_cli* cli)
 		"  -csv, -acsv: Write measurement result to CSV file. -acsv appends result.\n"
 		"  -auto: Silent logging for test automation. Only the results are printed.\n"
 		"  -v: Verbose logging (default)\n"
-		"  -vv: Even more verbose logging\n%%s";
+		"  -vv: Even more verbose logging\n"
+		"  -syncprep: direct this many test processes (with -sync)\n"
+		"  -sync: synchronize this test with others\n%%s";
 	int log_file_len = cli->log_file?strlen(cli->log_file):0;
 	char *help_msg = malloc(strlen(help_msg_base) + strlen(bin_name) +
 		log_file_len);
@@ -543,6 +546,8 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	char *csv_result_file = NULL;
 	int csv_append_results = 0;
 	int config_file_given = 0;
+	int sync_master_mode_client_count = 0;
+	int sync_client_mode = 0;
 
 	timout_override = 0;
 
@@ -710,6 +715,27 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 			csv_result_file = argv[t];
 			csv_append_results = 1;
 		}
+		else if(strcmp(argv[t], "-syncprep") == 0)
+		{
+			if(++t >= argc)
+			{
+				invalid_arguments(argv[0], cli);
+				result = -EINVAL;
+				goto cleanup;
+			}
+			errno = 0;
+			sync_master_mode_client_count = strtol(argv[t], NULL, 0);
+			if(errno || sync_master_mode_client_count < 1)
+			{
+				invalid_arguments(argv[0], cli);
+				result = -EINVAL;
+				goto cleanup;
+			}
+		}
+		else if(strcmp(argv[t], "-sync") == 0)
+		{
+			sync_client_mode = 1;
+		}
 		else
 		{
 			if(processed_argc >= MAX_ARGS)
@@ -729,6 +755,26 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 
 	if(log_want_trace)
 		blts_log_set_level(LEVEL_TRACE);
+
+	if(sync_master_mode_client_count) {
+		BLTS_DEBUG("Setting up master for %d synchronized tests.\n",
+			sync_master_mode_client_count);
+		result = blts_sync_master_init(sync_master_mode_client_count);
+		if(result) {
+			BLTS_ERROR("ERROR: Could not init master handler, -sync will not work.\n");
+		} else {
+			BLTS_DEBUG("Sync: Handler detached.\n");
+		}
+		goto cleanup;
+	}
+
+	if(sync_client_mode) {
+		result = blts_sync_client_init();
+		if(result) {
+			BLTS_ERROR("Failed setting up synchronization.\n");
+			goto cleanup;
+		}
+	}
 
 	/* Find out binary name without path. This used by various functions. */
 	bin_fname = strrchr(argv[0], '/');
@@ -884,6 +930,9 @@ cleanup:
 	/* All done, cleanup */
 	if (cli->blts_cli_teardown)
 		cli->blts_cli_teardown(user_ptr);
+
+	if(sync_client_mode)
+		blts_sync_client_cleanup();
 
 	if (used_config_file) {
 		blts_config_free();
