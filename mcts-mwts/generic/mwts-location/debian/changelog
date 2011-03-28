@@ -1,3 +1,7 @@
+mwts-location (0.0.6) unstable; urgency=low
+  * Added functionality and test case for getting GPS coordinates
+ -- Jan Grela <jan.grela@digia.com>  Mon, 14 Feb 2011 10:08:00 +0300
+
 mwts-location (0.0.5) unstable; urgency=low
   * Added Accuracy test
   * - conf file new variables to define anteenna position and accuracy limits wanted

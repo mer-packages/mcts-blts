@@ -41,7 +41,8 @@ BluetoothSocket::BluetoothSocket(QObject* parent)
 : QThread(parent),
   m_cBuffer(NULL),
   m_phost(NULL),
-  m_iSocket(0)
+  m_iSocket(0),
+  m_bTimeoutOccurred(false)
 {
     MWTS_ENTER;
     m_pTimer = new QTimer(this);
@@ -149,7 +150,6 @@ int BluetoothSocket::CreateClient()
           default:
           {
               emit transferError("Invalid protocol " + m_SocketType);
-              qCritical() << "Invalid protocol " << m_SocketType;
               return -1;
           }
       }
@@ -172,7 +172,6 @@ int BluetoothSocket::CreateClient()
       {
           this->Close();
           emit transferError("Connection failed, Error: "+ QString(strerror(errno)));
-          qCritical() << "Connection failed, Error: " << strerror(errno);
           errno = 0;
           return -1;
       }
@@ -229,7 +228,6 @@ int BluetoothSocket::CreateServer(TransferType type)
     else
     {
         emit transferError("Invalid protocol " + type);
-        qCritical() << "Invalid protocol " << type;
         return -1;
     }
     socklen_t opt = sizeof(remote_address);
@@ -251,7 +249,6 @@ int BluetoothSocket::CreateServer(TransferType type)
     {
         this->Close();
         emit transferError(QString("bind command failed. Error: ") + QString(strerror(errno)));
-        qCritical() << "bind command failed. Error: " << strerror(errno);
         errno = 0;
         return -1;
     }
@@ -264,13 +261,12 @@ int BluetoothSocket::CreateServer(TransferType type)
     {
         this->Close();
         emit transferError(QString("listen command failed. Error: ") + QString(strerror(errno)));
-        qCritical() << "listen command failed Error: " << strerror(errno);
         errno = 0;
         return -1;
     }
 
     // Init timeout
-    qDebug() << "Test timeout: "<<TEST_TIMEOUT;
+    qDebug() << "Starting timeout timer for ACCEPT";
     m_pTimer->start(TEST_TIMEOUT);
 
     // Accept one connection
@@ -279,6 +275,7 @@ int BluetoothSocket::CreateServer(TransferType type)
     qDebug() << "accept returned " << m_iSocket;
 
     // Stop timeout
+    qDebug() << "Stopping timeout timer after successful ACCEPT";
     m_pTimer->stop();
 
     // Close server socket
@@ -288,7 +285,6 @@ int BluetoothSocket::CreateServer(TransferType type)
     {
         this->Close();
         emit transferError(QString("accept command failed. Error: ") + QString(strerror(errno)));
-        qCritical() << "accept command failed. Error: " << strerror(errno);
         errno = 0;
         return -1;
     }
@@ -413,9 +409,14 @@ void BluetoothSocket::Close()
     // Close connection
     if(m_iSocket > 0)
     {
+        qDebug() << "Shutting down the socket:"<<m_iSocket;
+        int ret = shutdown(m_iSocket, 2);
+        qDebug() << "Shutdown returned:"<<ret;
+
         qDebug() << "Closing socket:"<<m_iSocket;
-        int ret = close(m_iSocket);
+        ret = close(m_iSocket);
         qDebug() << "Close returned:"<<ret;
+
         if(ret >= 0)
             m_iSocket = 0;
     }
@@ -482,7 +483,6 @@ int BluetoothSocket::ConvertSocketyType(QString type)
     else
     {
         emit transferError("Invalid socket type");
-        qCritical() << "Invalid socket type";
     }
     MWTS_LEAVE;
     return intType;
@@ -495,7 +495,9 @@ bool BluetoothSocket::runTransfer()
 {
     MWTS_ENTER;
     bool ret = true;
-    qDebug() << "Start transfering data";
+
+    qDebug() << "Reseting timeout flag -> false";
+    m_bTimeoutOccurred = false;
 
     /* init periodicThroughput variables */
     double previous_time = m_time.elapsed();
@@ -506,7 +508,7 @@ bool BluetoothSocket::runTransfer()
     m_cBytes_transfered = 0L;
 
     /* init timeout */
-    qDebug() << "Transfer timeout:"<<TEST_TIMEOUT;
+    qDebug() << "Starting timeout timer for TRANSFER";
     m_pTimer->start(TEST_TIMEOUT);
 
     qDebug() << "Transfer ongoing";
@@ -529,8 +531,7 @@ bool BluetoothSocket::runTransfer()
         /* check for error */
         if (ret < 0)
         {
-            emit transferWarning("Error while transfering using socket " +  QString(strerror(errno)) );
-            qWarning() <<  "Error while transfering using socket: " <<  strerror(errno) << errno;
+            qWarning() << "Error while transfering using socket: " << QString(strerror(errno));
             return false;
         }
         /* update transfer values */
@@ -543,7 +544,8 @@ bool BluetoothSocket::runTransfer()
         }
 
         /* check for periodic sample */
-        if((m_time.elapsed() - previous_time) > PERIODIC_SAMPLE_TIME)
+        if( !m_bTimeoutOccurred &&
+            ( (m_time.elapsed() - previous_time) > PERIODIC_SAMPLE_TIME ) )
         {
             /* emit periodicThroughput*/
 //            emit periodicThroughput(m_time.elapsed()/1000.0,
@@ -555,11 +557,11 @@ bool BluetoothSocket::runTransfer()
             if(m_cBytes_transfered <= previous_bytes_transferred)
             {
                 emit transferWarning("Error, no bytes transferred.");
-                qWarning() <<  "Error, no bytes transferred.";
                 return false;
             }
 
             /* restart timeout */
+            qDebug() << "RE-starting timeout timer for TRANSFER";
             m_pTimer->start(TEST_TIMEOUT);
 
             /* update the periodic variables */
@@ -569,14 +571,13 @@ bool BluetoothSocket::runTransfer()
     }
 
     /* stop timeout */
-    qDebug() << "Stop timeout";
+    qDebug() << "Stopping timeout timer after successful TRANSFER";
     m_pTimer->stop();
 
     /* check that bytes were transferred */
     if(m_cBytes_transfered < m_bytes)
     {
         emit transferWarning("Not all data were transferred.");
-        qWarning() <<  "Not all data were transferred. " << m_cBytes_transfered << " of " << m_bytes;
         return false;
     }
 
@@ -626,8 +627,7 @@ void BluetoothSocket::run()
         qDebug() << "BluetoothSocket::run do CreateClient()";
         if(!(CreateClient() > 0))
         {
-            emit transferError("Cannot create client");
-            qCritical() << "Cannot create client";
+            qWarning() << "CreateClient failed";
             bret = false;
         }
     }
@@ -636,46 +636,51 @@ void BluetoothSocket::run()
         qDebug() << "BluetoothSocket:: run do CreateServer";
         if(CreateServer(m_SocketType) <0)
         {
-            emit transferError("Cannot create server");
-            qCritical() << "Cannot create server";
+            qWarning() << "CreateServer failed";
             bret = false;
         }
     }
 
-    /* start time */
-    m_time.start();
-    /* reset checksum */
-    m_checksum->reset();
-
-    /* do until time is reached (for LOLA) */
-    do
+    if(bret)
     {
-        /* Create Buffer */
-        if(bret) CreateBuffer(m_buffsize);
-        /* run transfer */
-        qDebug() << "BluetoothSocket::run do runTransfer";
-        if(bret) bret = runTransfer();
-        bytesTransferedTotal += m_cBytes_transfered;
+        /* start time */
+        m_time.start();
+        /* reset checksum */
+        m_checksum->reset();
+
+        /* do until time is reached (for LOLA) */
+        do
+        {
+            /* Create Buffer */
+            if(bret) CreateBuffer(m_buffsize);
+            /* run transfer */
+            qDebug() << "BluetoothSocket::run do runTransfer";
+            if(bret) bret = runTransfer();
+            bytesTransferedTotal += m_cBytes_transfered;
+        }
+        while((m_time.elapsed() / 1000.0) < m_sendtime && bret);
+
+        if(bret)
+        {
+            /* calculate transfer speed */
+            /* bytes transferred divided by time gives the total transfer rate. */
+            bytesPerSecond = (double) bytesTransferedTotal/ ((double) m_time.elapsed() / 1000.0 );
+
+            /* compare checksums */
+            if(bret) bret = CompareChecksum();
+
+            /* close sockets */
+            Close();
+
+            /* finish transfer */
+            qDebug() << "BluetoothSocket::run do emit transferFinished";
+            emit transferFinished(bytesPerSecond,bret);
+
+            /* signal that transfer stopped */
+            qDebug() << "BluetoothSocket::run emit bluetooth test Stopped()";
+            emit transferStopped();
+        }
     }
-    while((m_time.elapsed() / 1000.0) < m_sendtime && bret);
-
-    /* calculate transfer speed */
-    /* bytes transferred divided by time gives the total transfer rate. */
-    bytesPerSecond = (double) bytesTransferedTotal/ ((double) m_time.elapsed() / 1000.0 );
-
-    /* compare checksums */
-    if(bret) bret = CompareChecksum();
-
-    /* close sockets */
-    Close();
-
-    /* finish transfer */
-    qDebug() << "BluetoothSocket::run do emit transferFinished";
-    emit transferFinished(bytesPerSecond,bret);
-
-    /* signal that transfer stopped */
-    qDebug() << "BluetoothSocket::run emit bluetooth test Stopped()";
-    emit transferStopped();
 
     MWTS_LEAVE;
 }
@@ -740,7 +745,6 @@ bool BluetoothSocket::CompareChecksum()
     if(strcmp(m_cBuffer,"OK") != 0)
     {
         emit transferWarning("Checksums were different");
-        qWarning() << "Checksums were different";
         return false;
     }
     else
@@ -756,14 +760,14 @@ bool BluetoothSocket::CompareChecksum()
 void BluetoothSocket::Timeout()
 {
     MWTS_ENTER;
+    m_bTimeoutOccurred = true;
+
+    qDebug() << "Stopping the timeout timer after TIMEOUT";
+    m_pTimer->stop();
 
     this->Close();
 
-    emit transferError("Got timeout signal, closing sockets");
-    qCritical() << "Got timeout signal, closing sockets";
-
-    //wait for main thread to complete
-    wait();
+    emit transferError("Timeout occurred during transfer");
 
     MWTS_LEAVE;
 }
