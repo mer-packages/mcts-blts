@@ -1,4 +1,4 @@
-/* mwtsconfig.h --
+/* mwtsradio.h -- radio access mode change
  *
  * This file is part of MCTS 
  * 
@@ -22,23 +22,21 @@
  *
  */
 
-#ifndef _INCLUDED_MWTS_CONFIG_H
-#define _INCLUDED_MWTS_CONFIG_H
+#ifndef _INCLUDED_MWTS_PSD_H
+#define _INCLUDED_MWTS_PSD_H
 
+/** Class for handling radio access technology */
 
-#include <QSettings>
+#define RAT_UMTS	1
+#define RAT_GSM		2
+#define RAT_DUAL	3
 
-/** Configuration
- */
-class MwtsConfig : public QSettings
+class MwtsPsd
 {
 public:
-	MwtsConfig();
-	virtual ~MwtsConfig();
-
-private:
+	static bool ChangeMode(int mode);
+	static bool Connect();
 };
 
-#endif //#ifndef _INCLUDED_MWTS_CONFIG_H
 
-
+#endif // #ifndef _INCLUDED_MWTS_RAT_H

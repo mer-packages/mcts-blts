@@ -1,4 +1,4 @@
-/* mwtsconfig.h --
+/* mwtsradio.cpp -- radio access mode change
  *
  * This file is part of MCTS 
  * 
@@ -22,23 +22,26 @@
  *
  */
 
-#ifndef _INCLUDED_MWTS_CONFIG_H
-#define _INCLUDED_MWTS_CONFIG_H
+#include "stable.h"
+#include "mwtspsd.h"
+#include <MwtsCommon>
+#include <QDBusConnection>
+#include <QDBusInterface>
 
-
-#include <QSettings>
-
-/** Configuration
- */
-class MwtsConfig : public QSettings
+/** Changes radio access technology mode*/
+bool MwtsPsd::ChangeMode(int mode)
 {
-public:
-	MwtsConfig();
-	virtual ~MwtsConfig();
+	MWTS_ENTER;
 
-private:
-};
+	qCritical() << "RAT functionality can not be used on MeeGo";
+}
 
-#endif //#ifndef _INCLUDED_MWTS_CONFIG_H
+bool MwtsPsd::Connect()
+{
+
+	qCritical() << "Common PSD Connect not implemented for MeeGo";
+	return false;
+}
+
 
 

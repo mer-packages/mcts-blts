@@ -1,3 +1,26 @@
+mwts-common (1.2.0) unstable; urgency=low
+  * Added series measurement feature
+  * Support common configuration file MwtsGlobal.conf
+  * Support reading NFT limit files
+  * Support reporting NFT limits to OTS
+ -- Tuomo Pelkonen <tuomo.pelkonen@digia.com>  Mon, 28 Mar 2011 16:10:00 +0300
+
+mwts-common (1.1.1) unstable; urgency=low
+  * Harmattan radio mode change
+ -- Tuomo Pelkonen <tuomo.pelkonen@digia.com>  Thu, 17 Mar 2011 09:34:00 +0200
+
+mwts-common (1.0.6) unstable; urgency=low
+  * Fixed the handling of direction parameter in StartClientThroughput function
+ -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Tue, 15 Mar 2011 14:32:56 +0200
+
+mwts-common (1.0.5) unstable; urgency=low
+  * Fixed g_pApp pointer setting correctly, when creating application
+ -- Reijo Korhonenn <reijo.korhonen@digia.com>  Thu, 10 Mar 2011 15:34:56 +0200
+
+mwts-common (1.0.4) unstable; urgency=low
+  * Fixed packaging
+ -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Tue, 22 Feb 2011 15:34:56 +0200
+
 mwts-common (1.0.3) unstable; urgency=low
   * Removed hard coded path from iperf starting and fine tuned QProcess error handling
  -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Tue, 1 Feb 2011 12:44:00 +0200

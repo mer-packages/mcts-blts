@@ -75,6 +75,32 @@ LOCAL int MaybePass(MinItemParser * item)
 	return 0;
 }
 
+LOCAL int ConfigTest(MinItemParser * item)
+{
+	MWTS_ENTER;
+	QStringList keys = g_pConfig->allKeys();
+	foreach (QString key, keys)
+	{
+		g_pResult->Write(key + QString(" = ") + g_pConfig->value(key).toString());
+	}
+	return 0;
+}
+
+
+LOCAL int SeriesMeasureTest(MinItemParser * item)
+{
+	MWTS_ENTER;
+	g_pResult->StartSeriesMeasure("throughput", "kb/s", 100, 80);
+	for(int i=0; i<100; i++)
+	{
+		usleep(30000);
+		g_pResult->AddSeriesMeasure("throughput", i);
+	}
+
+	return 0;
+}
+
+
 /**
   Declares Min scripter functions
 */
@@ -85,6 +111,8 @@ int ts_get_test_cases (DLList ** list)
 
 	ENTRYTC(*list, "RandomMeasurement", RandomMeasurement);
 	ENTRYTC(*list, "MaybePass", MaybePass);
+	ENTRYTC(*list, "ConfigTest", ConfigTest);
+	ENTRYTC(*list, "SeriesMeasureTest", SeriesMeasureTest);
 
 	return ENOERR;
 }
