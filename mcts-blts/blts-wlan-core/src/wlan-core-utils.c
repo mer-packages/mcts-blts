@@ -84,6 +84,14 @@
 #include "wlan-core-utils.h"
 #include "wlan-core-eloop.h"
 
+/* definitions to stop/restart conflicting processes */
+#define MAX_PROCESS_COUNT 	10
+#define MAX_PARAMETER_COUNT 10
+#define MAX_PROCESS_NAME 	255
+
+static char* stopped_processes = NULL;
+static char* restarted_processes = NULL;
+
 struct family_data {
         const char *group;
         int id;
@@ -1025,4 +1033,222 @@ int nl80211_set_supp_port(wlan_core_data *data, int authorized)
 	return send_and_recv_msgs(data, msg, NULL, NULL);
  nla_put_failure:
 	return -ENOBUFS;
+}
+
+static pid_t spawn_cmd()
+{
+    pid_t pid = -1;
+	pid_t pgrp = -1;
+
+    switch (pid = fork())
+    {
+        case -1: /* fork failure */
+            return pid;
+
+        case 0: /* child */
+            
+            if (pgrp < 0)
+                pgrp = getpid();
+
+            return 0;
+
+        default: /* parent */
+            if (pgrp < 0)
+                pgrp = pid;
+
+            setpgid(pid, pgrp);
+
+            return pid;
+    }
+}
+
+static pid_t spawn_command(const char *cmd)
+{	
+    int nullfd = -1;
+    int error = 0;
+
+    if (!cmd)
+        return -1;
+
+    nullfd = open("/dev/null",O_RDWR);
+    if (nullfd < 0)
+		error = errno;
+
+    if (!error)
+    {
+        pid_t pid = spawn_cmd();
+        switch (pid)
+        {
+            case -1: /* fork failure */
+                error = errno;
+                break;
+                
+            case 0: /* child process */
+               { 
+				   
+				dup2(nullfd, 0);
+                dup2(nullfd, 1);
+                dup2(nullfd, 2);				   
+				   				   
+                int fd = 3;
+				int index = 0;
+   				char *param = NULL;
+				char *command = NULL;				
+				char *params[MAX_PARAMETER_COUNT];
+                
+                int fdlimit = sysconf(_SC_OPEN_MAX);
+				while (fd < fdlimit)
+					close(fd++);				
+				
+				command = strtok((char *)cmd, " ");
+				params[index++] = command;
+				
+				if (command != NULL) 
+				{
+					while ((param = strtok(NULL, " ")) != NULL && index < (MAX_PARAMETER_COUNT - 1)) 
+					{
+						params[index++] = param;
+					}
+					params[index] = NULL;
+				}
+				if(command)
+					execvp(command, params);		
+                _exit(127);
+				}
+            default: /* parent process */
+
+                close(nullfd);
+
+                return pid;
+        }
+    }
+
+    /* only reached if error */
+    if (nullfd >= 0)
+        close(nullfd);
+
+    return error;
+}
+
+int stop_processes_before_testing(void)
+{	
+	int index = 0;
+	char *tmp, *ptr;
+	char programs[MAX_PROCESS_COUNT][MAX_PROCESS_NAME];
+	int num_programs = 0;
+	
+	memset(programs, 0, sizeof(programs));
+
+	if(blts_config_get_value_string("stopped_processes", &stopped_processes))
+	{
+		BLTS_TRACE("No processes to be stopped...\n");
+		return 0;
+	}
+		
+	tmp = strdup(stopped_processes);
+	
+	if(!tmp)
+		return -1;
+		
+	ptr = strtok((char *)tmp, ";");
+	if(!ptr)
+	{
+		free(tmp);	
+		return 0;
+	}
+	 
+	do 
+	{
+		strcat(programs[num_programs++], ptr);
+		if (num_programs >= MAX_PROCESS_COUNT)
+			break;		
+	} while ((ptr = strtok(NULL, ";")));
+
+	BLTS_TRACE("Processes to be stopped before testing:\n");	
+	for(index = 0; index < num_programs; index++)
+		BLTS_TRACE("[%s]\n", programs[index]);
+
+	if(num_programs)
+	{
+		DIR* d = opendir("/proc");
+		FILE* fp;
+		pid_t pid;
+		struct dirent *de;
+		char* end;
+		char buf[MAX_PROCESS_NAME];
+
+		while ((de = readdir(d)) != NULL) 
+		{
+			int i = 0;
+			pid = strtoul(de->d_name, &end, 10);
+			if (*end != '\0')
+			   continue;
+		   
+			sprintf(buf, "/proc/%d/cmdline", pid);
+			fp = fopen(buf, "rt");
+			if (fp == NULL)
+			  continue;
+			if (!fgets(buf, sizeof(buf), fp)) 
+				buf[0] = '\0';
+			fclose(fp);
+			
+			for(i=0; i<num_programs; i++)
+			{	
+				if(strlen(buf) && strstr((char *)&programs[i], buf))
+				{
+					BLTS_TRACE("Sending kill signal to pid: %d...\n", pid);
+					kill(pid, SIGTERM);
+					break;
+				}
+			}
+		}
+		closedir(d);	
+	}
+
+	free(tmp);
+	return 0;
+}
+
+int restart_processes_after_testing(void)
+{
+	int index = 0;
+	char *tmp, *ptr;
+	char programs[MAX_PROCESS_COUNT][MAX_PROCESS_NAME];
+	int num_programs = 0;
+	
+	memset(programs, 0, sizeof(programs));
+
+	if(blts_config_get_value_string("restarted_processes", &restarted_processes))
+	{
+		BLTS_TRACE("No processes to be restarted...\n");
+		return 0;
+	}
+
+	tmp = strdup(restarted_processes);
+	if(!tmp)
+		return -1;
+		
+	ptr = strtok((char *)tmp, ";");
+	if(!ptr)
+	{
+		free(tmp);	
+		return 0;
+	}
+	 
+	do 
+	{
+		strcat(programs[num_programs++], ptr);
+		if (num_programs >= MAX_PROCESS_COUNT)
+			break;		
+	} while ((ptr = strtok(NULL, ";")));
+
+	BLTS_TRACE("Processes to be restarted after testing:\n");	
+	for(index = 0; index < num_programs; index++)
+	{
+		BLTS_TRACE("[%s]\n", programs[index]);
+		spawn_command(programs[index]);
+	}
+
+	free(tmp);
+	return 0;	
 }

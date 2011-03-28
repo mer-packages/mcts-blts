@@ -28,10 +28,13 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
-manager.Offline()
+manager.Online()
 time.sleep(3)
 dev = EthDevice()
 ASSERT(dev.IsExist(), "No device found", manager.Online)
+time.sleep(3)
+manager.Offline()
+time.sleep(3)
 svc = dev.GetService()
 ret = svc != None and  svc.BroadcastPing()
 if ret:

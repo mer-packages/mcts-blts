@@ -1517,12 +1517,22 @@ error:
 /* -------------------- BT LE ----------------- */
 #ifdef HAVE_BTLE_API
 
+
+/* See BT4 spec: 2.E.7.7.65.2 */
+static int le_get_adv_info_rssi(le_advertising_info *info)
+{
+	if(!info)
+		return 127;  /* "RSSI not available" */
+	return *(((int8_t *) info->data) + info->length);
+}
+
 static int print_advertising_devices(int fd)
 {
 	unsigned char buf[HCI_MAX_EVENT_SIZE];
 	struct hci_filter nf, of;
 	socklen_t olen = sizeof(of);
-	int len, num = 10;
+	int len, num = 4;
+	int rssi;
 	evt_le_meta_event *meta;
 	le_advertising_info *info;
 	char addr[18];
@@ -1542,6 +1552,7 @@ static int print_advertising_devices(int fd)
 	}
 
 	while(num--) {
+		/* TODO: Add graceful timeout for this */
 		while((len = read(fd, buf, sizeof(buf))) < 0) {
 			if (errno == EAGAIN || errno == EINTR)
 				continue;
@@ -1558,7 +1569,16 @@ static int print_advertising_devices(int fd)
 		info = (le_advertising_info *) (meta->data + 1);
 		ba2str(&info->bdaddr, addr);
 
-		BLTS_DEBUG("address: %s (rssi: %u)\n", addr, info->rssi);
+		rssi = le_get_adv_info_rssi(info);
+		if(-127 <= rssi && rssi <= 20) {
+			BLTS_DEBUG("address: %s (RSSI: %d) \n", addr, rssi);
+		} else if (rssi == 127) {
+			BLTS_DEBUG("address: %s (RSSI not available)\n", addr);
+		} else {
+			/* TODO: Maybe we should error on this? */
+			BLTS_DEBUG("address: %s (Bad RSSI)\n", addr);
+			BLTS_ERROR("Warning: Reserved RSSI '%d' in advertising report for device %s !\n", rssi, addr);
+		}
 	}
 
 cleanup:
@@ -1740,7 +1760,51 @@ int le_disconnect_remote(struct bt_ctx *ctx)
 	return retval;
 }
 
+int le_tx_data(struct bt_ctx *ctx)
+{
+	int ret, bytes;
+	struct acl_test_packet p;
+	if(!ctx)
+		return -EINVAL;
+
+	ret = le_connect_remote(ctx);
+	if(ret) {
+		BLTS_ERROR("Could not connect to remote device, cannot continue.\n");
+		return ret;
+	}
+
+	memset(&p, 0, sizeof(struct acl_test_packet));
+	p.type = HCI_ACLDATA_PKT;
+	p.hdr.handle = htobs(acl_handle_pack(ctx->conn_handle, ACL_START));
+	p.hdr.dlen = htobs(strlen(acl_test_data));
+	memcpy(p.data, acl_test_data, p.hdr.dlen);
+
+	bytes = write(ctx->hci_fd, &p, 1 + HCI_ACL_HDR_SIZE + p.hdr.dlen);
+
+	if(bytes <= 0) {
+		BLTS_ERROR("Could not send data\n");
+		ret = errno ? -errno : -1;
+	}
+
+	sleep(WAIT_TIME_CONNECT_DISCONNECT);
+
+	le_disconnect_remote(ctx);
+
+	return ret;
+}
+
+int le_rx_data(struct bt_ctx *ctx)
+{
+	return hci_receive_acl_data(ctx);
+}
+
 #else /* !HAVE_BTLE_API */
+
+static void le_error_not_built()
+{
+	BLTS_ERROR("ERROR: Bluetooth LE support was not compiled in.\n");
+	BLTS_ERROR("Use a newer version of Bluez when building the tests.\n");
+}
 
 int do_le_scan(__attribute__((unused)) struct bt_ctx *ctx)
 {
@@ -1759,6 +1823,18 @@ int le_connect_remote(__attribute__((unused)) struct bt_ctx *ctx)
 
 int le_disconnect_remote(__attribute__((unused)) struct bt_ctx *ctx)
 {
+	return -1;
+}
+
+int le_tx_data(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	le_error_not_built();
+	return -1;
+}
+
+int le_rx_data(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	le_error_not_built();
 	return -1;
 }
 

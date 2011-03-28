@@ -32,10 +32,10 @@ from common import *
 
 manager.Online()
 time.sleep(3)
-manager.Offline()
-time.sleep(3)
 dev = EthDevice()
 ASSERT(dev.IsExist(), "No device found", manager.Online)
+manager.Offline()
+time.sleep(3)
 ret=dev.IsPoweredOff()
 if ret:
     print 'Default powered is off in offline mode'

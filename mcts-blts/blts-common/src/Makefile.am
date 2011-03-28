@@ -25,12 +25,14 @@ h_sources = \
 	blts_timing.h \
 	blts_dep_check.h \
 	blts_cli_frontend.h \
-	blts_params.h
+	blts_params.h \
+	blts_reporting.h
 
 # not needed in distribution
 local_h_sources = \
 	blts_params_local.h \
-	blts_results_xml.h
+	blts_results_xml.h \
+	csv_file.h
 
 c_sources = \
 	blts_log.c \
@@ -38,7 +40,9 @@ c_sources = \
 	blts_dep_check.c \
 	blts_cli_frontend.c \
 	blts_params.c \
-	blts_results_xml.c
+	blts_results_xml.c \
+	blts_reporting.c \
+	csv_file.c
 
 
 BUILT_SOURCES = param-parser.h param-parser.c param-scanner.c
@@ -53,3 +57,7 @@ lib_LTLIBRARIES= \
 libbltscommon_la_LIBADD = -lrt -ldl $(XML_LIBS)
 libbltscommon_la_SOURCES= $(parser_sources) $(h_sources) $(local_h_sources) $(c_sources)
 libbltscommon_la_LDFLAGS= -version-info $(BLTS_COMMON_LIBRARY_VERSION)
+
+CHK_SOURCES=$(h_sources) $(local_h_sources) $(c_sources)
+check-syntax:
+	$(CC) $(AM_CFLAGS) -o nul -S ${CHK_SOURCES}
