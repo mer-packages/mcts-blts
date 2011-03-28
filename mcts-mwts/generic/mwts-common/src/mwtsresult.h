@@ -48,10 +48,15 @@ public:
 	void AddError(QString sError);
 	bool IsPassed();
 	void SetLimits(double lfTarget, double lfFail);
+	void SetResultFilter(QString filter);
+	void StartSeriesMeasure(QString name, QString unit, double lfTarget=0, double lfFailLimit=0);
+	void AddSeriesMeasure(QString name, double value);
 
 protected:
 	static MwtsResult* inst;
 	MwtsResult();
+	
+	void WriteSeriesFile(QString name, QString text);
 
 	QList<MwtsIteration*> m_listIterations;
 	MwtsIteration*	m_pCurrentIteration;
@@ -60,6 +65,15 @@ protected:
 	QFile m_File;
 	double m_lfTarget;
 	double m_lfFailLimit;
+	QString m_sResultFilter;
+	
+	bool ReadLimitsFromFile();
+
+	void WriteXmlReport(QString sMeasureName, QString sValue,
+		QString sMeasureUnit, QString sFailLimit, QString sTarget);
+
+	void WriteCsvReport(QString sMeasureName, QString sValue,
+		QString sMeasureUnit, QString sFailLimit, QString sTarget);
 
 	bool m_bSpEnducance;
 };

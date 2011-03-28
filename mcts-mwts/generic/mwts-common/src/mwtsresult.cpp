@@ -136,6 +136,55 @@ void MwtsResult::SetLimits(double lfTarget, double lfFail)
 }
 
 
+void MwtsResult::SetResultFilter(QString filter)
+{
+	m_sResultFilter=filter;
+}
+
+bool MwtsResult::ReadLimitsFromFile()
+{
+	double lfFail=0;
+	double lfTarget=0;
+	QFile file("/usr/lib/tests/mwts-limits.csv");
+	if(!file.open(QIODevice::ReadOnly))
+	{
+		qDebug() << "Unable to open mwts-limits.csv";
+		return false;
+	}
+	QTextStream stream( &file );
+
+	while(!stream.atEnd())
+	{
+		QString line=stream.readLine();
+		if(line[0]=='#')
+		{
+			// comment line
+			continue;
+		}
+		QStringList parts=line.split(';');
+		if(parts.count() != 3)
+		{
+			qWarning() << "invalid line in mwts-limits.csv :" << line;
+			continue;
+		}
+		if(g_pTest->CaseName()!=parts[0])
+		{
+			// does not match the case name
+			continue;
+		}
+
+		lfFail=parts[1].toDouble();
+		lfTarget=parts[2].toDouble();
+
+		SetLimits(lfTarget, lfFail);
+		qDebug() << "Setting case limits to" <<lfFail <<"," << lfTarget;
+		return true;
+
+	}
+	qDebug() << "No limits found for the test case in mwts-limits.csv" <<lfFail <<"," << lfTarget;
+	return false;
+}
+
 /**
   Adds a measurement value in to results
   @param: Name name of the measurement
@@ -145,11 +194,52 @@ void MwtsResult::SetLimits(double lfTarget, double lfFail)
 void MwtsResult::AddMeasure(QString name, double value, QString unit)
 {
 	MWTS_ENTER;
+	// if result filter is set and the name does not match it, don'd do anything
+	if(!m_sResultFilter.isEmpty())
+	{
+		if(!name.contains(m_sResultFilter, Qt::CaseInsensitive))
+		{
+			return;
+		}
+	} 
+
 	m_pCurrentIteration->AddMeasure(new MwtsMeasure(name, value, unit));
 	QString text;
 	QTextStream(&text) << "- " << g_pTest->Name() << ": " << name << ": " << value << " : " << unit;
 	Write(text);
 }
+
+
+void MwtsResult::WriteSeriesFile(QString name, QString text)
+{
+	MWTS_ENTER;
+	QFile file;
+	file.setFileName("/var/log/tests/"+g_pTest->CaseName()+"."+name+".csv");
+	file.open(QIODevice::Append);
+	file.write(text.toLatin1()+"\n");
+}
+
+void MwtsResult::StartSeriesMeasure(QString name, QString unit, double lfTarget, double lfFailLimit)
+{
+	QString str=name + QString(";") + unit + QString(";");
+	if(lfTarget!=0)
+		str+= QString::number(lfTarget) + QString(";");
+	if(lfFailLimit!=0)
+		str+= QString::number(lfFailLimit) + QString(";");
+	WriteSeriesFile(name, str);	
+	
+}
+
+void MwtsResult::AddSeriesMeasure(QString name, double value)
+{
+	QString str;
+	QDateTime timestamp = QDateTime::currentDateTime();
+	QString timestampStr=timestamp.toString("yyyy-mm-dd\thh:mm:ss");
+	str=timestampStr+QString(";")+QString::number(value);
+	WriteSeriesFile(name, str);	
+	
+}
+
 
 /** Tells whether test case is passed in result perspective*/
 bool MwtsResult::IsPassed()
@@ -176,7 +266,6 @@ bool MwtsResult::IsPassed()
 */
 void MwtsResult::WriteReport()
 {
-	QDomDocument dom("report");
 
 	MWTS_ENTER;
 	int i;
@@ -184,32 +273,36 @@ void MwtsResult::WriteReport()
 	double max=-100000;
 	double min=100000;
 	double value;
-	int nIterations=m_listIterations.size();
 	MwtsIteration* pIteration;
+	int nIterations=m_listIterations.size();
 
-	QString verdict;
-	if(this->IsPassed())
-		verdict="PASSED";
-	else
-		verdict="FAILED";
-
-	Write("Overall result : "+verdict);
+	if(nIterations==0)
+	{
+		m_listIterations.append(m_pInitIteration);
+		nIterations++;
+		// add the init iteration in report, if there are no real iterations
+	}
 
 	QString text;
-	QTextStream(&text) << nIterations << " iterations total" ;
 	Write(text);
 	QString sMeasureName = "None";
 	QString sMeasureUnit = "None";
 
-	if(nIterations <= 1)
+	if(nIterations < 1)
 	{
 		return;
 	}
+
 	QList<double> values;
+	int nPassedIterations=0;
 
 	for (i = 0; i < nIterations; ++i)
 	{
 		pIteration=m_listIterations.at(i);
+		if(pIteration->IsPassed())
+		{
+			nPassedIterations++;
+		}
 		if(pIteration->m_listMeasures.size() > 1)
 		{
 			MWTS_ERROR("More than one measurement values per iteration");
@@ -234,7 +327,18 @@ void MwtsResult::WriteReport()
 		{
 			min=value;
 		}
+
 	}
+
+	QTextStream(&text) << nIterations << " iterations total" ;
+	QTextStream(&text) << nPassedIterations << " iterations passed" ;
+	QTextStream(&text) << (double)nPassedIterations/(double)nIterations*100.0 << "% pass rate";
+
+
+	ReadLimitsFromFile();
+
+	bool bLimitExceeded=true;
+	bool bBiggerIsBetter=true;
 
 	if(values.size() > 0)
 	{
@@ -244,8 +348,6 @@ void MwtsResult::WriteReport()
 		// this is identified by smaller target value than fail limit.
 		// -> comparison should be done accordingly
 
-		bool bLimitExceeded=true;
-		bool bBiggerIsBetter=true;
 		if(m_lfFailLimit > m_lfTarget)
 			bBiggerIsBetter=false;
 
@@ -277,28 +379,62 @@ void MwtsResult::WriteReport()
 			Write("Target value not exceeded! : CASE FAILED");
 		}
 
-		// Write XML report
-		QFile report;
-		report.setFileName("/var/log/tests/"+g_pTest->CaseName()+".report");
-		report.open(QIODevice::WriteOnly);
-
 		QString sValue=QString::number(stats.Median());
 		QString sTarget=QString::number(m_lfTarget);
 		QString sFailLimit=QString::number(m_lfFailLimit);
 
-		QString sReport="<testreport>\n\t<measures>\n\t\t<measure name=\"" + sMeasureName +
-			"\" description=\"median\" value=\"" + sValue +
-			"\" unit=\"" + sMeasureUnit +
-			"\" fail=\"" + sFailLimit +
-			"\" target=\"" + sTarget + "\" />\n\t</measures>\n</testreport>\n";
-
-		report.write(sReport.toLatin1());
-		report.close();
+		WriteXmlReport(sMeasureName, sValue, sMeasureUnit, sFailLimit, sTarget);
+		WriteCsvReport(sMeasureName, sValue, sMeasureUnit, sFailLimit, sTarget);
 
 	}
+
+	QString verdict="FAILED";
+	if(this->IsPassed() && bLimitExceeded)
+	{
+		verdict="PASSED";
+	}
+
+	Write("Overall result : "+verdict);
+
 	MwtsMonitor::instance()->WriteResults();
 	MWTS_LEAVE;
 }
+
+void MwtsResult::WriteXmlReport(QString sMeasureName, QString sValue,
+		QString sMeasureUnit, QString sFailLimit, QString sTarget)
+{
+	QFile report;
+	report.setFileName("/var/log/tests/"+g_pTest->CaseName()+".xmlreport");
+	report.open(QIODevice::WriteOnly);
+
+	QString sReport="<testreport>\n\t<measures>\n\t\t<measure name=\"" + sMeasureName +
+		"\" description=\"median\" value=\"" + sValue +
+		"\" unit=\"" + sMeasureUnit +
+		"\" fail=\"" + sFailLimit +
+		"\" target=\"" + sTarget + "\" />\n\t</measures>\n</testreport>\n";
+
+	report.write(sReport.toLatin1());
+	report.close();
+}
+
+void MwtsResult::WriteCsvReport(QString sMeasureName, QString sValue,
+		QString sMeasureUnit, QString sFailLimit, QString sTarget)
+{
+	QFile report;
+	report.setFileName("/var/log/tests/"+g_pTest->CaseName()+".csvreport");
+	report.open(QIODevice::WriteOnly);
+
+	QString sReport = sMeasureName + ";" + sValue + ";" + sMeasureUnit + ";";
+
+	if (m_lfTarget != 0.00 and m_lfFailLimit != 0.00)
+	{
+ 		sReport += sTarget + ";" + sFailLimit + ";";
+	}
+	sReport += "\n";
+	report.write(sReport.toLatin1());
+	report.close();
+}
+
 
 /**
   Writes next iteration mark

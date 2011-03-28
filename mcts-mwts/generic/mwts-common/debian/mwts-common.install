@@ -1,2 +1,4 @@
 usr/lib/*.so*
+usr/lib/min/*.so*
 usr/bin/*
+etc/min.d/min.conf

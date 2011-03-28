@@ -144,6 +144,8 @@ void MwtsMonitor::NextIteration()
 void MwtsMonitor::WriteResults()
 {
 	QString str;
+	if(m_listMemoryUsages.isEmpty())
+		return;
 	MwtsStatistics stat(m_listMemoryUsages);
 	str.sprintf("Memory usage: %.2lf+/-%.2lf MB",
 		    stat.Mean(),

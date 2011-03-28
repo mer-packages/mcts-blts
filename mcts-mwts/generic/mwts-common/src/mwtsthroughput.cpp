@@ -155,7 +155,8 @@ void MwtsIPerfThroughput::SetClientMeasurement(char* a_ServerIP, int transtime, 
 		testtime = TEST_TIME_INT;
 	}
 
-	qDebug() << "Using time " << testtime;
+    qDebug() << "Using IP " << a_ServerIP;
+    qDebug() << "Using time " << testtime;
 	qDebug() << "Using direction: " << direction;
 
 	// We are running client
@@ -163,7 +164,7 @@ void MwtsIPerfThroughput::SetClientMeasurement(char* a_ServerIP, int transtime, 
 
 	if(strncmp (direction,"bidirectional", 2) == 0)
 	{
-		// We are running client
+        // We are running bidirectional client
 		m_pIperfRole = IPERF_BICLIENT;
 		// Clear any existing params before appending new
 		m_params.clear();
@@ -176,7 +177,6 @@ void MwtsIPerfThroughput::SetClientMeasurement(char* a_ServerIP, int transtime, 
 		m_params.clear();
 		m_params << "-t" << QString::number( testtime ) <<  "-f" << "m" << "-c" << a_ServerIP << "-y" << "C";
 	}
-
 
 	MWTS_LEAVE;
 }
@@ -254,18 +254,23 @@ void MwtsIPerfThroughput::ParseOutput()
 					if(iBidirectionalStep == 2)
 					{
 						iBidirectionalStep = 1;
-
-						qDebug() << "speed up " << tempSpeed;
-						// save this value for the step two
 						downSpeed = speed / 1000.0 / 1000.0;
 
-						qDebug() << "speed down " << downSpeed;
+                        qDebug() << "speed up " << tempSpeed;
+                        qDebug() << "speed down " << downSpeed;
 
-						g_pResult->AddMeasure( "Throughput down:", downSpeed, "Mbits per second" );
-						//g_pResult->AddMeasure( "Throughput up:", downSpeed, "Mbits per second" );
-						g_pResult->StepPassed( "Throughput", true );
-
-						m_pReturnValue = true;
+						g_pResult->AddMeasure( "Download", downSpeed, "Mbits per second" );
+                        if( downSpeed == 0 )
+                        {
+                            g_pResult->Write( "Download speed is 0, iperf probably not running in the other end" );
+                            g_pResult->StepPassed( "Throughput", false );
+                            m_pReturnValue = false;
+                        }
+                        else
+                        {
+                            g_pResult->StepPassed( "Throughput", true );
+                            m_pReturnValue = true;
+                        }
 
 						break;
 					}
@@ -307,11 +312,21 @@ void MwtsIPerfThroughput::ParseOutput()
 				double speed = parts.at( 8 ).trimmed().toULong( &ok );
 				if ( ok == true )
 				{
-
 					double speedMbits = speed / 1000.0 / 1000.0;
-					g_pResult->AddMeasure( "Throughput", speedMbits, "Mbits per second" );
-					g_pResult->StepPassed( "Throughput", true );
-					m_pReturnValue = true;
+                    qDebug() << "speed up " << speedMbits;
+
+                    g_pResult->AddMeasure( "Upload", speedMbits, "Mbits per second" );
+                    if( speedMbits == 0 )
+                    {
+                        g_pResult->Write( "Upload speed is 0, iperf probably not running in the other end" );
+                        g_pResult->StepPassed( "Throughput", false );
+                        m_pReturnValue = false;
+                    }
+                    else
+                    {
+                        g_pResult->StepPassed( "Throughput", true );
+                        m_pReturnValue = true;
+                    }
 				}
 				else
 				{
