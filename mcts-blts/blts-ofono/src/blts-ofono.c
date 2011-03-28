@@ -50,6 +50,8 @@
 #include "call-meter-cases.h"
 #include "radio-settings.h"
 
+#include "data-context.h"
+
 static void my_ofono_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
@@ -1259,6 +1261,7 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Multiparty call test", blts_ofono_case_multiparty, 0 },
 	{ "oFono - Private call test", blts_ofono_case_private_chat, 0 },
 	{ "oFono - Change Radio Access Technology", my_ofono_chage_radio_technology, 0 },
+	{ "oFono - Data context test", ofono_test_data_context, 0 },
 
 
 	BLTS_CLI_END_OF_LIST

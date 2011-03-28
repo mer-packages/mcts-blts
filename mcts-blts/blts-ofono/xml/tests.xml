@@ -186,7 +186,14 @@
       <case name="oFono - Change Radio Access Technology"
         type="Functional">
         <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono_-_Change_Radio_Access_Technology.log -en "oFono - Change Radio Access Technology"</step>
+      </case>
+
+      <case name="oFono - Data context test"
+        type="Functional">
+        <step>/usr/bin/blts-ofono-tests -l /var/log/tests/oFono_-_Data_context_test.log -en "oFono - Data context test"</step>
       </case>	  
+      
+      	  
  
       <get>
         <file>/var/log/tests/oFono_-_Information_Query.log</file>
@@ -231,6 +238,7 @@
         <file>/var/log/tests/oFono_-_Private_call_test.log</file>
         <file>/var/log/tests/oFono_-_List_all_properties.log</file>
         <file>/var/log/tests/oFono_-_Change_Radio_Access_Technology.log</file>
+        <file>/var/log/tests/oFono_-_Data_context_test.log</file>        
         
       </get>
     </set>

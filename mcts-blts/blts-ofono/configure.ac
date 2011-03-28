@@ -19,7 +19,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-ofono-tests, 0.1.18, mikko.ojala@digia.com)
+AC_INIT(blts-ofono-tests, 0.1.19, mikko.ojala@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
