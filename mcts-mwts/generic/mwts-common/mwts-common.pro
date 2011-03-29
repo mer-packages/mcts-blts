@@ -1,4 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = src min
-# tools
+SUBDIRS = src min tools
