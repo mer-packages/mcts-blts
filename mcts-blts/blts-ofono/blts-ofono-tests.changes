@@ -1,5 +1,6 @@
-* Mon 28 Mar 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.19
+* Wed 30 Mar 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.19
 - Added data context test case
+- Added data context ping case
 
 * Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.18
 - [ Kari Laakso ] Improved all voice call, dual call and multiparty case run time instructions

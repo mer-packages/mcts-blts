@@ -54,6 +54,8 @@ typedef struct
 
 	char *RAT;			// radio access technology
 
+	char *ping_address;
+
 	/* Option flags */
 
 	unsigned fl_cleanup;  /* When set, skip call cleanups */

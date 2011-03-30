@@ -1,8 +1,9 @@
 blts-ofono-tests (0.1.19) unstable; urgency=low
 
-  * Added data context test case  
+  * Added data context test case
+  * Added data context ping case
   
- -- Mikko Ojala <mikko.ojala@digia.com>  Mon, 28 Mar 2011 14:57:07 +0300
+ -- Mikko Ojala <mikko.ojala@digia.com>  Wed, 30 Mar 2011 17:07:19 +0300
 
 blts-ofono-tests (0.1.18) unstable; urgency=low
 

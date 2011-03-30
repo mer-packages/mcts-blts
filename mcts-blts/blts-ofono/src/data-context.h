@@ -19,9 +19,12 @@
 #ifndef DATACONTEXT_H_
 #define DATACONTEXT_H_
 
+#include <blts_params.h>
 
 int ofono_test_data_context(void* user_ptr, int test_num);
+int ofono_test_data_context_download(void* user_ptr, int test_num);
 
 
+void *data_context_variant_set_arg_processor(struct boxed_value *, void *);
 
 #endif /* DATACONTEXT_H_ */

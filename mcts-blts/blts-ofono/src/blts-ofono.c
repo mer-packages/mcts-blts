@@ -522,7 +522,21 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	if (ret)
 		return NULL;
 
+	ret = blts_config_declare_variable_test("oFono - Data context test",
+		data_context_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "ping_address", "8.8.8.8",
+		CONFIG_PARAM_STRING, "context_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
 
+	ret = blts_config_declare_variable_test("oFono - Data context download test",
+		data_context_variant_set_arg_processor,
+		CONFIG_PARAM_STRING, "ping_address", "8.8.8.8",
+		CONFIG_PARAM_STRING, "context_timeout", "60000",
+		CONFIG_PARAM_NONE);
+	if (ret)
+		return NULL;
 
 	if(!my_data->barrings_pin)
 	{
@@ -584,6 +598,9 @@ static void my_ofono_teardown(void *user_ptr)
 
 		if (data->barrings_pin)
 			free(data->barrings_pin);
+
+		if (data->ping_address)
+			free(data->ping_address);
 
 		for(i=0; i<MAX_MODEMS; i++) {
 			if (data->modem[i])
@@ -1262,6 +1279,7 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Private call test", blts_ofono_case_private_chat, 0 },
 	{ "oFono - Change Radio Access Technology", my_ofono_chage_radio_technology, 0 },
 	{ "oFono - Data context test", ofono_test_data_context, 0 },
+	{ "oFono - Data context ping test", ofono_test_data_context_download, 0 },
 
 
 	BLTS_CLI_END_OF_LIST
