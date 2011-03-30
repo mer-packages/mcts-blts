@@ -1,3 +1,9 @@
+blts-bluetooth-tests (0.2.14) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Fix LE Scan case build
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 30 Mar 2011 16:00:25 +0300
+
 blts-bluetooth-tests (0.2.13) unstable; urgency=low
 
   * [ Jussi Saavalainen ] Fix LE build on mainline Bluez 4.89
