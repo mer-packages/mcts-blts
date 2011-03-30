@@ -48,6 +48,7 @@ make install INSTALL_ROOT=%{buildroot}
 %doc README COPYING DEPENDENCIES.png
 /usr/lib/libmwts-common.so.*
 /usr/bin/*.py
+/etc/min.d/min.conf
 
 %files devel
 %doc README COPYING DEPENDENCIES.png
