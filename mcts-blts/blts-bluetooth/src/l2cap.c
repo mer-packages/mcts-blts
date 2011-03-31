@@ -127,7 +127,7 @@ cleanup:
 /**
  * Handle an incoming connection on given socket. Timeout in ctx.
  */
-static int l2cap_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
+int l2cap_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 {
 	int ready, err, result;
 	fd_set read_fds;
