@@ -10,7 +10,7 @@
       Pass- /Fail Criteria: Access points are found if any, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Scan"'</step>
+        <step>min -c -t 'FUTE-WLAN-Scan'</step>
       </case>
       <case name="FUTE-WLAN-Connect"  timeout="10" description=
       "Purpose: Test connecting to wlan access point
@@ -19,7 +19,7 @@
       Pass- /Fail Criteria: connection to unsecured access point is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Connect"'</step>
+        <step>min -c -t 'FUTE-WLAN-Connect'</step>
       </case>
       <case name="FUTE-WLAN-Connect_WEP"  timeout="10" description=
       "Purpose: Test connecting to secured wlan access point
@@ -28,7 +28,7 @@
       Pass- /Fail Criteria: connection to access point is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Connect_WEP"'</step>
+        <step>min -c -t 'FUTE-WLAN-Connect_WEP'</step>
       </case>
       <case name="FUTE-WLAN-Connect_WPA2tkip"  timeout="10" description=
       "Purpose: Test connecting to secured wlan access point
@@ -37,7 +37,7 @@
       Pass- /Fail Criteria: connection to access point is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Connect_WPA2tkip"'</step>
+        <step>min -c -t 'FUTE-WLAN-Connect_WPA2tkip'</step>
       </case>
       <case name="FUTE-WLAN-Connect_WPA2aes"  timeout="10" description=
       "Purpose: Test connecting to secured wlan access point
@@ -46,7 +46,7 @@
       Pass- /Fail Criteria: connection to access point is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'FUTE-WLAN-Connect_WPA2aes"'</step>
+        <step>min -c -t 'FUTE-WLAN-Connect_WPA2aes'</step>
       </case>
       <case name="FUTE-WLAN-Connect_WPAtkip"  timeout="10" description=
       "Purpose: Test connecting to secured wlan access point
@@ -227,7 +227,7 @@
       Pass- /Fail Criteria: connection to psd network is made, file is downloaded test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-PSD-2g_Download_2.5M_file"'</step>
+        <step>min -c -t 'DATAFLOW-PSD-2g_Download_2.5M_file'</step>
       </case>
       <case name="DATAFLOW-PSD-2g_Upload_2.5M_file"  timeout="300" description=
       "Purpose: Test uploading 2.5M file via 2g psd network
@@ -236,7 +236,7 @@
       Pass- /Fail Criteria: connection to psd network is made, file is 2g_Upload_2.5M_file test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-PSD-2g_Upload_2.5M_file"'</step>
+        <step>min -c -t 'DATAFLOW-PSD-2g_Upload_2.5M_file'</step>
       </case>
       <case name="DATAFLOW-PSD-dual_Download_2.5M_file"  timeout="10" description=
       "Purpose: Test downloading 2.5M file via dual psd network
@@ -245,7 +245,7 @@
       Pass- /Fail Criteria: connection to psd network is made, file is downloaded test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-PSD-dual_Download_2.5M_file"'</step>
+        <step>min -c -t 'DATAFLOW-PSD-dual_Download_2.5M_file'</step>
       </case>
       <case name="DATAFLOW-PSD-dual_Upload_2.5M_file"  timeout="300" description=
       "Purpose: Test uploading 2.5M file via dual psd network
@@ -254,7 +254,7 @@
       Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-PSD-dual_Upload_2.5M_file"'</step>
+        <step>min -c -t 'DATAFLOW-PSD-dual_Upload_2.5M_file'</step>
       </case>
       <case name="DATAFLOW-PSD-3g_Download_10M_file"  timeout="300" description=
       "Purpose: Test downloading 2.5M file via 3g psd network
@@ -263,7 +263,7 @@
       Pass- /Fail Criteria: connection to psd network is made, file is downloaded test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-PSD-3g_Download_10M_file"'</step>
+        <step>min -c -t 'DATAFLOW-PSD-3g_Download_10M_file'</step>
       </case>
       <case name="DATAFLOW-PSD-3g_Upload_10M_file"  timeout="300" description=
       "Purpose: Test uploading 2.5M file via 3g psd network
@@ -272,7 +272,7 @@
       Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-PSD-3g_Upload_10M_file"'</step>
+        <step>min -c -t 'DATAFLOW-PSD-3g_Upload_10M_file'</step>
       </case>
    </set>
    <set name="DATAFLOW-WLAN" description="Networking functionality" feature="WLAN" type="Functional">
@@ -283,7 +283,7 @@
       Pass- /Fail Criteria: scan is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Scan"'</step>
+        <step>min -c -t 'DATAFLOW-WLAN-Scan'</step>
       </case>
       <case name="DATAFLOW-WLAN-Connect"  timeout="10" description=
       "Purpose: Test connecting to a wlan ap
@@ -292,7 +292,7 @@
       Pass- /Fail Criteria: connection to a ap is created, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Connect"'</step>
+        <step>min -c -t 'DATAFLOW-WLAN-Connect'</step>
       </case>
       <case name="DATAFLOW-WLAN-Download_100k_file"  timeout="300" description=
       "Purpose: Test downloading file via wlan and ftp
@@ -301,7 +301,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Download_100k_file"'</step>
+        <step>min -c -t 'DATAFLOW-WLAN-Download_100k_file'</step>
       </case>
       <case name="DATAFLOW-WLAN-Upload_100k_file"  timeout="300" description=
       "Purpose: Test uploading file via wlan to ftp
@@ -310,7 +310,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'DATAFLOW-WLAN-Upload_100k_file"'</step>
+        <step>min -c -t 'DATAFLOW-WLAN-Upload_100k_file'</step>
       </case>
    </set>
    
@@ -358,7 +358,7 @@
       Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-3g_Download_file_1M-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-3g_Download_file_1M-ITER'</step>
       </case>
       <case name="NFT-PSD-3g_Upload_file_1M-ITER" timeout="300" description=
       "Purpose: Test uploading file via 3g psd network
@@ -367,7 +367,7 @@
         Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-PSD-3g_Upload_file_1M-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-3g_Upload_file_1M-ITER'</step>
       </case>
       <case name="NFT-PSD-Connect_download_file_large_disconnect_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 3g network
@@ -376,7 +376,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_download_file_large_disconnect_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_download_file_large_disconnect_3g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Connect_upload_file_large_disconnect_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 3g network
@@ -385,7 +385,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_upload_file_large_disconnect_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_upload_file_large_disconnect_3g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Connect_download_file_small_disconnect_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 3g network
@@ -394,7 +394,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_download_file_large_disconnect_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_download_file_large_disconnect_3g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Connect_upload_file_small_disconnect_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 3g network
@@ -403,7 +403,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_upload_file_large_disconnect_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_upload_file_large_disconnect_3g-ITER'</step>
       </case>     
       <case name="NFT-PSD-Connect_upload_file_large_disconnect_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 2g network
@@ -412,7 +412,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_upload_file_large_disconnect_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_upload_file_large_disconnect_2g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Connect_download_file_large_disconnect_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 2g network
@@ -421,7 +421,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_download_file_large_disconnect_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_download_file_large_disconnect_2g-ITER'</step>
       </case>  
       <case name="NFT-PSD-Connect_upload_file_small_disconnect_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 2g network
@@ -430,7 +430,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_upload_file_small_disconnect_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_upload_file_small_disconnect_2g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Connect_download_file_small_disconnect_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 2g network
@@ -439,7 +439,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Connect_download_file_small_disconnect_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Connect_download_file_small_disconnect_2g-ITER'</step>
       </case>  
        <case name="NFT-PSD-Download_file_large_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 3g network
@@ -448,7 +448,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Download_file_large_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Download_file_large_3g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Upload_file_large_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 3g network
@@ -457,7 +457,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Upload_file_large_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Upload_file_large_3g-ITER'</step>
       </case>      
         <case name="NFT-PSD-Download_file_small_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 3g network
@@ -466,7 +466,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Download_file_small_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Download_file_small_3g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Upload_file_small_3g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 3g network
@@ -475,7 +475,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Upload_file_small_3g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Upload_file_small_3g-ITER'</step>
       </case>    
         <case name="NFT-PSD-Download_file_small_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 2g network
@@ -484,7 +484,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Download_file_small_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Download_file_small_2g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Upload_file_small_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 2g network
@@ -493,7 +493,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Upload_file_small_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Upload_file_small_2g-ITER'</step>
       </case>    
       <case name="NFT-PSD-Download_file_large_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file download trough 2g network
@@ -502,7 +502,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is downloaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Download_file_large_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Download_file_large_2g-ITER'</step>
       </case>       
       <case name="NFT-PSD-Upload_file_large_2g-ITER"  timeout="10" description=
       "Purpose: Test file iterative file upload trough 2g network
@@ -511,7 +511,7 @@
         Pass- /Fail Criteria: connection to psd network is made, file is uploaded, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-Upload_file_large_2g-ITER"'</step>
+        <step>min -c -t 'NFT-PSD-Upload_file_large_2g-ITER'</step>
       </case>    
   </set>
   
@@ -523,7 +523,7 @@
       Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, iperf client executed, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-PSD-3g_Upload_throughput"'</step>
+        <step>min -c -t 'NFT-PSD-3g_Upload_throughput'</step>
       </case>
       <case name="NFT-PSD-3g_Download_throughput-THRO"  timeout="10" description=
       "Purpose: Test download throughput via 3g psd network
@@ -532,7 +532,7 @@
         Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, iperf server measurements done, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-3g_Download_throughput-THRO"'</step>
+        <step>min -c -t 'NFT-PSD-3g_Download_throughput-THRO'</step>
       </case>
 
        <case name="NFT-PSD-2g_Upload_throughput"  timeout="10" description=
@@ -542,7 +542,7 @@
       Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 2g, iperf client executed, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-2g_Upload_throughput"'</step>
+        <step>min -c -t 'NFT-PSD-2g_Upload_throughput'</step>
       </case>
       <case name="NFT-PSD-2g_Download_throughput-THRO"  timeout="10" description=
       "Purpose: Test download throughput via 2g psd network
@@ -551,7 +551,7 @@
         Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 2g, iperf server measurements done, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-2g_Download_throughput-THRO"'</step>
+        <step>min -c -t 'NFT-PSD-2g_Download_throughput-THRO'</step>
       </case>
       
        <case name="NFT-PSD-dual_Upload_throughput"  timeout="10" description=
@@ -561,7 +561,7 @@
       Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to dual, iperf client executed, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-dual_Upload_throughput"'</step>
+        <step>min -c -t 'NFT-PSD-dual_Upload_throughput'</step>
       </case>
       <case name="NFT-PSD-dual_Download_throughput-THRO"  timeout="10" description=
       "Purpose: Test download throughput via dual psd network
@@ -570,7 +570,7 @@
         Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to dual, iperf server measurements done, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-dual_Download_throughput-THRO"'</step>
+        <step>min -c -t 'NFT-PSD-dual_Download_throughput-THRO'</step>
       </case> 
    </set>
 
@@ -582,7 +582,7 @@
       Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, iperf client executed 2 hours, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-3g_Upload-LOLA"'</step>
+        <step>min -c -t 'NFT-PSD-3g_Upload-LOLA'</step>
       </case>
       <case name="NFT-PSD-3g_Download-LOLA"  timeout="10" description=
       "Purpose: Test 2 hour download throughput via 3g psd network
@@ -591,7 +591,7 @@
         Pass- /Fail Criteria: connection to psd network is made, RAT mode is changed to dual, iperf server measurements for 2 hours are made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-PSD-3g_Download-LOLA"'</step>
+        <step>min -c -t 'NFT-PSD-3g_Download-LOLA'</step>
       </case>      
    </set>
    
@@ -603,7 +603,7 @@
       Pass- /Fail Criteria: scan is made, test does not crash 
       References: 
       Required test data: None.">
-        <step>min -c -t 'NFT-WLAN-Scan_ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Scan_ITER'</step>
       </case>
       <case name="NFT-WLAN-Download_file_10M_ITER" timeout="300" description=
       "Purpose: Test download 10M file 120 iterations
@@ -612,7 +612,7 @@
         Pass- /Fail Criteria: connection to ap made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_10M_ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_10M_ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_10M_ITER" timeout="300" description=
       "Purpose: Test upload 10M file 120 iterations
@@ -621,7 +621,7 @@
         Pass- /Fail Criteria: connection to ap made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_10M_ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_10M_ITER'</step>
       </case>
       <case name="NFT-WLAN-Download_file_small-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via unsecured connection
@@ -630,7 +630,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_small-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_small-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_small-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via unsecured connection
@@ -639,7 +639,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_small-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_small-ITER'</step>
       </case>
        <case name="NFT-WLAN-Download_file_small_WEP-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via wep connection
@@ -648,7 +648,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_small_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_small_WEP-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_small_WEP-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via WPA tkip  connection
@@ -657,7 +657,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_small_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_small_WEP-ITER'</step>
       </case>
        <case name="NFT-WLAN-Download_file_small_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via wep connection
@@ -666,7 +666,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_small_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_small_WPAtkip-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_small_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via WPA tkip connection
@@ -675,7 +675,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_small_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_small_WPAtkip-ITER'</step>
       </case>
        <case name="NFT-WLAN-Download_file_small_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -684,7 +684,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_small_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_small_WPA2aes-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_small_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -693,7 +693,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_small_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_small_WPA2aes-ITER'</step>
       </case>
       <case name="NFT-WLAN-Download_file_large-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via unsecured connection
@@ -702,7 +702,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_large-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_large-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_large-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via unsecured connection
@@ -711,7 +711,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_large-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_large-ITER'</step>
       </case> 
       <case name="NFT-WLAN-Download_file_large_WEP-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via wep connection
@@ -720,7 +720,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_large_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_large_WEP-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_large_WEP-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via wep connection
@@ -729,7 +729,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_large_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_large_WEP-ITER'</step>
       </case>     
       <case name="NFT-WLAN-Download_file_large_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -738,7 +738,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_large_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_large_WPAtkip-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_large_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -747,7 +747,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_large_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_large_WPAtkip-ITER'</step>
       </case>     
         <case name="NFT-WLAN-Download_file_large_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -756,7 +756,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_file_large_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_file_large_WPA2aes-ITER'</step>
       </case>
       <case name="NFT-WLAN-Upload_file_large_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -765,7 +765,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_file_large_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_file_large_WPA2aes-ITER'</step>
       </case>  
         <case name="NFT-WLAN-Connect_download_file_small_disconnect-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via unsecured connection
@@ -774,7 +774,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_small_disconnect-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via unsecured connection
@@ -783,7 +783,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_small_disconnect_WEP-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -792,7 +792,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect_WEP-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_small_disconnect_WEP-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -801,7 +801,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect_WEP-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_small_disconnect_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -810,7 +810,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect_WPAtkip-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_small_disconnect_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -819,7 +819,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect_WPAtkip-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_small_disconnect_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -828,7 +828,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_small_disconnect_WPA2aes-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_small_disconnect_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -837,7 +837,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_small_disconnect_WPA2aes-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_large_disconnect-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via unsecured connection
@@ -846,7 +846,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_large_disconnect-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via unsecured connection
@@ -855,7 +855,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_large_disconnect_WEP-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -864,7 +864,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect_WEP-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_large_disconnect_WEP-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -873,7 +873,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WEP-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WEP-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_large_disconnect_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -882,7 +882,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect_WPAtkip-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_large_disconnect_WPAtkip-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -891,7 +891,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WPAtkip-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WPAtkip-ITER'</step>
       </case> 
         <case name="NFT-WLAN-Connect_download_file_large_disconnect_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test download file from ftp server via secured connection
@@ -900,7 +900,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is downloaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_download_file_large_disconnect_WPA2aes-ITER'</step>
       </case>
       <case name="NFT-WLAN-Connect_upload_file_large_disconnect_WPA2aes-ITER"  timeout="10" description=
       "Purpose: Test upload file from ftp server via secured connection
@@ -909,7 +909,7 @@
       Pass- /Fail Criteria: connection to ap is made, file is uploaded, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WPA2aes-ITER"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_upload_file_large_disconnect_WPA2aes-ITER'</step>
       </case> 
       <case name="NFT-WLAN-Connect_idle_disconnect-ITER"  timeout="100" description=
       "Purpose: Test connecting to access point and then idle given time
@@ -930,7 +930,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_throughput"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_throughput'</step>
       </case>
        <case name="NFT-WLAN-Download_throughput"  timeout="10" description=
       "Purpose: Test unsecured connection download throughput
@@ -939,7 +939,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_throughput"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_throughput'</step>
       </case>
        <case name="NFT-WLAN-Upload_throughput_WEP"  timeout="10" description=
       "Purpose: Test WEP connection upload throughput
@@ -948,7 +948,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_throughput_WEP"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_throughput_WEP'</step>
       </case>
        <case name="NFT-WLAN-Download_throughput_WEP"  timeout="10" description=
       "Purpose: Test WEP connection download throughput
@@ -957,7 +957,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_throughput_WEP"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_throughput_WEP'</step>
       </case>
        <case name="NFT-WLAN-Upload_throughput_WPAtkip"  timeout="10" description=
       "Purpose: Test WPA tkip connection upload throughput
@@ -966,7 +966,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPAtkip"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPAtkip'</step>
       </case>
        <case name="NFT-WLAN-Download_throughput_WPAtkip"  timeout="10" description=
       "Purpose: Test WPA tkip connection download throughput
@@ -975,7 +975,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_throughput_WPAtkip"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_throughput_WPAtkip'</step>
       </case>
        <case name="NFT-WLAN-Upload_throughput_WPAaes"  timeout="10" description=
       "Purpose: Test WPA aes connection upload throughput
@@ -984,7 +984,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPAaes"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPAaes'</step>
       </case>
        <case name="NFT-WLAN-Download_throughput_WPAaes"  timeout="10" description=
       "Purpose: Test WPA aes connection download throughput
@@ -993,7 +993,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_throughput_WPAaes"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_throughput_WPAaes'</step>
       </case>
        <case name="NFT-WLAN-Upload_throughput_WPA2aes"  timeout="10" description=
       "Purpose: Test WPA2 aes connection upload throughput
@@ -1002,7 +1002,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPA2aes"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPA2aes'</step>
       </case>
        <case name="NFT-WLAN-Download_throughput_WPA2aes"  timeout="10" description=
       "Purpose: Test WPA2 aes connection download throughput
@@ -1011,7 +1011,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_throughput_WPA2aes"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_throughput_WPA2aes'</step>
       </case>
        <case name="NFT-WLAN-Upload_throughput_WPA2tkip"  timeout="10" description=
       "Purpose: Test WPA2 tkip connection upload throughput
@@ -1020,7 +1020,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPA2tkip"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_throughput_WPA2tkip'</step>
       </case>
        <case name="NFT-WLAN-Download_throughput_WPA2tkip"  timeout="10" description=
       "Purpose: Test WPA2 tkip connection download throughput
@@ -1029,7 +1029,7 @@
         Pass- /Fail Criteria: connection to ap made, measurements are done, test does not crash 
       References: 
       Required test data: None." >
-        <step>min -c -t 'NFT-WLAN-Download_throughput_WPA2tkip"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_throughput_WPA2tkip'</step>
       </case>
     </set>
 
@@ -1113,7 +1113,7 @@
         Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
         References: 
         Required test data: None.">
-        <step>min -c -t 'NFT-WLAN-Connect_WPA2-AES_saved-LATE"'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_WPA2-AES_saved-LATE'</step>
       </case>
       <case name="NFT-WLAN-Connect_WPA2-AES_unsaved-LATE"  timeout="10" description=
         "Purpose: tests connection creation latency with unsaved wpa2 aes secured ap
@@ -1152,7 +1152,7 @@
         Pass- /Fail Criteria: connection to wlan ap is made, iperf client executed 2 hours, test does not crash 
         References: 
         Required test data: None.">
-        <step>min -c -t 'NFT-WLAN-Upload_troughput-LOLA"'</step>
+        <step>min -c -t 'NFT-WLAN-Upload_troughput-LOLA'</step>
       </case>
       <case name="NFT-WLAN-Download_troughput-LOLA"  timeout="10" description=
         "Purpose: Test 2 hour download throughput via wlan connection
@@ -1161,7 +1161,7 @@
         Pass- /Fail Criteria: connection to wlan ap ismade, iperf server measurements for 2 hours are made, test does not crash 
         References: 
         Required test data: None.">
-        <step>min -c -t 'NFT-WLAN-Download_troughput-LOLA"'</step>
+        <step>min -c -t 'NFT-WLAN-Download_troughput-LOLA'</step>
       </case>   
     </set>
   </suite>
