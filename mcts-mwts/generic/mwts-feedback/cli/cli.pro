@@ -8,12 +8,8 @@ CONFIG += build_all
 CONFIG += lib_bundle
 CONFIG += warn_on
 CONFIG += debug
-#CONFIG += release
 CONFIG += mobility
 MOBILITY = feedback
-
-PKGCONFIG += QtFeedback
-
 
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp

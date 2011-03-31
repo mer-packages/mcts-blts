@@ -25,10 +25,22 @@
 #
 
 # Set environment variable here to specify the BT autotest server's MAC address
+SERV_BD_ADDR="00:0A:94:03:EB:EB"
+# Server type, we support "computer", "headset", "phone" and "keyboard or mouse" here. 
+SERV_BD_TYPE="computer"  
+
 
 DATA_DIR="./data"
 FTP_CLIENT="${DATA_DIR}/ftp-client"
 PBAP_CLIENT="${DATA_DIR}/pbap-client"
-SERV_BD_ADDR="00:0A:94:03:EC:CD"
+TEST_ADAPTER="${DATA_DIR}/test-adapter"
+TEST_DEVICE="${DATA_DIR}/test-device"
+
 ROOT_PASS="123456"
+TEST_NAME_STRING="default"
+TEST_TEXT_FILE="${DATA_DIR}/text_file_512k"
 export PATH=$PATH:/sbin/:/usr/sbin/:./data/
+
+# init hci status on client
+hciconfig hci0 piscan
+

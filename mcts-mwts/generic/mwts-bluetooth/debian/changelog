@@ -1,3 +1,7 @@
+mwts-bluetooth-tests (0.1.2) unstable; urgency=low
+  * Fixed error handling in timeout situations
+ -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Mon, 14 Feb 2011 12:09:53 +0200
+
 mwts-bluetooth-tests (0.1.1) unstable; urgency=low
   * Updated case names to follow guidelines
   * Fixed discrepancies in case naming

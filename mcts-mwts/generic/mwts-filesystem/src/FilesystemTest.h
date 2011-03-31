@@ -48,7 +48,7 @@ class FilesystemTest : public MwtsTest
 {
 	Q_OBJECT
 public:
-	FilesystemTest(QObject* pParent=0, QString platform="");
+	FilesystemTest(QObject* pParent=0);
 	virtual ~FilesystemTest();
 
 	void OnInitialize();

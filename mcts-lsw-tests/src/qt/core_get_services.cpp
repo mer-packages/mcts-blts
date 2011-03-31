@@ -16,6 +16,7 @@
  *  
  *  Created on: 2010-9-24
  *      Author: Tang, Shao-Feng (shaofeng.tang@intel.com)
+ *      Author: Huang, Rui (rui.r.huang@intel.com)
  *   
  */
 
@@ -32,7 +33,7 @@ int main(int argc, char *argv[]) {
 	SwClient* client = new SwClient();
 	QStringList services = client->getServices();
 
-	if (NULL != services && services.size() > 0) {
+	if (NULL != &services && services.size() > 0) {
 		for (int i = 0; i < services.size(); i++) {
 			qDebug() << services.at(i);
 		}

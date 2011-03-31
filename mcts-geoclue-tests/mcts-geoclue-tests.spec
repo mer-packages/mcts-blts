@@ -1,6 +1,6 @@
 %define name mcts-geoclue-tests
 %define version 1.0.0
-%define release 2
+%define release 3
 %define _unpackaged_files_terminate_build 0 
 
 

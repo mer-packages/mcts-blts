@@ -42,7 +42,7 @@ class MWTSCOMMON_EXPORT MwtsTest : public QObject
 	Q_OBJECT
 
 public:
-	MwtsTest(QObject* pParent=0, QString platform="");
+	MwtsTest(QObject* pParent=0);
 	virtual ~MwtsTest();
 
 	/** Returns name of the test class*/
@@ -52,11 +52,6 @@ public:
 	for example in cases that you don't use MIN test framework */
 	virtual QString CaseName();
 	void SetCaseName(QString sName);
-
-	/** Returns name of currently running platform.
-        */
-	virtual QString Platform();
-	void SetPlatform(QString sName);
 
 	void SetFailTimeout(int milliseconds);
 	void SetTestTimeout(int milliseconds);
@@ -88,9 +83,6 @@ protected:
 	QTimer* m_pFailTimeoutTimer;
 	QTimer* m_pTestTimeoutTimer;
 	QString m_sCaseName;
-	QString m_sPlatform;
-
-
 };
 
 
