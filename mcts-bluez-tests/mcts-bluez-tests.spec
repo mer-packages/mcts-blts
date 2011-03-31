@@ -2,7 +2,7 @@
 
 Summary: Template meego core test suite
 Name: mcts-bluez-tests
-Version: 1.0.0
+Version: 2.0.0
 Release: 2
 License: GPLv2
 Group: System/Libraries
