@@ -1,3 +1,5 @@
+/* -*- mode: C; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+
 /* bt_fute.c -- Bluez functional tests
 
    Copyright (C) 2000-2010, Nokia Corporation.
@@ -49,6 +51,9 @@ enum {
 	CORE_BT_READ_CONNECTED_LINK_INFO_REMOTE,
 	CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_MASTER,
 	CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_SLAVE,
+	CORE_BT_SIMPLE_PAIRING_AS_MASTER,
+	CORE_BT_RECEIVE_SECURE_L2CAP,
+	CORE_BT_SIMPLE_PAIRING_OOB_MASTER,
 	CORE_BT_LE_SCAN,
 	CORE_BT_LE_ADVERTISE,
 	CORE_BT_LE_CONNECT
@@ -56,7 +61,7 @@ enum {
 
 struct bt_data {
 	char *mac_address;
-};
+	int dev_id;
 
 int fute_bt_drivers_depcheck();
 int fute_bt_scan();
@@ -78,6 +83,9 @@ int fute_bt_hci_ctrl_info_remote(char *remote_mac);
 int fute_bt_hci_link_info_local();
 int fute_bt_hci_link_info_remote(char *remote_mac);
 int fute_bt_hci_ll_pairing(char* remote_mac, int master);
+int fute_bt_hci_simple_pairing (bt_data *user_data, int master);
+int fute_bt_hci_secure_l2cap_server (bt_data *user_data);
+int fute_bt_hci_simple_pairing_oob (bt_data *user_data, int master);
 
 int fute_bt_le_scan();
 int fute_bt_le_advertise();

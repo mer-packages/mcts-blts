@@ -1,3 +1,5 @@
+/* -*- mode: C; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+
 /* bt_fute_cli.c -- Bluez functional tests
 
    Copyright (C) 2000-2010, Nokia Corporation.
@@ -35,15 +37,17 @@
 static void bt_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
-		"[-m]",
-		"  -m: remote/server MAC address (format: \"00:00:00:00:00\")\n");
+		"[-m] [-d]",
+		"  -m: remote/server MAC address (format: \"00:00:00:00:00\")\n"
+		"  -d: local adapter number (0-16)\n");
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */
-static const char short_opts[] = "m:";
+static const char short_opts[] = "m:d:";
 static const struct option long_opts[] =
 {
-	{"mac-address", no_argument, NULL, 'm'},
+	{"mac-address", 1, 0, 'm'},
+	{"hci-device", 1, 0, 'd'},
 	{0,0,0,0}
 };
 
@@ -56,6 +60,8 @@ static void* bt_argument_processor(int argc, char **argv)
 	struct bt_data *my_data = malloc(sizeof(*my_data));
 	memset(my_data, 0, sizeof(*my_data));
 
+	my_data->dev_id = -1;
+
 	while ((c = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1)
 	{
 		switch (c)
@@ -64,6 +70,9 @@ static void* bt_argument_processor(int argc, char **argv)
 			if (my_data->mac_address)
 				free(my_data->mac_address);
 			my_data->mac_address = strdup(optarg);
+			break;
+		case 'd':
+			my_data->dev_id = atol(optarg);
 			break;
 		default:
 			free(my_data);
@@ -77,12 +86,22 @@ static void* bt_argument_processor(int argc, char **argv)
 		if (ret)
 		{
 			BLTS_WARNING("Cannot read mac_address value from config file\n");
-			BLTS_WARNING("Defaulting to 00:00:00:00:00:00\n");
 			my_data->mac_address = strdup("00:00:00:00:00:00");
 		}
 	}
 
+	if (my_data->dev_id == -1)
+	{
+		ret	= blts_config_get_value_int("hci_device", &my_data->dev_id);
+		if (ret)
+		{
+			BLTS_WARNING("Cannot read HCI device id value from config file\n");
+			my_data->dev_id = 0;
+		}
+	}
+
 	BLTS_DEBUG("MAC address to use: %s\n", my_data->mac_address);
+	BLTS_DEBUG("HCI device to use: %d\n", my_data->dev_id);
 
 	return my_data;
 }
@@ -184,6 +203,15 @@ static int bt_run_case(void* user_ptr, int test_num)
 	case CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_SLAVE:
 		ret = fute_bt_hci_ll_pairing("00:00:00:00:00:00", 0);
 		break;
+        case CORE_BT_SIMPLE_PAIRING_AS_MASTER:
+		ret = fute_bt_hci_simple_pairing (data, 1);
+		break;
+	case CORE_BT_RECEIVE_SECURE_L2CAP:
+		ret = fute_bt_hci_secure_l2cap_server (data);
+		break;
+	case CORE_BT_SIMPLE_PAIRING_OOB_MASTER:
+		ret = fute_bt_hci_simple_pairing_oob (data, 1);
+		break;
 
 #ifdef HAVE_BTLE_API
 	case CORE_BT_LE_SCAN:
@@ -240,6 +268,9 @@ static blts_cli_testcase bt_cases[] =
 	{ "Core-Bluetooth Read connected link information remote", bt_run_case, 35000 },
 	{ "Core-Bluetooth authentication with pairing as master", bt_run_case, 10000 },
 	{ "Core-Bluetooth authentication with pairing as slave", bt_run_case, 35000 },
+	{ "Core-Bluetooth simple pairing as master", bt_run_case, 60000 },
+	{ "Core-Bluetooth receive secure L2CAP connection", bt_run_case, 60000 },
+	{ "Core-Bluetooth simple pairing as master using OOB", bt_run_case, 60000 },
 	{ "Core-Bluetooth LE scan", bt_run_case, 60000 },
 	{ "Core-Bluetooth LE advertise", bt_run_case, 60000 },
 	{ "Core-Bluetooth LE connect", bt_run_case, 60000 },

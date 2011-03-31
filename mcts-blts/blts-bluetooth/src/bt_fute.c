@@ -1,3 +1,5 @@
+/* -*- mode: C; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+
 /* bt_fute.c -- Bluez functional tests
 
    Copyright (C) 2000-2010, Nokia Corporation.
@@ -40,6 +42,7 @@
 #include "rfcomm.h"
 #include "info.h"
 #include "pairing.h"
+#include "simple_pairing.h"
 
 /** rules file for depcheck() */
 #define DEPCHECK_RULES "/usr/lib/tests/blts-bluetooth-tests/blts-bluetooth-req_files.cfg"
@@ -466,6 +469,51 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master)
 
 }
 
+int fute_bt_hci_simple_pairing (bt_data *user_data, int master)
+{
+	int retval = -1;
+
+	if (!user_data)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	retval = blts_simple_pairing_run (user_data, master);
+
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
+
+	return retval;
+}
+
+int fute_bt_hci_secure_l2cap_server (bt_data *user_data)
+{
+	int retval = -1;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	retval = blts_simple_pairing_l2cap_server (user_data);
+
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
+
+	return retval;
+}
+
+int fute_bt_hci_simple_pairing_oob (bt_data *user_data, int master)
+{
+	int retval = -1;
+
+	if (!user_data)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	retval = blts_simple_pairing_oob_run (user_data, master);
+
+	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
+
+	return retval;
+}
+
 int fute_bt_le_scan()
 {
 	int retval = -1;
@@ -527,7 +575,6 @@ int fute_bt_le_connect_disconnect(char *remote_mac)
 
 	return retval;
 }
-
 
 int fute_bt_le_tx_data(void *user_ptr, __attribute__((unused)) int test_num)
 {
