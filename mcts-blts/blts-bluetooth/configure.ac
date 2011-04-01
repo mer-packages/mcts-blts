@@ -65,6 +65,19 @@ AC_CHECK_FUNCS([clock_gettime memset strdup strerror strtol])
 # Check for BTLE API support in Bluez
 AC_SEARCH_LIBS([hci_le_create_conn], [bluetooth], [AC_DEFINE([HAVE_BTLE_API], [1], [Defined if BTLE API available])],[],[])
 
+# Check if LE scan functions take a timeout parameter or not (post-4.89 Bluez
+# feature). Note that this will also pass with an implicit declaration warning
+# if LE is not available.
+AC_LANG_ASSERT([C])
+AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM(
+		[
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/hci.h>
+#include <bluetooth/hci_lib.h>
+		],
+		[hci_le_set_scan_enable(0,0,0,0);])],
+	[AC_DEFINE([LE_SCAN_HAS_TO], [1], [Defined if BTLE scan takes a timeout parameter])], [])
 
 AC_SUBST(configdir)
 
