@@ -1638,7 +1638,11 @@ int do_le_scan(struct bt_ctx *ctx)
 		goto cleanup;
 	}
 
+#ifdef LE_SCAN_HAS_TO
 	err = hci_le_set_scan_enable(fd, 0x00, 0x00, 1000);
+#else
+	err = hci_le_set_scan_enable(fd, 0x00, 0x00);
+#endif
 	if (err < 0) {
 		BLTS_LOGGED_PERROR("Disable scan failed");
 		goto cleanup;
