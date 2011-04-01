@@ -1606,14 +1606,25 @@ int do_le_scan(struct bt_ctx *ctx)
 		return -1;
 	}
 
+#ifdef LE_SCAN_HAS_TO
 	err = hci_le_set_scan_parameters(fd, 0x01, htobs(0x0010),
 		 htobs(0x0010), 0x00, 0x00,  1000);
+#else
+	err = hci_le_set_scan_parameters(fd, 0x01, htobs(0x0010),
+		 htobs(0x0010), 0x00, 0x00);
+#endif
+
 	if (err < 0) {
 		BLTS_LOGGED_PERROR("Set scan parameters failed");
 		goto cleanup;
 	}
 
+#ifdef LE_SCAN_HAS_TO
 	err = hci_le_set_scan_enable(fd, 0x01, 0x00, 1000);
+#else
+	err = hci_le_set_scan_enable(fd, 0x01, 0x00);
+#endif
+
 	if (err < 0) {
 		BLTS_LOGGED_PERROR("Enable scan failed");
 		goto cleanup;
