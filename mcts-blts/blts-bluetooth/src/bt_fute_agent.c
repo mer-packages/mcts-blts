@@ -18,6 +18,10 @@
 
 */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <poll.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -472,6 +476,7 @@ static const char *TESTING_CMD_OCF[] = {
 	NULL, // 0x0034
 };
 
+#ifdef HAVE_BTLE_API
 static const char *LE_CTL_OCF[] = {
 	NULL, // 0x0000
 	NULL, // 0x0001
@@ -527,6 +532,7 @@ static const char *LE_CTL_OCF[] = {
 	NULL, // 0x0033
 	NULL, // 0x0034
 };
+#endif
 
 static const char *FUTE_HCI_ERRORS[] = {
 	"Success", // 0x00
@@ -845,7 +851,9 @@ bt_fute_agent_opcode_to_ogf_str (uint16_t opcode)
 	case OGF_INFO_PARAM:   return "Info param";
 	case OGF_STATUS_PARAM: return "Status param";
 	case OGF_TESTING_CMD:  return "Testing command";
+#ifdef HAVE_BTLE_API
 	case OGF_LE_CTL:       return "Low energy control";
+#endif
 	case OGF_VENDOR_CMD:   return "Vendor specific";
 	default: break;
 	}
@@ -868,7 +876,9 @@ bt_fute_agent_opcode_to_ocf_str (uint16_t opcode)
 	case OGF_INFO_PARAM:   return INFO_PARAM_OCF[ocf];
 	case OGF_STATUS_PARAM: return STATUS_PARAM_OCF[ocf];
 	case OGF_TESTING_CMD:  return TESTING_CMD_OCF[ocf];
+#ifdef HAVE_BTLE_API
 	case OGF_LE_CTL:       return LE_CTL_OCF[ocf];
+#endif
 	case OGF_VENDOR_CMD:   return "Vendor specific";
 	default: break;
 	}
@@ -1645,7 +1655,9 @@ bt_fute_agent_handle_hci_event (BtFuteAgent *agent, bt_fute_hci_packet *data)
 	evt_user_passkey_notify *passkey_notify;
 	evt_keypress_notify *keypress_notify;
 	evt_remote_host_features_notify *remote_feats_notify;
+#ifdef HAVE_BTLE_API
 	evt_le_meta_event *le_meta;
+#endif
 	evt_stack_internal *bluez_internal;
 
 	uint8_t *ev_status;
@@ -2547,6 +2559,7 @@ bt_fute_agent_handle_hci_event (BtFuteAgent *agent, bt_fute_hci_packet *data)
 		remote_feats_notify = FUTE_EVENT_PAYLOAD (data->payload);
 		break;
 
+#ifdef HAVE_BTLE_API
 	case EVT_LE_META_EVENT:
 		if (evt->plen != EVT_LE_META_EVENT_SIZE) {
 			BLTS_ERROR ("Error: Payload size doesn't "
@@ -2556,6 +2569,7 @@ bt_fute_agent_handle_hci_event (BtFuteAgent *agent, bt_fute_hci_packet *data)
 		}
 		le_meta = FUTE_EVENT_PAYLOAD (data->payload);
 		break;
+#endif
 
 	case EVT_TESTING:
 		break;
