@@ -310,8 +310,6 @@ General cases:
 
  * oFono - Register to network
 
- * oFono - De-register from network
-
  * oFono - Enable modems
          Enables (powers on) all modems in device.
 

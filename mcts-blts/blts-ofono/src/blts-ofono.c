@@ -888,45 +888,6 @@ static int my_ofono_case_regnetwork(void* user_ptr, __attribute__((unused))int t
 }
 
 
-/** De-register DUT from network test case */
-static int my_ofono_case_deregnetwork(void* user_ptr, __attribute__((unused))int test_num)
-{
-	my_ofono_data* data = (my_ofono_data*)user_ptr;
-	GError *error = NULL;
-	DBusGProxy *proxy=NULL;
-	int i;
-	int retval = 0;
-	if(my_ofono_get_modem(data))
-		return -1;
-
-	for(i=0; i<data->number_modems; i++)
-	{
-		// testing network interface
-
-		proxy = dbus_g_proxy_new_for_name (data->connection,
-											OFONO_BUS,
-											data->modem[i],
-											OFONO_NW_INTERFACE);
-		if(!proxy)
-		{
-			BLTS_DEBUG ("Failed to open proxy for " OFONO_NW_INTERFACE "\n");
-			return -1;
-		}
-
-		if(!org_ofono_NetworkRegistration_deregister(proxy, &error))
-		{
-			display_dbus_glib_error(error);
-			g_error_free (error);
-			retval = -1;
-		}
-		g_object_unref (proxy);
-		proxy = NULL;
-	}
-
-
-	return retval;
-}
-
 /** Enable all modems (Power ON) test case*/
 static int my_ofono_case_enable_modems(void* user_ptr, __attribute__((unused))int test_num)
 {
@@ -1228,7 +1189,6 @@ static blts_cli_testcase my_ofono_cases[] =
 	 * Test case timeouts set to 0 are handled via configuration file! */
 	{ "oFono - Information Query", my_ofono_case_query, 60000 },
 	{ "oFono - Register to network", my_ofono_case_regnetwork, 60000 },
-	{ "oFono - De-register from network", my_ofono_case_deregnetwork, 60000 },
 	{ "oFono - Enable modems", my_ofono_case_enable_modems, 60000 },
 	{ "oFono - Set modems online", blts_ofono_case_modems_online, 60000 },
 	{ "oFono - Set modems offline", blts_ofono_case_modems_offline, 60000 },

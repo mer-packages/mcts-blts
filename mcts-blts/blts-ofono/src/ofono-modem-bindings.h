@@ -1063,43 +1063,6 @@ static
 inline
 #endif
 gboolean
-org_ofono_NetworkRegistration_deregister (DBusGProxy *proxy, GError **error)
-
-{
-  return dbus_g_proxy_call (proxy, "Deregister", error, G_TYPE_INVALID, G_TYPE_INVALID);
-}
-
-typedef void (*org_ofono_NetworkRegistration_deregister_reply) (DBusGProxy *proxy, GError *error, gpointer userdata);
-
-static void
-org_ofono_NetworkRegistration_deregister_async_callback (DBusGProxy *proxy, DBusGProxyCall *call, void *user_data)
-{
-  DBusGAsyncData *data = (DBusGAsyncData*) user_data;
-  GError *error = NULL;
-  dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID);
-  (*(org_ofono_NetworkRegistration_deregister_reply)data->cb) (proxy, error, data->userdata);
-  return;
-}
-
-static
-#ifdef G_HAVE_INLINE
-inline
-#endif
-DBusGProxyCall*
-org_ofono_NetworkRegistration_deregister_async (DBusGProxy *proxy, org_ofono_NetworkRegistration_deregister_reply callback, gpointer userdata)
-
-{
-  DBusGAsyncData *stuff;
-  stuff = g_slice_new (DBusGAsyncData);
-  stuff->cb = G_CALLBACK (callback);
-  stuff->userdata = userdata;
-  return dbus_g_proxy_begin_call (proxy, "Deregister", org_ofono_NetworkRegistration_deregister_async_callback, stuff, _dbus_glib_async_data_free, G_TYPE_INVALID);
-}
-static
-#ifdef G_HAVE_INLINE
-inline
-#endif
-gboolean
 org_ofono_NetworkRegistration_get_operators (DBusGProxy *proxy, GPtrArray** OUT_arg0, GError **error)
 
 {
