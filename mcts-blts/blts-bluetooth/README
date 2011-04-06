@@ -10,7 +10,6 @@ Running the tests in the package requires
   * linux >= 2.6.15
   * GNU libc >= 2.3
   * Bluez (libbluetooth and kernel modules) >= 4.12
-  * Bluez hcidump tool (>= 1.4)
   * For Bluetooth LE: Bluez >= ~ 4.80, Linux >= ~2.6.32
 
 
@@ -32,6 +31,41 @@ Alternatively, the packagin can be skipped by just running with Autotools:
  $ ./autogen.sh
  $ ./configure
  $ make
+
+
+
+Environment setup
+
+The tests in blts-bluetooth require a pair of Bluetooth-enabled devices to
+run. Depending on what the goal for the testing is, these can be a DUT and a
+PC with a Bluetooth adapter, a pair of DUTs, or a DUT and a Bluetooth
+accessory such as a headset.
+
+Most of the tests require that the tested device already has Bluetooth
+enabled and in a connectable state. This can be checked with the
+command-line tool hciconfig:
+
+-----------------------
+# hciconfig
+hci0:   Type: USB
+        BD Address: 00:15:83:18:C0:30 ACL MTU: 310:10 SCO MTU: 64:8
+        UP RUNNING PSCAN
+        RX bytes:1007 acl:0 sco:0 events:30 errors:0
+        TX bytes:367 acl:0 sco:0 commands:28 errors:0
+-----------------------
+
+On the third status line, "UP" and "RUNNING" means the adapter is active,
+and "PSCAN" means that it can receive connection attempts (their success
+will depend on security settings etc). If this was not the case, use
+"hciconfig hci0 up" and "hciconfig hci0 pscan" to put the adapter in the
+correct initial state. Use "hciconfig hci0 piscan" to also set the adapter
+visible for scans by other devices.
+
+In some situations with Bluetooth 2.1+EDR adapters, the Bluetooth security
+mode used will prevent connection attempts without proper pairing. As a
+workaround, use "hciconfig hci0 sspmode 0" on both tested devices to force
+the connection to use a fallback mode.
+
 
 
 Running the tests
