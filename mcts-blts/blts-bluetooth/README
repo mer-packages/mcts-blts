@@ -66,6 +66,23 @@ mode used will prevent connection attempts without proper pairing. As a
 workaround, use "hciconfig hci0 sspmode 0" on both tested devices to force
 the connection to use a fallback mode.
 
+The low-level "authentication with pairing as X" test cases will not work
+together with bluetoothd, since they need to implement functionality
+normally handled inside the daemon. For this reason, bluetoothd needs to be
+stopped for the duration of these two tests. Depending on the tested
+platform, one of the following may work:
+
+  * Several distributions use a udev rule to start bluetoothd. In this case,
+    locate the rule in /etc/udev/rules.d/ or /lib/udev/rules.d/
+    (distribution dependent) and comment it out.
+    "udevadm control --reload-rules" is needed in some cases.
+
+  * Newer Ubuntu versions start bluetoothd via udev, but don't restart the
+    process if gone. Use 'killall bluetoothd' as root.
+
+  * A few distributions use upstart to control bluetoothd. "stop bluetoothd"
+    should work. "initctl list" lists all jobs if the name is something
+    else.
 
 
 Running the tests
@@ -295,12 +312,8 @@ Core-Bluetooth authentication with pairing as master
   Parameters: <remote-mac>
    * Perform pairing with another bluetooth device. The device under test initiates
      the pairing.
-   * Running this test requires stopping bluetoothd on the test device (as root,
-     try
-     $ invoke-rc.d bluetooth stop
-     or
-     $ initctl stop bluetoothd
-     depending on distribution).
+   * Running this test requires stopping bluetoothd on the test device. See
+     the environment setup section for instructions.
    * Set the <remote-mac> to the Bluetooth MAC of the other device.
    * Only one device needs to run the test software; the other can be any
      Bluetooth device (that can use the given PIN). In this case, the tester
@@ -316,12 +329,8 @@ Core-Bluetooth authentication with pairing as slave
   Parameters: (none)
    * Perform pairing with another bluetooth device. The device under test waits
      for incoming pairing request.
-   * Running this test requires stopping bluetoothd on the test device (as root,
-     try
-     $ invoke-rc.d bluetooth stop
-     or
-     $ initctl stop bluetoothd
-     depending on distribution).
+   * Running this test requires stopping bluetoothd on the test device. See
+     the environment setup section for instructions.
    * Only one device needs to run the test software; the other can be any
      Bluetooth device (that can use the given PIN). In this case, the tester
      needs to enter the PIN manually within the timeout period on the other
