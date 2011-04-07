@@ -29,6 +29,8 @@
 #define _TESTCASE_LIBSOCIALWEB_KEYFOB_SYNC
 
 #include <glib.h>
+#include <glib-object.h>
+#include <ctype.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -93,6 +95,8 @@ int invoking_oauth_auth_sync(const char* serviceName,
 			return 1;
 		}
 	}
+       printf("Fail to get the OAuthproxy with Key = %s; secret = %s\n", key, secret);
+       return 1;
 }
 
 int test_generic_key_fob_auth_sync(const char* serviceName,

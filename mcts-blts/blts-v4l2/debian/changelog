@@ -1,3 +1,15 @@
+blts-v4l2-tests (0.3.11) unstable; urgency=low
+
+  * Add N900 and VIVI configs to example config package.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Fri, 25 Mar 2011 11:50:09 +0200
+
+blts-v4l2-tests (0.3.10) unstable; urgency=low
+
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 17:40:52 +0200
+
 blts-v4l2-tests (0.3.9-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.

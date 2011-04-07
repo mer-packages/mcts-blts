@@ -16,25 +16,26 @@
  *  
  *  Created on: 2010-9-24
  *      Author: Tang, Shao-Feng (shaofeng.tang@intel.com)
+ *      Author: Huang, Rui (rui.r.huang@intel.com)
  *   
  */
 
 #include <QtCore>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QtDBus>
 #include <libsocialweb-qt/swclient.h>
 #include "lsw_testcases.h"
 
 int main(int argc, char *argv[]) {
-	QApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 	qDebug("Going to invoke the method 'getServices'");
 
 	SwClient* client = new SwClient();
-	QStringList* services = client->getServices();
+	QStringList services = client->getServices();
 
-	if (NULL != services && services->size() > 0) {
-		for (int i = 0; i < services->size(); i++) {
-			qDebug() << services->at(i);
+	if (NULL != &services && services.size() > 0) {
+		for (int i = 0; i < services.size(); i++) {
+			qDebug() << services.at(i);
 		}
 
 		return SUCCESS_RETURN;

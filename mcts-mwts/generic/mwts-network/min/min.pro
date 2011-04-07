@@ -9,6 +9,7 @@ CONFIG += link_pkgconfig
 CONFIG += qtestlib
 
 QT += network
+QT += dbus
 
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp

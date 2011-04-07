@@ -1,22 +1,23 @@
 Name: libbltscommon1
 Summary: Common BLTS functions
-Version: 0.4.1
+Version: 0.4.3
 Release: 1
 License: GPLv2
 Group: Development/Testing
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: flex bison libxml2-devel
-Requires: libxml2
 
-%package -n libbltscommon-devel
+%package devel
 Summary: Common BLTS functions devel package
 Group: Development/Libraries
+Requires: %{name} = %{version}-%{release}
+Provides: libbltscommon-devel
 
 %description
 Common functions used in BLTS project test assets gathered in one library
 
-%description -n libbltscommon-devel
+%description devel
 This package contains libbltscommon1 development files
 
 %prep
@@ -41,11 +42,14 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %files
+%defattr(-,root,root,-)
 %doc README README.ParameterVariation COPYING
 /usr/lib/*.so.*
 
-%files -n libbltscommon-devel
+%files devel
+%defattr(-,root,root,-)
 %doc README README.ParameterVariation COPYING
 /usr/lib/*.so
 /usr/include/*.h
 /usr/lib/pkgconfig/*.pc
+

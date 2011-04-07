@@ -10,7 +10,7 @@ Standards-Version: 3.8.0
 
 Package: blts-bluetooth-tests
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12), bluez-hcidump
+Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12)
 Recommends: min | min-all
 Description: BLTS Bluetooth functional tests
  This package contains functional tests for the Bluez bluetooth stack.

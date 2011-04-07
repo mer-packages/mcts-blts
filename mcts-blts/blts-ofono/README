@@ -287,7 +287,17 @@ Call meter cases:
          Change Radio Technology of the device. Values to
          use are either "any", "lte", "umts" or "gsm" as
          specified it oFono. Values and timeouts can
-         be changed from configuration file. 
+         be changed from configuration file.
+
+
+Context:         
+         
+ * oFono - Data context test
+        Activates and de-activates data context
+
+ * oFono - Data context download test
+        Activates data context and verifies it by using ping command
+          
 
 
 General cases:

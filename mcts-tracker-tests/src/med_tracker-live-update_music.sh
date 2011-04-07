@@ -29,7 +29,7 @@ echo "Test case: med_tracker-live-update_music"
 
 cp /tmp/data/test_tracks/meego_m1.ogg ~/Music/
 
-sleep 15
+sleep 10
 
 if tracker-search -m | grep "meego_m1.ogg">/dev/null 2>&1
 then

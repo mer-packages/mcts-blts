@@ -2,7 +2,7 @@ Source: mwts-common
 Section: libs
 Priority: optional
 Maintainer: Tuomo Pelkonen <ext-tuomo.1.pelkonen@nokia.com>
-Build-Depends: libqt4-dev, debhelper, min-dev(>=2009w40), min
+Build-Depends: libqt4-dev, debhelper, min-dev(>=2009w40), min, cdbs, aegis-builder (>= 1.4)
 Standards-Version: 3.8.0
 
 Package: mwts-common
@@ -22,7 +22,7 @@ Description: Common CST-MWTS functionality and base classes development package
  MiddleWare Test Suite common library
  C++ headers for test development
 
-Package: mwts-common-tests
+Package: mwts-common-scripts
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, min(>=2009w40), libqt4-core

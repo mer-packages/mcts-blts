@@ -1,3 +1,11 @@
+* Wed 30 Mar 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.19
+- Added data context test case
+- Added data context ping case
+
+* Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.18
+- [ Kari Laakso ] Improved all voice call, dual call and multiparty case run time instructions
+- Version update due to packaging change.
+
 * Mon 17 Jan 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.17
 - [ Mikko Ojala ] Added radio technology change test
 - [ Kari Laakso ] "--dontcleanup" changed to "--cleanup" and removed mandatory environment check

@@ -1,3 +1,5 @@
+/* -*- mode: C; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+
 /* ext_tools.c -- External tools wrapper
 
    Copyright (C) 2000-2010, Nokia Corporation.
@@ -30,306 +32,647 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <pthread.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/hci.h>
+#include <bluetooth/hci_lib.h>
+#include <poll.h>
 
 #include <blts_log.h>
 
 #include "ext_tools.h"
 
-static pid_t hcidump_pid = 0;
-static char *hcidump_executable = "/usr/sbin/hcidump";
+static int       stop_thread = 0;
+static pthread_t thread_id   = 0;
 
-static int have_saved_signals = 0;
-static sigset_t sigmask_saved;
-static sighandler_t sigcld_handler_saved;
+typedef struct {
+	char *log_file;
+	int   log_fd;
 
-static void save_reset_signals()
+	char *hci_dev;
+	int   hci_dev_id;
+	int   hci_dev_fd;
+
+	int   raw_sock_id;
+} blts_hci_thread;
+
+struct blts_hci_header {
+	uint16_t length;    /* Packet length */
+	uint8_t  in;        /* Packet direction */
+	uint32_t time_sec;  /* Time stamp */
+	uint32_t time_usec;
+} __attribute__ ((packed));
+
+static blts_hci_thread *the_data = NULL;
+
+static pthread_mutex_t the_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+/* Get state if thread should stop */
+static int
+get_stop_thread (void)
 {
-	sigset_t sigmask_clear;
-	if (have_saved_signals)
-		return;
-	sigemptyset(&sigmask_clear);
-	sigprocmask(SIG_SETMASK, &sigmask_clear, &sigmask_saved);
-	sigcld_handler_saved = signal(SIGCLD, SIG_DFL);
-	have_saved_signals = 1;
+	int status;
+
+	pthread_mutex_trylock (&the_mutex);
+
+	status = stop_thread;
+
+	pthread_mutex_unlock (&the_mutex);
+
+	return status;
 }
 
-static void restore_saved_signals()
+/* Write stop state for thread */
+static void
+set_stop_thread (int status)
 {
-	if (!have_saved_signals)
-		return;
-	sigprocmask(SIG_SETMASK, &sigmask_saved, (void*) 0);
-	signal(SIGCLD, sigcld_handler_saved);
-	have_saved_signals = 0;
+	pthread_mutex_trylock (&the_mutex);
+
+	stop_thread = status;
+
+	pthread_mutex_unlock (&the_mutex);
 }
 
-/* Check if we have rights to actually run hcidump */
-static int hcidump_exec_ok()
+/* Create thread data, based on info given in */
+static blts_hci_thread *
+create_thread_data (const char *log_file, const char *hci_device)
 {
-	if (getuid() != 0)
-		return 0;
-	if (access(hcidump_executable, X_OK) != 0)
-		return 0;
+	blts_hci_thread *data = NULL;
+
+	FUNC_ENTER();
+
+	/* Create thread data or fail */
+	data = malloc (sizeof (blts_hci_thread));
+
+	if (!data) {
+		BLTS_ERROR ("Out of memory!\n");
+		return NULL;
+	}
+
+	memset (data, 0, sizeof (blts_hci_thread));
+
+	if (log_file) {
+		data->log_file = strdup (log_file);
+	}
+
+	if (hci_device) {
+		data->hci_dev = strdup (hci_device);
+	}
+
+	BLTS_DEBUG ("HCI dev: %s, log file: %s\n", data->hci_dev,
+		    data->log_file);
+
+	if (data->hci_dev) {
+		data->hci_dev_id = atoi (data->hci_dev + 3);
+	} else {
+		data->hci_dev_id = hci_get_route (NULL);
+	}
+
+	BLTS_DEBUG ("Using device %d\n", data->hci_dev_id);
+
+	FUNC_LEAVE();
+
+	return data;
+}
+
+/* Free thread data */
+static void
+free_thread_data (blts_hci_thread **ptr)
+{
+	if (ptr == NULL)
+		return;
+	if (*ptr == NULL)
+		return;
+
+	if ((*ptr)->log_file) {
+		free ((*ptr)->log_file);
+		(*ptr)->log_file = NULL;
+	}
+
+	if ((*ptr)->log_fd > 0) {
+		close ((*ptr)->log_fd);
+		(*ptr)->log_fd = 0;
+	}
+
+	if ((*ptr)->hci_dev) {
+		free ((*ptr)->hci_dev);
+		(*ptr)->hci_dev = NULL;
+	}
+	(*ptr)->hci_dev_id = 0;
+
+	free (*ptr);
+	*ptr = NULL;
+}
+
+/* Opens the logfile */
+static int
+open_log_file (blts_hci_thread *data)
+{
+	if (!data)
+		return -1;
+
+	if (data->log_fd > 0)
+		return -1;
+
+	if (!data->log_file)
+		return -1;
+
+	data->log_fd = open (data->log_file, O_WRONLY | O_CREAT | O_TRUNC,
+			     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
+	if (data->log_fd < 0) {
+		BLTS_LOGGED_PERROR ("Failed to open log file for writing.");
+		BLTS_ERROR ("Error %s\n", strerror (errno));
+		data->log_fd = -1;
+		return -1;
+	}
+
+	return data->log_fd;
+}
+
+/* Opens a hci device node and socket to it */
+static int
+open_hci_socket (blts_hci_thread *data)
+{
+	int opt;
+	struct hci_dev_info dev_info;
+	struct hci_filter flt;
+	struct sockaddr_hci addr;
+	char btname[256] = {'\0'};
+
+	FUNC_ENTER();
+
+	if (!data)
+		return -1;
+
+	/* Set hci device into raw mode */
+	data->hci_dev_fd = hci_open_dev (data->hci_dev_id);
+
+	if (data->hci_dev_fd < 0) {
+		BLTS_LOGGED_PERROR ("Failed to open hci device");
+		return -1;
+	}
+
+	if (hci_devinfo (data->hci_dev_id, &dev_info) < 0) {
+		BLTS_LOGGED_PERROR ("Can't get device info");
+		return -1;
+	}
+
+	BLTS_DEBUG ("Mapped to device: %s\n", dev_info.name);
+
+	if (hci_read_local_name (data->hci_dev_fd, 256, btname, 0) < 0) {
+		BLTS_LOGGED_PERROR ("Can't read local name");
+		return -1;
+	}
+
+	BLTS_DEBUG ("Device local name: %s\n", btname);
+
+	opt = hci_test_bit (HCI_RAW, &dev_info.flags);
+
+	if (ioctl (data->hci_dev_fd, HCISETRAW, opt) < 0) {
+		if (errno == EACCES) {
+			BLTS_LOGGED_PERROR ("Can't access device");
+			return -1;
+		}
+	}
+
+	hci_close_dev (data->hci_dev_fd);
+	data->hci_dev_fd = -1;
+
+	/* Create HCI socket */
+	data->raw_sock_id = socket (AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
+
+	if (data->raw_sock_id < 0) {
+		BLTS_LOGGED_PERROR ("Can't create raw socket!");
+		return -1;
+	}
+
+	/* Set as non block */
+	opt = fcntl (data->raw_sock_id, F_GETFL, NULL);
+
+	opt |= O_NONBLOCK;
+
+	if (fcntl (data->raw_sock_id, F_SETFL, opt) < 0) {
+		BLTS_LOGGED_PERROR ("Failed to set non-blocking");
+		close (data->raw_sock_id);
+		data->raw_sock_id = -1;
+		return -1;
+	}
+
+	/* Set direction info */
+	opt = 1;
+	if (setsockopt (data->raw_sock_id, SOL_HCI, HCI_DATA_DIR, &opt,
+			sizeof (opt)) < 0) {
+		BLTS_LOGGED_PERROR ("Can't enable data direction info");
+		close (data->raw_sock_id);
+		data->raw_sock_id = -1;
+		return -1;
+	}
+
+	/* Enable time stamps */
+	opt = 1;
+	if (setsockopt (data->raw_sock_id, SOL_HCI, HCI_TIME_STAMP, &opt,
+			sizeof (opt)) < 0) {
+		BLTS_LOGGED_PERROR ("Can't enable time stamp");
+		close (data->raw_sock_id);
+		data->raw_sock_id = -1;
+		return -1;
+	}
+
+	/* Allow all ptypes and events */
+	hci_filter_clear (&flt);
+	hci_filter_all_ptypes (&flt);
+	hci_filter_all_events (&flt);
+	if (setsockopt (data->raw_sock_id, SOL_HCI, HCI_FILTER, &flt,
+			sizeof (flt)) < 0) {
+		BLTS_LOGGED_PERROR ("Can't set filter");
+		close (data->raw_sock_id);
+		data->raw_sock_id = -1;
+		return -1;
+	}
+
+	/* Bind socket to the HCI device */
+	addr.hci_family = AF_BLUETOOTH;
+	addr.hci_dev = data->hci_dev_id;
+
+	if (bind (data->raw_sock_id, (struct sockaddr *) &addr,
+		  sizeof(addr)) < 0) {
+		BLTS_LOGGED_PERROR ("Binding failed");
+		close (data->raw_sock_id);
+		data->raw_sock_id = -1;
+		return -1;
+	}
+
+	BLTS_DEBUG ("Bound to raw socket %d\n", data->raw_sock_id);
+
+	FUNC_LEAVE();
+
+	return data->raw_sock_id;
+}
+
+/* Writes data from raw socket into a file in hexdump format */
+static int
+process_socket_data (blts_hci_thread *data)
+{
+	struct blts_hci_header *hdr;
+	struct cmsghdr         *cmessage;
+	struct msghdr           message;
+	struct iovec            iov;
+	struct timeval         *ts;
+
+	char *buffer = NULL;
+	char *ctrl = NULL;
+	int len, written;
+
+	FUNC_ENTER();
+
+	int header_size = sizeof (struct blts_hci_header);
+	int data_size = header_size + HCI_MAX_FRAME_SIZE;
+
+	/* Buffer and control buffer get owned by the the message struct. Do
+	 * not free?!
+	 *
+	 * Now, the buffer is aligned in the message struct, so the
+	 * header_size amount is leaked each time this function is called.
+	 */
+	buffer = malloc (data_size);
+	if (!buffer) {
+		BLTS_LOGGED_PERROR ("Can't allocate buffer");
+		return -1;
+	}
+
+	ctrl = malloc (100);
+	if (!ctrl) {
+		BLTS_LOGGED_PERROR ("Can't allocate control buffer");
+		free (buffer);
+		return -1;
+	}
+
+	memset (buffer, 0, data_size);
+	memset (&message, 0, sizeof (message));
+
+	/* Buffer position and size is a bit obscure, but this is the
+	 * way, how hcidump does it originally. And have to admit, it's
+	 * a simple way of adding a custom header info into the dump.
+	 *
+	 * Note here, that these two pointers, the actual data and header,
+	 * are allocated into same pointer, which is then written into the
+	 * dump file. The data received from socket is stored into the
+	 * buffer, that's aligned to skip the header data.
+	 */
+	hdr = (void *)buffer;
+	iov.iov_base = buffer + header_size;
+	iov.iov_len  = HCI_MAX_FRAME_SIZE;
+
+	message.msg_iov    = &iov;
+	message.msg_iovlen = 1;
+
+	message.msg_control    = ctrl;
+	message.msg_controllen = 100;
+
+	len = recvmsg (data->raw_sock_id, &message, MSG_DONTWAIT);
+
+	if (len < 0) {
+		if (errno == EINTR || errno == EAGAIN) {
+			return 0;
+		}
+		BLTS_LOGGED_PERROR ("Receive failed.");
+		return -1;
+	}
+
+	if (!len) {
+		BLTS_ERROR ("Client disconnected.\n");
+		return -1;
+	}
+
+	BLTS_DEBUG ("Read %d bytes\n", len);
+
+	hdr->length = htobs (len);
+
+	cmessage = CMSG_FIRSTHDR (&message);
+	while (cmessage) {
+		if (cmessage->cmsg_type == HCI_CMSG_DIR) {
+			hdr->in = *(CMSG_DATA (cmessage));
+		} else if (cmessage->cmsg_type == HCI_CMSG_TSTAMP) {
+			ts = (struct timeval *)CMSG_DATA (cmessage);
+			hdr->time_sec = htobl (ts->tv_sec);
+			hdr->time_usec = htobl (ts->tv_usec);
+		}
+		cmessage = CMSG_NXTHDR (&message, cmessage);
+	}
+
+	/* Add header size to length to be written */
+	len += header_size;
+
+	BLTS_DEBUG ("Writing %d bytes (added header data)\n", len);
+
+	do {
+		written = write (data->log_fd, buffer, len);
+
+		if (written < 0) {
+			if (errno == EINTR || errno == EAGAIN)
+				continue;
+			BLTS_LOGGED_PERROR ("Writing to log failed.");
+			return -1;
+		}
+		if (!written)
+			break;
+		len -= written;
+		buffer += written;
+		BLTS_DEBUG ("Wrote %d bytes, %d remaining.\n", written, len);
+	} while (len > 0);
+
+	FUNC_LEAVE();
 
 	return 1;
 }
 
-/*
- * Start capturing bluetooth packets with hcidump in dump_file,
- * from hci_device (null = default). 0 = start success.
- */
-int start_hcidump(char *dump_file, char *hci_device)
+/* The thread function */
+static void *
+read_hci_socket (void *user_data)
 {
-	pid_t pid;
-	if (hcidump_pid) {
-		BLTS_DEBUG("hcidump already running.\n");
-		return -EALREADY;
+	blts_hci_thread *data = user_data;
+	struct pollfd fds[1];
+	int ret;
+
+	FUNC_ENTER();
+
+	if (!data)
+		pthread_exit ((void *)-1);
+
+	/* Watch the socket data */
+	fds[0].fd = data->raw_sock_id;
+	fds[0].events = POLLIN;
+	fds[0].revents = 0;
+
+	while (!get_stop_thread()) {
+		ret = poll (fds, 1, 2000);
+
+		if (ret <= 0) {
+			BLTS_DEBUG ("No data in 2 seconds.\n");
+			continue;
+		}
+
+		if (fds[0].revents & (POLLHUP | POLLERR | POLLNVAL)) {
+			BLTS_DEBUG ("Socket disconnected\n");
+			break;
+		}
+
+		ret = process_socket_data (data);
+
+		if (ret < 0) {
+			BLTS_ERROR ("Failed to process data\n");
+			pthread_exit ((void *)-3);
+		}
 	}
 
-	if (!dump_file) {
-		BLTS_DEBUG("No dump file specified.\n");
-		return -EINVAL;
-	}
+	FUNC_LEAVE();
 
-	if (!hcidump_exec_ok()) {
-		BLTS_DEBUG("Can't run hcidump.\n");
-		return -EPERM;
-	}
+	pthread_exit (NULL);
+}
 
-	save_reset_signals();
+/* Reads the dump file, well any file, based on file descriptor */
+static int
+read_dump (int file, char *buf, int len)
+{
+        int retval = 0;
+	int n_read = 0;
 
-	if ((pid = fork()) < 0) {
-		BLTS_DEBUG("Failed to fork - %s", strerror(errno));
-		restore_saved_signals();
+        while (len > 0) {
+		n_read = read (file, buf, len);
+
+		if (n_read < 0) {
+                        if (errno == EINTR || errno == EAGAIN)
+                                continue;
+			BLTS_LOGGED_PERROR ("Failed to read");
+                        return -1;
+                }
+                if (!n_read)
+                        return 0;
+                len    -= n_read;
+		buf    += n_read;
+		retval += n_read;
+
+		BLTS_DEBUG ("Read %d bytes, %d left\n", n_read, len);
+        }
+        return retval;
+}
+
+/* Starts hci dump */
+int
+start_hcidump (char *log_file, char *hci_device)
+{
+	int ret = 0;
+
+	FUNC_ENTER();
+
+	/* Already got thread running.. most likely anyway */
+	if (the_data != NULL) {
+		BLTS_ERROR ("Already dumping hci data.\n");
 		return -1;
 	}
 
-	if (pid) {
-		/* parent */
-		hcidump_pid = pid;
-		usleep(250000);
-		BLTS_DEBUG("hcidump running.\n");
-		return 0;
+	if (thread_id) {
+		BLTS_ERROR ("Aready running a hci dump thread.\n");
+		return -1;
 	}
 
-	/* child */
-	char* exec_args[] = { hcidump_executable,
-			      "-N", "-i", hci_device ? hci_device : "hci0",
-			      "-w", dump_file,
-			      (void*) 0 };
-	char* exec_env[] = { (void*)0 };
-	for (int j=0; j<3; ++j)
-		close(j);
+	the_data = create_thread_data (log_file, hci_device);
 
-	if (execve(exec_args[0], exec_args, exec_env) < 0) {
-		perror("execve failure()");
+	if (!the_data) {
+		BLTS_ERROR ("Failed to create context for thread.\n");
+		return -1;
 	}
 
-	return -1; /* only on execve fail*/
+	ret = open_log_file (the_data);
+
+	if (ret < 0) {
+		BLTS_ERROR ("Failed to open log file!\n");
+		free_thread_data (&the_data);
+		return -1;
+	}
+
+	ret = open_hci_socket (the_data);
+
+	if (ret < 0) {
+		BLTS_ERROR ("Failed to open HCI socket!\n");
+		free_thread_data (&the_data);
+		return -1;
+	}
+
+	/* Create a thread or fail */
+	ret = pthread_create (&thread_id, NULL, read_hci_socket, the_data);
+
+	if (ret) {
+		BLTS_ERROR ("Read thread creation failed!\n");
+		free_thread_data (&the_data);
+		return -1;
+	}
+
+	FUNC_LEAVE();
+
+	return 1;
 }
 
-/*
- * Stop ongoing hcidump child
- */
-int stop_hcidump()
+/* Stops hci dump */
+int
+stop_hcidump ()
 {
-	int status = 0;
-	if (!hcidump_pid) {
-		BLTS_DEBUG("hcidump is not running.\n");
-		return -ESRCH;
+	int ret, thr_join = 0;
+
+	if (thread_id <= 0) {
+		BLTS_ERROR ("No dump thread running.\n");
+		return -1;
 	}
 
-	if (kill(hcidump_pid, SIGTERM) < 0) {
-		BLTS_DEBUG("Could not terminate hcidump.\n");
-		return -errno;
+	if (!the_data) {
+		BLTS_ERROR ("No thread data, assuming thread is not "
+			    "running.\n");
+		return -1;
 	}
 
-	if (waitpid(hcidump_pid, &status, 0) < 0) {
-		BLTS_DEBUG("Could wait for hcidump.\n");
-		return -errno;
+	set_stop_thread (1);
+
+	ret = pthread_join (thread_id, (void**)&thr_join);
+
+	if (ret) {
+		BLTS_LOGGED_PERROR ("Failed to join thread.");
+		free_thread_data (&the_data);
+		return -1;
 	}
 
-	restore_saved_signals();
-	hcidump_pid = 0;
+	if (thr_join) {
+		BLTS_ERROR ("Thread exited with %d\n", thr_join);
+		free_thread_data (&the_data);
+		return thr_join;
+	}
 
-	return 0;
+	free_thread_data (&the_data);
+
+	return 1;
 }
 
-/*
- * Parse hex dump and append result to array in output. Dynamically resize buffer given
- * old address and length.
- */
-static int append_hex_dump(char* input, uint8_t **output, size_t *output_len)
+/* Parses through hci dump and passes it to parser func */
+int
+parse_hcidump (char *dump_file,
+	       hcidump_trace_handler trace_handler,
+	       void *user_data)
 {
-	char *saveptr = 0, *token, *work;
-	unsigned val;
-	int count,i;
-	uint8_t vals[256], *new_output;
-
-	if (!input || !output || !output_len)
-		return -EINVAL;
-
-	work = strdup(input);
-
-	count = 0;
-	while (count < 256) {
-		token = strtok_r(count ? 0 : work, " \n", &saveptr);
-		if (!token)
-			break;
-		if (sscanf(token, "%x", &val) != 1)
-			return -EINVAL;
-		vals[count++] = val & 0xff;
-	}
-
-	free(work);
-	new_output = realloc(*output, *output_len + count);
-	for (i = 0; i < count ; ++i)
-		new_output[*output_len + i] = vals[i];
-
-	*output = new_output;
-	*output_len += count;
-
-	return 0;
-}
-
-
-/*
- * Call hcidump to parse given dump, calling trace_handler for each event in the sequence.
- * Format:
- * HCI sniffer - Bluetooth packet analyzer ver 1.42
- * 947121827.449127 > 04 13 05 01 0B 00 02 00
- * 947121827.460418 > 02 0B 20 10 00 0C 00 01 00 0B 01 08 00 02 00 00 00 03 00 00
- *   00
- * 947121827.460510 < 02 0B 20 10 00 0C 00 01 00 03 01 08 00 40 00 40 00 00 00 00
- *   00
- * 947121827.478790 > 04 07 FF 00 F1 A0 C0 6E 1D 00 4A 75 73 73 69 00 00 00 00 00
- *   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- *   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- */
-int parse_hcidump(char *dump_file, hcidump_trace_handler trace_handler, void *user_data)
-{
-	int ret = 0, status = 0, current_handled = 1, lineno = 0;
-	char packet_dir;
-	char *cmd = 0, *buf = 0, *data = 0;
-	FILE *dump = 0;
+	struct blts_hci_header hdr;
+	struct hcidump_trace   trace;
 	struct stat sb;
-	size_t buf_sz = 0;
-	ssize_t read_len = 0;
+	int   retval = 0;
+	int   log_fd = 0;
+	char *buffer = NULL;
+	int   header_size = sizeof (struct blts_hci_header);
 
-	struct hcidump_trace current = {0,0,0,0,0};
+	FUNC_ENTER();
 
-	if (!dump_file || stat(dump_file,&sb) < 0) {
-		BLTS_DEBUG("No dump to parse.\n");
-		return -ENOENT;
+	if (!dump_file || stat (dump_file, &sb) < 0) {
+		BLTS_ERROR ("No dump to parse.");
+		retval = -1;
+		goto CLEANUP;
 	}
 
-	if (!hcidump_exec_ok()) {
-		BLTS_DEBUG("Can't run hcidump.\n");
-		return -EPERM;
+	log_fd = open (dump_file, O_RDONLY,
+		       S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
+	if (log_fd < 0) {
+		BLTS_LOGGED_PERROR ("Failed to open log file.");
+		retval = -1;
+		goto CLEANUP;
 	}
 
-	if (asprintf(&cmd, "%s -tR -r %s", hcidump_executable, dump_file) < 0) {
-		BLTS_DEBUG("malloc() - %s", strerror(errno));
-		return -errno;
+	buffer = malloc (HCI_MAX_FRAME_SIZE);
+
+	if (!buffer) {
+		BLTS_LOGGED_PERROR ("Failed to allocate memory for buffer");
+		close (log_fd);
+		retval = -1;
+		goto CLEANUP;
 	}
 
-	save_reset_signals();
+	do {
+		retval = read_dump (log_fd, (char *) &hdr, header_size);
 
-	fflush(stdout);
-	dump = popen(cmd, "r");
-	if (!dump) {
-		BLTS_DEBUG("Failed to execute hcidump.\n");
-		ret = errno?-errno:-1;
-		goto cleanup;
-	}
-
-	while ((read_len = getline(&buf, &buf_sz, dump)) != -1) {
-		lineno++;
-
-		char* pch = NULL;
-		pch = strchr(buf,'.'); /* search for time stamp nnnn.nnnnnn */
-
-		switch (buf[0]) {
-		case 'H': /* header */
-			break;
-		case ' ': /* data for last packet or new packet with time stamp*/
-			if (!pch) { /* data for last packet if '.' not found*/
-				if ((buf_sz <= 2) ||
-					append_hex_dump(buf+2, &current.data,
-					&current.data_len) < 0) {
-					BLTS_DEBUG("Parse error on dump line %d\n", lineno);
-					ret = -1;
-					goto cleanup;
-				}
-				break;
-			}
-		case '0':/* new packet */
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			/* Previous event now has all data, so handle it */
-			if (trace_handler && (!current_handled)) {
-				if (trace_handler(&current, user_data)) {
-					BLTS_DEBUG("Failure in handler on dump line %d.\n",lineno);
-					ret = -1;
-					goto cleanup;
-				}
-				current_handled = 1;
-				if (current.data)
-					free(current.data);
-				memset(&current, 0, sizeof (current));
-			}
-			/* time.stamp dir hexdump */
-			if (sscanf(buf, "%lu.%lu %c %a[^\n]", &current.tv_sec, &current.tv_usec,
-				&packet_dir, &data) != 4) {
-				BLTS_DEBUG("Parse error on dump line %d\n", lineno);
-				ret = -1;
-				goto cleanup;
-			}
-			current.incoming = (packet_dir == '>');
-			if (append_hex_dump(data, &current.data, &current.data_len) < 0) {
-				BLTS_DEBUG("Parse error on dump line %d\n", lineno);
-				ret = -1;
-				goto cleanup;
-			}
-			current_handled = 0;
-			break;
-		default: /* ??? */
-			BLTS_DEBUG("Warning: no parse for line %d\n", lineno);
-			break;
+		if (retval < 0) {
+			BLTS_ERROR ("Failed to read packet header!\n");
+			goto CLEANUP;
 		}
-	}
-	if (!current_handled && trace_handler) {
-		if (trace_handler(&current, user_data)) {
-			BLTS_DEBUG("Failure in handler on dump line %d.\n",lineno);
-			ret = -1;
+
+		trace.data_len = btohl (hdr.length);
+		trace.incoming = hdr.in;
+		trace.tv_sec   = btohl (hdr.time_sec);
+		trace.tv_usec  = btohl (hdr.time_usec);
+		trace.data     = buffer;
+
+		memset (buffer, 0, HCI_MAX_FRAME_SIZE);
+
+		retval = read_dump (log_fd, buffer, trace.data_len);
+
+		if (retval < 0) {
+			BLTS_ERROR ("Failed to read dump data!\n");
+			goto CLEANUP;
 		}
-	}
 
-cleanup:
-	if (cmd)
-		free(cmd);
-	if (buf)
-		free(buf);
-
-	if (dump) {
-		status = pclose(dump);
-
-		if (status < 0) {
-			BLTS_DEBUG("Failed to wait for hcidump\n");
-			ret = -1;
-		} else if (status > 0) {
-			BLTS_DEBUG("Failure in hcidump (%d)\n", status);
-			ret = -1;
+		if (trace_handler (&trace, user_data)) {
+			BLTS_ERROR ("Failed to handle trace!\n");
+			retval = -1;
+			goto CLEANUP;
 		}
-	}
-	restore_saved_signals();
 
-	return ret;
+	} while (retval != 0);
+
+	FUNC_LEAVE();
+
+CLEANUP:
+	if (log_fd > 0)
+		close (log_fd);
+	if (buffer)
+		free (buffer);
+
+	return retval;
 }
-

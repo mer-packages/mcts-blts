@@ -21,6 +21,10 @@ MIN_CONFIG.files = data/*.min.conf
 MIN_CONFIG.path = /etc/min.d
 INSTALLS += MIN_CONFIG
 
+MIN_CONFIG_OVERRIDE.files = data/min.conf
+MIN_CONFIG_OVERRIDE.path = /etc/min.d
+INSTALLS += MIN_CONFIG_OVERRIDE
+
 MIN_SCRIPTS.files = data/*.cfg
 MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS

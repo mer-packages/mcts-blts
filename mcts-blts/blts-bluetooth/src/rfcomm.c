@@ -26,6 +26,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/select.h>
@@ -48,6 +49,10 @@
  */
 static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 {
+	int ready, err, result;
+	fd_set read_fds;
+	long sk_flags = 0;
+
 	if((!ctx) || (sock < 0)) return -EINVAL;
 
 	/* san check */
@@ -57,10 +62,20 @@ static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 		return -EINVAL;
 	}
 
-	/* Wait for incoming connection */
+	/* Set socket non-blocking (otherwise pselect..accept delay creates a race) */
+	sk_flags = fcntl(sock, F_GETFL);
+	if(sk_flags < 0) {
+		BLTS_LOGGED_PERROR("fcntl(F_GETFL) on listen socket failed\n");
+		return -errno;
+	}
+	sk_flags |= O_NONBLOCK;
+	err = fcntl(sock, F_SETFL, sk_flags);
+	if(err) {
+		BLTS_LOGGED_PERROR("fcntl(F_SETFL) on listen socket failed\n");
+		return -errno;
+	}
 
-	fd_set read_fds;
-	int ready;
+	/* Wait for incoming connection */
 
 	FD_ZERO(&read_fds);
 	FD_SET(sock, &read_fds);
@@ -68,7 +83,7 @@ static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	BLTS_DEBUG("Waiting...");
 	ready = pselect(sock+1, &read_fds, (void*) 0, (void*) 0, &(ctx->test_timeout), (void*) 0);
 
-	if(ready < 0)
+	if(ready < 0 && errno != EINTR)
 	{
 		BLTS_LOGGED_PERROR("pselect() failure");
 		return -errno;
@@ -91,13 +106,34 @@ static int rfcomm_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock)
 	BLTS_DEBUG("Accepting connection...");
 	if((sock_in = accept(sock, (void*)&sa_in, &sa_in_len)) < 0)
 	{
+		if(errno == EAGAIN || errno == EWOULDBLOCK) {
+			BLTS_DEBUG("already gone, stopping.\n");
+			/* Note: we can't generally tell if this was
+			 * intended by the client. */
+			return 0;
+		}
 		BLTS_LOGGED_PERROR("accept() failure");
 		return -errno;
 	}
 	BLTS_DEBUG("ok.\n");
 
-	int result = generic_server_handle_echo(sock_in);
+	/* Restore blocking mode */
+	sk_flags = fcntl(sock, F_GETFL);
+	if(sk_flags < 0) {
+		BLTS_LOGGED_PERROR("fcntl(F_GETFL) on listen socket failed\n");
+		result = -errno;
+		goto done;
+	}
+	sk_flags &= ~O_NONBLOCK;
+	err = fcntl(sock, F_SETFL, sk_flags);
+	if(err) {
+		BLTS_LOGGED_PERROR("fcntl(F_SETFL) on listen socket failed\n");
+		result = -errno;
+		goto done;
+	}
 
+	result = generic_server_handle_echo(sock_in);
+done:
 	errno=0;
 	if(close(sock_in) < 0)
 	{

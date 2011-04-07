@@ -22,7 +22,7 @@
 #	Modified from sample Makefile
 
 connman_SCRIPTS = CM_Flt_EthIsPoweredOff.py CM_Flt_EthNoPing.py CM_Flt_EthOnline.py CM_Flt_EthPoweredOff.py CM_Flt_EthPoweredOn.py CM_Flt_Offline.py CM_Flt_Online.py CM_Flt_Service.py CM_Flt_WiFiGuest.py CM_Flt_WiFiIsPoweredOff.py CM_Flt_WiFiNoPing.py CM_Flt_WiFiOnline.py CM_Flt_WiFiPoweredOff.py CM_Flt_WiFiPoweredOn.py
-helper_SCRIPTS = startup
+helper_SCRIPTS = startup cleanup
 helperdir = /opt/$(PACKAGE)/Flight
 connmandir = /opt/$(PACKAGE)
 EXTRA_DIST = $(connman_SCRIPTS) $(helper_SCRIPTS)

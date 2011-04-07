@@ -1,0 +1,18 @@
+* Mon Feb 01 2011 Shaofeng Tang <shaofeng.tang@intel.com> - 1.0.0
+- Initial version for OBS
+
+- fix bugs by liang.jin@intel.com
+  https://bugzilla.otcshare.org/show_bug.cgi?id=5577
+  geocode core dump -- wrong function call
+  master client bugd -- address start/ position start missing
+  configure file -- add attribute in Test dbus file
+  changed files list:
+  src/geoclue-geocode/test_geoclue_geocode.c
+  src/geoclue-geocode/test_geoclue_geocode_async.c
+  src/geoclue-master/test_geoclue_master_client.c
+  src/geoclue-provider/test_geoclue_provider.c
+  src/test-provider/geoclue-test.provider
+  src/utils/geoclue-test-provider-client.h
+  src/utils/test_geoclue_utils.c
+  src/utils/test_geoclue_utils.h
+

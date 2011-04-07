@@ -8,12 +8,12 @@ Standards-Version: 3.8.0
 Package: mwts-feedback
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0)
+Depends: ${shlibs:Depends}, libqt4-core, libqtm-feedback, mwts-common(>=0.2.0)
 Description: MWTS-Feedback libraries
  Feedback for creating MiddleWare Test Suite packages
  c++ interface
 
-Package: mwts-feedback-scripts
+Package: mwts-feedback-tests
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, mwts-feedback, min

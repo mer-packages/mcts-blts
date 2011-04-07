@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.61)
-AC_INIT([blts-common],[0.4.1],[jussi.saavalainen@digia.com])
+AC_INIT([blts-common],[0.4.3],[jussi.saavalainen@digia.com])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([src/blts_log.c])
 AM_INIT_AUTOMAKE

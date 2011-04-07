@@ -109,6 +109,29 @@ blts-wlan-core-tests -e 1
 Run a single case with its name (note quotes when there are spaces in the name):
 blts-wlan-core-tests -en "Test case name"
 
+
+Known issues
+
+* MeeGo Connman, wpa_supplicant and the test asset use similar methods of
+  accessing the WLAN adapter. Consequently, many tests will fail due to
+  conflicting commands from the test cases and other device users. To
+  prevent this, shut down Connman and wpa_supplicant before testing with (as
+  root):
+
+  1)
+  killall connmand
+  killall wpa_supplicant
+
+  Reboot the device when finished to restore WLAN functionality. (Note: this
+  applies to current Meego; future versions may differ.)
+
+  OR
+
+  2)
+  The example configuration file has global parameters 'stopped_processes' 
+  and 'restarted_processes' these can be used to stop/restart defined processes.
+  NOTE: These parameters can be empty if 'killall' commands are used.
+ 
 Test cases
 
 * Core-WLAN-Enumerate hardware

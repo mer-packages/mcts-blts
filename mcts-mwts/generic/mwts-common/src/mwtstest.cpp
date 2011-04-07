@@ -34,13 +34,11 @@
 #include <QDir>
 
 /** Constructs the test object and all needed dependencies*/
-MwtsTest::MwtsTest(QObject* pParent, QString platform/*=""*/)
-: QObject(pParent),
-  m_sPlatform(platform)
+MwtsTest::MwtsTest(QObject* pParent)
+: QObject(pParent)
 {
 //	MWTS_ENTER;  do not use MWTS_ENTER. logging not enabled at this point!!
 	m_sCaseName = "";
-	m_sPlatform = "";
 	g_pTest = this;
 	g_pLog = new MwtsLog();
 	g_pResult = MwtsResult::instance();
@@ -121,20 +119,7 @@ QString MwtsTest::CaseName()
 
 void MwtsTest::SetCaseName(QString sName)
 {
-	m_sPlatform=sName;
-}
-
-/**
-  Returns platform of currently running test case
- */
-QString MwtsTest::Platform()
-{
-	return m_sPlatform;
-}
-
-void MwtsTest::SetPlatform(QString sName)
-{
-	m_sPlatform=sName;
+	m_sCaseName=sName;
 }
 
 
@@ -167,7 +152,7 @@ void MwtsTest::Initialize()
 
 	qDebug()<<"Creating application";
 	setenv("DISPLAY", ":0.0", 1);
-	MwtsApp::instance();
+	g_pApp = MwtsApp::instance();
 	this->OnInitialize();
 
 	connect(m_pIdleTimer, SIGNAL(timeout()), this, SLOT(OnIdle()));

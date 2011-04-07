@@ -4,7 +4,6 @@ VERSION = 0.0.1
 TEMPLATE = lib
 CONFIG += debug
 CONFIG += warn_on
-#QT += network
 
 CONFIG	+= mobility
 MOBILITY = feedback

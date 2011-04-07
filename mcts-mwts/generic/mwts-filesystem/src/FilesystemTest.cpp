@@ -40,8 +40,8 @@
 #include <sys/statfs.h>
 
 
-FilesystemTest::FilesystemTest(QObject* pParent/*=0*/, QString platform/*=""*/)
-: MwtsTest(pParent, platform)
+FilesystemTest::FilesystemTest(QObject* pParent/*=0*/)
+: MwtsTest(pParent)
 {
 	MWTS_ENTER;
 

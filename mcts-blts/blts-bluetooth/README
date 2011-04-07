@@ -11,6 +11,7 @@ Running the tests in the package requires
   * GNU libc >= 2.3
   * Bluez (libbluetooth and kernel modules) >= 4.12
   * Bluez hcidump tool (>= 1.4)
+  * For Bluetooth LE: Bluez >= ~ 4.80, Linux >= ~2.6.32
 
 
 Building the package
@@ -296,3 +297,40 @@ Core-Bluetooth authentication with pairing as slave
    * This test can be run with "Core-Bluetooth authentication with pairing as master" as counterpart
      and is run first.
    $ blts-bluetooth-tests -en "Core-Bluetooth authentication with pairing as slave"
+
+
+Core-Bluetooth LE scan
+  Parameters: (none)
+
+   * Perform Bluetooth LE scan operation with first available Bluetooth
+     adapter, reading advertising data for each found device.
+   * Try "hciconfig hci0 leadv" on another device to enable advertising if
+     nothing found, or run the "Core-Bluetooth LE advertise" case there.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE scan"
+
+Core-Bluetooth LE advertise
+  Parameters: (none)
+
+   * Enable Bluetooth LE advertising with first available Bluetooth
+     adapter. This can be used as a companion to the "Core-Bluetooth LE
+     scan" test case.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE advertise"
+
+Core-Bluetooth LE connect
+  Parameters: <remote-mac>
+   * Connect just the Bluetooth LE link to device <remote-mac>, wait a
+     while, the disconnect.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE connect"
+
+Core-Bluetooth LE transmit data
+  Parameters: <remote-mac>
+   * Connect Bluetooth LE link to device <remote-mac>, transmit test data,
+     and disconnect.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE transmit data"
+
+Core-Bluetooth LE receive data
+  Parameters: (none)
+   * Wait for incoming LE connection, receive test data packet, and verify
+     it.
+   $ blts-bluetooth-tests -en "Core-Bluetooth LE receive data"
+

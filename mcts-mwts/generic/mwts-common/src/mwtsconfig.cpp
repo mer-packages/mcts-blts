@@ -29,39 +29,19 @@
 MwtsConfig::MwtsConfig()
 : QSettings(QSettings::SystemScope, g_pTest->Name())
 {
+	// add all values from global configuration to this config
+	// override if already existing
+	QSettings global(QSettings::SystemScope, "MwtsGlobal");
 
-	if(g_pTest->Platform()!="")
+	QStringList keys = global.allKeys();
+	foreach (QString key, keys)
 	{
-		g_pPlatformConfig = new QSettings(QSettings::SystemScope, g_pTest->Name()+'-'+ g_pTest->Platform());
+		this->setValue(key, global.value(key));
 	}
-        else
-        {
-               g_pPlatformConfig = NULL;
-        }
-
 }
 
 MwtsConfig::~MwtsConfig()
 {
-    if (g_pPlatformConfig)
-    {
-       delete g_pPlatformConfig;
-       g_pPlatformConfig = NULL;
-    }
-}
-
-QVariant MwtsConfig::value ( const QString & key, const QVariant & defaultValue/* = QVariant()*/ ) const
-{
-    // Get fefault value from generic platform implementation
-    QVariant my_value = QSettings::value(key, defaultValue);
-    if (g_pPlatformConfig)
-    {
-       // try override it by platform value, if not found, then generic value remains
-       my_value = g_pPlatformConfig->value(key,my_value);
-    }
-
-    return my_value;
-
 }
 
 

@@ -84,8 +84,6 @@ protected slots:
 	void updateDataTransferProgress(qint64, qint64);
 
 private:
-	void destroy();
-
 	/**
 	 * Pointer to the common
 	 */
@@ -95,6 +93,7 @@ private:
 
 	QFtp *ftp;
 
+        bool m_bResult;
 	qint64 		sizeOfFile;
 
 	QString		downloadPath;
@@ -103,5 +102,7 @@ private:
 	bool		bResult;
 	// bytes/sec
 	double		fTransferSpeed;
+
+        void destroy();
 
 };

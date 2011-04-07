@@ -1,6 +1,6 @@
 Summary: BLTS oFono functional tests
 Name: blts-ofono-tests
-Version: 0.1.17
+Version: 0.1.19
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -8,7 +8,7 @@ URL: http://wiki.meego.com/Quality/TestSuite/oFono_Modem_API_Test_Plan
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel dbus-devel dbus-glib-devel glib2-devel
-Requires: blts-ofono-tests-config dbus dbus-glib glib2
+Requires: blts-ofono-tests-config dbus
 
 %package config
 Summary: BLTS oFono tests default config
@@ -40,5 +40,6 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/*
 
 %files config
-/etc/blts/blts-ofono-tests.cnf
+%defattr(-,root,root,-)
+%config /etc/blts/blts-ofono-tests.cnf
 /usr/share/blts-ofono-tests/tests.xml

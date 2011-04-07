@@ -1,3 +1,31 @@
+blts-bluetooth-tests (0.2.14) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Fix LE Scan case build
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 30 Mar 2011 16:00:25 +0300
+
+blts-bluetooth-tests (0.2.13) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Fix LE build on mainline Bluez 4.89
+  * [ Jussi Saavalainen ] Allow LE advertising case use as LE scan pair
+  * [ Jussi Saavalainen ] Add basic LE data transmit/receive cases
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Mon, 14 Mar 2011 17:25:59 +0200
+
+blts-bluetooth-tests (0.2.12) unstable; urgency=low
+
+  * [ Mika Niinistö ] Add HCI tracer to remove hcidump dependency
+  * [ Kimmo Myllyvirta ] Add basic Bluetooth LE functional tests
+  * [ Jussi Saavalainen ] Make LE compile optional to support old Bluez versions
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Thu, 24 Feb 2011 11:48:18 +0200
+
+blts-bluetooth-tests (0.2.11) unstable; urgency=low
+
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 14:49:49 +0200
+
 blts-bluetooth-tests (0.2.10-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.

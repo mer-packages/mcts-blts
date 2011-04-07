@@ -36,11 +36,7 @@ public:
 	MwtsConfig();
 	virtual ~MwtsConfig();
 
-        QVariant value ( const QString & key, const QVariant & defaultValue = QVariant() ) const;
-
 private:
-        QSettings *g_pPlatformConfig;
-
 };
 
 #endif //#ifndef _INCLUDED_MWTS_CONFIG_H

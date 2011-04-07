@@ -20,36 +20,53 @@ SOURCE CODE AND COMPILING
 
 ENVIRONMENT REQUIREMENTS
 
-  This section explains specific setup which is necessary to
-  execute test cases. Most of the environment setups are 
-  explained in the MWTS.README.
+  Required HW & SW
+    One test device with MeeGo
+    Bluetooth hardware for bt syncing
+    Internet connection for cloud syncing
 
+  Most of the environment setups are explained in the MWTS.README.
 
 EXECUTING TESTS
 
   For local test cases you need to connect to device using ssh connection and
   start MIN tool using command 'min'.
+ 
+  First you need to specify your users home directory for the profiles (/usr/lib/tests/ButeoTest.conf). Default user name is 'meego'
 
-  Add here package specific instructions if needed. 
-  
+  Before running cases you need to set LD_LIBRARY_PATH enviroment variable to '/lib'.
+  Use 'export LD_LIBRARY_PATH=/lib' and kill and restart msync-daemon. This is a current workaround and will change in future.
+
+  For cloud syncing you need to se up internet connection first.
+  Account credentials need to be set in the config file first (/usr/lib/tests/ButeoTest.conf).
+
+  For bluetooth syncing you should pair your devices beforehand.
+  Bluetooth adresses etc need to be set in the config file first (/usr/lib/tests/ButeoTest.conf).
+
+  If you have to use http_proxy outside, please manually add those into example profiles under /etc/sync/profiles/service/
+  Example: /etc/sync/profiles/service/google.com.xml
+  '<key name="http_proxy_host" value="xxxx" />'
+  '<key name="http_proxy_port" value="xxxx" />' 
+ 
+  Otherwise MWTS-Buteo test execution is performed normally. Check the "General MWTS testing guide".
 
 TEST RESULTS
 
   Test results can be found from device in directory /var/log/tests/
   Result files are named according to test cases, <test_case_name>.result file contains
   overall information about test run and measured values.
-  
-  Add here package specific instructions if needed. 
-
 
 MIN SCRIPT FILES
 
   mwts-buteo.cfg 
-     Basic functionality test cases, like SMOKE tests
+     Basic functionality test cases
   mwts-buteo-nft.cfg
      Non-functional test cases
 
 KNOWN ISSUES
+  Sometimes the dbus-connection to msync-daemon does not work. I that case it might help to kill msyncd process and start again. 
 
 ADDITIONAL RESOURCES
+
+   http://wiki.meego.com/Quality/TestSuite/MWTS_Asset_Buteo_Description
 

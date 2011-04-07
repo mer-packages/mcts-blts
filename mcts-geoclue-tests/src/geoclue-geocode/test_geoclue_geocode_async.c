@@ -97,7 +97,7 @@ void test_geocode_address2position_async_accuracy_level () {
     
 	/*check returned accuracy_level with expected result*/
     g_assert (test_position_accuracy_async != NULL);
-    test_position_check_details (test_position_accuracy_async,
+    test_accuracy_check_details (test_position_accuracy_async,
 		TEST_ACCURACY_KEY_ACCURACY_LEVEL);
 }
 
@@ -108,7 +108,7 @@ void test_geocode_address2position_async_accuracy_horizontal () {
     
 	/*check returned horizontal_accurary with expected result*/
     g_assert (test_position_accuracy_async != NULL);
-    test_position_check_details (test_position_accuracy_async,
+    test_accuracy_check_details (test_position_accuracy_async,
 		TEST_ACCURACY_KEY_ACCURACY_HORIZONTAL);
 }
 
@@ -119,14 +119,14 @@ void test_geocode_address2position_async_accuracy_vertical () {
     
 	/*check returned vertical_accuracy with expected result*/
     g_assert (test_position_accuracy_async != NULL);
-    test_position_check_details (test_position_accuracy_async,
+    test_accuracy_check_details (test_position_accuracy_async,
 		TEST_ACCURACY_KEY_ACCURACY_VERTICAL);
 }
 
-static void callback_test_geocode_address2position_async (GeocluePosition     
-*pos,
+static void callback_test_geocode_address2position_async (GeoclueGeocode     
+*pcode,
 		   GeocluePositionFields fields,
-		   int                   timestamp,
+//		   int                   timestamp,  //it's bug in latest geoclue, modified by jinliang.
 		   double                latitude,
 		   double                longitude,
 		   double                altitude,
@@ -143,7 +143,7 @@ static void callback_test_geocode_address2position_async (GeocluePosition
 
     /*setup test position*/
     test_position_async = test_position_record (&latitude, &longitude,
-		&altitude, fields);
+		&altitude, TEST_LOCATION.position.fields); // bugs here, if using fields);  modified by jinliang.
     g_assert(test_position_async != NULL);
     test_position_accuracy_async = test_accuracy_record(accuracy);
     

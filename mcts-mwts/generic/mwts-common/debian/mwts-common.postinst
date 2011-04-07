@@ -11,3 +11,6 @@ then
 	mkdir $LOGDIR
 	chmod -R 777 $LOGDIR 
 fi
+
+#override existing min.conf
+mv -f /etc/min.d/min.conf /etc/min.conf

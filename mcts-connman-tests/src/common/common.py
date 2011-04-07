@@ -178,6 +178,9 @@ class Manager:
 
     def StartupBT(self):
         self.DisableTechnology('')
+        self.EnableTechnology('ethernet')
+        eth = EthDevice()
+        time.sleep(10)
         self.EnableTechnology('bluetooth')
         time.sleep(10)
 
@@ -540,23 +543,26 @@ class Service:
     # Basically we can get response through broadcast
     def BroadcastPing(self, size=0):
         count = 0
-        while count < 10:
+        while count < 5:
             ip = self.GetIP()
             if ip != None:
                 break
             time.sleep(5)
-            if count == 5:
-                print "Try to connect again"
-                try:
-                    self.svc.Connect()
-                except dbus.DBusException, e:
-                    pass
-                time.sleep(5)
             count += 1
         if ip == None:
             return False
         ip1 = ip.split('.')
         bip = ip1[0] + '.' + ip1[1] + '.' + ip1[2] + '.255'
+        if size != 0:
+            ping_string = 'ping -c 5 -s %s -b %s' % (size, bip)
+        else:
+            ping_string = 'ping -c 5 -b %s' % bip
+        ret = commands.getstatusoutput(ping_string)
+        print '%s  return %s' % (ping_string, ret[0])
+        if ret[0] == 0:
+            return True
+        # Guess if there is a machine xxx.xxx.xxx.1
+        bip = ip1[0] + '.' + ip1[1] + '.' + ip1[2] + '.1'
         if size != 0:
             ping_string = 'ping -c 5 -s %s -b %s' % (size, bip)
         else:
@@ -623,7 +629,7 @@ class Device:
         for path in manager.properties['Technologies']:
             technology = manager.GetSubObject(path, 'Technology')
             properties = technology.GetProperties()
-            if properties['Name'] != name:
+            if "Name" in properties.keys() and properties['Name'] != name:
                 continue
             i = 1
             self.manager = manager
@@ -631,6 +637,7 @@ class Device:
             self.name = name
             self.type = properties['Type']
             print 'Got it: %s' % path
+            manager.EnableTechnology(self.type)
             return
         print 'No such device!'
 

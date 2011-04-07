@@ -53,8 +53,8 @@ static void* bt_argument_processor(int argc, char **argv)
 {
 	int c;
 	int ret;
-	bt_data* my_data = malloc(sizeof(bt_data));
-	memset(my_data, 0, sizeof(bt_data));
+	struct bt_data *my_data = malloc(sizeof(*my_data));
+	memset(my_data, 0, sizeof(*my_data));
 
 	while ((c = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1)
 	{
@@ -92,7 +92,7 @@ static void bt_teardown(void *user_ptr)
 {
 	if(user_ptr)
 	{
-		bt_data* data = (bt_data*)user_ptr;
+		struct bt_data *data = (struct bt_data *)user_ptr;
 
 		if (data->mac_address)
 			free(data->mac_address);
@@ -109,7 +109,7 @@ static void bt_teardown(void *user_ptr)
 static int bt_run_case(void* user_ptr, int test_num)
 {
 	int ret = 0;
-	bt_data* data = (bt_data*)user_ptr;
+	struct bt_data *data = (struct bt_data *)user_ptr;
 
 	BLTS_DEBUG("Test number %i:\n", test_num);
 
@@ -185,6 +185,25 @@ static int bt_run_case(void* user_ptr, int test_num)
 		ret = fute_bt_hci_ll_pairing("00:00:00:00:00:00", 0);
 		break;
 
+#ifdef HAVE_BTLE_API
+	case CORE_BT_LE_SCAN:
+		ret = fute_bt_le_scan();
+		break;
+	case CORE_BT_LE_ADVERTISE:
+		ret = fute_bt_le_advertise();
+		break;
+	case CORE_BT_LE_CONNECT:
+		ret = fute_bt_le_connect_disconnect(data->mac_address);
+		break;
+#else
+	case CORE_BT_LE_SCAN:
+	case CORE_BT_LE_ADVERTISE:
+	case CORE_BT_LE_CONNECT:
+		ret = -1;
+		BLTS_ERROR("ERROR: Bluetooth LE support was not compiled in.\n");
+		BLTS_ERROR("Use a newer version of Bluez when building the tests.\n");
+		break;
+#endif
 	default:
 		BLTS_DEBUG("Not supported case number %d\n", test_num);
 	}
@@ -221,6 +240,11 @@ static blts_cli_testcase bt_cases[] =
 	{ "Core-Bluetooth Read connected link information remote", bt_run_case, 35000 },
 	{ "Core-Bluetooth authentication with pairing as master", bt_run_case, 10000 },
 	{ "Core-Bluetooth authentication with pairing as slave", bt_run_case, 35000 },
+	{ "Core-Bluetooth LE scan", bt_run_case, 60000 },
+	{ "Core-Bluetooth LE advertise", bt_run_case, 60000 },
+	{ "Core-Bluetooth LE connect", bt_run_case, 60000 },
+	{ "Core-Bluetooth LE transmit data", fute_bt_le_tx_data, 60000 },
+	{ "Core-Bluetooth LE receive data", fute_bt_le_rx_data, 60000 },
 
 	BLTS_CLI_END_OF_LIST
 };

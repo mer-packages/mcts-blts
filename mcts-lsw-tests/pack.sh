@@ -44,7 +44,7 @@ check_precondition make
 
 
 # parse spec required version
-VERSION=`grep "%define version" test.spec | awk '{print $3}'`
+VERSION=`grep "%define version" ${NAME}.spec | awk '{print $3}'`
 if [ -z "$VERSION" ];then
 	echo "Version not specified in spec file"
 	exit 1
@@ -62,7 +62,7 @@ mkdir -p $RPM_ROOT/RPMS $RPM_ROOT/SRPMS $RPM_ROOT/SPECS $RPM_ROOT/SOURCES $RPM_R
 echo "prepare workspace... >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 rm -rf *.rpm *.tar.bz2 *.tar.gz
 cp -a $SRC_ROOT/* $RPM_ROOT/src_tmp/$NAME-$VERSION
-cp $PWD/test.spec $RPM_ROOT/SPECS
+cp $PWD/${NAME}.spec $RPM_ROOT/SPECS
 cd $RPM_ROOT/src_tmp
 tar $ARCHIVE_OPTION $RPM_ROOT/SOURCES/$NAME-$VERSION.$ARCHIVE_TYPE $NAME-$VERSION
 cd -
@@ -70,7 +70,7 @@ cd -
 # build
 echo "build from workspace... >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 cd  $RPM_ROOT/SPECS
-rpmbuild -ba test.spec --clean --define "_topdir $RPM_ROOT"
+rpmbuild -ba ${NAME}.spec --clean --define "_topdir $RPM_ROOT"
 cd -
 
 # copy rpm

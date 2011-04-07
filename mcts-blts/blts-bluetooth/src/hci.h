@@ -135,5 +135,11 @@ int hci_transfer_acl_data(struct bt_ctx *ctx);
 int hci_receive_acl_data(struct bt_ctx *ctx);
 int hci_audit_incoming_connect(struct bt_ctx *ctx);
 
+int do_le_scan(struct bt_ctx *ctx);
+int le_set_advertise_mode(struct bt_ctx *ctx, int adv_on);
+int le_connect_remote(struct bt_ctx *ctx);
+int le_disconnect_remote(struct bt_ctx *ctx);
+int le_tx_data(struct bt_ctx *ctx);
+int le_rx_data(struct bt_ctx *ctx);
 
 #endif /* HCI_H */

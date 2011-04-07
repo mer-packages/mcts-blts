@@ -465,3 +465,110 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master)
 	return retval;
 
 }
+
+int fute_bt_le_scan()
+{
+	int retval = -1;
+	struct bt_ctx *ctx;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	if ((ctx = bt_ctx_new())) {
+		ctx->local_mac = *BDADDR_ANY;
+		retval = do_le_scan(ctx);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", retval ? "FAILED" : "PASSED");
+
+	return retval;
+}
+
+int fute_bt_le_advertise()
+{
+	int retval = -1;
+	struct bt_ctx *ctx;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	if ((ctx = bt_ctx_new())) {
+		ctx->local_mac = *BDADDR_ANY;
+		retval = le_set_advertise_mode(ctx, 1);
+		sleep(10 * (WAIT_TIME_CONNECT_DISCONNECT));
+		retval |= le_set_advertise_mode(ctx, 0);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", retval ? "FAILED" : "PASSED");
+
+	return retval;
+}
+
+int fute_bt_le_connect_disconnect(char *remote_mac)
+{
+	int retval = -1;
+	struct bt_ctx *ctx;
+
+	if (!remote_mac)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	if ((ctx = bt_ctx_new()))
+	{
+		str2ba(remote_mac, &ctx->remote_mac);
+		retval = le_connect_remote(ctx);
+		sleep(WAIT_TIME_CONNECT_DISCONNECT);
+		retval |= le_disconnect_remote(ctx);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", retval ? "FAILED" : "PASSED");
+
+	return retval;
+}
+
+
+int fute_bt_le_tx_data(void *user_ptr, __attribute__((unused)) int test_num)
+{
+	struct bt_data *data = (struct bt_data *) user_ptr;
+	struct bt_ctx *ctx;
+	int ret = -1;
+
+	if(!data || !data->mac_address)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	ctx = bt_ctx_new();
+	if(ctx)	{
+		str2ba(data->mac_address, &ctx->remote_mac);
+		ret = le_tx_data(ctx);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", ret ? "FAILED" : "PASSED");
+	return ret;
+}
+
+int fute_bt_le_rx_data(void *user_ptr, __attribute__((unused)) int test_num)
+{
+	struct bt_data *data = (struct bt_data *) user_ptr;
+	struct bt_ctx *ctx;
+	int ret = -1;
+
+	if(!data || !data->mac_address)
+		return -EINVAL;
+
+	BLTS_DEBUG("*** Test case start\n");
+
+	ctx = bt_ctx_new();
+	if(ctx)	{
+		str2ba(data->mac_address, &ctx->remote_mac);
+		ret = le_rx_data(ctx);
+		bt_ctx_free(ctx);
+	}
+
+	BLTS_DEBUG("*** Test %s\n", ret ? "FAILED" : "PASSED");
+	return ret;
+}

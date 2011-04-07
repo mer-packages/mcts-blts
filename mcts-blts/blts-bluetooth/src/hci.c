@@ -1512,3 +1512,345 @@ error:
 	if(cr) free(cr);
 	return NULL;
 }
+
+
+/* -------------------- BT LE ----------------- */
+#ifdef HAVE_BTLE_API
+
+
+/* See BT4 spec: 2.E.7.7.65.2 */
+static int le_get_adv_info_rssi(le_advertising_info *info)
+{
+	if(!info)
+		return 127;  /* "RSSI not available" */
+	return *(((int8_t *) info->data) + info->length);
+}
+
+static int print_advertising_devices(int fd)
+{
+	unsigned char buf[HCI_MAX_EVENT_SIZE];
+	struct hci_filter nf, of;
+	socklen_t olen = sizeof(of);
+	int len, num = 4;
+	int rssi;
+	evt_le_meta_event *meta;
+	le_advertising_info *info;
+	char addr[18];
+
+	if (getsockopt(fd, SOL_HCI, HCI_FILTER, &of, &olen) < 0) {
+		BLTS_DEBUG("Could not get socket options\n");
+		return -1;
+	}
+
+	hci_filter_clear(&nf);
+	hci_filter_set_ptype(HCI_EVENT_PKT, &nf);
+	hci_filter_set_event(EVT_LE_META_EVENT, &nf);
+
+	if (setsockopt(fd, SOL_HCI, HCI_FILTER, &nf, sizeof(nf)) < 0) {
+		BLTS_DEBUG("Could not set socket options\n");
+		return -1;
+	}
+
+	while(num--) {
+		/* TODO: Add graceful timeout for this */
+		while((len = read(fd, buf, sizeof(buf))) < 0) {
+			if (errno == EAGAIN || errno == EINTR)
+				continue;
+			BLTS_LOGGED_PERROR("read() failed");
+			goto cleanup;
+		}
+
+		meta = (void*)(buf + (1 + HCI_EVENT_HDR_SIZE));
+		len -= (1 + HCI_EVENT_HDR_SIZE);
+
+		if (meta->subevent != 0x02)
+			break;
+
+		info = (le_advertising_info *) (meta->data + 1);
+		ba2str(&info->bdaddr, addr);
+
+		rssi = le_get_adv_info_rssi(info);
+		if(-127 <= rssi && rssi <= 20) {
+			BLTS_DEBUG("address: %s (RSSI: %d) \n", addr, rssi);
+		} else if (rssi == 127) {
+			BLTS_DEBUG("address: %s (RSSI not available)\n", addr);
+		} else {
+			/* TODO: Maybe we should error on this? */
+			BLTS_DEBUG("address: %s (Bad RSSI)\n", addr);
+			BLTS_ERROR("Warning: Reserved RSSI '%d' in advertising report for device %s !\n", rssi, addr);
+		}
+	}
+
+cleanup:
+	if (setsockopt(fd, SOL_HCI, HCI_FILTER, &of, sizeof(of))) {
+		BLTS_DEBUG("Could not set socket options\n");
+		return -1;
+	}
+
+	return len < 0 ? -1 : 0;
+}
+
+int do_le_scan(struct bt_ctx *ctx)
+{
+	int fd, err = 0;
+
+	BLTS_DEBUG("Trying to get device... ");
+	if ((ctx->dev_id = hci_get_route(&ctx->local_mac)) < 0) {
+		BLTS_LOGGED_PERROR("hci_get_route failed");
+		return -1;
+	}
+
+	fd = hci_open_dev(ctx->dev_id);
+	if (fd < 0) {
+		BLTS_LOGGED_PERROR("Could not open device");
+		return -1;
+	}
+
+#ifdef LE_SCAN_HAS_TO
+	err = hci_le_set_scan_parameters(fd, 0x01, htobs(0x0010),
+		 htobs(0x0010), 0x00, 0x00,  1000);
+#else
+	err = hci_le_set_scan_parameters(fd, 0x01, htobs(0x0010),
+		 htobs(0x0010), 0x00, 0x00);
+#endif
+
+	if (err < 0) {
+		BLTS_LOGGED_PERROR("Set scan parameters failed");
+		goto cleanup;
+	}
+
+#ifdef LE_SCAN_HAS_TO
+	err = hci_le_set_scan_enable(fd, 0x01, 0x00, 1000);
+#else
+	err = hci_le_set_scan_enable(fd, 0x01, 0x00);
+#endif
+
+	if (err < 0) {
+		BLTS_LOGGED_PERROR("Enable scan failed");
+		goto cleanup;
+	}
+
+	BLTS_DEBUG("LE Scan ...\n");
+
+	err = print_advertising_devices(fd);
+	if (err < 0) {
+		BLTS_ERROR("Could not receive advertising events\n");
+		goto cleanup;
+	}
+
+#ifdef LE_SCAN_HAS_TO
+	err = hci_le_set_scan_enable(fd, 0x00, 0x00, 1000);
+#else
+	err = hci_le_set_scan_enable(fd, 0x00, 0x00);
+#endif
+	if (err < 0) {
+		BLTS_LOGGED_PERROR("Disable scan failed");
+		goto cleanup;
+	}
+
+	err = 0;
+
+cleanup:
+	hci_close_dev(fd);
+
+	return err;
+}
+
+int le_set_advertise_mode(struct bt_ctx *ctx, int adv_on)
+{
+	struct hci_request req;
+	le_set_advertise_enable_cp advertise_cp;
+	uint8_t status;
+	int ret, fd;
+
+	memset(&advertise_cp, 0, sizeof(advertise_cp));
+	memset(&req, 0, sizeof(req));
+
+	if (!ctx)
+		return -EINVAL;
+
+	if ((ctx->dev_id = hci_get_route(&ctx->remote_mac)) < 0) {
+		BLTS_LOGGED_PERROR("No route to remote device");
+		return -errno;
+	}
+
+	if ((fd = hci_open_dev(ctx->dev_id)) < 0) {
+		BLTS_LOGGED_PERROR("HCI device open failed");
+		return -errno;
+	}
+
+	advertise_cp.enable = adv_on ? 0x01 : 0x00;
+	req.ogf = OGF_LE_CTL;
+	req.ocf = OCF_LE_SET_ADVERTISE_ENABLE;
+	req.cparam = &advertise_cp;
+	req.clen = LE_SET_ADVERTISE_ENABLE_CP_SIZE;
+	req.rparam = &status;
+	req.rlen = 1;
+
+	BLTS_DEBUG("Setting advertise %s\n", adv_on ? "on" : "off");
+
+	ret = hci_send_req(fd, &req, 100);
+	if (ret < 0) {
+		BLTS_LOGGED_PERROR("Cannot set advertise mode");
+		hci_close_dev(fd);
+		return ret;
+	}
+
+	if (status)
+		BLTS_ERROR("Set advertise mode on hci%d returned status %d\n",
+			ctx->dev_id, status);
+
+	hci_close_dev(fd);
+	return status;
+}
+
+int le_connect_remote(struct bt_ctx *ctx)
+{
+	int err, fd;
+	uint16_t interval, latency, max_ce_length, max_interval, min_ce_length;
+	uint16_t min_interval, supervision_timeout, window, handle;
+	uint8_t initiator_filter, own_bdaddr_type, peer_bdaddr_type;
+
+	if (!ctx)
+		return -EINVAL;
+
+	if ((ctx->dev_id = hci_get_route(&ctx->remote_mac)) < 0) {
+		BLTS_LOGGED_PERROR("No route to remote device");
+		return -errno;
+	}
+
+	if ((fd = hci_open_dev(ctx->dev_id)) < 0) {
+		BLTS_LOGGED_PERROR("HCI device open failed");
+		return -errno;
+	}
+
+	peer_bdaddr_type = 0;
+	interval = htobs(0x4);
+	window = htobs(0x4);
+	initiator_filter = 0;
+	own_bdaddr_type = 0;
+	min_interval = htobs(0xF);
+	max_interval = htobs(0xF);
+	latency = htobs(0);
+	supervision_timeout = htobs(0x0C80);
+	min_ce_length = htobs(0x1);
+	max_ce_length = htobs(0x1);
+
+	err = hci_le_create_conn(fd, interval, window, initiator_filter,
+		peer_bdaddr_type, ctx->remote_mac, own_bdaddr_type, min_interval,
+		max_interval, latency, supervision_timeout,
+		min_ce_length, max_ce_length, &handle, 25000);
+	if (err < 0) {
+		BLTS_LOGGED_PERROR("Could not create connection");
+		hci_close_dev(fd);
+		return err;
+	}
+
+	BLTS_DEBUG("Connection handle %d\n", handle);
+
+	ctx->hci_fd = fd;
+	ctx->conn_handle = handle;
+
+	return 0;
+}
+
+int le_disconnect_remote(struct bt_ctx *ctx)
+{
+	int err, retval = 0;
+	uint8_t reason = HCI_OE_USER_ENDED_CONNECTION;
+
+	if (!ctx || ctx->hci_fd < 0 || ctx->conn_handle >= 0x0eff)
+		return -EINVAL;
+
+	err = hci_disconnect(ctx->hci_fd, ctx->conn_handle, reason, 10000);
+	if (err < 0) {
+		BLTS_LOGGED_PERROR("Cannot disconnect link");
+		retval = -errno;
+	}
+
+	hci_close_dev(ctx->hci_fd);
+	ctx->conn_handle = 0xffff;
+	ctx->hci_fd = -1;
+
+	return retval;
+}
+
+int le_tx_data(struct bt_ctx *ctx)
+{
+	int ret, bytes;
+	struct acl_test_packet p;
+	if(!ctx)
+		return -EINVAL;
+
+	ret = le_connect_remote(ctx);
+	if(ret) {
+		BLTS_ERROR("Could not connect to remote device, cannot continue.\n");
+		return ret;
+	}
+
+	memset(&p, 0, sizeof(struct acl_test_packet));
+	p.type = HCI_ACLDATA_PKT;
+	p.hdr.handle = htobs(acl_handle_pack(ctx->conn_handle, ACL_START));
+	p.hdr.dlen = htobs(strlen(acl_test_data));
+	memcpy(p.data, acl_test_data, p.hdr.dlen);
+
+	bytes = write(ctx->hci_fd, &p, 1 + HCI_ACL_HDR_SIZE + p.hdr.dlen);
+
+	if(bytes <= 0) {
+		BLTS_ERROR("Could not send data\n");
+		ret = errno ? -errno : -1;
+	}
+
+	sleep(WAIT_TIME_CONNECT_DISCONNECT);
+
+	le_disconnect_remote(ctx);
+
+	return ret;
+}
+
+int le_rx_data(struct bt_ctx *ctx)
+{
+	return hci_receive_acl_data(ctx);
+}
+
+#else /* !HAVE_BTLE_API */
+
+static void le_error_not_built()
+{
+	BLTS_ERROR("ERROR: Bluetooth LE support was not compiled in.\n");
+	BLTS_ERROR("Use a newer version of Bluez when building the tests.\n");
+}
+
+int do_le_scan(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+int le_set_advertise_mode(__attribute__((unused)) struct bt_ctx *ctx, __attribute__((unused)) int adv_on)
+{
+	return -1;
+}
+
+int le_connect_remote(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+int le_disconnect_remote(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	return -1;
+}
+
+int le_tx_data(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	le_error_not_built();
+	return -1;
+}
+
+int le_rx_data(__attribute__((unused)) struct bt_ctx *ctx)
+{
+	le_error_not_built();
+	return -1;
+}
+
+#endif /* HAVE_BTLE_API */

@@ -77,6 +77,8 @@ enum BLTSoFonoCases {
 	BLTS_OFONO_MULTIPARTY_CALL,
 	BLTS_OFONO_MULTIPARTY_CALL_PRIVATE,
 	BLTS_OFONO_RAT,
+	BLTS_OFONO_DATA_CONTEXT,
+	BLTS_OFONO_DATA_CONTEXT_PING,
 };
 
 #define G_VALUE_INIT {0,{{0}}}
@@ -97,6 +99,8 @@ enum BLTSoFonoCases {
 #define OFONO_CV_INTERFACE	"org.ofono.CallVolume"
 #define OFONO_METER_INTERFACE	"org.ofono.CallMeter"
 #define OFONO_RADIO_INTERFACE	"org.ofono.RadioSettings"
+#define OFONO_CONNMAN_INTERFACE	"org.ofono.ConnectionManager"
+#define OFONO_CONTEXT_INTERFACE "org.ofono.ConnectionContext"
 
 #define MAX_MODEMS		10	// maximum number of modems in system (hopefully, if more needed just increase)
 

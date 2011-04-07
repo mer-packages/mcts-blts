@@ -1,3 +1,9 @@
+blts-watchdog-tests (0.0.9) unstable; urgency=low
+
+  * Version update due to packaging change.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Tue, 08 Feb 2011 17:47:22 +0200
+
 blts-watchdog-tests (0.0.8-1) unstable; urgency=low
 
   * Debian packaging build-dependency update.

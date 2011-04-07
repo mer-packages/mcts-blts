@@ -26,10 +26,8 @@ config_getSN {
 
 config_getSI { 
     TARGET = swclient_get_service_instance
-    SOURCES += swclient_get_service_instance.cpp \
-    		service_parent.cpp
-    HEADERS += lsw_testcases.h \
-			service_parent.h
+    SOURCES += swclient_get_service_instance.cpp
+    HEADERS += lsw_testcases.h
 }
 
 config_getUnSI { 

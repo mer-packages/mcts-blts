@@ -84,6 +84,10 @@ GeoclueGeocode* create_geoclue_geocode ( TestProviderKey key );
 GeoclueProvider* create_geoclue_provider ( TestProviderKey key, TestProviderType type );
 GeoclueMasterClient* create_geoclue_master_client();
 
+void 
+geoclue_test_provider_address_start ( GeoclueMasterClient* client );
+void 
+geoclue_test_provider_position_start ( GeoclueMasterClient* client );
 G_END_DECLS
 
 #endif
