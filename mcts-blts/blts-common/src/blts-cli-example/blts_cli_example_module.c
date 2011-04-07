@@ -231,6 +231,66 @@ static int my_example_case_with_measurement(void* user_ptr, int test_num)
 }
 
 
+/* Try:
+ *   blts_cli_example -syncprep 2
+ *   (blts_cli_example -e <this test> -sync &); blts_cli_example -e <next test> -sync
+ */
+static int synctest_a(void* user_ptr, int test_num)
+{
+	/* BLTS_DEBUG("in test_a\n"); */
+
+	blts_sync_add_tag("test_sync_tag");
+	blts_sync_add_tag("test_sync_tag_1only");
+
+	BLTS_DEBUG("-> A: sync 1 (plain):\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> A: sync 1 done\n");
+
+	sleep(1);
+
+	BLTS_DEBUG("-> A: sync tagged:\n");
+	blts_sync_tagged("test_sync_tag");
+	BLTS_DEBUG("-> A: done\n");
+
+	sleep(1);
+
+	BLTS_DEBUG("-> A: sync tagged (1 only, this should not block):\n");
+	blts_sync_tagged("test_sync_tag_1only");
+	BLTS_DEBUG("-> A: done\n");
+
+	sleep(1);
+
+	BLTS_DEBUG("-> A: sync 2 (plain):\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> A: sync 2 done\n");
+	return 0;
+}
+
+static int synctest_b(void* user_ptr, int test_num)
+{
+	/* BLTS_DEBUG("in test_b\n"); */
+
+	blts_sync_add_tag("test_sync_tag");
+	sleep(2);
+
+	BLTS_DEBUG("-> B: sync 1 (plain):\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> B: sync 1 done\n");
+	sleep(2);
+
+	BLTS_DEBUG("-> B: sync tagged:\n");
+	blts_sync_tagged("test_sync_tag");
+	BLTS_DEBUG("-> B: done\n");
+	sleep(2);
+
+	BLTS_DEBUG("-> B: sync 2 (plain):\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> B: sync 2 done\n");
+
+	return 0;
+}
+
+
 
 /* Your test definitions */
 
@@ -247,6 +307,8 @@ static blts_cli_testcase my_example_cases[] =
 	{ "My example variant test A", my_example_case_6, 2000 },
 	{ "My example variant test B", my_example_case_7, 2000 },
 	{ "My example test with measurement", my_example_case_with_measurement, 2000 },
+	{ "My example test with sync points A", synctest_a, 20000 },
+	{ "My example test with sync points B", synctest_b, 20000 },
 	BLTS_CLI_END_OF_LIST
 };
 
