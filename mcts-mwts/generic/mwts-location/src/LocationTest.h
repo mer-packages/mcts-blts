@@ -122,6 +122,13 @@ public:
 	
 private:
     void CalculateAccuracy();
+
+private slots:
+    void OnPositionUpdated(const QGeoPositionInfo &info);
+    void OnTimeoutExpired();
+    void OnPositionSourceTimeoutExpired();
+
+private:
     // object for getting position info
     QGeoPositionInfoSource *m_gpisLocationSource;
     QTimer* m_pTimeout;
@@ -149,8 +156,14 @@ private:
     double m_antennaLatitude;
     double m_antennaLongitude;
     double m_antennaAltitude;
-
     double m_requiredProsent;
+
+    // accept range for received coordinates
+    double m_latitudeMin;
+    double m_latitudeMax;
+    double m_longitudeMin;
+    double m_longitudeMax;
+    bool m_bCoordinatesValid;
 
     // test driver/(A)GPSemulation
     TestDriver *m_pTestDriver;
@@ -158,12 +171,6 @@ private:
     bool m_useTestDriver;
     bool m_allow3Demulation;
     qreal m_emulatedRadius;
-
-
-private slots:
-    void OnPositionUpdated(const QGeoPositionInfo &info);
-    void OnTimeoutExpired();
-    void OnPositionSourceTimeoutExpired();
 };
 
 #endif //#ifndef _INCLUDED_LOCATION_TEST_H
