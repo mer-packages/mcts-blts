@@ -45,13 +45,13 @@ Requires:               mwts-sensors, mwts-sensors-generic-all, mwts-sensors-gen
 mwts-sensors generic meta package
 
 
-%package                cli
-Summary:                mwts-sensors command line tool
-Prefix:                 /usr/bin
-Group:                  Development/Tools
-Requires:               mwts-sensors
-%description            cli
-mwts-sensors command line tool
+#%package                cli
+#Summary:                mwts-sensors command line tool
+#Prefix:                 /usr/bin
+#Group:                  Development/Tools
+#Requires:               mwts-sensors
+#%description            cli
+#mwts-sensors command line tool
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -76,8 +76,8 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/*.cfg
 /usr/share/mwts-sensors-tests/tests.xml
 
-%files cli
-/usr/bin/mwts-sensors-cli
+#%files cli
+#/usr/bin/mwts-sensors-cli
 
 %files generic-config
 /usr/lib/tests/*

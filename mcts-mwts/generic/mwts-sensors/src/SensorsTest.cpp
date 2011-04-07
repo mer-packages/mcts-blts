@@ -31,6 +31,9 @@
 #include <QRotationSensor>
 #include <QTapSensor>
 #include <QSensorReading>
+
+#include <QTapReading>
+
 #include "stable.h"
 #include "SensorsTest.h"
 
@@ -57,6 +60,12 @@ void SensorsTest::OnInitialize()
 void SensorsTest::OnUninitialize()
 {
 	MWTS_ENTER;
+
+	if (m_Sensor)
+	{
+		delete m_Sensor;
+	}
+	disconnect();
 
 	MWTS_LEAVE;
 }
@@ -210,11 +219,11 @@ int SensorsTest::TestSensor()
     MWTS_DEBUG("Main loop stopped");
 
     // check if connected to backend
-    if (!m_Sensor->isConnectedToBackend())
+	/*if (!m_Sensor->isConnectedToBackend())
     {
         g_pResult->StepPassed("readingChanged", false);
         qCritical() << "Sensor is not connected to a backend. A sensor that has not been connected to a backend cannot do anything useful.";
-    }
+	}*/
 
 	m_Sensor->stop();
 	disconnect(m_Sensor,
@@ -231,7 +240,171 @@ int SensorsTest::TestSensor()
 	return 0;
 }
 
+///////////////////////////////////////////////////////////////////
 
+void SensorsTest::InitSensor(SensorsTest::SensorType type)
+{
+	MWTS_ENTER;
+
+	/*
+	currentSensorType = type;
+	switch (type)
+	{
+		case AccelerometerType:
+			m_Sensor = new QAccelerometer(this);
+			break;
+		case AmbientLightSensorType:
+			m_Sensor = new QAmbientLightSensor(this);
+			break;
+		case CompassType:
+			m_Sensor = new QCompass(this);
+			break;
+		case GyroscopeType:
+			//m_Sensor = new QGyroscope(this);
+			break;
+		case LightSensorType:
+			//m_Sensor = new QLightSensor(this);
+			break;
+		case MagnetometerType:
+			m_Sensor = new QMagnetometer(this);
+			break;
+		case OrientationSensorType:
+			m_Sensor = new QOrientationSensor(this);
+			break;
+		case ProximitySensorType:
+			m_Sensor = new QProximitySensor(this);
+			break;
+		case RotationSensorType:
+			m_Sensor = new QRotationSensor(this);
+			break;
+		case TapSensorType:
+			m_Sensor = new QTapSensor(this);
+			qDebug() << "Tap sensor initialized";
+			break;
+		default:
+			break;
+	}*/
+
+	m_Sensor = new QTapSensor(this);
+
+	connect(m_Sensor, SIGNAL(activeChanged()), this, SLOT(onActiveChanged()));
+	connect(m_Sensor, SIGNAL(availableSensorsChanged()), this, SLOT(onAvailableSensorsChanged()));
+	connect(m_Sensor, SIGNAL(busyChanged()), this, SLOT(onBusyChanged()));
+	connect(m_Sensor, SIGNAL(readingChanged()), this, SLOT(onReadingChanged()));
+	connect(m_Sensor, SIGNAL(sensorError(int)), this, SLOT(onSensorError(int)));
+
+	QTimer* t = new QTimer(this);
+	connect(t, SIGNAL(timeout()), this, SLOT(debug1()));
+	t->start(500);
+
+	m_Sensor->connectToBackend();
+
+	m_Sensor->start();
+	g_pTest->Start();
+
+	MWTS_LEAVE;
+}
+
+void SensorsTest::StartSensor()
+{
+	MWTS_ENTER;
+
+	qDebug() << "Enabling sensor";
+
+	//m_Sensor->start();
+	//g_pTest->Start();
+
+	MWTS_LEAVE;
+}
+
+
+/* slots */
+
+void SensorsTest::onActiveChanged()
+{
+	qDebug() << "active changed";
+}
+
+void SensorsTest::onAvailableSensorsChanged()
+{
+	qDebug() << "available sensors changed";
+}
+
+void SensorsTest::onBusyChanged()
+{
+	qDebug() << " busy changed";
+}
+
+void SensorsTest::onReadingChanged()
+{
+	switch (currentSensorType)
+	{
+	case AccelerometerType:
+
+		break;
+	case AmbientLightSensorType:
+
+		break;
+	case CompassType:
+
+		break;
+	case GyroscopeType:
+
+		break;
+	case LightSensorType:
+
+		break;
+	case MagnetometerType:
+
+		break;
+	case OrientationSensorType:
+
+		break;
+	case ProximitySensorType:
+
+		break;
+	case RotationSensorType:
+
+		break;
+		case TapSensorType:
+		{
+			QTapSensor* s1 = dynamic_cast<QTapSensor*>(m_Sensor);
+			QTapReading* reading1 = s1->reading();
+			qDebug() << reading1->tapDirection();
+			break;
+		}
+	default:
+		break;
+	}
+
+}
+
+void SensorsTest::onSensorError(int error)
+{
+	qDebug() << "sensor error has occured" << error;
+}
+
+void SensorsTest::debug1()
+{
+	if (m_Sensor->isConnectedToBackend())
+		qDebug() << "isConnectedToBackend";
+	else
+		qDebug() << "isNOTConnectedToBackend";
+
+	if (m_Sensor->isActive())
+		qDebug() << "isActive";
+	else
+		qDebug() << "isNOTActive";
+
+	if (m_Sensor->isBusy())
+		qDebug() << "is Busy";
+	else
+		qDebug() << "isNOTBusy";
+
+	qDebug() << "error code " << m_Sensor->error();
+}
+
+///////////////////////////////////////////////////////
 
 
 /* For Sensor callbacks */
@@ -239,7 +412,7 @@ int SensorsTest::TestSensor()
 // Note that some errors will cause the sensor to stop working.
 // You should call isActive() to determine if the sensor is still running.
 
-void SensorsTest::sensorError( int error )
+/*void SensorsTest::sensorError( int error )
 {
 	MWTS_ENTER;
 	MWTS_DEBUG("sensorError " + QString::number(error));
@@ -276,4 +449,4 @@ void SensorsTest::readingChanged()
 	Stop();
 
 	MWTS_LEAVE;
-}
+}*/

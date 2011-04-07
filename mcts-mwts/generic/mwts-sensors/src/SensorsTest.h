@@ -44,6 +44,24 @@ class SensorsTest : public MwtsTest
 {
 	Q_OBJECT
 public:
+
+	/**
+	 *	Indicates what type of sensor is used at the moment.
+	 */
+	enum SensorType
+	{
+		AccelerometerType,
+		AmbientLightSensorType,
+		CompassType,
+		GyroscopeType,
+		LightSensorType,
+		MagnetometerType,
+		OrientationSensorType,
+		ProximitySensorType,
+		RotationSensorType,
+		TapSensorType
+	};
+
 	/**
 	 *  @fn SensorsTest( )
 	 *  @brief Constructor for SensorsTest.
@@ -67,6 +85,12 @@ public:
 	 *  @brief Virtual uninitialization function. Derived from MwtsTest.
 	 */
 	void OnUninitialize();
+
+	void InitSensor(SensorsTest::SensorType type);
+
+	void StartSensor();
+
+	///////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 *  @fn void TestAccelerometer()
@@ -140,6 +164,8 @@ public:
 	 */
 	int TestTapSensor();
 
+	///////////////////////////////////////////////////////////////////////////////////
+
 
 
 private:
@@ -154,25 +180,34 @@ private:
 	int TestSensor();
 
 
-public slots:
+private slots:
 
 /* For Sensor callbacks */
+
+	void onActiveChanged();
+	void onAvailableSensorsChanged();
+	void onBusyChanged();
+	void onReadingChanged();
+	void onSensorError(int error);
+
+	void debug1();
 
  /**
   *  @fn void sensorError()
   *  @brief This slot is called when an error code is set on the sensor.
   */
-    void sensorError( int error );
+//	void sensorError( int error );
 
     /**
       *  @fn void readingChanged()
       *  @brief This slot is emitted when the reading has changed.
       */
-    void readingChanged();
+//	void readingChanged();
 
 
 private:
 	QtMobility::QSensor* m_Sensor;
+	SensorType currentSensorType;
 	bool m_is_readingChanged;
 };
 

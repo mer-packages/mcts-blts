@@ -174,6 +174,84 @@ LOCAL int TapSensorTestFunc(MinItemParser * item)
 	return ret;
 }
 
+/**
+	Initializes sensor of type given in parameter
+ */
+LOCAL int InitSensor(MinItemParser * item)
+{
+	MWTS_ENTER;
+
+	char *type = NULL;
+
+	if (mip_get_next_string(item, &type))
+	{
+		qCritical() << "The type must contain chars.";
+		return 1;
+	}
+	else
+	{
+		QString s(type);
+		if (s == "accelerometer")
+		{
+			Test.InitSensor(SensorsTest::AccelerometerType);
+		}
+		else if (s == "ambient_light_sensor")
+		{
+			Test.InitSensor(SensorsTest::AmbientLightSensorType);
+		}
+		else if (s == "compass")
+		{
+			Test.InitSensor(SensorsTest::CompassType);
+		}
+		else if (s == "gyroscope")
+		{
+			Test.InitSensor(SensorsTest::GyroscopeType);
+		}
+		else if (s == "light_sensor")
+		{
+			Test.InitSensor(SensorsTest::LightSensorType);
+		}
+		else if (s == "magnetometer")
+		{
+			Test.InitSensor(SensorsTest::MagnetometerType);
+		}
+		else if (s == "orientation_sensor")
+		{
+			Test.InitSensor(SensorsTest::OrientationSensorType);
+		}
+		else if (s == "proximity_sensor")
+		{
+			Test.InitSensor(SensorsTest::ProximitySensorType);
+		}
+		else if (s == "rotation_sensor")
+		{
+			Test.InitSensor(SensorsTest::RotationSensorType);
+		}
+		else if (s == "tap_sensor")
+		{
+			Test.InitSensor(SensorsTest::TapSensorType);
+		}
+		else
+		{
+		   qCritical() << "No such type";
+		   return 1;
+		}
+	}
+	free(type);
+
+	return ENOERR;
+}
+
+/**
+  Starts test and activate sensor
+ */
+LOCAL int StartTest(__attribute__((unused)) MinItemParser * item)
+{
+	 MWTS_ENTER;
+	 Test.StartSensor();
+	 return ENOERR;
+}
+
 
 
 /**
@@ -192,6 +270,9 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "ProximitySensorTestFunc", ProximitySensorTestFunc);
     ENTRYTC (*list, "RotationSensorTestFunc", RotationSensorTestFunc);
     ENTRYTC (*list, "TapSensorTestFunc", TapSensorTestFunc);
+
+	ENTRYTC (*list, "InitSensor", InitSensor);
+	ENTRYTC (*list, "StartTest", StartTest);
 
 	return ENOERR;
 }
