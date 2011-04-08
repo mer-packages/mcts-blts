@@ -30,8 +30,8 @@
 #include <QProximitySensor>
 #include <QRotationSensor>
 #include <QTapSensor>
-#include <QSensorReading>
 
+#include <QSensorReading>
 #include <QTapReading>
 
 #include "stable.h"
@@ -64,6 +64,7 @@ void SensorsTest::OnUninitialize()
 	if (m_Sensor)
 	{
 		delete m_Sensor;
+		m_Sensor = NULL;
 	}
 	disconnect();
 
@@ -72,7 +73,7 @@ void SensorsTest::OnUninitialize()
 
 
 
-int SensorsTest::TestAccelerometer()
+/*int SensorsTest::TestAccelerometer()
 {
 	MWTS_ENTER;
 	int ret;
@@ -219,11 +220,11 @@ int SensorsTest::TestSensor()
     MWTS_DEBUG("Main loop stopped");
 
     // check if connected to backend
-	/*if (!m_Sensor->isConnectedToBackend())
+	if (!m_Sensor->isConnectedToBackend())
     {
         g_pResult->StepPassed("readingChanged", false);
         qCritical() << "Sensor is not connected to a backend. A sensor that has not been connected to a backend cannot do anything useful.";
-	}*/
+	}
 
 	m_Sensor->stop();
 	disconnect(m_Sensor,
@@ -238,7 +239,7 @@ int SensorsTest::TestSensor()
 	g_pResult->StepPassed("readingChanged", m_is_readingChanged);
 	MWTS_LEAVE;
 	return 0;
-}
+}*/
 
 ///////////////////////////////////////////////////////////////////
 
@@ -286,6 +287,7 @@ void SensorsTest::InitSensor(SensorsTest::SensorType type)
 	}*/
 
 	m_Sensor = new QTapSensor(this);
+	//m_Sensor = new QSensor("TapSensor");
 
 	connect(m_Sensor, SIGNAL(activeChanged()), this, SLOT(onActiveChanged()));
 	connect(m_Sensor, SIGNAL(availableSensorsChanged()), this, SLOT(onAvailableSensorsChanged()));
@@ -295,9 +297,9 @@ void SensorsTest::InitSensor(SensorsTest::SensorType type)
 
 	QTimer* t = new QTimer(this);
 	connect(t, SIGNAL(timeout()), this, SLOT(debug1()));
-	t->start(500);
+	t->start(1000);
 
-	m_Sensor->connectToBackend();
+	//m_Sensor->connectToBackend();
 
 	m_Sensor->start();
 	g_pTest->Start();
@@ -366,11 +368,12 @@ void SensorsTest::onReadingChanged()
 	case RotationSensorType:
 
 		break;
-		case TapSensorType:
+	case TapSensorType:
 		{
 			QTapSensor* s1 = dynamic_cast<QTapSensor*>(m_Sensor);
 			QTapReading* reading1 = s1->reading();
 			qDebug() << reading1->tapDirection();
+			//qDebug() << "can read now";
 			break;
 		}
 	default:

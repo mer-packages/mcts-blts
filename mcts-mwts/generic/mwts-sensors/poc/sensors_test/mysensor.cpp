@@ -9,6 +9,7 @@ MySensor::MySensor()
 {
 
 	s = new QTapSensor(this);
+	//s = new QSensor("TapSensor");
 
 	connect(s, SIGNAL(activeChanged()), this, SLOT(onActiveChanged()));
 	connect(s, SIGNAL(availableSensorsChanged()), this, SLOT(onAvailableSensorsChanged()));
@@ -18,7 +19,7 @@ MySensor::MySensor()
 
 	QTimer* t = new QTimer(this);
 	connect(t, SIGNAL(timeout()), this, SLOT(show()));
-	t->start(500);
+	t->start(1000);
 
 	s->start();
 
@@ -44,11 +45,12 @@ void MySensor::onReadingChanged()
 	QTapSensor* s1 = dynamic_cast<QTapSensor*>(s);
 	QTapReading* reading1 = s1->reading();
 	qDebug() << reading1->tapDirection();
+	//qDebug() << "Can read now";
 }
 
 void MySensor::onSensorError(int error)
 {
-	qDebug() << "error";
+	qDebug() << "error code " << error;
 }
 
 

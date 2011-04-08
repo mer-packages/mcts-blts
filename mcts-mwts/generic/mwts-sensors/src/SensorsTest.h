@@ -26,7 +26,7 @@
 #define _SENSORS_TEST_H
 
 #include <QSensor>
-#include <QApplication>
+//#include <QApplication>
 
 #include <MwtsCommon>
 
@@ -99,7 +99,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestAccelerometer();
+	//int TestAccelerometer();
 
 	/**
 	 *  @fn void TestAmbientLightSensor()
@@ -108,7 +108,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestAmbientLightSensor();
+	//int TestAmbientLightSensor();
 
 	/**
 	 *  @fn void TestCompass()
@@ -117,7 +117,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestCompass();
+	//int TestCompass();
 
 	/**
 	 *  @fn void TestMagnetometer()
@@ -126,7 +126,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestMagnetometer();
+	//int TestMagnetometer();
 
 	/**
 	 *  @fn void TestOrientationSensor()
@@ -135,7 +135,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestOrientationSensor();
+	//int TestOrientationSensor();
 
 	/**
 	 *  @fn void TestProximitySensor()
@@ -144,7 +144,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestProximitySensor();
+	//int TestProximitySensor();
 
 	/**
 	 *  @fn void RotationSensor()
@@ -153,7 +153,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestRotationSensor();
+	//int TestRotationSensor();
 
 	/**
 	 *  @fn void TapSensor()
@@ -162,7 +162,7 @@ public:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestTapSensor();
+	//int TestTapSensor();
 
 	///////////////////////////////////////////////////////////////////////////////////
 
@@ -177,7 +177,7 @@ private:
      *         If timeout is got first, test is written failed to the result file.
 	 *  @return 0, if successfull. Error otherwise.
 	 */
-	int TestSensor();
+	//int TestSensor();
 
 
 private slots:

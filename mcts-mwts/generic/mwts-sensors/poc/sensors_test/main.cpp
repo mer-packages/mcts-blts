@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
 
 	//MySensor* s = new MySensor("QTapSensor");
-MySensor s;
+MySensor* s = new MySensor();
 	//s->start();
 
 

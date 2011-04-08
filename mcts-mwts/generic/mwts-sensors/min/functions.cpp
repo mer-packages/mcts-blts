@@ -43,14 +43,14 @@ SensorsTest Test;
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int AccelerometerTestFunc (MinItemParser * item)
+/*LOCAL int AccelerometerTestFunc (MinItemParser * item)
 {
 	MWTS_ENTER;
 	
 	int ret = 1;
 	ret = Test.TestAccelerometer();
 	return ret;
-}
+}*/
 
 /**
  *  @fn int AmbientLightSensorTestFunc()
@@ -59,14 +59,14 @@ LOCAL int AccelerometerTestFunc (MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int AmbientLightSensorTestFunc (MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int AmbientLightSensorTestFunc (MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestAmbientLightSensor();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestAmbientLightSensor();
+//	return ret;
+//}
 
 /**
  *  @fn int CompassTestFunc()
@@ -75,14 +75,14 @@ LOCAL int AmbientLightSensorTestFunc (MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int CompassTestFunc(MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int CompassTestFunc(MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestCompass();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestCompass();
+//	return ret;
+//}
 
 
 
@@ -93,14 +93,14 @@ LOCAL int CompassTestFunc(MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int MagnetometerTestFunc(MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int MagnetometerTestFunc(MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestMagnetometer();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestMagnetometer();
+//	return ret;
+//}
 
 
 
@@ -111,14 +111,14 @@ LOCAL int MagnetometerTestFunc(MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int OrientationSensorTestFunc(MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int OrientationSensorTestFunc(MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestOrientationSensor();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestOrientationSensor();
+//	return ret;
+//}
 
 
 
@@ -129,14 +129,14 @@ LOCAL int OrientationSensorTestFunc(MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int ProximitySensorTestFunc(MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int ProximitySensorTestFunc(MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestProximitySensor();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestProximitySensor();
+//	return ret;
+//}
 
 
 
@@ -147,14 +147,14 @@ LOCAL int ProximitySensorTestFunc(MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int RotationSensorTestFunc(MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int RotationSensorTestFunc(MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestRotationSensor();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestRotationSensor();
+//	return ret;
+//}
 
 
 
@@ -165,14 +165,14 @@ LOCAL int RotationSensorTestFunc(MinItemParser * item)
  *         If timeout is got first, test is written failedto the result file.
  *  @return True, if successfull. False otherwise.
  */
-LOCAL int TapSensorTestFunc(MinItemParser * item)
-{
-	MWTS_ENTER;
+//LOCAL int TapSensorTestFunc(MinItemParser * item)
+//{
+//	MWTS_ENTER;
 
-	int ret = 1;
-	ret = Test.TestTapSensor();
-	return ret;
-}
+//	int ret = 1;
+//	ret = Test.TestTapSensor();
+//	return ret;
+//}
 
 /**
 	Initializes sensor of type given in parameter
@@ -262,14 +262,14 @@ int ts_get_test_cases (DLList ** list)
 	// declare common functions like Init, Close, SetTestTimeout ...
 	MwtsMin::DeclareFunctions(list);
 
-    ENTRYTC (*list, "AccelerometerTestFunc", AccelerometerTestFunc);
+	/*ENTRYTC (*list, "AccelerometerTestFunc", AccelerometerTestFunc);
     ENTRYTC (*list, "AmbientLightSensorTestFunc", AmbientLightSensorTestFunc);
     ENTRYTC (*list, "CompassTestFunc", CompassTestFunc);
     ENTRYTC (*list, "MagnetometerTestFunc", MagnetometerTestFunc);
     ENTRYTC (*list, "OrientationSensorTestFunc", OrientationSensorTestFunc);
     ENTRYTC (*list, "ProximitySensorTestFunc", ProximitySensorTestFunc);
     ENTRYTC (*list, "RotationSensorTestFunc", RotationSensorTestFunc);
-    ENTRYTC (*list, "TapSensorTestFunc", TapSensorTestFunc);
+	ENTRYTC (*list, "TapSensorTestFunc", TapSensorTestFunc);*/
 
 	ENTRYTC (*list, "InitSensor", InitSensor);
 	ENTRYTC (*list, "StartTest", StartTest);
