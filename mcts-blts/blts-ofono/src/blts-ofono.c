@@ -49,8 +49,8 @@
 #include "call-volume-cases.h"
 #include "call-meter-cases.h"
 #include "radio-settings.h"
-
 #include "data-context.h"
+#include "call-settings.h"
 
 static void my_ofono_help(const char* help_msg_base)
 {
@@ -91,7 +91,9 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	int c, ret;
 	my_ofono_data* my_data = malloc(sizeof(my_ofono_data));
 	memset(my_data, 0, sizeof(my_ofono_data));
-
+	// override default timeout
+	// TODO:: get here global timeout variable
+	my_data->timeout = DEFAULT_TIMEOUT;
 	while((c = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1)
 	{
 		switch(c)
@@ -1240,6 +1242,7 @@ static blts_cli_testcase my_ofono_cases[] =
 	{ "oFono - Change Radio Access Technology", my_ofono_chage_radio_technology, 0 },
 	{ "oFono - Data context test", ofono_test_data_context, 0 },
 	{ "oFono - Data context ping test", ofono_test_data_context_download, 0 },
+	{ "oFono - Call settings, switch 'call waiting'", blts_ofono_settings_waiting, 60000 },
 
 
 	BLTS_CLI_END_OF_LIST

@@ -78,11 +78,13 @@ enum BLTSoFonoCases {
 	BLTS_OFONO_RAT,
 	BLTS_OFONO_DATA_CONTEXT,
 	BLTS_OFONO_DATA_CONTEXT_PING,
+	BLTS_OFONO_CALL_SETTINGS_WAITING,
 };
 
 #define G_VALUE_INIT {0,{{0}}}
 
 #define	DEFAULT_MODEM		"/isimodem0"	//obsolete, modems are found through oFono
+#define DEFAULT_TIMEOUT		200000
 
 /* oFono interfaces and default paths */
 #define OFONO_BUS		"org.ofono"
@@ -100,6 +102,7 @@ enum BLTSoFonoCases {
 #define OFONO_RADIO_INTERFACE	"org.ofono.RadioSettings"
 #define OFONO_CONNMAN_INTERFACE	"org.ofono.ConnectionManager"
 #define OFONO_CONTEXT_INTERFACE "org.ofono.ConnectionContext"
+#define OFONO_CALL_SETTINGS_INTERFACE "org.ofono.CallSettings"
 
 #define MAX_MODEMS		10	// maximum number of modems in system (hopefully, if more needed just increase)
 

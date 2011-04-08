@@ -1,4 +1,4 @@
-/* dual-call-cases.c -- Dual voicecall cases for blts-ofono
+/* data-context.c -- Dual voicecall cases for blts-ofono
 
  Copyright (C) 2000-2010, Nokia Corporation.
 

@@ -297,7 +297,14 @@ Context:
 
  * oFono - Data context download test
         Activates data context and verifies it by using ping command
-          
+
+
+Call settings:
+
+ * oFono - Call settings, switch 'call waiting'
+ 	Changes the state of 'call waiting'
+ 	disabled -> enabled or
+ 	enabled -> disabled depending on initial state          
 
 
 General cases:
