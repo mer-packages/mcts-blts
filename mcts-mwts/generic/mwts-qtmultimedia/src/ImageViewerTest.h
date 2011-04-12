@@ -68,18 +68,21 @@ public:
 
 
     /**
-     * Gets directory/file path as a  paramater
-     * and displays every image from the directory or only a given file
-     * @param directory/file path to the images(s)
-     * @param if no parameter given, then MultimediaTest.conf path is default
+     * Displays image/s which were set with SetImageTimeout method
      */
-    void PlayImageViewer(QString path);
+    void PlayImageViewer();
 
     /**
      * Sets the timeout of the image playing
      * @param image playing timeout in milliseconds
      */
      void SetImageTimeout(int milliseconds);
+
+     /**
+      * Sets directory where images are of path to image file
+      * @param path directory/file path
+      */
+     void SetImageViewerPath(QString path);
 
 private:
     //The main object used for image viewing
@@ -88,10 +91,6 @@ private:
     QMediaPlaylist *playlist;
     //Object for playlist setting up, later binding to viewer
     QVideoWidget *display;
-    //Integer holds the duration value
-    int duration;
-    //Ugly solution for pathing indicated by startPlayImageViewer()
-    QString tmppath;
 
     /**
      * Gets directory/filename path as a  paramater
@@ -128,10 +127,6 @@ private slots:
     */
     void currentMediaChanged(const QMediaContent &content);
 
-    /**
-    * Ugly solution, the MIN test framwork indicated to be placed regarding the lack of QApplication's main event loop
-    */
-    void startPlayImageViewer();
 };
 
 #endif //#ifndef _IMAGE_VIEWER_TEST_H

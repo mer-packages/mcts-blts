@@ -46,7 +46,21 @@ void ImageViewerTest::OnInitialize()
 {
     MWTS_ENTER;
 
-    duration = g_pConfig->value("VIEWER/duration").toInt();
+    viewer = new QMediaImageViewer();
+    display = new QVideoWidget(g_pMainWindow);
+    playlist = new QMediaPlaylist(viewer);
+
+    viewer->bind(display);
+    viewer->setPlaylist(playlist);
+
+    g_pMainWindow->setCentralWidget(display);
+    g_pMainWindow->setWindowTitle(tr("Image Viewer"));
+    g_pMainWindow->showFullScreen();
+
+    connect(viewer, SIGNAL(stateChanged(QMediaImageViewer::State)), this, SLOT(stateChanged(QMediaImageViewer::State)));
+    connect(viewer, SIGNAL(mediaStatusChanged(QMediaImageViewer::MediaStatus)), this, SLOT(statusChanged(QMediaImageViewer::MediaStatus)));
+    connect(viewer, SIGNAL(elapsedTimeChanged(int)), this, SLOT(elapsedTimeChanged(int)));
+    connect(playlist, SIGNAL(currentMediaChanged(QMediaContent)), this, SLOT(currentMediaChanged(QMediaContent)));
 
     MWTS_LEAVE;
 }
@@ -55,14 +69,33 @@ void ImageViewerTest::OnUninitialize()
 {
     MWTS_ENTER;
 
+    if (playlist)
+    {
+        delete playlist;
+        qDebug() << "playlist removed";
+        playlist = NULL;
+    }
+    if (viewer)
+    {
+        delete viewer;
+        qDebug() << "viewer removed";
+        viewer = NULL;
+    }
+    if (display)
+    {
+        delete display;
+        qDebug() << "display removed";
+        display = NULL;
+    }
+
     MWTS_LEAVE;
 }
 
-void ImageViewerTest::PlayImageViewer(QString path)
+void ImageViewerTest::PlayImageViewer()
 {
     MWTS_ENTER;
-    tmppath=path;
-    QTimer::singleShot(100, this, SLOT(startPlayImageViewer()));
+
+    viewer->play();
     g_pTest->Start();
 
     MWTS_LEAVE;
@@ -110,9 +143,23 @@ void ImageViewerTest::SetImageTimeout(int milliseconds)
 {
     MWTS_ENTER;
 
-    duration = milliseconds;
-
+    viewer->setTimeout(milliseconds);
+    qDebug() << "Image displayed duration time set to: " << milliseconds;
     MWTS_LEAVE;
+}
+
+void ImageViewerTest::SetImageViewerPath(QString path)
+{
+    if (path.isEmpty())
+    {
+        qDebug() << "Using default directory/file path";
+        openDirectory(g_pConfig->value("VIEWER/path").toString());
+    }
+    else
+    {
+        qDebug() << "Using script with give path";
+        openDirectory(path);
+    }
 }
 
 void ImageViewerTest::stateChanged(QMediaImageViewer::State state)
@@ -167,44 +214,4 @@ void ImageViewerTest::elapsedTimeChanged(int time)
 void ImageViewerTest::currentMediaChanged(const QMediaContent &content)
 {
     qDebug() << "Playlist item: " << content.canonicalUrl();
-}
-
-void ImageViewerTest::startPlayImageViewer()
-{
-    viewer = new QMediaImageViewer(this);
-    display = new QVideoWidget(g_pMainWindow);
-    playlist = new QMediaPlaylist(viewer);
-
-    viewer->bind(display);
-    viewer->bind(playlist);
-
-    viewer->setTimeout(duration);
-    qDebug() << "Image displayed duration time:" << viewer->timeout();
-
-    g_pMainWindow->setCentralWidget(display);
-    g_pMainWindow->setWindowTitle(tr("Image Viewer"));
-    g_pMainWindow->showFullScreen();
-
-    connect(viewer, SIGNAL(stateChanged(QMediaImageViewer::State)),
-            this, SLOT(stateChanged(QMediaImageViewer::State)));
-    connect(viewer, SIGNAL(mediaStatusChanged(QMediaImageViewer::MediaStatus)),
-            this, SLOT(statusChanged(QMediaImageViewer::MediaStatus)));
-    connect(viewer, SIGNAL(elapsedTimeChanged(int)),
-            this, SLOT(elapsedTimeChanged(int)));    
-    connect(playlist, SIGNAL(currentMediaChanged(QMediaContent)),
-            this, SLOT(currentMediaChanged(QMediaContent)));
-
-    if (tmppath.isEmpty())
-    {
-        qDebug() << "Using default directory/file path";
-        openDirectory(g_pConfig->value("VIEWER/path").toString());
-    }
-    else
-    {
-        qDebug() << "Using script with give path";
-        openDirectory(tmppath);
-    }
-
-    qDebug () << "g_PMainWindow is visible:" << g_pMainWindow->isVisible();
-    viewer->play();
 }

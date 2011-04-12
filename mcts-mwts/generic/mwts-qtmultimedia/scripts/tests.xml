@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
-  <suite name="mwts-multimedia-audiorecorder-tests" domain="System">
-    <!--This set contains test cases from mwts-multimedia-audiorecorder.cfg-->
+  <suite name="mwts-qtmultimedia-audiorecorder-tests" domain="System">
+    <!--This set contains test cases from mwts-qtmultimedia-audiorecorder.cfg-->
     <set name="Functional test" description="Multimedia audio recording functionality tests" feature="Settings" type="Functional" >
       <case name="FUTE-Multimedia_Record_audio_mono_1channel_48KHZ_256kbs_vorbis" subfeature="Record" timeout="120" description=
         "Purpose
@@ -125,8 +125,8 @@
     </set>
   </suite>
 
-  <suite name="mwts-multimedia-imageviewer-tests" domain="Visual">
-    <!--This set contains test cases from mwts-multimedia-imageviewer*.cfg-->   
+  <suite name="mwts-qtmultimedia-imageviewer-tests" domain="Visual">
+    <!--This set contains test cases from mwts-qtmultimedia-imageviewer*.cfg-->   
     <set name="Imageviewing_Reliability" description="Image viewing reliability tests" feature="Still Viewing" type="Iterative" >
       <case name="NFT-Imageviewing-Show_1MB_JPG_image-ITER" subfeature="Show" description=
             "Purpose
@@ -203,8 +203,8 @@
     </set>
   </suite>
 
-  <suite name="mwts-multimedia-fmradio-tests" domain="System">
-    <!--This set contains test cases from mwts-multimedia-fmradio.cfg-->
+  <suite name="mwts-qtmultimedia-fmradio-tests" domain="System">
+    <!--This set contains test cases from mwts-qtmultimedia-fmradio.cfg-->
     <set name="Functional test" description="Multimedia fm radio functionality tests" feature="Settings" type="Functional" >
       <case name="FUTE-Multimedia_FMRadio_Tune_on_active_frequency" subfeature="" timeout="120" description=
         "Purpose
@@ -234,7 +234,7 @@
       </case>
     </set>
 
-    <!--This set contains test cases from mwts-multimedia-fmradio-nft.cfg-->
+    <!--This set contains test cases from mwts-qtmultimedia-fmradio-nft.cfg-->
     <set name="Non functional test" description="Multimedia fm radio non functional tests" feature="Settings" type=" Non Functional" >
       <case name="NFT-FMRadio_Scan_frequency-LATE" subfeature="" timeout="120" description=
         "Purpose

@@ -33,10 +33,10 @@ MultimediaTest::MultimediaTest()
 {        
     MWTS_ENTER;
 
-    audioRecorder = new AudioRecorderTest;
-    imageViewer = new ImageViewerTest;
-    fmRadio = new FMRadioTest;
-    audioPlayer = new AudioPlayerTest;
+    //audioRecorder = new AudioRecorderTest;
+    //imageViewer = new ImageViewerTest;
+    //fmRadio = new FMRadioTest;
+    //mediaPlayer = new MediaPlayerTest;
 
     MWTS_LEAVE;
 }
@@ -51,10 +51,15 @@ void MultimediaTest::OnInitialize()
 {
     MWTS_ENTER;
 
-    audioRecorder->OnInitialize();
-    imageViewer->OnInitialize();
-    fmRadio->OnInitialize();
-    audioPlayer->OnInitialize();
+    //audioRecorder->OnInitialize();
+    //imageViewer->OnInitialize();
+    //fmRadio->OnInitialize();
+    //mediaPlayer->OnInitialize();
+
+    audioRecorder = NULL;
+    imageViewer = NULL;
+    fmRadio = NULL;
+    mediaPlayer = NULL;
 
     MWTS_LEAVE;
 }
@@ -63,35 +68,60 @@ void MultimediaTest::OnUninitialize()
 {
     MWTS_ENTER;
 
-    imageViewer->OnUninitialize();
     if(imageViewer)
     {
+        imageViewer->OnUninitialize();
         delete imageViewer;
         imageViewer = NULL;
     }
 
-    audioRecorder->OnUninitialize();
     if(audioRecorder)
     {
+        audioRecorder->OnUninitialize();
         delete audioRecorder;
         audioRecorder = NULL;
     }
 
-    fmRadio->OnUninitialize();
     if(fmRadio)
     {
+        fmRadio->OnUninitialize();
         delete fmRadio;
         fmRadio = NULL;
     }
 
-    audioPlayer->OnUninitialize();
-    if (audioPlayer)
+    if (mediaPlayer)
     {
-        delete audioPlayer;
-        audioPlayer = NULL;
+        mediaPlayer->OnUninitialize();
+        delete mediaPlayer;
+        mediaPlayer = NULL;
     }
 
     MWTS_LEAVE;
+}
+
+void MultimediaTest::EnableFeature(featureName name)
+{
+    switch (name)
+    {
+    case audioRecorderFeature:
+        audioRecorder = new AudioRecorderTest;
+        audioRecorder->OnInitialize();
+        break;
+    case imageViewerFeature:
+        imageViewer = new ImageViewerTest;
+        imageViewer->OnInitialize();
+        break;
+    case radioPlayerFeature:
+        fmRadio = new FMRadioTest;
+        fmRadio->OnInitialize();
+        break;
+    case mediaPlayerFeature:
+        mediaPlayer = new MediaPlayerTest;
+        mediaPlayer->OnInitialize();
+        break;
+    default:
+        break;
+    }
 }
 
 

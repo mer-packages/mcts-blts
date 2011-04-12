@@ -1,5 +1,5 @@
-TARGET = mwts-multimedia
-VERSION = 0.0.1
+TARGET = mwts-qtmultimedia
+VERSION = 0.1.4
 
 TEMPLATE = lib
 CONFIG += debug
@@ -20,15 +20,13 @@ SOURCES += \
         AudioRecorderTest.cpp \
         ImageViewerTest.cpp \
         FMRadioTest.cpp \
-        MultimediaTest.cpp \
-        AudioPlayerTest.cpp
+        MultimediaTest.cpp
 
 HEADERS += \
         AudioRecorderTest.h \
         ImageViewerTest.h \
         FMRadioTest.h \
-        MultimediaTest.h \
-        AudioPlayerTest.h
+        MultimediaTest.h
 
 LIBS += -lmwts-common
 	

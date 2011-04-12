@@ -28,24 +28,17 @@
 #include <QApplication>
 int main( int argc, char** argv )
 {
-   QApplication app(argc, argv);
-   MultimediaTest test;
-   /* MultimediaTest *test = new MultimediaTest;
-    test->Initialize();
-    test->audioRecorder->SetRecordingDuration(4000);
-    qDebug() << "Set codec :" << test->audioRecorder->SetCodec("audio/PCM");
+    qDebug() << "In main function";
+    MultimediaTest test;
+    MwtsApp::EnableUI(true);
+    //test.SetCaseName("MT1");
 
-    test->audioRecorder->SetBitRate(256000);
-    test->audioRecorder->SetSampleRate(48000);
-    test->audioRecorder->SetChannelCount(2);
-    qDebug() << "Record result: " << test->audioRecorder->Record();
-*/
-  test.imageViewer->PlayImageViewer("/home/meego/Pictures");
-  //test->audioRecorder->SetCodec("audio/PCM");
-  //test->audioRecorder->Record();
-  //test->Uninitialize();
-  app.exec();
-    //delete test;
+    test.Initialize();
 
+    test.imageViewer->SetImageTimeout(10000);
+    test.imageViewer->SetImageViewerPath("/home/user/MyDocs/testdata/Image/JPEG/JPEG_2304x1296(3MPix)_24BPP_BigBuckBunny_1.2MB.jpg");
+    test.imageViewer->PlayImageViewer();
+
+    test.Uninitialize();
     return 0;
 }

@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = mwts-multimedia
+PROJECT_NAME           = mwts-qtmultimedia
 PROJECT_NUMBER         =
 OUTPUT_DIRECTORY       = doc
 CREATE_SUBDIRS         = NO

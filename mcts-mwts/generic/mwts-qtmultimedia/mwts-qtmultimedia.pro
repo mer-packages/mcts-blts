@@ -15,11 +15,8 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = scripts/tests.xml
-TESTS.path = /usr/share/mwts-multimedia-tests
+TESTS.path = /usr/share/mwts-qtmultimedia-tests
 INSTALLS += TESTS
 
-#HEADER.files = src/MultimediaTest.h
-#HEADER.path = /usr/include
-#INSTALLS += HEADER
 
 

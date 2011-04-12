@@ -22,11 +22,11 @@
  *
  */
 
-/** @mainpage MWTS-MULTIMEDIA
+/** @mainpage MWTS-QTMULTIMEDIA
  *
  * @section links
  *
- * For detailed informations check README file on @link gitorious http://gitorious.org/~tumi/qa-tools/mcts-mwts-dev/trees/master/mcts-mwts/generic/mwts-multimedia @endlink
+ * For detailed informations check README file on @link gitorious http://gitorious.org/~tumi/qa-tools/mcts-mwts-dev/trees/master/mcts-mwts/generic/mwts-qtmultimedia @endlink
  */
 
 
@@ -37,12 +37,18 @@
 #include "AudioRecorderTest.h"
 #include "ImageViewerTest.h"
 #include "FMRadioTest.h"
-#include "AudioPlayerTest.h"
+#include "MediaPlayerTest.h"
 
 class MultimediaTest : public MwtsTest
 {
     Q_OBJECT
 public:
+
+    /**
+     *  enum naming features of test asset
+     */
+    enum featureName {audioRecorderFeature, mediaPlayerFeature, imageViewerFeature, radioPlayerFeature};
+
     /**
      * Constructor for template test class
      */
@@ -65,11 +71,17 @@ public:
      */
     void OnUninitialize();
 
+    /**
+     *  Used to allocate needed object like audioRecorder, mediaPlayer, fmradio, imageViewer
+     *  @param featureName name of the feature to enable
+     */
+    void EnableFeature(featureName name);
+
 public:
     ImageViewerTest *imageViewer;
     AudioRecorderTest *audioRecorder;
     FMRadioTest *fmRadio;
-    AudioPlayerTest* audioPlayer;
+    MediaPlayerTest* mediaPlayer;
 };
 
 #endif //#ifndef _INCLUDED_MULTIMEDIA_TEST_H

@@ -1,6 +1,6 @@
-TARGET = min-mwts-multimedia
+TARGET = min-mwts-qtmultimedia
 TEMPLATE = lib
-VERSION = 0.0.1
+VERSION = 0.1.4
 
 CONFIG += plugin
 CONFIG += warn_on
@@ -19,7 +19,7 @@ SOURCES += \
 INCLUDEPATH += ../src
 
 LIBS+= -L../src
-LIBS += -lminutils -lmintmapi -lminevent -lmwts-common -lmwts-multimedia
+LIBS += -lminutils -lmintmapi -lminevent -lmwts-common -lmwts-qtmultimedia
 
 target.path = /usr/lib/min
 INSTALLS += target

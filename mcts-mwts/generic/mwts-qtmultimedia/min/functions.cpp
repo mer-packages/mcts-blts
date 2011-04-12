@@ -36,6 +36,53 @@ const char *module_time = __TIME__;
 MultimediaTest test;
 
 /**
+  Allocate needed abject and initialize it.
+  Usage: EnableFeature [featureName]
+  @param featureName needed object name
+  @return ENOERR
+ */
+LOCAL int EnableFeature(MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    char *name = NULL;
+
+    if (mip_get_next_string(item, &name))
+    {
+        qCritical() << "The feature name must cointains chars.";
+        return 1;
+    }
+    else
+    {
+        QString s(name);
+        if (s == "audio_recorder")
+        {
+            test.EnableFeature(MultimediaTest::audioRecorderFeature);
+        }
+        else if (s == "media_player")
+        {
+            test.EnableFeature(MultimediaTest::mediaPlayerFeature);
+        }
+        else if (s == "radio_player")
+        {
+            test.EnableFeature(MultimediaTest::radioPlayerFeature);
+        }
+        else if (s == "image_viewer")
+        {
+            test.EnableFeature(MultimediaTest::imageViewerFeature);
+        }
+        else
+        {
+           qCritical() << "No such feature!";
+           return 1;
+        }
+    }
+    free(name);
+
+    return ENOERR;
+}
+
+/**
  * Shows debug message of supported codecs and containners on device.
  * @return ENOERR
  */
@@ -346,30 +393,51 @@ LOCAL int SetImageTimeout(MinItemParser * item)
 }
 
 /**
-  Gets directory/file path as a paramater or no paramater, then
-  displays every image(s) from the directory/file or default directory/file path is read from the config/MultimediaTest.conf file
-  Usage: PlayImageViewer [ <directory path> | <file path> | no parameter = default from MultimediaTest.conf ]
+  Gets directory/file path as a paramater or no paramater, loads images into playlist from the directory/file or default directory/file path is read from the config/MultimediaTest.conf file
+  Usage: SetImageViewerPath [ <directory path> | <file path> | no parameter = default from MultimediaTest.conf ]
   @param directory/file path to the images(s)
   @return ENOERR
 */
-LOCAL int PlayImageViewer(MinItemParser * item)
+LOCAL int SetImageViewerPath(MinItemParser * item)
 {
     MWTS_ENTER;
 
     char *path = NULL;
 
     if (mip_get_next_string(item, &path))
-    {        
-        test.imageViewer->PlayImageViewer(QString(""));
+    {
+        qCritical() << "Path to file not set";
+        return 1;
     }
     else
     {
-        test.imageViewer->PlayImageViewer(path);
+        test.imageViewer->SetImageViewerPath(path);
     }
     free(path);
 
     if (!test.IsPassed())
+    {
         return 1;
+    }
+
+    return ENOERR;
+}
+
+/**
+  Displays image file(s) which are set with SetImageViewerPath method
+  @param directory/file path to the images(s)
+  @return ENOERR
+*/
+LOCAL int PlayImageViewer(__attribute__((unused)) MinItemParser * item)
+{
+    MWTS_ENTER;
+
+    test.imageViewer->PlayImageViewer();
+
+    if (!test.IsPassed())
+    {
+        return 1;
+    }
 
     return ENOERR;
 }
@@ -599,108 +667,280 @@ LOCAL int SetVolume (MinItemParser * item)
 }
 
 
-/**
- *  Player functions
- */
+ /**
+  *  Player functions
+  */
 
-/**
-  Play recently recorder audio file.
-  Can be call anly after calling Record function.
-  @return ENOERR if playing pass with any error
+ /**
+   Play recently recorder audio file.
+   Can be call only after calling Record function.
+   @return ENOERR if playing pass with any error
+  */
+ LOCAL int PlayRecordedAudio(__attribute__((unused)) MinItemParser * item)
+ {
+      MWTS_ENTER;
+
+      QString filePath = test.audioRecorder->FullRecordedFilePath();
+      test.mediaPlayer->SetMedia(filePath);
+      test.mediaPlayer->Play();
+      return ENOERR;
+ }
+
+ /**
+   Sets the path of the file to play.
+   Usage: SetMedia [file path]
+   @param path to media file
+   @return ENOERR or 1 if wrong argument
  */
-LOCAL int PlayRecordedAudio(__attribute__((unused)) MinItemParser * item)
-{
+ LOCAL int SetMedia(MinItemParser * item)
+ {
      MWTS_ENTER;
 
-     QString filePath = test.audioRecorder->FullRecordedFilePath();
-     test.audioPlayer->SetMedia(filePath);
-     test.audioPlayer->play();
+     char *path = NULL;
+
+     if (mip_get_next_string(item, &path))
+     {
+         qCritical() << "The path must contain chars.";
+         return 1;
+     }
+     else
+     {
+         test.mediaPlayer->SetMedia(path);
+     }
+     free(path);
+
+     MWTS_LEAVE;
      return ENOERR;
-}
+ }
 
-/**
-  Sets the path of the file to play.
-  Usage: SetMedia [file path]
-  @param path name
-  @return ENOERR
-*/
-LOCAL int SetMedia(MinItemParser * item)
-{
-    MWTS_ENTER;
-
-    char *path = NULL;
-
-    if (mip_get_next_string(item, &path))
-    {
-        qCritical() << "The name must contain chars.";
-    }
-    else
-    {
-        test.audioPlayer->SetMedia(path);
-    }
-    free(path);
-
-    return ENOERR;
-}
-
-/**
-  Set the audio player volume in percentage
-  Usage: SetPlaybackVolume [volume]
-  @param volume  as 0 <= integer number <= 100)
-  @return ENOERR
-*/
-LOCAL int SetPlaybackVolume (MinItemParser * item)
-{
-    MWTS_ENTER;
-
-    int volume = 70;
-
-    if(mip_get_next_int(item, &volume))
-    {
-        qCritical() << "The volume is an integer number.";
-    }
-    else
-    {
-            test.audioPlayer->SetVolume(volume);
-    }
-    MWTS_LEAVE;
-    return ENOERR;
-}
-
-/**
-  Set the audio player duration in miliseconds
-  Usage: SetPlaybackDuration [duration]
-  @param duration > 0
-  @return ENOERR
-*/
-LOCAL int SetPlaybackDuration (MinItemParser * item)
-{
-    MWTS_ENTER;
-
-    int duration = 4000;
-
-    if(mip_get_next_int(item, &duration))
-    {
-        qCritical() << "The volume is an integer number.";
-    }
-    else
-    {
-            test.audioPlayer->SetPlaybackDuration(duration);
-    }
-    MWTS_LEAVE;
-    return ENOERR;
-}
-
-/**
- * Play set audio file.
- * @return ENOERR
+ /**
+   Set the audio player volume in percentage
+   Usage: SetPlaybackVolume [volume]
+   @param volume  as 0 <= integer number <= 100)
+   @return ENOERR or 1 if wrong argument
  */
-LOCAL int Play(__attribute__((unused)) MinItemParser * item)
-{
-    MWTS_ENTER;
-    test.audioPlayer->play();
-    return ENOERR;
-}
+ LOCAL int SetPlaybackVolume (MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int volume = 70;
+
+     if(mip_get_next_int(item, &volume))
+     {
+         qCritical() << "The volume is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetVolume(volume);
+     }
+
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+   Set the audio player duration in miliseconds
+   Usage: SetPlaybackDuration [duration]
+   @param duration > 0
+   @return ENOERR or 1 if wrong argument
+ */
+ LOCAL int SetPlaybackDuration (MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int duration = 4000;
+
+     if(mip_get_next_int(item, &duration))
+     {
+         qCritical() << "The duration is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetPlaybackDuration(duration);
+     }
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+  * Plays set media file.
+  * @return ENOERR
+  */
+ LOCAL int Play(__attribute__((unused)) MinItemParser * item)
+ {
+     MWTS_ENTER;
+     test.mediaPlayer->Play();
+     return ENOERR;
+ }
+
+ /**
+  * Sets timeout in seconds for stop event.
+  * Usage: SetStopTimeout [time]
+  * @param timeout
+  * @return ENOERR or 1 if wrong argument
+  */
+ LOCAL int SetStopTimeout(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int timeout = 0;
+
+     if(mip_get_next_int(item, &timeout))
+     {
+         qCritical() << "The timeout is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetStopTimeout(timeout);
+     }
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+  * Sets timeout in seconds for pause event.
+  * @return ENOERR or 1 if wrong argument
+  */
+ LOCAL int SetPauseTimeout(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int timeout = 0;
+
+     if(mip_get_next_int(item, &timeout))
+     {
+         qCritical() << "The timeout is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetPauseTimeout(timeout);
+     }
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+  * Sets duration in seconds for pause event.
+  * @return ENOERR or 1 if wrong argument
+  */
+ LOCAL int SetPauseDuration(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int duration = 0;
+
+     if(mip_get_next_int(item, &duration))
+     {
+         qCritical() << "The duration is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetPauseDuration(duration);
+     }
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+  * Sets timeout in seconds for seek event.
+  * @return ENOERR or 1 if wrong argument
+  */
+ LOCAL int SetSeekTimeout(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int timeout = 0;
+
+     if(mip_get_next_int(item, &timeout))
+     {
+         qCritical() << "The timeout is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetSeekTimeout(timeout);
+     }
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+  * Sets position in seconds to seek
+  * @return ENOERR or 1 if wrong argument
+  */
+ LOCAL int SetSeekPosition(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     int position = 0;
+
+     if(mip_get_next_int(item, &position))
+     {
+         qCritical() << "The position is an integer number.";
+         return 1;
+     }
+     else
+     {
+             test.mediaPlayer->SetSeekPosition(position);
+     }
+     MWTS_LEAVE;
+     return ENOERR;
+ }
+
+ /**
+   Sets stop event behaviour
+   Usage: SetStopEventBehaviour [behaviourName]
+   @param behaviourName to set
+   @return ENOERR if success or 1 if there is no behaviour
+  */
+ LOCAL int SetStopEventBehaviour(MinItemParser * item)
+ {
+     MWTS_ENTER;
+
+     char *name = NULL;
+
+     if (mip_get_next_string(item, &name))
+     {
+         qCritical() << "The feature name must cointains chars.";
+         return 1;
+     }
+     else
+     {
+         QString s(name);
+         if (s == "stop_normal")
+         {
+             test.mediaPlayer->SetStopEventBehaviour(MediaPlayerTest::StopNormal);
+         }
+         else if (s == "stop_and_play")
+         {
+             test.mediaPlayer->SetStopEventBehaviour(MediaPlayerTest::StopAndPlay);
+         }
+         else
+         {
+            qCritical() << "No such behaviour!";
+            return 1;
+         }
+     }
+     free(name);
+
+     return ENOERR;
+ }
+
+ /**
+  * Initializes video widgets for displaying video file
+  * @return ENOERR
+  */
+ LOCAL int InitVideo(__attribute__((unused)) MinItemParser * item)
+ {
+     MWTS_ENTER;
+     test.mediaPlayer->InitVideo();
+     return ENOERR;
+ }
 
 
 /**
@@ -711,6 +951,9 @@ LOCAL int Play(__attribute__((unused)) MinItemParser * item)
 int ts_get_test_cases (DLList ** list)
 {   //min interface
     MwtsMin::DeclareFunctions(list);
+
+    //multimedia test
+    ENTRYTC (*list, "EnableFeature", EnableFeature);
 
     //multimedia audio recorder
     ENTRYTC (*list, "ShowSupportedCodecsAndContainers", ShowSupportedCodecsAndContainers);
@@ -725,8 +968,9 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "SetSampleRate", SetSampleRate);
     ENTRYTC (*list, "SetPath", SetPath);
 
-     //multimedia image viewer
+    //multimedia image viewer
     ENTRYTC (*list, "SetImageTimeout", SetImageTimeout);
+    ENTRYTC (*list, "SetImageViewerPath", SetImageViewerPath);
     ENTRYTC (*list, "PlayImageViewer", PlayImageViewer);
 
     //multimedia fm radio
@@ -740,12 +984,19 @@ int ts_get_test_cases (DLList ** list)
     ENTRYTC (*list, "SetRadioBand", SetRadioBand);
     ENTRYTC (*list, "PerformBandScan", PerformBandScan);
 
-    //multimedia audio player
+    //multimedia player
     ENTRYTC (*list, "PlayRecordedAudio", PlayRecordedAudio);
     ENTRYTC (*list, "SetMedia", SetMedia);
     ENTRYTC (*list, "SetPlaybackVolume", SetPlaybackVolume);
     ENTRYTC (*list, "SetPlaybackDuration", SetPlaybackDuration);
     ENTRYTC (*list, "Play", Play);
+    ENTRYTC (*list, "SetStopTimeout", SetStopTimeout);
+    ENTRYTC (*list, "SetPauseTimeout", SetPauseTimeout);
+    ENTRYTC (*list, "SetPauseDuration", SetPauseDuration);
+    ENTRYTC (*list, "SetSeekTimeout", SetSeekTimeout);
+    ENTRYTC (*list, "SetSeekPosition", SetSeekPosition);
+    ENTRYTC (*list, "SetStopEventBehaviour", SetStopEventBehaviour);
+    ENTRYTC (*list, "InitVideo", InitVideo);
 
     return ENOERR;
 }
