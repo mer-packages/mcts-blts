@@ -25,6 +25,7 @@
 #include <blts_cli_frontend.h>
 #include <blts_params.h>
 #include <blts_reporting.h>
+#include <blts_sync.h>
 
 typedef struct
 {
