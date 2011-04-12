@@ -35,15 +35,15 @@
 
 /** Data for each barrier. */
 struct tagged_barrier_entry {
-	sem_t mutex;
+	sem_t mutex;                   /**< Mutex for this structure (only) */
 
-	unsigned refcount;
-	unsigned active;
+	unsigned refcount;             /**< Number of registered users */
+	unsigned active;               /**< 1/more users waiting on this barrier */
 
-	sem_t barrier_arrive_signal;
-	sem_t barrier_depart_signal;
+	sem_t barrier_arrive_signal;   /**< Collects arriving processes */
+	sem_t barrier_depart_signal;   /**< Completion broadcast */
 
-	char tag[SYNC_TAG_LEN];
+	char tag[SYNC_TAG_LEN];        /**< Name for this barrier */
 };
 
 /** This will live in /dev/shm/SYNC_SHM_NAME */
@@ -257,6 +257,12 @@ static void tagged_barrier_unref(char *tag)
 	BLTS_TRACE("Sync: '%s'.refcount == %u\n", tag, mapped_shm->barriers[i].refcount);
 }
 
+/**
+ * Register test process as user of named barrier. This must be used before
+ * calling blts_sync_tagged().
+ * @param tag Name to register
+ * @return 0 on success
+ */
 int blts_sync_add_tag(char *tag)
 {
 	int ret;
@@ -269,6 +275,11 @@ int blts_sync_add_tag(char *tag)
 	return ret;
 }
 
+/**
+ * Remove a test process' registration of the named barrier.
+ * @param tag Name to deregister
+ * @return 0 on success
+ */
 int blts_sync_del_tag(char *tag)
 {
 	if(!init_done)
@@ -279,6 +290,13 @@ int blts_sync_del_tag(char *tag)
 	return 0;
 }
 
+/**
+ * Block process until each registered user reaches named barrier. Note that
+ * the participating processes must take care to have their sync_*() calls
+ * in the same order to avoid likely deadlock.
+ * @param tag Name of barrier, registered earlier with blts_sync_add_tag()
+ * @return 0 on success
+ */
 int blts_sync_tagged(char *tag)
 {
 	int i, ret = 0;
@@ -297,6 +315,7 @@ int blts_sync_tagged(char *tag)
 	return ret;
 }
 
+/** Not implemented */
 int blts_sync_tagged_to(__attribute__((unused)) char *tag, __attribute__((unused)) unsigned long msec)
 {
 	if(!init_done)
@@ -305,6 +324,7 @@ int blts_sync_tagged_to(__attribute__((unused)) char *tag, __attribute__((unused
 	return 0;
 }
 
+/** Not implemented */
 int blts_sync_anon_to(__attribute__((unused)) unsigned long msec)
 {
 	if(!init_done)
@@ -314,8 +334,10 @@ int blts_sync_anon_to(__attribute__((unused)) unsigned long msec)
 }
 
 /**
- * Default barrier.
- * @return 0
+ * Default barrier. This will block until all participating processes reach
+ * this point. Note that the participating processes must take care to have
+ * their sync_*() calls in the same order to avoid likely deadlock.
+ * @return 0 (always)
  */
 int blts_sync_anon()
 {
@@ -433,6 +455,10 @@ err_done:
 }
 
 /**
+ * Prepare shared state and launch a daemon to clean up afterwards.  Don't
+ * call this unless not using the common CLI.
+ * @param client_count Number of processes to track
+ * @return 0 on success.
  */
 int blts_sync_master_init(unsigned client_count)
 {
@@ -525,6 +551,10 @@ done:
 	return err;
 }
 
+/**
+ * Set up shared state for a test process. Don't call this unless not using the common CLI.
+ * @return 0 on success
+ */
 int blts_sync_client_init()
 {
 	int err;
@@ -539,6 +569,10 @@ done:
 	return err;
 }
 
+/**
+ * Clean up shared state after a test process. Don't call this unless not
+ * using the common CLI.
+ */
 void blts_sync_client_cleanup()
 {
 	if(mapped_shm) {
