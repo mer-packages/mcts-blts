@@ -37,17 +37,19 @@
 static void bt_help(const char* help_msg_base)
 {
 	fprintf(stdout, help_msg_base,
-		"[-m] [-d]",
+		"[-m] [-d] [-a]",
 		"  -m: remote/server MAC address (format: \"00:00:00:00:00\")\n"
-		"  -d: local adapter number (0-16)\n");
+		"  -d: local adapter number (0-16)\n"
+		"  -a: Show debug information from device agent");
 }
 
 /* Arguments -l, -e, -en, -s, -?, -nc are reserved, do not use here */
-static const char short_opts[] = "m:d:";
+static const char short_opts[] = "m:d:a";
 static const struct option long_opts[] =
 {
 	{"mac-address", 1, 0, 'm'},
 	{"hci-device", 1, 0, 'd'},
+	{"hci-agent", 1, 0, 'a'},
 	{0,0,0,0}
 };
 
@@ -61,6 +63,7 @@ static void* bt_argument_processor(int argc, char **argv)
 	memset(my_data, 0, sizeof(*my_data));
 
 	my_data->dev_id = -1;
+	my_data->agent_running = 0;
 
 	while ((c = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1)
 	{
@@ -74,6 +77,10 @@ static void* bt_argument_processor(int argc, char **argv)
 		case 'd':
 			my_data->dev_id = atol(optarg);
 			break;
+		case 'a':
+			my_data->agent_running = 1;
+			break;
+
 		default:
 			free(my_data);
 			return NULL;
@@ -102,6 +109,10 @@ static void* bt_argument_processor(int argc, char **argv)
 
 	BLTS_DEBUG("MAC address to use: %s\n", my_data->mac_address);
 	BLTS_DEBUG("HCI device to use: %d\n", my_data->dev_id);
+	if(my_data->agent_running)
+		BLTS_DEBUG("Agent will be showing debug messages\n")
+	else
+		BLTS_DEBUG("Agent will not show debug messages\n");
 
 	return my_data;
 }
@@ -135,73 +146,73 @@ static int bt_run_case(void* user_ptr, int test_num)
 	switch (test_num)
 	{
 	case CORE_BT_SCAN:
-		ret = fute_bt_scan();
+		ret = fute_bt_scan(data->agent_running);
 		break;
 	case CORE_BT_CHECK:
-		ret = fute_bt_drivers_depcheck();
+		ret = fute_bt_drivers_depcheck(data->agent_running);
 		break;
 	case CORE_BT_RECEIVE_L2CAP:
-		ret = fute_bt_l2cap_echo_server();
+		ret = fute_bt_l2cap_echo_server(data->agent_running);
 		break;
 	case CORE_BT_CONNECT_L2CAP:
-		ret = fute_bt_l2cap_echo_client(data->mac_address,0);
+		ret = fute_bt_l2cap_echo_client(data->mac_address,0, data->agent_running);
 		break;
 	case CORE_BT_PING_PONG_L2CAP:
-		ret = fute_bt_l2cap_echo_client(data->mac_address,1);
+		ret = fute_bt_l2cap_echo_client(data->mac_address,1, data->agent_running);
 		break;
 	case CORE_BT_RECEIVE_RFCOMM:
-		ret = fute_bt_rfcomm_echo_server();
+		ret = fute_bt_rfcomm_echo_server(data->agent_running);
 		break;
 	case CORE_BT_CONNECT_RFCOMM:
-		ret = fute_bt_rfcomm_echo_client(data->mac_address,0);
+		ret = fute_bt_rfcomm_echo_client(data->mac_address,0, data->agent_running);
 		break;
 	case CORE_BT_PING_PONG_RFCOMM:
-		ret = fute_bt_rfcomm_echo_client(data->mac_address,1);
+		ret = fute_bt_rfcomm_echo_client(data->mac_address,1, data->agent_running);
 		break;
 	case CORE_BT_CONNECT_HCI:
-		ret = fute_bt_hci_connect_disconnect(data->mac_address);
+		ret = fute_bt_hci_connect_disconnect(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_TRANSFER_ACL_DATA_WITH_HCI:
-		ret = fute_bt_hci_transfer_acl_data(data->mac_address);
+		ret = fute_bt_hci_transfer_acl_data(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_RECEIVE_ACL_DATA_WITH_HCI:
-		ret = fute_bt_hci_receive_acl_data();
+		ret = fute_bt_hci_receive_acl_data(data->agent_running);
 		break;
 	case CORE_BT_CHANGE_NAME_WITH_HCI:
-		ret = fute_bt_hci_change_name();
+		ret = fute_bt_hci_change_name(data->agent_running);
 		break;
 	case CORE_BT_VERIFY_NAME_WITH_HCI:
-		ret = fute_bt_hci_verify_name(data->mac_address);
+		ret = fute_bt_hci_verify_name(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_CHANGE_CLASS_WITH_HCI:
-		ret = fute_bt_hci_change_class();
+		ret = fute_bt_hci_change_class(data->agent_running);
 		break;
 	case CORE_BT_VERIFY_CLASS_WITH_HCI:
-		ret = fute_bt_hci_verify_class(data->mac_address);
+		ret = fute_bt_hci_verify_class(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_RESET_CONNECTION_WITH_HCI:
-		ret = fute_bt_hci_reset_connection(data->mac_address);
+		ret = fute_bt_hci_reset_connection(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_AUDIT_INCOMING_HCI_CONNECTION:
-		ret = fute_bt_hci_audit_incoming_connect();
+		ret = fute_bt_hci_audit_incoming_connect(data->agent_running);
 		break;
 	case CORE_BT_READ_HCI_CONTROLLER_INFO_LOCAL:
-		ret = fute_bt_hci_ctrl_info_local();
+		ret = fute_bt_hci_ctrl_info_local(data->agent_running);
 		break;
 	case CORE_BT_READ_HCI_CONTROLLER_INFO_REMOTE:
-		ret = fute_bt_hci_ctrl_info_remote(data->mac_address);
+		ret = fute_bt_hci_ctrl_info_remote(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_READ_CONNECTED_LINK_INFO_LOCAL:
-		ret = fute_bt_hci_link_info_local();
+		ret = fute_bt_hci_link_info_local(data->agent_running);
 		break;
 	case CORE_BT_READ_CONNECTED_LINK_INFO_REMOTE:
-		ret = fute_bt_hci_link_info_remote(data->mac_address);
+		ret = fute_bt_hci_link_info_remote(data->mac_address, data->agent_running);
 		break;
 	case CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_MASTER:
-		ret = fute_bt_hci_ll_pairing(data->mac_address, 1);
+		ret = fute_bt_hci_ll_pairing(data->mac_address, 1, data->agent_running);
 		break;
 	case CORE_BT_AUTHENTICATION_WITH_PAIRING_AS_SLAVE:
-		ret = fute_bt_hci_ll_pairing("00:00:00:00:00:00", 0);
+		ret = fute_bt_hci_ll_pairing("00:00:00:00:00:00", 0, data->agent_running);
 		break;
         case CORE_BT_SIMPLE_PAIRING_AS_MASTER:
 		ret = fute_bt_hci_simple_pairing (data, 1);

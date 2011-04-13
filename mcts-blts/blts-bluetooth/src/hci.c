@@ -236,7 +236,6 @@ int do_scan(struct bt_ctx *ctx, int *n_responses, inquiry_info *responses, char 
 	int n_resps = -1, max_resps = 255;
 
 	char *scan_addr=0, *scan_name=0, **resolved=0;
-        BtFuteAgent *agent;
 
 	/* use first available adapter */
 	BLTS_DEBUG("Trying to get device... ");
@@ -246,21 +245,6 @@ int do_scan(struct bt_ctx *ctx, int *n_responses, inquiry_info *responses, char 
 		retval = errno? -errno : -1 ;
 		goto cleanup;
 	}
-
-        agent = bt_fute_agent_new (ctx->dev_id);
-        if (!agent) {
-            BLTS_ERROR ("Failed to create agent\n");
-            retval = -1;
-            goto cleanup;
-        }
-
-        retval = bt_fute_agent_run (agent);
-
-        if (retval < 0) {
-            BLTS_ERROR ("Failed to run agent\n");
-            retval = -1;
-            goto cleanup;
-        }
 
 	BLTS_DEBUG("got #%d.\nOpening socket...",ctx->dev_id);
 
@@ -355,10 +339,6 @@ cleanup:
 		retval = errno?-errno:-1;
 	}
 
-        if (agent) {
-            bt_fute_agent_stop (agent);
-            agent = bt_fute_agent_unref (agent);
-        }
 
 	if(resps) free(resps);
 

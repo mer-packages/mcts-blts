@@ -50,6 +50,7 @@ typedef struct {
 
 	int l2cap_fd;
 	uint8_t role; /* 0x00 for slave 0x01 for master */
+
 } blts_simple_pairing_data;
 
 /* Create a Simple pairing data, out of generic bluetooth context */
@@ -633,7 +634,6 @@ blts_simple_pairing_master (blts_simple_pairing_data *data)
 	struct bt_ctx *ctx;
 	auth_requested_cp auth_param;
 	char remote_name[256] = {'\0'};
-	BtFuteAgent *agent;
 
 	ctx = data->ctx;
 
@@ -653,14 +653,14 @@ blts_simple_pairing_master (blts_simple_pairing_data *data)
 		goto DONE;
 	}
 
-	BLTS_DEBUG ("Running agent...\n");
+	/*BLTS_DEBUG ("Running agent...\n");
 	agent = bt_fute_agent_new (ctx->dev_id);
 	ret = bt_fute_agent_run (agent);
 	if (ret < 0) {
 		BLTS_ERROR ("Failed to run agent\n");
 		goto DONE;
 	}
-	BLTS_DEBUG ("done\n");
+	BLTS_DEBUG ("done\n");*/
 
 	BLTS_DEBUG ("Forming L2CAP Connection\n");
 	ret = blts_simple_pairing_l2cap_connect (data, 1);
@@ -783,10 +783,10 @@ blts_simple_pairing_master (blts_simple_pairing_data *data)
 #endif
 
 DONE:
-	if (agent) {
+/*	if (agent) {
 		bt_fute_agent_stop (agent);
 		bt_fute_agent_unref (agent);
-	}
+	}*/
 
 	FUNC_LEAVE();
 
@@ -818,10 +818,22 @@ blts_simple_pairing_run (bt_data *user_data, int master)
 	int ret = 0;
 	struct bt_ctx *ctx;
 	blts_simple_pairing_data *data;
-
+	BtFuteAgent *agent = NULL;
 	FUNC_ENTER();
 
 	ctx = bt_ctx_new ();
+	if(user_data->agent_running)
+	{
+		agent = bt_fute_agent_new (ctx->dev_id);
+		if (!agent) {
+			BLTS_ERROR ("Failed to create agent\n");
+		}
+		if (bt_fute_agent_run (agent) < 0) {
+			BLTS_ERROR ("Failed to run agent\n");
+		}
+	}
+
+
 	data = blts_simple_pairing_data_new (ctx);
 
 	if (!data || !ctx) {
@@ -849,6 +861,14 @@ blts_simple_pairing_run (bt_data *user_data, int master)
 	else if (!ret)
 		ret = blts_simple_pairing_slave (data);
 
+	if(user_data->agent_running)
+	{
+		if (agent) {
+			bt_fute_agent_stop (agent);
+			agent = bt_fute_agent_unref (agent);
+		}
+	}
+
 	if (ctx) {
 		if (ctx->hci_fd > 0) {
 			hci_close_dev (ctx->hci_fd);
@@ -875,11 +895,24 @@ blts_simple_pairing_l2cap_server (bt_data *user_data)
 	blts_simple_pairing_data *data;
 	socklen_t len;
 	struct sockaddr_l2 address;
+	BtFuteAgent *agent;
 
 	FUNC_ENTER();
 
 	ctx = bt_ctx_new ();
 	data = blts_simple_pairing_data_new (ctx);
+	if(user_data->agent_running)
+	{
+		agent = bt_fute_agent_new (ctx->dev_id);
+		if (!agent) {
+			BLTS_ERROR ("Failed to create agent\n");
+		}
+		if (bt_fute_agent_run (agent) < 0) {
+			BLTS_ERROR ("Failed to run agent\n");
+		}
+
+	}
+
 
 	if (!data || !ctx) {
 		BLTS_LOGGED_PERROR ("Failed to create context!");
@@ -933,6 +966,14 @@ blts_simple_pairing_l2cap_server (bt_data *user_data)
 	}
 
 DONE:
+	if(user_data->agent_running)
+	{
+		if (agent) {
+			bt_fute_agent_stop (agent);
+			agent = bt_fute_agent_unref (agent);
+		}
+	}
+
 	if (ctx) {
 		if (ctx->hci_fd > 0) {
 			hci_close_dev (ctx->hci_fd);
@@ -959,10 +1000,22 @@ blts_simple_pairing_oob_run (bt_data *user_data, int master)
 	blts_simple_pairing_data *data;
 	uint8_t hash = 0;
 	uint8_t randomizer = 0;
+	BtFuteAgent *agent = NULL;
 
 	FUNC_ENTER();
 
 	ctx = bt_ctx_new ();
+	if(user_data->agent_running)
+	{
+		agent = bt_fute_agent_new (ctx->dev_id);
+		if (!agent) {
+			BLTS_ERROR ("Failed to create agent\n");
+		}
+		if (bt_fute_agent_run (agent) < 0) {
+			BLTS_ERROR ("Failed to run agent\n");
+		}
+	}
+
 	data = blts_simple_pairing_data_new (ctx);
 
 	if (!data || !ctx) {
@@ -1019,6 +1072,14 @@ blts_simple_pairing_oob_run (bt_data *user_data, int master)
 	/* Transfer OOB data */
 
 DONE:
+	if(user_data->agent_running)
+	{
+		if (agent) {
+			bt_fute_agent_stop (agent);
+			agent = bt_fute_agent_unref (agent);
+		}
+	}
+
 	if (ctx) {
 		if (ctx->hci_fd > 0) {
 			hci_close_dev (ctx->hci_fd);

@@ -107,6 +107,11 @@ mac_address defined in configuration file:
 
 blts-bluetooth-tests -m 01:02:03:04:05:06 -e 3
 
+You may also add debug message output agent running to see details:
+blts-bluetooth-tests -m 01:02:03:04:05:06 -e 3 -a
+This is not currently supported in LE cases
+
+
 The list of test cases that require MAC address (server-mac/remote-mac)
 to be executed (<-> test case's pair):
 

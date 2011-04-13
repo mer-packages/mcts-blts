@@ -44,9 +44,38 @@
 #include "pairing.h"
 #include "simple_pairing.h"
 
+#include "bt_fute_agent.h"
+
+
 /** rules file for depcheck() */
 #define DEPCHECK_RULES "/usr/lib/tests/blts-bluetooth-tests/blts-bluetooth-req_files.cfg"
 
+BtFuteAgent *agent = NULL;
+
+void start_debug_agent(int agent_running, struct bt_ctx *ctx)
+{
+	if(agent_running)
+	{
+		agent = bt_fute_agent_new (ctx->dev_id);
+		if (!agent) {
+			BLTS_ERROR ("Failed to create agent\n");
+		}
+		if (bt_fute_agent_run (agent) < 0) {
+			BLTS_ERROR ("Failed to run agent\n");
+		}
+	}
+
+}
+
+void stop_debug_agent(int agent_running)
+{
+	if(!agent_running)
+		return;
+    if (agent) {
+        bt_fute_agent_stop (agent);
+        agent = bt_fute_agent_unref (agent);
+    }
+}
 /* -------------------------------------------------------------------------- */
 /* Test cases -> */
 /* -------------------------------------------------------------------------- */
@@ -63,18 +92,23 @@ int fute_bt_drivers_depcheck()
 }
 
 /* Simple BT scan */
-int fute_bt_scan()
+int fute_bt_scan(int agent_running)
 {
+
 	BLTS_DEBUG("*** Test case start\n");
 
 	int retval = -1;
 
+
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		retval = do_scan(ctx,0,0,0);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
+
 	}
 
 	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
@@ -83,7 +117,7 @@ int fute_bt_scan()
 }
 
 /* Echo server */
-int fute_bt_l2cap_echo_server()
+int fute_bt_l2cap_echo_server(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 
@@ -92,9 +126,11 @@ int fute_bt_l2cap_echo_server()
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		ctx->local_port = 0x1234;
 		retval = l2cap_echo_server_oneshot(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -104,7 +140,7 @@ int fute_bt_l2cap_echo_server()
 }
 
 /* Echo test client */
-int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test)
+int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test, int agent_running)
 {
 	if(!server_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -114,9 +150,11 @@ int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test)
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(server_mac, &ctx->remote_mac);
 		ctx->remote_port = 0x1234;
 		retval = l2cap_echo_test_client(ctx, want_transfer_test);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -127,7 +165,7 @@ int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test)
 
 
 /* Echo server (rfcomm) */
-int fute_bt_rfcomm_echo_server()
+int fute_bt_rfcomm_echo_server(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 
@@ -136,9 +174,11 @@ int fute_bt_rfcomm_echo_server()
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		ctx->local_port = 0x11;
 		retval = rfcomm_echo_server_oneshot(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -148,7 +188,7 @@ int fute_bt_rfcomm_echo_server()
 }
 
 /* Echo test client (rfcomm) */
-int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test)
+int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test, int agent_running)
 {
 	if(!server_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -158,9 +198,11 @@ int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test)
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(server_mac, &ctx->remote_mac);
 		ctx->remote_port = 0x11;
 		retval = rfcomm_echo_test_client(ctx, want_transfer_test);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -170,7 +212,7 @@ int fute_bt_rfcomm_echo_client(char *server_mac, int want_transfer_test)
 }
 
 /* Use HCI to connect & disconnect only the link */
-int fute_bt_hci_connect_disconnect(char *remote_mac)
+int fute_bt_hci_connect_disconnect(char *remote_mac, int agent_running)
 {
 	if(!remote_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -180,10 +222,12 @@ int fute_bt_hci_connect_disconnect(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 		retval = hci_connect_remote(ctx);
 		sleep(WAIT_TIME_CONNECT_DISCONNECT);
 		retval |= hci_disconnect_remote(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -192,7 +236,7 @@ int fute_bt_hci_connect_disconnect(char *remote_mac)
 }
 
 /* Audit incoming HCI connection sequence */
-int fute_bt_hci_audit_incoming_connect()
+int fute_bt_hci_audit_incoming_connect(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
@@ -201,8 +245,10 @@ int fute_bt_hci_audit_incoming_connect()
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->test_timeout.tv_sec = 10;
 		retval = hci_audit_incoming_connect(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -211,7 +257,7 @@ int fute_bt_hci_audit_incoming_connect()
 }
 
 /* Transfer ACL test data to Receive ACL test data test case*/
-int fute_bt_hci_transfer_acl_data(char *remote_mac)
+int fute_bt_hci_transfer_acl_data(char *remote_mac, int agent_running)
 {
 
 	if(!remote_mac) return -EINVAL;
@@ -222,8 +268,10 @@ int fute_bt_hci_transfer_acl_data(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 		retval = hci_transfer_acl_data(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -233,7 +281,7 @@ int fute_bt_hci_transfer_acl_data(char *remote_mac)
 }
 
 /* Receive ACL test data when Transfer ACL data test case sends it*/
-int fute_bt_hci_receive_acl_data()
+int fute_bt_hci_receive_acl_data(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 	int retval = -1;
@@ -242,7 +290,9 @@ int fute_bt_hci_receive_acl_data()
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		retval = hci_receive_acl_data(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -250,7 +300,7 @@ int fute_bt_hci_receive_acl_data()
 	return retval;
 }
 
-int fute_bt_hci_change_name()
+int fute_bt_hci_change_name(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 
@@ -259,8 +309,10 @@ int fute_bt_hci_change_name()
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		retval = do_change_name(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -268,7 +320,7 @@ int fute_bt_hci_change_name()
 
 	return retval;
 }
-int fute_bt_hci_verify_name(char *remote_mac)
+int fute_bt_hci_verify_name(char *remote_mac, int agent_running)
 {
 	if(!remote_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -278,15 +330,17 @@ int fute_bt_hci_verify_name(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 		retval = hci_verify_name_change(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
 	BLTS_DEBUG("*** Test %s\n",retval?"FAILED":"PASSED");
 	return retval;
 }
-int fute_bt_hci_change_class()
+int fute_bt_hci_change_class(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 
@@ -295,8 +349,10 @@ int fute_bt_hci_change_class()
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		retval = do_change_class(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -304,7 +360,7 @@ int fute_bt_hci_change_class()
 
 	return retval;
 }
-int fute_bt_hci_verify_class(char *remote_mac)
+int fute_bt_hci_verify_class(char *remote_mac, int agent_running)
 {
 	if(!remote_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -314,8 +370,10 @@ int fute_bt_hci_verify_class(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 		retval = hci_verify_class_change(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -326,7 +384,7 @@ int fute_bt_hci_verify_class(char *remote_mac)
 
 
 /* Use HCI to connect, reset connection & connect again */
-int fute_bt_hci_reset_connection(char *remote_mac)
+int fute_bt_hci_reset_connection(char *remote_mac, int agent_running)
 {
 	if(!remote_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -336,10 +394,12 @@ int fute_bt_hci_reset_connection(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 		if((retval = hci_connect_remote(ctx)))
 		{
 			BLTS_DEBUG("*** Connection failed - Test FAILED\n");
+			stop_debug_agent(agent_running);
 			bt_ctx_free(ctx);
 			return retval;
 		}
@@ -347,6 +407,7 @@ int fute_bt_hci_reset_connection(char *remote_mac)
 		if((retval = do_reset(ctx)))
 		{
 			BLTS_DEBUG("*** Reset failed - Test FAILED\n");
+			stop_debug_agent(agent_running);
 			bt_ctx_free(ctx);
 			hci_disconnect_remote(ctx);
 			return retval;
@@ -359,7 +420,7 @@ int fute_bt_hci_reset_connection(char *remote_mac)
 		sleep(WAIT_TIME_CONNECT_DISCONNECT);
 
 		retval |= hci_disconnect_remote(ctx);
-
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -368,7 +429,7 @@ int fute_bt_hci_reset_connection(char *remote_mac)
 }
 
 
-int fute_bt_hci_ctrl_info_local()
+int fute_bt_hci_ctrl_info_local(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 
@@ -377,8 +438,10 @@ int fute_bt_hci_ctrl_info_local()
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		retval = read_and_verify_loc_ctrl_info(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -386,7 +449,7 @@ int fute_bt_hci_ctrl_info_local()
 
 	return retval;
 }
-int fute_bt_hci_ctrl_info_remote(char *remote_mac)
+int fute_bt_hci_ctrl_info_remote(char *remote_mac, int agent_running)
 {
 	if(!remote_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -396,8 +459,10 @@ int fute_bt_hci_ctrl_info_remote(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 		retval = collect_and_send_rem_ctrl_info(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -405,7 +470,7 @@ int fute_bt_hci_ctrl_info_remote(char *remote_mac)
 	return retval;
 }
 
-int fute_bt_hci_link_info_local()
+int fute_bt_hci_link_info_local(int agent_running)
 {
 	BLTS_DEBUG("*** Test case start\n");
 
@@ -414,8 +479,10 @@ int fute_bt_hci_link_info_local()
 	struct bt_ctx *ctx;
 	if( (ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
 		retval = read_and_verify_link_info(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -423,7 +490,7 @@ int fute_bt_hci_link_info_local()
 
 	return retval;
 }
-int fute_bt_hci_link_info_remote(char *remote_mac)
+int fute_bt_hci_link_info_remote(char *remote_mac, int agent_running)
 {
 	if(!remote_mac) return -EINVAL;
 	BLTS_DEBUG("*** Test case start\n");
@@ -433,9 +500,11 @@ int fute_bt_hci_link_info_remote(char *remote_mac)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		str2ba(remote_mac, &ctx->remote_mac);
 //		retval = collect_and_send_link_info(ctx);
 		retval = collect_and_send_link_info_one_by_one(ctx);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
@@ -443,7 +512,7 @@ int fute_bt_hci_link_info_remote(char *remote_mac)
 	return retval;
 }
 
-int fute_bt_hci_ll_pairing(char* remote_mac, int master)
+int fute_bt_hci_ll_pairing(char* remote_mac, int master, int agent_running)
 {
 	if (master && !remote_mac)
 		return -EINVAL;
@@ -455,12 +524,14 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master)
 
 	if((ctx = bt_ctx_new()))
 	{
+		start_debug_agent(agent_running, ctx);
 		if (master)
 			str2ba(remote_mac, &ctx->remote_mac);
 		ctx->dev_id = 0;
 		ctx->test_timeout.tv_sec = 10;
 		ctx->test_timeout.tv_nsec = 0;
 		retval = pairing_no_btd(ctx, master);
+		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
 	}
 
