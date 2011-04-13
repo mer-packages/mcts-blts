@@ -238,6 +238,7 @@ static int my_example_case_with_measurement(void* user_ptr, int test_num)
  */
 static int synctest_a(void* user_ptr, int test_num)
 {
+	int ret;
 	/* BLTS_DEBUG("in test_a\n"); */
 
 	blts_sync_add_tag("test_sync_tag");
@@ -264,6 +265,19 @@ static int synctest_a(void* user_ptr, int test_num)
 	BLTS_DEBUG("-> A: sync 2 (plain):\n");
 	blts_sync_anon();
 	BLTS_DEBUG("-> A: sync 2 done\n");
+
+	BLTS_DEBUG("-> A: sync 3 (short timeout):\n");
+	ret = blts_sync_anon_to(100);
+	BLTS_DEBUG("-> A: sync 3 done\n");
+
+	BLTS_DEBUG("-> A: sync 4 (expect timeout with B):\n");
+	ret = blts_sync_anon_to(100);
+	BLTS_DEBUG("-> A: sync 4 done, ret = %d\n",ret);
+
+	BLTS_DEBUG("-> A: final (plain) sync:\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> A: final sync done\n");
+
 	return 0;
 }
 
@@ -287,6 +301,18 @@ static int synctest_b(void* user_ptr, int test_num)
 	BLTS_DEBUG("-> B: sync 2 (plain):\n");
 	blts_sync_anon();
 	BLTS_DEBUG("-> B: sync 2 done\n");
+
+	BLTS_DEBUG("-> B: sync 3 (plain):\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> B: sync 3 done\n");
+
+	BLTS_DEBUG("-> B: sleeping a bit...\n");
+	sleep(3);
+	BLTS_DEBUG("-> B: done.\n");
+
+	BLTS_DEBUG("-> B: final (plain) sync:\n");
+	blts_sync_anon();
+	BLTS_DEBUG("-> B: final sync done\n");
 
 	return 0;
 }
