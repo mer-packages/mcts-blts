@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "blts_sync.h"
 #include "blts_log.h"
@@ -63,6 +64,24 @@ static unsigned init_done;   /**< Flag: process has sync set up (0 -> API calls 
 
 
 
+/* static void debug_barrier_show(unsigned index) */
+/* { */
+/* 	struct tagged_barrier_entry *b; */
+/* 	int a,d,m; */
+/* 	b = &mapped_shm->barriers[index]; */
+/* 	sem_getvalue(&b->barrier_arrive_signal, &a); */
+/* 	sem_getvalue(&b->barrier_depart_signal, &d); */
+/* 	sem_getvalue(&b->mutex, &m); */
+/* 	BLTS_TRACE("[%d] barrier \"%s\":\n" */
+/* 		   "\tmutex = %d,\n" */
+/* 		   "\trefcount = %u,\n" */
+/* 		   "\tactive = %u,\n" */
+/* 		   "\tbarrier_arrive_signal = %d,\n" */
+/* 		   "\tbarrier_depart_signal = %d\n", */
+/* 		   pid,b->tag,m,b->refcount,b->active,a,d); */
+/* } */
+
+
 static void sync_mutex_lock()
 {
 	int err /*, curr */;
@@ -75,6 +94,32 @@ static void sync_mutex_lock()
 	}
 	/* sem_getvalue(&mapped_shm->sync_mutex, &curr); */
 	/* BLTS_TRACE("[%d] >mutex sem post_lock -> %d\n",pid,curr); */
+}
+
+/** As sync_mutex_lock(), but bail immediately with -EAGAIN if lock can't be acquired. */
+static int sync_mutex_trylock()
+{
+	int err;
+	err = sem_trywait(&mapped_shm->sync_mutex);
+	if(err) {
+		if(errno == EAGAIN)
+			return -EAGAIN;
+		if(errno != EINTR) {
+			BLTS_LOGGED_PERROR("Sync: ERROR while locking master semaphor");
+			return -errno;
+		}
+	}
+	return 0;
+}
+
+static int sync_mutex_lock_to(struct timespec *abs_timeout)
+{
+	int err;
+	err = sem_timedwait(&mapped_shm->sync_mutex, abs_timeout);
+	if(err && errno == EINVAL) {
+		BLTS_LOGGED_PERROR("Sync: ERROR while locking master semaphor");
+	}
+	return err?-errno:0;
 }
 
 static void sync_mutex_unlock()
@@ -99,6 +144,17 @@ static void barrier_mutex_lock(struct tagged_barrier_entry *b)
 		BLTS_LOGGED_PERROR("Sync: ERROR while locking barrier mutex");
 	}
 }
+
+static int barrier_mutex_lock_to(struct tagged_barrier_entry *b, struct timespec *abs_timeout)
+{
+	int err;
+	err = sem_timedwait(&b->mutex, abs_timeout);
+	if(err && errno == EINVAL) {
+		BLTS_LOGGED_PERROR("Sync: ERROR while locking barrier mutex");
+	}
+	return err?-errno:0;
+}
+
 static void barrier_mutex_unlock(struct tagged_barrier_entry *b)
 {
 	int err;
@@ -192,6 +248,90 @@ static void barrier_sync(unsigned barrier_index)
 	}
 	BLTS_TRACE("[%d] <<< leaving barrier\n", pid);
 	sync_mutex_lock();
+}
+
+/**
+ * Block until all referrers reach barrier. Timeouting version. Call locked!
+ * @param barrier_index     Index to barrier table
+ * @param max_timeout_msec  Timeout, in milliseconds
+ * @return 0 on success, -ETIMEDOUT on timeout.
+ */
+static int barrier_sync_to(unsigned barrier_index, long max_timeout_msec)
+{
+	int i, ret = 0;
+	struct tagged_barrier_entry *b;
+	struct timespec abs_timeout;
+
+	clock_gettime(CLOCK_REALTIME, &abs_timeout);
+	abs_timeout.tv_sec += max_timeout_msec / 1000;
+	abs_timeout.tv_nsec += (max_timeout_msec % 1000L) * 1000000L;
+
+	b = &mapped_shm->barriers[barrier_index];
+	BLTS_TRACE("[%d] >>> arrived at barrier\n", pid);
+	ret = barrier_mutex_lock_to(b, &abs_timeout);
+	if(ret)
+		goto out;
+
+	if(!b->active) {
+		b->active = 1;
+		i = b->refcount - 1;
+		barrier_mutex_unlock(b);
+		sync_mutex_unlock();
+
+		while(i--) {
+			/* BLTS_TRACE("[%d] barrier: 1st waiting others - %d\n",pid, i); */
+			ret = sem_timedwait(&b->barrier_arrive_signal, &abs_timeout);
+			if(ret) {
+				ret = errno ? -errno : -1;
+				goto out;
+			}
+		}
+
+		ret = barrier_mutex_lock_to(b, &abs_timeout);
+		if(ret)
+			goto out;
+		i = b->refcount - 1;
+		while(i--) {
+			/* BLTS_TRACE("[%d] barrier: 1st signalling others - %d\n",pid, i); */
+			sem_post(&b->barrier_depart_signal);
+		}
+
+		b->active = 0;
+		barrier_mutex_unlock(b);
+		/* BLTS_TRACE("[%d] barrier: 1st done\n",pid); */
+	} else {
+		barrier_mutex_unlock(b);
+		sync_mutex_unlock();
+		/* BLTS_TRACE("[%d] barrier: other signalling 1st\n", pid); */
+		sem_post(&b->barrier_arrive_signal);
+
+		/* BLTS_TRACE("[%d] barrier: other waiting signal\n",pid); */
+		ret = sem_timedwait(&b->barrier_depart_signal, &abs_timeout);
+		if(ret) {
+			ret = errno ? -errno : -1;
+			goto out;
+		}
+
+		/* BLTS_TRACE("[%d] barrier: other done\n",pid); */
+	}
+
+out:
+	/* note: no locks are held at this point, but the barrier signals
+	 * might be messed up if we timed out */
+
+	BLTS_TRACE("[%d] <<< leaving barrier\n", pid);
+
+	if(ret) {
+		BLTS_ERROR("Sync [%d]: WARNING: barrier failed\n");
+	}
+	sync_mutex_lock();
+	if(ret) {
+		BLTS_TRACE("[%d] resetting barrier due to failure\n", pid);
+		while(!sem_trywait(&b->barrier_arrive_signal));
+		while(!sem_trywait(&b->barrier_depart_signal));
+		b->active = 0;
+	}
+	return ret;
 }
 
 /** Return index of barrier with given tag; <0 if none. Call locked. */
@@ -315,26 +455,53 @@ int blts_sync_tagged(char *tag)
 	return ret;
 }
 
-/** Not implemented */
-int blts_sync_tagged_to(__attribute__((unused)) char *tag, __attribute__((unused)) unsigned long msec)
+/**
+ * @see blts_sync_tagged()
+ * In addition, time out after msec if barrier has not been reached by some
+ * participants.
+ * @param tag  Name of barrier, registered earlier with blts_sync_add_tag()
+ * @param msec Timeout for operation in milliseconds
+ * @return 0 on success, <0 on fail (-ETIMEDOUT on timeout)
+ */
+int blts_sync_tagged_to(char *tag, unsigned long msec)
 {
+	int i, ret = 0;
 	if(!init_done)
 		return 0;
-	BLTS_DEBUG("WARNING: %s does not do anything yet\n", __FUNCTION__);
-	return 0;
-}
-
-/** Not implemented */
-int blts_sync_anon_to(__attribute__((unused)) unsigned long msec)
-{
-	if(!init_done)
-		return 0;
-	BLTS_DEBUG("WARNING: %s does not do anything yet\n", __FUNCTION__);
-	return 0;
+	sync_mutex_lock();
+	i = find_tagged_barrier(tag);
+	if(i < 0) {
+		BLTS_ERROR("Sync: Named barrier '%s' not available\n", tag);
+		ret = -EINVAL;
+	} else {
+		BLTS_TRACE("Sync: Arriving at named barrier '%s'\n", tag);
+		barrier_sync_to(i, msec);
+	}
+	sync_mutex_unlock();
+	return ret;
 }
 
 /**
- * Default barrier. This will block until all participating processes reach
+ * @see blts_sync_anon()
+ * In addition, time out after msec if barrier has not been reached by some
+ * participants.
+ * @param msec Timeout for operation in milliseconds
+ * @return 0 on success, <0 on fail (-ETIMEDOUT on timeout)
+ */
+int blts_sync_anon_to(unsigned long msec)
+{
+	int ret;
+	if(!init_done)
+		return 0;
+
+	sync_mutex_lock();
+	ret = barrier_sync_to(0, msec);
+	sync_mutex_unlock();
+	return ret;
+}
+
+/**
+ * Plain barrier. This will block until all participating processes reach
  * this point. Note that the participating processes must take care to have
  * their sync_*() calls in the same order to avoid likely deadlock.
  * @return 0 (always)
