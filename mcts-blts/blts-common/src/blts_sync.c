@@ -526,7 +526,7 @@ static int setup_shm_master()
 		return 0;
 
 	BLTS_TRACE("master:start shm setup\n");
-	fd = shm_open(SYNC_SHM_NAME, O_RDWR | O_CREAT | O_TRUNC, 0666);
+	fd = shm_open(SYNC_SHM_NAME, O_RDWR | O_CREAT | O_TRUNC | O_EXCL, 0666);
 
 	if(fd < 0) {
 		BLTS_LOGGED_PERROR("Sync: Failed creating shared memory area");
