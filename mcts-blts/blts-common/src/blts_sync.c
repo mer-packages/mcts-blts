@@ -96,32 +96,6 @@ static void sync_mutex_lock()
 	/* BLTS_TRACE("[%d] >mutex sem post_lock -> %d\n",pid,curr); */
 }
 
-/** As sync_mutex_lock(), but bail immediately with -EAGAIN if lock can't be acquired. */
-static int sync_mutex_trylock()
-{
-	int err;
-	err = sem_trywait(&mapped_shm->sync_mutex);
-	if(err) {
-		if(errno == EAGAIN)
-			return -EAGAIN;
-		if(errno != EINTR) {
-			BLTS_LOGGED_PERROR("Sync: ERROR while locking master semaphor");
-			return -errno;
-		}
-	}
-	return 0;
-}
-
-static int sync_mutex_lock_to(struct timespec *abs_timeout)
-{
-	int err;
-	err = sem_timedwait(&mapped_shm->sync_mutex, abs_timeout);
-	if(err && errno == EINVAL) {
-		BLTS_LOGGED_PERROR("Sync: ERROR while locking master semaphor");
-	}
-	return err?-errno:0;
-}
-
 static void sync_mutex_unlock()
 {
 	int err /*, curr*/;
