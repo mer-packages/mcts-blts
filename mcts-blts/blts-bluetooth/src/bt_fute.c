@@ -540,7 +540,7 @@ int fute_bt_hci_ll_pairing(char* remote_mac, int master, int agent_running)
 
 }
 
-int fute_bt_hci_simple_pairing (bt_data *user_data, int master)
+int fute_bt_hci_simple_pairing (struct bt_data *user_data, int master)
 {
 	int retval = -1;
 
@@ -556,7 +556,7 @@ int fute_bt_hci_simple_pairing (bt_data *user_data, int master)
 	return retval;
 }
 
-int fute_bt_hci_secure_l2cap_server (bt_data *user_data)
+int fute_bt_hci_secure_l2cap_server (struct bt_data *user_data)
 {
 	int retval = -1;
 
@@ -569,7 +569,7 @@ int fute_bt_hci_secure_l2cap_server (bt_data *user_data)
 	return retval;
 }
 
-int fute_bt_hci_simple_pairing_oob (bt_data *user_data, int master)
+int fute_bt_hci_simple_pairing_oob (struct bt_data *user_data, int master)
 {
 	int retval = -1;
 

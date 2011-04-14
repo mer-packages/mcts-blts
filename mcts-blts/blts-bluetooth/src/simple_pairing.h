@@ -25,14 +25,14 @@
 
 /* Run simple pairing test, "in band", as in l2cap socket */
 int
-blts_simple_pairing_run (bt_data *user_data, int master);
+blts_simple_pairing_run (struct bt_data *user_data, int master);
 
 /* OOB initiated simple pairing */
 int
-blts_simple_pairing_oob_run (bt_data *user_data, int master);
+blts_simple_pairing_oob_run (struct bt_data *user_data, int master);
 
 /* L2CAP "secure" server for simple pairing cases */
 int
-blts_simple_pairing_l2cap_server (bt_data *user_data);
+blts_simple_pairing_l2cap_server (struct bt_data *user_data);
 
 #endif /* SIMPLE_PAIRING_H_ */
