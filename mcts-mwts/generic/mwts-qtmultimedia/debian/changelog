@@ -1,5 +1,5 @@
 mwts-qtmultimedia (0.1.4) unstable; urgency=low
-  * Fixed: NB#13710 - [MWTS-Multimedia] Imageviewing case always show failed though image shown on screen
+  * Fixes: NB#13710 - [MWTS-Multimedia] Imageviewing case always show failed though image shown on screen
   * Renamed mwts-multimedia-mwts-qtmultmedia
  -- Balazs Sipos <balazs.sipos@digia.com>  Mon, 11 Apr 2011 10:00:00 +0300
 
