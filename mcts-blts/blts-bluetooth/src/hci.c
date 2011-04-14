@@ -37,6 +37,7 @@
 #include "bt_ctx.h"
 #include "hci.h"
 #include "ext_tools.h"
+#include "bt_fute_agent.h"
 
 char *acl_test_data = "BLTS-BLUETOOTH-TESTCASE";
 char test_device_name[] = "BLTS-TEST-DEVICE-NAME";
@@ -338,6 +339,7 @@ cleanup:
 		retval = errno?-errno:-1;
 	}
 
+
 	if(resps) free(resps);
 
 	return retval;
@@ -408,19 +410,24 @@ int hci_connect_remote(struct bt_ctx *ctx)
 {
 	if(!ctx) return -EINVAL;
 
-	if((ctx->dev_id = hci_get_route(&ctx->remote_mac)) < 0)
-	{
+        if (ctx->dev_id <= 0) {
+            if((ctx->dev_id = hci_get_route(&ctx->remote_mac)) < 0)
+            {
 		errno = ENODEV;
 		BLTS_LOGGED_PERROR("No route to remote device");
 		return -errno;
-	}
+            }
+        }
 
-	int fd;
-	if((fd = hci_open_dev(ctx->dev_id)) < 0)
-	{
+        if (ctx->hci_fd <= 0) {
+            int fd;
+            if((fd = hci_open_dev(ctx->dev_id)) < 0)
+            {
 		BLTS_LOGGED_PERROR("HCI device open failed");
 		return -errno;
-	}
+            }
+            ctx->hci_fd = fd;
+        }
 
 	uint16_t handle = -1;
 
@@ -433,14 +440,13 @@ int hci_connect_remote(struct bt_ctx *ctx)
 
 	int timeout = 10000; /* ms */
 
-	if(hci_create_connection(fd, &ctx->remote_mac, htobs(ptype),
+	if(hci_create_connection(ctx->hci_fd, &ctx->remote_mac, htobs(ptype),
 				 htobs(clkoffset), rswitch, &handle, timeout) < 0)
 	{
 		BLTS_LOGGED_PERROR("HCI create connection failed");
 		return -errno;
 	}
 
-	ctx->hci_fd = fd;
 	ctx->conn_handle = handle;
 
 	/* Leave the device open here, for additional commands.

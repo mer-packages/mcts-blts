@@ -122,3 +122,41 @@ Parameter variation
 
  * See README.ParameterVariation
 
+
+
+Synchronised tests
+
+ * Any common CLI-using tests can be synced with this.
+   * Example use case: Make Bluetooth and WLAN scans start at the same time,
+     so they have a good chance of interfering with each other.
+
+ * Usage:
+   * User calls blts_<something> -syncprep <number of tests to sync>
+      - This sets up shared state and detaches a daemon that cleans things up
+        and dies when prepped number of clients exit.
+   * User launches tests with -sync flag. Single cases only.
+
+ * Test assets:
+   * #include <blts_sync.h>
+   * int blts_sync_anon();
+      - Blocks until all synced processes call this.
+   * int blts_sync_add_tag(char *tag); int blts_sync_del_tag(char *tag);
+      - Add/remove tag this process is interested in using for sync.
+   * int blts_sync_tagged(char *tag);
+      - Blocks until each process that has added <tag> calls this.
+   * Common CLI calls blts_sync_*_init()/cleanup() for you.
+
+ * "Best practices":
+   * Add tags at start of testcase, then blts_sync_anon() to ensure you
+     don't reach a tagged sync point before other participants have added
+     it.
+   * If you have an event loop, don't call sync directly from that - there's
+     no guarantee control returns to the loop quickly.
+   * There's no checking that the process you want to sync with isn't trying
+     to sync with you using a different tag, so check what each of them uses.
+
+ * Unexpected behaviour:
+   * Allowing tests to reach the common CLI timeout will work in most cases.
+   * If all else fails, kill -9 all test processes, and then "rm
+     /dev/shm/blts_sync_shared" as root.
+

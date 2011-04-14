@@ -1,3 +1,9 @@
+blts-common (0.4.4) unstable; urgency=low
+
+  * Added multiple test client sync support
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Fri, 18 Mar 2011 15:20:28 +0200
+
 blts-common (0.4.3) unstable; urgency=low
 
   * Added CSV measurement output support: CLI switch, API for reporting

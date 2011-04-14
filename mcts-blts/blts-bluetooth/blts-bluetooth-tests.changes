@@ -1,3 +1,8 @@
+* Thy 14 Apr 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.2.15
+- [ Jussi Saavalainen ] Update environment setup instructions. Fixes: BMC#10096
+- [ Mikko Ojala ] Allow agent to be used for tracing all cases
+- [ Mika Niinistö ] Add agent for tracing and future pairing implementation
+
 * Wed 30 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.2.14
 - [ Jussi Saavalainen ] Fix LE Scan case build
 

@@ -1,4 +1,4 @@
-/* dual-call-cases.c -- Dual voicecall cases for blts-ofono
+/* data-context.c -- Dual voicecall cases for blts-ofono
 
  Copyright (C) 2000-2010, Nokia Corporation.
 
@@ -85,13 +85,15 @@ on_connection_context_property_changed(__attribute__((unused))DBusGProxy *proxy,
 		}
 		return;
 	}
+	else if (G_VALUE_HOLDS_STRING(value))
+	{
+		BLTS_DEBUG("Data context property: '%s' changed to '%s'\n", key,
+				g_value_get_string(value));
 
-	BLTS_DEBUG("Data context property: '%s' changed to '%s'\n", key,
-			g_strdup_value_contents(value));
-
-	if ((!strcmp(key, "Active")) && (!strcmp(g_strdup_value_contents(value),
-	        state->wished_state)))
-		g_main_loop_quit(state->ofono_data->mainloop);
+		if ((!g_strcmp0(key, "Active")) && (!g_strcmp0(g_value_get_string(value),
+		        state->wished_state)))
+			g_main_loop_quit(state->ofono_data->mainloop);
+	}
 }
 
 static void
@@ -169,14 +171,13 @@ ofono_get_contextpath(char *modem_path, my_ofono_data *data)
 		g_error_free(error);
 		error = NULL;
 		g_object_unref(proxyconnman);
-		g_value_unset (&val);
+		g_value_unset(&val);
 		FUNC_LEAVE();
 		return NULL;
 	}
-	g_value_unset (&val);
+	g_value_unset(&val);
 	g_object_unref(proxyconnman);
 
-	// exit here if something has gone wrong
 	if (contexts == NULL)
 	{
 		BLTS_DEBUG("No available contexts...\n");
@@ -208,7 +209,6 @@ ofono_test_data_context(void* user_ptr, __attribute__((unused))int test_num)
 	GError *error = NULL;
 	GValue val = G_VALUE_INIT;
 
-
 	if (my_ofono_get_modem(data))
 		return -1;
 
@@ -218,7 +218,7 @@ ofono_test_data_context(void* user_ptr, __attribute__((unused))int test_num)
 	modem_path = data->modem[0];
 
 	contextpath = ofono_get_contextpath(modem_path, data);
-	if(!contextpath)
+	if (!contextpath)
 	{
 		BLTS_DEBUG("No contexts found\n");
 		return -1;
@@ -255,7 +255,6 @@ ofono_test_data_context(void* user_ptr, __attribute__((unused))int test_num)
 
 	BLTS_DEBUG("Activating gprs\n");
 
-
 	g_value_init(&val, G_TYPE_BOOLEAN);
 	g_value_set_boolean(&val, TRUE);
 	state.wished_state = "TRUE";
@@ -294,7 +293,7 @@ ofono_test_data_context(void* user_ptr, __attribute__((unused))int test_num)
 		state.datacontext_proxy = NULL;
 		retval = -1;
 	}
-	g_value_unset (&val);
+	g_value_unset(&val);
 	source_id = g_timeout_add(data->timeout,
 	        (GSourceFunc) context_property_timeout, &state);
 
@@ -312,7 +311,8 @@ ofono_test_data_context(void* user_ptr, __attribute__((unused))int test_num)
 }
 
 int
-ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test_num)
+ofono_test_data_context_download(void* user_ptr,
+        __attribute__((unused))int test_num)
 {
 	FUNC_ENTER()
 	int retval = 0;
@@ -327,7 +327,6 @@ ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test
 	GValue val = G_VALUE_INIT;
 	char *command;
 
-
 	if (my_ofono_get_modem(data))
 		return -1;
 
@@ -337,14 +336,14 @@ ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test
 	modem_path = data->modem[0];
 
 	contextpath = ofono_get_contextpath(modem_path, data);
-	BLTS_DEBUG("Contextpath = %s\n", contextpath);
-	if(!contextpath)
+	BLTS_TRACE("Contextpath = %s\n", contextpath);
+	if (!contextpath)
 	{
 		BLTS_DEBUG("No contexts found\n");
 		return -1;
 	}
 
-	BLTS_DEBUG("Timeout=%i\n", data->timeout);
+	BLTS_TRACE("Timeout=%i\n", data->timeout);
 	state.datacontext_proxy = dbus_g_proxy_new_for_name(data->connection,
 	        OFONO_BUS, contextpath, OFONO_CONTEXT_INTERFACE);
 	if (!state.datacontext_proxy)
@@ -374,7 +373,6 @@ ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test
 		return -1;
 	}
 
-
 	guint source_id = g_timeout_add(data->timeout,
 	        (GSourceFunc) context_property_timeout, &state);
 
@@ -383,17 +381,17 @@ ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test
 	g_source_remove(source_id);
 
 	BLTS_DEBUG("Ping test to '%s'\n", data->ping_address);
-
-	command = (char*) malloc (strlen(data->ping_address) + 20);
-	  if (command==NULL)
-	  {
-		  BLTS_DEBUG("OOM");
-		  return -1;
-	  }
+	// 20 = command 'ping...' length
+	command = (char*) malloc(strlen(data->ping_address) + 20);
+	if (command == NULL)
+	{
+		BLTS_DEBUG("OOM");
+		return -1;
+	}
 	sprintf(command, "ping -c 1 -I gprs0 %s", data->ping_address);
 	retval = system(command);
 	free(command);
-	if(retval)
+	if (retval)
 	{
 		BLTS_DEBUG("Ping test failed\n");
 	}
@@ -417,7 +415,7 @@ ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test
 		state.datacontext_proxy = NULL;
 		retval = -1;
 	}
-	g_value_unset (&val);
+	g_value_unset(&val);
 	source_id = g_timeout_add(data->timeout,
 	        (GSourceFunc) context_property_timeout, &state);
 
@@ -433,8 +431,6 @@ ofono_test_data_context_download(void* user_ptr, __attribute__((unused))int test
 	FUNC_LEAVE();
 	return retval;
 }
-
-
 
 void *
 data_context_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)

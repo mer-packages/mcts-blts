@@ -23,12 +23,12 @@ h_sources = sms-cases.h call-cases.h ofono-modem-bindings.h ofono-general.h \
 	ofono-util.h call-forwarding.h sim-cases.h call-volume-cases.h \
 	call-meter-cases.h call-barring.h dual-call-cases.h modem-cases.h \
 	multiparty-call-cases.h ofono-call-bindings.h radio-settings.h \ 
-	data-context.h
+	data-context.h call-settings.h
 
 c_sources = blts-ofono.c sms-cases.c call-cases.c ofono-util.c \
 	call-forwarding.c sim-cases.c call-volume-cases.c call-meter-cases.c \
 	call-barring.c dual-call-cases.c modem-cases.c multiparty-call-cases.c \
-	radio-settings.c data-context.c
+	radio-settings.c data-context.c call-settings.c
 
 generated_sources = signal-marshal.h signal-marshal.c
 
