@@ -19,6 +19,7 @@
 #ifndef L2CAP_H
 #define L2CAP_H
 
+int l2cap_echo_server_wait_handle_one(struct bt_ctx *ctx, int sock);
 int l2cap_echo_server_oneshot(struct bt_ctx *ctx);
 int l2cap_echo_test_client(struct bt_ctx *ctx, int want_transfer_test);
 

@@ -26,7 +26,8 @@ h_sources = \
 	blts_dep_check.h \
 	blts_cli_frontend.h \
 	blts_params.h \
-	blts_reporting.h
+	blts_reporting.h \
+	blts_sync.h
 
 # not needed in distribution
 local_h_sources = \
@@ -42,7 +43,8 @@ c_sources = \
 	blts_params.c \
 	blts_results_xml.c \
 	blts_reporting.c \
-	csv_file.c
+	csv_file.c \
+	blts_sync.c
 
 
 BUILT_SOURCES = param-parser.h param-parser.c param-scanner.c

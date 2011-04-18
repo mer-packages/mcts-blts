@@ -1,3 +1,8 @@
+* Thu, 7 Apr 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 0.0.7
+- Removed a duplicate test case from script file
+- Fixed test.xml to match the script files
+- Added support for specifying a range in which the location coordinates must be
+
 * Mon, 14 Feb 2011 Jan Grela <jan.grela@digia.com> - 0.0.6
 - Added functionality and test case for getting GPS coordinates
 

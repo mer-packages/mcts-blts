@@ -30,7 +30,9 @@ h_sources = \
 	gen_server.h \
 	ext_tools.h \
 	pairing.h \
-	info.h
+	info.h \
+	simple_pairing.h \
+	bt_fute_agent.h
 
 c_sources = \
 	bt_fute.c \
@@ -42,7 +44,9 @@ c_sources = \
 	gen_server.c \
 	ext_tools.c \
 	pairing.c \
-	info.c
+	info.c \
+	simple_pairing.c \
+	bt_fute_agent.c
 
 bin_PROGRAMS = blts-bluetooth-tests
 

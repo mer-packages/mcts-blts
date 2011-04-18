@@ -629,7 +629,7 @@ class Device:
         for path in manager.properties['Technologies']:
             technology = manager.GetSubObject(path, 'Technology')
             properties = technology.GetProperties()
-            if "Name" in properties.keys() and properties['Name'] != name:
+            if "Name" not in properties.keys() or properties['Name'] != name:
                 continue
             i = 1
             self.manager = manager

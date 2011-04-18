@@ -5,9 +5,9 @@
 
 
 Summary: meego core test suite for geoclue component
-Name: %{name}
-Version: %{version}
-Release: %{release}
+Name: mcts-geoclue-tests
+Version: 1.0.0
+Release: 3
 License: GPLv2
 Group: System/Libraries
 Source: %{name}-%{version}.tar.gz

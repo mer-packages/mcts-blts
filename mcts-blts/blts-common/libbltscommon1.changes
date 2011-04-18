@@ -1,3 +1,6 @@
+* Fri 18 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.4
+- Added multiple test client sync support
+
 * Tue 08 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.3
 - Added CSV measurement output support: CLI switch, API for reporting
 
