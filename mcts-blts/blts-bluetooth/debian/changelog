@@ -1,3 +1,23 @@
+blts-bluetooth-tests (0.2.15) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Update environment setup instructions. Fixes: BMC#10096
+  * [ Mikko Ojala ] Allow agent to be used for tracing all cases
+  * [ Mika Niinistö ] Add agent for tracing and future pairing implementation
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Thu, 14 Apr 2011 11:26:08 +0300
+
+blts-bluetooth-tests (0.2.14) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Fix LE Scan case build
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 30 Mar 2011 16:00:25 +0300
+
+blts-bluetooth-tests (0.2.14) unstable; urgency=low
+
+  * [ Jussi Saavalainen ] Fix LE Scan case build
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 30 Mar 2011 16:00:25 +0300
+
 blts-bluetooth-tests (0.2.13) unstable; urgency=low
 
   * [ Jussi Saavalainen ] Fix LE build on mainline Bluez 4.89

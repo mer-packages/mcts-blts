@@ -1,13 +1,9 @@
-%define name mcts-lsw-tests
-%define version 1.0.1
-%define release 1
-%define _unpackaged_files_terminate_build 0 
+%define _unpackaged_files_terminate_build 0
 
-
-Summary: meego core test suite for libsocialweb component
-Name: %{name}
-Version: %{version}
-Release: %{release}
+Summary: meego core test suite for libsocialweb component   
+Name: mcts-lsw-tests   
+Version: 1.0.1   
+Release: 2
 License: GPLv2
 Group: System/Libraries
 Source: %{name}-%{version}.tar.gz

@@ -105,6 +105,8 @@ private:
     char*       	m_cBuffer;               ///< transfer buffer
     int         	m_iSocket;               ///< socket used in transfer
 
+    bool            m_bTimeoutOccurred;      ///< flag telling if timeout has occurred
+
     QCryptographicHash* m_checksum;      	///< checksum of all bytes transferred
 
 };

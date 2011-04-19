@@ -48,8 +48,7 @@ TestProviderData test_providers_data[PROVIDER_NUM] =
 {
 	/*test provider*/
 	{"org.freedesktop.Geoclue.Providers.Test",
-	"/org/freedesktop/Geoclue/Providers/Test", "Test", "GeoClue Test\
-		Provider",
+	"/org/freedesktop/Geoclue/Providers/Test", "Test", "GeoClue Test Provider",
 	"org.freedesktop.Geoclue.Position;org.freedesktop.Geoclue.Address"},
 	
  	/*manual provider*/
@@ -59,38 +58,29 @@ TestProviderData test_providers_data[PROVIDER_NUM] =
 
  	/*example provider*/	
  	{"org.freedesktop.Geoclue.Providers.Example",
-	"/org/freedesktop/Geoclue/Providers/Example","Example", "Example\
-	provider",\
+	"/org/freedesktop/Geoclue/Providers/Example","Example", "Example provider",\
 	"org.freedesktop.Geoclue.Position"},
 	
 	/*hostip provider*/
 	{"org.freedesktop.Geoclue.Providers.Hostip",
-	"/org/freedesktop/Geoclue/Providers/Hostip","Hostip", "Hostip\
-	provider",\
+	"/org/freedesktop/Geoclue/Providers/Hostip","Hostip", "Hostip provider",\
 	"org.freedesktop.Geoclue.Position;org.freedesktop.Geoclue.Address"} ,
 	
  	/*yahoo provider*/
 	{"org.freedesktop.Geoclue.Providers.Yahoo",
-	"/org/freedesktop/Geoclue/Providers/Yahoo","Yahoo", "Geocode provider that\
-	uses the Yahoo! Maps web services API","org.freedesktop.Geoclue.Geocode"},
+	"/org/freedesktop/Geoclue/Providers/Yahoo","Yahoo", "Geocode provider that uses the Yahoo! Maps web services API","org.freedesktop.Geoclue.Geocode"},
 	
  	/*geonames provider*/	
 	{"org.freedesktop.Geoclue.Providers.Geonames",
-	"/org/freedesktop/Geoclue/Providers/Geonames","Geonames", "Geonames\
-	provider","org.freedesktop.Geoclue.Geocode;org.freedesktop.Geoclue.\
-	ReverseGeocode"},
+	"/org/freedesktop/Geoclue/Providers/Geonames","Geonames", "Geonames provider","org.freedesktop.Geoclue.Geocode;org.freedesktop.Geoclue. ReverseGeocode"},
 	
  	/*localnet provider*/
 	{"org.freedesktop.Geoclue.Providers.Localnet",
-	"/org/freedesktop/Geoclue/Providers/Localnet","Localnet", "provides Address\
-	based on current gateway mac address and a local address file (which can be\
-	updated through D-Bus)","org.freedesktop.Geoclue.Address"},
+	"/org/freedesktop/Geoclue/Providers/Localnet","Localnet", "provides Address based on current gateway mac address and a local address file (which can be updated through D-Bus)","org.freedesktop.Geoclue.Address"},
 	
  	/*plazes provider*/	
 	{"org.freedesktop.Geoclue.Providers.Plazes",
-	"/org/freedesktop/Geoclue/Providers/Plazes","Plazes", "Plazes.com based\
-	provider, uses gateway mac address to\
-	locate","org.freedesktop.Geoclue.Position;org.freedesktop.Geoclue.Address"}
+	"/org/freedesktop/Geoclue/Providers/Plazes","Plazes", "Plazes.com based provider, uses gateway mac address to locate","org.freedesktop.Geoclue.Position;org.freedesktop.Geoclue.Address"}
 };
 
 
@@ -283,6 +273,33 @@ geoclue_test_provider_set_address ( GHashTable* address )
 	        &error );
 }
 
+typedef struct _GeoclueMasterClientPrivate {
+	DBusGProxy *proxy;
+	char *object_path;
+} GeoclueMasterClientPrivate;
+
+
+#define GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GEOCLUE_TYPE_MASTER_CLIENT, GeoclueMasterClientPrivate))
+void 
+geoclue_test_provider_address_start ( GeoclueMasterClient* client )
+{
+	g_assert ( client != NULL );
+	GError* error = NULL;
+	GeoclueMasterClientPrivate* priv = GET_PRIVATE (client);
+  org_freedesktop_Geoclue_Test_address_start(priv->proxy, &error);
+
+}
+
+void 
+geoclue_test_provider_position_start ( GeoclueMasterClient* client )
+{
+	g_assert ( client != NULL );
+	GError* error = NULL;
+	GeoclueMasterClientPrivate* priv = GET_PRIVATE (client);
+  org_freedesktop_Geoclue_Test_position_start(priv->proxy, &error);
+
+}
+
 static void
 check_address_key_and_value ( char *key, char *value, GHashTable *target )
 {
@@ -453,15 +470,17 @@ GeoclueMasterClient* create_geoclue_master_client()
 {
 	GeoclueMaster* master = geoclue_master_get_default ();
 	g_assert ( master != NULL );
-
+  
+  char* object_path = 0;
 	GError * error = NULL;
-	GeoclueMasterClient* client = geoclue_master_create_client ( master, NULL,
+	GeoclueMasterClient* client = geoclue_master_create_client ( master, (char**)&object_path,
 		&error );
 	g_assert ( client != NULL );
 	
 	/* Set provider requirements*/
 	geoclue_master_client_set_requirements ( client,
 	        GEOCLUE_ACCURACY_LEVEL_STREET,
+//          GEOCLUE_ACCURACY_LEVEL_NONE,
 	        0, FALSE,
 	        GEOCLUE_RESOURCE_ALL,
 	        &error );

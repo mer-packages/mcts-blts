@@ -40,7 +40,7 @@ SOURCE CODE AND COMPILING
 
 DATA FILES
 
-  The data files for the test cases are/will available here: http://testdata.meego.com/p/d/meego_qa/media/index.html
+  The data files for the test cases are/will available here: http://testdata.meego.com
   A streaming server with the data files has to be provided to run the streaming
   playback test cases, to run the local playback test cases the data files have to be downloaded.
 

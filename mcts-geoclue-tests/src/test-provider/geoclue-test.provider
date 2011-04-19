@@ -3,4 +3,5 @@ Name=Test
 Service=org.freedesktop.Geoclue.Providers.Test
 Path=/org/freedesktop/Geoclue/Providers/Test
 Interfaces=org.freedesktop.Geoclue.Address;org.freedesktop.Geoclue.Position
+Provides=ProvidesUpdates
 Accuracy=Street

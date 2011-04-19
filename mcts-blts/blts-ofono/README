@@ -287,7 +287,24 @@ Call meter cases:
          Change Radio Technology of the device. Values to
          use are either "any", "lte", "umts" or "gsm" as
          specified it oFono. Values and timeouts can
-         be changed from configuration file. 
+         be changed from configuration file.
+
+
+Context:         
+         
+ * oFono - Data context test
+        Activates and de-activates data context
+
+ * oFono - Data context download test
+        Activates data context and verifies it by using ping command
+
+
+Call settings:
+
+ * oFono - Call settings, switch 'call waiting'
+ 	Changes the state of 'call waiting'
+ 	disabled -> enabled or
+ 	enabled -> disabled depending on initial state          
 
 
 General cases:
@@ -299,8 +316,6 @@ General cases:
          Queries through every interface that modem has
 
  * oFono - Register to network
-
- * oFono - De-register from network
 
  * oFono - Enable modems
          Enables (powers on) all modems in device.

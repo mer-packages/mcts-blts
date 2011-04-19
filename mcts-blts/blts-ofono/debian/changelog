@@ -1,3 +1,18 @@
+blts-ofono-tests (0.1.20) unstable; urgency=low
+
+  * [ Mikko Ojala ] Test for Call Waiting setting added
+  * [ Mikko Ojala ] Memory leak in data context case fixed
+  * [ Pasi Matilainen ] Test for obsolete Deregister method removed
+
+ -- Mikko Ojala <mikko.ojala@digia.com>  Thu, 14 Apr 2011 11:30:37 +0300
+
+blts-ofono-tests (0.1.19) unstable; urgency=low
+
+  * Added data context test case
+  * Added data context ping case
+  
+ -- Mikko Ojala <mikko.ojala@digia.com>  Wed, 30 Mar 2011 17:07:19 +0300
+
 blts-ofono-tests (0.1.18) unstable; urgency=low
 
   * [ Kari Laakso ] Improved all voice call, dual call and multiparty case run

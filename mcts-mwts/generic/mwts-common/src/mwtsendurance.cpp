@@ -22,6 +22,8 @@
  *
  */
 
+
+
 #include "stable.h"
 #include "MwtsCommon"
 #include "mwtsendurance.h"
@@ -29,10 +31,11 @@
 /** Creates the object and initializes endurance reporting*/
 MwtsEndurance::MwtsEndurance()
 {
-	// setenv("DISPLAY", ":0.0", 1); 
+	setenv("DISPLAY", ":0.0", 1); // this is needed by sp-endurance
 }
 
-/** Gathers endurance data using some endurance data gathering tool.*/
+
+/** Gathers endurance data using sp-endurance.*/
 void MwtsEndurance::GatherData(QString sStepName)
 {
 	QProcess process;
@@ -43,9 +46,25 @@ void MwtsEndurance::GatherData(QString sStepName)
 	sStepName.replace(" ", "_");
 	params << casename << sStepName;
 	process.setWorkingDirectory("/home/user/MyDocs");
+	process.start("/usr/bin/save-incremental-endurance-stats", params);
 
+	if(!process.waitForFinished(15000))
+	{
+		qCritical() << "sp-endurance process not finished in 15 seconds";
+		process.terminate();
+		return;
+	}
+	QString output=process.readAllStandardOutput();
+	if(0 != process.exitCode())
+	{
+		qCritical() << "sp-endurance returned " << process.exitCode()
+				<< ". Output:" << output;
+		return;
+	}
 
-	// todo: gathering the endurance data
-	qWarning() << "Gathering endurance data not implemented yet!";
-
+	if(-1 == output.indexOf("Saving to")) // this should be in output
+	{
+		qCritical() << "Error with sp-endurance. Output:" << output;
+		return;
+	}
 }

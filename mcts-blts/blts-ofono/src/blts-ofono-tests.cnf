@@ -433,3 +433,27 @@
 	params RAT RAT_timeout
 [end_test]
 
+
+################
+# Data Context #
+################
+
+[parameter]
+	name context_timeout
+	const global_timeout
+[end_parameter]
+
+[parameter]
+	name ping_address
+	const "8.8.8.8"  
+[end_parameter]
+
+[test]
+	name "oFono - Data context test"
+	params ping_address context_timeout
+[end_test]
+
+[test]
+	name "oFono - Data context download test"
+	params ping_address context_timeout
+[end_test]

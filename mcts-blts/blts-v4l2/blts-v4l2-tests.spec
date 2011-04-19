@@ -1,6 +1,6 @@
 Summary: BLTS V4L2 test set
 Name: blts-v4l2-tests
-Version: 0.3.10
+Version: 0.3.11
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -45,4 +45,6 @@ rm -rf $RPM_BUILD_ROOT
 %files config-example
 %defattr(-,root,root,-)
 %config /etc/blts/blts-v4l2-tests.cnf
+%config /etc/blts/blts-v4l2-n900.cnf
+%config /etc/blts/blts-v4l2-vivi.cnf
 /usr/share/blts-v4l2-tests/tests.xml

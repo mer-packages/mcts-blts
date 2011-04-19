@@ -26,17 +26,19 @@ SOURCES += \
 	mwtsglobal.cpp \
 	mwtsconfig.cpp \
 	mwtsmonitor.cpp \
+	mwtspsd.cpp \
 	mwtsiteration.cpp \
 	mwtsthroughput.cpp \
 	mwtsmonitorlogger.cpp \
 	mwtsmemorymonitor.cpp \
 	mwtscpumonitor.cpp \
 	mwtsabstractmonitor.cpp \
+	mwtsendurance.cpp \
 	mwtsmemorymeasurement.cpp \
 	mwtsradio.cpp \
 	mwtsstatistics.cpp \
-	mwtssocket.cpp \
-	mwtsendurance.cpp
+	mwtssocket.cpp 
+
 
 HEADERS += \
 	MwtsCommon \
@@ -50,6 +52,7 @@ HEADERS += \
 	mwtsglobal.h \
 	mwtsconfig.h \
 	mwtsmonitor.h \
+	mwtspsd.h \
 	mwtsiteration.h \
 	mwtsthroughput.h \
 	mwtsmonitorlogger.h \

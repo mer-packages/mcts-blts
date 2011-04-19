@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-GCC_FLAGS := -Wall -O2 -lbltscommon
+GCC_FLAGS := -Wall -O2 -lbltscommon -lrt
 GCC_FILES := blts_cli_example_module.c
 
 default:

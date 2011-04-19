@@ -28,6 +28,7 @@
 #include "mwtsload.h"
 #include "mwtsthroughput.h"
 #include "mwtsradio.h"
+#include "mwtspsd.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -155,6 +156,31 @@ int SetFailTimeout( MinItemParser * item )
 	return 1;
 }
 
+
+
+/**
+  Sets the fail timeout
+  If the test is not stopped naturally before this timeout
+  the test is marked as timeouted and is failed
+  Test is stopped when timeout occurs.
+  param: Timeout (int) sets the amount of time in milliseconds
+*/
+int SetResultFilter( MinItemParser * item )
+{
+	MWTS_ENTER;
+	int arg = 30000;
+	char *filter_str = (char*) INITPTR;
+	if (mip_get_next_string(item, &filter_str) != ENOERR)
+	{
+		MWTS_ERROR ("Missing result filter parameter in SetResultFilter");
+		return 1;
+	}
+
+	g_pResult->SetResultFilter(filter_str);
+	
+	return 0;
+}
+
 /**
   Starts CPU load
   param: Load (int) amount of cpu load, percentage
@@ -237,7 +263,9 @@ int StartClientThroughput ( MinItemParser* item )
 
 	char *IP_str = (char*) INITPTR;
 	int transtime = 0;
-	if (mip_get_next_string(item, &IP_str) != ENOERR)
+    char *direction_str = (char*) INITPTR;
+
+    if (mip_get_next_string(item, &IP_str) != ENOERR)
 	{
 		MWTS_ERROR ("Missing server IP parameter in StartClientThroughput");
 		return 1;
@@ -249,7 +277,13 @@ int StartClientThroughput ( MinItemParser* item )
 		transtime = 0;
 	}
 
-	g_pIPerfThroughput-> SetClientMeasurement(IP_str, transtime, "upload");
+    if (mip_get_next_string(item, &direction_str) != ENOERR)
+    {
+        MWTS_DEBUG("No direction given, using default");
+        direction_str = "upload";
+    }
+
+    g_pIPerfThroughput-> SetClientMeasurement(IP_str, transtime, direction_str);
 	if(!g_pIPerfThroughput->Start())
 	{
 		MWTS_ERROR("Failed to start client throughput measuring");
@@ -350,6 +384,52 @@ int SetRadioMode(MinItemParser* item)
 }
 
 
+/**
+* Changes Radio Access Technology between 2G/3G (DUAL/GSM/UMTS)
+*
+*/
+int ChangeRAT(MinItemParser* item)
+{
+	MWTS_ENTER;
+	char *mode_str = (char*) INITPTR;
+	int mode=0;
+	if (mip_get_next_string(item, &mode_str) != ENOERR)
+	{
+		return 1;
+	}
+	if(0==strcmp("DUAL", mode_str))
+	{
+		mode=RAT_DUAL;
+		MWTS_DEBUG("Changing radio access to DUAL");
+	}
+	else if(0==strcmp("GSM", mode_str))
+	{
+		mode=RAT_GSM;
+		MWTS_DEBUG("Changing radio access to GSM");
+	}
+	else if(0==strcmp("UMTS", mode_str))
+	{
+		mode=RAT_UMTS;
+		MWTS_DEBUG("Changing radio access to UMTS");
+	}
+	else
+	{
+		qCritical() << "Invalid radio access mode defined : " << mode_str;
+		return 1;
+	}
+
+	if(!MwtsPsd::ChangeMode(mode))
+	{
+		MWTS_ERROR("Changing radio access technology failed!");
+		return 1;
+	}
+
+	sleep(10); // wait 10 seconds for mode change to take effect - no need to do this in script
+
+	free(mode_str);
+	return 0;
+}
+
 
 /**
   Stops current memory load process
@@ -421,7 +501,8 @@ void MwtsMin::DeclareFunctions(DLList ** list)
 
 	ENTRYTC(*list, "SetTestTimeout", SetTestTimeout);
 	ENTRYTC(*list, "SetFailTimeout", SetFailTimeout);
-
+	ENTRYTC(*list, "SetResultFilter", SetResultFilter);
+	
 	ENTRYTC(*list, "StartIteration", StartIteration);
 	ENTRYTC(*list, "EndIteration", EndIteration);
 
@@ -436,6 +517,9 @@ void MwtsMin::DeclareFunctions(DLList ** list)
 	ENTRYTC(*list, "EnableUI", EnableUI);
 
 	ENTRYTC(*list, "SetLimits", SetLimits);
+
+	ENTRYTC(*list, "ChangeRAT", ChangeRAT);
 	ENTRYTC(*list, "SetRadioMode", SetRadioMode);
+
 
 }

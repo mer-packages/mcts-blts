@@ -1,2 +1,4 @@
 etc/blts/blts-v4l2-tests.cnf
+etc/blts/blts-v4l2-n900.cnf
+etc/blts/blts-v4l2-vivi.cnf
 usr/share/blts-v4l2-tests/tests.xml

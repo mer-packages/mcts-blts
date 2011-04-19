@@ -71,12 +71,8 @@ void ButeoTest::OnInitialize()
     m_bSuccess = false;
 
     connect(sci, SIGNAL(syncStatus(QString,int,QString,int)), this, SLOT(slotSyncStatus(QString,int,QString,int)));
-    //connect(sci, SIGNAL(profileChanged(QString,int,SyncProfile)), this, SLOT(slotProfileChanged(QString,int,Buteo::SyncProfile)));
     connect(sci, SIGNAL(resultsAvailable(QString,Buteo::SyncResults)), this, SLOT(slotResultsAvailable(QString,Buteo::SyncResults)));
     connect(sci, SIGNAL(transferProgress(QString,int,int,QString,int)), this, SLOT(slotTransferProgress(QString,int,int,QString,int)));
-
-    //void transferProgress(QString aProfileId, int aTransferDatabase,
-    //              int aTransferType , QString aMimeType, int aCommittedItems );
 
     QString sync_folder  = g_pConfig->value("sync_home").toString();
 
