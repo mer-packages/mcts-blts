@@ -3489,7 +3489,7 @@ Run Instructions:</p>
 2. make sure connman can get IP for wifi and can ping with other wifi IP address by &quot;connect-service [ssid]&quot;<br />
 3. make sure ethernet and bt are disconnected<br />
 4. call test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;<br />
-5. disable wifi device by calling &quot;test-connman disable wifi&quot;<br />
+5. disable wifi device by calling &quot;test-connman disconnect &lt;connected service&gt;&quot;<br />
 6. call test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
 <p><br />
 Pass/Fail Criteria:</p>
