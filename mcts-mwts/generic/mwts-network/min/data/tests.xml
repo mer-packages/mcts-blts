@@ -1086,7 +1086,7 @@
         Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
         References: 
         Required test data: None.">
-        <step>min -c -t NFT-WLAN-Connect_WPA-TKIP_saved-LATE'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_WPA-TKIP_saved-LATE'</step>
       </case>
       <case name="NFT-WLAN-Connect_WPA2-TKIP_unsaved-LATE"  timeout="10" description=
         "Purpose: tests connection creation latency with unsaved wpa2 tkip secured ap
@@ -1104,7 +1104,7 @@
         Pass- /Fail Criteria: connection to wlan ap is made, test does not crash 
         References: 
         Required test data: None.">
-        <step>min -c -t NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
+        <step>min -c -t 'NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
       </case>
      <case name="NFT-WLAN-Connect_WPA2-AES_saved-LATE" timeout="10" description=
         "Purpose: tests connection creation latency with saved wpa2 aes secured ap
