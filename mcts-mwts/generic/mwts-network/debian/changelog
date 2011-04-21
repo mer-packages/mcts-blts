@@ -1,15 +1,19 @@
+mwts-network-tests (1.0.4) unstable; urgency=low
+ * fixed tests.xml to match the schema
+ -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Tue, 19 Apr 2011 13:00:00 +0300
+
 mwts-network-tests (1.0.3) unstable; urgency=low
- * psd connect functionality added. 
- -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Thu, 19 Feb 2010 10:00:00 +0300
+ * psd connect functionality added
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Thu, 10 Feb 2011 10:00:00 +0300
 
 mwts-network-tests (1.0.2) unstable; urgency=low
- * minor changes to disconnect. 
+ * minor changes to disconnect
  * new test case added 
- -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Tue, 8 Dec 2010 08:00:00 +0300
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Tue, 8 Feb 2011 08:00:00 +0300
 
 mwts-network-tests (1.0.1) unstable; urgency=low
   * connect / disconnect functionality now uses connman directly instead of bearer management
- -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Mon, 31 Jan 2010 08:00:00 +0300
+ -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Mon, 31 Jan 2011 08:00:00 +0300
 
 mwts-network-tests (1.0.0) unstable; urgency=low
   * Modified wlan scan logic. Now it searches if specifig access point is found
