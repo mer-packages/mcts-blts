@@ -170,37 +170,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Disconnect.py</step>
 </case>
 
-<case name="CM_BT_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the BT device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;bnep&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IfconfigDown.py</step>
-</case>
-
-<case name="CM_BT_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;bnep&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;bnep&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IfconfigUp.py</step>
-</case>
-
 <case name="CM_BT_IsPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device is on by default</p>
@@ -491,22 +460,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_Disconnect.py</step>
 </case>
 
-<case name="CM_3G_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="3G" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the 3G device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;wwan&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_IfconfigDown.py</step>
-</case>
-
 <case name="CM_3G_Item_Configuring" manual="true" timeout="90" type="Functional" subfeature="3G" insignificant="false">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
@@ -521,21 +474,6 @@ Run Instructions:<br />
 <br />
 During 3G network is connecting, there is &quot;configuraton&quot; state</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
-</case>
-
-<case name="CM_3G_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="3G" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;wwan&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;wwan&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_IfconfigUp.py</step>
 </case>
 
 <case name="CM_3G_Item_Disconnect" manual="true" timeout="90" type="Functional" subfeature="3G" insignificant="false">
@@ -1717,37 +1655,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_Disconnect.py</step>
 </case>
 
-<case name="CM_WG_IfconfigDown" manual="false" timeout="180" type="Functional" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the WiFi device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;eth&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_IfconfigDown.py</step>
-</case>
-
-<case name="CM_WG_IfconfigUp" manual="false" timeout="180" type="Functional" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;wlan&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;wlan&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_IfconfigUp.py</step>
-</case>
-
 <case name="CM_WG_IsPoweredOn" manual="false" timeout="180" type="Functional" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if WiFi device is on by default</p>
@@ -2070,37 +1977,6 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p>Ping cannot receive any response.</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_Disconnect.py</step>
-</case>
-
-<case name="CM_Eth_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="Ethernet" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the ethernet device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;eth&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_IfconfigDown.py</step>
-</case>
-
-<case name="CM_Eth_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="Ethernet" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;eth&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;eth&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_IfconfigUp.py</step>
 </case>
 
 <case name="CM_Eth_IsPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Ethernet" insignificant="false">
