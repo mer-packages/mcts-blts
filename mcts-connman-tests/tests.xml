@@ -2857,66 +2857,6 @@ Pass/Fail Criteria:</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_State.py</step>
 </case>
 
-<case name="CM_PS_APN" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if APN property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if APN is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_APN.py</step>
-</case>
-
-<case name="CM_PS_MCC" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if MCC property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if MCC is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_MCC.py</step>
-</case>
-
-<case name="CM_PS_MNC" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if MNC property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if MNC is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_MNC.py</step>
-</case>
-
-<case name="CM_PS_Roaming" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Roaming property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if Roaming is&nbsp;in [True, False]&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_Roaming.py</step>
-</case>
-
-<case name="CM_PS_SetupRequired" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if SetupRequired property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if SetupRequired is&nbsp;in [True, False]</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_SetupRequired.py</step>
-</case>
-
 <case name="CM_PS_AutoConnect" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test if AutoConnect in Service interface is valid.</p>
