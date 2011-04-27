@@ -43,4 +43,16 @@ value_list = [
     'wpa',
     'rsn',
     ]
-EXIT(InListWiFiGuest('Security', value_list))
+
+dev = WiFiGuestDevice()
+svc = dev.GetService()
+properties = svc.GetProperties()
+key='Security'
+items = properties[key]
+for item in items:
+    if item in value_list:
+        print '%s %s is valid' % (key, item)
+        EXIT(True)
+    else:
+        print '%s %s is invalid' % (key, item)
+        EXIT(False)
