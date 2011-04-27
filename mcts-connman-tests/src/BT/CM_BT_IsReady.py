@@ -30,4 +30,5 @@ from common import *
 
 dev = BTDevice()
 svc = dev.GetService()
+svc.Connect()
 EXIT(svc.IsReady())

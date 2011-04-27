@@ -30,4 +30,5 @@ from common import *
 
 dev = C3GDevice()
 svc = dev.GetService()
+svc.Connect()
 EXIT(svc.IsReady())
