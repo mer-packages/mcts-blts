@@ -956,7 +956,7 @@ Password = whatever</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
 </case>
-<case name="CM_WS_EAP_TTLS_MSCHAPV2" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_MSCHAPV2" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MSCHAPV2</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -985,7 +985,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAPV2.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_MSCHAP" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_MSCHAP" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MSCHAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1014,7 +1014,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAP.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_CHAP" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_CHAP" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS CHAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1043,7 +1043,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_CHAP.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_MD5" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_MD5" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MD5</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1072,7 +1072,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MD5.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_PAP" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_PAP" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS PAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -5724,22 +5724,6 @@ can catch the signal that the IP address of ethernet has been changed</p>]]></de
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_SC_Networks" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Networks property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Powered off the device</p>
-<p>2.2 sleep 5 seconds, and Powered on the device</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Networks.py</step>
-</case>
-
 <case name="CM_SM_ConnectedTechnologies" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if signal is triggered when ConnectedTechnologies property changed</p>
@@ -5836,21 +5820,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SM_State.py</step>
 </case>
 
-<case name="CM_SM_Strength" manual="false" timeout="90" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Strength property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Invoke Manager.RequestScan('wifi')</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SM_Strength.py</step>
-</case>
-
 <case name="CM_SS_AutoConnect" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if signal is triggered when AutoConnect property changed</p>
@@ -5914,37 +5883,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SS_Passphrase.py</step>
 </case>
 
-<case name="CM_SC_Powered" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Powered property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Powered off the device</p>
-<p>2.2 sleep 5 seconds, and Powered on the device</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Powered.py</step>
-</case>
-
-<case name="CM_SC_Scanning" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Scanning property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Invoke Manager.RequestScan('wifi')</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Scanning.py</step>
-</case>
-
 <case name="CM_SC_ConnectedTechnologies" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if signal is triggered when ConnectedTechnologies property changed</p>
@@ -5991,22 +5929,6 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_State.py</step>
-</case>
-
-<case name="CM_SC_Connected" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Connected property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Set connman to offline mode</p>
-<p>2.2 sleep 5 seconds, and set connman to online mode</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Connected.py</step>
 </case>
 
 <case name="CM_SC_OfflineMode" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
