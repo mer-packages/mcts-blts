@@ -13,9 +13,12 @@ Requires:  dbus-python
 Requires:  python-lxml  
 Requires:  GConf-dbus 
 Requires:  libgnome-keyring-devel
+BuildRequires: libgnome-keyring-devel
 Requires:  libsocialweb-qt
 Requires:  libsocialweb-devel
+BuildRequires: libsocialweb-devel
 Requires:  libsocialweb-qt-devel
+BuildRequires: libsocialweb-qt-devel
 Requires:  libsocialweb-keys
 Requires:  qt-qmake 
 Requires:  gcc-c++
