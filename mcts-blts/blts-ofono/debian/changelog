@@ -1,3 +1,9 @@
+blts-ofono-tests (0.1.21) unstable; urgency=low
+
+  * [ Arun Ravindran ] Check call status before swapping
+
+ -- Mikko Ojala <mikko.ojala@digia.com>  Wed, 27 Apr 2011 15:17:24 +0300
+
 blts-ofono-tests (0.1.20) unstable; urgency=low
 
   * [ Mikko Ojala ] Test for Call Waiting setting added
