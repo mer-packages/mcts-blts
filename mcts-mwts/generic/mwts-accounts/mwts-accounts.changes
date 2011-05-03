@@ -1,3 +1,6 @@
+* Wed 20 Apr 2011 Jan Grela <jan.grela@digia.com> - 0.0.3
+- Fixes: NB#10743 - packages description added to README, COPYING and README added to generic-all in .scep file
+
 * Thu 16 Dec 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 0.0.2
 - Accounts can be created
 - SSO credentials can be created
