@@ -1054,8 +1054,12 @@ gboolean GstreamerTest::run_pipeline(gboolean flush_on_complete)
          so frame count is actually framecount-1 */
         qDebug("local_frame_count: %d", local_frame_count);
         qDebug("local_elapsed_time: %d", local_elapsed_time);
-        g_pResult->AddMeasure("Framerate", (double)(local_frame_count-1)/(double)local_elapsed_time, "FPS");
-
+		double framerate = (double)(local_frame_count-1)/(double)local_elapsed_time;
+		g_pResult->AddMeasure("Framerate", framerate, "FPS");
+		if (framerate < 15)
+		{
+			qCritical() << "Measured framerate critically low (" << framerate << ")";
+		}
     }
 
     MWTS_LEAVE;

@@ -1,5 +1,8 @@
-* Thu Dec 09 2010 Jan Grela <jan.grela@digia.com> - 0.0.7
- - Added playback functionality, codecs and containers setting moved to .conf file, added new test cases
+* Tue May 03 2011 Jan Grela <jan.grela@digia.com> - 0.0.8
+ - Fixes: NB#16744 - measure framerate test cases will fail if framerate is critically low
+
+* Mon Apr 04 2011 Balazs Sipos <balazs.sipos@digia.com> - 0.0.7
+ - Fixes:NB#11611 - MCTS-MWTS-Gstreamer: Missing test data
 
 * Tue 29 Sept 2010 Balazs Sipos <balazs.sipos@digia.com> - 0.0.6
  - Initial MeeGo version
@@ -21,4 +24,3 @@
 
 * Tue 11 May 2010 Esa-Pekka Miettinen <esa-pekka.miettinen@digia.com> - 0.0.1
   - Initial version
-
