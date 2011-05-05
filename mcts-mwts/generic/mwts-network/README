@@ -6,7 +6,7 @@ Introduction
 
    Usage of mwts-network is currently restricted to wlan-cases. 
 
-   Contact: toivanen.pauli-pekka@digia.com 
+   Contact: ext-rauno.vartiainen@nokia.com
 
 Function descriptions
 
@@ -51,7 +51,16 @@ Source code and compiling
 Requirements for environment
 
    For troughput measurements, Iperf 2.0.2 must be installed in device and server. With never versions (2.0.4) problems with troughput measurements might appear. 
-   In order to execute all tests on mwts-  network, you need to map access point names in the NetworkTest.cfg (/usr/lib/NetworkTest.cfg)
+
+   In order to execute all tests on mwts-network, you need to map access point names in the NetworkTest.conf (/usr/lib/tests/NetworkTest.cfg)
+
+   For file upload cases, you need to generate the test files (or use the corresponding download case first, if the test files exist on the server).
+   The location where files are uploaded from or downloaded to, is specified in NetworkTest.conf with local_path key in [FTP] section.
+   To generate a 10 megabyte file named 10MB.bin use the following command:
+
+        dd bs=1024 count=10240 if=/dev/urandom of=10MB.bin
+
+   For test files with different sizes modify the count arguments and file names accordingly.
 
 Executing tests
 
