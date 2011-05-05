@@ -62,7 +62,7 @@ static struct usb_device_descriptor device_desc = {
 static char manufacturer[50];
 
 /* default serial number takes at least two packets */
-static char serial[] = "0123456789.0123456789.0123456789";
+static const char serial[] = "0123456789.0123456789.0123456789";
 
 static struct usb_string strings_dev[] = {
 	[STRING_MANUFACTURER_IDX].s = manufacturer,
