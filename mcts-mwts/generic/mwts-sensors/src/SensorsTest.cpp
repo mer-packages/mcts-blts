@@ -30,6 +30,7 @@
 #include <QProximitySensor>
 #include <QRotationSensor>
 #include <QTapSensor>
+#include <QLightSensor>
 
 #include <QSensorReading>
 #include <QTapReading>
@@ -247,36 +248,45 @@ void SensorsTest::InitSensor(SensorsTest::SensorType type)
 {
 	MWTS_ENTER;
 
-	/*
+	printSensorsTypes();
+
 	currentSensorType = type;
 	switch (type)
 	{
 		case AccelerometerType:
 			m_Sensor = new QAccelerometer(this);
+			qDebug() << "Accelerometer sensor initialized";
 			break;
 		case AmbientLightSensorType:
 			m_Sensor = new QAmbientLightSensor(this);
+			qDebug() << "Ambient light sensor initialized";
 			break;
 		case CompassType:
 			m_Sensor = new QCompass(this);
+			qDebug() << "Compass sensor initialized";
 			break;
 		case GyroscopeType:
 			//m_Sensor = new QGyroscope(this);
 			break;
 		case LightSensorType:
-			//m_Sensor = new QLightSensor(this);
+			m_Sensor = new QLightSensor(this);
+			qDebug() << "Light sensor initialized";
 			break;
 		case MagnetometerType:
 			m_Sensor = new QMagnetometer(this);
+			qDebug() << "Magnetometer sensor initialized";
 			break;
 		case OrientationSensorType:
 			m_Sensor = new QOrientationSensor(this);
+			qDebug() << "Orientation sensor initialized";
 			break;
 		case ProximitySensorType:
 			m_Sensor = new QProximitySensor(this);
+			qDebug() << "Proximity sensor initialized";
 			break;
 		case RotationSensorType:
 			m_Sensor = new QRotationSensor(this);
+			qDebug() << "Rotation sensor initialized";
 			break;
 		case TapSensorType:
 			m_Sensor = new QTapSensor(this);
@@ -284,9 +294,9 @@ void SensorsTest::InitSensor(SensorsTest::SensorType type)
 			break;
 		default:
 			break;
-	}*/
+	}
 
-	m_Sensor = new QTapSensor(this);
+	//m_Sensor = new QTapSensor(this);
 	//m_Sensor = new QSensor("TapSensor");
 
 	connect(m_Sensor, SIGNAL(activeChanged()), this, SLOT(onActiveChanged()));
@@ -341,43 +351,70 @@ void SensorsTest::onReadingChanged()
 {
 	switch (currentSensorType)
 	{
-	case AccelerometerType:
-
-		break;
-	case AmbientLightSensorType:
-
-		break;
-	case CompassType:
-
-		break;
-	case GyroscopeType:
-
-		break;
-	case LightSensorType:
-
-		break;
-	case MagnetometerType:
-
-		break;
-	case OrientationSensorType:
-
-		break;
-	case ProximitySensorType:
-
-		break;
-	case RotationSensorType:
-
-		break;
-	case TapSensorType:
+		case AccelerometerType:
 		{
-			QTapSensor* s1 = dynamic_cast<QTapSensor*>(m_Sensor);
-			QTapReading* reading1 = s1->reading();
-			qDebug() << reading1->tapDirection();
-			//qDebug() << "can read now";
+			QAccelerometer* s = dynamic_cast<QAccelerometer*>(m_Sensor);
+			QAccelerometerReading* reading = s->reading();
+			qDebug() << "x " << reading->x() << ", y " << reading->y() << ", z " << reading->z();
 			break;
 		}
-	default:
-		break;
+		case AmbientLightSensorType:
+
+			break;
+		case CompassType:
+		{
+			QCompass* s = dynamic_cast<QCompass*>(m_Sensor);
+			QCompassReading* reading = s->reading();
+			qDebug() << "azimuth " << reading->azimuth() << ", calibration level " << reading->calibrationLevel();
+			break;
+		}
+		case GyroscopeType:
+
+			break;
+		case LightSensorType:
+		{
+			QLightSensor* s = dynamic_cast<QLightSensor*>(m_Sensor);
+			QLightReading* reading = s->reading();
+			qDebug() << "lux " << reading->lux();
+			break;
+		}
+		case MagnetometerType:
+		{
+			QMagnetometer* s = dynamic_cast<QMagnetometer*>(m_Sensor);
+			QMagnetometerReading* reading = s->reading();
+			qDebug() << "calibration level " << reading->calibrationLevel() << ", x " << reading->x() << ", y " << reading->y() << ", z" << reading->z();
+			break;
+		}
+		case OrientationSensorType:
+		{
+			QOrientationSensor* s = dynamic_cast<QOrientationSensor*>(m_Sensor);
+			QOrientationReading* reading = s->reading();
+			qDebug() << "orientation " << reading->orientation();
+			break;
+		}
+		case ProximitySensorType:
+		{
+			QProximitySensor* s = dynamic_cast<QProximitySensor*>(m_Sensor);
+			QProximityReading* reading = s->reading();
+			qDebug() << "close " << reading->close();
+			break;
+		}
+		case RotationSensorType:
+		{
+			QRotationSensor* s = dynamic_cast<QRotationSensor*>(m_Sensor);
+			QRotationReading* reading = s->reading();
+			qDebug() << "x " << reading->x() << ", y " << reading->y() << ", z " << reading->z();
+			break;
+		}
+		case TapSensorType:
+		{
+			QTapSensor* s = dynamic_cast<QTapSensor*>(m_Sensor);
+			QTapReading* reading = s->reading();
+			qDebug() << "tap direction " << reading->tapDirection() << ", is double tap " << reading->isDoubleTap();
+			break;
+		}
+		default:
+			break;
 	}
 
 }
@@ -389,22 +426,51 @@ void SensorsTest::onSensorError(int error)
 
 void SensorsTest::debug1()
 {
+
+	qDebug() << "+--------------------------------";
+
+	qDebug() << "|Sensor type" << m_Sensor->type();
+
 	if (m_Sensor->isConnectedToBackend())
-		qDebug() << "isConnectedToBackend";
+	{
+		qDebug() << "|Sensor is connected to backend";
+	}
 	else
-		qDebug() << "isNOTConnectedToBackend";
+	{
+		qDebug() << "|Sensor is not connected to backend";
+		qDebug() << "|trying to connect to backend...";
+		if (m_Sensor->connectToBackend())
+			qDebug() << "...true";
+		else
+			qDebug() << "|...false";
+	}
 
 	if (m_Sensor->isActive())
-		qDebug() << "isActive";
+		qDebug() << "|Sensor is active";
 	else
-		qDebug() << "isNOTActive";
+		qDebug() << "|Sensor is not active";
 
 	if (m_Sensor->isBusy())
-		qDebug() << "is Busy";
+		qDebug() << "|Sensor is busy";
 	else
-		qDebug() << "isNOTBusy";
+		qDebug() << "|Sensor is not busy";
 
-	qDebug() << "error code " << m_Sensor->error();
+
+
+	qDebug() << "|error code " << m_Sensor->error();
+
+	qDebug() << "+--------------------------------";
+
+
+}
+
+void SensorsTest::printSensorsTypes()
+{
+	QList<QByteArray> list = QSensor::sensorTypes();
+	qDebug() << "Sensor list:";
+	foreach (QByteArray a, list)
+		qDebug() << a;
+
 }
 
 ///////////////////////////////////////////////////////

@@ -11,8 +11,22 @@ class MySensor : public QObject {
      Q_OBJECT
 
  public:
-	MySensor();
 
+	enum SensorType
+	{
+		AccelerometerType,
+		AmbientLightSensorType,
+		CompassType,
+		GyroscopeType,
+		LightSensorType,
+		MagnetometerType,
+		OrientationSensorType,
+		ProximitySensorType,
+		RotationSensorType,
+		TapSensorType
+	};
+
+	MySensor(MySensor::SensorType);
 
  public slots:
 	void onActiveChanged ();
@@ -23,8 +37,11 @@ class MySensor : public QObject {
 
 	void show();
 
+	void printSensorsTypes();
+
 private:
 	QSensor* s;
+	SensorType sType;
 
  };
 

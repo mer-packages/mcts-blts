@@ -1,6 +1,7 @@
-#include "mysensor.h"
+#include "supersensor.h"
+
 #include <QtDebug>
-#include <iostream> 
+#include <iostream>
 #include <QSensorReading>
 #include <QTapReading>
 
@@ -30,13 +31,96 @@
 
 #include <QTimer>
 
-MySensor::MySensor(MySensor::SensorType type) : sType(type)
+//SuperSensor::SuperSensor(SuperSensor::SensorType type, QObject* parent) : sType(type)//, FooBarClass(parent)
+SuperSensor::SuperSensor()
 {
-	//sType = type;
-//
+	MWTS_ENTER;
+
+	/*printSensorsTypes();
+
+
+
+	switch (sType)
+	{
+		case AccelerometerType:
+			s = new QAccelerometer(this);
+			qDebug() << "Accelerometer sensor initialized";
+			break;
+		case AmbientLightSensorType:
+			//s = new QAmbientLightSensor(this);
+			//qDebug() << "Ambient light sensor initialized";
+			//break;
+		case CompassType:
+			s = new QCompass(this);
+			qDebug() << "Compass sensor initialized";
+			break;
+		case GyroscopeType:
+			//s = new QGyroscope(this);
+			break;
+		case LightSensorType:
+			s = new QLightSensor(this);
+			qDebug() << "Light sensor initialized";
+			break;
+		case MagnetometerType:
+			s = new QMagnetometer(this);
+			qDebug() << "Magnetometer sensor initialized";
+			break;
+		case OrientationSensorType:
+			s = new QOrientationSensor(this);
+			qDebug() << "Orientation sensor initialized";
+			break;
+		case ProximitySensorType:
+			s = new QProximitySensor(this);
+			qDebug() << "Proximity sensor initialized";
+			break;
+		case RotationSensorType:
+			s = new QRotationSensor(this);
+			qDebug() << "Rotation sensor initialized";
+			break;
+		case TapSensorType:
+			s = new QTapSensor(this);
+			qDebug() << "Tap sensor initialized";
+			break;
+		default:
+			s = new QAccelerometer(this);
+			qDebug() << " Default initialization accelerometer";
+			break;
+	}
+
+	//s = new QTapSensor(this);
+	//s = new QAccelerometer(this);
+	//s = new QCompass(this);
+	//s = new QRotationSensor(this);
+	//s = new QLightSensor(this);
+	//s = new QProximitySensor(this);
+	//s = new QOrientationSensor(this);
+	//s = new QMagnetometer(this);
+
+
+	connect(s, SIGNAL(activeChanged()), this, SLOT(onActiveChanged()));
+	connect(s, SIGNAL(availableSensorsChanged()), this, SLOT(onAvailableSensorsChanged()));
+	connect(s, SIGNAL(busyChanged()), this, SLOT(onBusyChanged()));
+	connect(s, SIGNAL(readingChanged()), this, SLOT(onReadingChanged()));
+	connect(s, SIGNAL(sensorError(int)), this, SLOT(onSensorError(int)));
+
+	QTimer* t = new QTimer(this);
+	connect(t, SIGNAL(timeout()), this, SLOT(show()));
+	t->start(1000);
+
+	s->start();*/
+
+	MWTS_LEAVE;
+
+}
+
+void SuperSensor::startToFuck(SuperSensor::SensorType type)
+{
+
+	MWTS_ENTER;
 
 	printSensorsTypes();
 
+	sType = type;
 
 	switch (sType)
 	{
@@ -107,24 +191,38 @@ MySensor::MySensor(MySensor::SensorType type) : sType(type)
 
 	s->start();
 
+	MWTS_LEAVE;
+
 }
 
-void MySensor::onActiveChanged()
+void SuperSensor::OnInitialize()
+{
+	MWTS_ENTER;
+	MWTS_LEAVE;
+}
+
+void SuperSensor::OnUninitialize()
+{
+	MWTS_ENTER;
+	MWTS_LEAVE;
+}
+
+void SuperSensor::onActiveChanged()
 {
 	qDebug() << "active";
 }
 
-void MySensor::onAvailableSensorsChanged()
+void SuperSensor::onAvailableSensorsChanged()
 {
 	qDebug() << "available";
 }
 
-void MySensor::onBusyChanged()
+void SuperSensor::onBusyChanged()
 {
 	qDebug() << "busy";
 }
 
-void MySensor::printSensorsTypes()
+void SuperSensor::printSensorsTypes()
 {
 	QList<QByteArray> list = QSensor::sensorTypes();
 	qDebug() << "Sensor list:";
@@ -133,7 +231,7 @@ void MySensor::printSensorsTypes()
 
 }
 
-void MySensor::onReadingChanged()
+void SuperSensor::onReadingChanged()
 {
 	switch (sType)
 	{
@@ -241,30 +339,47 @@ void MySensor::onReadingChanged()
 	//qDebug() << "calibration level " << reading1->calibrationLevel() << ", x " << reading1->x() << ", y " << reading1->y() << ", z" << reading1->z();
 }
 
-void MySensor::onSensorError(int error)
+void SuperSensor::onSensorError(int error)
 {
 	qDebug() << "error occurs, code: " << error;
 }
 
 
-void MySensor::show()
+void SuperSensor::show()
 {
+	qDebug() << "+--------------------------------";
+
+	qDebug() << "|Sensor type" << s->type();
+
 	if (s->isConnectedToBackend())
-		qDebug() << "connected";
+	{
+		qDebug() << "|Sensor is connected to backend";
+	}
 	else
-		qDebug() << "not connected";
+	{
+		qDebug() << "|Sensor is not connected to backend";
+		qDebug() << "|trying to connect to backend...";
+		if (s->connectToBackend())
+			qDebug() << "...true";
+		else
+			qDebug() << "|...false";
+	}
 
 	if (s->isActive())
-		qDebug() << "active";
+		qDebug() << "|Sensor is active";
 	else
-		qDebug() << "not active";
+		qDebug() << "|Sensor is not active";
 
 	if (s->isBusy())
-		qDebug() << "busy";
+		qDebug() << "|Sensor is busy";
 	else
-		qDebug() << "not busy";
+		qDebug() << "|Sensor is not busy";
 
-	qDebug() << "error code " << s->error();
+
+
+	qDebug() << "|error code " << s->error();
+
+	qDebug() << "+--------------------------------";
 }
 
 

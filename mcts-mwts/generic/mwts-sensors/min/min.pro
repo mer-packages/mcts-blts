@@ -32,7 +32,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-sensors-tests
+TESTS.path = /usr/share/mwts-sensors-scripts
 INSTALLS += TESTS
 
 target.path = /usr/lib/min

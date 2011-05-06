@@ -1,3 +1,24 @@
+* Thu 10 Mar 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.7
+- Changed timeout from 10s to 15s to support also slower sensor reading found in some devices
+
+* Web 9 Mar 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.6
+- Added pure test asset mwts-sensors-test without mwts-common or min dependency, just dependendy to QSensors
+- Changed aegis packaging
+
+* Mon 28 Feb 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.5
+- Debian packaging finetuning
+
+* Fri 18 Feb 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.4
+- Changed packaging
+
+* Web 16 Feb 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.3
+- Fixed debian packaging for documentation.
+- Functionality is not changed other way.
+
+* Fri 14 Jan 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.2
+- Updated documentation. Added QT API call in implementation to chech if backend are connected.
+- Fuctionality is not changed other way.
+
 * Fri 03 Dec 2010 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.1
 - Renaming FUTE and NFT cases in standard way.
 

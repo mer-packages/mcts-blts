@@ -11,5 +11,11 @@ MOBILITY = sensors
  
 
 # Input
-HEADERS += mysensor.h
-SOURCES += main.cpp mysensor.cpp
+HEADERS += mysensor.h \
+    supersensor.h \
+    foobarclass.h
+SOURCES += main.cpp mysensor.cpp \
+    supersensor.cpp \
+    foobarclass.cpp
+
+LIBS += -lmwts-common
