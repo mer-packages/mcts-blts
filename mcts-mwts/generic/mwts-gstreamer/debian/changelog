@@ -1,10 +1,10 @@
-mwts-gstreamer (0.0.7) unstable; urgency=low
-  * Fixes:NB#11611 - MCTS-MWTS-Gstreamer: Missing test data  
- -- Balazs Sipos <balazs.sipos@digia.com>  Mon, 4 Apr 2011 14:04:00 +0300
+mwts-gstreamer (0.0.8) unstable; urgency=low
+  * Fixes: NB#16744 - measure framerate test cases will fail if framerate is critically low
+ -- Jan Grela <jan.grela@digia.com>  Tue, 03 May 2011 13:29:00 +0300
 
 mwts-gstreamer (0.0.7) unstable; urgency=low
-  * Added playback functionality, codecs and containers setting moved to .conf file, added new test cases
- -- Jan Grela <jan.greala@digia.com>  Thu, 29 Dec 2010 14:04:00 +0300
+  * Fixes:NB#11611 - MCTS-MWTS-Gstreamer: Missing test data  
+ -- Balazs Sipos <balazs.sipos@digia.com>  Mon, 04 Apr 2011 14:04:00 +0300
 
 mwts-gstreamer (0.0.6) unstable; urgency=low
   * Initial MeeGo version
