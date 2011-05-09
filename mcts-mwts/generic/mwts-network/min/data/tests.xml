@@ -369,13 +369,13 @@
     <step>min -c -t 'NFT-WLAN-Connect_WPA-TKIP_unsaved-LATE'</step>
    </case>
    <case description="Purpose: tests connection creation latency with saved wpa tkip secured ap&#xa;        Method: Connection is made, latency is measured&#xa;        Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="10" name="NFT-WLAN-Connect_WPA-TKIP_saved-LATE">
-    <step>min -c -t NFT-WLAN-Connect_WPA-TKIP_saved-LATE'</step>
+    <step>min -c -t 'NFT-WLAN-Connect_WPA-TKIP_saved-LATE'</step>
    </case>
    <case description="Purpose: tests connection creation latency with unsaved wpa2 tkip secured ap&#xa;        Method: Connection is made, latency is measured&#xa;        Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="10" name="NFT-WLAN-Connect_WPA2-TKIP_unsaved-LATE">
     <step>min -c -t 'NFT-WLAN-Connect_WPA2-TKIP_unsaved-LATE'</step>
    </case>
    <case description="Purpose: tests connection creation latency with saved wpa2 tkip secured ap&#xa;        Method: Connection is made, latency is measured&#xa;        Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="10" name="NFT-WLAN-Connect_WPA2-TKIP_saved-LATE">
-    <step>min -c -t NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
+    <step>min -c -t 'NFT-WLAN-Connect_WPA2-TKIP_saved-LATE'</step>
    </case>
    <case description="Purpose: tests connection creation latency with saved wpa2 aes secured ap&#xa;        Method: Connection is made, latency is measured&#xa;        Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="10" name="NFT-WLAN-Connect_WPA2-AES_saved-LATE">
     <step>min -c -t 'NFT-WLAN-Connect_WPA2-AES_saved-LATE'</step>
