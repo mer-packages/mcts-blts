@@ -73,44 +73,44 @@ public:
 	 */
 	bool ConnectToName(QString ap_name);
 
-	/*
+    /**
 	*  Closes all active wlan sessions
 	*/ 
 	void CloseActiveSessions();	
 
-	/*
+    /**
 	* Turns wlan chip on/off
 	*/ 
 	bool SwitchWlan(const QString state);
 
-	/*
+    /**
 	 * Create network session from target config
 	 */
 	bool ConnectToConfig(const QNetworkConfiguration& config);
 
-        /*
-         * helper method to get target service dbus object path from connman manager
-         * @param ap_name
-         */
-        QString GetServicePath(const QString ap_name);
+    /**
+     * helper method to get target service dbus object path from connman manager
+     * @param ap_name
+     */
+    QString GetServicePath(const QString ap_name);
 
-        /*
-         * Creates connection to wlan/psd access point. Uses connman
-         * @param ap_name target access point name
-         */
-        bool ConnmanConnection(const QString ap_name);
+    /**
+     * Creates connection to wlan/psd access point. Uses connman
+     * @param ap_name target access point name
+     */
+    bool ConnmanConnection(const QString ap_name);
 
-        /*
-         * Removes available service configuration
-         * @param ap_name target access/service point name
-         */
-        bool RemoveService(const QString ap_name);
+    /**
+     * Removes available service configuration
+     * @param ap_name target access/service point name
+     */
+    bool RemoveService(const QString ap_name);
 
-        /*
-         * Sets tethering on/off
-         * @param mode on or off
-         */
-        bool SetTethering(const QString mode);
+    /**
+     * Sets tethering on/off
+     * @param mode on or off
+     */
+    bool SetTethering(const QString mode);
 
 	/**
 	 * Just to check if UpdateConfigurations signal is catched
@@ -145,60 +145,31 @@ public:
 	 */
 	bool ServerLaunchIperf(const char* time);
 
-	/*
+    /**
 	 * Idle loop
 	 */
 	void RunIdle();
 
-	/*
+    /**
 	 * Stops running networksession
 	 */
-        bool StopSession(const QString ap_name);
+    bool StopSession(const QString ap_name);
 
-	/*
+    /**
 	 * Returns the status network connection
 	 */
 	bool IsOnline();
 
-	/*
+    /**
 	 * Finds the ip of given interface
 	 */
 	bool FindIp(const QString strInterface);
 
-	/*
+    /**
 	 * Roaming setter
 	 */
 	inline void setRoaming() { bCanRoam = true; }
 
-	/*
-	 * Min access function to start http file download
-	 */
-	bool downloadFileHttp(const QString strUrl);
-
-	/*
-	 * Function to save http download to file
-	 * Used with http-download
-	 */
-	bool saveToDisk(const QString &filename, QIODevice *data);
-
-	/*
-	 * Helper function to get file name from url
-	 */
-	QString saveFileName(const QUrl &url);
-
-private:
-        QDBusInterface *m_ConnmanManager;
-
-	/*
-	 * Helper function to get file name from url
-	 */
-	void debugPrintConfiguration(QNetworkConfiguration config);
-
-	QNetworkConfiguration GetConfigurationByName(QString ap_name);
-
-	enum SecType { WEP, WPA_PKS, NONE };
-
-	typedef QMap<QString, SecType> StringToEnumMap;
 
 protected slots:
 	void configurationsUpdateCompleted();
@@ -209,10 +180,10 @@ protected slots:
 	void configurationsRemoved(const QNetworkConfiguration& config);
 	void configurationsChanged(const QNetworkConfiguration& config);
 
-        /*
-         * Connman manager slot
-         */
-        void slotConnmanStateChanged();
+    /*
+     * Connman manager slot
+     */
+    void slotConnmanStateChanged();
 
 	/*
 	 * Slots for roaming support.
@@ -220,14 +191,14 @@ protected slots:
 	void newConfigurationActivatedHandler ();
 	void preferredConfigurationChangedHandler ( const QNetworkConfiguration & config, bool isSeamless );
 
-
 	/*
 	* Slots for http download functions
 	*/
 	void downloadFinished(QNetworkReply *reply);
+    void slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void slotError(QNetworkReply::NetworkError error);
 
-	/**
+    /*
 	 * Slots for QProcess signals
 	 */
 	void slotError(QProcess::ProcessError error);
@@ -235,19 +206,31 @@ protected slots:
 	void slotStateChanged  ( QProcess::ProcessState newState );
 	void slotReadStandardOutput();
 
+
 private:
-	QNetworkConfigurationManager networkManager;
+    void debugPrintConfiguration(QNetworkConfiguration config);
+    QNetworkConfiguration GetConfigurationByName(QString ap_name);
+    QString saveFileName(const QUrl &url);
+
+
+private:
+    enum SecType { WEP, WPA_PKS, NONE };
+    typedef QMap<QString, SecType> StringToEnumMap;
+
+    QDBusInterface *m_ConnmanManager;
+
+    QNetworkConfigurationManager networkManager;
 	QNetworkConfiguration networkConfiguration;
 	QNetworkSession *networkSession;
 
 	// for http download purposes
-	QNetworkAccessManager httpmanager;
-
-	QString m_strHttpFileName;
+    QNetworkAccessManager m_httpManager;
+    QNetworkReply *m_pHttpReply;
+    QFile *m_pHttpDownloadFile;
+    qint64 m_iHttpDownloadCounter;
+    bool m_bHttpDownloadSuccess;
 
 	bool bCanRoam;
-
-	bool m_bHttpDownloadSuccess;
 
 	QString m_strDeviceIp;
 
