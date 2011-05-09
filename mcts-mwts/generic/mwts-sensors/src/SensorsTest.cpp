@@ -305,14 +305,14 @@ void SensorsTest::InitSensor(SensorsTest::SensorType type)
 	connect(m_Sensor, SIGNAL(readingChanged()), this, SLOT(onReadingChanged()));
 	connect(m_Sensor, SIGNAL(sensorError(int)), this, SLOT(onSensorError(int)));
 
-	QTimer* t = new QTimer(this);
-	connect(t, SIGNAL(timeout()), this, SLOT(debug1()));
-	t->start(1000);
+	//QTimer* t = new QTimer(this);
+	//connect(t, SIGNAL(timeout()), this, SLOT(debug1()));
+	//t->start(1000);
 
 	//m_Sensor->connectToBackend();
 
-	m_Sensor->start();
-	g_pTest->Start();
+	//m_Sensor->start();
+	//g_pTest->Start();
 
 	MWTS_LEAVE;
 }
@@ -323,10 +323,25 @@ void SensorsTest::StartSensor()
 
 	qDebug() << "Enabling sensor";
 
-	//m_Sensor->start();
-	//g_pTest->Start();
+	m_Sensor->start();
+
+	debug1();
+
+	g_pTest->Start();
 
 	MWTS_LEAVE;
+}
+
+void SensorsTest::OnFailTimeout()
+{
+	m_Sensor->stop();
+	qCritical() << "Did not received any sensor data - test fail!";
+	g_pTest->Stop();
+}
+
+void SensorsTest::OnIdle()
+{
+	qDebug() << "Waiting for user interaction...";
 }
 
 
@@ -334,28 +349,43 @@ void SensorsTest::StartSensor()
 
 void SensorsTest::onActiveChanged()
 {
-	qDebug() << "active changed";
+	if (m_Sensor->isActive())
+		qDebug() << "Sensor is active";
+	else
+		qDebug() << "Sensor is not active";
 }
 
 void SensorsTest::onAvailableSensorsChanged()
 {
-	qDebug() << "available sensors changed";
+	qDebug() << "Available sensors changed";
 }
 
 void SensorsTest::onBusyChanged()
 {
-	qDebug() << " busy changed";
+	if (m_Sensor->isBusy())
+		qDebug() << "Sensor is busy";
+	else
+		qDebug() << "Sensor is not busy";
 }
 
 void SensorsTest::onReadingChanged()
 {
+
+	QString msg;
+
+
+
+	msg.append("---------------------\n");
+
+
 	switch (currentSensorType)
 	{
 		case AccelerometerType:
 		{
 			QAccelerometer* s = dynamic_cast<QAccelerometer*>(m_Sensor);
 			QAccelerometerReading* reading = s->reading();
-			qDebug() << "x " << reading->x() << ", y " << reading->y() << ", z " << reading->z();
+			msg.append("Received accelerometer sensor data\n");
+			msg.append("x " + QString::number(reading->x()) + ", y " + QString::number(reading->y()) + ", z " + QString::number(reading->z()));
 			break;
 		}
 		case AmbientLightSensorType:
@@ -365,7 +395,8 @@ void SensorsTest::onReadingChanged()
 		{
 			QCompass* s = dynamic_cast<QCompass*>(m_Sensor);
 			QCompassReading* reading = s->reading();
-			qDebug() << "azimuth " << reading->azimuth() << ", calibration level " << reading->calibrationLevel();
+			msg.append("Received compass sensor data\n");
+			msg.append("azimuth " + QString::number(reading->azimuth()) + ", calibration level " + QString::number(reading->calibrationLevel()));
 			break;
 		}
 		case GyroscopeType:
@@ -375,53 +406,74 @@ void SensorsTest::onReadingChanged()
 		{
 			QLightSensor* s = dynamic_cast<QLightSensor*>(m_Sensor);
 			QLightReading* reading = s->reading();
-			qDebug() << "lux " << reading->lux();
+			msg.append("Received light sensor data\n");
+			msg.append("lux " + QString::number(reading->lux()));
 			break;
 		}
 		case MagnetometerType:
 		{
 			QMagnetometer* s = dynamic_cast<QMagnetometer*>(m_Sensor);
 			QMagnetometerReading* reading = s->reading();
-			qDebug() << "calibration level " << reading->calibrationLevel() << ", x " << reading->x() << ", y " << reading->y() << ", z" << reading->z();
+			msg.append("Received magnetometer sensor data\n");
+			msg.append("calibration level " + QString::number(reading->calibrationLevel()) + ", x " + QString::number(reading->x()) + ", y " + QString::number(reading->y()) + ", z" + QString::number(reading->z()));
 			break;
 		}
 		case OrientationSensorType:
 		{
 			QOrientationSensor* s = dynamic_cast<QOrientationSensor*>(m_Sensor);
 			QOrientationReading* reading = s->reading();
-			qDebug() << "orientation " << reading->orientation();
+			msg.append("Received orientation sensor data\n");
+			msg.append("orientation " + QString::number(reading->orientation()));
 			break;
 		}
 		case ProximitySensorType:
 		{
 			QProximitySensor* s = dynamic_cast<QProximitySensor*>(m_Sensor);
 			QProximityReading* reading = s->reading();
-			qDebug() << "close " << reading->close();
+			msg.append("Received proximity sensor data\n");
+			if (reading->close())
+				msg.append("close");
+			else
+				msg.append("not close");
 			break;
 		}
 		case RotationSensorType:
 		{
 			QRotationSensor* s = dynamic_cast<QRotationSensor*>(m_Sensor);
 			QRotationReading* reading = s->reading();
-			qDebug() << "x " << reading->x() << ", y " << reading->y() << ", z " << reading->z();
+			msg.append("Received rotation sensor data\n");
+			msg.append("x " + QString::number(reading->x()) + ", y " + QString::number(reading->y()) + ", z " + QString::number(reading->z()));
 			break;
 		}
 		case TapSensorType:
 		{
 			QTapSensor* s = dynamic_cast<QTapSensor*>(m_Sensor);
 			QTapReading* reading = s->reading();
-			qDebug() << "tap direction " << reading->tapDirection() << ", is double tap " << reading->isDoubleTap();
+			msg.append("Received tap sensor data\n");
+			msg.append("tap direction " + QString::number(reading->tapDirection()));
+			if (reading->isDoubleTap())
+				msg.append(", is double tap");
+			else
+				msg.append(", is not double tap");
 			break;
 		}
 		default:
 			break;
 	}
 
+	msg.append("\n---------------------\n");
+
+	qDebug() << msg;
+	g_pResult->Write(msg);
+
+	g_pTest->Stop();
+	m_Sensor->stop();
+
 }
 
 void SensorsTest::onSensorError(int error)
 {
-	qDebug() << "sensor error has occured" << error;
+	qDebug() << "Sensor error has occured" << error;
 }
 
 void SensorsTest::debug1()
