@@ -80,7 +80,7 @@ void NetworkTest::OnInitialize()
     // connman dbus manager
     m_ConnmanManager = new QDBusInterface("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
 
-    connect(&httpmanager, SIGNAL(finished(QNetworkReply*)),
+    connect(&m_httpManager, SIGNAL(finished(QNetworkReply*)),
                     this, SLOT(downloadFinished(QNetworkReply*)));
 
     connect(&networkManager, SIGNAL(updateCompleted()),
@@ -534,8 +534,8 @@ bool NetworkTest::StopSession(const QString ap_name)
             CloseActiveSessions();
     }
 
-    return m_bResult;
     MWTS_LEAVE;
+    return m_bResult;
 }
 
 void NetworkTest::RunIdle()
@@ -580,60 +580,73 @@ bool NetworkTest::DownloadfileHttp(const QString strUrl)
 
     qDebug() << "Attempting a http file download with url: " << strUrl;
 
+    // reset the byte counter used in logging filter
+    m_iHttpDownloadCounter = 0;
+
+    // open the file for downloaded file
     QNetworkRequest request(strUrl);
-    QNetworkReply *reply = httpmanager.get(request);
-
-    // needed signals for reply
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),
-             this, SLOT(slotError(QNetworkReply::NetworkError)));
-
-    qDebug() << "Waiting for the download to finish...";
-
-    g_pTime->start();
-
-    this->Start();
-
-    // this is set in the downloadFinished-slot
-    return m_bHttpDownloadSuccess;
-
-    MWTS_LEAVE;
-}
-
-bool NetworkTest::saveToDisk(const QString &filename, QIODevice *data)
-{
-    QFile file(filename);
-    QDir::setCurrent("/root");
-
-    if (!file.open(QIODevice::WriteOnly)) {
-        qDebug() << "Could not open " << filename << " for writing \n";
+    QString filename = saveFileName(request.url());
+    m_pHttpDownloadFile = new QFile(filename);
+    if( !m_pHttpDownloadFile->open(QIODevice::WriteOnly) )
+    {
+        qDebug() << "Could not open" << filename << "for writing!";
         return false;
     }
 
-    file.write(data->readAll());
-    file.close();
+    // make the request
+    g_pTime->start();
+    m_pHttpReply = m_httpManager.get(request);
 
-    return true;
+    // needed signals for reply
+    connect(m_pHttpReply, SIGNAL(downloadProgress(qint64, qint64)),
+            this, SLOT(slotDownloadProgress(qint64, qint64)));
+    connect(m_pHttpReply, SIGNAL(error(QNetworkReply::NetworkError)),
+            this, SLOT(slotError(QNetworkReply::NetworkError)));
+
+    qDebug() << "Waiting for the download to finish...";
+
+    this->Start();
+
+    // close the downloaded file
+    m_pHttpDownloadFile->close();
+    delete m_pHttpDownloadFile;
+    m_pHttpDownloadFile = NULL;
+
+    MWTS_LEAVE;
+
+    // this is set in the downloadFinished-slot
+    return m_bHttpDownloadSuccess;
 }
 
 QString NetworkTest::saveFileName(const QUrl &url)
 {
-    QString path = url.path();
-    QString basename = QFileInfo(path).fileName();
-
-    if (basename.isEmpty())
-            basename = "download";
-
-    if (QFile::exists(basename)) {
-        // already exists, don't overwrite
-        int i = 0;
-        basename += '.';
-        while (QFile::exists(basename + QString::number(i)))
-                ++i;
-
-        basename += QString::number(i);
+    QString basepath = g_pConfig->value("HTTP/local_path").toString();
+    if(!basepath.endsWith("/"))
+    {
+        basepath += "/";
     }
 
-    return basename;
+    QString filename = QFileInfo(url.path()).fileName();
+    if (filename.isEmpty())
+    {
+        filename = "downloaded";
+    }
+    QString fullpath = basepath + filename;
+
+    if( QFile::exists(fullpath) )
+    {
+        // already exists, don't overwrite
+        int i = 1;
+        fullpath += '.';
+        while( QFile::exists(fullpath + QString::number(i)) )
+        {
+            ++i;
+        }
+
+        fullpath += QString::number(i);
+    }
+
+    return fullpath;
 }
 
 /*
@@ -643,31 +656,32 @@ void NetworkTest::downloadFinished(QNetworkReply *reply)
 {
     MWTS_ENTER;
 
-    this->Stop();
     qDebug() << "Download finished from url: " << reply->url();
 
-    QUrl url = reply->url();
-    if (reply->error()) {
-            qDebug() << "Download failed!";
-            qDebug() << "Error: " << reply->errorString();
-    } else {
-        // we got the reply
-        double elapsed=g_pTime->elapsed();
-        qDebug() << "Http file download laster: " << elapsed << " ms";
+    double elapsed=g_pTime->elapsed();
+    qDebug() << "Http file download lasted:" << elapsed << "ms";
+    g_pResult->AddMeasure("File download", elapsed, "ms");
 
-        g_pResult->AddMeasure("File download", elapsed, "ms");
-
-        QString filename = saveFileName(url);
-        if (saveToDisk(filename, reply)) {
-            qDebug() << "Download success. Saved to file: " << filename;
-            m_bHttpDownloadSuccess = true;
-        }
-    }
+    m_bHttpDownloadSuccess = true;
 
     // take care of destroying the object
     reply->deleteLater();
 
+    this->Stop();
+
     MWTS_LEAVE;
+}
+
+void NetworkTest::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    // write log only after each received megabyte
+    if( (bytesReceived - m_iHttpDownloadCounter) > (1024*1024) )
+    {
+        qDebug() << bytesReceived/(1024*1024) << "MB /" << bytesTotal/(1024*1024) << "MB";
+        m_iHttpDownloadCounter = bytesReceived;
+    }
+
+    m_pHttpDownloadFile->write(m_pHttpReply->readAll());
 }
 
 void NetworkTest::slotError(QNetworkReply::NetworkError error)
@@ -743,8 +757,8 @@ bool NetworkTest::ConnectToDefault()
     MWTS_ENTER;
     bool retVal = ConnectToConfig(networkManager.defaultConfiguration());
 
-    return retVal;
     MWTS_LEAVE;
+    return retVal;
 }
 
 QString NetworkTest::ConfigurationByName(const QString name)
@@ -790,8 +804,8 @@ bool NetworkTest::ConnectToName(QString ap_name)
     bool retval = false;
     retval = ConnectToConfig(networkConfiguration);
 
-    return retval;
     MWTS_LEAVE;
+    return retval;
 }
 bool NetworkTest::SetTethering(const QString mode)
 {
@@ -820,9 +834,8 @@ bool NetworkTest::SetTethering(const QString mode)
 
     qDebug() << "Reply from SetTethering: " << tethering_reply;
 
-    return true;
-
     MWTS_LEAVE;
+    return true;
 }
 
 QString NetworkTest::GetServicePath(const QString ap_name)
@@ -975,8 +988,8 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     qDebug() << "Waiting for the connection state change....";
     this->Start();
 
-    return m_bResult;
     MWTS_LEAVE;
+    return m_bResult;
 }
 
 bool NetworkTest::RemoveService(const QString ap_name)
@@ -1004,8 +1017,8 @@ bool NetworkTest::RemoveService(const QString ap_name)
     QDBusMessage connect_reply = iface.call("Remove");
     qDebug() << "Reply was: " << connect_reply;
 
-    return true;
     MWTS_LEAVE;
+    return true;
 }
 
 QNetworkConfiguration NetworkTest::GetConfigurationByName(QString ap_name)
@@ -1295,7 +1308,7 @@ void NetworkTest::configurationAdded(const QNetworkConfiguration& config)
 void NetworkTest::configurationsChanged(const QNetworkConfiguration& config)
 {
     MWTS_ENTER;
-    //qDebug()<< "CHANGED CONFIGURATION:" << config.name() << " State: " << config.state();
+    qDebug()<< "CHANGED CONFIGURATION:" << config.name() << " State: " << config.state();
     //qDebug()<< "Config changed: ";
     //debugPrintConfiguration(config);
     MWTS_LEAVE;

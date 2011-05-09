@@ -1,10 +1,16 @@
+mwts-network-tests (1.0.6) unstable; urgency=low
+ * Fixes MB#13534 - Fixed typos in tests.xml
+ * The file downloaded via HTTP is not cached in memory anymore
+ * Added SetResultFilter keywords to PSD script files
+-- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Wed, 4 May 2011 14:12:00 +0300
+
 mwts-network-tests (1.0.5) unstable; urgency=low
- * Added SetResultFilter keywords to script files
+ * Fixes MB#16521 - Added SetResultFilter keywords to script files
  * Fixed AP names in script files
  -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Thu, 21 Apr 2011 14:00:00 +0300
 
 mwts-network-tests (1.0.4) unstable; urgency=low
- * fixed tests.xml to match the schema
+ * Fixes MB#16364 - Fixed tests.xml to match the schema
  -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Tue, 19 Apr 2011 13:00:00 +0300
 
 mwts-network-tests (1.0.3) unstable; urgency=low
