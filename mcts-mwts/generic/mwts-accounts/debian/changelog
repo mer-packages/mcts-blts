@@ -1,10 +1,17 @@
+mwts-accounts-tests (0.0.4) unstable; urgency=low
+  * Fixes: NB#16358 - fixed names in tests.xml, uncommented FUTE-SSO_create_session_facebook script
+ -- Jan Grela <jan.grela@digia.com>  Tue, 03 May 2011 16:16:00 +0200
+
+mwts-accounts-tests (0.0.3) unstable; urgency=low
+  * Fixes: NB#10743 - packages description added to README, COPYING and README added to generic-all in .scep file
+ -- Jan Grela <jan.grela@digia.com>  Wed, 20 Apr 2011 13:57:00 +0200
+
 mwts-accounts-tests (0.0.2) unstable; urgency=low
   * Accounts can be created
-  * SSO credentials can be created 
+  * SSO credentials can be created
   * Session creation now possible
  -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Thu, 16 Nov 2010 13:57:00 +0200
 
 mwts-accounts-tests (0.0.1) unstable; urgency=low
   * Initial version
  -- Pauli-Pekka Toivanen <ext-pauli-pekka.toivanen@nokia.com>  Fri, 19 Nov 2010 10:32:00 +0200
-
