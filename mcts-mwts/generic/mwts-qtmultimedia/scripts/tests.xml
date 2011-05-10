@@ -235,7 +235,7 @@
     </set>
 
     <!--This set contains test cases from mwts-qtmultimedia-fmradio-nft.cfg-->
-    <set name="Non functional test" description="Multimedia fm radio non functional tests" feature="Settings" type=" Non Functional" >
+    <set name="Non functional test" description="Multimedia fm radio non functional tests" feature="Settings" type="Latency" >
       <case name="NFT-FMRadio_Scan_frequency-LATE" subfeature="" timeout="120" description=
         "Purpose
         Test measure how long FM Radio scan takes to scan all radio stations.

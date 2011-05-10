@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-pim-scripts" domain="PIM">
 
-    <set name="PIM-FUTE" description="PIM functional test cases" feature="PIM" type="FUTE" >
+    <set name="PIM-FUTE" description="PIM functional test cases" feature="PIM" type="Functional" >
       <case name="FUTE-PIM-Check_calendar_datastore_availability" subfeature="Test" timeout="20" description=
       		"Purpose: Testing listing and creation of available data stores in the device
 		 Method: Tests lists available data stores and creates them separately
@@ -146,7 +146,7 @@
 
 <!-- NFT tests -->
 
-    <set name="PIM-NFT-ITER" description="PIM non functional iteration test cases" feature="PIM" type="ITER" >	
+    <set name="PIM-NFT-ITER" description="PIM non functional iteration test cases" feature="PIM" type="Iterative" >	
 	<case name="NFT-PIM-Create_and_delete_contacts-ITER" subfeature="Test" timeout="60" description=
       		"Purpose: Testing creation and deletion of contacts multiple times
 		 Method: Creates and deletes n contacts
@@ -165,7 +165,7 @@
        </case>
     </set>
 
-    <set name="PIM-NFT-LATE" description="PIM non functional latency test cases" feature="PIM" type="LATE" >
+    <set name="PIM-NFT-LATE" description="PIM non functional latency test cases" feature="PIM" type="Latency" >
 	<case name="NFT-PIM-Create_calendar_items-LATE" subfeature="Test" timeout="60" description=
       		"Purpose: Measures creation time of calendar items
 		 Method: Creates n calendar events and measures each saving time to calendar data store
