@@ -245,7 +245,7 @@ LOCAL int InitSensor(MinItemParser * item)
 /**
   Starts test and activate sensor
  */
-LOCAL int Start(__attribute__((unused)) MinItemParser * item)
+LOCAL int StartTest(__attribute__((unused)) MinItemParser * item)
 {
 	 MWTS_ENTER;
 	 Test.StartSensor();
@@ -272,7 +272,7 @@ int ts_get_test_cases (DLList ** list)
 	ENTRYTC (*list, "TapSensorTestFunc", TapSensorTestFunc);*/
 
 	ENTRYTC (*list, "InitSensor", InitSensor);
-	ENTRYTC (*list, "Start", Start);
+	ENTRYTC (*list, "StartTest", StartTest);
 
 	return ENOERR;
 }

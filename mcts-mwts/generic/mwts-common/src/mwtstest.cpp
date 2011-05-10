@@ -141,22 +141,13 @@ void MwtsTest::Initialize()
 			qCritical() << "Unable to create test log dir: " << testpath;
 		}
 	}
-
-	qDebug() << "im here *" << testpath;
 	
 	QString logpath=testpath+CaseName()+".log";
-
-	qDebug() << "im here **" << logpath;
-	//QString logpath = "/var/log/tests/dupa";
 	g_pLog->Open(logpath);
-
-	qDebug() << "im here ***";
 	g_pResult->Open(CaseName());
 
-	qDebug() << "im here ***";
-
 	qDebug()<<"Creating config";
-	//QSettings::setPath(QSettings::NativeFormat, QSettings::SystemScope, "/usr/lib/tests/");
+	QSettings::setPath(QSettings::NativeFormat, QSettings::SystemScope, "/usr/lib/tests/");
 	g_pConfig=new MwtsConfig();
 
 	qDebug()<<"Creating application";

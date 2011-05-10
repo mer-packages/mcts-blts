@@ -26,10 +26,12 @@
 #define _SENSORS_TEST_H
 
 #include <QSensor>
+//#include <QTapSensor>
 //#include <QApplication>
 
 #include <MwtsCommon>
 
+QTM_USE_NAMESPACE;
 
 /**
  *  @class SensorsTest
@@ -94,96 +96,9 @@ public:
 
 	void OnIdle();
 
-	///////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 *  @fn void TestAccelerometer()
-	 *  @brief Put accelerometer callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestAccelerometer();
-
-	/**
-	 *  @fn void TestAmbientLightSensor()
-	 *  @brief Put AmbientLightSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestAmbientLightSensor();
-
-	/**
-	 *  @fn void TestCompass()
-	 *  @brief Put Compass callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestCompass();
-
-	/**
-	 *  @fn void TestMagnetometer()
-	 *  @brief Put Magnetometer callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestMagnetometer();
-
-	/**
-	 *  @fn void TestOrientationSensor()
-	 *  @brief Put OrientationSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestOrientationSensor();
-
-	/**
-	 *  @fn void TestProximitySensor()
-	 *  @brief Put ProximitySensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestProximitySensor();
-
-	/**
-	 *  @fn void RotationSensor()
-	 *  @brief Put RotationSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestRotationSensor();
-
-	/**
-	 *  @fn void TapSensor()
-	 *  @brief Put TapSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestTapSensor();
-
-	///////////////////////////////////////////////////////////////////////////////////
-
-	void printSensorsTypes();
-
-
-
 private:
-	/**
-	 *  @fn void TestSensor()
-	 *  @brief Generic sensor testing
-	 *         Put accelerometer callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	//int TestSensor();
+
+	void checkBackendAvailability();
 
 
 private slots:
@@ -196,7 +111,7 @@ private slots:
 	void onReadingChanged();
 	void onSensorError(int error);
 
-	void debug1();
+	void debugMessage();
 
  /**
   *  @fn void sensorError()
@@ -212,14 +127,12 @@ private slots:
 
 
 private:
-	QtMobility::QSensor* m_Sensor;
+	QSensor* m_Sensor;
+	//QTapSensor* m_Sensor;
 	SensorType currentSensorType;
 	bool m_is_readingChanged;
+	//QSettings* defaultSensors;
 };
-
-
-
-
 
 #endif //#ifndef _SENSORS_TEST_H
 
