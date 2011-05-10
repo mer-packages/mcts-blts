@@ -355,7 +355,7 @@
       	<step>min -c -t 'NFT-IM-Send_IM_using_SIP-ITER-MS'</step>
       </case>
     </set>
-    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Long-lasting">
+    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Long lasting">
       <case name="NFT-VoIP-Create_GTalk_call-LOLA-MS" subfeature="GTalk" timeout="360" description=
 	      "Purpose
 	      Test creating long lasting VoIP call.
