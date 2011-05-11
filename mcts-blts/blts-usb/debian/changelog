@@ -1,3 +1,9 @@
+blts-usb-tests (0.0.18) unstable; urgency=low
+
+  * Fix build warnings on x86_64 kernel module build.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 11 May 2011 16:47:24 +0300
+
 blts-usb-tests (0.0.17) unstable; urgency=low
 
   * [ Timo-Pekka Launonen ] Add timeouts and fix single IO thread failure
