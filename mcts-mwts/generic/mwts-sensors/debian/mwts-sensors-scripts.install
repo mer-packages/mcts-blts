@@ -1,4 +1,4 @@
 etc/min.d/mwts-sensors.min.conf
 usr/lib/min/*.cfg
-usr/share/mwts-sensors-scripts/tests.xml
+usr/share/mwts-sensors-tests/tests.xml
 

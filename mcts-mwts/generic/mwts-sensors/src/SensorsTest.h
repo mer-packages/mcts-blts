@@ -26,8 +26,6 @@
 #define _SENSORS_TEST_H
 
 #include <QSensor>
-//#include <QTapSensor>
-//#include <QApplication>
 
 #include <MwtsCommon>
 
@@ -88,6 +86,9 @@ public:
 	 */
 	void OnUninitialize();
 
+	/**
+	 *
+	 */
 	void InitSensor(SensorsTest::SensorType type);
 
 	void StartSensor();

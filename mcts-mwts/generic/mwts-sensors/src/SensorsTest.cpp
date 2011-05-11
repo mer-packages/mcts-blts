@@ -88,11 +88,11 @@ void SensorsTest::OnUninitialize()
 
 	if (m_Sensor)
 	{
-		m_Sensor->stop();
+		//m_Sensor->stop();
 		delete m_Sensor;
 		m_Sensor = NULL;
 	}
-	//disconnect();
+
 
 	MWTS_LEAVE;
 }

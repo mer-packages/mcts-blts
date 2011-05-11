@@ -34,6 +34,9 @@ int main( int argc, char** argv )
     test->Initialize();
 
 	test->InitSensor(SensorsTest::TapSensorType);
+	test->StartSensor();
+
+	test->Uninitialize();
 
 	qDebug("delete test");
     delete test;

@@ -2,7 +2,7 @@ Source: mwts-sensors
 Section: libs
 Priority: optional
 Build-Depends: cdbs, aegis-builder (>= 1.4), debhelper, libqt4-dev, libqtm-sensors-dev, mwts-common-dev(>=1.0.0), min-dev
-Maintainer: Reijo Korhonen <reijo.korhonen@digia.com>
+Maintainer: Jan Grela <jan.grela@digia.com>
 Standards-Version: 3.8.0
 
 Package: mwts-sensors
@@ -26,10 +26,10 @@ Depends: ${shlibs:Depends},  mwts-sensors, min
 Description: Test cases for Mobility Sensors by command line
  Application
 
-Package: mwts-sensors-test
-Section: apps
-Architecture: any
-Depends: ${shlibs:Depends}
-Description: Bare sensors test application
- Application to test QSensoes-API
+#Package: mwts-sensors-test
+#Section: apps
+#Architecture: any
+#Depends: ${shlibs:Depends}
+#Description: Bare sensors test application
+# Application to test QSensoes-API
 

@@ -40,26 +40,14 @@ TEST RESULTS
 
 MIN SCRIPTER INTERFACE
 
-  AccelerometerTestFunc
-    Tests that accelerometer gives data. Passed if accelometer sensor gives a value. You must move DUT while executing sensor test.
-  AmbientLightSensorTestFunc
-    Tests that Ambient Light sensors gives data. Passed if Ambient Light sensor gives a value.
-  CompassTestFunc
-    Tests that compass gives data. Passed if compass sensor gives a value. You must move DUT while executing sensor test.
-  MagnetometerTestFunc
-    Tests that magnetometer gives data. Passed if magnetometer sensor gives a value. You must move DUT while executing sensor test.
-  OrientationSensorTestFunc
-    Tests that orientation sensor gives data. Passed if orientation sensor gives a value. You must move DUT while executing sensor test.
-  ProximitySensorTestFunc
-    Test that proximity sensor gives data.  Passed if proximity sensor gives a value. DUT is needed to be covered and uncovered.
-  RotationSensorTestFunc
-    Tests that rotation sensor gives data. Passed if rotation sensor gives a value. If you don't move DUT, it does not rotate and
-    you get zero values or not values at all. It's better to move DUT while testing.
-  TapSensorTestFunc
-    Tests that tap sensor gives data. Passed if tap sensor gives a value.
-    You must manually tap the screen by you finger or use some kind external device to play finger to get tap sensor values.
+	InitSensor <sensors_type>
+		Creates sensors object and check if it has default backend.
+		Following sensors types can be set: AccelerometerType, AmbientLightSensorType,
+		CompassType, GyroscopeType, LightSensorType, MagnetometerType, OrientationSensorType,
+		ProximitySensorType, RotationSensorType, TapSensorType
+	StartTest
+		Starts sensors and test. Wait 30 sec for sensor data.
 
 Known Issues
 
-  No sensor is verified to work when running tests as user. Cases stuck. Running test as root works.
-  Tap sensor is unsure, sometimes work, sometimes not.
+  Test cases ara working fine, but at the end are crashing. Overall result is passed, like it can be checked from result file.
