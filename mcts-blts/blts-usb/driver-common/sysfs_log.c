@@ -62,7 +62,7 @@ struct sysfs_log_entry {
 
 static struct ring_buffer_event *get_next_rb_event(int *event_cpu)
 {
-	int cpu, next_cpu;
+	int cpu, next_cpu = -1;
 	u64 ts, next_ts = 0;
 	struct ring_buffer_event *event;
 	struct ring_buffer_event *next_event = NULL;

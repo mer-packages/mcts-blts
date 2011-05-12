@@ -32,6 +32,8 @@ EXECUTING TESTS
   run tests two times and change device conditions, because all sensors test just pass, if sensors give a value given it is correct or not.
   Look details information of sensor tests functionality on MIN SCRIPTER INTERFACE.
 
+  Test cases should not be run as root, but as normal user, (e.g. meego).
+  Running cases as root might work, but may could some troubles as well.
 
 TEST RESULTS
 
@@ -61,5 +63,4 @@ MIN SCRIPTER INTERFACE
 
 Known Issues
 
-  No sensor is verified to work when running tests as user. Cases stuck. Running test as root works.
-  Tap sensor is unsure, sometimes work, sometimes not.
+  None test case work and can be verified due to some problems in test asset.

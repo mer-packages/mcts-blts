@@ -48,6 +48,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files 
 %doc README
 %doc doc/MWTS.README
+%doc COPYING
 /usr/lib/libmwts-accounts*
 /usr/lib/min/*.so*
 
@@ -60,6 +61,8 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/tests/*.conf
 
 %files generic-all
+%doc README
+%doc COPYING
 
 %post
 ldconfig

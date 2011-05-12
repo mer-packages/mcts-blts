@@ -1,3 +1,6 @@
+* Mon 18 Apr 2011 Jan Grela  <jan.grela@digia.com>  - 1.0.3
+- Fixes: NB#231237 - README updated, added test cases running role information
+
 * Fri 14 Jan 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.2
 - Updated documentation. Added QT API call in implementation to chech if backend are connected.
 - Fuctionality is not changed other way.

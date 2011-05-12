@@ -177,7 +177,7 @@
       </case>
     </set>
 
-    <set name="USB_LongLasting" description="USB network long-lasting tests" feature="USB" type="Long-lasting">
+    <set name="USB_LongLasting" description="USB network long-lasting tests" feature="USB" type="Long lasting">
       <case name="NFT-USB-Send_throughput_2h-LOLA" subfeature="send" timeout="600" description=
         "Purpose 
         This test case measures USB network reliability from desktop PC to test device with a long lasting transfer.

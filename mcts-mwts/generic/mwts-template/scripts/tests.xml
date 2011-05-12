@@ -32,7 +32,7 @@
       </case>
     </set>
     
-    <set name="Template_Low-resource" description="Template low-resource test cases" feature="Settings" type="Low-resource" >
+    <set name="Template_Low-resource" description="Template low-resource test cases" feature="Settings" type="Low resource" >
       <case name="NFT-Template-Test_1-LOWR" subfeature="Test" timeout="60" description=
         "Purpose
         Template test case, purpose is to demonstrate how to use MIN interface in low-resource tests

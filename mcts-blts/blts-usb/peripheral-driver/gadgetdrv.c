@@ -62,7 +62,7 @@ static struct usb_device_descriptor device_desc = {
 static char manufacturer[50];
 
 /* default serial number takes at least two packets */
-static char serial[] = "0123456789.0123456789.0123456789";
+static const char serial[] = "0123456789.0123456789.0123456789";
 
 static struct usb_string strings_dev[] = {
 	[STRING_MANUFACTURER_IDX].s = manufacturer,
@@ -299,8 +299,8 @@ ssize_t gadgetdrv_read(struct file *filp, char __user *usr_buf,
 		goto done;
 
 	if (buf->req->actual != count)
-		GDTDEBUG("Read %d bytes, expected %d\n", buf->req->actual,
-			count);
+		GDTDEBUG("Read %d bytes, expected %lu\n", buf->req->actual,
+			(unsigned long) count);
 
 	if (copy_to_user(usr_buf, buf->req->buf, buf->req->actual))
 		retval = -EFAULT;
@@ -375,8 +375,8 @@ ssize_t gadgetdrv_write(struct file *filp, const char __user *usr_buf,
 		goto done;
 
 	if (buf->req->actual != count)
-		GDTDEBUG("Wrote %d bytes, expected %d\n", buf->req->actual,
-			count);
+		GDTDEBUG("Wrote %d bytes, expected %lu\n", buf->req->actual,
+			(unsigned long) count);
 
 	retval = buf->req->actual;
 

@@ -16,7 +16,16 @@ INTRODUCTION
 SOURCE CODE AND COMPILING
 
   Look doc/MWTS.README.
-  
+
+  Test asset consists of 4 packages:
+  1. mwts-accounts
+	Contains test asset libraries .so (Shared Objects) and README files
+  2. mwts-accounts-generic-tests
+	Contains MIN configuration file, MIN scripts files and tests.xml file
+  3. mwts-accounts-generic-config
+	Contains configuration file for test asset
+  4. mwts-accounts-generic-all
+	Meta package for handling dependencies
 
 ENVIRONMENT REQUIREMENTS
 

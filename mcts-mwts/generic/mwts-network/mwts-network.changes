@@ -1,11 +1,23 @@
+* Wed 4 May 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.6
+ - Fixes MB#13534 - Fixed typos in tests.xml
+ - The file downloaded via HTTP is not cached in memory anymore
+ - Added SetResultFilter keywords to PSD script files
+
+* Thu 21 Apr 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.5
+ - Fixes MB#16521 - Added SetResultFilter keywords to script files
+ - Fixed AP names in script files
+
+* Tue 19 Apr 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.4
+ - Fixes MB#16364 - Fixed tests.xml to match the schema
+
 * Thu 10 Feb 2011 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 1.0.3
- - psd connect functionality added. 
+ - psd connect functionality added
 
 * Tue 8 Feb 2011 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 1.0.2
- - minor changes to disconnect. 
- - new test case added 
+ - minor changes to disconnect
+ - new test case added
 
-* Mon 31 Jan 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 1.0.1
+* Mon 31 Jan 2011 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 1.0.1
  - connect / disconnect functionality now uses connman directly instead of bearer management
 
 * Wed 29 Dec 2010 Pauli-Pekka Toivanen <pauli-pekka.toivanen@digia.com> - 1.0.0
