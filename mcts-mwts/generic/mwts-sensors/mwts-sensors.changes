@@ -1,3 +1,6 @@
+* Thu 12 May 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  - 1.0.4
+- Fixes: MB#17464 - Fixed mwts-sensors-generic-all package dependencies
+
 * Mon 18 Apr 2011 Jan Grela  <jan.grela@digia.com>  - 1.0.3
 - Fixes: NB#231237 - README updated, added test cases running role information
 

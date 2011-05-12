@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                A Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-sensors
-Version:                1.0.1
+Version:                1.0.4
 Release:                0
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -40,7 +40,7 @@ mwts-sensors generic config
 Summary:                mwts-sensors generic meta package
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               mwts-sensors, mwts-sensors-generic-all, mwts-sensors-generic-config
+Requires:               mwts-sensors, mwts-sensors-generic-tests, mwts-sensors-generic-config
 %description            generic-all
 mwts-sensors generic meta package
 
