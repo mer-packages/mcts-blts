@@ -46,7 +46,7 @@ class SensorsTest : public MwtsTest
 public:
 
 	/**
-	 *	Indicates what type of sensor is used at the moment.
+	 *	Indicates what type of sensor is used during test execution.
 	 */
 	enum SensorType
 	{
@@ -87,12 +87,19 @@ public:
 	void OnUninitialize();
 
 	/**
-	 *
+	 *	Creates sensor abject and connects its signals
+	 *	Checks if it has default backend
 	 */
 	void InitSensor(SensorsTest::SensorType type);
 
+	/**
+	 * Starst the sesors and Qt mail loop
+	 */
 	void StartSensor();
 
+	/**
+	 * Ocuurs if no sensors data is received, fails test case
+	 */
 	void OnFailTimeout();
 
 	void OnIdle();
@@ -114,22 +121,8 @@ private slots:
 
 	void debugMessage();
 
- /**
-  *  @fn void sensorError()
-  *  @brief This slot is called when an error code is set on the sensor.
-  */
-//	void sensorError( int error );
-
-    /**
-      *  @fn void readingChanged()
-      *  @brief This slot is emitted when the reading has changed.
-      */
-//	void readingChanged();
-
-
 private:
 	QSensor* m_Sensor;
-	//QTapSensor* m_Sensor;
 	SensorType currentSensorType;
 	bool m_is_readingChanged;
 	//QSettings* defaultSensors;

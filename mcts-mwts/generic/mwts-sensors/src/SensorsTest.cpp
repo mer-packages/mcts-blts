@@ -53,11 +53,13 @@
 SensorsTest::SensorsTest()
 {
 	MWTS_ENTER;
+	MWTS_LEAVE;
 }
 
 SensorsTest::~SensorsTest()
 {
 	MWTS_ENTER;
+	MWTS_LEAVE;
 }
 
 
@@ -65,11 +67,8 @@ void SensorsTest::OnInitialize()
 {
 	MWTS_ENTER;
 
-	//QString path = g_pConfig->value("GENERAL/sensors").toString();
-	//qDebug() << path;
-
-	/*defaultSensors = new QSettings("/etc/xdg/Nokia/Sensors.conf", QSettings::NativeFormat);
-
+	/*
+	defaultSensors = new QSettings("/etc/xdg/Nokia/Sensors.conf", QSettings::NativeFormat);
 	qDebug() << "Dafault sensors for types are:";
 	QStringList df = defaultSensors->allKeys();
 	foreach (QString s, df)
@@ -88,7 +87,6 @@ void SensorsTest::OnUninitialize()
 
 	if (m_Sensor)
 	{
-		//m_Sensor->stop();
 		delete m_Sensor;
 		m_Sensor = NULL;
 	}
@@ -154,13 +152,11 @@ void SensorsTest::InitSensor(SensorsTest::SensorType type)
 	connect(m_Sensor, SIGNAL(readingChanged()), this, SLOT(onReadingChanged()));
 	connect(m_Sensor, SIGNAL(sensorError(int)), this, SLOT(onSensorError(int)));
 
-	checkBackendAvailability();
+	//checkBackendAvailability();
 
 	//QTimer* t = new QTimer(this);
 	//connect(t, SIGNAL(timeout()), this, SLOT(debug1()));
 	//t->start(1000);
-
-	//m_Sensor->connectToBackend();
 
 	MWTS_LEAVE;
 }
@@ -172,9 +168,8 @@ void SensorsTest::StartSensor()
 	/*qDebug() << "Setting default sensor backend";
 	qDebug() << defaultSensors->value("Default/" + m_Sensor->type()).toString();
 	m_Sensor->setIdentifier(defaultSensors->value(m_Sensor->type()).toByteArray());
-	qDebug() << m_Sensor->identifier();
+	qDebug() << m_Sensor->identifier();*/
 
-	m_Sensor->connectToBackend();*/
 
 	qDebug() << "Enabling sensor ... ";
 	if (m_Sensor->start())
@@ -325,12 +320,14 @@ void SensorsTest::onReadingChanged()
 	qDebug() << msg;
 	g_pResult->Write(msg);
 
-	g_pTest->Stop();
 	m_Sensor->stop();
+	g_pTest->Stop();
 }
 
 void SensorsTest::onSensorError(int error)
 {
+	m_Sensor->stop();
+	g_pTest->Stop();
 	qCritical() << "Sensor error has occured" << error;
 }
 
