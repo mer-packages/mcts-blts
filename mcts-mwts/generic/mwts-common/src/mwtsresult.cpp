@@ -212,7 +212,8 @@ void MwtsResult::AddMeasure(QString name, double value, QString unit)
 
 void MwtsResult::WriteSeriesFile(QString name, QString text)
 {
-	MWTS_ENTER;
+    //let's avoid fullfilling the log with this call
+    //MWTS_ENTER;
 	QFile file;
 	file.setFileName("/var/log/tests/"+g_pTest->CaseName()+"."+name+".csv");
 	file.open(QIODevice::Append);
