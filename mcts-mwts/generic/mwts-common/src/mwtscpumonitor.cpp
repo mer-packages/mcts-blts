@@ -23,16 +23,21 @@
  */
 
 #include "mwtscpumonitor.h"
+#include "MwtsCommon"
 
 /** Constructs the CPU monitor object and starts CPU monitoring process*/
 MwtsCpuMonitor::MwtsCpuMonitor(MwtsMonitorLogger* logger)
 	: MwtsAbstractMonitor(logger)
 {
 	QStringList params;
-	params << QString::number(1);
+    //n - causes the headers not to be reprinted regularly.
+    //1 - updates in every second
+    params << QString("-n") << QString::number(1);
 	m_pMpstatProcess=new QProcess();
-	m_pMpstatProcess->start("/usr/bin/mpstat", params);
+    m_pMpstatProcess->start("/usr/bin/vmstat", params);
 
+    g_pResult->StartSeriesMeasure("cpu_usage", "%", 0, 0);
+    g_pResult->StartSeriesMeasure("cpu_io_wait", "%", 0, 0);
 }
 
 /** Writes result to logger */
@@ -45,28 +50,28 @@ void MwtsCpuMonitor::WriteResult()
 	for(i=0; i<lines.size(); i++)
 	{
 		QString line=lines[i];
-		if (-1 != line.indexOf("Linux")) //this is first line
+        if (-1 != line.indexOf("procs")) //this is first line
 		{
 			continue;
 		}
 
-		else if(-1 != line.indexOf("%idle") ) // this is header line
+        else if(-1 != line.indexOf("st") ) // this is header line
 		{
 			// check the header positions. locations change a little
-			// on different implementations so lets figure them out
-			// 02:04:04 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest   %idle
+			// on different implementations so lets figure them out            
+            // r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
 			QStringList headers=line.split(" ", QString::SkipEmptyParts);
 			QHash<QString, int> hash;
 			for(int j=0; j<headers.size(); j++)
 			{
 				hash[headers[j]] = j;
 			}
-			m_nIowaitIndex=hash["%iowait"];
-			m_nUserIndex=hash["%usr"];
-			if (!m_nUserIndex) // can be also ..
-				m_nUserIndex=hash["%user"];
-			m_nSysIndex=hash["%sys"];
-			m_nIdleIndex=hash["%idle"];
+            m_nIowaitIndex=hash["wa"];
+            m_nUserIndex=hash["us"];
+            //if (!m_nUserIndex) // can be also ..
+            //	m_nUserIndex=hash["%user"];
+            m_nSysIndex=hash["sy"];
+            m_nIdleIndex=hash["id"];
 			continue;
 		}
 		else
@@ -74,25 +79,31 @@ void MwtsCpuMonitor::WriteResult()
 			QStringList values=line.split(' ', QString::SkipEmptyParts);
 			if(values.size()<5) // empty line
 				continue;
-			double cpu_user=values.at(m_nUserIndex).toDouble();
-			double cpu_sys=values.at(m_nSysIndex).toDouble();
-			double cpu_iowait=values.at(m_nIowaitIndex).toDouble();
-			double cpu_idle=values.at(m_nIdleIndex).toDouble();
-			double cpu_total=100.0-cpu_idle;
+            int cpu_user=values.at(m_nUserIndex).toInt();
+            int cpu_sys=values.at(m_nSysIndex).toInt();
+            int cpu_iowait=values.at(m_nIowaitIndex).toInt();
+            int cpu_idle=values.at(m_nIdleIndex).toInt();
+            int cpu_total=100-cpu_idle;
 
 			m_pLogger->Write("CpuUsage", cpu_total);
 			m_pLogger->Write("CpuIowait", cpu_iowait);
+
+            //added cpu usage measurement to .csv file for testrunner-lite
+            g_pResult->AddSeriesMeasure("cpu_usage", cpu_total);
+            //added cpu io wait measurement to .csv file for testrunner-lite
+            g_pResult->AddSeriesMeasure("cpu_io_wait", cpu_iowait);
 		}
 	}
 
 
 }
 /*
-Linux 2.6.31-20-generic (tumi-dt) 	03/10/2010 	_i686_	(4 CPU)
-02:04:04 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest   %idle
-02:04:05 PM  all   15.95    0.00    5.06    0.00    0.00    0.00    0.00    0.00   78.99
-02:04:06 PM  all   10.90    0.00    7.02    0.00    0.00    0.00    0.00    0.00   82.08
-02:04:07 PM  all    0.80    0.00    1.60    0.00    0.00    0.00    0.00    0.00   97.59
-02:04:08 PM  all    1.19    0.00    2.14    0.00    0.00    0.00    0.00    0.00   96.67
-02:04:09 PM  all    2.36    0.00    6.28    0.00    0.00    0.00
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0    428  13812     56 436412    0    0     3     7  184  224  5  1 93  1  0
+ 2  0    428  13928     56 436412    0    0     0     0 2086  650 100  0  0  0  0
+ 3  0    428  13928     56 436412    0    0     0     0 2074  571 100  0  0  0  0
+ 2  0    428  13928     56 436412    0    0     0     0 2078  576 100  0  0  0  0
+ 2  0    428  13944     56 436412    0    0     0     0 2067  577 100  0  0  0  0
+ 5  0    428  13960     56 436412    0    0     0     0 2151  798 100  1  0  0  0
 */

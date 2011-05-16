@@ -12,7 +12,7 @@ Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
 BuildRequires:          qt-devel, min-devel, min, gcc-c++
-Requires:               libqtcore4, libqtgui4, min
+Requires:               libqtcore4, libqtgui4, min, procps
 Source:                 %{name}-%{version}.tar.gz
 
 %description

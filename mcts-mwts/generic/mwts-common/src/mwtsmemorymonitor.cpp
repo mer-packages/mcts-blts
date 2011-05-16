@@ -25,10 +25,13 @@
 #include "stable.h"
 #include "mwtsmemorymonitor.h"
 #include "mwtsmonitorlogger.h"
+#include "MwtsCommon"
 
 MwtsMemoryMonitor::MwtsMemoryMonitor(MwtsMonitorLogger* logger)
 	: MwtsAbstractMonitor(logger)
 {
+    g_pResult->StartSeriesMeasure("mem_used", "kB", 0, 0);
+    g_pResult->StartSeriesMeasure("mem_free", "kB", 0, 0);
 }
 
 /** Writes memory consumption results to logger */
@@ -37,7 +40,14 @@ void MwtsMemoryMonitor::WriteResult()
 	if(!m_pLogger)
 		return;
 	measurement.Update();
-	m_pLogger->Write("UsedMem", measurement.GetUsed()/1024.0);
-	m_pLogger->Write("FreeMem", measurement.GetFree()/1024.0);
+
+    //write used and free memory measurements to .result file
+    m_pLogger->Write("UsedMem", measurement.GetUsed()/1024.0);
+    m_pLogger->Write("FreeMem", measurement.GetFree()/1024.0);
+
+    //added used memory measurement to .csv file for testrunner-lite
+    g_pResult->AddSeriesMeasure("mem_used", measurement.GetUsed()/1024.0);
+    //added free memory measurement to .csv file for testrunner-lite
+    g_pResult->AddSeriesMeasure("mem_free", measurement.GetFree()/1024.0);
 }
 
