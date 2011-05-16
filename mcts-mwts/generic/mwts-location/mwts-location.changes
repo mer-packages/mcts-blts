@@ -1,3 +1,6 @@
+* Mon, 16 May 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 0.0.8
+- Fixes MB#14885 - Fixed test.xml again to match the script files
+
 * Thu, 7 Apr 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 0.0.7
 - Fixes MB#14885 - Removed a duplicate test case from script file
 - Fixes MB#14885 - Fixed test.xml to match the script files
