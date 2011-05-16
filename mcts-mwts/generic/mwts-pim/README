@@ -44,7 +44,7 @@ ENVIRONMENT REQUIREMENTS
 
 EXECUTING TESTS
 
-  For local test cases you need to connect to device using ssh connection.
+  For local test cases you need to connect to device using ssh connection. All test cases should be run as USER.
 
   Test cases can be executed from:
         - MIN gui:
