@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Mwts-common is a Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-common
-Version:                1.2.0
+Version:                1.2.1
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -69,3 +69,34 @@ chmod 777 /var/log/tests
 
 %postun
 ldconfig
+
+%changelog
+* Fri May 13 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.1
+- Added memory and cpu usage format support to qa-reports
+
+* Mon Mar 28 2011 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 1.2.0
+- Added series measurement feature
+- Support common configuration file MwtsGlobal.conf
+- Support reading NFT limit files
+- Support reporting NFT limits to OTS
+
+* Tue Mar 15 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.0.6
+- Fixed the handling of direction parameter in StartClientThroughput function
+
+* Thu Mar 10 2011 Reijo Korhonenn <reijo.korhonen@digia.com> - 1.0.5
+- Fixed g_pApp pointer setting correctly, when creating application
+
+* Tue Feb 22 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.0.4
+- Fixed packaging
+
+* Tue Feb 1 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.0.3
+- Removed hard coded path from iperf starting and fine tuned QProcess error handling
+
+* Thu Dec 16 2010 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 1.0.2
+- added OBS support
+
+* Mon Nov 22 2010 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 1.0.1
+- Fixes crashes on some environments
+
+* Mon Sep 20 2010 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 1.0.0
+- Initial version
