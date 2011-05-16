@@ -32,7 +32,8 @@ QTM_USE_NAMESPACE
 /**
  * Constructor for Feedback test class
  */
-FeedbackTest::FeedbackTest() : mEffect(0) {
+FeedbackTest::FeedbackTest()
+{
 
         MWTS_ENTER;
         MWTS_LEAVE;
@@ -41,7 +42,8 @@ FeedbackTest::FeedbackTest() : mEffect(0) {
 /**
  * Destructor for Feedback test class
  */
-FeedbackTest::~FeedbackTest() {
+FeedbackTest::~FeedbackTest()
+{
 
         MWTS_ENTER;
         MWTS_LEAVE;
@@ -51,31 +53,23 @@ FeedbackTest::~FeedbackTest() {
  * Overridden functions for MwtsTest class
  * OnInitialize is called before test execution
  */
-void FeedbackTest::OnInitialize() {
+void FeedbackTest::OnInitialize()
+{
 
         MWTS_ENTER;
 
         //default values
-        int duration = 1000;
+		int duration = 3000;
         int intensity = 1.0;
-        mErrorIndicator = false;
 
-	qDebug() << "in initialize";
+		effect = new QFeedbackHapticsEffect();
+		effect->setDuration(duration);
+		effect->setIntensity(intensity);
 
-        mEffect = new QFeedbackHapticsEffect();
-        mEffect->setDuration(duration);
-        mEffect->setIntensity(intensity);
+		debugMessage();
 
-        qDebug() << "| attack time " << mEffect->attackTime();
-        qDebug() << "| attack intensity " << mEffect->attackIntensity();
-        qDebug() << "| duration " << mEffect->duration();
-        qDebug() << "| intensity " << mEffect->intensity();
-        qDebug() << "| fade time " << mEffect->fadeTime();
-        qDebug() << "| fade intensity " << mEffect->fadeIntensity();
-
-
-        connect(mEffect, SIGNAL(error(QFeedbackEffect::ErrorType)), this, SLOT( onErrorOccurs(QFeedbackEffect::ErrorType)));
-        //connect(effect, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
+		connect(effect, SIGNAL(error(QFeedbackEffect::ErrorType)), this, SLOT( onError(QFeedbackEffect::ErrorType)));
+		connect(effect, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
 
         MWTS_LEAVE;
 }
@@ -84,145 +78,143 @@ void FeedbackTest::OnInitialize() {
  * Overridden functions for MwtsTest class
  * OnUninitialize is called after test execution
  */
-void FeedbackTest::OnUninitialize() {
+void FeedbackTest::OnUninitialize()
+{
 
         MWTS_ENTER;
-
-	qDebug() << "in uninitialize";
-        if (mEffect) {
-            qDebug() << "| attack time " << mEffect->attackTime();
-            qDebug() << "| attack intensity " << mEffect->attackIntensity();
-            qDebug() << "| duration " << mEffect->duration();
-            qDebug() << "| intensity " << mEffect->intensity();
-            qDebug() << "| fade time " << mEffect->fadeTime();
-            qDebug() << "| fade intensity " << mEffect->fadeIntensity();
-        }
-
 
         disconnect();
 
-        if (mEffect) {
-                mEffect->stop();
-                delete mEffect;
-                mEffect = 0;
+		if (effect)
+		{
+				delete effect;
+				effect = NULL;
         }
 
         MWTS_LEAVE;
 }
 
-void FeedbackTest::StartEffect() {
+void FeedbackTest::StartEffect()
+{
 
         MWTS_ENTER;
 
-        if (mEffect) {
-            qDebug() << "starting the effect";
-            mEffect->start();
-        }
+		qDebug() << "starting the effect";
+		effect->start();
+		g_pTest->Start();
 
         MWTS_LEAVE;
 }
 
-void FeedbackTest::PauseEffect() {
+void FeedbackTest::PauseEffect()
+{
 
         MWTS_ENTER;
 
-        if (mEffect) {
-                mEffect->pause();
-        }
+		effect->pause();
 
         MWTS_LEAVE;
 }
 
-void FeedbackTest::StopEffect() {
+void FeedbackTest::StopEffect()
+{
 
         MWTS_ENTER;
 
-        if (mEffect) {
-                mEffect->stop();
-        }
+		effect->stop();
 
         MWTS_LEAVE;
 }
 
-
-
-void FeedbackTest::onErrorOccurs(QFeedbackEffect::ErrorType error) {
-
-        MWTS_ENTER;
-
-        mErrorIndicator = true;
-
-        MWTS_LEAVE;
+void FeedbackTest::debugMessage() const
+{
+	qDebug() << "| attack time " << effect->attackTime();
+	qDebug() << "| attack intensity " << effect->attackIntensity();
+	qDebug() << "| duration " << effect->duration();
+	qDebug() << "| intensity " << effect->intensity();
+	qDebug() << "| fade time " << effect->fadeTime();
+	qDebug() << "| fade intensity " << effect->fadeIntensity();
+	qDebug() << "| effect state " << effect->state();
 }
 
-void FeedbackTest::onStateChanged() {
-
-        MWTS_ENTER;
-
-        //qDebug() << "state changed to: " << mEffect->state();
-
-        MWTS_LEAVE;
+void FeedbackTest::OnFailTimeout()
+{
+	g_pTest->Stop();
+	qCritical() << "Effect was not played properly";
+	debugMessage();
 }
 
-QFeedbackEffect::State FeedbackTest::EffectState() const {
-
-        MWTS_ENTER;
-
-        if (mEffect) {
-                return mEffect->state();
-        }
-
-        MWTS_LEAVE;
+void FeedbackTest::onError(QFeedbackEffect::ErrorType error)
+{
+		MWTS_ENTER;
+		qCritical() << "Error occured, error type: " << error;
+		MWTS_LEAVE;
 }
 
-bool FeedbackTest::ErrorIndicator() const {
-        MWTS_ENTER;
-        MWTS_LEAVE;
-        return mErrorIndicator;
+void FeedbackTest::onStateChanged()
+{
+		MWTS_ENTER;
+
+		switch (effect->state())
+		{
+		case QFeedbackEffect::Stopped:
+			qDebug() << "Effect state changed to: Stopped";
+			g_pTest->Stop();
+			break;
+		case QFeedbackEffect::Paused:
+			qDebug() << "Effect state changed to: Paused";
+			break;
+		case QFeedbackEffect::Running:
+			qDebug() << "Effect state changed to: Running";
+			break;
+		case QFeedbackEffect::Loading:
+			qDebug() << "Effect state changed to: Loading";
+			break;
+		default:
+			break;
+		}
+
+		MWTS_LEAVE;
 }
 
-
-void FeedbackTest::SetDuration(int miliseconds) {
+void FeedbackTest::SetDuration(int miliseconds)
+{
     MWTS_ENTER;
-    mEffect->setDuration(miliseconds);
+	effect->setDuration(miliseconds);
     MWTS_LEAVE;
 }
 
-void FeedbackTest::SetIntensity(qreal intensity) {
+void FeedbackTest::SetIntensity(qreal intensity)
+{
     MWTS_ENTER;
-    mEffect->setIntensity(intensity);
+	effect->setIntensity(intensity);
     MWTS_LEAVE;
 }
 
-void FeedbackTest::SetAttackTime(int miliseconds) {
+void FeedbackTest::SetAttackTime(int miliseconds)
+{
     MWTS_ENTER;
-    mEffect->setAttackTime(miliseconds);
+	effect->setAttackTime(miliseconds);
     MWTS_LEAVE;
 }
 
-void FeedbackTest::SetAttackIntensity(qreal intensity) {
+void FeedbackTest::SetAttackIntensity(qreal intensity)
+{
     MWTS_ENTER;
-    mEffect->setAttackIntensity(intensity);
+	effect->setAttackIntensity(intensity);
     MWTS_LEAVE;
 }
 
-void FeedbackTest::SetFadeTime(int miliseconds) {
+void FeedbackTest::SetFadeTime(int miliseconds)
+{
     MWTS_ENTER;
-    mEffect->setFadeTime(miliseconds);
+	effect->setFadeTime(miliseconds);
     MWTS_LEAVE;
 }
 
-void FeedbackTest::SetFadeIntensity(qreal intensity) {
+void FeedbackTest::SetFadeIntensity(qreal intensity)
+{
     MWTS_ENTER;
-    mEffect->setFadeIntensity(intensity);
+	effect->setFadeIntensity(intensity);
     MWTS_LEAVE;
 }
-
-QFeedbackHapticsEffect* FeedbackTest::Effect() const {
-    MWTS_ENTER;
-    return mEffect;
-    MWTS_LEAVE;
-}
-
-
-
