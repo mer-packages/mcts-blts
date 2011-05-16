@@ -1,19 +1,11 @@
-* Thu 10 Mar 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.7
-- Changed timeout from 10s to 15s to support also slower sensor reading found in some devices
+* Mon 16 May 2011 Jan Grela <jan.grela@nokia.com>  - 1.0.5
+- Test asset refactored, changed functionality, test cases work but crush
 
-* Web 9 Mar 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.6
-- Added pure test asset mwts-sensors-test without mwts-common or min dependency, just dependendy to QSensors
-- Changed aegis packaging
+* Thu 12 May 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  - 1.0.4
+- Fixes: MB#17464 - Fixed mwts-sensors-generic-all package dependencies
 
-* Mon 28 Feb 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.5
-- Debian packaging finetuning
-
-* Fri 18 Feb 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.4
-- Changed packaging
-
-* Web 16 Feb 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.3
-- Fixed debian packaging for documentation.
-- Functionality is not changed other way.
+* Mon 18 Apr 2011 Jan Grela  <jan.grela@digia.com>  - 1.0.3
+- Fixes: NB#231237 - README updated, added test cases running role information
 
 * Fri 14 Jan 2011 Reijo Korhonen  <reijo.korhonen@digia.com>  - 1.0.2
 - Updated documentation. Added QT API call in implementation to chech if backend are connected.

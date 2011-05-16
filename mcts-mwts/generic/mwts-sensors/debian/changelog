@@ -1,24 +1,14 @@
-mwts-sensors (1.0.7) unstable; urgency=low
-  * Changed timeout from 10s to 15s to support also slower sensor reading found in some devices
- -- Reijo Korhonen  <reijo.korhonen@digia.com>  Thu, 10 Mar 2011 12:50:00 +0200
-
-mwts-sensors (1.0.6) unstable; urgency=low
-  * Added pure test asset mwts-sensors-test without mwts-common or min dependency, just dependendy to QSensors
-  * Changed aegis packaging
- -- Reijo Korhonen  <reijo.korhonen@digia.com>  Web, 9 Mar 2011 12:50:00 +0200
-
 mwts-sensors (1.0.5) unstable; urgency=low
-  * Debian packaging finetuning
- -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Mon, 28 Feb 2011 10:12:00 +0200
+  * Test asset refactored, changed functionality, test cases work but crush
+ -- Jan Grela  <jan.grela@digia.com>  Mon, 16 May 2011 15:34:00 +0300
 
 mwts-sensors (1.0.4) unstable; urgency=low
-  * Changed packaging
- -- Reijo Korhonen  <reijo.korhonen@digia.com>  Fri, 18 Feb 2011 12:50:00 +0200
+  * Fixes: MB#17464 - Fixed mwts-sensors-generic-all package dependencies.
+ -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Thu, 12 May 2011 13:09:00 +0300
 
 mwts-sensors (1.0.3) unstable; urgency=low
-  * Fixed debian packaging for documentation.
-    Functionality is not changed other way.
- -- Reijo Korhonen  <reijo.korhonen@digia.com>  Web, 16 Feb 2011 12:50:00 +0200
+  * Fixes: NB#231237 - README updated, added test cases running role information.
+ -- Jan Grela  <jan.grela@digia.com>  Mon, 18 Apr 2011 12:50:00 +0300
 
 mwts-sensors (1.0.2) unstable; urgency=low
   * Updated documentation. Added QT API call in implementation to chech if backend are connected.
@@ -32,6 +22,6 @@ mwts-sensors (1.0.1) unstable; urgency=low
 
 mwts-sensors (1.0.0) unstable; urgency=low
   * Inital version
- -- Reijo Korhonen <reijo.korhonen@digia.com>  Web, 23 Sep 2010 13:57:00 +0200
+ -- Reijo Korhonen <reijo.korhonen@digia.com>  Wed, 23 Sep 2010 13:57:00 +0200
 
 
