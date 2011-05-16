@@ -1,4 +1,4 @@
-mwts-feedback (0.0.1) unstable; urgency=low
+mwts-feedback (0.0.2) unstable; urgency=low
   * Fixes: MB#17514 - README file updated
   * Changed haptics effect functionality
  -- Jan Grela <jan.grela@digia.com>  Mon, 16 May 2011 14:32:00 +0200
