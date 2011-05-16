@@ -25,7 +25,7 @@ Pass/Fail Criteria: Test runs successfully, test does not crash.</description>
 Method: Using Qt Mobility location API.
 Pre/Post-Conditions: Device located so that signal receivable from at least 4 satellites.
 Pass/Fail Criteria: Test runs successfully, test does not crash.</description>
-    <step>min -c -t 'NFT-GPS-HotFix_Without_Assisted-ITER'</step>
+    <step>min -c -t 'NFT-GPS-HotFix-ITER'</step>
    </case>
   </set>
   <set type="Latency" name="LATE-location">
