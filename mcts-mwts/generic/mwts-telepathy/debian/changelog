@@ -1,3 +1,16 @@
+mwts-telepathy-tests (0.1.6) unstable; urgency=low
+  * Added SIP DTMF cases
+  * Added missing SIP slave cases
+  * Fixed some cases
+  * Fixed some typos
+  * Fixes: MB#12954 - [FEA][MWTS-Telepathy]Need cases for Hold/Reject/DTMF VoIP calls
+ -- Timo Ojala <timo.ojala@digia.com>  Tue, 17 May 2011 13:25:29 +0300
+
+mwts-telepathy-tests (0.1.5) unstable; urgency=low
+  * Amended executing tests section in README
+  * Fixes: MB#11981 - Failed to create an gtalk account
+ -- Timo Ojala <timo.ojala@digia.com>  Tue, 17 May 2011 12:59:09 +0300
+
 mwts-telepathy-tests (0.1.4) unstable; urgency=low
   * Added SMS cases
  -- Arttu Valo <ext-arttu.valo@nokia.com>  Mon, 07 Feb 2011 12:51:00 +0200
