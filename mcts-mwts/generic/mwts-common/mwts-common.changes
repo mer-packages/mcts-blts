@@ -1,3 +1,6 @@
+* Wed 18 May 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.2.2
+- Fixed log writing to be thread safe
+
 * Fri 13 May 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.1
 - Added memory and cpu usage format support to qa-reports
 

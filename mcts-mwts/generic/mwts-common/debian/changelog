@@ -1,3 +1,11 @@
+mwts-common (1.2.2) unstable; urgency=low
+  * Fixed log writing to be thread safe
+ -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Wed, 18 May 2011 10:32:56 +0300
+
+mwts-common (1.2.1) unstable; urgency=low
+  * Added memory and cpu usage format support to qa-reports
+ -- Balazs Sipos <balazs.sipos@digia.com>  Fri, 13 May 2011 15:20:00 +0300
+
 mwts-common (1.2.0) unstable; urgency=low
   * Added series measurement feature
   * Support common configuration file MwtsGlobal.conf

@@ -258,10 +258,15 @@ void MwtsLog::EnableLogPrint(bool bEnable)
 */
 void MwtsLog::Write(QString sText)
 {
+    m_Mutex.lock();
+
 	static char buffer[1024];
 	static int n;
 	if(!m_pLogFile)
+    {
+        m_Mutex.unlock();
 		return;
+    }
 
 
 	// first read stdout and stderr pipes if there is stuff
@@ -304,6 +309,7 @@ void MwtsLog::Write(QString sText)
 		fprintf(stdout, str.toAscii().constData());
 	}
 
+    m_Mutex.unlock();
 }
 
 /**
