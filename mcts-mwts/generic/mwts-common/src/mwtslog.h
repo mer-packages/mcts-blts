@@ -26,9 +26,11 @@
 #define _INCLUDED_MWTS_LOG_H
 
 #include <QObject>
-class QFile;
+#include <QMutex>
 #include <QTime>
 #include <MwtsCommon>
+
+class QFile;
 
 /** Logging functionality */
 class MWTSCOMMON_EXPORT MwtsLog : public QObject
@@ -63,6 +65,8 @@ protected:
 	bool m_bTraceEnabled;
 	bool m_bLogPrintEnabled;
 	QTime time;
+
+    QMutex m_Mutex;
 };
 
 
