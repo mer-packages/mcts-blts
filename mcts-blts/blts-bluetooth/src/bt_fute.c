@@ -128,7 +128,7 @@ int fute_bt_l2cap_echo_server(int agent_running)
 	{
 		start_debug_agent(agent_running, ctx);
 		ctx->local_mac = *BDADDR_ANY;
-		ctx->local_port = 0x1234;
+		ctx->local_port = 0x1233;
 		retval = l2cap_echo_server_oneshot(ctx);
 		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
@@ -152,7 +152,7 @@ int fute_bt_l2cap_echo_client(char *server_mac, int want_transfer_test, int agen
 	{
 		start_debug_agent(agent_running, ctx);
 		str2ba(server_mac, &ctx->remote_mac);
-		ctx->remote_port = 0x1234;
+		ctx->remote_port = 0x1233;
 		retval = l2cap_echo_test_client(ctx, want_transfer_test);
 		stop_debug_agent(agent_running);
 		bt_ctx_free(ctx);
