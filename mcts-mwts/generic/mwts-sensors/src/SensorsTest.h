@@ -26,10 +26,10 @@
 #define _SENSORS_TEST_H
 
 #include <QSensor>
-#include <QApplication>
 
 #include <MwtsCommon>
 
+QTM_USE_NAMESPACE;
 
 /**
  *  @class SensorsTest
@@ -44,6 +44,24 @@ class SensorsTest : public MwtsTest
 {
 	Q_OBJECT
 public:
+
+	/**
+	 *	Indicates what type of sensor is used during test execution.
+	 */
+	enum SensorType
+	{
+		AccelerometerType,
+		AmbientLightSensorType,
+		CompassType,
+		GyroscopeType,
+		LightSensorType,
+		MagnetometerType,
+		OrientationSensorType,
+		ProximitySensorType,
+		RotationSensorType,
+		TapSensorType
+	};
+
 	/**
 	 *  @fn SensorsTest( )
 	 *  @brief Constructor for SensorsTest.
@@ -69,116 +87,46 @@ public:
 	void OnUninitialize();
 
 	/**
-	 *  @fn void TestAccelerometer()
-	 *  @brief Put accelerometer callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
+	 *	Creates sensor abject and connects its signals
+	 *	Checks if it has default backend
 	 */
-	int TestAccelerometer();
+	void InitSensor(SensorsTest::SensorType type);
 
 	/**
-	 *  @fn void TestAmbientLightSensor()
-	 *  @brief Put AmbientLightSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
+	 * Starst the sesors and Qt mail loop
 	 */
-	int TestAmbientLightSensor();
+	void StartSensor();
 
 	/**
-	 *  @fn void TestCompass()
-	 *  @brief Put Compass callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
+	 * Ocuurs if no sensors data is received, fails test case
 	 */
-	int TestCompass();
+	void OnFailTimeout();
 
-	/**
-	 *  @fn void TestMagnetometer()
-	 *  @brief Put Magnetometer callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	int TestMagnetometer();
-
-	/**
-	 *  @fn void TestOrientationSensor()
-	 *  @brief Put OrientationSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	int TestOrientationSensor();
-
-	/**
-	 *  @fn void TestProximitySensor()
-	 *  @brief Put ProximitySensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	int TestProximitySensor();
-
-	/**
-	 *  @fn void RotationSensor()
-	 *  @brief Put RotationSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	int TestRotationSensor();
-
-	/**
-	 *  @fn void TapSensor()
-	 *  @brief Put TapSensor callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	int TestTapSensor();
-
-
+	void OnIdle();
 
 private:
-	/**
-	 *  @fn void TestSensor()
-	 *  @brief Generic sensor testing
-	 *         Put accelerometer callbacks on. Put timeout on.
-	 *         If callback is got first, test is written succeeded to the result file.
-     *         If timeout is got first, test is written failed to the result file.
-	 *  @return 0, if successfull. Error otherwise.
-	 */
-	int TestSensor();
+
+	void checkBackendAvailability();
 
 
-public slots:
+private slots:
 
 /* For Sensor callbacks */
 
- /**
-  *  @fn void sensorError()
-  *  @brief This slot is called when an error code is set on the sensor.
-  */
-    void sensorError( int error );
+	void onActiveChanged();
+	void onAvailableSensorsChanged();
+	void onBusyChanged();
+	void onReadingChanged();
+	void onSensorError(int error);
 
-    /**
-      *  @fn void readingChanged()
-      *  @brief This slot is emitted when the reading has changed.
-      */
-    void readingChanged();
-
+	void debugMessage();
 
 private:
-	QtMobility::QSensor* m_Sensor;
+	QSensor* m_Sensor;
+	SensorType currentSensorType;
 	bool m_is_readingChanged;
+	//QSettings* defaultSensors;
 };
-
-
-
-
 
 #endif //#ifndef _SENSORS_TEST_H
 

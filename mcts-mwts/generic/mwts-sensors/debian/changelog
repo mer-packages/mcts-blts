@@ -1,3 +1,7 @@
+mwts-sensors (1.0.5) unstable; urgency=low
+  * Test asset refactored, changed functionality, test cases work but crush
+ -- Jan Grela  <jan.grela@digia.com>  Mon, 16 May 2011 15:34:00 +0300
+
 mwts-sensors (1.0.4) unstable; urgency=low
   * Fixes: MB#17464 - Fixed mwts-sensors-generic-all package dependencies.
  -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Thu, 12 May 2011 13:09:00 +0300

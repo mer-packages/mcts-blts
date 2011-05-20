@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                A Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-sensors
-Version:                1.0.4
+Version:                1.0.5
 Release:                0
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -53,6 +53,14 @@ Requires:               mwts-sensors
 %description            cli
 mwts-sensors command line tool
 
+#%package                test
+#Summary:                mwts-sensors command line test tool without min or mwts-common dependency
+#Prefix:                 /usr/bin
+#Group:                  Development/Tools
+#Requires:
+#%description            test
+#mwts-sensors command line test tool without min or mwts-common dependency
+
 %prep
 %setup -q -n %{name}-%{version}
 
@@ -78,6 +86,9 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files cli
 /usr/bin/mwts-sensors-cli
+
+#%files test
+#/usr/bin/mwts-sensors-test
 
 %files generic-config
 /usr/lib/tests/*
