@@ -1,3 +1,23 @@
+mwts-messaging (0.0.6) unstable; urgency=low
+  * Removed duplicate test case.
+ -- Arttu Valo <arttu.valo@digia.com>  Fri, 20 May 2011 18:28:00 +0200
+
+mwts-messaging (0.0.5) unstable; urgency=low
+  * Added e-mail sending to CLI.
+ -- Arttu Valo <arttu.valo@digia.com>  Tue, 5 Apr 2011 17:23:00 +0200
+
+mwts-messaging (0.0.4) unstable; urgency=low
+  * Logic simplicity, more logging and more simple account using for emailing.
+ -- Reijo Korhonen <reijo.korhonen@digia.com>  Wed, 30 Mar 2011 11:50:00 +0200
+
+mwts-messaging (0.0.3) unstable; urgency=low
+  * Fixed packaging.
+ -- Arttu Valo <arttu.valo@digia.com>  Wed, 2 Mar 2011 11:50:00 +0200
+ 
+mwts-messaging (0.0.2) unstable; urgency=low
+  * Debian packaging finetuning
+ -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Mon, 28 Feb 2011 10:12:00 +0200
+
 mwts-messaging (0.0.1) unstable; urgency=low
   * Initial version
  -- Arttu Valo <arttu.valo@digia.com>  Mon, 4 Oct 2010 15:32:00 +0200

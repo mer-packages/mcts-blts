@@ -1,3 +1,18 @@
+* Fri 20 May 2011 Arttu Valo <arttu.valo@digia.com> - 0.0.6
+- Removed duplicate test case.
+
+* Tue 5 Apr 2011 Arttu Valo <arttu.valo@digia.com> - 0.0.5
+- Added e-mail sending to CLI.
+
+* Wed 30 Mar 2011 Reijo Korhonen <reijo.korhonen@digia.com> - 0.0.4
+- Logic simplicity, more logging and more simple account using for emailing. Fixed packaging rules.
+
+* Wed 2 Mar 2011 Arttu Valo <arttu.valo@digia.com> - 0.0.3
+- Fixed packaging.
+
+* Mon 28 Feb 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 0.0.2
+- Debian packaging finetuning
+
 * Mon 4 Oct 2010 Arttu Valo <arttu.valo@digia.com> - 0.0.1
 - Initial version
 

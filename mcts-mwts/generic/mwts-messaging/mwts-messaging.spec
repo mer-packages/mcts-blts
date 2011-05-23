@@ -6,7 +6,7 @@ BuildRoot:		%{buildroot}
 Summary: 		Mwts-messaging is a test asset for Qt Mobility Messaging
 License: 		LGPL
 Name: 			mwts-messaging
-Version: 		0.0.1
+Version: 		0.0.6
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
@@ -60,7 +60,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-messaging/*.xml
+/usr/share/mwts-messaging-scripts/*.xml
 
 %files generic-config
 /usr/lib/tests/*.conf
