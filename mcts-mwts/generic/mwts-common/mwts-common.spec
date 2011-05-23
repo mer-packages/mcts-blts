@@ -71,6 +71,12 @@ chmod 777 /var/log/tests
 ldconfig
 
 %changelog
+* Mon May 23 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.3
+- Fixed test case verdict (passed, failed) to be in sync at the min interface and..result file
+
+* Wed May 18 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.2.2
+- Fixed log writing to be thread safe
+
 * Fri May 13 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.1
 - Added memory and cpu usage format support to qa-reports
 

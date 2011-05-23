@@ -60,6 +60,8 @@ public:
 	void Uninitialize();
 	bool IsPassed();
 
+	bool ReadLimitsFromFile();
+
 	// Pure virtuals to be implemented by derived asset
 	virtual void OnInitialize();
 	virtual void OnUninitialize();
