@@ -1,5 +1,5 @@
 * Fri 20 May 2011 Arttu Valo <arttu.valo@digia.com> - 0.0.6
-- Removed duplicate test case.
+- Fixes: MB#12633 - FUTE-Messaging-Query_All_Accounts is defined twice.
 
 * Tue 5 Apr 2011 Arttu Valo <arttu.valo@digia.com> - 0.0.5
 - Added e-mail sending to CLI.

@@ -1,5 +1,5 @@
 mwts-messaging (0.0.6) unstable; urgency=low
-  * Removed duplicate test case.
+  * Fixes: MB#12633 - FUTE-Messaging-Query_All_Accounts is defined twice.
  -- Arttu Valo <arttu.valo@digia.com>  Fri, 20 May 2011 18:28:00 +0200
 
 mwts-messaging (0.0.5) unstable; urgency=low
