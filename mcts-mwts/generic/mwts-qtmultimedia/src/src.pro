@@ -20,13 +20,15 @@ SOURCES += \
         AudioRecorderTest.cpp \
         ImageViewerTest.cpp \
         FMRadioTest.cpp \
-        MultimediaTest.cpp
+		MultimediaTest.cpp \
+		MediaPlayerTest.cpp
 
 HEADERS += \
         AudioRecorderTest.h \
         ImageViewerTest.h \
         FMRadioTest.h \
-        MultimediaTest.h
+		MultimediaTest.h \
+		MediaPlayerTest.h
 
 LIBS += -lmwts-common
 	

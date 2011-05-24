@@ -1,3 +1,11 @@
+mwts-qtmultimedia (0.1.6) unstable; urgency=low
+  * Fixed some script audio playing MIN scripts
+ -- Jan Grela <jan.grela@digia.com>  Tue, 24 May 2011 10:00:00 +0300
+
+mwts-qtmultimedia (0.1.5) unstable; urgency=low
+  * Fixes: NB#16203 - updated README, test data location info
+ -- Jan Grela <jan.grela@digia.com>  Mon, 18 Apr 2011 10:00:00 +0300
+
 mwts-qtmultimedia (0.1.4) unstable; urgency=low
   * Fixes: NB#13710 - [MWTS-Multimedia] Imageviewing case always show failed though image shown on screen
   * Renamed mwts-multimedia-mwts-qtmultmedia
