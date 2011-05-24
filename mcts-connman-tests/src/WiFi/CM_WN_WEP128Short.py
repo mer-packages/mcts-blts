@@ -28,5 +28,5 @@ dir=os.path.dirname(sys.argv[0])+"/common"
 sys.path.append(dir)
 from common import *
 
-EXIT(not manager.ConnectWiFi('1111222233334444555566661', 'wep128', 1,
+EXIT(not manager.ConnectWiFi(cm_apset_ap_essid, '1111222233334444555566661', 'wep128', 1,
      0, 1))
