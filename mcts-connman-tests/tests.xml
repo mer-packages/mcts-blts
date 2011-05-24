@@ -4897,7 +4897,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WA_AutoDelete.py</step>
 </case>
 
-<case name="CM_WA_AutoConnectFromSuspend" manual="false" timeout="180" type="Functional" subfeature="Auto connect from Suspend" insignificant="false">
+<case name="CM_WA_AutoConnectFromSuspend" manual="true" timeout="180" type="Functional" subfeature="Auto connect from Suspend" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check wifi can automatically connect from suspend</p>
 <p><br />
@@ -5184,7 +5184,7 @@ Pass/Fail Criteria:</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_WS_Open" manual="false" timeout="90" type="Functional" subfeature="Open System" insignificant="false">
+<case name="CM_WS_Open" manual="false" timeout="180" type="Functional" subfeature="Open System" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi for Open mode</p>
 <p><br />
