@@ -352,6 +352,7 @@ class Manager:
         channel=1,
         ):
         print 'Connecting to AP...'
+        sec = ''
         if security == 'wep64':
             sec = 'wep'
         elif security == 'wep128':
