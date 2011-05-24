@@ -45,7 +45,7 @@ if svc == None:
     EXIT(False)
 
 props = svc.GetProperties()
-security = props['Security']
+security = props['Security'][0]
 print 'Current security mothod is %s' % security
 if security != 'psk' and security != 'wpa':
     EXIT(False)

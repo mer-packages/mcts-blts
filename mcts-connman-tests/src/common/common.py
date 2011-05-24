@@ -333,6 +333,12 @@ class Manager:
             print 'Command %s return fail' % apset_cmd
             return False
         print 'apset done'
+        print 'Enable/Disable wifi to refresh ap list"
+        manager.DisableTechnology('wifi')
+        time.sleep(3)
+        manager.EnableTechnology('wifi')
+        time.sleep(3)
+
         return True
 
     # Refer to ConnectWiFi
