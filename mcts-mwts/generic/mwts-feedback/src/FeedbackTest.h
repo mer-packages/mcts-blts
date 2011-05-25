@@ -27,6 +27,7 @@
 
 #include <MwtsCommon>
 #include <QFeedbackHapticsEffect>
+#include <QFeedbackActuator>
 
 QTM_USE_NAMESPACE;
 
@@ -123,6 +124,7 @@ class FeedbackTest : public MwtsTest {
 
 				void OnFailTimeout();
 
+
         private slots:
 				void onError(QFeedbackEffect::ErrorType error);
                 void onStateChanged();
@@ -130,6 +132,8 @@ class FeedbackTest : public MwtsTest {
 
         private:
 				QFeedbackHapticsEffect* effect;
+
+				void PrintAvailableActuator() const;
 
 
 };
