@@ -68,6 +68,8 @@ void FeedbackTest::OnInitialize()
 
 		debugMessage();
 
+		PrintAvailableActuator();
+
 		connect(effect, SIGNAL(error(QFeedbackEffect::ErrorType)), this, SLOT( onError(QFeedbackEffect::ErrorType)));
 		connect(effect, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
 
@@ -140,7 +142,7 @@ void FeedbackTest::debugMessage() const
 void FeedbackTest::OnFailTimeout()
 {
 	g_pTest->Stop();
-	qCritical() << "Effect was not played properly";
+	qCritical() << "Effect was not played properly.";
 	debugMessage();
 }
 
@@ -217,4 +219,23 @@ void FeedbackTest::SetFadeIntensity(qreal intensity)
     MWTS_ENTER;
 	effect->setFadeIntensity(intensity);
     MWTS_LEAVE;
+}
+
+/* private */
+
+void FeedbackTest::PrintAvailableActuator() const
+{
+	MWTS_ENTER;
+
+	QList<QFeedbackActuator*> actuators = QFeedbackActuator::actuators();
+	if (actuators.count() == 0)
+	{
+		qCritical() << "No actuators available in system - failing.";
+		return;
+	}
+	foreach (QFeedbackActuator* act, actuators)
+		qDebug() << act->name();
+
+
+	MWTS_LEAVE;
 }
