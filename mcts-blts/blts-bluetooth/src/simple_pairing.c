@@ -844,7 +844,7 @@ blts_simple_pairing_run (struct bt_data *user_data, int master)
 	str2ba (user_data->mac_address, &ctx->remote_mac);
 
 	ctx->dev_id = user_data->dev_id;
-	ctx->remote_port = 0x1234;
+	ctx->remote_port = 0x1233;
 	data->role = master; /* Initial wish of role */
 
         /* XXX:
@@ -922,7 +922,7 @@ blts_simple_pairing_l2cap_server (struct bt_data *user_data)
 
 	ctx->dev_id     = user_data->dev_id;
 	ctx->local_mac  = *BDADDR_ANY;
-	ctx->local_port = 0x1234;
+	ctx->local_port = 0x1233;
 
 	ret = blts_simple_pairing_init (data, 0);
 
@@ -1026,7 +1026,7 @@ blts_simple_pairing_oob_run (struct bt_data *user_data, int master)
 	str2ba (user_data->mac_address, &ctx->remote_mac);
 
 	ctx->dev_id = user_data->dev_id;
-	ctx->remote_port = 0x1234;
+	ctx->remote_port = 0x1233;
 
 	if (ctx->dev_id < 0) {
 		ctx->dev_id = hci_get_route (NULL);
