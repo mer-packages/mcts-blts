@@ -360,14 +360,14 @@ static int usb_do_transfer(struct hostdrv_buffer *buf, unsigned length,
 /*
  * Userspace interface
  */
-loff_t hostdrv_llseek(struct file *filp, loff_t off, int whence)
+static loff_t hostdrv_llseek(struct file *filp, loff_t off, int whence)
 {
 	/* This is technically unnecessary for now, but we may use the position
 	   for something later */
 	return -EINVAL;
 }
 
-ssize_t hostdrv_read(struct file *filp, char __user *usr_buf,
+static ssize_t hostdrv_read(struct file *filp, char __user *usr_buf,
 	size_t count, loff_t *offp)
 {
 	struct hostdrv_buffer *buf;
@@ -424,7 +424,7 @@ ssize_t hostdrv_read(struct file *filp, char __user *usr_buf,
 	return retval;
 }
 
-ssize_t hostdrv_write(struct file *filp, const char __user *usr_buf,
+static ssize_t hostdrv_write(struct file *filp, const char __user *usr_buf,
 	size_t count, loff_t *offp)
 {
 	struct hostdrv_buffer *buf;
@@ -484,7 +484,7 @@ done:
 	return retval;
 }
 
-int hostdrv_open(struct inode *inode, struct file *filp)
+static int hostdrv_open(struct inode *inode, struct file *filp)
 {
 	int ret = -ENOMEM;
 	unsigned cminor, epstate;
@@ -510,7 +510,7 @@ done:
 	return ret;
 }
 
-int hostdrv_release(struct inode *inode, struct file *filp)
+static int hostdrv_release(struct inode *inode, struct file *filp)
 {
 	BUG_ON(mutex_lock_interruptible(&hostdrv_lock));
 
@@ -624,7 +624,7 @@ static void usb_show_endpoint_descriptor(struct usb_endpoint_descriptor *desc)
 }
 
 #define USB_DEFAULT_MINOR_BASE 192
-const struct file_operations usb_fops = {
+static const struct file_operations usb_fops = {
 	.owner = THIS_MODULE,
 };
 
