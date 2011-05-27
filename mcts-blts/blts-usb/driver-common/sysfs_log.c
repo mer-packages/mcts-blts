@@ -19,6 +19,8 @@
 #include <linux/kernel.h>
 #include <linux/version.h>
 
+#include "sysfs_log.h"
+
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 28) || !defined (CONFIG_RING_BUFFER)
 
 int sysfs_log_add(void)
