@@ -1,3 +1,10 @@
+mwts-network-tests (1.0.8) unstable; urgency=low
+ * Fixes MB#18122 - Fixed connecting not to fail if re-connecting
+ * Fixes MB#18123 - Fixed disconnecting not to fail if already disconnected
+ * Fixes MB#18132 - Fixed the timeout values in script files
+ * Connman AutoConnect feature is set to false for new connected services
+-- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Fri, 27 May 2011 14:12:00 +0300
+
 mwts-network-tests (1.0.7) unstable; urgency=low
  * Fixes MB#17680 - Fixed the mismatches between script files and tests.xml
 -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Wed, 18 May 2011 14:12:00 +0300

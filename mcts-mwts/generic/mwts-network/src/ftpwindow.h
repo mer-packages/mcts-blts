@@ -33,76 +33,75 @@ class QFtp;
 
 class FtpWindow : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
+
 public:
-	/**
-	 * Constructor
-	 */
-	FtpWindow(MwtsTest *testAsset);
-	/**
-	 * Destructor
-	 */
-	~FtpWindow();
 
-	/**
-	 * Connect to target ftp host
-	 * @return true/false if succeeded
-	 */
-	bool connectToHost(const QString ip, const QString username,const QString password);
+    /**
+     * Constructor
+     */
+    FtpWindow(MwtsTest *testAsset);
 
-	/**
-	 * Download file from ftp server
-	 * @param strFilename name of the downloadable file
-	 * @return true/false if succeeded
-	 */
-	bool downloadFile(QString strFilename);
+    /**
+     * Destructor
+     */
+    ~FtpWindow();
 
-	/**
-	 * Upload file to ftp server
-	 * @param strFilename name of the uploaded file
-	 * @return true/false if succeeded
-	 */
-	bool uploadFile(QString strFilename);
+    /**
+     * Connect to target ftp host
+     * @return true/false if succeeded
+     */
+    bool connectToHost(const QString ip, const QString username,const QString password);
 
-	/**
-	 * Returns last transfer speed
-	 * Speed is in bytes/sec
-	 * @return bytes/sec
-	 */
-	inline double transferSpeed(){ return fTransferSpeed; }
+    /**
+     * Download file from ftp server
+     * @param strFilename name of the downloadable file
+     * @return true/false if succeeded
+     */
+    bool downloadFile(QString strFilename);
+
+    /**
+     * Upload file to ftp server
+     * @param strFilename name of the uploaded file
+     * @return true/false if succeeded
+     */
+    bool uploadFile(QString strFilename);
+
+    /**
+     * Returns last transfer speed
+     * Speed is in bytes/sec
+     * @return bytes/sec
+     */
+    inline double transferSpeed(){ return m_fTransferSpeed; }
 
 protected slots:
 
-	/**
-	 * Slots for QFtp signals
-	 */
-	void ftp_commandStarted();
-	void ftp_commandFinished();
-	void ftp_stateChanged(int);
-	void ftp_done(bool);
-	void ftp_listInfo(const QUrlInfo &);
-	void updateDataTransferProgress(qint64, qint64);
+    /**
+     * Slots for QFtp signals
+     */
+    void ftp_commandStarted(int id);
+    void ftp_commandFinished(int id, bool error);
+    void ftp_stateChanged(int state);
+    void ftp_done(bool error);
+    void ftp_listInfo(const QUrlInfo &info);
+    void updateDataTransferProgress(qint64 readBytes, qint64 totalBytes);
 
 private:
-	/**
-	 * Pointer to the common
-	 */
-	MwtsTest	*testAsset;
 
-	QFile		*file;
+    void destroy();
+    void logError();
 
-	QFtp *ftp;
+private:
 
-        bool m_bResult;
-	qint64 		sizeOfFile;
+    MwtsTest	*m_pTestAsset;
+    QFile		*m_pFile;
+    QFtp        *m_pFtp;
 
-	QString		downloadPath;
-	QString		uploadPath;
-	QString		localPath;
-	bool		bResult;
-	// bytes/sec
-	double		fTransferSpeed;
 
-        void destroy();
-
+    QString		m_sDownloadPath;
+    QString		m_sUploadPath;
+    QString		m_sLocalPath;
+    qint64 		m_iSizeOfFile;
+    double		m_fTransferSpeed;
+    bool        m_bResult;
 };
