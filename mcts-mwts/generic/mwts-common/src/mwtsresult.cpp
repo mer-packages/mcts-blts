@@ -40,6 +40,8 @@ MwtsResult* MwtsResult::instance()
 MwtsResult::MwtsResult()
 {
 	m_nIteration=0;
+	m_lfFailLimit=0.0;
+	m_lfTarget=0.0;
 	m_pInitIteration=new MwtsIteration;
 	m_pCurrentIteration=m_pInitIteration;
 
