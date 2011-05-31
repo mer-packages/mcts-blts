@@ -520,44 +520,49 @@ bool NetworkTest::StopSession(const QString ap_name)
     MWTS_ENTER;
     qDebug() << "Disconnection method!";
 
-    QString ap;
-    ap = g_pConfig->value(ap_name + "/name").toString();
+    QString ap = g_pConfig->value(ap_name + "/name").toString();
 
     QString service_path = GetServicePath(ap_name);
-
-    if (service_path == "") {
+    if (service_path == "")
+    {
         qCritical() << "No service available, can be because of the daemon, or the ap is just not seen currently. aborting";
         return false;
     }
-
-    qDebug() << "service path is: " << service_path;
+    qDebug() << "Service path is:" << service_path;
 
     //make sure the signal is connected
     m_pConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
-                                          this, SLOT(slotConnmanStateChanged()));
+                                          this, SLOT(slotConnmanStateChanged(QString)));
+
+    // set the flag telling if we are connecting or disconnecting
+    m_bConnecting = false;
 
     // open interface to the service
     QDBusInterface iface("net.connman", service_path, "net.connman.Service", QDBusConnection::systemBus());
 
     qDebug() << "Trying to disconnect...";
-    QDBusReply<QDBusVariant> disconnect_reply = iface.call("Disconnect");
-
-    if (!disconnect_reply.isValid())
+    g_pTime->start();
+    QDBusMessage disconnect_reply = iface.call("Disconnect");
+    if ( disconnect_reply.type() == QDBusMessage::ErrorMessage )
     {
-        QDBusError error = disconnect_reply.error();
-
-        if (error.message() == "Not connected")
+        if (disconnect_reply.errorMessage() == "Not connected")
         {
             qDebug() << "Not connected. No need to disconnect. All good.";
+            QString msg = "Access point '" + ap + "' not connected. Nothing to do.";
+            g_pResult->Write(msg);
             return true;
         }
+        else
+        {
+            qCritical() << "Disconnecting error:" << disconnect_reply.errorMessage();
+            return false;
+        }
     }
-
 
     // set this to false, we dont know if disconnecting works yet
     m_bResult = false;
 
-    qDebug() << "Disconnecting....";
+    qDebug() << "Waiting for the connection state change....";
     this->Start();
 
     if(m_pNetworkSession != 0)
@@ -890,6 +895,9 @@ bool NetworkTest::SetTethering(const QString mode)
 
 QString NetworkTest::GetServicePath(const QString ap_name)
 {
+    QString name = g_pConfig->value(ap_name + "/name").toString();
+    qDebug() << "Ap:" << ap_name << " is:" << name;
+
     qDebug() << "Opening Connman manager interface";
     QDBusInterface maanager("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
 
@@ -907,23 +915,15 @@ QString NetworkTest::GetServicePath(const QString ap_name)
 
     QVariantMap map = reply;
     QVariant services;
-
-    // get the Services map value
-    if (map.contains("Services")) {
-        qDebug() << "Reply contains Services!";
+    if (map.contains("Services"))
+    {
+        qDebug() << "Manager properties contain Services";
         services = map.value("Services");
     }
-
     // cast Services to a string list
     QStringList services_list = qdbus_cast<QStringList>(services);
 
-    QString name = g_pConfig->value(ap_name + "/name").toString();
-
-    qDebug() << "Ap: " << ap_name << " is: " << name;
-
-    map = QVariantMap();
-
-    for (int i=0;i<services_list.count();i++)
+    for (int i=0; i<services_list.count(); i++)
     {
         QDBusInterface service_iface("net.connman", services_list.at(i), "net.connman.Service", QDBusConnection::systemBus());
         reply = service_iface.call("GetProperties");
@@ -933,13 +933,14 @@ QString NetworkTest::GetServicePath(const QString ap_name)
             map = reply;
 
             QMapIterator<QString, QVariant>iter(map);
-            while (iter.hasNext()) {
+            while (iter.hasNext())
+            {
                 iter.next();
-                if (iter.key() == "Name" && iter.value() == name) {  // service name matches with our access point name
-                        qDebug() << "/////////";
-                        qDebug() << "Found service named: " << name << " . Path is : " << services_list.at(i);
-
-                        return services_list.at(i);
+                if (iter.key() == "Name" && iter.value() == name)
+                {
+                    // service name matches with our access point name
+                    qDebug() << "Found service named:" << name;
+                    return services_list.at(i);
                 }
             }
         }
@@ -952,93 +953,105 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
 {
     MWTS_ENTER;
 
-    QString ap;
-    ap = g_pConfig->value(ap_name + "/name").toString();
-
     QString service_path = GetServicePath(ap_name);
+    qDebug() << "Service path is:" << service_path;
 
-    qDebug() << "service path is: " << service_path;
-
-    if (service_path == "") {
+    if (service_path == "")
+    {
         qCritical() << "No service available, can be because of the daemon, or the ap is just not seen currently. aborting";
         return false;
     }
 
     // connect the connman state signal to slot
     m_pConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
-                                          this, SLOT(slotConnmanStateChanged()));
+                                          this, SLOT(slotConnmanStateChanged(QString)));
+
+    // set the flag telling if we are connecting or disconnecting
+    m_bConnecting = true;
 
     // open interface to the service
     QDBusInterface iface("net.connman", service_path, "net.connman.Service", QDBusConnection::systemBus());
 
-    if( ap_name == "psd_network") {
+    QString propertyName = "";
+    QList<QVariant> args;
+
+    if( ap_name == "psd_network")
+    {
         qDebug() << "You are connecting to a psd-network. Lets set the apn...";
         QString apnName = g_pConfig->value(ap_name + "/apn").toString();
 
-        if ( apnName == ""){
+        if ( apnName == "")
+        {
             qCritical() << "Apn returned null from config-file. apn must be set! Aborting...";
             return false;
         }
-        qDebug() << "apn: " << apnName;
+        qDebug() << "Apn: " << apnName;
 
-        QString property = "APN";
-        QList<QVariant> args;
-
-        args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(apnName));
-        //QDBusMessage pass_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
-
-        QDBusReply<QVariant> apn_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
-
-        /*
-        if ( !apn_reply.isValid() ) {
-            QDBusError error = apn_reply.error();
-            qCritical() << "Apn set error: " << error.message();
+        propertyName = "APN";
+        args.clear();
+        args << QVariant::fromValue(propertyName) << QVariant::fromValue(QDBusVariant(apnName));
+        qDebug() << "Setting APN...";
+        QDBusMessage apn_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+        if( apn_reply.type() == QDBusMessage::ErrorMessage )
+        {
+            qCritical() << "Apn set error: " << apn_reply.errorMessage();
             return false;
-        } */
+        }
 
         qDebug() << "Apn set for " << ap_name << " . Proceeding";
-
     }
 
     QString name     = g_pConfig->value(ap_name + "/name").toString();
     QString security = g_pConfig->value(ap_name + "/wlan_security").toString();
     QString pass     = "";
 
-    if ( ap_name != "psd_network") {
-        if (security == "wpa" ) {
-            qDebug() << "Encryption type wpa";
+    if ( ap_name != "psd_network")
+    {
+        if (security == "wpa" )
+        {
             pass = g_pConfig->value(ap_name + "/EAP_wpa_preshared_passphrase").toString();
+            qDebug() << "Encryption type WPA";
+            qDebug() << "Passphrase:" << pass;
         }
-        else if ( security == "wep") {
-            qDebug() << "Encryption type: wep.";
+        else if ( security == "wep")
+        {
             pass = g_pConfig->value(ap_name + "/wlan_wepkey1").toString();
+            qDebug() << "Encryption type WEP";
+            qDebug() << "Passphrase:" << pass;
         }
-        else {
-            qDebug() << "Ap is open, no need to add passphrase";
+        else
+        {
+            qDebug() << "Ap is open, using empty passphrase.";
         }
     }
 
-    QString property = "Passphrase";
-    QList<QVariant> args;
-
-    args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(pass));
+    propertyName = "Passphrase";
+    args.clear();
+    args << QVariant::fromValue(propertyName) << QVariant::fromValue(QDBusVariant(pass));
     qDebug() << "Setting passphrase...";
-    QDBusMessage pass_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
-    qDebug() << pass_reply;
+    QDBusMessage  pass_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+    if ( pass_reply.type() == QDBusMessage::ErrorMessage )
+    {
+        qCritical() << "Passphrase set error: " << pass_reply.errorMessage();
+        return false;
+    }
 
     g_pTime->start();
-
     qDebug() << "Trying to connect to service";
-    QDBusReply<QDBusVariant> connect_reply = iface.call("Connect");
-
-    if (!connect_reply.isValid())
+    QDBusMessage connect_reply = iface.call("Connect");
+    if ( connect_reply.type() == QDBusMessage::ErrorMessage )
     {
-        QDBusError error = connect_reply.error();
-
-        if (error.message() == "Already connected")
+        if (connect_reply.errorMessage() == "Already connected")
         {
             qDebug() << "Already connected. No need to connect. All good.";
+            QString msg = "Access point '" + name + "' already connected. Nothing to do.";
+            g_pResult->Write(msg);
             return true;
+        }
+        else
+        {
+            qCritical() << "Connecting error:" << connect_reply.errorMessage();
+            return false;
         }
     }
 
@@ -1046,13 +1059,17 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     this->Start();
 
     // set AutoConnect property to false
-    property = "AutoConnect";
-    bool propertyValue = false;
+    propertyName = "AutoConnect";
+    bool autoConnectValue = false;
     args.clear();
-    args << QVariant::fromValue(property) << QVariant::fromValue(QDBusVariant(propertyValue));
+    args << QVariant::fromValue(propertyName) << QVariant::fromValue(QDBusVariant(autoConnectValue));
     qDebug() << "Setting AutoConnect property to false...";
     QDBusMessage autoconnect_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
-    qDebug() << autoconnect_reply;
+    if ( autoconnect_reply.type() == QDBusMessage::ErrorMessage )
+    {
+        qCritical() << "AutoConnect set error: " << autoconnect_reply.errorMessage();
+        return false;
+    }
 
     MWTS_LEAVE;
     return m_bResult;
@@ -1066,10 +1083,10 @@ bool NetworkTest::RemoveService(const QString ap_name)
     ap = g_pConfig->value(ap_name + "/name").toString();
 
     QString service_path = GetServicePath(ap_name);
+    qDebug() << "Service path is: " << service_path;
 
-    qDebug() << "service path is: " << service_path;
-
-    if (service_path == "") {
+    if (service_path == "")
+    {
         qCritical() << "No path to service. Aborting";
         return false;
     }
@@ -1080,8 +1097,12 @@ bool NetworkTest::RemoveService(const QString ap_name)
     QString name = g_pConfig->value(ap_name + "/name").toString();
 
     qDebug() << "Removing service configuration....";
-    QDBusMessage connect_reply = iface.call("Remove");
-    qDebug() << "Reply was: " << connect_reply;
+    QDBusMessage remove_reply = iface.call("Remove");
+    if ( remove_reply.type() == QDBusMessage::ErrorMessage )
+    {
+        qCritical() << "Service remove error: " << remove_reply.errorMessage();
+        return false;
+    }
 
     MWTS_LEAVE;
     return true;
@@ -1239,56 +1260,71 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
 
 void NetworkTest::debugPrintConfiguration(QNetworkConfiguration config)
 {
-    qDebug() <<     "///// ACCESS POINT //////// " <<config.name();
-    qDebug() <<     "  Name: " <<config.name();
-    qDebug() <<     "  Identifier: " <<config.identifier();
-    QString valid = config.isValid()?"TRUE":"FALSE";
-    qDebug() <<     "  isValid: " << valid;
-    QString type =  "  Type: ";
-    QString state = "  State: ";
+    qDebug() << "///// ACCESS POINT /////";
+    qDebug() << "Name:" << config.name();
+    qDebug() << "Identifier:" << config.identifier();
+    qDebug() << "Valid:" << (config.isValid() ? "TRUE" : "FALSE");
 
-    QList<QNetworkConfiguration> childs = config.children();
-
-
-    if(childs.size() < 1)
+    QList<QNetworkConfiguration> children = config.children();
+    qDebug() << "Children:" << children.size();
+    if(children.size() < 1)
     {
-        qDebug() << "  Children: no children, this is not a service network";
+        qDebug() << "    No children, this is not a service network";
     }
-    else {
+    else
+    {
         // just print the list of children
-        for (int i = 0; i < childs.size(); ++i) {
-                qDebug() << childs.at(i).name();
+        for (int i = 0; i < children.size(); ++i)
+        {
+            qDebug() << "    " << children.at(i).name();
         }
     }
 
-    switch(config.type()) {
-        case QNetworkConfiguration::InternetAccessPoint:
-            type += "Internet Access Point"; break;
-        case QNetworkConfiguration::ServiceNetwork:
-            type += "Service Network";break;
-        case QNetworkConfiguration::UserChoice:
-            type += "User choice"; break;
-        case QNetworkConfiguration::Invalid:
-            type += "Invalid";break;
-        default:
-            type += "N/A"; break;
+    QString type =  "Type: ";
+    switch( config.type() )
+    {
+    case QNetworkConfiguration::InternetAccessPoint:
+        type += "Internet Access Point";
+        break;
+    case QNetworkConfiguration::ServiceNetwork:
+        type += "Service Network";
+        break;
+    case QNetworkConfiguration::UserChoice:
+        type += "User choice";
+        break;
+    case QNetworkConfiguration::Invalid:
+        type += "Invalid";
+        break;
+    default:
+        type += "N/A";
+        break;
     }
+    qDebug() << type;
 
-    switch(config.state()) {
-        case QNetworkConfiguration::Undefined:
-            state += "Undefined (Found, but no configuration exists in the device)";break;
-        case QNetworkConfiguration::Defined:
-            state += "Defined (Configurations is found)";break;
-        case QNetworkConfiguration::Discovered:
-            state += "Discovered (Connectable)";break;
-        case QNetworkConfiguration::Active:
-            state += "Active";break;
-        default:
-            state += "N/A";break;
-    }
-    qDebug() << "  " << type;
-    qDebug() << "  " << state;
+    debugPrintConfigState(config.state());
+
     MWTS_LEAVE;
+}
+
+void NetworkTest::debugPrintConfigState(QNetworkConfiguration::StateFlags state)
+{
+    qDebug() << "State:";
+    if( state.testFlag(QNetworkConfiguration::Undefined) )
+    {
+        qDebug() << "    Undefined (Found, but no configuration exists in the device)";
+    }
+    if( state.testFlag(QNetworkConfiguration::Defined) )
+    {
+        qDebug() << "    Defined (Configurations is found)";
+    }
+    if( state.testFlag(QNetworkConfiguration::Discovered) )
+    {
+        qDebug() << "    Discovered (Connectable)";
+    }
+    if( state.testFlag(QNetworkConfiguration::Active) )
+    {
+        qDebug() << "    Active";
+    }
 }
 
 bool NetworkTest::FindIp(const QString strInterface)
@@ -1318,21 +1354,43 @@ bool NetworkTest::FindIp(const QString strInterface)
 
 // SLOTS
 
-void NetworkTest::slotConnmanStateChanged()
+void NetworkTest::slotConnmanStateChanged(QString state)
 {
     MWTS_ENTER;
-    this->Stop();
-    qDebug() << "State of Connman Manager changed!";
+    qDebug() << "State of Connman Manager changed to:" << state;
 
-    double elapsed=g_pTime->elapsed();
-    qDebug() << "Connection establishing/disconnecting took: " << elapsed << " ms";
-    g_pResult->AddMeasure("Latency", elapsed, "ms");
+    if( m_bConnecting && (state.indexOf("online") >=0) )
+    {
+        // we were waiting for state "online"
 
-    m_bResult = true;
+        double elapsed=g_pTime->elapsed();
+        qDebug() << "Connection establishing took:" << elapsed << "ms";
+        g_pResult->AddMeasure("Connect Latency", elapsed, "ms");
 
-    // we can disconnect the signal for now
-    m_pConnmanManager->connection().disconnect("net.connman", "/", "net.connman.Manager", "StateChanged",
-                                          this, SLOT(slotConnmanStateChanged()));
+        m_bResult = true;
+
+        // we can disconnect the signal for now
+        m_pConnmanManager->connection().disconnect("net.connman", "/", "net.connman.Manager", "StateChanged",
+                                              this, SLOT(slotConnmanStateChanged(QString)));
+
+        this->Stop();
+    }
+    else if( !m_bConnecting && (state.indexOf("offline") >=0) )
+    {
+        // we were waiting for state "offline"
+
+        double elapsed=g_pTime->elapsed();
+        qDebug() << "Disconnecting took:" << elapsed << "ms";
+        g_pResult->AddMeasure("Disconnect Latency", elapsed, "ms");
+
+        m_bResult = true;
+
+        // we can disconnect the signal for now
+        m_pConnmanManager->connection().disconnect("net.connman", "/", "net.connman.Manager", "StateChanged",
+                                              this, SLOT(slotConnmanStateChanged(QString)));
+
+        this->Stop();
+    }
 
     MWTS_LEAVE;
 }
@@ -1367,23 +1425,24 @@ void NetworkTest::preferredConfigurationChangedHandler( const QNetworkConfigurat
 void NetworkTest::configurationAdded(const QNetworkConfiguration& config)
 {
     MWTS_ENTER;
-    qDebug()<< "ADDED CONFIGURATION:" << config.name() << " State: " << config.state();
+    qDebug() << "ADDED CONFIGURATION:" << config.name();
+    debugPrintConfigState(config.state());
     MWTS_LEAVE;
 }
 
 void NetworkTest::configurationsChanged(const QNetworkConfiguration& config)
 {
     MWTS_ENTER;
-    qDebug()<< "CHANGED CONFIGURATION:" << config.name() << " State: " << config.state();
-    //qDebug()<< "Config changed: ";
-    //debugPrintConfiguration(config);
+    qDebug() << "CHANGED CONFIGURATION:" << config.name();
+    debugPrintConfigState(config.state());
     MWTS_LEAVE;
 }
 
 void NetworkTest::configurationsRemoved(const QNetworkConfiguration& config)
 {
     MWTS_ENTER;
-    qDebug()<< "REMOVED CONFIGURATION:" << config.name() << " State: " << config.state();
+    qDebug()<< "REMOVED CONFIGURATION:" << config.name();
+    debugPrintConfigState(config.state());
     MWTS_LEAVE;
 }
 
