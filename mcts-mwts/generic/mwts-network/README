@@ -117,3 +117,13 @@ Known Issues
    connected with mwts-network asset. But there might be access points that
    have been connected by other means and those might have the AutoConnect
    feature set to true.
+
+   Connecting to the access point that is already connected is considered as
+   passed. Connecting to one access point when already connected to the
+   different access point changes the connected access point.
+   Switching between WLAN and PSD access points does not work though.
+
+   Disconnecting needs to know the access point name where to disconnect from.
+   Disconnecting when not connected is considered as passed, because there is
+   nothing to do. Also, if connected to one access point and trying to
+   disconnect from another one, it is considered as passed too.
