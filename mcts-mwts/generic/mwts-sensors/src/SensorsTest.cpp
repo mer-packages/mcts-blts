@@ -25,31 +25,58 @@
 #include <QAccelerometer>
 #include <QAmbientLightSensor>
 #include <QCompass>
+#include <QGyroscope>
+#include <QLightSensor>
 #include <QMagnetometer>
 #include <QOrientationSensor>
 #include <QProximitySensor>
 #include <QRotationSensor>
 #include <QTapSensor>
+
 #include <QSensorReading>
+#include <QAccelerometerReading>
+#include <QAmbientLightReading>
+#include <QCompassReading>
+#include <QGyroscopeReading>
+#include <QLightReading>
+#include <QMagnetometerReading>
+#include <QOrientationReading>
+#include <QProximityReading>
+#include <QRotationReading>
+#include <QTapReading>
+
 #include "stable.h"
 #include "SensorsTest.h"
 
-QTM_USE_NAMESPACE
+//QTM_USE_NAMESPACE
 
 SensorsTest::SensorsTest()
 {
 	MWTS_ENTER;
+	MWTS_LEAVE;
 }
 
 SensorsTest::~SensorsTest()
 {
 	MWTS_ENTER;
+	MWTS_LEAVE;
 }
 
 
 void SensorsTest::OnInitialize()
 {
 	MWTS_ENTER;
+
+	/*
+	defaultSensors = new QSettings("/etc/xdg/Nokia/Sensors.conf", QSettings::NativeFormat);
+	qDebug() << "Dafault sensors for types are:";
+	QStringList df = defaultSensors->allKeys();
+	foreach (QString s, df)
+		qDebug() << s << "=" << defaultSensors->value(s).toString();
+	*/
+
+	qDebug() << "Setting back default path for config files.";
+	QSettings::setPath(QSettings::NativeFormat, QSettings::SystemScope, "/etc/xdg");
 
 	MWTS_LEAVE;
 }
@@ -58,222 +85,306 @@ void SensorsTest::OnUninitialize()
 {
 	MWTS_ENTER;
 
+	if (m_Sensor)
+	{
+		delete m_Sensor;
+		m_Sensor = NULL;
+	}
+
+
 	MWTS_LEAVE;
 }
 
-
-
-int SensorsTest::TestAccelerometer()
+void SensorsTest::InitSensor(SensorsTest::SensorType type)
 {
 	MWTS_ENTER;
-	int ret;
 
-	m_Sensor = new QtMobility::QAccelerometer(this);
-	ret = TestSensor();
+	currentSensorType = type;
 
-	delete m_Sensor;
-	m_Sensor = NULL;
+	switch (type)
+	{
+		case AccelerometerType:
+			m_Sensor = new QAccelerometer(this);
+			qDebug() << "Accelerometer sensor initialized";
+			break;
+		case AmbientLightSensorType:
+			m_Sensor = new QAmbientLightSensor(this);
+			qDebug() << "Ambient light sensor initialized";
+			break;
+		case CompassType:
+			m_Sensor = new QCompass(this);
+			qDebug() << "Compass sensor initialized";
+			break;
+		case GyroscopeType:
+			//m_Sensor = new QGyroscope(this);
+			break;
+		case LightSensorType:
+			m_Sensor = new QLightSensor(this);
+			qDebug() << "Light sensor initialized";
+			break;
+		case MagnetometerType:
+			m_Sensor = new QMagnetometer(this);
+			qDebug() << "Magnetometer sensor initialized";
+			break;
+		case OrientationSensorType:
+			m_Sensor = new QOrientationSensor(this);
+			qDebug() << "Orientation sensor initialized";
+			break;
+		case ProximitySensorType:
+			m_Sensor = new QProximitySensor(this);
+			qDebug() << "Proximity sensor initialized";
+			break;
+		case RotationSensorType:
+			m_Sensor = new QRotationSensor(this);
+			qDebug() << "Rotation sensor initialized";
+			break;
+		case TapSensorType:
+			m_Sensor = new QTapSensor(this);
+			qDebug() << "Tap sensor initialized";
+			break;
+		default:
+			break;
+	}
+
+	connect(m_Sensor, SIGNAL(activeChanged()), this, SLOT(onActiveChanged()));
+	connect(m_Sensor, SIGNAL(availableSensorsChanged()), this, SLOT(onAvailableSensorsChanged()));
+	connect(m_Sensor, SIGNAL(busyChanged()), this, SLOT(onBusyChanged()));
+	connect(m_Sensor, SIGNAL(readingChanged()), this, SLOT(onReadingChanged()));
+	connect(m_Sensor, SIGNAL(sensorError(int)), this, SLOT(onSensorError(int)));
+
+	//checkBackendAvailability();
+
+	//QTimer* t = new QTimer(this);
+	//connect(t, SIGNAL(timeout()), this, SLOT(debug1()));
+	//t->start(1000);
 
 	MWTS_LEAVE;
-	return ret;
 }
 
-int SensorsTest::TestAmbientLightSensor()
+void SensorsTest::StartSensor()
 {
 	MWTS_ENTER;
-	int ret;
 
-	m_Sensor = new QtMobility::QAmbientLightSensor(this);
-	ret = TestSensor();
+	/*qDebug() << "Setting default sensor backend";
+	qDebug() << defaultSensors->value("Default/" + m_Sensor->type()).toString();
+	m_Sensor->setIdentifier(defaultSensors->value(m_Sensor->type()).toByteArray());
+	qDebug() << m_Sensor->identifier();*/
 
-	delete m_Sensor;
-	m_Sensor = NULL;
+
+	qDebug() << "Enabling sensor ... ";
+	if (m_Sensor->start())
+		qDebug() << "... true, sensor started";
+	else
+		qDebug() << "... false, sensors not started";
+
+	debugMessage();
+
+	g_pTest->Start();
 
 	MWTS_LEAVE;
-	return ret;
+}
+
+void SensorsTest::OnFailTimeout()
+{
+	m_Sensor->stop();
+	qCritical() << "Did not received any sensor data - test fail!";
+	g_pTest->Stop();
+}
+
+void SensorsTest::OnIdle()
+{
+	qDebug() << "Waiting for user interaction...";
 }
 
 
-int SensorsTest::TestCompass()
+/* slots */
+
+void SensorsTest::onActiveChanged()
 {
-	MWTS_ENTER;
-	int ret;
-
-	m_Sensor = new QtMobility::QCompass(this);
-	ret = TestSensor();
-
-	delete m_Sensor;
-	m_Sensor = NULL;
-
-	MWTS_LEAVE;
-	return ret;
+	if (m_Sensor->isActive())
+		qDebug() << "Sensor is active";
+	else
+		qDebug() << "Sensor is not active";
 }
 
-int SensorsTest::TestMagnetometer()
+void SensorsTest::onAvailableSensorsChanged()
 {
-	MWTS_ENTER;
-	int ret;
-
-	m_Sensor = new QtMobility::QMagnetometer(this);
-	ret = TestSensor();
-
-	delete m_Sensor;
-	m_Sensor = NULL;
-
-	MWTS_LEAVE;
-	return ret;
+	qDebug() << "Available sensors changed";
 }
 
-int SensorsTest::TestOrientationSensor()
+void SensorsTest::onBusyChanged()
 {
-	MWTS_ENTER;
-	int ret;
-
-	m_Sensor = new QtMobility::QOrientationSensor(this);
-	ret = TestSensor();
-
-	delete m_Sensor;
-	m_Sensor = NULL;
-
-	MWTS_LEAVE;
-	return ret;
+	if (m_Sensor->isBusy())
+		qDebug() << "Sensor is busy";
+	else
+		qDebug() << "Sensor is not busy";
 }
 
-int SensorsTest::TestProximitySensor()
+void SensorsTest::onReadingChanged()
 {
-	MWTS_ENTER;
-	int ret;
 
-	m_Sensor = new QtMobility::QProximitySensor(this);
-	ret = TestSensor();
+	QString msg;
 
-	delete m_Sensor;
-	m_Sensor = NULL;
+	msg.append("\n+---------------------\n");
 
-	MWTS_LEAVE;
-	return ret;
-}
+	switch (currentSensorType)
+	{
+		case AccelerometerType:
+		{
+			QAccelerometer* s = dynamic_cast<QAccelerometer*>(m_Sensor);
+			QAccelerometerReading* reading = s->reading();
+			msg.append("| Received accelerometer sensor data\n");
+			msg.append("| x " + QString::number(reading->x()) + ", y " + QString::number(reading->y()) + ", z " + QString::number(reading->z()));
+			break;
+		}
+		case CompassType:
+		{
+			QCompass* s = dynamic_cast<QCompass*>(m_Sensor);
+			QCompassReading* reading = s->reading();
+			msg.append("| Received compass sensor data\n");
+			msg.append("| azimuth " + QString::number(reading->azimuth()) + ", calibration level " + QString::number(reading->calibrationLevel()));
+			break;
+		}
+		case AmbientLightSensorType:
+		{
+			QAmbientLightSensor* s = dynamic_cast<QAmbientLightSensor*>(m_Sensor);
+			QAmbientLightReading* reading = s->reading();
+			msg.append("| Received ambient light sensor data\n");
+			msg.append("| light level " + QString::number(reading->lightLevel()));
+			break;
+		}
+		case GyroscopeType:
 
-int SensorsTest::TestRotationSensor()
-{
-	MWTS_ENTER;
-	int ret;
+			break;
+		case LightSensorType:
+		{
+			QLightSensor* s = dynamic_cast<QLightSensor*>(m_Sensor);
+			QLightReading* reading = s->reading();
+			msg.append("| Received light sensor data\n");
+			msg.append("| lux " + QString::number(reading->lux()));
+			break;
+		}
+		case MagnetometerType:
+		{
+			QMagnetometer* s = dynamic_cast<QMagnetometer*>(m_Sensor);
+			QMagnetometerReading* reading = s->reading();
+			msg.append("| Received magnetometer sensor data\n");
+			msg.append("| calibration level " + QString::number(reading->calibrationLevel()) + ", x " + QString::number(reading->x()) + ", y " + QString::number(reading->y()) + ", z" + QString::number(reading->z()));
+			break;
+		}
+		case OrientationSensorType:
+		{
+			QOrientationSensor* s = dynamic_cast<QOrientationSensor*>(m_Sensor);
+			QOrientationReading* reading = s->reading();
+			msg.append("| Received orientation sensor data\n");
+			msg.append("| orientation " + QString::number(reading->orientation()));
+			break;
+		}
+		case ProximitySensorType:
+		{
+			QProximitySensor* s = dynamic_cast<QProximitySensor*>(m_Sensor);
+			QProximityReading* reading = s->reading();
+			msg.append("| Received proximity sensor data");
+			if (reading->close())
+				msg.append(", close\n");
+			else
+				msg.append(", not close\n");
+			break;
+		}
+		case RotationSensorType:
+		{
+			QRotationSensor* s = dynamic_cast<QRotationSensor*>(m_Sensor);
+			QRotationReading* reading = s->reading();
+			msg.append("| Received rotation sensor data\n");
+			msg.append("| x " + QString::number(reading->x()) + ", y " + QString::number(reading->y()) + ", z " + QString::number(reading->z()));
+			break;
+		}
+		case TapSensorType:
+		{
+			QTapSensor* s = dynamic_cast<QTapSensor*>(m_Sensor);
+			QTapReading* reading = s->reading();
+			msg.append("| Received tap sensor data\n");
+			msg.append("| tap direction " + QString::number(reading->tapDirection()));
+			if (reading->isDoubleTap())
+				msg.append(", is double tap");
+			else
+				msg.append(", is not double tap");
+			break;
+		}
+		default:
+			break;
+	}
 
-	m_Sensor = new QtMobility::QRotationSensor(this);
-	ret = TestSensor();
+	msg.append("\n+---------------------");
 
-	delete m_Sensor;
-	m_Sensor = NULL;
-
-	MWTS_LEAVE;
-	return ret;
-}
-
-int SensorsTest::TestTapSensor()
-{
-	MWTS_ENTER;
-	int ret;
-
-	m_Sensor = new QtMobility::QTapSensor(this);
-	ret = TestSensor();
-
-	delete m_Sensor;
-	m_Sensor = NULL;
-
-	MWTS_LEAVE;
-	return ret;
-}
-
-int SensorsTest::TestSensor()
-{
-	MWTS_ENTER;
-	m_is_readingChanged = false;
-
-	connect(m_Sensor,
-			SIGNAL(readingChanged ()),
-			this,
-			SLOT(readingChanged()));
-	connect(m_Sensor,
-			SIGNAL(sensorError (int)),
-			this,
-			SLOT(sensorError (int)));
-
-	m_Sensor->start();
-	qDebug("SensorsTest::OnInitialize End, all initialised to get signals and listerners started");
-	
-	// now start qt main loop
-	MWTS_DEBUG("Starting the qt-main loop");
-	Start();
-
-	// when signal is got
-    // then we continue here.
-    MWTS_DEBUG("Main loop stopped");
-
-    // check if connected to backend
-    if (!m_Sensor->isConnectedToBackend())
-    {
-        g_pResult->StepPassed("readingChanged", false);
-        qCritical() << "Sensor is not connected to a backend. A sensor that has not been connected to a backend cannot do anything useful.";
-    }
+	qDebug() << msg;
+	g_pResult->Write(msg);
 
 	m_Sensor->stop();
-	disconnect(m_Sensor,
-			SIGNAL(sensorError (int)),
-			this,
-			SLOT(sensorError (int)));
-	disconnect(m_Sensor,
-			SIGNAL(readingChanged ()),
-			this,
-			SLOT(readingChanged()));
-
-	g_pResult->StepPassed("readingChanged", m_is_readingChanged);
-	MWTS_LEAVE;
-	return 0;
+	g_pTest->Stop();
 }
 
-
-
-
-/* For Sensor callbacks */
-// This slot  is called when an error code is set on the sensor.
-// Note that some errors will cause the sensor to stop working.
-// You should call isActive() to determine if the sensor is still running.
-
-void SensorsTest::sensorError( int error )
+void SensorsTest::onSensorError(int error)
 {
-	MWTS_ENTER;
-	MWTS_DEBUG("sensorError " + QString::number(error));
+	m_Sensor->stop();
+	g_pTest->Stop();
+	qCritical() << "Sensor error has occured" << error;
+}
 
-	if (!m_Sensor->isActive () )
+void SensorsTest::debugMessage()
+{
+
+	qDebug() << "+--------------------------------";
+
+	qDebug() << "|Sensor type" << m_Sensor->type();
+
+	if (m_Sensor->isConnectedToBackend())
 	{
-		qCritical() << "Sensor not active, serious error";
-		Stop();
+		qDebug() << "|Sensor is connected to backend";
 	}
 	else
 	{
-		MWTS_DEBUG("Sensor still active, still waiting values from sensor");
+		qDebug() << "|Sensor is not connected to backend";
+		qDebug() << "|trying to connect to backend...";
+		if (m_Sensor->connectToBackend())
+			qDebug() << "...true";
+		else
+			qDebug() << "|...false";
 	}
 
-	MWTS_LEAVE;
+	if (m_Sensor->isActive())
+		qDebug() << "|Sensor is active";
+	else
+		qDebug() << "|Sensor is not active";
+
+	if (m_Sensor->isBusy())
+		qDebug() << "|Sensor is busy";
+	else
+		qDebug() << "|Sensor is not busy";
+
+	qDebug() << "|error code " << m_Sensor->error();
+
+	qDebug() << "+--------------------------------";
+
+
 }
 
-// This slot is emitted when the reading has changed.
-
-void SensorsTest::readingChanged()
+void SensorsTest::checkBackendAvailability()
 {
-	MWTS_ENTER;
-	MWTS_DEBUG("Sensor Changed");
+	bool available = false;
 
-	QtMobility::QSensorReading* accelerometerReading = m_Sensor->reading ();
-	MWTS_DEBUG("Accelerometer has " + QString::number(accelerometerReading->valueCount ()) + " values");
-
-    int i;
-	for ( i=0; i < accelerometerReading->valueCount (); i++ )
+	qDebug() << "Default sensors types are:";
+	QList<QByteArray> list = QSensor::sensorTypes();
+	qDebug() << "Sensor list:";
+	foreach (QByteArray a, list)
 	{
-	    g_pResult->AddMeasure( "Value " + QString::number(i), accelerometerReading->value(i).toDouble(), "Real" );
+		qDebug() << a;
+		if (a == QString(m_Sensor->type()))
+			available = true;
 	}
-	m_is_readingChanged = true;
-	Stop();
 
-	MWTS_LEAVE;
+	if (available)
+		qDebug() << "There is default backend for type " << m_Sensor->type();
+	else
+		qCritical() << "Default backend for type " << m_Sensor->type() << "does not exists";
 }

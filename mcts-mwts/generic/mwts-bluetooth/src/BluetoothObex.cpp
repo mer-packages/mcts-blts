@@ -301,7 +301,7 @@ QDBusInterface* BluetoothObex::CreateInterface(const QString& service, const QSt
     qDebug() << "with path:"<< path;
     pret = new QDBusInterface(service,path,type,QDBusConnection::sessionBus());
     qDebug() << "Has a dbus Interface == " << pret->isValid() << " of type " << type;
-    if(!pret->isValid()) qCritical() << "No dbus Interface "<< type << " availlable";
+    if(!pret->isValid()) qDebug() << "Interface "<< type << " validity couldn't be confirmed.";
 
     MWTS_LEAVE;
     return pret;

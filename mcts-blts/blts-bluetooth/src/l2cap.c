@@ -47,7 +47,7 @@
 static int l2cap_set_test_sockopt(int sock)
 {
 	struct l2cap_options s_opt;
-	size_t len = sizeof(s_opt);
+	socklen_t len = sizeof(s_opt);
 
 	if(getsockopt(sock, SOL_L2CAP, L2CAP_OPTIONS, &s_opt, &len) < 0)
 	{

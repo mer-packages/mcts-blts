@@ -1,6 +1,6 @@
 TARGET = min-mwts-common
 TEMPLATE = lib
-VERSION = 0.0.1
+VERSION = 1.2.1
 
 CONFIG += dll
 QT += network dbus

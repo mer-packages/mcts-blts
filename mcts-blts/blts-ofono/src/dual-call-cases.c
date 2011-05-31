@@ -76,6 +76,8 @@ static gboolean pending_call_queue_answerable_check(gpointer data);
 
 static gboolean pending_call_state_check(gpointer data);
 static void pending_call_state_check_complete(DBusGProxy *proxy, GHashTable *properties, GError *error, gpointer data);
+static void pending_second_call_state_check_complete(DBusGProxy *proxy,GHashTable *properties, GError *error, gpointer data);
+static gboolean pending_second_call_queue_swappable_check(gpointer data);
 
 static int check_call_count(struct dual_call_case_state *state, int expected_count);
 
@@ -552,11 +554,62 @@ gboolean do_swap(gpointer user_ptr)
 	struct dual_call_case_state *state = (struct dual_call_case_state *) user_ptr;
 
 	BLTS_DEBUG("-- Swap calls--\n");
-
-	org_ofono_VoiceCallManager_swap_calls_async (state->voice_call_manager, swap_complete, state);
-
+	/* Check the call status to be active before swapping*/
+        state->retries = 5;
+        org_ofono_VoiceCall_get_properties_async(state->voice_calls[SECOND_CALL],
+        pending_second_call_state_check_complete, state);
 	return FALSE;
 }
+
+/* Timer callback for retrying checks for call swap */
+static gboolean pending_second_call_queue_swappable_check(gpointer data)
+{
+        struct dual_call_case_state *state;
+
+        g_assert(data);
+        state = (struct dual_call_case_state *) data;
+
+        org_ofono_VoiceCall_get_properties_async(state->voice_calls[SECOND_CALL],
+                pending_second_call_state_check_complete, data);
+
+        return FALSE;
+}
+
+/* Check that second call is really in active state */
+static void pending_second_call_state_check_complete(__attribute__((unused)) DBusGProxy *proxy,
+        GHashTable *properties, GError *error, gpointer data)
+{
+        struct dual_call_case_state *state;
+
+        g_assert(data);
+        state = (struct dual_call_case_state *) data;
+
+        if (error) {
+                display_dbus_glib_error(error);
+                g_error_free(error);
+                goto test_fail;
+        }
+
+        if (g_hash_table_find(properties, (GHRFunc) check_state, "active"))
+        {
+        	BLTS_DEBUG("-- Swap calls--\n");
+        	org_ofono_VoiceCallManager_swap_calls_async (state->voice_call_manager, swap_complete, state);
+
+        }
+        else if (state->retries)
+	{
+        	state->retries--;
+        	g_timeout_add(500, pending_second_call_queue_swappable_check, state);
+        } 
+	else
+        	goto test_fail;
+
+        return;
+
+test_fail:
+        state->result = -1;
+        g_main_loop_quit(state->mainloop);
+ }
 
 /*
  * Put the current call on hold and answers the currently waiting call

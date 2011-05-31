@@ -34,124 +34,124 @@ QTM_USE_NAMESPACE;
  */
 class MessagingTest : public MwtsTest
 {
-        Q_OBJECT
+	Q_OBJECT
 
-        public: // Functions
+	public: // Functions
 
-                /**
-                 * Constructor for Messaging test class
-                 */
-                MessagingTest();
+		/**
+		 * Constructor for Messaging test class
+		 */
+		MessagingTest();
 
-                /**
-                 * Destructor for Messaging test class
-                 */
-                virtual ~MessagingTest();
+		/**
+		 * Destructor for Messaging test class
+		 */
+		virtual ~MessagingTest();
 
-                /**
-                 * Overridden functions for MwtsTest class
-                 * OnInitialize is called before test execution
-                 */
-                void OnInitialize();
+		/**
+		 * Overridden functions for MwtsTest class
+		 * OnInitialize is called before test execution
+		 */
+		void OnInitialize();
 
-                /**
-                 * Overridden functions for MwtsTest class
-                 * OnUninitialize is called after test execution
-                 */
-                void OnUninitialize();
+		/**
+		 * Overridden functions for MwtsTest class
+		 * OnUninitialize is called after test execution
+		 */
+		void OnUninitialize();
 
-                void TestSendingIM();
+		void TestSendingIM();
 
-                /**
-                 * Sets currently used message type
-                 */
-                void SetMessageType( QMessage::Type type );
+		/**
+		 * Sets currently used message type
+		 */
+		void SetMessageType( QMessage::Type type );
 
-                /**
-                 * Write latencies to report
-                 */
-                void ReportLatencies();
+		/**
+		 * Write latencies to report
+		 */
+		void ReportLatencies();
 
-                /**
-                 * Queries all accounts available for Qt Mobility Messaging
-                 */
-                void QueryAllAccounts();
+		/**
+		 * Queries all accounts available for Qt Mobility Messaging
+		 */
+		void QueryAllAccounts();
 
-                /**
-                 * Prints preferred charsets for messages
-                 */
-                void PreferredCharsets();
+		/**
+		 * Prints preferred charsets for messages
+		 */
+		void PreferredCharsets();
 
-                /**
-                 * Send SMS to self number
-                 */
-                void SendSMS( const QString& message );
+		/**
+		 * Send SMS to self number
+		 */
+		void SendSMS( const QString& message );
 
-                /**
-                 * Send SMS to self number with given encoding
-                 */
-                void SendSMS( const QString& message, const QString& encoding );
+		/**
+		 * Send SMS to self number with given encoding
+		 */
+		void SendSMS( const QString& message, const QString& encoding );
 
-                /**
-                 * Send SMS to self number with given MIB of a known encoding
-                 */
-                void SendSMS( const QString& message, int mib );
+		/**
+		 * Send SMS to self number with given MIB of a known encoding
+		 */
+		void SendSMS( const QString& message, int mib );
 
-                /**
-                 * Send E-Mail message
-                 */
-                void SendEmail( const QString& subject, const QString& message );
+		/**
+		 * Send E-Mail message
+		 */
+		void SendEmail( const QString& subject, const QString& message );
 
-                /**
-                 * Waits for incoming message
-                 */
-                void WaitForIncomingMessage();
+		/**
+		 * Waits for incoming message
+		 */
+		void WaitForIncomingMessage();
 
-        private slots: // Slots
+	private slots: // Slots
 
-                // From QMessageManager
-                void onMessageAdded( const QMessageId& id,
-                                const QMessageManager::NotificationFilterIdSet& matchingFilterIds );
-                void onMessageRemoved( const QMessageId& id,
-                                const QMessageManager::NotificationFilterIdSet& matchingFilterIds );
-                void onMessageUpdated( const QMessageId& id,
-                                const QMessageManager::NotificationFilterIdSet& matchingFilterIds );
+		// From QMessageManager
+		void onMessageAdded( const QMessageId& id,
+				const QMessageManager::NotificationFilterIdSet& matchingFilterIds );
+		void onMessageRemoved( const QMessageId& id,
+				const QMessageManager::NotificationFilterIdSet& matchingFilterIds );
+		void onMessageUpdated( const QMessageId& id,
+				const QMessageManager::NotificationFilterIdSet& matchingFilterIds );
 
-                // From QMessageService
-                void onMessagesCounted( int count );
-                void onMessagesFound( const QMessageIdList& ids );
-                void onProgressChanged( uint value, uint total );
-                void onStateChanged( QMessageService::State newState );
+		// From QMessageService
+		void onMessagesCounted( int count );
+		void onMessagesFound( const QMessageIdList& ids );
+		void onProgressChanged( uint value, uint total );
+		void onStateChanged( QMessageService::State newState );
 
-                void verifyMessage();
+		void verifyMessage();
 
-        private: // Functions
+	private: // Functions
 
-                bool sendMessage( QMessage& message );
+		bool sendMessage( QMessage& message );
 
 
-        private: // Data
+	private: // Data
 
-                QMessageService*						mMsgService;
-                QMessageManager*						mMsgManager;
+		QMessageService*						mMsgService;
+		QMessageManager*						mMsgManager;
 
-                QString									mSelfNumber;
-                QString									mEmailMaster;
-                QString									mEmailSlave;
-                QString									mMsgBody;
+		QString									mSelfNumber;
+		QString									mEmailMasterName;
+		QString									mEmailSlaveAddress;
+		QString									mMsgBody;
 
-                bool									mRetValue;
+		bool									mRetValue;
 
-                QMessageManager::NotificationFilterId	mFilterId;
+		QMessageManager::NotificationFilterId	mFilterId;
 
-                QTime									mSendTime;
-                QTime									mReceiveTime;
-                int										mSendLatency;
-                int										mReceiveLatency;
+		QTime									mSendTime;
+		QTime									mReceiveTime;
+		int										mSendLatency;
+		int										mReceiveLatency;
 
-                QMessageId								mReceivedMessage;
+		QMessageId								mReceivedMessage;
 
-                QEventLoop								mEventLoop;
+		QEventLoop								mEventLoop;
 };
 
 #endif // _INCLUDED_MESSAGING_TEST_H

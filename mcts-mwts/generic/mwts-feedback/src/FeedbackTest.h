@@ -27,6 +27,7 @@
 
 #include <MwtsCommon>
 #include <QFeedbackHapticsEffect>
+#include <QFeedbackActuator>
 
 QTM_USE_NAMESPACE;
 
@@ -63,7 +64,6 @@ class FeedbackTest : public MwtsTest {
                  */
                 void OnUninitialize();
 
-
                 /**
                  * Starts the effect
                  * Switching state of effect to QFeedbackEffect::Running (2)
@@ -83,17 +83,6 @@ class FeedbackTest : public MwtsTest {
                 void StopEffect();
 
                 /**
-                 * @returns state of effect (State in emum defined in QFeedbackEffect)
-                 */
-                QFeedbackEffect::State EffectState() const;
-
-                /**
-                 * @returns true if any error lately occurs, otherwise false
-                 */
-                bool ErrorIndicator() const;
-
-
-                /**
                  *  Sets duration of object pointed by mEffect
                  *  @param miliseconds duration time
                  */
@@ -105,11 +94,7 @@ class FeedbackTest : public MwtsTest {
                  */
                 void SetIntensity(qreal intensity);
 
-                /**
-                 *  Gets tested effect
-                 *  @returns pointer to tested effect
-                 */
-                QFeedbackHapticsEffect* Effect() const;
+
 
                 /**
                  *  Sets attack duration of object pointed by mEffect
@@ -135,21 +120,20 @@ class FeedbackTest : public MwtsTest {
                  */
                 void SetFadeIntensity(qreal intensity);
 
+				void debugMessage() const;
 
+				void OnFailTimeout();
 
-                //methods to implement - some ideas, what to test
-                //
 
         private slots:
-                void onErrorOccurs(QFeedbackEffect::ErrorType error);
+				void onError(QFeedbackEffect::ErrorType error);
                 void onStateChanged();
 
 
         private:
-                QFeedbackHapticsEffect* mEffect;
+				QFeedbackHapticsEffect* effect;
 
-                bool mErrorIndicator; //true if error has occured
-
+				void PrintAvailableActuator() const;
 
 
 };

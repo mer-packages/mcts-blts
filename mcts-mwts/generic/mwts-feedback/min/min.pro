@@ -29,6 +29,5 @@ INSTALLS += target
 OTHER_FILES += \
     ../scripts/mwts-feedback.cfg \
     ../scripts/mwts-feedback.min.conf \
-    ../scripts/mwts-feedback-nft.cfg \
     ../scripts/tests.xml
 

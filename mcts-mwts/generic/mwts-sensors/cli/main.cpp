@@ -33,8 +33,10 @@ int main( int argc, char** argv )
 	qDebug("test->Initialize()");
     test->Initialize();
 
-    qDebug("test->TestAccelerometer()");
-    test->TestAccelerometer();
+	test->InitSensor(SensorsTest::TapSensorType);
+	test->StartSensor();
+
+	test->Uninitialize();
 
 	qDebug("delete test");
     delete test;

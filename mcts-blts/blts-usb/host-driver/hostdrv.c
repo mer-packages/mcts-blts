@@ -693,8 +693,8 @@ static int usb_buffer_setup_dma_safe(struct hostdrv_buffer *buf)
 		return -ENOMEM;
 	}
 
-	BHDEBUG("Allocated %u B + %u B USB DMA buffers\n",
-		USB_IOBUF_DMA_SIZE, sizeof(*buf->cr));
+	BHDEBUG("Allocated %u B + %lu B USB DMA buffers\n",
+		USB_IOBUF_DMA_SIZE, (unsigned long) sizeof(*buf->cr));
 	return 0;
 }
 
@@ -714,8 +714,8 @@ static int usb_buffer_setup_urb(struct hostdrv_buffer *buf)
 
 	buf->current_urb = usb_alloc_urb(packets, GFP_ATOMIC);
 
-	BHDEBUG("URB size = %u B\n", sizeof(struct urb)
-		+ packets * sizeof(struct usb_iso_packet_descriptor));
+	BHDEBUG("URB size = %lu B\n", (unsigned long)(sizeof(struct urb)
+			+ packets * sizeof(struct usb_iso_packet_descriptor)));
 	if (!buf->current_urb)
 		return -ENOMEM;
 	return 0;

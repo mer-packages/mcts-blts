@@ -1,3 +1,6 @@
+* Wed 27 Apr 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.21
+- [ Arun Ravindran ] Check call status before swapping
+
 * Thu 14 Apr 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.20
 - [ Mikko Ojala ] Test for Call Waiting setting added
 - [ Mikko Ojala ] Memory leak in data context case fixed

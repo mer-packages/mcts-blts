@@ -10,7 +10,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-VoIP-Create_GTalk_call-MS'</step>
       </case>
@@ -22,7 +22,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      Answering successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-VoIP-Answer_GTalk_call-MS'</step>
       </case>
@@ -34,7 +34,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      Answering successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-IM-Send_IM_using_GTalk-MS'</step>
       </case>
@@ -46,7 +46,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'SMOKE-VoIP-GTalk_Create_Call'</step>
       </case>
@@ -58,7 +58,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'SMOKE-VoIP-GTalk_Answer_Call'</step>
       </case>
@@ -70,7 +70,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'SMOKE-IM-Send_IM_using_GTalk'</step>
       </case>
@@ -82,7 +82,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'SMOKE-IM-Receive_IM_using_GTalk'</step>
       </case>
@@ -94,7 +94,7 @@
 	      Pre- /Post-conditions
 	      Skype account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-Create_VoIP_Account_Using_SKYPE'</step>
       </case>
@@ -106,7 +106,7 @@
 	      Pre- /Post-conditions
 	      Skype account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-Create_VoIP_Call_Using_SKYPE'</step>
       </case>
@@ -118,7 +118,7 @@
 	      Pre- /Post-conditions
 	      Skype account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-VoIP-Create_SKYPE_call-MS'</step>
       </case>
@@ -130,7 +130,7 @@
 	      Pre- /Post-conditions
 	      Skype account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-VoIP-Answer_SKYPE_call-MS'</step>
       </case>
@@ -142,7 +142,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-Create_VoIP_Account_Using_SIP'</step>
       </case>
@@ -154,19 +154,19 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-Create_VoIP_Call_Using_SIP'</step>
       </case>
       <case name="FUTE-VoIP-Create_SIP_call-MS" subfeature="SIP" timeout="360" description=
 	      "Purpose
-	      Test creating Master/Slave VoIP call using SIP.
+	      Test creating a VoIP call using SIP.
 	      Method
 	      Open SIP account, request media channel and open audio stream. No measurements. 
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-VoIP-Create_SIP_call-MS'</step>
       </case>
@@ -178,7 +178,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-VoIP-Answer_SIP_call-MS'</step>
       </case>
@@ -190,7 +190,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-IM-Send_IM_using_SIP-MS'</step>
       </case>
@@ -202,9 +202,33 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'FUTE-IM-Receive_IM_using_SIP-MS'</step>
+      </case>
+      <case name="FUTE-Create_VoIP_Call_Using_SIP_with_DTMF" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating a VoIP call using SIP and sending DMTF tones.
+	      Method
+	      Open SIP account, request media channel and open audio stream. Send DTMF tones. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successful. Testcase does not crash.
+	      ">
+        <step>min -c -t 'FUTE-Create_VoIP_Call_Using_SIP_with_DTMF'</step>
+      </case>
+      <case name="FUTE-VoIP-Create_SIP_call_with_DTMF-MS" subfeature="SIP" timeout="360" description=
+	      "Purpose
+	      Test creating a VoIP call using SIP and sending DMTF tones. Master/slave setup.
+	      Method
+	      Open SIP account, request media channel and open audio stream. Send DTMF tones. No measurements. 
+	      Pre- /Post-conditions
+	      SIP account configured. DUT capable to connect to internet.
+	      Pass- /Fail Criteria
+	      Calling successful. Testcase does not crash.
+	      ">
+        <step>min -c -t 'FUTE-VoIP-Create_SIP_call_with_DTMF-MS'</step>
       </case>
     </set>
     <set name="VoIP-LATE" description="VoIP latency test cases" feature="VoIP" type="Latency">
@@ -216,9 +240,9 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
-      	<step>min -c -t 'NFT-VoIP-Latency_for_creating_GTalk_call-MS-LATE'</step>
+        <step>min -c -t 'NFT-VoIP-Latency_for_creating_GTalk_call-MS-LATE'</step>
       </case>
       <case name="NFT-VoIP-Latency_for_answering_GTalk_call-MS-LATE" subfeature="GTalk" timeout="360" description=
 	      "Purpose
@@ -228,7 +252,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      Answering successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Latency_for_answering_GTalk_call-MS-LATE'</step>
       </case>
@@ -240,7 +264,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answering successfull successfull on all iterations. Testcase does not crash. 
+	      Answering successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-IM-Send_IM_message_using_GTalk-MS-LATE'</step>
       </case>
@@ -252,7 +276,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Call creation successfull. Testcase does not crash. 
+	      Call creation successful. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Latency_for_creating_SIP_call-MS-LATE'</step>
       </case>
@@ -264,7 +288,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answering successfull. Testcase does not crash. 
+	      Answering successful. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Latency_for_answering_SIP_call-MS-LATE'</step>
       </case>
@@ -276,7 +300,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Message sending successfull. Testcase does not crash. 
+	      Message sending successful. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-IM-Send_IM_message_using_SIP-MS-LATE'</step>
       </case>
@@ -290,7 +314,7 @@
 	      Pre- /Post-conditions
 	      Gtalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answer successfull on all iterations. Testcase does not crash. 
+	      Answer successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Answer_GTalk_call-ITER-MS'</step>
       </case>
@@ -302,7 +326,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Create_GTalk_call-ITER-MS'</step>
       </case>
@@ -314,7 +338,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Sending successfull on all iterations. Testcase does not crash. 
+	      Sending successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-IM-Send_IM_message_using_GTalk-ITER-MS'</step>
       </case>
@@ -326,7 +350,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull on all iterations. Testcase does not crash. 
+	      Calling successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Create_SIP_call-ITER-MS'</step>
       </case>
@@ -338,7 +362,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Answering successfull on all iterations. Testcase does not crash. 
+	      Answering successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Answer_SIP_call-ITER-MS'</step>
       </case>
@@ -350,12 +374,12 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Sending successfull on all iterations. Testcase does not crash. 
+	      Sending successful on all iterations. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-IM-Send_IM_using_SIP-ITER-MS'</step>
       </case>
     </set>
-    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Long-lasting">
+    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Long lasting">
       <case name="NFT-VoIP-Create_GTalk_call-LOLA-MS" subfeature="GTalk" timeout="360" description=
 	      "Purpose
 	      Test creating long lasting VoIP call.
@@ -364,7 +388,7 @@
 	      Pre- /Post-conditions
 	      GTalk account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull. Testcase does not crash. 
+	      Calling successful. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Create_GTalk_call-LOLA-MS'</step>
       </case>
@@ -376,7 +400,7 @@
 	      Pre- /Post-conditions
 	      SIP account configured. DUT capable to connect to internet.
 	      Pass- /Fail Criteria
-	      Calling successfull. Testcase does not crash. 
+	      Calling successful. Testcase does not crash.
 	      ">
       	<step>min -c -t 'NFT-VoIP-Create_SIP_call-LOLA-MS'</step>
       </case>

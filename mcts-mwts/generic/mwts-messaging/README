@@ -34,16 +34,16 @@ ENVIRONMENT REQUIREMENTS
   execute test cases. Most of the environment setups are 
   explained in the MWTS.README.
   
-  Add here package specific instructions if needed. 
+  You must set valid e-mail account configured in DUT for using e-mail cases.
 
+  In the assets configuration file, email-master-account-name is used as sending account name.
+  Configuration option email-slave-account-address is used as e-mail target.
 
 EXECUTING TESTS
 
   For local test cases you need to connect to device using ssh connection and
   start MIN tool using command 'min'.
 
-  Add here package specific instructions if needed. 
-  
 
 TEST RESULTS
 
@@ -66,18 +66,21 @@ MIN SCRIPT FILES
 
 MIN SCRIPTER INTERFACE
 
-  messagingTestFunc 
-     example MIN function, no parameters
-  FuncWithParam OPT|ANOTHER|OTHER
-     example function with selectable parameter
-  FuncWithValues <number>
-     example function that sets value to number.  
+  QueryAllAccounts
+     Queries all accounts available for Qt Mobility Messaging
+  PreferredCharsets
+      Prints preferred charsets for messages
+  SendSMS
+     Send SMS to self number.
+  WaitForIncomingMessage
+  ReportLatencies
+  SetMessageType
+  SendEmail
+  TestSendingIM
+
 
 
 KNOWN ISSUES
-
-  List here is there is known problems with the test asset.
-
 
 ADDITIONAL RESOURCES
 

@@ -35,13 +35,14 @@ blts_usb_host-objs := hostdrv.o ../driver-common/sysfs_log.o
 
 module: hostdrv.c
 	@[ -d $(KERNELDIR) ] || ( echo "Kernel module build environment not found" ; exit 1 )
-	@echo "++  Checking kernel module"
-	-$(CHECKPATCH) --no-tree --emacs --file hostdrv.c ../driver-common/sysfs_log.c
 	@echo "++  Building kernel module"
-	$(MAKE) -C $(KERNELDIR) M=`pwd` modules
+	$(MAKE) W=1 -C $(KERNELDIR) M=`pwd` modules
 
 module-sparse: hostdrv.c
 	$(MAKE) -C $(KERNELDIR) C=2 M=`pwd` modules
+
+module-checkpatch: hostdrv.c
+	$(CHECKPATCH) --no-tree --emacs --file hostdrv.c ../driver-common/sysfs_log.c
 
 test_hostdrv: test_hostdrv.c
 	$(CC) -o test_hostdrv $(USER_CFLAGS) test_hostdrv.c $(USER_LIBS)

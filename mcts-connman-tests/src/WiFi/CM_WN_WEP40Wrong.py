@@ -29,5 +29,5 @@ sys.path.append(dir)
 from common import *
 
 manager.Apset('1111000000', 'wep64', 1, 0, 1)
-EXIT(not manager.ConnectAP('1111100000', 'wep64', 1, 0, 1))
+EXIT(not manager.ConnectAP(cm_apset_ap_essid, '1111100000', 'wep64', 1, 0, 1))
 

@@ -34,10 +34,11 @@ blts_gadget-objs := gadgetdrv.o ep_config.o usbstring.o composite.o epautoconf.o
 
 module: gadgetdrv.c
 	@[ -d $(KERNELDIR) ] || ( echo "Kernel module build environment not found" ; exit 1 )
-	@echo "++  Checking kernel module"
-	-$(CHECKPATCH) --no-tree --emacs -f gadgetdrv.c ep_config.c composite.c ../driver-common/sysfs_log.c test_gadgetdrv.c
-	@echo "++  Building kernel module"
 	$(MAKE) -C $(KERNELDIR) M=`pwd` modules
+
+module-checkpatch: gadgetdrv.c
+	-$(CHECKPATCH) --no-tree --emacs -f gadgetdrv.c ep_config.c composite.c ../driver-common/sysfs_log.c test_gadgetdrv.c
+
 
 test_gadgetdrv: test_gadgetdrv.c
 	$(CC) -o test_gadgetdrv $(USER_CFLAGS) test_gadgetdrv.c $(USER_LIBS)

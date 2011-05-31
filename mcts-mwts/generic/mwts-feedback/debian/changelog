@@ -1,3 +1,12 @@
+mwts-feedback (0.0.3) unstable; urgency=low
+  * Added actuator checkout
+ -- Jan Grela <jan.grela@digia.com>  Mon, 25 May 2011 11:01:00 +0200
+
+mwts-feedback (0.0.2) unstable; urgency=low
+  * Fixes: MB#17514 - README file updated
+  * Changed haptics effect functionality
+ -- Jan Grela <jan.grela@digia.com>  Mon, 16 May 2011 14:32:00 +0200
+
 mwts-feedback (0.0.1) unstable; urgency=low
   * Initial version
  -- Jan Grela <jan.grela@digia.com>  Fri, 19 Nov 2010 13:50:00 +0200

@@ -78,7 +78,16 @@ GENERAL STEPS
 
 EXECUTING TESTS
 
-  MWTS-telepathy tests are executed normally. Check the MWTS.README.
+  Depending on the current state of the platform some extra settings
+  may be required to get the execution working.
+  If you have problems, try:
+  - on DUT console start screen in detached mode with 'screen -dm'
+  - from PC side connect to the DUT with ssh and resume screen session
+    with 'screen -r'.
+  - create ring account: 'mc-tool add ring/tel ring'
+  - launch dbus: 'dbus-launch --auto-syntax'
+
+  Check the MWTS.README for more information.
   
   
 TEST RESULTS

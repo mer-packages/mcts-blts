@@ -1,7 +1,11 @@
+mwts-location (0.0.8) unstable; urgency=low
+  * Fixes MB#14885 - Fixed test.xml again to match the script files
+ -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Mon, 16 May 2011 10:08:00 +0300
+
 mwts-location (0.0.7) unstable; urgency=low
-  * Removed a duplicate test case from script file
-  * Fixed test.xml to match the script files
-  * Added support for specifying a range in which the location coordinates must be
+  * Fixes MB#14885 - Removed a duplicate test case from script file
+  * Fixes MB#14885 - Fixed test.xml to match the script files
+  * Fixes MB#12668 - Added support for specifying a range in which the location coordinates must be
  -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Thu, 7 Apr 2011 10:08:00 +0300
 
 mwts-location (0.0.6) unstable; urgency=low

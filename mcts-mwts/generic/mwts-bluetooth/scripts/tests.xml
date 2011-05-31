@@ -556,7 +556,7 @@
       </case>
   </set>
 <!--This set contains LONG-LASTING test cases from mwts-bluetooth-nft.cfg-->
-    <set name="Long_Lasting_Tests" description="Long-Lasting test cases for Bluetooth" feature="BT" type="Long-lasting">
+    <set name="Long_Lasting_Tests" description="Long-Lasting test cases for Bluetooth" feature="BT" type="Long lasting">
       <case name="NFT-BT-L2CAP_Send_2h-LOLA-MS" subfeature="Send" timeout="7800" description=
             "Purpose
             Test basic Bluetooth L2CAP Send side long-lasting reliability, master-slave

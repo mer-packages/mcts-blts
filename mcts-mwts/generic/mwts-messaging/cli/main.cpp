@@ -20,12 +20,30 @@
 #include "stable.h"
 #include "MessagingTest.h"
 
-int main( int argc, char** argv )
+int main( int argc, char* argv[] )
 {
 	MessagingTest test;
 
 	test.Initialize();
-	test.QueryAllAccounts();
+
+	if ( argc < 2 )
+	{
+		test.QueryAllAccounts();
+	}
+	else
+	{
+		if ( QString::compare( argv[ 1 ], "send_email" ) == 0 )
+		{
+			if ( argc < 4 )
+			{
+				qCritical() << "Usage: mwts-messaging-cli send_email <subect> <body>";
+				test.Uninitialize();
+				return 1;
+			}
+			test.SetMessageType( QMessage::Email );
+			test.SendEmail( argv[ 2 ], argv[ 3 ] );
+		}
+	}
 	test.Uninitialize();
 
 	return 0;

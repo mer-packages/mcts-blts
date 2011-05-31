@@ -1,10 +1,16 @@
+* Wed 18 May 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.2.2
+- Fixed log writing to be thread safe
+
+* Fri 13 May 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.1
+- Added memory and cpu usage format support to qa-reports
+
 * Mon 28 Mar 2011 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 1.2.0
 - Added series measurement feature
 - Support common configuration file MwtsGlobal.conf
 - Support reading NFT limit files
 - Support reporting NFT limits to OTS
 
-* Tue 15 Feb 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.0.6
+* Tue 15 Mar 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.0.6
 - Fixed the handling of direction parameter in StartClientThroughput function
 
 * Thu 10 Mar 2011 Reijo Korhonenn <reijo.korhonen@digia.com> - 1.0.5
@@ -24,4 +30,3 @@
 
 * Mon 20 Sep 2010 Tuomo Pelkonen <tuomo.pelkonen@digia.com> - 1.0.0
 - Initial version
-

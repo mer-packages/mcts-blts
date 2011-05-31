@@ -1,3 +1,6 @@
+* Mon 02 May 2011 Jan Grela <jan.grela@digia.com> - 1.0.1
+- Fixes: NB#12008 - script for NFT-FUTE-SystemInfo_BatteryPower-ITER fixed
+
 * Mon 29 Oct 2010 Reijo Korhonen <reijo.korhonen@digia.com> - 1.0.0
 - Initial open source version
 

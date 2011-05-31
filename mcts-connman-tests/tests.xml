@@ -170,37 +170,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Disconnect.py</step>
 </case>
 
-<case name="CM_BT_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the BT device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;bnep&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IfconfigDown.py</step>
-</case>
-
-<case name="CM_BT_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;bnep&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;bnep&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IfconfigUp.py</step>
-</case>
-
 <case name="CM_BT_IsPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device is on by default</p>
@@ -283,43 +252,6 @@ Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_SmallPing.py</step>
 </case>
-<case name="CM_BT_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test bluetooth upload.</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_BT_Upload.py<br />
-This commands basically do:<br />
-+ Connect To the AP<br />
-+ Upload/Download file to/from peer machine through the AP</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+ An AP, a peer machine that connect to the same network<br />
-+ Need to pair to the AP as normal BT cases<br />
-+ Configure common/config.py to change&nbsp;method to transfer data file (cm_bt_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Upload.py</step>
-</case>
-
-<case name="CM_BT_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test Bluetooth download</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_BT_Download.py<br />
-This commands basically do:<br />
-+ Connect To the AP<br />
-+ Upload/Download file to/from peer machine through the AP</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+ An AP, a peer machine that connect to the same network<br />
-+ Configure common/config.py to change&nbsp;method to transfer data file (cm_bt_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Download.py</step>
-</case>
-
 </set>
 <set name="3G" description="&lt;p&gt;Test suites for 3G device.&lt;/p&gt;
 &lt;p&gt;We use China Unicom service, if you use other service, the script might need some changes.&lt;/p&gt;">
@@ -491,22 +423,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_Disconnect.py</step>
 </case>
 
-<case name="CM_3G_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="3G" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the 3G device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;wwan&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_IfconfigDown.py</step>
-</case>
-
 <case name="CM_3G_Item_Configuring" manual="true" timeout="90" type="Functional" subfeature="3G" insignificant="false">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
@@ -521,21 +437,6 @@ Run Instructions:<br />
 <br />
 During 3G network is connecting, there is &quot;configuraton&quot; state</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
-</case>
-
-<case name="CM_3G_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="3G" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;wwan&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;wwan&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_3G_IfconfigUp.py</step>
 </case>
 
 <case name="CM_3G_Item_Disconnect" manual="true" timeout="90" type="Functional" subfeature="3G" insignificant="false">
@@ -1018,7 +919,7 @@ Password = whatever</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional):</p>]]></description>
 </case>
-<case name="CM_WS_EAP_TTLS_MSCHAPV2" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_MSCHAPV2" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MSCHAPV2</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1047,7 +948,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAPV2.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_MSCHAP" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_MSCHAP" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MSCHAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1076,7 +977,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MSCHAP.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_CHAP" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_CHAP" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS CHAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1105,7 +1006,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_CHAP.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_MD5" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_MD5" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS MD5</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1134,7 +1035,7 @@ Password = whatever</p>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_EAP_TLS_MD5.py</step>
 </case>
 
-<case name="CM_WS_EAP_TTLS_PAP" manual="false" timeout="90" type="Functional" level="Feature">
+<case name="CM_WS_EAP_TTLS_PAP" manual="true" timeout="90" type="Functional" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): Test EAP TTLS PAP</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -1717,37 +1618,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_Disconnect.py</step>
 </case>
 
-<case name="CM_WG_IfconfigDown" manual="false" timeout="180" type="Functional" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the WiFi device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;eth&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_IfconfigDown.py</step>
-</case>
-
-<case name="CM_WG_IfconfigUp" manual="false" timeout="180" type="Functional" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;wlan&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;wlan&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_IfconfigUp.py</step>
-</case>
-
 <case name="CM_WG_IsPoweredOn" manual="false" timeout="180" type="Functional" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if WiFi device is on by default</p>
@@ -1829,85 +1699,6 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WG_SmallBroadcastPing.py</step>
-</case>
-<case name="CM_WS_WEP_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi upload with wep64 key. It can also be used as test cases for features shared/hidden</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_WEP_Upload.py<br />
-This commands basically do:<br />
-+ Connect To the AP<br />
-+ Upload/Download file to/from peer machine through the AP</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+ An AP, a peer machine that connect to the same network<br />
-+ Configure common/config.py to change<br />
-&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
-&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_WEP_Upload.py</step>
-</case>
-
-<case name="CM_WS_RSN_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi upload with wpa rsn. It can also be used as test cases for features open/broadcast</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_RSN_Upload.py<br />
-This commands basically do:<br />
-+ Connect To the AP<br />
-+ Upload/Download file to/from peer machine through the AP</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+ An AP, a peer machine that connect to the same network<br />
-+ Configure common/config.py to change<br />
-&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
-&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_RSN_Upload.py</step>
-</case>
-
-<case name="CM_WS_WEP_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi download with wep64 key. It can also be used as test cases for features shared/hidden</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_WEP_Download.py<br />
-This commands basically do:<br />
-+ Connect To the AP<br />
-+ Upload/Download file to/from peer machine through the AP</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+ An AP, a peer machine that connect to the same network<br />
-+ Configure common/config.py to change<br />
-&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
-&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_WEP_Download.py</step>
-</case>
-
-<case name="CM_WS_RSN_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test WiFi download with wpa rsn. It can also be used as test cases for features open/broadcast</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_RSN_Download.py<br />
-This commands basically do:<br />
-+ Connect To the AP<br />
-+ Upload/Download file to/from peer machine through the AP</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+ An AP, a peer machine that connect to the same network<br />
-+ Configure common/config.py to change<br />
-&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
-&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WS_RSN_Download.py</step>
 </case>
 <case name="CM_WF_wps_pbc" manual="true" timeout="90" type="Functional" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory): Associate with WPS&nbsp;PBC</p>
@@ -2072,37 +1863,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_Disconnect.py</step>
 </case>
 
-<case name="CM_Eth_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="Ethernet" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig down</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get the state of the ethernet device</p>
-<p>2. The state is 'available'</p>
-<p>3. Run ifconfig &lt;eth&gt; down</p>
-<p>4. Get the device state, check if the state is down</p>
-<p>&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The state is down</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_IfconfigDown.py</step>
-</case>
-
-<case name="CM_Eth_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="Ethernet" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if connman works with ifconfig up</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Run ifconfig &lt;eth&gt; down</p>
-<p>2. Check the device is down</p>
-<p>3. Run ifconfig &lt;eth&gt; up</p>
-<p>2. Check the state is up</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>the device state is up</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_IfconfigUp.py</step>
-</case>
-
 <case name="CM_Eth_IsPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Ethernet" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if ethernet device is on by default</p>
@@ -2197,41 +1957,6 @@ Pass/Fail Criteria:</p>
 <p>Required test data (Optional):</p>
 <p>Change history (Optional)</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_TCP_DNS.py</step>
-</case>
-<case name="CM_Eth_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test ethernet upload.</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Eth_Upload.py<br />
-This commands basically do:<br />
-+ Connect To the network<br />
-+ Upload/Download file to/from peer machine</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+&nbsp;Wired network as normal wired network cases<br />
-+ Configure common/config.py to change&nbsp;method to transfer data file (cm_eth_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_Upload.py</step>
-</case>
-
-<case name="CM_Eth_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
-	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test wired network download.</p>
-<p>Method (Optional):</p>
-<p>References (Optional):</p>
-<p>Pre/Post-conditions (Optional):</p>
-<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Eth_Download.py<br />
-This commands basically do:<br />
-+ Connect To the network<br />
-+ Upload/Download file to/from peer machine</p>
-<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
-<p>Test Environment (Optional): Tester need to setup following test environment:<br />
-+&nbsp;Wired&nbsp;network as normal Wired network cases<br />
-+ Configure common/config.py to change&nbsp;method to transfer data file (cm_eth_download/upload). Tester needs to make sure the method works</p>
-<p>Required test data (Optional):</p>
-<p>Change history (Optional):</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Eth_Download.py</step>
 </case>
 </set>
 <set name="DHCP" description=" 
@@ -2981,66 +2706,6 @@ Pass/Fail Criteria:</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_State.py</step>
 </case>
 
-<case name="CM_PS_APN" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if APN property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if APN is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_APN.py</step>
-</case>
-
-<case name="CM_PS_MCC" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if MCC property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if MCC is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_MCC.py</step>
-</case>
-
-<case name="CM_PS_MNC" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if MNC property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if MNC is&nbsp;not empty&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_MNC.py</step>
-</case>
-
-<case name="CM_PS_Roaming" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if Roaming property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if Roaming is&nbsp;in [True, False]&nbsp;</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_Roaming.py</step>
-</case>
-
-<case name="CM_PS_SetupRequired" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Test if SetupRequired property in Service interface is valid.</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Get 3G service</p>
-<p>2. Check if SetupRequired is&nbsp;in [True, False]</p>
-<p><br />
-Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_PS_SetupRequired.py</step>
-</case>
-
 <case name="CM_PS_AutoConnect" manual="false" timeout="90" type="Functional" subfeature="API Property" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test if AutoConnect in Service interface is valid.</p>
@@ -3489,7 +3154,7 @@ Run Instructions:</p>
 2. make sure connman can get IP for wifi and can ping with other wifi IP address by &quot;connect-service [ssid]&quot;<br />
 3. make sure ethernet and bt are disconnected<br />
 4. call test-manager to check the &quot;State&quot; property of manager is &quot;online&quot;<br />
-5. disable wifi device by calling &quot;test-connman disable wifi&quot;<br />
+5. disable wifi device by calling &quot;test-connman disconnect &lt;connected service&gt;&quot;<br />
 6. call test-manager to check the &quot;State&quot; property of manager is &quot;offline&quot;</p>
 <p><br />
 Pass/Fail Criteria:</p>
@@ -5081,7 +4746,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_WA_AutoDelete.py</step>
 </case>
 
-<case name="CM_WA_AutoConnectFromSuspend" manual="false" timeout="180" type="Functional" subfeature="Auto connect from Suspend" insignificant="false">
+<case name="CM_WA_AutoConnectFromSuspend" manual="true" timeout="180" type="Functional" subfeature="Auto connect from Suspend" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check wifi can automatically connect from suspend</p>
 <p><br />
@@ -5368,7 +5033,7 @@ Pass/Fail Criteria:</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_WS_Open" manual="false" timeout="90" type="Functional" subfeature="Open System" insignificant="false">
+<case name="CM_WS_Open" manual="false" timeout="180" type="Functional" subfeature="Open System" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Test WiFi for Open mode</p>
 <p><br />
@@ -5908,22 +5573,6 @@ can catch the signal that the IP address of ethernet has been changed</p>]]></de
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_SC_Networks" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Networks property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Powered off the device</p>
-<p>2.2 sleep 5 seconds, and Powered on the device</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Networks.py</step>
-</case>
-
 <case name="CM_SM_ConnectedTechnologies" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if signal is triggered when ConnectedTechnologies property changed</p>
@@ -6020,21 +5669,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SM_State.py</step>
 </case>
 
-<case name="CM_SM_Strength" manual="false" timeout="90" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Strength property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Invoke Manager.RequestScan('wifi')</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SM_Strength.py</step>
-</case>
-
 <case name="CM_SS_AutoConnect" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if signal is triggered when AutoConnect property changed</p>
@@ -6098,37 +5732,6 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SS_Passphrase.py</step>
 </case>
 
-<case name="CM_SC_Powered" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Powered property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Powered off the device</p>
-<p>2.2 sleep 5 seconds, and Powered on the device</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Powered.py</step>
-</case>
-
-<case name="CM_SC_Scanning" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Scanning property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Invoke Manager.RequestScan('wifi')</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Scanning.py</step>
-</case>
-
 <case name="CM_SC_ConnectedTechnologies" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if signal is triggered when ConnectedTechnologies property changed</p>
@@ -6175,22 +5778,6 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p>The callback function is called.</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_State.py</step>
-</case>
-
-<case name="CM_SC_Connected" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
-	<description><![CDATA[<p>Purpose:</p>
-<p>Check if signal is triggered when Connected property changed</p>
-<p><br />
-Run Instructions:</p>
-<p>1. Set property_changed call back</p>
-<p>2. Using following way to make the property changed</p>
-<p>2.1 Set connman to offline mode</p>
-<p>2.2 sleep 5 seconds, and set connman to online mode</p>
-<p>3. Check if the property_changed called.</p>
-<p><br />
-Pass/Fail Criteria:</p>
-<p>The callback function is called.</p>]]></description>
-<step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_SC_Connected.py</step>
 </case>
 
 <case name="CM_SC_OfflineMode" manual="false" timeout="90" type="Functional" subfeature="API Signal" insignificant="false">
@@ -6366,6 +5953,169 @@ Run Instructions:</p>
 Pass/Fail Criteria:</p>
 <p>The active&nbsp;profile is changed</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_Prof_ActiveProfile.py</step>
+</case>
+</set>
+<set name="DataTransfer" description="&lt;p&gt;DataTransfer&lt;/p&gt;">
+
+<case name="CM_WS_WEP_Upload" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test WiFi upload with wep64 key. It can also be used as test cases for features shared/hidden</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_WEP_Upload.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_WEP_Upload.py</step>
+</case>
+
+<case name="CM_WS_RSN_Upload" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test WiFi upload with wpa rsn. It can also be used as test cases for features open/broadcast</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_RSN_Upload.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_RSN_Upload.py</step>
+</case>
+
+<case name="CM_WS_WEP_Download" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test WiFi download with wep64 key. It can also be used as test cases for features shared/hidden</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_WEP_Download.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_WEP_Download.py</step>
+</case>
+
+<case name="CM_WS_RSN_Download" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test WiFi download with wpa rsn. It can also be used as test cases for features open/broadcast</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_WS_RSN_Download.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change<br />
+&nbsp;&nbsp;&nbsp; + AP parameters (essid, key)<br />
+&nbsp;&nbsp;&nbsp; + Method to transfer data file (cm_wifi_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_WS_RSN_Download.py</step>
+</case>
+
+<case name="CM_BT_Upload" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test bluetooth upload.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_BT_Upload.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Need to pair to the AP as normal BT cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_bt_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_BT_Upload.py</step>
+</case>
+
+<case name="CM_BT_Download" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test Bluetooth download</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_BT_Download.py<br />
+This commands basically do:<br />
++ Connect To the AP<br />
++ Upload/Download file to/from peer machine through the AP</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++ An AP, a peer machine that connect to the same network<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_bt_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_BT_Download.py</step>
+</case>
+
+<case name="CM_Eth_Upload" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test ethernet upload.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Eth_Upload.py<br />
+This commands basically do:<br />
++ Connect To the network<br />
++ Upload/Download file to/from peer machine</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++&nbsp;Wired network as normal wired network cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_eth_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Eth_Upload.py</step>
+</case>
+
+<case name="CM_Eth_Download" manual="false" timeout="300" type="Functional" level="Feature">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose (Mandatory): This test case is used for test wired network download.</p>
+<p>Method (Optional):</p>
+<p>References (Optional):</p>
+<p>Pre/Post-conditions (Optional):</p>
+<p>Run instructions (Mandatory): /opt/mcts-connman-tests/CM_Eth_Download.py<br />
+This commands basically do:<br />
++ Connect To the network<br />
++ Upload/Download file to/from peer machine</p>
+<p>Pass/Fail criteria (Mandatory): The command returns 0</p>
+<p>Test Environment (Optional): Tester need to setup following test environment:<br />
++&nbsp;Wired&nbsp;network as normal Wired network cases<br />
++ Configure common/config.py to change&nbsp;method to transfer data file (cm_eth_download/upload). Tester needs to make sure the method works</p>
+<p>Required test data (Optional):</p>
+<p>Change history (Optional):</p>]]></description>
+<step expected_result="0" manual="true">/opt/mcts-connman-tests/CM_Eth_Download.py</step>
 </case>
 </set>
 <set name="Flight" description="&lt;p&gt;Test cases for offline mode.&lt;/p&gt; &lt;p&gt;connman-test package contains utility test-connman. test-connman offlinemode can set/unset offlinemode like:&lt;/p&gt; &lt;p&gt;test-connman offlinemode: show current offlinemode. 1: offlinemode on, 0: offlinemode off&lt;/p&gt; &lt;p&gt;test-connman offlinemode on: Set offlinemode on&lt;/p&gt; &lt;p&gt;test-connman offlinemode off: Turn offlinemode off&lt;/p&gt;">

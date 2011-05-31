@@ -6,7 +6,7 @@ BuildRoot:		%{buildroot}
 Summary: 		A MWTS test asset for Telepathy-QT4
 License: 		LGPL
 Name: 			mwts-telepathy
-Version: 		0.1.4
+Version: 		0.1.6
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools

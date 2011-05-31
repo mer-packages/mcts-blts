@@ -14,7 +14,7 @@
         ">
         <step>min -c -t 'FUTE-Feedback-StartEffect'</step>
       </case>
-      <case name="FUTE-Feedback-PauseEffect" subfeature="Vibra" timeout="30" description=
+  <!--    <case name="FUTE-Feedback-PauseEffect" subfeature="Vibra" timeout="30" description=
         "Purpose
         Test if effect feature (vibration in mobile devices) works
         Method
@@ -110,6 +110,7 @@
         ">
         <step>min -c -t 'FUTE-Feedback-SetEffectFadeIntensity_0.1'</step>
       </case>
+	  -->
     </set>
   </suite>
 </testdefinition>

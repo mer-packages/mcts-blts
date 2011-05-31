@@ -20,7 +20,7 @@ PRECOMPILED_HEADER	 = stable.h
 SOURCES				+= MessagingTest.cpp
 HEADERS				+= MessagingTest.h
 
-LIBS += -lmwts-common
+LIBS				+= -lmwts-common
 
 target.path = /usr/lib
 INSTALLS += target

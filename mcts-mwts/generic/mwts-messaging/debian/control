@@ -1,15 +1,14 @@
 Source: mwts-messaging
 Section: libs
 Priority: optional
-Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libqmf-dev, libqtm-dev
+Build-Depends: debhelper, libqt4-dev, mwts-common-dev(>=0.2.0), min-dev, libqmf-dev, libqtm-dev, cdbs
 Maintainer: Arttu Valo <arttu.valo@digia.com>
 Standards-Version: 3.8.0
 
 Package: mwts-messaging
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0)
-Aegis-Manifest: included
+Depends: ${shlibs:Depends}, libqt4-core, mwts-common(>=0.2.0), libqtm-messaging
 Description: MWTS-Messaging libraries
  Messaging for creating MiddleWare Test Suite packages
  C++ interface
@@ -21,18 +20,10 @@ Depends: ${shlibs:Depends}, mwts-messaging, min
 Description: MWTS-Messaging Test cases
  Min interface and test cases
 
-Package: mwts-messaging-tests
-Section: libs
-Architecture: any
-Depends: ${shlibs:Depends}, ci-testing, mwts-messaging, min, ci-testing
-XB-Maemo-CI-Packages: libc6
-XB-Maemo-CI-Stage: validation
-Description: MWTS Messaging for CITA
- Messaging for creating for CITA test cases
-
 Package: mwts-messaging-cli
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, mwts-messaging, 
 Description: MWTS Messaging command line interface
  Command line interface for mwts-messaging
+
