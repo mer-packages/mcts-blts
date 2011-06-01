@@ -34,10 +34,8 @@ MwtsCpuMonitor::MwtsCpuMonitor(MwtsMonitorLogger* logger)
     //1 - updates in every second
     params << QString("-n") << QString::number(1);
 	m_pMpstatProcess=new QProcess();
-    m_pMpstatProcess->start("/usr/bin/vmstat", params);
-
-    g_pResult->StartSeriesMeasure("cpu_usage", "%", 0, 0);
-    g_pResult->StartSeriesMeasure("cpu_io_wait", "%", 0, 0);
+	//it might be that float precision is needed (note: no mpstat on meego)
+	m_pMpstatProcess->start("/usr/bin/vmstat", params);
 }
 
 /** Writes result to logger */
@@ -51,7 +49,7 @@ void MwtsCpuMonitor::WriteResult()
 	{
 		QString line=lines[i];
         if (-1 != line.indexOf("procs")) //this is first line
-		{
+		{	
 			continue;
 		}
 
@@ -77,9 +75,11 @@ void MwtsCpuMonitor::WriteResult()
 		else
 		{
 			QStringList values=line.split(' ', QString::SkipEmptyParts);
-			if(values.size()<5) // empty line
+			if(values.size()<5)
+			{// empty line
 				continue;
-            int cpu_user=values.at(m_nUserIndex).toInt();
+			}
+			int cpu_user=values.at(m_nUserIndex).toInt();
             int cpu_sys=values.at(m_nSysIndex).toInt();
             int cpu_iowait=values.at(m_nIowaitIndex).toInt();
             int cpu_idle=values.at(m_nIdleIndex).toInt();
@@ -88,10 +88,10 @@ void MwtsCpuMonitor::WriteResult()
 			m_pLogger->Write("CpuUsage", cpu_total);
 			m_pLogger->Write("CpuIowait", cpu_iowait);
 
-            //added cpu usage measurement to .csv file for testrunner-lite
-            g_pResult->AddSeriesMeasure("cpu_usage", cpu_total);
+			//added cpu usage measurement to .csv file for testrunner-lite
+			g_pResult->AddSeriesMeasure("cpu_usage", QString::number(cpu_total), "%");
             //added cpu io wait measurement to .csv file for testrunner-lite
-            g_pResult->AddSeriesMeasure("cpu_io_wait", cpu_iowait);
+			g_pResult->AddSeriesMeasure("cpu_io_wait", QString::number(cpu_iowait), "%");
 		}
 	}
 

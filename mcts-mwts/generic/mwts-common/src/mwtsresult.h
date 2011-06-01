@@ -51,8 +51,8 @@ public:
 	bool IsPassed();
 	void SetLimits(double lfTarget, double lfFail);
 	void SetResultFilter(QString filter);
-	void StartSeriesMeasure(QString name, QString unit, double lfTarget=0, double lfFailLimit=0);
-	void AddSeriesMeasure(QString name, double value);
+	void StartSeriesMeasure(QString name, QString unit, double lfTarget=0, double lfFailLimit=0);	
+	void AddSeriesMeasure(QString name, QString value, QString unit);
 	bool IsLimitExceeded(MwtsStatistics &stats);
 
 protected:
