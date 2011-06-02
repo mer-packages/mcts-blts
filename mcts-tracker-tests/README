@@ -1,6 +1,6 @@
----------------------
+------------------------
 Introduction
----------------------
+------------------------
 mcts-tracker-tests contains  both manual and auto tests for Tracker. 
 tests.xml describes both auto and manual tests.
 
@@ -13,9 +13,9 @@ two big benefits for the user; shared data between applications and
 information which is relational to other information (for example:
 mixing contacts with files, locations, activities and etc.)
 
----------------------
-Build and Run
----------------------
+------------------------
+Package Build & Install
+------------------------
 + Build in meego system, you need install build system and rpmbuild
 	cd mcts-tracker-tests
 	./pack.sh
@@ -25,22 +25,22 @@ This will generate mcts-tracker-tests-<version>-<release>.<arch>.rpm package
 + Install
 	rpm -ivh mcts-tracker-tests-<version>-<release>.<arch>.rpm --nodeps
 
-+ Run
-Recommend to execute tests on Web UI via Testkit manager:
-	zypper in testkit-manager
-	open webUI to select and start up the tests
-
-Also it is able to run by command-line tool testrunner-lite with root user:
-	zypper in testrunner-lite
-	testrunner-lite -m -f /usr/share/mnts-tracker-tests/tests.xml -o results.xml
-
-For more information, check "man testrunner-lite".
-
----------------------
-Common Install
----------------------
+------------------------
+Common Build & Install
+------------------------
+Build and install tests with root user:
     ./autogen
     ./configure prefix=/usr
     make && make install
+
+------------------------
+Run Tests
+------------------------
+Run tests by command-line tool testrunner-lite with root user:
+	zypper in testrunner-lite
+	testrunner-lite -m -f /usr/share/mcts-tracker-tests/tests.xml -o results.xml
+
+For more information, check "man testrunner-lite".
+
 
 
