@@ -1,3 +1,6 @@
+* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.0.3
+- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
+
 * Thu 02 Dec 2010 Arto Katajasalo <arto.katajasalo@digia.com> - 0.0.2
 - Contacts, Organizer, and Versit APIs separated to own classes. Min scripter interface modified. NFT test cases added. Input data moved to PimTest.conf.  
 

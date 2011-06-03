@@ -1,3 +1,7 @@
+mwts-network-tests (1.0.8) unstable; urgency=low
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-network-tests (1.0.7) unstable; urgency=low
  * Fixes MB#17680 - Fixed the mismatches between script files and tests.xml
 -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Wed, 18 May 2011 14:12:00 +0300

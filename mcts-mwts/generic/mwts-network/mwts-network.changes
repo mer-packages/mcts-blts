@@ -1,3 +1,6 @@
+* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 1.0.8
+- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
+
 * Wed 18 May 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.7
  - Fixes MB#17680 - Fixed the mismatches between script files and tests.xml
 
