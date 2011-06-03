@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Mwts-location is a test asset for GPS using Qt Mobility location API
 License:                LGPL
 Name:                   mwts-location
-Version:                0.0.8
+Version:                0.0.9
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -19,12 +19,12 @@ Source:                 %{name}-%{version}.tar.gz
 Mwts-location-tests is a test asset for GPS using Qt Mobility location API
 
 
-%package               generic-tests
+%package               generic-scripts
 Summary:               Min interface and test cases
 Prefix:                 /usr
 Group:                 Development/Tools
 Requires:              mwts-location
-%description           generic-tests
+%description           generic-scripts
 MIN test cases for mwts-location-tests
 
 %package               generic-config
@@ -39,7 +39,7 @@ Configuration file for mwts-location / generic
 Summary:               Meta package for all needed mwts-location generic packages
 Prefix:                 /usr
 Group:                 Development/Tools
-Requires:              mwts-location, mwts-location-generic-config, mwts-location-generic-tests
+Requires:              mwts-location, mwts-location-generic-config, mwts-location-generic-scripts
 %description           generic-all
 Meta package for all needed mwts-location generic packages
 
@@ -64,10 +64,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/*.so
 
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-location-scripts/tests.xml
 
 %files generic-config
 /usr/lib/tests/LocationTest.conf

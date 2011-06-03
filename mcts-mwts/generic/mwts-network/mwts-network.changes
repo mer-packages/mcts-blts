@@ -6,6 +6,7 @@
  - Fixes MB#18123 - Fixed disconnecting not to fail if already disconnected
  - Fixes MB#18132 - Fixed the timeout values in script files
  - Connman AutoConnect feature is set to false for new connected services
+ - Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
 
 * Wed 18 May 2011 Rauno Vartiainen <ext-rauno.vartiainen@nokia.com> - 1.0.7
  - Fixes MB#17680 - Fixed the mismatches between script files and tests.xml
