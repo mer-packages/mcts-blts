@@ -1,3 +1,6 @@
+* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.0.9
+- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
+
 * Mon, 16 May 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 0.0.8
 - Fixes MB#14885 - Fixed test.xml again to match the script files
 

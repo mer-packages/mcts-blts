@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-accounts
 Summary:        Test asset for testing SSO and account management
 License:        LGPL
-Version:        0.0.1
+Version:        0.0.5
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -17,10 +17,10 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Accounts test asset.
             
-%package        generic-tests
+%package        generic-scripts
 Summary:        MIN test case scripts for mwts-accounts
 Requires:       mwts-accounts
-%description    generic-tests
+%description    generic-scripts
 MIN test case scripts for mwts-accounts
 
 %package        generic-config
@@ -31,7 +31,7 @@ Generic configuration file for mwts-accounts
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-accounts (generic)
-Requires:	mwts-accounts, mwts-accounts-generic-tests, mwts-accounts-generic-config
+Requires:	mwts-accounts, mwts-accounts-generic-scripts, mwts-accounts-generic-config
 %description	generic-all
 Meta package for installing all needed packages for generic version of mwts-accounts
 
@@ -52,9 +52,8 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-accounts*
 /usr/lib/min/*.so*
 
-%files generic-tests
-/etc/min.d/mwts-accounts.min.conf 
-/usr/share/mwts-accounts-generic-tests/tests.xml
+%files generic-scripts
+/etc/min.d/mwts-accounts.min.conf
 /usr/lib/min/*.cfg
 
 %files generic-config
