@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-feedback
 Summary:        Feedback test asset
 License:        LGPL
-Version:        0.0.3
+Version:        0.0.4
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -17,12 +17,12 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Feedback test asset.
             
-%package        generic-tests
+%package        generic-scripts
 Summary:        MIN test case scripts for mwts-feedback
 Prefix:         /usr/bin
 Group:          Development/Tools
 Requires:       min, mwts-feedback
-%description    generic-tests
+%description    generic-scripts
 MIN test case scripts for mwts-feedback
 
 %package        generic-config
@@ -45,7 +45,7 @@ mwts-feedback command line tool
 Summary:        meta package for mwts-feedback generic
 Prefix:          /usr/bin
 Group:          Development/Tools
-Requires:       mwts-feedback, mwts-feedback-cli, mwts-feedback-generic-tests, mwts-feedback-generic-config
+Requires:       mwts-feedback, mwts-feedback-cli, mwts-feedback-generic-scripts, mwts-feedback-generic-config
 %description    generic-all
 meta package for mwts-feedback generic
 
@@ -68,10 +68,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-feedback*
 /usr/lib/min/libmin-mwts-feedback.*
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-feedback-generic-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/FeedbackTest.conf

@@ -6,7 +6,7 @@ BuildRoot:		%{buildroot}
 Summary: 		A wlan/psd networking test asset
 License: 		LGPL
 Name: 			mwts-network
-Version: 		1.0.9
+Version: 		1.1.0
 Release: 		0
 Prefix: 		/usr
 Group: 			Testing
@@ -17,12 +17,12 @@ Source: 		%{name}-%{version}.tar.gz
 %description
 Mwts-network is a wlan/psd networking test asset
 
-%package                generic-tests
+%package                generic-scripts
 Summary:                Min test-case scripts for mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
 Requires:               mwts-network
-%description            generic-tests
+%description            generic-scripts
 MIN test case scripts for mwts-network
 
 
@@ -38,7 +38,7 @@ mwts-network generic config
 Summary:                meta package for generic mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
-Requires:               mwts-network, mwts-network-generic-config, mwts-network-generic-tests
+Requires:               mwts-network, mwts-network-generic-config, mwts-network-generic-scripts
 %description            generic-all
 meta package for generic mwts-network
 
@@ -62,9 +62,8 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/mwts-network.min.conf
-/usr/share/mwts-network-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

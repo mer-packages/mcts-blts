@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                A Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-sensors
-Version:                1.0.5
+Version:                1.0.6
 Release:                0
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -18,12 +18,12 @@ Source:                 %{name}-%{version}.tar.gz
 %description
 mwts-sensors is a common library for MWTS test assets. It provides tool for sensors testing, logging and reporting results.
 
-%package                generic-tests
+%package                generic-scripts
 Summary:                mwts-sensors MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               min, mwts-sensors
-%description            generic-tests
+%description            generic-scripts
 MIN test cases for mwts-sensors
 
 
@@ -40,7 +40,7 @@ mwts-sensors generic config
 Summary:                mwts-sensors generic meta package
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               mwts-sensors, mwts-sensors-generic-tests, mwts-sensors-generic-config
+Requires:               mwts-sensors, mwts-sensors-generic-scripts, mwts-sensors-generic-config
 %description            generic-all
 mwts-sensors generic meta package
 
@@ -79,10 +79,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-sensors-tests/tests.xml
 
 %files cli
 /usr/bin/mwts-sensors-cli
