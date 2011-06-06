@@ -51,7 +51,13 @@ public:
      * Connect to target ftp host
      * @return true/false if succeeded
      */
-    bool connectToHost(const QString ip, const QString username,const QString password);
+    bool connectToHost(const QString ip);
+
+    /**
+     * Login to target ftp host
+     * @return true/false if succeeded
+     */
+    bool login(const QString username,const QString password);
 
     /**
      * Download file from ftp server
