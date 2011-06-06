@@ -22,7 +22,7 @@ Summary:        MIN test case scripts for mwts-systeminfo
 Requires:       min, mwts-systeminfo
 Prefix:          /usr
 Group:          Development/Tools
-%description    generic-tests
+%description    generic-scripts
 MIN test case scripts for mwts-systeminfo
 
 
