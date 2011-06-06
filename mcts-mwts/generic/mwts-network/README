@@ -1,28 +1,33 @@
 mwts-network
------------
+------------
+
+
 Introduction
  
-   MWTS-Network contains tests for QT Bearer Management API. Test asset is used for measuring the performance and reliability of wireless LAN and packet switched data transfers.
+   MWTS-Network contains tests for QT Bearer Management API.
+   Test asset is used for measuring the performance and reliability of
+   wireless LAN and packet switched data transfers.
 
    Usage of mwts-network is currently restricted to wlan-cases. 
 
    Contact: ext-rauno.vartiainen@nokia.com
 
+
 Function descriptions
 
 These are MIN interface function used in cases.
 
-   Scan 	                 Scan wireless LAN access points
-   Connect <access point> 	 Connect to given access point
-   ConnectToDefault 	         Connect to default access point
-   Disconnect 	                 Disconnect current session
-   Downloadfile <filename>     	 Download file from ftp-server
+   Scan                          Scan wireless LAN access points
+   Connect <access point>        Connect to given access point
+   ConnectToDefault              Connect to default access point
+   Disconnect                    Disconnect current session
+   Downloadfile <filename>       Download file from ftp-server
    UploadFile <filename>         Upload file to ftp-server
-   DownloadfileHttp <filename> 	 Download file via http
+   DownloadfileHttp <filename>   Download file via http
    RemoveService <access point>  Removes existing access point configuration from system
-   ServerStartIperf <time> 	 Start iperf upload measurement while given time
-   ServerStartDownload <time> 	 Start iperf download measurement while given time
-   Idle <time> 	                 Idle given time
+   ServerStartIperf <time>       Start iperf upload measurement while given time
+   ServerStartDownload <time>    Start iperf download measurement while given time
+   Idle <time>                   Idle given time
    SwitchWlan <on/off>           Switches wlan on/off
 
 
@@ -30,51 +35,85 @@ Usage
 
 Source code and compiling
 
-  mwts-network compiles on a typical red hat/linux distributions by executing sh rpmbuild.sh if you have missing dependencies, add them with
+  mwts-network compiles on a typical red hat/linux distributions by executing
+  sh rpmbuild.sh if you have missing dependencies, add them with:
 
-  zypper install
+        zypper install
 
-  , if you need to search after a package you can do that with
+  If you need to search after a package you can do that with:
 
-  zypper search
+        zypper search
 
-  and get more info with
+  And get more info with:
 
-  zypper info
+        zypper info
 
-  on non-debian/red-hat based linux system you can compile and install by (no dependency check)
+  on non-debian/red-hat based linux system you can compile and
+  install by (no dependency check):
 
-  qmake
-  make
-  make install (as root) 
+        qmake
+        make
+        make install (as root)
+
 
 Requirements for environment
 
-   For troughput measurements, Iperf 2.0.2 must be installed in device and server. With never versions (2.0.4) problems with troughput measurements might appear. 
+   For troughput measurements, Iperf 2.0.2 must be installed in device
+   and in server. With never versions (2.0.4) problems with troughput
+   measurements might appear.
 
-   In order to execute all tests on mwts-network, you need to map access point names in the NetworkTest.conf (/usr/lib/tests/NetworkTest.cfg)
+   In order to execute all tests on mwts-network, you need to map access point
+   names in the config file (/usr/lib/tests/NetworkTest.cfg).
 
-   For file upload cases, you need to generate the test files (or use the corresponding download case first, if the test files exist on the server).
-   The location where files are uploaded from or downloaded to, is specified in NetworkTest.conf with local_path key in [FTP] section.
-   To generate a 10 megabyte file named 10MB.bin use the following command:
+   For PSD-cases you need to set the service name and internet access point
+   to the config file (/usr/lib/tests/NetworkTest.cfg) befofe executing tests.
+   The internet access point name is usually 'internet' and the psd_network name
+   can be checked with using connman test-scripts. To list all available
+   services give command:
 
-        dd bs=1024 count=10240 if=/dev/urandom of=10MB.bin
+        /usr/lib/connman/test/test-connman services
 
-   For test files with different sizes modify the count arguments and file names accordingly.
+   The location where files are uploaded from or downloaded to, is specified
+   in the config file (/usr/lib/tests/NetworkTest.cfg) with local_path key
+   in [FTP] section.
+
+   Test files can be created with 'dd' command. To create a 10MB test file
+   use the following command:
+
+        dd bs=1024 count=10000 if=/dev/urandom of=10MB.bin
+
+   For test files with different sizes modify the count arguments and
+   file names accordingly.
+
 
 Executing tests
 
-   For PSD-cases you need to set the service name and internet access point to the config file (/usr/lib/tests/NetworkTest.cfg) befofe executing tests. 
-   The internet access point name is usually 'internet' and the psd_network name can be checked with using connman test-scripts 
-    * give  '/usr/lib/connman/test/test-connman services'
+   MWTS-Network test execution is performed normally.
+   Check the "General MWTS testing guide".
 
-   MWTS-Network test execution is performed normally. Check the "General MWTS testing guide".
 
 Test results
 
-   Test results can be found from device in directory /var/log/tests/. Results are named as test cases, test_case_name.result file contains overall information about test run and measured values.
+   Test results can be found from device in directory /var/log/tests/.
+   Results are named as test cases, test_case_name.result file contains
+   overall information about test run and measured values.
+
 
 Known Issues
 
-   It should be noted that in Meego platform Bearer Management works on top of connman. In case of trouble user should verify that connman-daemon (connmand) is running. 
-   In /usr/lib/connman/test/ is a bunch of python scripts to directly use the connman dbus-interface. In example 'python test-connman services' lists available wlan/psd access points.
+   It should be noted that in Meego platform Bearer Management works on top
+   of connman. In case of trouble user should verify that
+   connman-daemon (connmand) is running.
+
+   In /usr/lib/connman/test/ is a bunch of python scripts to directly use
+   the connman dbus-interface. In example 'test-connman services'
+   lists available wlan/psd access points.
+
+   By default connman sets the AutoConnect property to true for connected access
+   points. This may cause problems, if connman automatically connects to some
+   access point after test script disconnects.
+
+   The AutoConnect feature is set to false for every access point that is
+   connected with mwts-network asset. But there might be access points that
+   have been connected by other means and those might have the AutoConnect
+   feature set to true.

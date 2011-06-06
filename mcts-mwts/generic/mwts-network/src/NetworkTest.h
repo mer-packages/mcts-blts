@@ -176,7 +176,6 @@ protected slots:
 	void configurationAdded(const QNetworkConfiguration& config);
 	void networkStateChanged(QNetworkSession::State state);
 	void networkError(QNetworkSession::SessionError error);
-	void configurationsAdded(const QNetworkConfiguration& config);
 	void configurationsRemoved(const QNetworkConfiguration& config);
 	void configurationsChanged(const QNetworkConfiguration& config);
 
@@ -217,16 +216,17 @@ private:
     enum SecType { WEP, WPA_PKS, NONE };
     typedef QMap<QString, SecType> StringToEnumMap;
 
-    QDBusInterface *m_ConnmanManager;
+    QDBusInterface *m_pConnmanManager;
 
-    QNetworkConfigurationManager networkManager;
-	QNetworkConfiguration networkConfiguration;
-	QNetworkSession *networkSession;
+    QNetworkConfigurationManager m_NetworkManager;
+    QNetworkConfiguration m_NetworkConfiguration;
+    QNetworkSession *m_pNetworkSession;
 
 	// for http download purposes
-    QNetworkAccessManager m_httpManager;
+    QNetworkAccessManager m_HttpManager;
     QNetworkReply *m_pHttpReply;
     QFile *m_pHttpDownloadFile;
+    qint64 m_iHttpDownloadFileSize;
     qint64 m_iHttpDownloadCounter;
     bool m_bHttpDownloadSuccess;
 

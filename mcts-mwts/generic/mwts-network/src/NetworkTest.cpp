@@ -56,13 +56,36 @@
     qDebug() << __message << "TRUE";
 
 NetworkTest::NetworkTest() 
+    : m_pConnmanManager(NULL),
+    m_pNetworkSession(NULL),
+    m_pHttpReply(NULL),
+    m_pHttpDownloadFile(NULL),
+    m_pProcess(NULL)
 {
     MWTS_ENTER;
+    MWTS_LEAVE;
 }
 
 NetworkTest::~NetworkTest()
 {
     MWTS_ENTER;
+
+    if(m_pNetworkSession)
+    {
+        qDebug() << "Closing session";
+        m_pNetworkSession->close();
+        qDebug() << "Destroying session";
+        delete m_pNetworkSession;
+        m_pNetworkSession = NULL;
+    }
+
+    if(m_pProcess)
+    {
+        delete m_pProcess;
+        m_pProcess = NULL;
+    }
+
+    MWTS_LEAVE;
 }
 
 void NetworkTest::OnInitialize()
@@ -78,18 +101,18 @@ void NetworkTest::OnInitialize()
 
 
     // connman dbus manager
-    m_ConnmanManager = new QDBusInterface("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
+        m_pConnmanManager = new QDBusInterface("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
 
-    connect(&m_httpManager, SIGNAL(finished(QNetworkReply*)),
+    connect(&m_HttpManager, SIGNAL(finished(QNetworkReply*)),
                     this, SLOT(downloadFinished(QNetworkReply*)));
 
-    connect(&networkManager, SIGNAL(updateCompleted()),
+    connect(&m_NetworkManager, SIGNAL(updateCompleted()),
             this, SLOT(configurationsUpdateCompleted()));
-    connect(&networkManager, SIGNAL(configurationAdded(const QNetworkConfiguration)),
+    connect(&m_NetworkManager, SIGNAL(configurationAdded(const QNetworkConfiguration)),
             this, SLOT(configurationAdded(const QNetworkConfiguration)));
-    connect(&networkManager, SIGNAL(configurationChanged(const QNetworkConfiguration&)),
+    connect(&m_NetworkManager, SIGNAL(configurationChanged(const QNetworkConfiguration&)),
             this, SLOT(configurationsChanged(const QNetworkConfiguration&)));
-    connect(&networkManager, SIGNAL(configurationRemoved(const QNetworkConfiguration&)),
+    connect(&m_NetworkManager, SIGNAL(configurationRemoved(const QNetworkConfiguration&)),
             this, SLOT(configurationsRemoved(const QNetworkConfiguration&)));
 
     connect(m_pProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(slotError(QProcess::ProcessError)));
@@ -104,7 +127,7 @@ void NetworkTest::OnInitialize()
     g_pLog->EnableTrace(true);
 
     // Increase default timeout to 15sec
-    this->SetTestTimeout(15000);
+    // this->SetTestTimeout(15000);
 
     m_bUpdateCompleted = false;
 }
@@ -113,9 +136,9 @@ void NetworkTest::OnUninitialize()
 {
     MWTS_ENTER;
 
-    if (networkSession) {
-        delete networkSession;
-        networkSession = NULL;
+    if (m_pNetworkSession) {
+        delete m_pNetworkSession;
+        m_pNetworkSession = NULL;
     }
 
     if (m_pProcess)	{
@@ -123,9 +146,9 @@ void NetworkTest::OnUninitialize()
         m_pProcess = NULL;
     }
 
-    if (m_ConnmanManager) {
-        delete m_ConnmanManager;
-        m_ConnmanManager = NULL;
+    if (m_pConnmanManager) {
+        delete m_pConnmanManager;
+        m_pConnmanManager = NULL;
     }
 }
 
@@ -384,7 +407,7 @@ void NetworkTest::CloseActiveSessions()
 {
     qDebug() << "Closing active sessions";
 
-    QList<QNetworkConfiguration> configs = networkManager.allConfigurations();
+    QList<QNetworkConfiguration> configs = m_NetworkManager.allConfigurations();
     for (int i = 0; i < configs.size(); ++i) {
         if (configs.at(i).state() == QNetworkConfiguration::Active) {
            QNetworkSession session(configs.at(i));
@@ -411,9 +434,14 @@ bool NetworkTest::SwitchWlan(const QString state)
         return false;
     }
 
-    QDBusReply<QVariantMap> reply = m_ConnmanManager->call("GetProperties");
+    qDebug() << "Getting manager properties...";
+    QDBusReply<QVariantMap> reply = m_pConnmanManager->call("GetProperties");
+    if (!reply.isValid())
+    {
+        QDBusError error = reply.error();
+        qDebug() << "Received invalid DBUS reply";
+        qDebug() << "Error message:" << error.message();
 
-    if (!reply.isValid()) {
         qCritical() << "Could not get manager properties, check connman-daemon. Aborting...";
         return false;
     }
@@ -439,9 +467,14 @@ bool NetworkTest::SwitchWlan(const QString state)
         QDBusInterface tech_iface("net.connman", tech_list.at(i), "net.connman.Technology", QDBusConnection::systemBus());
         tech_reply = tech_iface.call("GetProperties");
 
-        if (!tech_reply.isValid()) {
-                qDebug() << "Technologies reply invalid, aborting...";
-                return false;
+        if (!tech_reply.isValid())
+        {
+            QDBusError error = tech_reply.error();
+            qDebug() << "Received invalid DBUS reply";
+            qDebug() << "Error message:" << error.message();
+
+            qDebug() << "Technologies reply invalid, aborting...";
+            return false;
         }
 
         //qDebug() << "Got technology properties, proceeding to open device interface";
@@ -500,15 +533,26 @@ bool NetworkTest::StopSession(const QString ap_name)
     qDebug() << "service path is: " << service_path;
 
     //make sure the signal is connected
-    m_ConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
+    m_pConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
                                           this, SLOT(slotConnmanStateChanged()));
 
     // open interface to the service
     QDBusInterface iface("net.connman", service_path, "net.connman.Service", QDBusConnection::systemBus());
 
     qDebug() << "Trying to disconnect...";
-    QDBusMessage disconnect_reply = iface.call("Disconnect");
-    qDebug() << "Reply was: " << disconnect_reply;
+    QDBusReply<QDBusVariant> disconnect_reply = iface.call("Disconnect");
+
+    if (!disconnect_reply.isValid())
+    {
+        QDBusError error = disconnect_reply.error();
+
+        if (error.message() == "Not connected")
+        {
+            qDebug() << "Not connected. No need to disconnect. All good.";
+            return true;
+        }
+    }
+
 
     // set this to false, we dont know if disconnecting works yet
     m_bResult = false;
@@ -516,17 +560,17 @@ bool NetworkTest::StopSession(const QString ap_name)
     qDebug() << "Disconnecting....";
     this->Start();
 
-    if(networkSession != 0)
+    if(m_pNetworkSession != 0)
     {
             qDebug() << "Session was open, now closing it!";
-            qDebug() << "Active time    : " << networkSession->activeTime() << " seconds" ;
-            qDebug() << "Bytes 	written  : " << networkSession->bytesWritten();
-            qDebug() << "Bytes received : " << networkSession->bytesReceived();
+            qDebug() << "Active time    : " << m_pNetworkSession->activeTime() << " seconds" ;
+            qDebug() << "Bytes 	written  : " << m_pNetworkSession->bytesWritten();
+            qDebug() << "Bytes received : " << m_pNetworkSession->bytesReceived();
 
-            networkSession->disconnect();
-            networkSession->stop();
+            m_pNetworkSession->disconnect();
+            m_pNetworkSession->stop();
             this->Start();
-            networkSession->close();
+            m_pNetworkSession->close();
     }
     else
     {
@@ -550,8 +594,8 @@ void NetworkTest::UpdateConfigs()
     qDebug() << "UPDATING CONFIGURATIONS / SCANNING FOR AVAILABLE ACCESS POINTS....";
     m_bUpdateCompleted = false;
 
-    QSignalSpy spy(&networkManager, SIGNAL(updateCompleted()));
-    networkManager.updateConfigurations();
+    QSignalSpy spy(&m_NetworkManager, SIGNAL(updateCompleted()));
+    m_NetworkManager.updateConfigurations();
 
     // wait for the updateCompleted signal
     TRY_VERIFY(spy.count() == 1, "Scan: Verify that updateCompleted is emitted once");
@@ -590,12 +634,14 @@ bool NetworkTest::DownloadfileHttp(const QString strUrl)
     if( !m_pHttpDownloadFile->open(QIODevice::WriteOnly) )
     {
         qDebug() << "Could not open" << filename << "for writing!";
+        delete m_pHttpDownloadFile;
+        m_pHttpDownloadFile = NULL;
         return false;
     }
 
     // make the request
     g_pTime->start();
-    m_pHttpReply = m_httpManager.get(request);
+    m_pHttpReply = m_HttpManager.get(request);
 
     // needed signals for reply
     connect(m_pHttpReply, SIGNAL(downloadProgress(qint64, qint64)),
@@ -658,9 +704,11 @@ void NetworkTest::downloadFinished(QNetworkReply *reply)
 
     qDebug() << "Download finished from url: " << reply->url();
 
-    double elapsed=g_pTime->elapsed();
-    qDebug() << "Http file download lasted:" << elapsed << "ms";
-    g_pResult->AddMeasure("File download", elapsed, "ms");
+    double transTime = g_pTime->elapsed();
+    double sizeInMB = (double)m_iHttpDownloadFileSize / (double)(1024*1024);
+    double timeInSeconds = (double)transTime / (double)1000;
+    double transferSpeed = sizeInMB / timeInSeconds;
+    g_pResult->AddMeasure("Http download", transferSpeed, "MB/s");
 
     m_bHttpDownloadSuccess = true;
 
@@ -674,6 +722,8 @@ void NetworkTest::downloadFinished(QNetworkReply *reply)
 
 void NetworkTest::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
+    m_iHttpDownloadFileSize = bytesTotal;
+
     // write log only after each received megabyte
     if( (bytesReceived - m_iHttpDownloadCounter) > (1024*1024) )
     {
@@ -724,13 +774,13 @@ bool NetworkTest::IsAccessPointFound(QString ap_name)
 {
 	MWTS_ENTER;
 	qDebug() << "Checking if " << ap_name << " is valid.";
-	qDebug() << "Validity:  " << networkManager.configurationFromIdentifier(ap_name).isValid();
-	qDebug() << "State:  " << networkManager.configurationFromIdentifier(ap_name).state();
+    qDebug() << "Validity:  " << m_NetworkManager.configurationFromIdentifier(ap_name).isValid();
+    qDebug() << "State:  " << m_NetworkManager.configurationFromIdentifier(ap_name).state();
 
-	if((networkManager.configurationFromIdentifier(ap_name).state() ==  QNetworkConfiguration::Undefined &&
-		networkManager.configurationFromIdentifier(ap_name).isValid()) ||
-		(networkManager.configurationFromIdentifier(ap_name).state() == QNetworkConfiguration::Discovered &&
-		networkManager.configurationFromIdentifier(ap_name).isValid()))
+    if((m_NetworkManager.configurationFromIdentifier(ap_name).state() ==  QNetworkConfiguration::Undefined &&
+        m_NetworkManager.configurationFromIdentifier(ap_name).isValid()) ||
+        (m_NetworkManager.configurationFromIdentifier(ap_name).state() == QNetworkConfiguration::Discovered &&
+        m_NetworkManager.configurationFromIdentifier(ap_name).isValid()))
 	{
 		qDebug() << "Given access point is in discovered or undefined state and it is also valid, so proceeding...";
 		return true;
@@ -746,7 +796,7 @@ void NetworkTest::ListConfigurations()
     //MWTS_ENTER;
     qDebug() << "LISTING AVAILABLE ACCESS POINT CONFIGURATIONS:";
 
-    QList<QNetworkConfiguration> configs = networkManager.allConfigurations();
+    QList<QNetworkConfiguration> configs = m_NetworkManager.allConfigurations();
     for (int i = 0; i < configs.size(); ++i) {
         debugPrintConfiguration(configs.at(i));
     }
@@ -755,7 +805,7 @@ void NetworkTest::ListConfigurations()
 bool NetworkTest::ConnectToDefault()
 {
     MWTS_ENTER;
-    bool retVal = ConnectToConfig(networkManager.defaultConfiguration());
+    bool retVal = ConnectToConfig(m_NetworkManager.defaultConfiguration());
 
     MWTS_LEAVE;
     return retVal;
@@ -766,7 +816,7 @@ QString NetworkTest::ConfigurationByName(const QString name)
     MWTS_ENTER;
     QString identifier = "";
 
-    QList<QNetworkConfiguration> configs = networkManager.allConfigurations();
+    QList<QNetworkConfiguration> configs = m_NetworkManager.allConfigurations();
     for (int i=0; i< configs.size(); ++i) {
         if (name == configs.at(i).name() ) {
             qDebug() << "Found " << name;
@@ -797,12 +847,12 @@ bool NetworkTest::ConnectToName(QString ap_name)
     UpdateConfigs();
 
     QString ap_identifier = ConfigurationByName(ap);
-    networkConfiguration = networkManager.configurationFromIdentifier(ap_identifier);
+    m_NetworkConfiguration = m_NetworkManager.configurationFromIdentifier(ap_identifier);
 
-    qDebug() << "connecting to config named: " << networkConfiguration.name() << " and identifier: " << networkConfiguration.identifier();
+    qDebug() << "connecting to config named: " << m_NetworkConfiguration.name() << " and identifier: " << m_NetworkConfiguration.identifier();
 
     bool retval = false;
-    retval = ConnectToConfig(networkConfiguration);
+    retval = ConnectToConfig(m_NetworkConfiguration);
 
     MWTS_LEAVE;
     return retval;
@@ -830,7 +880,7 @@ bool NetworkTest::SetTethering(const QString mode)
     QList<QVariant> args;
 
     args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(bMode));
-    QDBusMessage tethering_reply = m_ConnmanManager->callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+    QDBusMessage tethering_reply = m_pConnmanManager->callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
 
     qDebug() << "Reply from SetTethering: " << tethering_reply;
 
@@ -841,13 +891,17 @@ bool NetworkTest::SetTethering(const QString mode)
 QString NetworkTest::GetServicePath(const QString ap_name)
 {
     qDebug() << "Opening Connman manager interface";
-
     QDBusInterface maanager("net.connman", "/", "net.connman.Manager", QDBusConnection::systemBus());
 
-    QDBusReply<QVariantMap> reply = m_ConnmanManager->call("GetProperties");
+    qDebug() << "Getting manager properties...";
+    QDBusReply<QVariantMap> reply = m_pConnmanManager->call("GetProperties");
+    if (!reply.isValid())
+    {
+        QDBusError error = reply.error();
+        qDebug() << "Received invalid DBUS reply";
+        qDebug() << "Error message:" << error.message();
 
-    if (!reply.isValid()) {
-        qCritical() << "Reply is inValid!";
+        qCritical() << "Could not get manager properties, check connman-daemon. Aborting...";
         return "";
     }
 
@@ -911,7 +965,7 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     }
 
     // connect the connman state signal to slot
-    m_ConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
+    m_pConnmanManager->connection().connect("net.connman", "/", "net.connman.Manager", "StateChanged",
                                           this, SLOT(slotConnmanStateChanged()));
 
     // open interface to the service
@@ -968,25 +1022,37 @@ bool NetworkTest::ConnmanConnection(const QString ap_name)
     QList<QVariant> args;
 
     args << qVariantFromValue(property) << QVariant::fromValue(QDBusVariant(pass));
+    qDebug() << "Setting passphrase...";
     QDBusMessage pass_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+    qDebug() << pass_reply;
 
     g_pTime->start();
 
     qDebug() << "Trying to connect to service";
-
     QDBusReply<QDBusVariant> connect_reply = iface.call("Connect");
 
-    if (!connect_reply.isValid()) {
+    if (!connect_reply.isValid())
+    {
         QDBusError error = connect_reply.error();
 
-        if (error.message() == "Already connected") {
-            qCritical() << "Already connected. Disconnect previous session before attempting another...";
-            return false;
+        if (error.message() == "Already connected")
+        {
+            qDebug() << "Already connected. No need to connect. All good.";
+            return true;
         }
     }
 
     qDebug() << "Waiting for the connection state change....";
     this->Start();
+
+    // set AutoConnect property to false
+    property = "AutoConnect";
+    bool propertyValue = false;
+    args.clear();
+    args << QVariant::fromValue(property) << QVariant::fromValue(QDBusVariant(propertyValue));
+    qDebug() << "Setting AutoConnect property to false...";
+    QDBusMessage autoconnect_reply = iface.callWithArgumentList(QDBus::AutoDetect, QLatin1String("SetProperty"), args);
+    qDebug() << autoconnect_reply;
 
     MWTS_LEAVE;
     return m_bResult;
@@ -1026,7 +1092,7 @@ QNetworkConfiguration NetworkTest::GetConfigurationByName(QString ap_name)
     MWTS_ENTER;
 
     // browse trough list of configurations and return one with matching name
-    QList<QNetworkConfiguration> configs = networkManager.allConfigurations();
+    QList<QNetworkConfiguration> configs = m_NetworkManager.allConfigurations();
     for (int i =0; i< configs.size(); ++i) {
         if (ap_name == configs.at(i).name() ) {
             qDebug() << "Found " << ap_name;
@@ -1036,16 +1102,16 @@ QNetworkConfiguration NetworkTest::GetConfigurationByName(QString ap_name)
         }
     }
     qDebug() << "Couldn't find " << ap_name << " using default configuration";
-    return networkManager.defaultConfiguration();
+    return m_NetworkManager.defaultConfiguration();
 }
 
 bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
 {
     MWTS_ENTER;
 
-    if (networkSession != 0) {
+    if (m_pNetworkSession != 0) {
         qDebug("Closing existing session!");
-        networkSession->stop();
+        m_pNetworkSession->stop();
         MWTS_LEAVE;
         return false;
     }
@@ -1071,28 +1137,28 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
     debugPrintConfiguration(config);
 
 
-    networkSession = new QNetworkSession(config);
-    connect(networkSession, SIGNAL(stateChanged(QNetworkSession::State)),
+    m_pNetworkSession = new QNetworkSession(config);
+    connect(m_pNetworkSession, SIGNAL(stateChanged(QNetworkSession::State)),
             this, SLOT(networkStateChanged(QNetworkSession::State)));
-    connect(networkSession, SIGNAL(error(QNetworkSession::SessionError)),
+    connect(m_pNetworkSession, SIGNAL(error(QNetworkSession::SessionError)),
             this, SLOT(networkError(QNetworkSession::SessionError)));
 
     // Setting this property to true before calling open() implies that the connection attempt is made but if no connection can be established,
     // the user is not consulted and asked to select a suitable connection. This property is not set by default and support for it depends on the platform.
-    networkSession->setSessionProperty ("ConnectInBackground", false);
+    m_pNetworkSession->setSessionProperty ("ConnectInBackground", false);
 
     if (bCanRoam) {
         qDebug() << "Roaming is set on. Asset will now change to more suitable configuration on the fly...";
-        connect(networkSession, SIGNAL(newConfigurationActivated()),
+        connect(m_pNetworkSession, SIGNAL(newConfigurationActivated()),
                 this, SLOT(newConfigurationActivatedHandler()));
-        connect(networkSession, SIGNAL(preferredConfigurationChanged(const QNetworkConfiguration & config, bool isSeamless)),
+        connect(m_pNetworkSession, SIGNAL(preferredConfigurationChanged(const QNetworkConfiguration & config, bool isSeamless)),
                 this, SLOT(preferredConfigurationChangedHandler(const QNetworkConfiguration & config, bool isSeamless)));
     }
 
     g_pTime->start();
-    networkSession->open();
+    m_pNetworkSession->open();
 
-    if (networkSession->waitForOpened(10000)) {
+    if (m_pNetworkSession->waitForOpened(10000)) {
         qDebug("Success, Connection established!");
 
         double elapsed=g_pTime->elapsed();
@@ -1100,7 +1166,7 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
 
         g_pResult->AddMeasure("Connection latency", elapsed, "ms");
 
-        QString interfaceName = networkSession->interface().humanReadableName();
+        QString interfaceName = m_pNetworkSession->interface().humanReadableName();
         qDebug() << "Interface: " << interfaceName;
 
         QString bearer = config.bearerName();
@@ -1148,7 +1214,7 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
             qDebug() << "Type: Internet access point";
 
         // finally accept the current iap connection
-        networkSession->accept();
+        m_pNetworkSession->accept();
 
         if (bCanRoam) {
             qDebug() << "Roaming is set on, checking for more suitable ap..";
@@ -1158,10 +1224,10 @@ bool NetworkTest::ConnectToConfig(const QNetworkConfiguration& config)
     } // if
     else
     {
-        if (networkSession) {
-            networkSession->stop();
-            delete networkSession;
-            networkSession = 0;
+        if (m_pNetworkSession) {
+            m_pNetworkSession->stop();
+            delete m_pNetworkSession;
+            m_pNetworkSession = 0;
             qCritical() << "The session was not opened in 10 seconds.";
             return false;
         }
@@ -1265,7 +1331,7 @@ void NetworkTest::slotConnmanStateChanged()
     m_bResult = true;
 
     // we can disconnect the signal for now
-    m_ConnmanManager->connection().disconnect("net.connman", "/", "net.connman.Manager", "StateChanged",
+    m_pConnmanManager->connection().disconnect("net.connman", "/", "net.connman.Manager", "StateChanged",
                                           this, SLOT(slotConnmanStateChanged()));
 
     MWTS_LEAVE;
@@ -1277,7 +1343,7 @@ void NetworkTest::newConfigurationActivatedHandler()
     this->Stop();
 
     qDebug() << "New configuration activated. Going to accept()";
-    networkSession->accept();
+    m_pNetworkSession->accept();
 
     MWTS_LEAVE;
 }
@@ -1338,9 +1404,9 @@ void NetworkTest::networkStateChanged(QNetworkSession::State state)
              status += "Closing"; break;
         case QNetworkSession::Disconnected:
             status += "Disconnected";
-            if (networkSession) {
-                networkSession->deleteLater();
-                networkSession = 0;
+            if (m_pNetworkSession) {
+                m_pNetworkSession->deleteLater();
+                m_pNetworkSession = 0;
             }
             this->Stop();
             break;
