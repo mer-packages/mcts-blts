@@ -1,0 +1,23 @@
+
+	N900-JKL-CORE-TESTS
+	-------------------
+
+
+INTRODUCTION
+
+  This is example how to create packages for OTS automatic testing.
+  Package contains only one file: tests.xml with test cases which are
+  copied from tests-all.xml from relevant test assets. Dependencies to
+  test assets from which test cases are used should be specified in .spec file.
+
+  Package include tests.xml with tests from following test assets:
+  - mwts-network
+  - mwts-filesystem
+  - mwts-qtmultimedia
+
+
+PACKAGE BUILDING
+
+  Use included script to build rpm package
+  $ ./pack -r
+
