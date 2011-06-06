@@ -78,9 +78,7 @@ FtpWindow::~FtpWindow()
     }
 }
 
-bool FtpWindow::connectToHost(const QString ip,
-                              const QString username,
-                              const QString password)
+bool FtpWindow::connectToHost(const QString ip)
 {
     // close the existing connection
     if ( m_pFtp->state() != QFtp::Unconnected )
@@ -91,8 +89,20 @@ bool FtpWindow::connectToHost(const QString ip,
     }
 
     qDebug() << "Connecting to host " << ip;
-    m_pFtp->connectToHost( ip );
-    m_pFtp->login( username, password );
+    m_pFtp->connectToHost(ip);
+    m_pTestAsset->Start();
+
+    if (m_pFtp->state() == QFtp::Connected)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool FtpWindow::login(const QString username, const QString password)
+{
+    qDebug() << "Logging in with username:" << username << "and password:" << password;
+    m_pFtp->login(username, password);
     m_pTestAsset->Start();
 
     if (m_pFtp->state() == QFtp::LoggedIn)
@@ -231,6 +241,7 @@ void FtpWindow::ftp_commandFinished(int /*id*/, bool error)
         case QFtp::ConnectToHost:
             qDebug() << "Connect to host finished with an error!";
             logError();
+            m_pTestAsset->Stop();
             break;
         case QFtp::Login:
             qDebug() << "Login finished with an error!";
@@ -268,6 +279,7 @@ void FtpWindow::ftp_commandFinished(int /*id*/, bool error)
         {
         case QFtp::ConnectToHost:
             qDebug() << "Successfully connected to host";
+            m_pTestAsset->Stop();
             break;
         case QFtp::Login:
             qDebug() << "Login succeeded";
