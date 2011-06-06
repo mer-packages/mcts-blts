@@ -316,7 +316,6 @@ bool NetworkTest::Downloadfile(const QString strFilename)
             qCritical() << "No connection available, aborting file Download!";
             return false;
     }
-
     qDebug() << "Nice we have a connection!";
 
     FtpWindow ftpObject(this);
@@ -328,25 +327,32 @@ bool NetworkTest::Downloadfile(const QString strFilename)
     password = g_pConfig->value("FTP/password").toString();
 
     if(ip.isNull() || username.isNull() || password.isNull()) {
-        qCritical() << "Missing ftp information(ip, pass or username), please check you NetworkTest.cfg";
+        qCritical() << "Missing ftp information(ip, pass or username), please check your NetworkTest.conf";
         return false;
     }
 
-    qDebug() << "Connecting to ftp host " << ip << " with " << username << "/" << password;
-    success = ftpObject.connectToHost(ip, username, password);
+    success = ftpObject.connectToHost(ip);
+    if(!success)
+    {
+        qCritical() << "Connecting to host failed!";
+        return false;
+    }
 
-    if(!success) {
-        qDebug() << "Login failed!";
+    success = ftpObject.login(username, password);
+    if(!success)
+    {
+        qCritical() << "Logging in failed!";
         return false;
     }
 
     success = ftpObject.downloadFile(strFilename);
-
-    if(!success) {
-        qDebug() << "File download failed!";
+    if(!success)
+    {
+        qCritical() << "File download failed!";
         return false;
     }
-    else {
+    else
+    {
         g_pResult->AddMeasure("Download", ftpObject.transferSpeed(), "MB/s");
     }
 
@@ -365,7 +371,6 @@ bool NetworkTest::UploadFile(const QString strFilename)
         qCritical() << "No connection available, aborting file Upload!";
         return false;
     }
-
     qDebug() << "Nice we have a connection!";
 
     FtpWindow ftpObject(this);
@@ -377,25 +382,32 @@ bool NetworkTest::UploadFile(const QString strFilename)
     password = g_pConfig->value("FTP/password").toString();
 
     if(ip.isNull() || username.isNull() || password.isNull()) {
-        qCritical() << "Missing ftp information (ip, pass or username), please check you NetworkTest.cfg";
+        qCritical() << "Missing ftp information (ip, pass or username), please check your NetworkTest.conf";
         return false;
     }
 
-    qDebug() << "Connecting to ftp host " << ip << " with username " << username;
-    success = ftpObject.connectToHost(ip, username, password);
+    success = ftpObject.connectToHost(ip);
+    if(!success)
+    {
+        qCritical() << "Connecting to host failed!";
+        return false;
+    }
 
-    if(!success) {
-        qDebug() << "Login failed!";
+    success = ftpObject.login(username, password);
+    if(!success)
+    {
+        qCritical() << "Logging in failed!";
         return false;
     }
 
     success = ftpObject.uploadFile(strFilename);
-
-    if(!success) {
-        qDebug() << "File upload failed!";
+    if(!success)
+    {
+        qCritical() << "File upload failed!";
         return false;
     }
-    else {
+    else
+    {
         g_pResult->AddMeasure("Upload", ftpObject.transferSpeed(), "MB/s");
     }
 
