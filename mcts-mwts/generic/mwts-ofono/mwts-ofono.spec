@@ -54,7 +54,7 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/*.so*
 /usr/lib/tests/*
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/mwts-ofono.min.conf
 /usr/lib/min/*.cfg
 
