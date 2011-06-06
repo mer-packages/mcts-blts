@@ -130,6 +130,7 @@ int ofono_enter_pin(void* user_ptr, int __attribute__((unused))test_num)
 	struct sim_manager_state state;
 	state.data = data;
 	state.proxy = NULL;
+	state.result = -1;
 
 	if(!state.data->pin_type ||
 	   !state.data->old_pin)
@@ -523,7 +524,7 @@ on_sim_manager_property_changed(__attribute__((unused))DBusGProxy *proxy, char *
 	const char* value_str = g_value_get_string(value);
 
 	BLTS_DEBUG("SIM manager property '%s' changed to '%s'\n", key, value_str);
-
+	state->result = 0;
 	g_main_loop_quit(state->data->mainloop);
 }
 
