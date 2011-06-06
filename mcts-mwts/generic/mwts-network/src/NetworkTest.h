@@ -182,7 +182,7 @@ protected slots:
     /*
      * Connman manager slot
      */
-    void slotConnmanStateChanged();
+    void slotConnmanStateChanged(QString state);
 
 	/*
 	 * Slots for roaming support.
@@ -208,6 +208,7 @@ protected slots:
 
 private:
     void debugPrintConfiguration(QNetworkConfiguration config);
+    void debugPrintConfigState(QNetworkConfiguration::StateFlags state);
     QNetworkConfiguration GetConfigurationByName(QString ap_name);
     QString saveFileName(const QUrl &url);
 
@@ -242,6 +243,8 @@ private:
 	QProcess* m_pProcess;
 
 	bool m_bUpdateCompleted;
+
+    bool m_bConnecting;
 };
 
 #endif //#ifndef _INCLUDED_NETWORK_TEST_H
