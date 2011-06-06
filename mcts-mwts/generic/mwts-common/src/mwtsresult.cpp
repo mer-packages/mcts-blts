@@ -189,16 +189,25 @@ void MwtsResult::StartSeriesMeasure(QString name, QString unit, double lfTarget,
 	
 }
 
-void MwtsResult::AddSeriesMeasure(QString name, double value)
-{
-	QString str;
-	QDateTime timestamp = QDateTime::currentDateTime();
-	QString timestampStr=timestamp.toString("yyyy-mm-dd\thh:mm:ss");
-	str=timestampStr+QString(";")+QString::number(value);
-	WriteSeriesFile(name, str);	
-	
-}
 
+void MwtsResult::AddSeriesMeasure(QString name, QString value, QString unit)
+{
+	/*
+	name;value;unit;
+	name;value;unit;target;failure;
+	name;value;unit;target;failure;
+	where the name and unit are strings; value target and failure floating point numbers.
+	(http://wiki.meego.com/Quality/QA-tools/Test_plan#Measurement_data)
+	Example:
+	bt.upload;1.4123432;MB/s;
+	cpu.load;23.41;%;5;90;
+	mem.load;80.16;%;80;99;
+	*/
+	QString str = name + ";" + value + ";" + unit +";";
+	if (m_lfFailLimit!=0 && m_lfTarget!=0)
+		str += QString::number(m_lfTarget) + ";" + QString::number(m_lfFailLimit) + ";";
+	WriteSeriesFile(name, str);
+}
 
 /** Tells whether test case is passed in result perspective*/
 bool MwtsResult::IsPassed()

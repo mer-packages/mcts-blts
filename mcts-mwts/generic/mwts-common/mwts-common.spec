@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Mwts-common is a Qt based framework library used by all MWTS test assets
 License:                LGPL
 Name:                   mwts-common
-Version:                1.2.2
+Version:                1.2.4
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -71,6 +71,9 @@ chmod 777 /var/log/tests
 ldconfig
 
 %changelog
+* Wed Jun 1 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.4
+- Fixes: MB#18304 - .csv files written in wrong format
+
 * Mon May 23 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.3
 - Fixed test case verdict (passed, failed) to be in sync at the min interface and..result file
 
