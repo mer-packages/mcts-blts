@@ -6,12 +6,12 @@ BuildRoot:		%{buildroot}
 Summary: 		A MWTS test asset for Telepathy-QT4
 License: 		LGPL
 Name: 			mwts-telepathy
-Version: 		0.1.7
+Version: 		0.1.8
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
-BuildRequires:		libqt-devel, min-devel, min, compat-telepathy-qt4-devel, mwts-common-devel
-Requires:		min, compat-telepathy-qt4, mwts-common
+BuildRequires:		libqt-devel, min-devel, min, telepathy-qt4-devel, mwts-common-devel
+Requires:		min, telepathy-qt4, mwts-common
 Source: 		%{name}-%{version}.tar.gz
 
 %description
