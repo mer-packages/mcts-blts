@@ -29,6 +29,12 @@
 #include "PendingOperationWaiter.h"
 #include "Contacts.h"
 
+#include <TelepathyQt4/AccountSet>
+#include <TelepathyQt4/SharedPtr>
+#include <TelepathyQt4/ConnectionLowlevel>
+#include <TelepathyQt4/Client>
+#include <TelepathyQt4/ChannelClassSpecList>
+#include <TelepathyQt4/ChannelClassSpec>
 /**************** Class TelepathyTest ********************/
 
 
@@ -74,9 +80,9 @@ void TelepathyTest::OnInitialize()
 	qDebug() << "Creating channel handlers...";
 
 	mClientRegistrar = Tp::ClientRegistrar::create();
-	Tp::ChannelClassList clientFilters;
-	Tp::ChannelClassList text;
-	Tp::ChannelClassList streamedMedia;
+        Tp::ChannelClassSpecList clientFilters;
+        Tp::ChannelClassSpecList text;
+        Tp::ChannelClassSpecList streamedMedia;
 
 	Tp::ChannelClassList filters;
 	// match filters with the ones defined in CallUi.client file:
@@ -151,14 +157,14 @@ void TelepathyTest::OnInitialize()
 	// org.freedesktop.Telepathy.Channel.TargetHandleType u=2
 
 	{ // [org.freedesktop.Telepathy.Client.Handler.HandlerChannelFilter 0]
-		Tp::ChannelClass filter;
-		filter.insert(
+                Tp::ChannelClass filter;
+                filter.insert(
 			QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".ChannelType"),
 			QDBusVariant(TELEPATHY_INTERFACE_CHANNEL_TYPE_TEXT) );
 		filter.insert(
 			QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"),
 			QDBusVariant((uint) Tp::HandleTypeContact) );
-		text.append( filter );
+                text.append( filter );
 	}
 
 	{ // [org.freedesktop.Telepathy.Client.Handler.HandlerChannelFilter 1]
@@ -169,13 +175,13 @@ void TelepathyTest::OnInitialize()
 		filter.insert(
 			QLatin1String(TELEPATHY_INTERFACE_CHANNEL ".TargetHandleType"),
 			QDBusVariant((uint) Tp::HandleTypeRoom) );
-		text.append( filter );
+                text.append( filter );
 	}
 
 	clientFilters.append( text );
 	clientFilters.append( streamedMedia );
 	
-	mChannelHandler = new ChannelHandlerClient( clientFilters, clientCapabilities, true );
+        mChannelHandler = new ChannelHandlerClient( clientFilters, clientCapabilities, true );
 	
 	qDebug() << "Registering CommonClientHandler...";
 	Tp::AbstractClientPtr client = Tp::AbstractClientPtr::dynamicCast(Tp::SharedPtr<ChannelHandlerClient>( mChannelHandler ));
@@ -204,17 +210,17 @@ void TelepathyTest::OnInitialize()
 		// AccountManager is now ready
 		qDebug() << "Bus name: " << mAccountMgr->busName();
 		qDebug() << "Object path: " << mAccountMgr->objectPath();
-		qDebug() << "Valid accounts:";
-		foreach ( const QString& path, mAccountMgr->validAccountPaths() )
+                /*qDebug() << "Valid accounts:";
+                foreach ( const QString& path, mAccountMgr->validAccountPaths() )
 		{
 			qDebug() << " path: " << path;
-		}
-		QList<Tp::AccountPtr> validAccounts = mAccountMgr->validAccounts();
-		foreach( Tp::AccountPtr account, validAccounts )
+                }*/
+                QList<Tp::AccountPtr> validAccounts = mAccountMgr->validAccounts()->accounts();
+                foreach( Tp::AccountPtr account, validAccounts )
 		{
-			qDebug() << "Account protocol: " << account->protocol();
-			if ( account->protocol().compare( "jabber" ) == 0 ||
-				 account->protocol().compare( "sip" ) == 0 )
+                        qDebug() << "Account protocol: " << account->protocolName();
+                        if ( account->protocolName().compare( "jabber" ) == 0 ||
+                                 account->protocolName().compare( "sip" ) == 0 )
 			{
 				bool ret = (*mWaiter)( account->remove() );
 				if ( ret == true )
@@ -543,7 +549,7 @@ bool TelepathyTest::CreateAccountFromPath( const QString& path )
 			qDebug() << "Account successfully created from path: " << path;
 			
 			mAccountState = mAccount->isEnabled();
-			mHaveConnection = mAccount->haveConnection();
+                        mHaveConnection = (!mAccount->connection().isNull()) ? (!mAccount->connection()->objectPath().isEmpty()) : false;
 			mConnectionStatus = mAccount->connectionStatus();
 			mConnectionStatusReason = mAccount->connectionStatusReason();
 			
@@ -723,7 +729,8 @@ bool TelepathyTest::RequestContacts( const QStringList& names )
 		}
 		
 		Tp::UIntList handles;
-		Tp::PendingHandles* ph = conn->requestHandles( Tp::HandleTypeContact, names );
+
+                Tp::PendingHandles* ph = conn->lowlevel()->requestHandles( Tp::HandleTypeContact, names );
 		// Synchronize PendingOperation returned for handle request.
 		// Execution will not continue, until requestHandles has returned
 		ret = mWaiter->requestHandles( ph, handles );
@@ -744,7 +751,7 @@ bool TelepathyTest::RequestContacts( const QStringList& names )
 			}
 		}
 		
-		Tp::ContactManager* contactManager = conn->contactManager();
+                Tp::ContactManagerPtr contactManager = conn->contactManager();
 		if ( contactManager )
 		{
 			QList<Tp::ContactPtr> contacts;
@@ -821,7 +828,7 @@ bool TelepathyTest::GetContacts( const QStringList& names )
 		}
 		
 		Tp::UIntList handles;
-		Tp::PendingHandles* ph = conn->requestHandles( Tp::HandleTypeContact, names );
+                Tp::PendingHandles* ph = conn->lowlevel()->requestHandles( Tp::HandleTypeContact, names );
 		// Synchronize PendingOperation returned for handle request.
 		// Execution will not continue, until requestHandles has returned
 		ret = mWaiter->requestHandles( ph, handles );
@@ -834,7 +841,7 @@ bool TelepathyTest::GetContacts( const QStringList& names )
 			return ret;
 		}
 		
-		Tp::ContactManager* contactManager = conn->contactManager();
+                Tp::ContactManagerPtr contactManager = conn->contactManager();
 		if ( contactManager )
 		{
 			// Look up given handles from "buddy list"
@@ -882,11 +889,11 @@ bool TelepathyTest::EnsureMediaCall(	const QString& contactIdentifier,
 		// Connect to NewChannels from TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS
 		// This way we will be notified for new channels
 		Tp::ConnectionPtr conn = mAccount->connection();
-		if ( conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
-		{
-			connect(conn->requestsInterface(),
-				SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
-				SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
+                if ( conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
+                {
+                    connect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
+                                SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
+                                SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
 		}
 	}
 	else
@@ -906,7 +913,7 @@ bool TelepathyTest::EnsureMediaCall(	const QString& contactIdentifier,
 	// Execution will not continue, until ensureMediaCall has finished.
 	// During that time, our ChannelHandler will be offered the newly requested channel.
 	mOutgoingCallMeasure->start();
-        bool ret = (*mWaiter)( mAccount->ensureMediaCall( contactName,
+        bool ret = (*mWaiter)( mAccount->ensureStreamedMediaCall( contactName,
 							  userActionTime,
 							  preferredHandler ) );
 	if ( ret == true )
@@ -1062,7 +1069,7 @@ bool TelepathyTest::WaitForIncomingCall()
 		if ( conn.data() && conn->isValid() &&conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
 		{
 			qDebug() << "Connecting to NewChannels";
-			connect(conn->requestsInterface(),
+                        connect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
 				SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
 				SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
 		}
@@ -1113,7 +1120,7 @@ bool TelepathyTest::WaitForIncomingCall()
 		if ( conn.data() && conn->isValid() &&conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
 		{
 			qDebug() << "Disconnecting from NewChannels";
-			disconnect(conn->requestsInterface(),
+                        disconnect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
 				SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
 				this,
 				SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
@@ -1151,7 +1158,7 @@ bool TelepathyTest::CreateConferenceCall()
 
 
 	Tp::PendingChannelRequest* pcr =
-			mAccount->createConferenceMediaCall( chans,
+                        mAccount->createConferenceStreamedMediaCall( chans,
 				QStringList(), QDateTime::currentDateTime(),
 				"org.freedesktop.Telepathy.Client.CommonClientHandler" );
 	mRetValue = (*mWaiter)( pcr );
@@ -1284,8 +1291,11 @@ bool TelepathyTest::isValidAccountPath( const QString& path )
 	MWTS_ENTER;
 	qDebug() << "Checking validity of " << path;
 	// Check that the given path is in account managers list of valid account paths
-	foreach ( const QString& validpath, mAccountMgr->validAccountPaths() )
-	{
+        //foreach ( const QString& validpath, mAccountMgr->validAccounts() )
+        QList<Tp::AccountPtr> validAccounts = mAccountMgr->validAccounts()->accounts();
+        foreach( Tp::AccountPtr account, validAccounts )
+        {
+                const QString& validpath = account->objectPath();
 		if ( validpath.compare( path ) == 0 )
 		{
 			qDebug() << "Found " << path << " from valid paths.";
@@ -1671,15 +1681,15 @@ void TelepathyTest::onIncomingTextChannelReceived(
 }
 
 
-bool TelepathyTest::RequestHandles( uint handleType, const QStringList& names )
+bool TelepathyTest::RequestHandles(Tp::HandleType handleType, const QStringList& names )
 {
 	MWTS_ENTER;
 	bool ret = false;
 
-	if ( mAccount->haveConnection() )
+        if ( (!mAccount->connection().isNull()) ? (!mAccount->connection()->objectPath().isEmpty()) : false )
 	{
 		Tp::ConnectionPtr conn = mAccount->connection();
-		connect( conn->requestHandles( handleType, names ),
+                connect( conn->lowlevel()->requestHandles( handleType, names ),
 			 SIGNAL( finished( Tp::PendingOperation* ) ),
 			 this,
 			 SLOT( onRequestHandlesReady( Tp::PendingOperation* ) ) );
@@ -1814,7 +1824,7 @@ bool TelepathyTest::WaitForIncomingMessage()
 		if ( conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
 		{
 			qDebug() << "Connecting to NewChannels...";
-			connect(conn->requestsInterface(),
+                        connect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
 					SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
 					SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
 		}
@@ -1855,7 +1865,7 @@ bool TelepathyTest::WaitForIncomingMessage()
 	if ( conn.data() && conn->isValid() &&conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
 	{
 		qDebug() << "Disconnecting from NewChannels";
-		disconnect(conn->requestsInterface(),
+                disconnect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
 			SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
 			this,
 			SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
@@ -1878,7 +1888,7 @@ bool TelepathyTest::WaitForIncomingIM()
 		if ( conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
 		{
 			qDebug() << "Connecting to NewChannels...";
-			connect(conn->requestsInterface(),
+                        connect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
 					SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
 					SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
 		}
@@ -1909,7 +1919,7 @@ bool TelepathyTest::WaitForIncomingIM()
 	if ( conn.data() && conn->isValid() &&conn->interfaces().contains( TELEPATHY_INTERFACE_CONNECTION_INTERFACE_REQUESTS ) )
 	{
 		qDebug() << "Disconnecting from NewChannels";
-		disconnect(conn->requestsInterface(),
+                disconnect(conn->optionalInterface<Tp::Client::ConnectionInterfaceRequestsInterface>(Tp::Connection::CheckInterfaceSupported),
 			SIGNAL(NewChannels(const Tp::ChannelDetailsList&)),
 			this,
 			SLOT(onNewChannels(const Tp::ChannelDetailsList&)));
