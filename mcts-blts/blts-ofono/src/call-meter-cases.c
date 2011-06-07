@@ -34,14 +34,14 @@ struct call_meter_case_state {
 	char* address;
 	char* pin;
 
-	char* initial_call_meter;
-	char* initial_accu_call_meter;
-	char* initial_accu_call_meter_max;
-	char* initial_price_per_unit;
+	guint32 initial_call_meter;
+	guint32 initial_accu_call_meter;
+	guint32 initial_accu_call_meter_max;
+	double initial_price_per_unit;
 	char* initial_currency;
 
-	char* new_accu_call_meter_max;
-	char* new_price_per_unit;
+	guint32 new_accu_call_meter_max;
+	double new_price_per_unit;
 	char* new_currency;
 
 	GMainLoop *mainloop;
@@ -106,90 +106,88 @@ GHashTable* get_call_meter_properties(DBusGProxy *proxy)
 	return list;
 }
 
-static gboolean
-check_call_meter_value (GHashTable* properties, gpointer key, gpointer expected, gpointer user_data)
+/* expected_val can be NULL or set to (variable type) value to compare against. */
+static gboolean check_call_meter_value(GHashTable* properties, gpointer key,
+				       GValue *expected_val, gpointer user_data)
 {
 	struct call_meter_case_state *state = (struct call_meter_case_state *) user_data;
-	gpointer *value = g_hash_table_lookup ((GHashTable*)properties, key);
+	GValue *value = g_hash_table_lookup((GHashTable*)properties, key);
 
-    if (!value)
-	{
+	if(!value) {
 		BLTS_DEBUG("Value for key:%s not found\n", key);
-        return FALSE;
-    }
+		return FALSE;
+	}
 
-	if(strcmp(key, "CallMeter") == 0)
-	{
-		guint32 current = g_value_get_uint((GValue*) value);
-		BLTS_DEBUG("CallMeter current value:%d\n", current);
+	if(strcmp(key, "CallMeter") == 0) {
+		guint32 current = g_value_get_uint(value);
+		BLTS_DEBUG("CallMeter current value: %u\n", current);
+
 		/* if expected is given compare against that */
-		if((gint)expected != -1)
-		{
-			BLTS_DEBUG("CallMeter expected value:%d\n", (guint32)expected);
-			return ((guint32)expected == current) ? TRUE : FALSE;
+		if(expected_val) {
+			guint32 expected = g_value_get_uint(expected_val);
+			BLTS_DEBUG("CallMeter expected value: %u\n", expected);
+			return (expected == current) ? TRUE : FALSE;
+		} else {
+			/* else CallMeter value must be bigger than the initial value */
+			return (state->initial_call_meter < current) ? TRUE : FALSE;
 		}
-		/* else CallMeter value must be bigger than the initial value */
-		else
-		{
-			guint32 initial = atoi(state->initial_call_meter);
-			return (initial < current) ? TRUE : FALSE;
-		}
-	}
-	else if(strcmp(key, "AccumulatedCallMeter") == 0)
-	{
-		guint32 current = g_value_get_uint((GValue*)value);
-		BLTS_DEBUG("AccumulatedCallMeter current value:%d\n", current);
+
+	} else if(strcmp(key, "AccumulatedCallMeter") == 0) {
+		guint32 current = g_value_get_uint(value);
+		BLTS_DEBUG("AccumulatedCallMeter current value: %u\n", current);
+
 		/* if expected is given compare against that */
-		if((gint)expected != -1)
-		{
-			BLTS_DEBUG("AccumulatedCallMeter expected value:%d\n", (guint32)expected);
-			return ((guint32)expected == current) ? TRUE : FALSE;
+		if(expected_val) {
+			guint32 expected = g_value_get_uint(expected_val);
+			BLTS_DEBUG("AccumulatedCallMeter expected value: %lu\n", expected);
+			return (expected == current) ? TRUE : FALSE;
+		} else {
+			/* else CallMeter value must be bigger than the initial value */
+			return (state->initial_accu_call_meter < current) ? TRUE : FALSE;
 		}
-		/* else CallMeter value must be bigger than the initial value */
-		else
-		{
-			guint32 initial = atoi(state->initial_accu_call_meter);
-			return (initial < current) ? TRUE : FALSE;
-		}
-	}
-	else if (strcmp(key, "AccumulatedCallMeterMaximum") == 0)
-	{
-		guint32 initial = atoi(state->initial_accu_call_meter_max);
-		guint32 current = g_value_get_uint((GValue*)value);
-		guint32 exp = atoi(expected);
 
-		BLTS_DEBUG("AccumulatedCallMeterMaximum initial value:%d\n", initial);
-		BLTS_DEBUG("AccumulatedCallMeterMaximum current value:%d\n", current);
-		BLTS_DEBUG("AccumulatedCallMeterMaximum expected value:%d\n", exp);
-
-		return (exp == current) ? TRUE : FALSE;
-	}
-	else if (strcmp(key, "PricePerUnit") == 0)
-	{
-		gdouble initial = atof(state->initial_price_per_unit);
-		gdouble current = g_value_get_double((GValue*)value);
-
-		BLTS_DEBUG("PricePerUnit initial value:%f\n", initial);
-		BLTS_DEBUG("PricePerUnit current value:%f\n", current);
-		BLTS_DEBUG("PricePerUnit expected value:%f\n", atof(expected));
-
-		return (atof(expected) == current) ? TRUE : FALSE;
-	}
-	else if (strcmp(key, "Currency") == 0)
-	{
-		const gchar* current = g_value_get_string((GValue*)value);
-
-		BLTS_DEBUG("Currency initial value:%s\n", state->initial_currency);
-		BLTS_DEBUG("Currency current value:%s\n", current);
-		BLTS_DEBUG("Currency expected value:%s\n", (gchar*) expected);
-
-		if (strcmp(current, (gchar*)expected) == 0)
-			return TRUE;
-		else
+	} else if (strcmp(key, "AccumulatedCallMeterMaximum") == 0) {
+		if(!expected_val) {
+			BLTS_ERROR("BUG: Expected value for comparison missing\n");
 			return FALSE;
-	}
-	else
-	{
+		}
+		guint32 current = g_value_get_uint(value);
+		guint32 expected = g_value_get_uint(expected_val);
+
+		BLTS_DEBUG("AccumulatedCallMeterMaximum initial value: %u\n",
+			   state->initial_accu_call_meter_max);
+		BLTS_DEBUG("AccumulatedCallMeterMaximum current value: %u\n", current);
+		BLTS_DEBUG("AccumulatedCallMeterMaximum expected value: %u\n", expected);
+
+		return (expected == current) ? TRUE : FALSE;
+
+	} else if (strcmp(key, "PricePerUnit") == 0) {
+		if(!expected_val) {
+			BLTS_ERROR("BUG: Expected value for comparison missing\n");
+			return FALSE;
+		}
+		double current = g_value_get_double(value);
+		double expected = g_value_get_double(expected_val);
+
+		BLTS_DEBUG("PricePerUnit initial value: %lf\n", state->initial_price_per_unit);
+		BLTS_DEBUG("PricePerUnit current value: %lf\n", current);
+		BLTS_DEBUG("PricePerUnit expected value:%lf\n", expected);
+
+		return (expected == current) ? TRUE : FALSE;
+	} else if (strcmp(key, "Currency") == 0) {
+		if(!expected_val) {
+			BLTS_ERROR("BUG: Expected value for comparison missing\n");
+			return FALSE;
+		}
+		const gchar* current = g_value_get_string(value);
+		const gchar* expected = g_value_get_string(expected_val);
+
+		BLTS_DEBUG("Currency initial value: %s\n", state->initial_currency);
+		BLTS_DEBUG("Currency current value: %s\n", current);
+		BLTS_DEBUG("Currency expected value: %s\n", expected);
+
+		return strcmp(current, expected) == 0;
+	} else {
 		BLTS_DEBUG("new property:%s?\n", key);
 	}
     return  FALSE;
@@ -203,33 +201,27 @@ get_initial_value (gpointer key, gpointer value, gpointer data)
 	if(!state)
 		return;
 
-	if(strcmp(key, "CallMeter") == 0)
-	{
-		state->initial_call_meter = g_strdup_value_contents (value);
-		BLTS_DEBUG("Save initial CallMeter %s (%s)\n", state->initial_call_meter, G_VALUE_TYPE_NAME(value));
-	}
-	else if (strcmp(key, "AccumulatedCallMeter") == 0)
-	{
-		state->initial_accu_call_meter = g_strdup_value_contents (value);
-		BLTS_DEBUG("Save initial AccumulatedCallMeter %s (%s)\n", state->initial_accu_call_meter, G_VALUE_TYPE_NAME(value));
-	}
-	else if (strcmp(key, "AccumulatedCallMeterMaximum") == 0)
-	{
-		state->initial_accu_call_meter_max =  g_strdup_value_contents (value);
-		BLTS_DEBUG("Save initial AccumulatedCallMeterMaximum %s (%s)\n", state->initial_accu_call_meter_max, G_VALUE_TYPE_NAME(value));
-	}
-	else if (strcmp(key, "PricePerUnit") == 0)
-	{
-		state->initial_price_per_unit =  g_strdup_value_contents (value);
-		BLTS_DEBUG("Save initial PricePerUnit %s (%s)\n", state->initial_price_per_unit, G_VALUE_TYPE_NAME(value));
-	}
-	else if (strcmp(key, "Currency") == 0)
-	{
-		state->initial_currency =  g_value_dup_string (value);
-		BLTS_DEBUG("Save initial Currency %s (%s)\n", state->initial_currency, G_VALUE_TYPE_NAME(value));
-	}
-	else
-	{
+	if(strcmp(key, "CallMeter") == 0) {
+		state->initial_call_meter = g_value_get_uint(value);
+		BLTS_DEBUG("Save initial CallMeter %u (%s)\n",
+			   state->initial_call_meter, G_VALUE_TYPE_NAME(value));
+	} else if (strcmp(key, "AccumulatedCallMeter") == 0) {
+		state->initial_accu_call_meter = g_value_get_uint(value);
+		BLTS_DEBUG("Save initial AccumulatedCallMeter %u (%s)\n",
+			   state->initial_accu_call_meter, G_VALUE_TYPE_NAME(value));
+	} else if (strcmp(key, "AccumulatedCallMeterMaximum") == 0) {
+		state->initial_accu_call_meter_max = g_value_get_uint(value);
+		BLTS_DEBUG("Save initial AccumulatedCallMeterMaximum %u (%s)\n",
+			   state->initial_accu_call_meter_max, G_VALUE_TYPE_NAME(value));
+	} else if (strcmp(key, "PricePerUnit") == 0) {
+		state->initial_price_per_unit = g_value_get_double(value);
+		BLTS_DEBUG("Save initial PricePerUnit %lf (%s)\n",
+			   state->initial_price_per_unit, G_VALUE_TYPE_NAME(value));
+	} else if (strcmp(key, "Currency") == 0) {
+		state->initial_currency = g_value_dup_string (value);
+		BLTS_DEBUG("Save initial Currency %s (%s)\n",
+			   state->initial_currency, G_VALUE_TYPE_NAME(value));
+	} else {
 		BLTS_DEBUG("new property:%s?\n", key);
 	}
 }
@@ -241,41 +233,40 @@ static void restore_call_meter_values(gpointer data)
 
 	GError *error = NULL;
 
-	if(strlen(state->new_accu_call_meter_max) != 0)
-	{
+	if(state->new_accu_call_meter_max != state->initial_accu_call_meter_max) {
 		GValue* new_value = malloc(sizeof *(new_value));
 		memset(new_value, 0, sizeof *(new_value));
 		g_value_init(new_value, G_TYPE_UINT);
-		g_value_set_uint(new_value, atoi(state->initial_accu_call_meter_max));
+		g_value_set_uint(new_value, state->initial_accu_call_meter_max);
 
 		BLTS_DEBUG("Restore AccumulatedCallMeterMaximum property...\n");
 
-		if(!org_ofono_CallMeter_set_property (state->call_meter, "AccumulatedCallMeterMaximum",  new_value, state->pin, &error))
-		{
+		if(!org_ofono_CallMeter_set_property(state->call_meter,
+			"AccumulatedCallMeterMaximum", new_value, state->pin, &error)) {
 			display_dbus_glib_error(error);
-			g_error_free (error);
+			g_error_free(error);
+			error = NULL;
 		}
 	}
 
-	if(strlen(state->new_price_per_unit) != 0)
+	if(state->new_price_per_unit != state->initial_price_per_unit)
 	{
 		GValue* new_value = malloc(sizeof *(new_value));
 		memset(new_value, 0, sizeof *(new_value));
 		g_value_init(new_value, G_TYPE_DOUBLE);
-		g_value_set_double(new_value, atof(state->initial_price_per_unit));
+		g_value_set_double(new_value, state->initial_price_per_unit);
 
 		BLTS_DEBUG("Restore PricePerUnit property...\n");
 
-		if(!org_ofono_CallMeter_set_property (state->call_meter, "PricePerUnit",  new_value, state->pin, &error))
-		{
+		if(!org_ofono_CallMeter_set_property(state->call_meter,
+			"PricePerUnit", new_value, state->pin, &error))	{
 			display_dbus_glib_error(error);
 			g_error_free (error);
+			error = NULL;
 		}
-
 	}
 
-	if(strlen(state->new_currency) != 0)
-	{
+	if(strcmp(state->new_currency, state->initial_currency)) {
 		GValue* new_value = malloc(sizeof *(new_value));
 		memset(new_value, 0, sizeof *(new_value));
 		g_value_init(new_value, G_TYPE_STRING);
@@ -283,8 +274,8 @@ static void restore_call_meter_values(gpointer data)
 
 		BLTS_DEBUG("Restore Currency property...\n");
 
-		if(!org_ofono_CallMeter_set_property (state->call_meter, "Currency",  new_value, state->pin, &error))
-		{
+		if(!org_ofono_CallMeter_set_property(state->call_meter,
+			"Currency",  new_value, state->pin, &error)) {
 			display_dbus_glib_error(error);
 			g_error_free (error);
 		}
@@ -308,21 +299,9 @@ static void call_meter_state_finalize(struct call_meter_case_state *state)
 	if (state->pin)
 		free(state->pin);
 
-	if (state->initial_call_meter)
-		free(state->initial_call_meter);
-	if (state->initial_accu_call_meter)
-		free(state->initial_accu_call_meter);
-	if (state->initial_accu_call_meter_max)
-		free(state->initial_accu_call_meter_max);
-	if (state->initial_price_per_unit)
-		free(state->initial_price_per_unit);
 	if (state->initial_currency)
 		free(state->initial_currency);
 
-	if (state->new_accu_call_meter_max)
-		free(state->new_accu_call_meter_max);
-	if (state->new_price_per_unit)
-		free(state->new_price_per_unit);
 	if (state->new_currency)
 		free(state->new_currency);
 
@@ -338,35 +317,25 @@ static gboolean call_meter_read_user_timeout(gpointer data)
 
 	BLTS_DEBUG("Read user timeout reached\n");
 
-	if(!org_ofono_VoiceCallManager_hangup_all(state->voice_call_manager, &error))
-	{
+	if(!org_ofono_VoiceCallManager_hangup_all(state->voice_call_manager, &error)) {
 		display_dbus_glib_error(error);
 		g_error_free (error);
 		state->result = -1;
-	}
-	else
-	{
+	} else {
 		properties = get_call_meter_properties(state->call_meter);
 
-		if(properties)
-		{
-			if (!check_call_meter_value (properties, "CallMeter", (gpointer)-1, data))
-			{
+		if(properties) {
+			if(!check_call_meter_value (properties, "CallMeter", NULL, data)) {
 				BLTS_DEBUG("CallMeter value is not increased - test failed!\n");
 				state->result = -1;
-			}
-			else
-			{
+			} else {
 				state->result = 0;
 			}
 
 			g_hash_table_destroy(properties);
-		}
-		else
-		{
+		} else {
 			state->result = -1;
 		}
-
 	}
 	g_main_loop_quit(state->mainloop);
 
@@ -377,13 +346,13 @@ static gboolean call_meter_set_user_timeout(gpointer data)
 {
 	FUNC_ENTER();
 
-	char* acm_max;
-	char* ppu;
-	char* currency;
-
 	GError *error = NULL;
 	GHashTable* properties = NULL;
 	struct call_meter_case_state *state = (struct call_meter_case_state *) data;
+
+	GValue expected_acm_max = G_VALUE_INIT;
+	GValue expected_ppu = G_VALUE_INIT;
+	GValue expected_currency = G_VALUE_INIT;
 
 	BLTS_DEBUG("Set user timeout reached\n");
 	g_main_loop_quit(state->mainloop);
@@ -400,25 +369,28 @@ static gboolean call_meter_set_user_timeout(gpointer data)
 	if(!properties)
 		goto error;
 
-	if(strlen(state->new_accu_call_meter_max) != 0)
-		acm_max = state->new_accu_call_meter_max;
+	g_value_init(&expected_acm_max, G_TYPE_UINT);
+	if(state->new_accu_call_meter_max > 0)
+		g_value_set_uint(&expected_acm_max, state->new_accu_call_meter_max);
 	else
-		acm_max = state->initial_accu_call_meter_max;
+		g_value_set_uint(&expected_acm_max, state->initial_accu_call_meter_max);
 
-	if(strlen(state->new_price_per_unit) != 0)
-		ppu = state->new_price_per_unit;
+	g_value_init(&expected_ppu, G_TYPE_DOUBLE);
+	if(state->new_price_per_unit > 0.0)
+		g_value_set_double(&expected_ppu, state->new_price_per_unit);
 	else
-		ppu = state->initial_price_per_unit;
+		g_value_set_double(&expected_ppu, state->initial_price_per_unit);
 
-	if(strlen(state->new_currency) != 0)
-		currency = state->new_currency;
+	g_value_init(&expected_currency, G_TYPE_STRING);
+	if(state->new_currency && strlen(state->new_currency) != 0)
+		g_value_set_string(&expected_currency, state->new_currency);
 	else
-		currency = state->initial_currency;
+		g_value_set_string(&expected_currency, state->initial_currency);
 
-	if (!check_call_meter_value (properties, "AccumulatedCallMeterMaximum", (gpointer*)acm_max, data) ||
-		!check_call_meter_value (properties, "PricePerUnit", (gpointer*)ppu, data) ||
-		!check_call_meter_value (properties, "Currency", (gpointer*)currency, data) )
-	{
+	if (!check_call_meter_value(properties,
+			"AccumulatedCallMeterMaximum", &expected_acm_max, data)
+	    || !check_call_meter_value(properties, "PricePerUnit", &expected_ppu, data)
+	    || !check_call_meter_value(properties, "Currency", &expected_currency, data)) {
 		BLTS_DEBUG("CallMeter values are not expected ones - test failed!\n");
 		goto error;
 	}
@@ -472,8 +444,11 @@ static gboolean call_meter_reset_user_timeout(gpointer data)
 	if(!properties)
 		goto error;
 
-	if (!check_call_meter_value (properties, "AccumulatedCallMeter", 0, data))
-	{
+	GValue zero = G_VALUE_INIT;
+	g_value_init(&zero, G_TYPE_UINT);
+	g_value_set_uint(&zero, 0);
+
+	if (!check_call_meter_value(properties, "AccumulatedCallMeter", &zero, data)) {
 		BLTS_DEBUG("CallMeter values are not reset - test failed!\n");
 		goto error;
 	}
@@ -563,10 +538,10 @@ static gboolean call_meter_init_start(gpointer data)
 	DBusGProxy *call_meter;
 	DBusGProxy *voice_call_manager;
 
-	voice_call_manager = dbus_g_proxy_new_for_name (state->ofono_data->connection,
-											OFONO_BUS,
-											state->ofono_data->modem[0],
-											OFONO_VC_INTERFACE);
+	voice_call_manager = dbus_g_proxy_new_for_name(state->ofono_data->connection,
+				OFONO_BUS,
+				state->ofono_data->modem[0],
+				OFONO_VC_INTERFACE);
 
 	if (!voice_call_manager){
 		BLTS_DEBUG("Cannot get proxy for " OFONO_VC_INTERFACE "\n");
@@ -576,10 +551,10 @@ static gboolean call_meter_init_start(gpointer data)
 	}
 	state->voice_call_manager = voice_call_manager;
 
-	call_meter = dbus_g_proxy_new_for_name (state->ofono_data->connection,
-											OFONO_BUS,
-											state->ofono_data->modem[0],
-											OFONO_METER_INTERFACE);
+	call_meter = dbus_g_proxy_new_for_name(state->ofono_data->connection,
+			OFONO_BUS,
+			state->ofono_data->modem[0],
+			OFONO_METER_INTERFACE);
 
 	if (!call_meter) {
 		BLTS_DEBUG("Cannot get proxy for " OFONO_METER_INTERFACE "\n");
@@ -591,11 +566,11 @@ static gboolean call_meter_init_start(gpointer data)
 	state->call_meter = call_meter;
 
 	if (state->signalcb_CallMeter_PropertyChanged) {
-				dbus_g_proxy_add_signal(state->call_meter, "PropertyChanged",
-						G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
-				dbus_g_proxy_connect_signal(state->call_meter, "PropertyChanged",
-					state->signalcb_CallMeter_PropertyChanged, data, 0);
-			}
+		dbus_g_proxy_add_signal(state->call_meter, "PropertyChanged",
+			G_TYPE_STRING, G_TYPE_VALUE, G_TYPE_INVALID);
+		dbus_g_proxy_connect_signal(state->call_meter, "PropertyChanged",
+			state->signalcb_CallMeter_PropertyChanged, data, 0);
+	}
 
 	if (state->case_begin)
 		g_idle_add(state->case_begin, state);
@@ -626,7 +601,8 @@ gboolean save_initial_values(struct call_meter_case_state *state)
 	return TRUE;
 }
 
-static void read_call_meter_call_complete(__attribute__((unused)) DBusGProxy *proxy, __attribute__((unused))char* call_path, GError *error, gpointer data)
+static void read_call_meter_call_complete(__attribute__((unused)) DBusGProxy *proxy,
+		__attribute__((unused))char* call_path, GError *error, gpointer data)
 {
 	FUNC_ENTER();
 
@@ -643,7 +619,8 @@ static void read_call_meter_call_complete(__attribute__((unused)) DBusGProxy *pr
 
 }
 
-static void set_call_meter_call_complete(__attribute__((unused)) DBusGProxy *proxy, __attribute__((unused))char* call_path, GError *error, gpointer data)
+static void set_call_meter_call_complete(__attribute__((unused)) DBusGProxy *proxy,
+		__attribute__((unused))char* call_path, GError *error, gpointer data)
 {
 	FUNC_ENTER();
 
@@ -660,7 +637,8 @@ static void set_call_meter_call_complete(__attribute__((unused)) DBusGProxy *pro
 
 }
 
-static void reset_call_meter_call_complete(__attribute__((unused)) DBusGProxy *proxy, __attribute__((unused))char* call_path, GError *error, gpointer data)
+static void reset_call_meter_call_complete(__attribute__((unused)) DBusGProxy *proxy,
+		__attribute__((unused))char* call_path, GError *error, gpointer data)
 {
 	FUNC_ENTER();
 
@@ -677,7 +655,8 @@ static void reset_call_meter_call_complete(__attribute__((unused)) DBusGProxy *p
 
 }
 
-static void near_max_warning_call_complete(__attribute__((unused)) DBusGProxy *proxy, __attribute__((unused))char* call_path, GError *error, gpointer data)
+static void near_max_warning_call_complete(__attribute__((unused)) DBusGProxy *proxy,
+		__attribute__((unused))char* call_path, GError *error, gpointer data)
 {
 	FUNC_ENTER();
 
@@ -693,6 +672,7 @@ static void near_max_warning_call_complete(__attribute__((unused)) DBusGProxy *p
 	g_timeout_add(state->user_timeout, (GSourceFunc) call_meter_near_max_warning_user_timeout, state);
 
 }
+
 static gboolean read_call_meter_start(gpointer data)
 {
 	FUNC_ENTER();
@@ -730,43 +710,39 @@ static gboolean set_call_meter_start(gpointer data)
 		return FALSE;
 	}
 
-	if(strlen(state->new_accu_call_meter_max) != 0)
-	{
+	if(state->new_accu_call_meter_max > 0) {
 		GValue* new_value = malloc(sizeof *(new_value));
 		memset(new_value, 0, sizeof *(new_value));
 		g_value_init(new_value, G_TYPE_UINT);
-		g_value_set_uint(new_value, atoi(state->new_accu_call_meter_max));
+		g_value_set_uint(new_value, state->new_accu_call_meter_max);
 
 		BLTS_DEBUG("Set AccumulatedCallMeterMaximum property...\n");
 
-		if(!org_ofono_CallMeter_set_property (state->call_meter, "AccumulatedCallMeterMaximum",  new_value, state->pin, &error))
-		{
+		if(!org_ofono_CallMeter_set_property(state->call_meter,
+			"AccumulatedCallMeterMaximum", new_value, state->pin, &error)) {
 			display_dbus_glib_error(error);
 			g_error_free (error);
 			goto error;
 		}
 	}
 
-	if(strlen(state->new_price_per_unit) != 0)
-	{
+	if(state->new_price_per_unit > 0.0) {
 		GValue* new_value = malloc(sizeof *(new_value));
 		memset(new_value, 0, sizeof *(new_value));
 		g_value_init(new_value, G_TYPE_DOUBLE);
-		g_value_set_double(new_value, atof(state->new_price_per_unit));
+		g_value_set_double(new_value, state->new_price_per_unit);
 
 		BLTS_DEBUG("Set PricePerUnit property...\n");
 
-		if(!org_ofono_CallMeter_set_property (state->call_meter, "PricePerUnit",  new_value, state->pin, &error))
-		{
+		if(!org_ofono_CallMeter_set_property(state->call_meter,
+			"PricePerUnit", new_value, state->pin, &error)) {
 			display_dbus_glib_error(error);
 			g_error_free (error);
 			goto error;
 		}
-
 	}
 
-	if(strlen(state->new_currency) != 0)
-	{
+	if(state->new_currency && strlen(state->new_currency) != 0) {
 		GValue* new_value = malloc(sizeof *(new_value));
 		memset(new_value, 0, sizeof *(new_value));
 		g_value_init(new_value, G_TYPE_STRING);
@@ -774,8 +750,8 @@ static gboolean set_call_meter_start(gpointer data)
 
 		BLTS_DEBUG("Set Currency property...\n");
 
-		if(!org_ofono_CallMeter_set_property (state->call_meter, "Currency",  new_value, state->pin, &error))
-		{
+		if(!org_ofono_CallMeter_set_property(state->call_meter,
+			"Currency",  new_value, state->pin, &error)) {
 			display_dbus_glib_error(error);
 			g_error_free (error);
 			goto error;
@@ -834,8 +810,8 @@ static gboolean near_max_warning_start(gpointer data)
 	g_value_set_uint(new_value, 10);
 
 	BLTS_DEBUG("Set AccumulatedCallMeterMaximum property to be < 30 sec...\n");
-	if(!org_ofono_CallMeter_set_property (state->call_meter, "AccumulatedCallMeterMaximum",  new_value, state->pin, &error))
-	{
+	if(!org_ofono_CallMeter_set_property(state->call_meter,
+		"AccumulatedCallMeterMaximum", new_value, state->pin, &error)) {
 		display_dbus_glib_error(error);
 		g_error_free (error);
 		goto error;
@@ -951,15 +927,14 @@ int blts_ofono_set_call_meter_data(void* user_ptr, __attribute__((unused)) int t
 
 	test->pin = strdup((data->old_pin) ? (data->old_pin) : "31337");
 
-	test->new_accu_call_meter_max = strdup((data->accu_cm_max) ? (data->accu_cm_max) : "");
-	test->new_price_per_unit = strdup((data->ppu) ? (data->ppu) : "");
-	test->new_currency = strdup((data->currency) ? (data->currency) : "");
+	test->new_accu_call_meter_max = data->accu_cm_max;
+	test->new_price_per_unit = data->ppu;
+	test->new_currency = data->currency;
 
-	if( !strlen(test->new_accu_call_meter_max) &&
-		!strlen(test->new_price_per_unit) &&
-		!strlen(test->new_currency) )
-	{
-		BLTS_DEBUG("At least one Call Meter data parameter (-a, -p, or -c) must be given\n");
+	if(test->new_accu_call_meter_max == 0
+	   && test->new_price_per_unit == 0.0
+	   && !strlen(test->new_currency) ) {
+		BLTS_ERROR("At least one Call Meter data parameter (-a, -p, or -c) must be given\n");
 		return -1;
 	}
 
@@ -1033,12 +1008,21 @@ int blts_ofono_test_near_max_warning(void* user_ptr, __attribute__((unused)) int
 /* Convert generated parameters to test case format. */
 void *call_meter_variant_read_arg_processor(struct boxed_value *args, void *user_ptr)
 {
-	long timeout = 0;
+	long timeout;
+	const char *to_s;
+	char *end;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
-	timeout = atol(blts_config_boxed_value_get_string(args));
+	/* for some reason the global timeout is a string ..? */
+	errno = 0;
+	to_s = blts_config_boxed_value_get_string(args);
+	timeout = strtol(to_s, &end, 0);
+	if(errno || end == to_s) {
+		BLTS_ERROR("Invalid timeout value in config\n");
+		return NULL;
+	}
 
 	/* These are already non-zero, if set on command line */
 
@@ -1050,33 +1034,46 @@ void *call_meter_variant_read_arg_processor(struct boxed_value *args, void *user
 
 void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_ptr)
 {
-	char *acc_max = 0, *ppu = 0, *currency = 0;
-	long timeout = 0;
+	int acc_max = 0;
+	double ppu = 0.0;
+	char *currency = 0;
+	long timeout;
+	const char *to_s;
+	char *end;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
 
-	acc_max = strdup(blts_config_boxed_value_get_string(args));
+	acc_max = blts_config_boxed_value_get_int(args);
+	if(acc_max < 0) {
+		BLTS_ERROR("Invalid negative call meter max value in config\n");
+		return NULL;
+	}
 	args = args->next;
-	ppu = strdup(blts_config_boxed_value_get_string(args));
+
+	ppu = blts_config_boxed_value_get_double(args);
 	args = args->next;
+
 	currency = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
-	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	errno = 0;
+	to_s = blts_config_boxed_value_get_string(args);
+	timeout = strtol(to_s, &end, 0);
+	if(errno || end == to_s) {
+		BLTS_ERROR("Invalid timeout value in config\n");
+		return NULL;
+	}
 
 	/* These are already non-zero, if set on command line */
 
-	if (data->accu_cm_max)
-		free(acc_max);
-	else
+	if(data->accu_cm_max == 0)
 		data->accu_cm_max = acc_max;
 
-	if (data->ppu)
-		free(ppu);
-	else
+	if(data->ppu == 0.0)
 		data->ppu = ppu;
 
-	if (data->currency)
+	if(data->currency)
 		free(currency);
 	else
 		data->currency = currency;
@@ -1090,7 +1087,10 @@ void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_
 void *call_meter_variant_reset_arg_processor(struct boxed_value *args, void *user_ptr)
 {
 	char *remote_addr = 0, *old_pin = 0;
-	long timeout = 0;
+
+	const char *to_s;
+	char *end;
+	long timeout;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -1099,7 +1099,14 @@ void *call_meter_variant_reset_arg_processor(struct boxed_value *args, void *use
 	args = args->next;
 	old_pin = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
-	timeout = atol(blts_config_boxed_value_get_string(args));
+
+	errno = 0;
+	to_s = blts_config_boxed_value_get_string(args);
+	timeout = strtol(to_s, &end, 0);
+	if(errno || end == to_s) {
+		BLTS_ERROR("Invalid timeout value in config\n");
+		return NULL;
+	}
 
 	/* These are already non-zero, if set on command line */
 
