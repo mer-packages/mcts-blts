@@ -89,6 +89,7 @@ static const struct option long_opts[] =
 static void* my_ofono_argument_processor(int argc, char **argv)
 {
 	int c, ret;
+	char *end;
 	my_ofono_data* my_data = malloc(sizeof(my_ofono_data));
 	memset(my_data, 0, sizeof(my_ofono_data));
 	// override default timeout
@@ -99,14 +100,20 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		switch(c)
 		{
 		case 'a':
-			if (my_data->accu_cm_max)
-				free(my_data->accu_cm_max);
-			my_data->accu_cm_max = strdup(optarg);
+			errno = 0;
+			my_data->accu_cm_max = strtol(optarg, &end, 0);
+			if(errno || end == optarg) {
+				BLTS_ERROR("Invalid call meter maximum given.\n");
+				return NULL;
+			}
 			break;
 		case 'p':
-			if (my_data->ppu)
-				free(my_data->ppu);
-			my_data->ppu = strdup(optarg);
+			errno = 0;
+			my_data->ppu = strtod(optarg, &end);
+			if(errno || end == optarg) {
+				BLTS_ERROR("Invalid call meter price-per-unit given.\n");
+				return NULL;
+			}
 			break;
 		case 'c':
 			if (my_data->currency)
@@ -564,12 +571,6 @@ static void my_ofono_teardown(void *user_ptr)
 	{
 		ensure_calls_cleared(data);
 		reset_supplementary_services(data);
-
-		if (data->accu_cm_max)
-			free(data->accu_cm_max);
-
-		if (data->ppu)
-			free(data->ppu);
 
 		if (data->currency)
 			free(data->currency);

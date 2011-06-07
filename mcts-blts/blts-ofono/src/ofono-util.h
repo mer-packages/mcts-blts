@@ -46,8 +46,8 @@ typedef struct
 	int user_timeout;
 	char* volume;
 
-	char* accu_cm_max;
-	char* ppu;
+	guint32 accu_cm_max;
+	double ppu;
 	char* currency;
 
 	char* dtmf_tone;	//dtmf case variable data
