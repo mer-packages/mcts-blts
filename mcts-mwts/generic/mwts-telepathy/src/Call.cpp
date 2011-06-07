@@ -58,7 +58,7 @@ Call::Call( const Tp::StreamedMediaChannelPtr& aChannel, QObject* pParent )
 	connect( mTimer, SIGNAL(timeout()), SLOT(callTimeout()));
 	
 	Tp::Features feats;
-	feats.insert( Tp::StreamedMediaChannel::FeatureContents );
+        feats.insert( Tp::StreamedMediaChannel::FeatureCore );
 	feats.insert( Tp::StreamedMediaChannel::FeatureStreams );
 	feats.insert( Tp::StreamedMediaChannel::FeatureLocalHoldState );
 	
@@ -333,7 +333,7 @@ bool Call::HangUp( Tp::StreamedMediaChannel::StateChangeReason reason, const QSt
 
 	// Synchronize call to requestStream
 	// Execution will not continue until reqestStream has finished
-	mRetValue = (*mWaiter)( mChannel->hangupCall( reason, detailedReason, message ) );
+        mRetValue = (*mWaiter)( mChannel->hangupCall( /*reason, detailedReason, message*/ ) );
 	if ( mRetValue == true )
 	{
 		qDebug() << "Succesfully hanged up.";
@@ -488,7 +488,7 @@ bool Call::SendDTMFTone( Tp::DTMFEvent aEvent )
 	}
 	
 	// Make sure we have audio streams to send the tones to
-	Tp::MediaStreams streams = mChannel->streamsForType( Tp::MediaStreamTypeAudio );
+        Tp::StreamedMediaStreams streams = mChannel->streamsForType( Tp::MediaStreamTypeAudio );
 	
 	if ( streams.size() == 0 )
 	{
@@ -499,7 +499,7 @@ bool Call::SendDTMFTone( Tp::DTMFEvent aEvent )
 	}
 	
 	// Just take the first stream, we shouldn't have more
-	Tp::MediaStreamPtr stream = streams.at( 0 );
+        Tp::StreamedMediaStreamPtr stream = streams.at( 0 );
 	
 	// Begin sending the tone, and synchronize the call
 	// Execution will not continue, until startDTMFTone has finished
@@ -584,12 +584,12 @@ bool Call::StayOnLine( int aTime )
 bool Call::MergeCall( const Tp::StreamedMediaChannelPtr& aChannel )
 {
     MWTS_ENTER;
-    bool mChannelCanMerge = mChannel->hasMergeableConferenceInterface();
-    bool aChannelCanMerge = aChannel->hasMergeableConferenceInterface();
+    bool mChannelCanMerge = mChannel->supportsConferenceMerging();
+    bool aChannelCanMerge = aChannel->supportsConferenceMerging();
     qDebug() << "mChannel can merge? " << mChannelCanMerge;
     qDebug() << "aChannel can merge? " << aChannelCanMerge;
 
-    bool ret = mChannel->hasMergeableConferenceInterface();
+    bool ret = mChannel->supportsConferenceMerging();
     if ( ret )
     {
         if ( aChannel->localHoldState() == Tp::LocalHoldStateHeld )
@@ -675,7 +675,7 @@ bool Call::haveErrors()
 }
 
 
-void Call::onStreamAdded( const Tp::MediaStreamPtr& stream )
+void Call::onStreamAdded( const Tp::StreamedMediaStreamPtr & stream )
 {
 	MWTS_ENTER;
 	qDebug() << "Call::onStreamAdded:" <<
@@ -718,7 +718,7 @@ void Call::onStreamAdded( const Tp::MediaStreamPtr& stream )
 }
 
 
-void Call::onStreamRemoved( const Tp::MediaStreamPtr& stream )
+void Call::onStreamRemoved( const Tp::StreamedMediaStreamPtr& stream )
 {
 	MWTS_ENTER;
 	qDebug() << "Call::onStreamRemoved:" <<
@@ -740,7 +740,7 @@ void Call::onStreamRemoved( const Tp::MediaStreamPtr& stream )
 }
 
 
-void Call::onStreamDirectionChanged(	const Tp::MediaStreamPtr& stream,
+void Call::onStreamDirectionChanged(	const Tp::StreamedMediaStreamPtr& stream,
 					Tp::MediaStreamDirection direction,
 					Tp::MediaStreamPendingSend pendingSend )
 {
@@ -772,7 +772,7 @@ void Call::onStreamDirectionChanged(	const Tp::MediaStreamPtr& stream,
 }
 
 
-void Call::onStreamStateChanged(	const Tp::MediaStreamPtr &stream,
+void Call::onStreamStateChanged(	const Tp::StreamedMediaStreamPtr &stream,
 					Tp::MediaStreamState state )
 {
 	MWTS_ENTER;
@@ -814,9 +814,9 @@ void Call::onStreamStateChanged(	const Tp::MediaStreamPtr &stream,
 }
 
 
-void Call::onStreamError( const Tp::MediaStreamPtr& stream,
-			  Tp::MediaStreamError errorCode,
-			  const QString& errorMessage )
+void Call::onStreamError(	const Tp::StreamedMediaStreamPtr stream,
+                        Tp::MediaStreamError errorCode,
+                        const QString& errorMessage )
 {
 	MWTS_ENTER;
 	Q_UNUSED(stream);
