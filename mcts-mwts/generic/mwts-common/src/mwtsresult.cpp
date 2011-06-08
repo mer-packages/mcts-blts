@@ -342,7 +342,8 @@ void MwtsResult::WriteReport()
 		// TODO: fix this to be overall verdict
 		if(!IsLimitExceeded(stats))
 		{
-			Write("Target value not exceeded! : CASE FAILED");
+			//Write("Target value not exceeded! : CASE FAILED");
+			MWTS_ERROR("Target value not exceeded! : CASE FAILED");
 		}
 
 		QString sValue=QString::number(stats.Median());

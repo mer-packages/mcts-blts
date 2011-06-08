@@ -148,6 +148,10 @@ void GstreamerTest::OnInitialize()
     {
         qDebug() << "Pipeline created" ;
     }
+
+	defaultFramerateLimit = g_pConfig->value("FRAMERATE/dafault_limit").toDouble();
+	qDebug() << "Setting default framerate limit to: " << defaultFramerateLimit;
+
     MWTS_LEAVE;
 }
 
@@ -1056,7 +1060,7 @@ gboolean GstreamerTest::run_pipeline(gboolean flush_on_complete)
         qDebug("local_elapsed_time: %d", local_elapsed_time);
 		double framerate = (double)(local_frame_count-1)/(double)local_elapsed_time;
 		g_pResult->AddMeasure("Framerate", framerate, "FPS");
-		if (framerate < 15)
+		if (framerate < defaultFramerateLimit)
 		{
 			qCritical() << "Measured framerate critically low (" << framerate << ")";
 		}
