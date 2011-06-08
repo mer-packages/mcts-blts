@@ -279,7 +279,7 @@ class TelepathyTest : public MwtsTest
 		 *  @param names List of requested names
 		 *  @return True, if successfull. False otherwise.
 		 */
-		bool RequestHandles( uint handleType, const QStringList& names );
+                bool RequestHandles( Tp::HandleType handleType, const QStringList& names );
 		
 		/**
 		 *  @fn bool EnsureTextChat( const QString& contactIdentifier, const QDateTime& userActionTime = QDateTime::currentDateTime(), const QString& preferredHandler = QString() )

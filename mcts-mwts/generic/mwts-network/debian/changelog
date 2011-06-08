@@ -1,3 +1,22 @@
+mwts-network-tests (1.1.1) unstable; urgency=low
+ * Clarified the FTP login sequence
+-- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Mon, 6 Jun 2011 14:12:00 +0300
+
+mwts-network-tests (1.1.0) unstable; urgency=low
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0300
+
+mwts-network-tests (1.0.9) unstable; urgency=low
+ * Fixed more issues with connecting and disconnecting
+-- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Tue, 31 May 2011 14:12:00 +0300
+
+mwts-network-tests (1.0.8) unstable; urgency=low
+ * Fixes MB#18122 - Fixed connecting not to fail if re-connecting
+ * Fixes MB#18123 - Fixed disconnecting not to fail if already disconnected
+ * Fixes MB#18132 - Fixed the timeout values in script files
+ * Connman AutoConnect feature is set to false for new connected services
+-- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Fri, 27 May 2011 14:12:00 +0300
+
 mwts-network-tests (1.0.7) unstable; urgency=low
  * Fixes MB#17680 - Fixed the mismatches between script files and tests.xml
 -- Rauno Vartiainen <ext-rauno.vartiainen@nokia.com>  Wed, 18 May 2011 14:12:00 +0300

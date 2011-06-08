@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<testdefinition version="0.1">
+  <suite name="mwts-n900-jkl-core-tests" domain="" level="Feature">
+    <set name="FUTE-Filesystem" description="File system FUTE test cases" feature="Filesystem" type="Functional">
+      <case name="FUTE-FS-Write_data_to_USBMSD" subfeature="write" type="Functional" timeout="600" description=
+        "Purpose
+          This test verifies Write tor USBMSD-MemoryCard
+        Method
+          Test case writes data. File block size 32kB and block count 500.
+        Pre-/Post-Conditions
+          Test asset is installed to the device. Device must be in mass storage mode, and mounted in desktop pc. Memory card must be mounted on the device. Test must be executed as root.
+        Pass/Fail Criteria
+          Test case returns passed logged into /var/log/tests/.
+        ">
+        <step>min -c -t 'FUTE-FS-Write_data_to_USBMSD'</step>
+      </case>
+     </set>
+
+     <set name="Functional test" description="Multimedia audio recording functionality tests" feature="Settings" type="Functional" >
+       <case name="FUTE-Multimedia_Record_audio_mono_1channel_48KHZ_256kbs_vorbis" subfeature="Record" timeout="120" description=
+         "Purpose
+           Test basic recording functionality of the device
+          Method
+            Test case uses qt-mobility API
+          Pre-/Post-Conditions
+          Pass/Fail Criteria
+            Is able to create audio files with >0 size
+            Test case result can be found from /var/log/tests
+          ">
+        <step>min -c -t 'FUTE-Multimedia_Record_audio_mono_1channel_48KHZ_256kbs_vorbis'</step>
+      </case>
+     </set>
+
+     <set description="Networking functionality" type="Functional" name="FUTE-WLAN">
+       <case description="Purpose: Test scanning wlan access points&#xa;      Method: Bring wlan interface up and do a scan via bearer management &#xa;      Pre/Post-Conditions: none&#xa;      Pass/Fail Criteria: Access points are found if any, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="FUTE-WLAN-Scan">
+         <step>min -c -t 'FUTE-WLAN-Scan'</step>
+       </case>
+     </set>
+  </suite>
+</testdefinition>
+

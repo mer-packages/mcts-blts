@@ -1,3 +1,9 @@
+* Wed 1 Jun 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.4
+- Fixes: MB#18304 - .csv files written in wrong format
+
+* Mon 23 May 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.3
+- Fixed test case verdict (passed, failed) to be in sync at the min interface and..result file
+
 * Wed 18 May 2011 Rauno Vartiainen <rauno.vartiainen@digia.com> - 1.2.2
 - Fixed log writing to be thread safe
 

@@ -27,22 +27,22 @@
 
 
 
-Tp::AbstractClientPtr ChannelHandlerClient::create(	Tp::ChannelClassList& aChannelFilter,
+Tp::AbstractClientPtr ChannelHandlerClient::create(	Tp::ChannelClassSpecList& aChannelFilter,
 							const QStringList& aClientCapabilities,
 							bool aWantsRequestNotification )
 {
 	MWTS_ENTER;
 	MWTS_LEAVE;
 	return Tp::AbstractClientPtr::dynamicCast(Tp::SharedPtr<ChannelHandlerClient>(
-			new ChannelHandlerClient(	aChannelFilter,
+                        new ChannelHandlerClient(	aChannelFilter,
 							aClientCapabilities,
 							aWantsRequestNotification ) ) );
 }
 
-ChannelHandlerClient::ChannelHandlerClient(	Tp::ChannelClassList& aChannelFilter,
+ChannelHandlerClient::ChannelHandlerClient(	Tp::ChannelClassSpecList& aChannelFilter,
 						const QStringList& aClientCapabilities,
-						bool aWantsRequestNotification )
-	: Tp::AbstractClientHandler(	aChannelFilter,
+                                                bool aWantsRequestNotification )
+        : Tp::AbstractClientHandler(	aChannelFilter,
 					aClientCapabilities,
 					aWantsRequestNotification ),
 	mWaiter( PendingOperationWaiter::instance() )
@@ -90,14 +90,13 @@ void ChannelHandlerClient::CloseChannels()
 
 
 
-void ChannelHandlerClient::handleChannels(
-		const Tp::MethodInvocationContextPtr<>& context,
-		const Tp::AccountPtr& account,
-		const Tp::ConnectionPtr& connection,
-		const QList<Tp::ChannelPtr>& channels,
-		const QList<Tp::ChannelRequestPtr>& requestsSatisfied,
-		const QDateTime& userActionTime,
-		const QVariantMap& handlerInfo )
+void ChannelHandlerClient::handleChannels(const Tp::MethodInvocationContextPtr<> &context,
+                            const Tp::AccountPtr &account,
+                            const Tp::ConnectionPtr &connection,
+                            const QList<Tp::ChannelPtr> &channels,
+                            const QList<Tp::ChannelRequestPtr> &requestsSatisfied,
+                            const QDateTime &userActionTime,
+                            const HandlerInfo &handlerInfo)
 {
 	MWTS_ENTER;
 	Q_UNUSED( account );

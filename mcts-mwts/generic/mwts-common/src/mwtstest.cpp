@@ -156,8 +156,8 @@ void MwtsTest::Initialize()
 	this->OnInitialize();
 
 	connect(m_pIdleTimer, SIGNAL(timeout()), this, SLOT(OnIdle()));
-	m_pIdleTimer->start(1000);
-
+	m_pIdleTimer->start(1000);	
+	ReadLimitsFromFile();
 }
 
 
@@ -239,6 +239,51 @@ void MwtsTest::SetFailTimeout(int milliseconds)
 	MWTS_ENTER;
 	qDebug() << "Setting fail timeout to " << milliseconds;
 	m_nFailTimeout=milliseconds;
+}
+
+bool MwtsTest::ReadLimitsFromFile()
+{
+	MWTS_ENTER;
+
+	double lfFail=0;
+	double lfTarget=0;
+	QFile file("/usr/lib/tests/mwts-limits.csv");
+	if(!file.open(QIODevice::ReadOnly))
+	{
+		qDebug() << "Unable to open mwts-limits.csv";
+	return false;
+	}
+	QTextStream stream( &file );
+
+	while(!stream.atEnd())
+	{
+		QString line=stream.readLine();
+		if(line[0]=='#')
+		{
+			// comment line
+			continue;
+		}
+		QStringList parts=line.split(';');
+		if(parts.count() != 3)
+		{
+			qWarning() << "invalid line in mwts-limits.csv :" << line;
+			continue;
+		}
+		if(CaseName()!=parts[0])
+		{
+			// does not match the case name
+			continue;
+		}
+
+		lfFail=parts[1].toDouble();
+		lfTarget=parts[2].toDouble();
+
+		g_pResult->SetLimits(lfTarget, lfFail);
+		return true;
+
+	}
+	qDebug() << "No limits found for the test case in mwts-limits.csv" <<lfFail <<"," << lfTarget;
+	return false;
 }
 
 /**
@@ -332,6 +377,7 @@ void MwtsTest::OnFailTimeout()
 	m_bFailTimeout = TRUE;
 	Stop();
 }
+
 
 
 

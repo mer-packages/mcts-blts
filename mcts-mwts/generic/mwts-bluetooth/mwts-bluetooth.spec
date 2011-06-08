@@ -18,12 +18,12 @@ Source:         %{name}-%{version}.tar.gz
 Bluetooth test asset for BlueZ and libbluetooth.
 C++ and MIN interface
 
-%package        generic-tests
+%package        generic-scripts
 Summary:        Min test cases
 Prefix:         /usr
 Group:          Development/Tools
 Requires:       mwts-bluetooth
-%description    generic-tests
+%description    generic-scripts
 Min test cases, generic version
 
 %package        generic-config
@@ -38,7 +38,7 @@ configuration file, generic
 Summary:        mwts-bluetooth, meta package, generic
 Prefix:         /usr
 Group:          Development/Tools
-Requires:       mwts-bluetooth, mwts-bluetooth-generic-config, mwts-bluetooth-generic-tests
+Requires:       mwts-bluetooth, mwts-bluetooth-generic-config, mwts-bluetooth-generic-scripts
 %description    generic-all
 mwts-bluetooth, meta package, generic
 
@@ -75,9 +75,8 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/mwts-bluetooth.min.conf
-/usr/share/mwts-bluetooth-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config
