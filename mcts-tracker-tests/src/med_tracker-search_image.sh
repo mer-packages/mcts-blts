@@ -31,12 +31,12 @@ cp -rf /tmp/data/test_tracks/meego_i*.jpg ~/Pictures/
 
 sleep 10
 
-if tracker-search -i | grep "Files">/dev/null 2>&1
+if tracker-search -i | grep "file">/dev/null 2>&1
 then
   echo "Not Null Value for grep output"
-  tracker-search -i | grep -c "Files" | awk '\
+  tracker-search -i | grep -c "file" | awk '\
   {if($1>0)\
-  {printf("Success: Tracker find %s image\n",$2);\
+  {printf("Success: Tracker find %s image\n",$1);\
   exit 0;}\
   else\
   {printf("Fail: Tracker can not find any image\n");\
