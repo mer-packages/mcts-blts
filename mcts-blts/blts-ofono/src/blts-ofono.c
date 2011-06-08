@@ -311,6 +311,7 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 	ret = blts_config_declare_variable_test("oFono - Call meters read",
 		call_meter_variant_read_arg_processor,
 		CONFIG_PARAM_STRING, "call_meter_timeout", "60000",
+		CONFIG_PARAM_STRING, "remote_address", "1234567890",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;
@@ -321,6 +322,8 @@ static void* my_ofono_argument_processor(int argc, char **argv)
 		CONFIG_PARAM_STRING, "price_per_unit", "1.0",
 		CONFIG_PARAM_STRING, "currency", "FIM",
 		CONFIG_PARAM_STRING, "call_meter_timeout", "60000",
+		CONFIG_PARAM_STRING, "remote_address", "1234567890",
+		CONFIG_PARAM_STRING, "old_pin", "1234",
 		CONFIG_PARAM_NONE);
 	if (ret)
 		return NULL;

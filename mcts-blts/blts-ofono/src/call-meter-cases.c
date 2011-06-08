@@ -893,12 +893,17 @@ int blts_ofono_read_call_meter_data(void* user_ptr, __attribute__((unused)) int 
 
  	/* log_set_level(5); */
 
+	if(!data->remote_address) {
+		BLTS_ERROR("ERROR: Remote address for test call missing, cannot test.\n");
+		return -1;
+	}
+
 	test = call_meter_state_init((my_ofono_data *) user_ptr);
 
 	if (!test)
 		return -1;
 
-	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
+	test->address = strdup(data->remote_address);
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
@@ -918,14 +923,23 @@ int blts_ofono_set_call_meter_data(void* user_ptr, __attribute__((unused)) int t
 
  	/* log_set_level(5); */
 
+	if(!data->remote_address) {
+		BLTS_ERROR("ERROR: Remote address for test call missing, cannot test.\n");
+		return -1;
+	}
+	if(!data->old_pin) {
+		BLTS_ERROR("ERROR: PIN for changing call meter setting missing, cannot test.\n");
+		return -1;
+	}
+
 	test = call_meter_state_init((my_ofono_data *) user_ptr);
 
 	if (!test)
 		return -1;
 
-	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
+	test->address = strdup(data->remote_address);
 
-	test->pin = strdup((data->old_pin) ? (data->old_pin) : "31337");
+	test->pin = strdup(data->old_pin);
 
 	test->new_accu_call_meter_max = data->accu_cm_max;
 	test->new_price_per_unit = data->ppu;
@@ -956,14 +970,22 @@ int blts_ofono_reset_call_meter_data(void* user_ptr, __attribute__((unused)) int
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 
  	/* log_set_level(5); */
+	if(!data->remote_address) {
+		BLTS_ERROR("ERROR: Remote address for test call missing, cannot test.\n");
+		return -1;
+	}
+	if(!data->old_pin) {
+		BLTS_ERROR("ERROR: PIN for changing call meter setting missing, cannot test.\n");
+		return -1;
+	}
 
 	test = call_meter_state_init((my_ofono_data *) user_ptr);
 
 	if (!test)
 		return -1;
 
-	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
-	test->pin = strdup((data->old_pin) ? (data->old_pin) : "31337");
+	test->address = strdup(data->remote_address);
+	test->pin = strdup(data->old_pin);
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
@@ -982,14 +1004,22 @@ int blts_ofono_test_near_max_warning(void* user_ptr, __attribute__((unused)) int
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 
  	/* log_set_level(5); */
+	if(!data->remote_address) {
+		BLTS_ERROR("ERROR: Remote address for test call missing, cannot test.\n");
+		return -1;
+	}
+	if(!data->old_pin) {
+		BLTS_ERROR("ERROR: PIN for changing call meter setting missing, cannot test.\n");
+		return -1;
+	}
 
 	test = call_meter_state_init((my_ofono_data *) user_ptr);
 
 	if (!test)
 		return -1;
 
-	test->address = strdup((data->remote_address) ? (data->remote_address) : "123456");
-	test->pin = strdup((data->old_pin) ? (data->old_pin) : "31337");
+	test->address = strdup(data->remote_address);
+	test->pin = strdup(data->old_pin);
 	test->user_timeout = data->user_timeout ? data->user_timeout : 5000;
 	test->signalcb_CallMeter_PropertyChanged =
 		G_CALLBACK(on_call_meter_property_changed);
@@ -1010,7 +1040,7 @@ void *call_meter_variant_read_arg_processor(struct boxed_value *args, void *user
 {
 	long timeout;
 	const char *to_s;
-	char *end;
+	char *end, *remote_addr;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -1024,10 +1054,18 @@ void *call_meter_variant_read_arg_processor(struct boxed_value *args, void *user
 		return NULL;
 	}
 
+	args = args->next;
+
+	remote_addr = strdup(blts_config_boxed_value_get_string(args));
 	/* These are already non-zero, if set on command line */
 
 	if (!data->timeout)
 		data->timeout = timeout;
+
+	if (data->remote_address)
+		free(remote_addr);
+	else
+		data->remote_address = remote_addr;
 
 	return data;
 }
@@ -1040,6 +1078,8 @@ void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_
 	long timeout;
 	const char *to_s;
 	char *end;
+	char *remote_addr, *old_pin;
+
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
 		return 0;
@@ -1064,6 +1104,11 @@ void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_
 		BLTS_ERROR("Invalid timeout value in config\n");
 		return NULL;
 	}
+	args = args->next;
+
+	remote_addr = strdup(blts_config_boxed_value_get_string(args));
+	args = args->next;
+	old_pin = strdup(blts_config_boxed_value_get_string(args));
 
 	/* These are already non-zero, if set on command line */
 
@@ -1080,6 +1125,17 @@ void *call_meter_variant_set_arg_processor(struct boxed_value *args, void *user_
 
 	if (!data->timeout)
 		data->timeout = timeout;
+
+
+	if (data->remote_address)
+		free(remote_addr);
+	else
+		data->remote_address = remote_addr;
+
+	if (data->old_pin)
+		free(old_pin);
+	else
+		data->old_pin = old_pin;
 
 	return data;
 }
