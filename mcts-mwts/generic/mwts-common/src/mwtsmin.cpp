@@ -89,12 +89,17 @@ int Close ( __attribute__((unused)) MinItemParser * item)
 {
 	MWTS_ENTER;
 	int ret = 0;
+	//if(!g_pTest->IsPassed())
+	//{
+	//	MWTS_LEAVE;
+	//	ret = 1;
+	//}
+	g_pTest->Uninitialize();
 	if(!g_pTest->IsPassed())
 	{
 		MWTS_LEAVE;
 		ret = 1;
 	}
-	g_pTest->Uninitialize();
 	MWTS_LEAVE;
 	return ret;
 }
