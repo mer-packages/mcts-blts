@@ -1,3 +1,9 @@
+* Wed 08 Jun 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.22
+- Fixes: BMC#18172 - blts-ofono enter pin fails
+- [ Mikko Ojala ] Fixed wrong result from enter pin test case
+- [ Jussi Saavalainen ] Fix expected value handling in call meter cases
+- [ Jussi Saavalainen ] Remove default pin/test address from call meter cases
+
 * Wed 27 Apr 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.21
 - [ Arun Ravindran ] Check call status before swapping
 
