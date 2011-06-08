@@ -276,26 +276,32 @@ bool SignonClient::CreateSession(const QString name)
     // session is created based on a method name which should already be inserted to created identity
     if (!m_session) {
         m_session=m_identity->createSession(method);
+		if (m_session) {
+		    qDebug() << "Session object created.....look UI!";
+			qDebug() << "METHOD: " << m_session->name();
 
-        qDebug() << "Session object created.....look UI!";
-        qDebug() << "METHOD: " << m_session->name();
+			m_session->queryAvailableMechanisms();
+			
+			connect(m_session, SIGNAL(mechanismsAvailable(const QStringList &)),
+					this, SLOT(slotMechanismsAvailable(const QStringList &)));
 
-        m_session->queryAvailableMechanisms();
+			connect(m_session, SIGNAL(response(const SignOn::SessionData&)),
+					this, SLOT(response(const SignOn::SessionData&)));
 
-        connect(m_session, SIGNAL(mechanismsAvailable(const QStringList &)),
-            this, SLOT(slotMechanismsAvailable(const QStringList &)));
+			connect(m_session, SIGNAL(error(const SignOn::Error &)),
+					this, SLOT(sessionError(const SignOn::Error &)));
 
-        m_testObj->Start();
+			connect(m_session, SIGNAL(stateChanged(AuthSession::AuthSessionState, const QString &)),
+					this, SLOT(slotStateChanged(AuthSession::AuthSessionState, const QString &)));
 
-        connect(m_session, SIGNAL(response(const SignOn::SessionData&)),
-            this, SLOT(response(const SignOn::SessionData&)));
+			m_testObj->Start();
+		}
+		else {
+		    qCritical() << "Could not create session, exiting.";
+		    return false;
+			MWTS_LEAVE;
 
-        connect(m_session, SIGNAL(error(const SignOn::Error &)),
-            this, SLOT(sessionError(const SignOn::Error &)));
-
-        connect(m_session, SIGNAL(stateChanged(AuthSession::AuthSessionState, const QString &)),
-            this, SLOT(slotStateChanged(AuthSession::AuthSessionState, const QString &)));
-
+		}
     }
 
     m_session->process(data , QLatin1String("ClientLogin"));
@@ -373,16 +379,22 @@ void SignonClient::slotStateChanged(AuthSession::AuthSessionState state, const Q
     MWTS_LEAVE;
 }
 
-void SignonClient::methodsAvailable(const QStringList &mechs)
+void SignonClient::methodsAvailable(const QStringList &methods)
 {
     MWTS_ENTER;
     m_testObj->Stop();
-    qDebug() << "Listing methods...";
-    qDebug() << "##################";
-
-    for (int i = 0; i < mechs.size(); ++i) {
-        qDebug() << mechs.at(i).toLocal8Bit().constData() << endl;
-        m_service->queryMechanisms(mechs.at(i));
+	if (methods.isEmpty()) {
+		// returned methods list is empty, test fails
+	    qDebug() << "Method list is empty";
+		m_bSuccess = false;
+	}
+	else {
+	    qDebug() << "Listing methods...";
+		qDebug() << "##################";
+		
+		for (int i = 0; i < methods.size(); ++i) {
+		    qDebug() << methods.at(i).toLocal8Bit().constData() << endl;
+			m_service->queryMechanisms(methods.at(i));
     }
 
     MWTS_LEAVE;
