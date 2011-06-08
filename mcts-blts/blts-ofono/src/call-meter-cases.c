@@ -403,7 +403,8 @@ static gboolean call_meter_set_user_timeout(gpointer data)
 
 	state->result = 0;
 	restore_call_meter_values(state);
-	g_hash_table_destroy(properties);
+	if(properties)
+		g_hash_table_destroy(properties);
 	g_main_loop_quit(state->mainloop);
 
 	return FALSE;
@@ -461,7 +462,8 @@ static gboolean call_meter_reset_user_timeout(gpointer data)
 
 	state->result = 0;
 
-	g_hash_table_destroy(properties);
+	if(properties)
+		g_hash_table_destroy(properties);
 	g_main_loop_quit(state->mainloop);
 
 	return FALSE;
@@ -506,7 +508,8 @@ static gboolean call_meter_near_max_warning_user_timeout(gpointer data)
 
 	restore_call_meter_values(state);
 
-	g_hash_table_destroy(properties);
+	if(properties)
+		g_hash_table_destroy(properties);
 	g_main_loop_quit(state->mainloop);
 
 	return FALSE;
