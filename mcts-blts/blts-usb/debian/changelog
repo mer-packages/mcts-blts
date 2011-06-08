@@ -1,3 +1,10 @@
+blts-usb-tests (0.0.19) unstable; urgency=low
+
+  * Fixes: BMC#18224 - blts-usb build problems on Linux 2.6.39
+  * Fix build warnings on Linux 2.6.39+ kernel module build.
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 08 Jun 2011 15:41:15 +0300
+
 blts-usb-tests (0.0.18) unstable; urgency=low
 
   * Fix build warnings on x86_64 kernel module build.
