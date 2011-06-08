@@ -266,18 +266,24 @@ static void restore_call_meter_values(gpointer data)
 		}
 	}
 
-	if(strcmp(state->new_currency, state->initial_currency)) {
-		GValue* new_value = malloc(sizeof *(new_value));
-		memset(new_value, 0, sizeof *(new_value));
-		g_value_init(new_value, G_TYPE_STRING);
-		g_value_set_string(new_value, state->initial_currency);
+	if(state->new_currency) {
+		size_t new_len = strlen(state->new_currency);
+		size_t init_len = strlen(state->initial_currency);
 
-		BLTS_DEBUG("Restore Currency property...\n");
+		if(new_len != init_len
+		   || strncmp(state->new_currency, state->initial_currency, new_len)) {
+			GValue* new_value = malloc(sizeof *(new_value));
+			memset(new_value, 0, sizeof *(new_value));
+			g_value_init(new_value, G_TYPE_STRING);
+			g_value_set_string(new_value, state->initial_currency);
 
-		if(!org_ofono_CallMeter_set_property(state->call_meter,
-			"Currency",  new_value, state->pin, &error)) {
-			display_dbus_glib_error(error);
-			g_error_free (error);
+			BLTS_DEBUG("Restore Currency property...\n");
+
+			if(!org_ofono_CallMeter_set_property(state->call_meter,
+				"Currency",  new_value, state->pin, &error)) {
+				display_dbus_glib_error(error);
+				g_error_free (error);
+			}
 		}
 	}
 	FUNC_LEAVE();
