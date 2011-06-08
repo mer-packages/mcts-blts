@@ -365,12 +365,12 @@
 
 [test]
 	name "oFono - Call meters read"
-	params call_meter_timeout
+	params call_meter_timeout remote_address
 [end_test]
 
 [test]
 	name "oFono - Call meters set"
-	params call_meter_max price_per_unit currency call_meter_timeout
+	params call_meter_max price_per_unit currency call_meter_timeout remote_address old_pin
 [end_test]
 
 [test]
