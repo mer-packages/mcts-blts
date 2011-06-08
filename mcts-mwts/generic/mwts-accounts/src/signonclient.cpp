@@ -379,11 +379,11 @@ void SignonClient::slotStateChanged(AuthSession::AuthSessionState state, const Q
     MWTS_LEAVE;
 }
 
-void SignonClient::methodsAvailable(const QStringList &methods)
+void SignonClient::methodsAvailable(const QStringList &mechs)
 {
     MWTS_ENTER;
     m_testObj->Stop();
-	if (methods.isEmpty()) {
+	if (mechs.isEmpty()) {
 		// returned methods list is empty, test fails
 	    qDebug() << "Method list is empty";
 		m_bSuccess = false;
@@ -392,9 +392,9 @@ void SignonClient::methodsAvailable(const QStringList &methods)
 	    qDebug() << "Listing methods...";
 		qDebug() << "##################";
 		
-		for (int i = 0; i < methods.size(); ++i) {
-		    qDebug() << methods.at(i).toLocal8Bit().constData() << endl;
-			m_service->queryMechanisms(methods.at(i));
+		for (int i = 0; i < mechs.size(); ++i) {
+		    qDebug() << mechs.at(i).toLocal8Bit().constData() << endl;
+			m_service->queryMechanisms(mechs.at(i));
     }
 
     MWTS_LEAVE;
