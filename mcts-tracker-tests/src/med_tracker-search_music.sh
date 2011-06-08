@@ -31,12 +31,12 @@ cp -rf /tmp/data/test_tracks/meego_m*.ogg ~/Music/
 
 sleep 10
 
-if tracker-search -m | grep "Files">/dev/null 2>&1
+if tracker-search -m | grep "file">/dev/null 2>&1
 then
   echo "Not Null Value for grep output"
-  tracker-search -m | grep -c "Files" | awk '\
+  tracker-search -m | grep -c "file" | awk '\
   {if($1>0)\
-  {printf("Success: Tracker find %s music\n",$2);\
+  {printf("Success: Tracker find %s music\n",$1);\
   exit 0;}\
   else\
   {printf("Fail: Tracker can not find any music\n");\
