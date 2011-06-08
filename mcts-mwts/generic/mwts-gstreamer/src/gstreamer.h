@@ -155,6 +155,9 @@ private:
     gint local_second_event_timeout_setting;
 
     bool m_bMeasureFpsPerformance;
+
+	//default framerate limit
+	double defaultFramerateLimit;
 };
 
 #endif //#ifndef _INCLUDED_GSTREAMER_TEST_H
