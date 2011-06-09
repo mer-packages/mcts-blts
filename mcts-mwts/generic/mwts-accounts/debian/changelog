@@ -1,3 +1,9 @@
+mwts-accounts-tests (0.0.6) unstable; urgency=low
+  * Fixes: BMC#18461 - Added error handling to methodsAvailable() in signonclient.cpp
+  * Fixes: BMC#18462 - Fixed a typo in FUTE-SSO_create_identity_flicker
+  * Fixes: BMC#18464 - Added error handling to createSession() in signonclient.cpp
+ -- Markku Valtonen <markku.valtonen@digia.com> Fri, 08 Jun 2011 12:35:00 +0200
+
 mwts-accounts-tests (0.0.5) unstable; urgency=low
   * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
  -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
