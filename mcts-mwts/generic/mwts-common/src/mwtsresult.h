@@ -28,8 +28,10 @@
 #include "mwtsglobal.h"
 #include "mwtsmeasure.h"
 #include "mwtsiteration.h"
-
 #include <QFile>
+
+class MwtsStatistics;
+
 
 /** Class for writing test case results and creating report */
 class MWTSCOMMON_EXPORT MwtsResult
@@ -49,8 +51,9 @@ public:
 	bool IsPassed();
 	void SetLimits(double lfTarget, double lfFail);
 	void SetResultFilter(QString filter);
-	void StartSeriesMeasure(QString name, QString unit, double lfTarget=0, double lfFailLimit=0);
-	void AddSeriesMeasure(QString name, double value);
+	void StartSeriesMeasure(QString name, QString unit, double lfTarget=0, double lfFailLimit=0);	
+	void AddSeriesMeasure(QString name, QString value, QString unit);
+	bool IsLimitExceeded(MwtsStatistics &stats);
 
 protected:
 	static MwtsResult* inst;
@@ -66,8 +69,6 @@ protected:
 	double m_lfTarget;
 	double m_lfFailLimit;
 	QString m_sResultFilter;
-	
-	bool ReadLimitsFromFile();
 
 	void WriteXmlReport(QString sMeasureName, QString sValue,
 		QString sMeasureUnit, QString sFailLimit, QString sTarget);

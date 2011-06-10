@@ -35,8 +35,7 @@ MwtsStep::MwtsStep(QString sName, bool bPassed)
 
 /** Tells whether this iteration is passed or not.*/
 bool MwtsIteration::IsPassed()
-{
-	MWTS_ENTER;
+{	
 	if(m_listErrors.size()>0)
 		return false;
 	for(int i=0; i<m_listSteps.size(); i++)

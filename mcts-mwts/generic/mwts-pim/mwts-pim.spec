@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Test asset for testing personal information managagement in qt mobility 
 License:                LGPL
 Name:                   mwts-pim
-Version:                0.0.2
+Version:                0.0.3
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -18,12 +18,12 @@ Source:                 %{name}-%{version}.tar.gz
 %description
 mwts-pim is a test asset for testing personal information managagement in qt mobility. It provides tool for pim testing, logging and reporting results.
 
-%package                generic-tests
+%package                generic-scripts
 Summary:                Test case files
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               min, mwts-pim
-%description            generic-tests
+%description            generic-scripts
 MIN test cases for mwts-pim
 
 %package                generic-config
@@ -38,7 +38,7 @@ mwts-pim generic config
 Summary:                mwts-pim generic meta package
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               mwts-pim, mwts-pim-generic-config, mwts-pim-generic-tests
+Requires:               mwts-pim, mwts-pim-generic-config, mwts-pim-generic-scripts
 %description            generic-all
 mwts-pim generic meta package
 
@@ -62,10 +62,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/tests/mwts-pim/*.vcf
 /usr/lib/tests/mwts-pim/*.ics
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-pim-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/PimTest.conf

@@ -1,3 +1,11 @@
+mwts-gstreamer (0.1.0) unstable; urgency=low
+  * Fixes: NB#16744 - Create NFT duplicate test cases for FUTE cases which use FPS measurement, those are now using SetLimits to assure that framerate is high enough
+ -- Jan Grela <jan.grela@digia.com>  Tue, 07 Jun 2011 16:11:00 +0200
+
+mwts-gstreamer (0.0.9) unstable; urgency=low
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-gstreamer (0.0.8) unstable; urgency=low
   * Fixes: NB#16744 - measure framerate test cases will fail if framerate is critically low
  -- Jan Grela <jan.grela@digia.com>  Tue, 03 May 2011 13:29:00 +0300

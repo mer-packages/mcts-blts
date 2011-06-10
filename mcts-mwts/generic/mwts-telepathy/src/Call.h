@@ -153,14 +153,14 @@ class Call : public QObject
 	private Q_SLOTS:
 		
 		// From streamed media channel
-		void onStreamAdded( const Tp::MediaStreamPtr& );
-		void onStreamRemoved( const Tp::MediaStreamPtr& );
-		void onStreamDirectionChanged(	const Tp::MediaStreamPtr&,
+                void onStreamAdded( const Tp::StreamedMediaStreamPtr& );
+                void onStreamRemoved( const Tp::StreamedMediaStreamPtr& );
+                void onStreamDirectionChanged(	const Tp::StreamedMediaStreamPtr&,
 						Tp::MediaStreamDirection,
 						Tp::MediaStreamPendingSend );
-		void onStreamStateChanged( const Tp::MediaStreamPtr&,
+                void onStreamStateChanged( const Tp::StreamedMediaStreamPtr&,
 					  Tp::MediaStreamState );
-		void onStreamError(	const Tp::MediaStreamPtr& stream,
+                void onStreamError(	const Tp::StreamedMediaStreamPtr,
 					Tp::MediaStreamError errorCode,
 					const QString& errorMessage );
 		

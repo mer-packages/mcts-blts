@@ -66,7 +66,7 @@ ContactManagement::ContactManagement( const Tp::ConnectionPtr& aConnection, QObj
 		}
 	}
 	
-	mContactManager = mConnection->contactManager();
+        mContactManager = mConnection->contactManager().data();
 	if ( mContactManager )
 	{
 		connect( mContactManager,
@@ -104,7 +104,7 @@ bool ContactManagement::contactsForIdentifiers( const QStringList& identifiers, 
 {
 	MWTS_ENTER;
 	QList<Tp::ContactPtr> contactList;
-	QSet<Tp::Contact::Feature> features;
+        QSet<Tp::Feature> features;
 	
 	features.insert( Tp::Contact::FeatureAlias );
 	features.insert( Tp::Contact::FeatureAvatarToken );
@@ -330,7 +330,7 @@ Contact::Contact( const Tp::ContactPtr& aContact, QObject* pParent )
 Contact::~Contact()
 {
 	MWTS_ENTER;
-	mContact.clear();
+        //mContact.clear();
 	disconnect();
 	MWTS_LEAVE;
 }
