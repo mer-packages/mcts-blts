@@ -89,12 +89,11 @@ LOCAL int ConfigTest(MinItemParser * item)
 
 LOCAL int SeriesMeasureTest(MinItemParser * item)
 {
-	MWTS_ENTER;
-	g_pResult->StartSeriesMeasure("throughput", "kb/s", 100, 80);
+	MWTS_ENTER;	
 	for(int i=0; i<100; i++)
 	{
 		usleep(30000);
-		g_pResult->AddSeriesMeasure("throughput", i);
+		g_pResult->AddSeriesMeasure("throughput", QString::number(i), "kb/s");
 	}
 
 	return 0;

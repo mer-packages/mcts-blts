@@ -65,7 +65,7 @@ class ChannelHandlerClient : public QObject, public Tp::AbstractClientHandler
 		 *  @param wantsRequestNotification Boolean flag, that tells wether request notifications are wanted.
 		 *  @return Abstract client pointer.
 		 */
-		static Tp::AbstractClientPtr create(	Tp::ChannelClassList& aChannelFilter,
+                static Tp::AbstractClientPtr create(	Tp::ChannelClassSpecList& aChannelFilter,
 							const QStringList& aClientCapabilities,
 							bool aWantsRequestNotification );
 		
@@ -76,7 +76,7 @@ class ChannelHandlerClient : public QObject, public Tp::AbstractClientHandler
 		 *  @param bypassApproval Boolean flag, that tells wether channel approval should be bypassed.
 		 *  @param wantsRequestNotification Boolean flag, that tells wether request notifications are wanted.
 		 */
-		ChannelHandlerClient(	Tp::ChannelClassList& aChannelFilter,
+                ChannelHandlerClient(	Tp::ChannelClassSpecList& aChannelFilter,
 					const QStringList& aClientCapabilities,
 					bool aWantsRequestNotification );
 		
@@ -104,13 +104,13 @@ class ChannelHandlerClient : public QObject, public Tp::AbstractClientHandler
 		 *  @param userActionTime Time and date when user took action leading to this function call.
 		 *  @param handlerInfo Handler information.
 		 */
-		virtual void handleChannels(const Tp::MethodInvocationContextPtr<>& context,
-			const Tp::AccountPtr& account,
-			const Tp::ConnectionPtr& connection,
-			const QList<Tp::ChannelPtr>& channels,
-			const QList<Tp::ChannelRequestPtr>& requestsSatisfied,
-			const QDateTime& userActionTime,
-			const QVariantMap& handlerInfo);
+                virtual void handleChannels(const Tp::MethodInvocationContextPtr<> &context,
+                                            const Tp::AccountPtr &account,
+                                            const Tp::ConnectionPtr &connection,
+                                            const QList<Tp::ChannelPtr> &channels,
+                                            const QList<Tp::ChannelRequestPtr> &requestsSatisfied,
+                                            const QDateTime &userActionTime,
+                                            const HandlerInfo &handlerInfo);
 		
 		/**
 		 *  @var mChannels

@@ -28,7 +28,6 @@
 #include <QDomDocument>
 #include "mwtsstatistics.h"
 
-
 MwtsResult* MwtsResult::inst = NULL;
 /** This static method returns instance to singleton result object*/
 MwtsResult* MwtsResult::instance()
@@ -41,8 +40,11 @@ MwtsResult* MwtsResult::instance()
 MwtsResult::MwtsResult()
 {
 	m_nIteration=0;
+	m_lfFailLimit=0.0;
+	m_lfTarget=0.0;
 	m_pInitIteration=new MwtsIteration;
 	m_pCurrentIteration=m_pInitIteration;
+
 	MWTS_ENTER;
 }
 
@@ -130,7 +132,7 @@ void MwtsResult::StepPassed(QString step, bool bPassed)
 void MwtsResult::SetLimits(double lfTarget, double lfFail)
 {
 	MWTS_ENTER;
-	qDebug() << "Setting limits (" << lfTarget << "," << lfFail << ")";
+	qDebug() << "Setting limits (" << lfTarget << "," << lfFail << ")";	
 	m_lfFailLimit=lfFail;
 	m_lfTarget=lfTarget;
 }
@@ -139,50 +141,6 @@ void MwtsResult::SetLimits(double lfTarget, double lfFail)
 void MwtsResult::SetResultFilter(QString filter)
 {
 	m_sResultFilter=filter;
-}
-
-bool MwtsResult::ReadLimitsFromFile()
-{
-	double lfFail=0;
-	double lfTarget=0;
-	QFile file("/usr/lib/tests/mwts-limits.csv");
-	if(!file.open(QIODevice::ReadOnly))
-	{
-		qDebug() << "Unable to open mwts-limits.csv";
-		return false;
-	}
-	QTextStream stream( &file );
-
-	while(!stream.atEnd())
-	{
-		QString line=stream.readLine();
-		if(line[0]=='#')
-		{
-			// comment line
-			continue;
-		}
-		QStringList parts=line.split(';');
-		if(parts.count() != 3)
-		{
-			qWarning() << "invalid line in mwts-limits.csv :" << line;
-			continue;
-		}
-		if(g_pTest->CaseName()!=parts[0])
-		{
-			// does not match the case name
-			continue;
-		}
-
-		lfFail=parts[1].toDouble();
-		lfTarget=parts[2].toDouble();
-
-		SetLimits(lfTarget, lfFail);
-		qDebug() << "Setting case limits to" <<lfFail <<"," << lfTarget;
-		return true;
-
-	}
-	qDebug() << "No limits found for the test case in mwts-limits.csv" <<lfFail <<"," << lfTarget;
-	return false;
 }
 
 /**
@@ -231,32 +189,69 @@ void MwtsResult::StartSeriesMeasure(QString name, QString unit, double lfTarget,
 	
 }
 
-void MwtsResult::AddSeriesMeasure(QString name, double value)
-{
-	QString str;
-	QDateTime timestamp = QDateTime::currentDateTime();
-	QString timestampStr=timestamp.toString("yyyy-mm-dd\thh:mm:ss");
-	str=timestampStr+QString(";")+QString::number(value);
-	WriteSeriesFile(name, str);	
-	
-}
 
+void MwtsResult::AddSeriesMeasure(QString name, QString value, QString unit)
+{
+	/*
+	name;value;unit;
+	name;value;unit;target;failure;
+	name;value;unit;target;failure;
+	where the name and unit are strings; value target and failure floating point numbers.
+	(http://wiki.meego.com/Quality/QA-tools/Test_plan#Measurement_data)
+	Example:
+	bt.upload;1.4123432;MB/s;
+	cpu.load;23.41;%;5;90;
+	mem.load;80.16;%;80;99;
+	*/
+	QString str = name + ";" + value + ";" + unit +";";
+	if (m_lfFailLimit!=0 && m_lfTarget!=0)
+		str += QString::number(m_lfTarget) + ";" + QString::number(m_lfFailLimit) + ";";
+	WriteSeriesFile(name, str);
+}
 
 /** Tells whether test case is passed in result perspective*/
 bool MwtsResult::IsPassed()
-{
+{	
 	MWTS_ENTER;
 	if(!m_pInitIteration->IsPassed())
 	{
 		return false;
 	}
+
+	QList<double> values;
+	MwtsIteration* pIteration;
 	for(int i=0; i<m_listIterations.size(); i++)
 	{
+		pIteration=m_listIterations.at(i);
+		if(!pIteration->IsPassed())
+		{
+			return false;
+		}
 		if(!m_listIterations.at(i)->IsPassed())
 		{
 			return false;
 		}
+
+		if(pIteration->m_listMeasures.size() > 1)
+		{
+			MWTS_ERROR("More than one measurement values per iteration");
+			return FALSE;
+		}
+		if(pIteration->m_listMeasures.size() < 1)
+		{
+			qDebug() << "No values for iteration " << i;
+			continue;
+		}
+		values.append(pIteration->m_listMeasures.at(0)->m_lfValue);
 	}
+
+	if (!values.isEmpty())
+	{
+		MwtsStatistics stats (values);
+		bool ret = IsLimitExceeded(stats);
+		return ret;
+	}
+
 	return true;
 }
 
@@ -328,54 +323,24 @@ void MwtsResult::WriteReport()
 		{
 			min=value;
 		}
-
 	}
-
 	QTextStream(&text) << nIterations << " iterations total" ;
 	QTextStream(&text) << nPassedIterations << " iterations passed" ;
 	QTextStream(&text) << (double)nPassedIterations/(double)nIterations*100.0 << "% pass rate";
 
+	QString verdict="FAILED";
 
-	ReadLimitsFromFile();
-
-	bool bLimitExceeded=true;
-	bool bBiggerIsBetter=true;
-
-	if(values.size() > 0)
+	if (!values.isEmpty())
 	{
-		MwtsStatistics stats(values);
-
-		// for example in latency measurements smaller values are better
-		// this is identified by smaller target value than fail limit.
-		// -> comparison should be done accordingly
-
-		if(m_lfFailLimit > m_lfTarget)
-			bBiggerIsBetter=false;
-
-		if(bBiggerIsBetter && stats.Median()<m_lfFailLimit)
-			bLimitExceeded=false;
-
-		if((!bBiggerIsBetter) && stats.Median()>m_lfFailLimit)
-			bLimitExceeded=false;
-
-
-		text.sprintf("Min: %.2lf", stats.Min());
-		Write(text);
-		text.sprintf("Max: %.2lf", stats.Max());
-		Write(text);
-		text.sprintf("Mean: %.2lf", stats.Mean());
-		Write(text);
-		text.sprintf("Stdev: %.2lf", stats.Stdev());
-		Write(text);
-		text.sprintf("Median: %.2lf", stats.Median());
-		Write(text);
-		text.sprintf("Target: %.2lf", m_lfTarget);
-		Write(text);
-		text.sprintf("Fail: %.2lf", m_lfFailLimit);
-		Write(text);
+		MwtsStatistics stats (values);
+		Write(QString("Min: %1 \nMax: %2 \nMean: %3 \nStdev: %4 \nMedian: %5 \nTarget: %6 \nFail: %7")
+			.arg(stats.Min(), 0, 'f', 2).arg(stats.Max(), 0, 'f', 2)
+			.arg(stats.Mean(), 0, 'f', 2).arg(stats.Stdev(), 0, 'f', 2)
+			.arg(stats.Median(), 0, 'f', 2).arg(m_lfTarget, 0, 'f', 2)
+			.arg(m_lfFailLimit, 0, 'f', 2));
 
 		// TODO: fix this to be overall verdict
-		if(!bLimitExceeded)
+		if(!IsLimitExceeded(stats))
 		{
 			Write("Target value not exceeded! : CASE FAILED");
 		}
@@ -386,19 +351,37 @@ void MwtsResult::WriteReport()
 
 		WriteXmlReport(sMeasureName, sValue, sMeasureUnit, sFailLimit, sTarget);
 		WriteCsvReport(sMeasureName, sValue, sMeasureUnit, sFailLimit, sTarget);
-
 	}
 
-	QString verdict="FAILED";
-	if(this->IsPassed() && bLimitExceeded)
+	if(this->IsPassed())
 	{
 		verdict="PASSED";
 	}
-
-	Write("Overall result : "+verdict);
-
+	Write("Overall result : " + verdict);
 	MwtsMonitor::instance()->WriteResults();
 	MWTS_LEAVE;
+
+}
+
+bool MwtsResult::IsLimitExceeded(MwtsStatistics &stats)
+{
+	MWTS_ENTER;
+	bool bLimitExceeded=true;
+	bool bBiggerIsBetter=true;
+
+	// for example in latency measurements smaller values are better
+	// this is identified by smaller target value than fail limit.
+	// -> comparison should be done accordingly
+
+	if(m_lfFailLimit > m_lfTarget)
+		bBiggerIsBetter=false;
+	if(bBiggerIsBetter && stats.Median()<m_lfFailLimit)
+		bLimitExceeded=false;
+
+	if((!bBiggerIsBetter) && stats.Median()>m_lfFailLimit)
+		bLimitExceeded=false;
+
+	return bLimitExceeded;
 }
 
 void MwtsResult::WriteXmlReport(QString sMeasureName, QString sValue,

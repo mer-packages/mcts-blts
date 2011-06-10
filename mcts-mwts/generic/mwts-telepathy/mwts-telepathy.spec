@@ -6,23 +6,23 @@ BuildRoot:		%{buildroot}
 Summary: 		A MWTS test asset for Telepathy-QT4
 License: 		LGPL
 Name: 			mwts-telepathy
-Version: 		0.1.6
+Version: 		0.1.8
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
-BuildRequires:		libqt-devel, min-devel, min, compat-telepathy-qt4-devel, mwts-common-devel
-Requires:		min, compat-telepathy-qt4, mwts-common
+BuildRequires:		libqt-devel, min-devel, min, telepathy-qt4-devel, mwts-common-devel
+Requires:		min, telepathy-qt4, mwts-common
 Source: 		%{name}-%{version}.tar.gz
 
 %description
 Mwts-telepathy is a MWTS test asset for Telepathy-QT4. It provides test cases for all available account types.
 
-%package		generic-tests
+%package		generic-scripts
 Summary:		Mwts-telepathy MIN files
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		min, mwts-telepathy
-%description	generic-tests
+%description	generic-scripts
 MIN test cases for mwts-telepathy
 
 
@@ -39,7 +39,7 @@ Mwts-telepathy generic config
 Summary:		Mwts-telepathy generic meta package
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		mwts-telepathy, mwts-telepathy-generic-config, mwts-telepathy-generic-tests
+Requires:		mwts-telepathy, mwts-telepathy-generic-config, mwts-telepathy-generic-scripts
 %description	generic-all
 Mwts-telepathy generic meta package
 
@@ -58,11 +58,10 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-telepathy.*
 /usr/share/telepathy/clients/*.client
 
-%files generic-tests
+%files generic-scripts
 /usr/lib/min/libmin-mwts-telepathy.*
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-telepathy-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/*.conf

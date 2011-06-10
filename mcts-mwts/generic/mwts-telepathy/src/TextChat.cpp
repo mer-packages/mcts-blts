@@ -120,10 +120,10 @@ TextChat::TextChat( const Tp::TextChannelPtr& aChannel, QObject* pParent )
 		connect(mChannel.data(),
 			SIGNAL(pendingMessageRemoved(const Tp::ReceivedMessage&)),
 			SLOT(onPendingMessageRemoved(const Tp::ReceivedMessage&)));
-			
-			
 
-		Tp::Client::ChannelTypeTextInterface* textInterface = mChannel->textInterface();
+
+                /*Tp::Client::ChannelTypeTextInterface* textInterface = mChannel->textInterface();*/
+                Tp::Client::ChannelTypeTextInterface* textInterface = mChannel->optionalInterface<Tp::Client::ChannelTypeTextInterface>();
 		if ( textInterface )
 		{
 	        connect(textInterface, SIGNAL(LostMessage()),this,SLOT(onMessageLost()));
@@ -131,7 +131,8 @@ TextChat::TextChat( const Tp::TextChannelPtr& aChannel, QObject* pParent )
 							 this, SLOT(onMessageReceived(uint,uint,uint,uint,uint,const QString&)));
 		}
 
-		Tp::Client::ChannelInterfaceMessagesInterface* msgInterface = mChannel->messagesInterface();
+                /*Tp::Client::ChannelInterfaceMessagesInterface* msgInterface = mChannel->messagesInterface();*/
+                Tp::Client::ChannelInterfaceMessagesInterface* msgInterface = mChannel->optionalInterface<Tp::Client::ChannelInterfaceMessagesInterface>();
 		if ( msgInterface )
 		{
 	        connect(msgInterface, SIGNAL(MessageReceived(const Tp::MessagePartList&)),

@@ -1,3 +1,9 @@
+* Tue 31 May 2011 Alexey Kuznetsov <alexey.kuznetsov@digia.com> - 0.1.8
+- BMC#14970: move to telepathy-qt4 0.5.x 
+
+* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.1.7
+- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
+
 * Tue 17 May 2011 Timo Ojala <timo.ojala@digia.com> - 0.1.6
 - Added SIP DTMF cases
 - Added missing SIP slave cases

@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-buteo
 Summary:        Mwts-buteo syncing test asset 
 License:        LGPL
-Version:        0.0.4
+Version:        0.0.5
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -17,11 +17,11 @@ Source:         %{name}-%{version}.tar.gz
 %description
 mwts-buteo syncing test asset 
 
-%package        generic-tests
+%package        generic-scripts
 Summary:        mwts-buteo MIN files
 Prefix:		/usr
 Requires:       mwts-buteo
-%description    generic-tests
+%description    generic-scripts
 MIN test cases for mwts-buteo
 
 %package        generic-config
@@ -34,7 +34,7 @@ mwts-buteo generic configuration
 %package        generic-all
 Summary:        mwts-buteo generic meta package
 Prefix:		/usr
-Requires:       mwts-buteo, mwts-buteo-generic-config, mwts-buteo-generic-tests, buteo-service-google, buteo-service-memotoo, buteo-service-mobical
+Requires:       mwts-buteo, mwts-buteo-generic-config, mwts-buteo-generic-scripts, buteo-service-google, buteo-service-memotoo, buteo-service-mobical
 %description    generic-all
 mwts-buteo generic meta package
 
@@ -55,9 +55,8 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so
 
-%files generic-tests
+%files generic-scripts
 /etc/min.d/mwts-buteo.min.conf
-/usr/share/mwts-buteo-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

@@ -29,32 +29,32 @@
  * Constructor
  */
 FtpWindow::FtpWindow(MwtsTest *testAsset)
+    : m_pTestAsset(testAsset),
+      m_pFile(NULL),
+      m_iSizeOfFile(0),
+      m_fTransferSpeed(0),
+      m_bResult(false)
 {
     MWTS_ENTER;
 
-    this->testAsset = testAsset;
+    m_pFtp = new QFtp(this);
 
-    ftp = new QFtp( this );
+    connect( m_pFtp, SIGNAL(commandStarted(int)),
+             this, SLOT(ftp_commandStarted(int)) );
+    connect( m_pFtp, SIGNAL(commandFinished(int,bool)),
+             this, SLOT(ftp_commandFinished(int,bool)) );
+    connect( m_pFtp, SIGNAL(stateChanged(int)),
+             this, SLOT(ftp_stateChanged(int)) );
+    connect( m_pFtp, SIGNAL(done(bool)),
+             this, SLOT(ftp_done(bool)) );
+    connect( m_pFtp, SIGNAL(listInfo(const QUrlInfo &)),
+             this, SLOT(ftp_listInfo(const QUrlInfo &)) );
+    connect( m_pFtp, SIGNAL(dataTransferProgress(qint64, qint64)),
+             this, SLOT(updateDataTransferProgress(qint64, qint64)) );
 
-    connect( ftp, SIGNAL(commandStarted(int)),
-                    SLOT(ftp_commandStarted()) );
-    connect( ftp, SIGNAL(commandFinished(int,bool)),
-                    SLOT(ftp_commandFinished()) );
-    connect( ftp, SIGNAL(stateChanged(int)),
-                    SLOT(ftp_stateChanged(int)) );
-    connect( ftp, SIGNAL(done(bool)),
-                    SLOT(ftp_done(bool)) );
-    connect( ftp, SIGNAL(listInfo(const QUrlInfo &)),
-                    SLOT(ftp_listInfo(const QUrlInfo &)) );
-    connect(ftp, SIGNAL(dataTransferProgress(qint64, qint64)),
-                    this, SLOT(updateDataTransferProgress(qint64, qint64)));
-
-
-    m_bResult = false;
-
-    this->downloadPath = g_pConfig->value("FTP/download_path").toString();
-    this->uploadPath   = g_pConfig->value("FTP/upload_path").toString();
-    this->localPath    = g_pConfig->value("FTP/local_path").toString();
+    m_sDownloadPath = g_pConfig->value("FTP/download_path").toString();
+    m_sUploadPath   = g_pConfig->value("FTP/upload_path").toString();
+    m_sLocalPath    = g_pConfig->value("FTP/local_path").toString();
 
     MWTS_LEAVE;
 }
@@ -64,23 +64,297 @@ FtpWindow::FtpWindow(MwtsTest *testAsset)
  */
 FtpWindow::~FtpWindow()
 {
-    if (ftp) {
+    if (m_pFtp)
+    {
         // make sure the connection is shut
         this->destroy();
-        delete ftp;
-        ftp = NULL;
+        delete m_pFtp;
     }
 
-    if (file) {
-        delete file;
-        file = NULL;
+    if (m_pFile)
+    {
+        m_pFile->close();
+        delete m_pFile;
     }
 }
 
-void FtpWindow::ftp_listInfo( const QUrlInfo &i )
+bool FtpWindow::connectToHost(const QString ip)
+{
+    // close the existing connection
+    if ( m_pFtp->state() != QFtp::Unconnected )
+    {
+        qDebug() << "Closing an existing connection";
+        m_pFtp->close();
+        m_pTestAsset->Start();
+    }
+
+    qDebug() << "Connecting to host " << ip;
+    m_pFtp->connectToHost(ip);
+    m_pTestAsset->Start();
+
+    if (m_pFtp->state() == QFtp::Connected)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool FtpWindow::login(const QString username, const QString password)
+{
+    qDebug() << "Logging in with username:" << username << "and password:" << password;
+    m_pFtp->login(username, password);
+    m_pTestAsset->Start();
+
+    if (m_pFtp->state() == QFtp::LoggedIn)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool FtpWindow::downloadFile(QString strFilename)
+{
+    m_pFile = new QFile(strFilename);
+    if (!m_pFile->open(QIODevice::WriteOnly))
+    {
+        qCritical() << "Error in file creation";
+        delete m_pFile;
+        m_pFile = NULL;
+        return false;
+    }
+
+    m_fTransferSpeed = 0;
+
+    if (!m_sDownloadPath.isNull())
+    {
+        qDebug() << "Changing ftp path to:" << m_sDownloadPath;
+        m_pFtp->cd(m_sDownloadPath);
+    }
+
+    qDebug() << "Starting to download file:" << strFilename;
+
+    g_pTime->restart();
+    m_pFtp->get(strFilename, m_pFile);
+
+    // start the event loop
+    m_pTestAsset->Start();
+
+    // elapsed time is in milliseconds
+    double transTime = g_pTime->elapsed();
+    double sizeInMB = (double)m_iSizeOfFile / (double)(1024*1024);
+    double timeInSeconds = (double)transTime / (double)1000;
+    m_fTransferSpeed = sizeInMB / timeInSeconds;
+
+    return m_bResult;
+}
+
+bool FtpWindow::uploadFile(QString strFilename)
+{
+    if (strFilename.isNull())
+    {
+        return false;
+    }
+
+    QString fullPath = "";
+
+    m_fTransferSpeed = 0;
+
+    if (!m_sLocalPath.isNull())
+    {
+        fullPath = m_sLocalPath + "/" + strFilename;
+    }
+
+    qDebug() << "Reading file from:" << fullPath;
+    m_pFile = new QFile(fullPath);
+    if (!m_pFile->open(QIODevice::ReadOnly))
+    {
+        qCritical() << "Error in file reading";
+        delete m_pFile;
+        m_pFile = NULL;
+        return false;
+    }
+
+    if (!m_sUploadPath.isNull())
+    {
+        qDebug() << "Changing ftp path to:" << m_sUploadPath;
+        m_pFtp->cd(m_sUploadPath);
+    }
+
+    qDebug() << "Starting to upload file:" << strFilename;
+
+    g_pTime->restart();
+    m_pFtp->put(m_pFile, strFilename);
+
+    // start the event loop
+    m_pTestAsset->Start();
+
+    // elapsed time is in milliseconds
+    double transTime = g_pTime->elapsed();
+    double sizeInMB = (double)m_iSizeOfFile / (double)(1024*1024);
+    double timeInSeconds = (double)transTime / (double)1000;
+    m_fTransferSpeed = sizeInMB / timeInSeconds;
+
+    return m_bResult;
+}
+
+void FtpWindow::updateDataTransferProgress(qint64 readBytes, qint64 totalBytes)
+{
+    m_iSizeOfFile = totalBytes;
+    qDebug() << "Transfered:" << readBytes << "/" << totalBytes << " bytes";
+}
+
+void FtpWindow::ftp_commandStarted(int /*id*/)
+{
+    qDebug() << "Started FTP Command:";
+
+    switch( m_pFtp->currentCommand() )
+    {
+    case QFtp::ConnectToHost:
+        qDebug() << "    ConnectToHost";
+        break;
+    case QFtp::Login:
+        qDebug() << "    Login";
+        break;
+    case QFtp::Close:
+        qDebug() << "    Close";
+        break;
+    case QFtp::List:
+        qDebug() << "    List";
+        break;
+    case QFtp::Put:
+        qDebug() << "    Put";
+        break;
+    case QFtp::Get:
+        qDebug() << "    Get";
+        break;
+    default:
+        qDebug() << "Unknown command:" << m_pFtp->currentCommand();
+    }
+}
+
+void FtpWindow::ftp_commandFinished(int /*id*/, bool error)
+{
+    if( error )
+    {
+        switch( m_pFtp->currentCommand() )
+        {
+        case QFtp::ConnectToHost:
+            qDebug() << "Connect to host finished with an error!";
+            logError();
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::Login:
+            qDebug() << "Login finished with an error!";
+            logError();
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::Close:
+            qDebug() << "Close finished with an error!";
+            logError();
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::List:
+            qDebug() << "List finished with an error!";
+            logError();
+            break;
+        case QFtp::Put:
+            qDebug() << "Put command finished with an error!";
+            logError();
+            m_bResult = false;
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::Get:
+            qDebug() << "Get command finished with an error!";
+            logError();
+            m_bResult = false;
+            m_pTestAsset->Stop();
+            break;
+        default:
+            qDebug() << "There was an error with unrecognized command:" << m_pFtp->currentCommand();
+        }
+    }
+    else
+    {
+        switch( m_pFtp->currentCommand() )
+        {
+        case QFtp::ConnectToHost:
+            qDebug() << "Successfully connected to host";
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::Login:
+            qDebug() << "Login succeeded";
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::Close:
+            qDebug() << "Close succeeded";
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::List:
+            qDebug() << "List succeeded";
+            break;
+        case QFtp::Put:
+            qDebug() << "Put command succeeded";
+            m_bResult = true;
+            m_pTestAsset->Stop();
+            break;
+        case QFtp::Get:
+            qDebug() << "Get command succeeded";
+            m_bResult = true;
+            m_pTestAsset->Stop();
+            break;
+        default:
+            qDebug() << "Unrecognized command finished:" << m_pFtp->currentCommand();
+        }
+    }
+}
+
+void FtpWindow::ftp_stateChanged(int state)
+{
+    switch ( (QFtp::State)state )
+    {
+    case QFtp::Unconnected:
+        qDebug() << "State is: Unconnected";
+        m_pTestAsset->Stop();
+        break;
+    case QFtp::HostLookup:
+        qDebug() << "State is: Looking Host";
+        break;
+    case QFtp::Connecting:
+        qDebug() << "State is: Connecting";
+        break;
+    case QFtp::Connected:
+        qDebug() << "State is: Connected";
+        break;
+    case QFtp::LoggedIn:
+        qDebug() << "State is: Logged in";
+        break;
+    case QFtp::Closing:
+        qDebug() << "State is: Closing";
+        break;
+    default:
+        qDebug() << "Unrecognized state:" << state;
+        break;
+    }
+}
+
+void FtpWindow::ftp_done(bool error)
+{
+    if (error)
+    {
+        qDebug() << "All pending FTP commands have finished but there was an error!";
+        logError();
+        m_pTestAsset->Stop();
+    }
+    else
+    {
+        qDebug() << "All pending FTP commands have finished successfully!";
+    }
+}
+
+void FtpWindow::ftp_listInfo(const QUrlInfo &i)
 {
     // stop the event loop
-    testAsset->Start();
+    m_pTestAsset->Start();
 
     qDebug() << "///////";
     qDebug() << i.name();
@@ -90,239 +364,42 @@ void FtpWindow::ftp_listInfo( const QUrlInfo &i )
     qDebug() << i.lastModified().toString("MMM dd yyyy");
 }
 
-bool FtpWindow::downloadFile(QString strFilename)
-{
-    file = new QFile(strFilename);
-    if (!file->open(QIODevice::WriteOnly)) {
-            qCritical() << "Error in file creation";
-            delete file;
-            return false;
-    }
-
-    fTransferSpeed = 0;
-
-    if (!this->downloadPath.isNull()) {
-            qDebug() << "changing ftp path to " << this->downloadPath;
-            ftp->cd(this->downloadPath);
-    }
-
-    qDebug() << "Starting to download file" << strFilename;
-
-    g_pTime->restart();
-
-    ftp->get(strFilename, file);
-    // stop the event loop
-    testAsset->Start();
-
-    // elapsed time is in milliseconds
-    double transTime = g_pTime->elapsed();
-
-    fTransferSpeed = (sizeOfFile / 1024) / 1024 / (transTime/1000);
-
-    //bResult = true;
-
-    return m_bResult;
-}
-
-bool FtpWindow::uploadFile(QString strFilename)
-{
-    if ( strFilename.isNull() ) {
-            return false;
-    }
-
-    QString localPath = strFilename;
-
-    fTransferSpeed = 0;
-
-    if (!this->localPath.isNull()) {
-        localPath = this->localPath + "/" + strFilename;
-    }
-
-    qDebug() << "Reading file " << localPath;
-    file = new QFile(localPath);
-    if (!file->open(QIODevice::ReadOnly)) {
-        qCritical() << "Error in file reading";
-        delete file;
-        return false;
-    }
-
-    testAsset->SetFailTimeout( 120000 );
-
-    if (!this->uploadPath.isNull()) {
-        qDebug() << "changing ftp path to " << this->uploadPath;
-        ftp->cd(this->uploadPath);
-    }
-
-    qDebug() << "Starting to upload file " << strFilename;
-
-    g_pTime->restart();
-    ftp->put( file, strFilename );
-
-    // start the event loop
-    testAsset->Start();
-
-    // elapsed time is in milliseconds
-    double transTime = g_pTime->elapsed();
-
-    fTransferSpeed = (sizeOfFile / 1024) / 1024 / (transTime/1000);
-
-    return m_bResult;
-}
-
-void FtpWindow::updateDataTransferProgress(qint64 readBytes, qint64 totalBytes)
-{
-    sizeOfFile = totalBytes;
-    qDebug() << "Transfered:" << readBytes << "/" << totalBytes << " bytes";
-}
-
-void FtpWindow::ftp_commandStarted()
-{
-	qDebug() << "FTP Command Started";
-
-        switch (ftp->currentCommand()) {
-            case QFtp::ConnectToHost:
-                 qDebug() << "Connect to host command";
-            break;
-            case QFtp::Login:
-                qDebug() << "Login command!";
-            break;
-            case QFtp::Close:
-                qDebug() << "Close command!";
-            break;
-            case QFtp::List:
-                qDebug() << "List command!";
-            break;
-            case QFtp::Put:
-                qDebug() << "Put command!";
-            break;
-            case QFtp::Get:
-                qDebug() << "Get command!";
-                break;
-            default:
-                qDebug() << "Command started " << ftp->currentCommand();
-	}
-}
-
-void FtpWindow::ftp_commandFinished()
-{
-	qDebug() << "FTP Command finished";
-
-        switch (ftp->currentCommand()) {
-            case QFtp::ConnectToHost:
-                    qDebug() << "Connect to host command finished";
-            break;
-            case QFtp::Login:
-                    qDebug() << "Login succeeded";
-                    // stop the event loop
-                    testAsset->Stop();
-            break;
-            case QFtp::Close:
-                    qDebug() << "Close command finished";
-            break;
-            case QFtp::List:
-                    qDebug() << "List command finished";
-            break;
-            case QFtp::Put:
-                    qDebug() << "Put command finished";
-                    m_bResult = true;
-                    // stop the event loop
-                    testAsset->Stop();
-            break;
-            case QFtp::Get:
-                    qDebug() << "Get command finished";
-                    m_bResult = true;
-                    // stop the event loop
-                    testAsset->Stop();
-                    break;
-            default:
-                    qDebug() << "Command finished " << ftp->currentCommand();
-	}
-}
-
-void FtpWindow::ftp_stateChanged( int state )
-{
-    switch ( (QFtp::State)state ) {
-        case QFtp::Unconnected:
-                qDebug() << "State is : Unconnected";
-                testAsset->Stop();
-                break;
-        case QFtp::HostLookup:
-                qDebug() << "State is : Looking Host";
-                break;
-        case QFtp::Connecting:
-                qDebug() << "State is : Connecting";
-                break;
-        case QFtp::Connected:
-                qDebug() << "State is : Connected";
-                break;
-        case QFtp::LoggedIn:
-                qDebug() << "State is : Logged in";
-                break;
-        case QFtp::Closing:
-                qDebug() << "State is: Closing";
-                break;
-    }
-
-}
-
-void FtpWindow::ftp_done( bool error )
-{
-    if ( error ) {
-        switch(error) {
-            case QFtp::HostNotFound:
-                    qDebug() << "Error: host not found";
-                    m_bResult = false;
-            break;
-            case QFtp::ConnectionRefused:
-                    qDebug() << "Error: connection refused";
-                    m_bResult = false;
-            break;
-            case QFtp::NotConnected:
-                    qDebug() << "Error: not connected";
-            break;
-            case QFtp::UnknownError:
-                    qDebug() << "Error: unknown";
-                    m_bResult = false;
-            break;
-        }
-        // If we are connected, but not logged in, it is not meaningful to stay connected
-        if ( ftp->state() == QFtp::Connected ) {
-            ftp->close();
-        }
-        testAsset->Stop();
-    }
-}
-
-bool FtpWindow::connectToHost(const QString ip, const QString username,const QString password)
-{
-    qDebug() << "FtpWindow::connectToHost";
-
-    // close the existing connection
-    if ( ftp->state() != QFtp::Unconnected )
-        ftp->close();
-
-    qDebug() << "Connecting to host " << ip;
-    ftp->connectToHost( ip );
-    ftp->login( username, password );
-
-    testAsset->Start();
-
-    if (ftp->state() == QFtp::LoggedIn){
-        return true;
-    }
-    return false;
-}
 
 void FtpWindow::destroy()
 {
-        qDebug() << "Closing FTP connection....";
+    qDebug() << "Closing FTP connection....";
 
-        if ( ftp->state() != QFtp::Unconnected )
-        {
-                ftp->close();
-                testAsset->Start();
-        }
+    if ( m_pFtp->state() != QFtp::Unconnected )
+    {
+        m_pFtp->close();
+        m_pTestAsset->Start();
+    }
 }
 
+void FtpWindow::logError()
+{
+    switch(m_pFtp->error())
+    {
+    case QFtp::HostNotFound:
+        qDebug() << "Error: host not found";
+        m_bResult = false;
+        break;
+    case QFtp::ConnectionRefused:
+        qDebug() << "Error: connection refused";
+        m_bResult = false;
+        break;
+    case QFtp::NotConnected:
+        qDebug() << "Error: not connected";
+        break;
+    case QFtp::UnknownError:
+        qDebug() << "Error: unknown error";
+        m_bResult = false;
+        break;
+    default:
+        qDebug() << "Unrecognized error:" << m_pFtp->error();
+        m_bResult = false;
+        break;
+    }
 
-
+    qDebug() << "Error string:" << m_pFtp->errorString();
+}

@@ -37,3 +37,5 @@ PKGCONFIG += TelepathyQt4
 LIBS += -lmwts-common
 target.path = /usr/lib
 INSTALLS += target
+
+DEFINES += TP_QT4_ENABLE_LOWLEVEL_API
