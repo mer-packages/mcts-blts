@@ -2,7 +2,7 @@
 
 Summary: Template meego core test suite
 Name: mcts-packagekit-tests
-Version: 1.0.0
+Version: 1.0.1
 Release: 1
 License: GPLv2
 Group: System/Libraries
