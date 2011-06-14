@@ -1,3 +1,5 @@
+* Tue June 14 2011 Yugang Fan <yugang.fan@intel.com> - 1.0.1
+- Rename the PackageKit MCTS test cases.
 * Mon Feb 01 2011 Huajun Li <huajun.li@intel.com> - 1.0.0
 - Initial version for OBS
 
