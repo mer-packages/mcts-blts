@@ -56,7 +56,8 @@ LOCAL int RandomMeasurement(MinItemParser * item)
 {
 	MWTS_ENTER;
 	double value=60+rand()*40.0/(double)RAND_MAX;
-	g_pResult->AddMeasure("RandomMeasurement", value, "");
+
+	g_pResult->AddMeasure("RandomMeasurement", value, "amount");
 
 	return 0;
 }
@@ -90,10 +91,13 @@ LOCAL int ConfigTest(MinItemParser * item)
 LOCAL int SeriesMeasureTest(MinItemParser * item)
 {
 	MWTS_ENTER;	
+
+	g_pResult->StartSeriesMeasure("throughput", "kb/s", g_pResult->m_lfTarget, g_pResult->m_lfFailLimit);
+
 	for(int i=0; i<100; i++)
 	{
 		usleep(30000);
-		g_pResult->AddSeriesMeasure("throughput", QString::number(i), "kb/s");
+		g_pResult->AddSeriesMeasure("throughput", (double) i);
 	}
 
 	return 0;

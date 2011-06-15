@@ -71,6 +71,9 @@ chmod 777 /var/log/tests
 ldconfig
 
 %changelog
+* Tue Jun 14 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.5
+- Fixes: MB#19137 - [FEA] mwts-common .csv file syntax to support the <series> tag in testrunner
+
 * Wed Jun 1 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.4
 - Fixes: MB#18304 - .csv files written in wrong format
 

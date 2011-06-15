@@ -52,8 +52,11 @@ public:
 	void SetLimits(double lfTarget, double lfFail);
 	void SetResultFilter(QString filter);
 	void StartSeriesMeasure(QString name, QString unit, double lfTarget=0, double lfFailLimit=0);	
-	void AddSeriesMeasure(QString name, QString value, QString unit);
+	void AddSeriesMeasure(QString name, double value);
 	bool IsLimitExceeded(MwtsStatistics &stats);
+
+	double m_lfTarget;
+	double m_lfFailLimit;
 
 protected:
 	static MwtsResult* inst;
@@ -66,8 +69,6 @@ protected:
 	MwtsIteration*	m_pInitIteration;
 	int m_nIteration;
 	QFile m_File;
-	double m_lfTarget;
-	double m_lfFailLimit;
 	QString m_sResultFilter;
 
 	void WriteXmlReport(QString sMeasureName, QString sValue,

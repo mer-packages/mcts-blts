@@ -144,7 +144,7 @@ void MwtsResult::SetResultFilter(QString filter)
 }
 
 /**
-  Adds a measurement value in to results
+  Adds a measurement value
   @param: Name name of the measurement
   @param: Value value to be added
   @param: Unit unit of the measurement, for example "kB/s"
@@ -165,8 +165,41 @@ void MwtsResult::AddMeasure(QString name, double value, QString unit)
 	QString text;
 	QTextStream(&text) << "- " << g_pTest->Name() << ": " << name << ": " << value << " : " << unit;
 	Write(text);
+
+	/*
+	  name;value;unit;
+	  name;value;unit;target;failure;
+	  name;value;unit;target;failure;
+
+	  where the name and unit are strings; value target and failure floating point numbers.
+	  (http://wiki.meego.com/Quality/QA-tools/Test_plan#Measurement_data)
+
+	  Example:
+	  bt.upload;1.4123432;MB/s;
+	  cpu.load;23.41;%;5;90;
+	  mem.load;80.16;%;80;99;
+	*/
+	QString str = name + ";" + QString::number(value) + ";" + unit +";";
+	if (m_lfFailLimit!=0 && m_lfTarget!=0)
+		str += QString::number(m_lfTarget) + ";" + QString::number(m_lfFailLimit) + ";";
+	WriteSeriesFile(name, str);
 }
 
+
+/**
+  Adds a measurement value in to results
+  @param: Name name of the measurement
+  @param: Value value to be added
+*/
+void MwtsResult::AddSeriesMeasure(QString name, double value)
+{
+	QString str;
+	QDateTime timestamp = QDateTime::currentDateTime();
+	QString timestampStr=timestamp.toString(Qt::ISODate);
+	str=timestampStr+QString(";")+QString::number(value);
+	WriteSeriesFile(name, str);
+
+}
 
 void MwtsResult::WriteSeriesFile(QString name, QString text)
 {
@@ -185,28 +218,17 @@ void MwtsResult::StartSeriesMeasure(QString name, QString unit, double lfTarget,
 		str+= QString::number(lfTarget) + QString(";");
 	if(lfFailLimit!=0)
 		str+= QString::number(lfFailLimit) + QString(";");
-	WriteSeriesFile(name, str);	
-	
-}
 
-
-void MwtsResult::AddSeriesMeasure(QString name, QString value, QString unit)
-{
-	/*
-	name;value;unit;
-	name;value;unit;target;failure;
-	name;value;unit;target;failure;
-	where the name and unit are strings; value target and failure floating point numbers.
-	(http://wiki.meego.com/Quality/QA-tools/Test_plan#Measurement_data)
-	Example:
-	bt.upload;1.4123432;MB/s;
-	cpu.load;23.41;%;5;90;
-	mem.load;80.16;%;80;99;
-	*/
-	QString str = name + ";" + value + ";" + unit +";";
-	if (m_lfFailLimit!=0 && m_lfTarget!=0)
-		str += QString::number(m_lfTarget) + ";" + QString::number(m_lfFailLimit) + ";";
-	WriteSeriesFile(name, str);
+	//check if the name;unit[;target;failure] part is already in the first line
+	//because writeseriesfiles appends to the files
+	QFile file ("/var/log/tests/"+g_pTest->CaseName()+"."+name+".csv");
+	file.open(QIODevice::ReadOnly);
+	QString firstLine = file.readLine();
+	file.close();
+	if (firstLine.trimmed() != str)
+	{
+		WriteSeriesFile(name, str);
+	}
 }
 
 /** Tells whether test case is passed in result perspective*/
