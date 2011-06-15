@@ -67,7 +67,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-location-scripts/tests.xml
+/usr/share/mwts-location-generic-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/LocationTest.conf

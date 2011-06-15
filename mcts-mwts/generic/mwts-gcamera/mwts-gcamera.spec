@@ -56,7 +56,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-gcamera.min.conf
-/usr/share/mwts-gcamera-tests/tests.xml
+/usr/share/mwts-gcamera-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

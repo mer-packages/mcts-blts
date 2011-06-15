@@ -60,7 +60,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-usb.min.conf
-/usr/share/mwts-usb-scripts/tests.xml
+/usr/share/mwts-usb-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

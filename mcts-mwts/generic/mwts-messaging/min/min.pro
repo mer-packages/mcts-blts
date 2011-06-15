@@ -30,7 +30,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-messaging-scripts
+TESTS.path = /usr/share/mwts-messaging-generic-tests
 INSTALLS += TESTS
 
 target.path = /usr/lib/min

@@ -58,7 +58,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 %defattr (-,root,root)
 /etc/min.d/*.min.conf
-/usr/share/mwts-qtmultimedia-tests/tests.xml
+/usr/share/mwts-qtmultimedia-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

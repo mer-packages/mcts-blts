@@ -64,7 +64,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-network.min.conf
-/usr/share/mwts-network-tests/tests.xml
+/usr/share/mwts-network-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

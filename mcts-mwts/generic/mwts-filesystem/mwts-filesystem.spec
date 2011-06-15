@@ -93,7 +93,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-filesystem-tests/tests.xml
+/usr/share/mwts-filesystem-generic-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/FilesystemTest.conf

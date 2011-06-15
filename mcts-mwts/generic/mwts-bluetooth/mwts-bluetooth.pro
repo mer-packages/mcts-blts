@@ -15,5 +15,5 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 ALLTESTS.files = scripts/tests.xml
-ALLTESTS.path = /usr/share/mwts-bluetooth-tests
+ALLTESTS.path = /usr/share/mwts-bluetooth-generic-tests
 INSTALLS += ALLTESTS

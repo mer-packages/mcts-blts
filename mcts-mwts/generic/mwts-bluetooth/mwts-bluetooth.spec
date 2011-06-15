@@ -77,7 +77,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-bluetooth.min.conf
-/usr/share/mwts-bluetooth-tests/tests.xml
+/usr/share/mwts-bluetooth-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

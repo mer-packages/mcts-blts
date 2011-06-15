@@ -59,7 +59,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/*.min.conf
-/usr/share/mwts-systeminfo-scripts/tests.xml
+/usr/share/mwts-systeminfo-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config
