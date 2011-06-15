@@ -1,7 +1,3 @@
-mwts-systeminfo-tests (1.0.2) unstable; urgency=low
-  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
- -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
-
 mwts-systeminfo-tests (1.0.1) unstable; urgency=low
   * Fixes: NB#12008 - script for NFT-FUTE-SystemInfo_BatteryPower-ITER fixed
  -- Jan Grela <jan.grela@digia.com>  Mon, 02 May 2011 16:57:00 +0200

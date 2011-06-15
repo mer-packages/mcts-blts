@@ -17,12 +17,12 @@ Source: 		%{name}-%{version}.tar.gz
 %description
 Mwts-telepathy is a MWTS test asset for Telepathy-QT4. It provides test cases for all available account types.
 
-%package		generic-scripts
+%package		generic-tests
 Summary:		Mwts-telepathy MIN files
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		min, mwts-telepathy
-%description	generic-scripts
+%description	generic-tests
 MIN test cases for mwts-telepathy
 
 
@@ -39,7 +39,7 @@ Mwts-telepathy generic config
 Summary:		Mwts-telepathy generic meta package
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		mwts-telepathy, mwts-telepathy-generic-config, mwts-telepathy-generic-scripts
+Requires:		mwts-telepathy, mwts-telepathy-generic-config, mwts-telepathy-generic-tests
 %description	generic-all
 Mwts-telepathy generic meta package
 
@@ -58,10 +58,11 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-telepathy.*
 /usr/share/telepathy/clients/*.client
 
-%files generic-scripts
+%files generic-tests
 /usr/lib/min/libmin-mwts-telepathy.*
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
+/usr/share/mwts-telepathy-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/*.conf

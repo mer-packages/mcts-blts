@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-systeminfo
 Summary:        systeminfo test asset
 License:        LGPL
-Version:        1.0.2
+Version:        1.0.0
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -17,7 +17,7 @@ Source:         %{name}-%{version}.tar.gz
 %description
 systeminfo test asset.
             
-%package        generic-scripts
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-systeminfo
 Requires:       min, mwts-systeminfo
 Prefix:          /usr
@@ -34,7 +34,7 @@ Generic configuration file for mwts-systeminfo
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-systeminfo (generic)
-Requires:	mwts-systeminfo, mwts-systeminfo-generic-scripts, mwts-systeminfo-generic-config
+Requires:	mwts-systeminfo, mwts-systeminfo-generic-tests, mwts-systeminfo-generic-config
 %description	generic-all
 Meta package for installing all needed packages for generic version of mwts-systeminfo
 
@@ -57,8 +57,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-systeminfo.*
 /usr/lib/min/*.so
 
-%files generic-scripts
+%files generic-tests
 /etc/min.d/*.min.conf
+/usr/share/mwts-systeminfo-scripts/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

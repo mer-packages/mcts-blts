@@ -1,6 +1,3 @@
-* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.0.4
-- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
-
 * Mon 25 May 2011 Jan Grela <jan.grela@digia.com> - 0.0.3
 - Added actuator checkout
 

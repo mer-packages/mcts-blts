@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Generic File system test asset
 License:                LGPL
 Name:                   mwts-filesystem
-Version:                1.0.3
+Version:                1.0.2
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
@@ -26,12 +26,12 @@ Requires:               qt-devel, mwts-filesystem
 %description            devel
 Development headers and libraries for mwts-filesystem
 
-%package                generic-scripts
+%package                generic-tests
 Summary:                mwts-filesystem MIN files
 Prefix:                 /usr
 Group:                  Development/Tools
 Requires:               min, mwts-filesystem
-%description            generic-scripts
+%description            generic-tests
 MIN test cases for mwts-filesystem
 
 %package                generic-config
@@ -54,7 +54,7 @@ mwts-filesystem generic utils for making mass storage functionality
 Summary:                mwts-filesystem meta package for generic version
 Prefix:                 /usr
 Group:                  Development/Tools
-Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mwts-filesystem-generic-scripts
+Requires:               min, mwts-filesystem, mwts-filesystem-generic-config, mwts-filesystem-generic-tests
 %description            generic-all
 mwts-filesystem meta package for generic version
 
@@ -90,9 +90,10 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/libmin-mwts-filesystem.so
 /usr/include/FilesystemTest.h
 
-%files generic-scripts
+%files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
+/usr/share/mwts-filesystem-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/FilesystemTest.conf

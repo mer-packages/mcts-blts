@@ -17,12 +17,12 @@ Source: 		%{name}-%{version}.tar.gz
 %description
 Mwts-network is a wlan/psd networking test asset
 
-%package                generic-scripts
+%package                generic-tests
 Summary:                Min test-case scripts for mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
 Requires:               mwts-network
-%description            generic-scripts
+%description            generic-tests
 MIN test case scripts for mwts-network
 
 
@@ -38,7 +38,7 @@ mwts-network generic config
 Summary:                meta package for generic mwts-network
 Prefix:                 /usr
 Group:                  Development/Scripts
-Requires:               mwts-network, mwts-network-generic-config, mwts-network-generic-scripts
+Requires:               mwts-network, mwts-network-generic-config, mwts-network-generic-tests
 %description            generic-all
 meta package for generic mwts-network
 
@@ -62,8 +62,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so
 
-%files generic-scripts
+%files generic-tests
 /etc/min.d/mwts-network.min.conf
+/usr/share/mwts-network-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

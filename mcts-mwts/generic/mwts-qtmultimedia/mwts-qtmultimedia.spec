@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-qtmultimedia
 Summary:        Test asset for Qt Mobility Multimedia API
 License:        LGPL
-Version:        0.1.7
+Version:        0.1.6
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
@@ -17,10 +17,10 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Test asset for Qt Mobility Multimedia API
 
-%package        generic-scripts
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-qtmultimedia
 Requires:       mwts-qtmultimedia
-%description    generic-scripts
+%description    generic-tests
 MIN test case scripts for mwts-qtmultimedia
 
 %package        generic-config
@@ -31,7 +31,7 @@ Generic configuration file for mwts-qtmultimedia
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-qtmultimedia (generic)
-Requires:	mwts-qtmultimedia, mwts-qtmultimedia-generic-scripts, mwts-qtmultimedia-generic-config
+Requires:	mwts-qtmultimedia, mwts-qtmultimedia-generic-tests, mwts-qtmultimedia-generic-config
 %description	generic-all
 Meta package for installing all needed packages for generic version of mwts-qtmultimedia
 
@@ -55,9 +55,10 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so
 
-%files generic-scripts
+%files generic-tests
 %defattr (-,root,root)
 /etc/min.d/*.min.conf
+/usr/share/mwts-qtmultimedia-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

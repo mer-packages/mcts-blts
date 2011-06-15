@@ -1,6 +1,3 @@
-* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 1.0.6
-- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
-
 * Mon 16 May 2011 Jan Grela <jan.grela@nokia.com>  - 1.0.5
 - Test asset refactored, changed functionality, test cases work but crush
 

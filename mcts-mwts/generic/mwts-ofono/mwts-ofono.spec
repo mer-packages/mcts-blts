@@ -7,7 +7,7 @@ BuildRoot:	%{buildroot}
 Summary: 	Test libraries for ofono-qt
 License: 	LGPL
 Name: 		mwts-ofono
-Version: 	0.1.1
+Version: 	0.1.0
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
@@ -17,12 +17,12 @@ Source: 	%{name}-%{version}.tar.gz
 %description
 Test cases for ofono-qt
 
-%package	generic-scripts
+%package	generic-tests
 Summary:	Test cases for ofono-qt
 Prefix: 	/usr
 Group: 		Development/Tools
 Requires:	mwts-ofono
-%description	generic-scripts
+%description	generic-tests
 MIN test cases for measuring performance and reliability
 
 %package        generic-config
@@ -33,7 +33,7 @@ Generic configuration file for mwts-ofono
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-ofono (generic)
-Requires:	mwts-ofono, mwts-ofono-generic-scripts, mwts-ofono-generic-config
+Requires:	mwts-ofono, mwts-ofono-generic-tests, mwts-ofono-generic-config
 %description	generic-all
 Meta package for installing all needed packages for generic version of mwts-ofono
 
@@ -56,6 +56,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-scripts
 /etc/min.d/mwts-ofono.min.conf
+/usr/share/mwts-ofono-scripts/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

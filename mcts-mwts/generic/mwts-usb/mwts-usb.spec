@@ -7,7 +7,7 @@ BuildRoot:		%{buildroot}
 Summary: 		Test libraries for USB networking.
 License: 		LGPL
 Name: 			mwts-usb
-Version: 		1.0.3
+Version: 		1.0.2
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
@@ -17,12 +17,12 @@ Source: 		%{name}-%{version}.tar.gz
 %description
 Test libraries for USB networking. C++ and MIN test modules.
 
-%package		generic-scripts
+%package		generic-tests
 Summary:		Test cases for USB networking.
 Prefix: 		/usr
 Group: 			Development/Tools
 Requires:		mwts-usb
-%description		generic-scripts
+%description		generic-tests
 MIN test cases for measuring performance and reliability
 
 %package		generic-config
@@ -38,7 +38,7 @@ mwts-usb generic configuration file
 Summary:		mwts-usb generic meta package
 Prefix: 		/usr
 Group: 			Development/Tools
-Requires:		mwts-usb, mwts-usb-generic-config, mwts-usb-generic-scripts
+Requires:		mwts-usb, mwts-usb-generic-config, mwts-usb-generic-tests
 %description		generic-all
 mwts-usb generic meta package
             
@@ -58,8 +58,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/*.so*
 /usr/lib/min/*.so*
 
-%files generic-scripts
+%files generic-tests
 /etc/min.d/mwts-usb.min.conf
+/usr/share/mwts-usb-scripts/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

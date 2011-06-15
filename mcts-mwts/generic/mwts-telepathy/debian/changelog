@@ -1,7 +1,3 @@
-mwts-telepathy-tests (0.1.7) unstable; urgency=low
-  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
- -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
-
 mwts-telepathy-tests (0.1.6) unstable; urgency=low
   * Added SIP DTMF cases
   * Added missing SIP slave cases
