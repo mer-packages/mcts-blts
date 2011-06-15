@@ -1,6 +1,3 @@
-* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.1.7
-- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests package changed to -scripts, tests.xml removed from packaging
-
 * Tue 24 May 2011 Jan Grela <jan.grela@digia.com> - 0.1.6
  - Fixed some script audio playing MIN scripts
 

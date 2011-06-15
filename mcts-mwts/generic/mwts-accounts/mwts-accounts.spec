@@ -17,10 +17,10 @@ Source:         %{name}-%{version}.tar.gz
 %description
 Accounts test asset.
             
-%package        generic-scripts
+%package        generic-tests
 Summary:        MIN test case scripts for mwts-accounts
 Requires:       mwts-accounts
-%description    generic-scripts
+%description    generic-tests
 MIN test case scripts for mwts-accounts
 
 %package        generic-config
@@ -31,7 +31,7 @@ Generic configuration file for mwts-accounts
 
 %package	generic-all
 Summary:	meta package containing everything for mwts-accounts (generic)
-Requires:	mwts-accounts, mwts-accounts-generic-scripts, mwts-accounts-generic-config
+Requires:	mwts-accounts, mwts-accounts-generic-tests, mwts-accounts-generic-config
 %description	generic-all
 Meta package for installing all needed packages for generic version of mwts-accounts
 
@@ -52,8 +52,9 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/libmwts-accounts*
 /usr/lib/min/*.so*
 
-%files generic-scripts
-/etc/min.d/mwts-accounts.min.conf
+%files generic-tests
+/etc/min.d/mwts-accounts.min.conf 
+/usr/share/mwts-accounts-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

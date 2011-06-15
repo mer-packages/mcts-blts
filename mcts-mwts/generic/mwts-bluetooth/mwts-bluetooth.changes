@@ -1,6 +1,3 @@
-* Fri 03 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.1.4
-- Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests pakage changed to -scripts, tests.xml removed from packaging
-
 * Fri 06 May 2011 Timo Ojala <timo.ojala@digia.com> - 0.1.3
 - Changed obex file transfer not to fail if interface validity
   can't be verified at interface creation.
