@@ -56,7 +56,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-gstreamer.min.conf
-/usr/share/mwts-gstreamer-tests/tests.xml
+/usr/share/mwts-gstreamer-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

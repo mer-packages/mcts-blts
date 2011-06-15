@@ -15,5 +15,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = scripts/tests.xml
-TESTS.path = /usr/share/mwts-systeminfo-scripts
+TESTS.path = /usr/share/mwts-systeminfo-generic-tests
 INSTALLS += TESTS
+
+

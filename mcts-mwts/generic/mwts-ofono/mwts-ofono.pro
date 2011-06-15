@@ -15,5 +15,5 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = scripts/tests.xml
-TESTS.path = /usr/share/mwts-ofono-scripts
+TESTS.path = /usr/share/mwts-ofono-generic-tests
 INSTALLS += TESTS

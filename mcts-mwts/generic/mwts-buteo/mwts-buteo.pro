@@ -12,7 +12,7 @@ MIN_SCRIPTS.files = min/data/*.cfg
 MIN_SCRIPTS.path = /usr/lib/min
 
 TESTS.files = min/data/tests.xml
-TESTS.path = /usr/share/mwts-buteo-tests/
+TESTS.path = /usr/share/mwts-buteo-generic-tests/
 
 INSTALLS += MIN_CONFIG
 INSTALLS += MIN_SCRIPTS

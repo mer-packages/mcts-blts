@@ -34,7 +34,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTSXML.files = data/tests.xml
-TESTSXML.path = /usr/share/mwts-location-scripts
+TESTSXML.path = /usr/share/mwts-location-generic-tests
 INSTALLS += TESTSXML
 
 

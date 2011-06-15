@@ -57,7 +57,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files generic-tests
 /etc/min.d/mwts-buteo.min.conf
-/usr/share/mwts-buteo-tests/tests.xml
+/usr/share/mwts-buteo-generic-tests/tests.xml
 /usr/lib/min/*.cfg
 
 %files generic-config

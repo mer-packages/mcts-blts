@@ -62,7 +62,7 @@ make install INSTALL_ROOT=%{buildroot}
 /usr/lib/min/libmin-mwts-telepathy.*
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-telepathy-tests/tests.xml
+/usr/share/mwts-telepathy-generic-tests/tests.xml
 
 %files generic-config
 /usr/lib/tests/*.conf

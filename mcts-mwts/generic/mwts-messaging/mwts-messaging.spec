@@ -60,7 +60,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-messaging-scripts/*.xml
+/usr/share/mwts-messaging-generic-tests/*.xml
 
 %files generic-config
 /usr/lib/tests/*.conf

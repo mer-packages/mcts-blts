@@ -82,7 +82,7 @@ make install INSTALL_ROOT=%{buildroot}
 %files generic-tests
 /etc/min.d/*.min.conf
 /usr/lib/min/*.cfg
-/usr/share/mwts-sensors-tests/tests.xml
+/usr/share/mwts-sensors-generic-tests/tests.xml
 
 %files cli
 /usr/bin/mwts-sensors-cli

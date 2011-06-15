@@ -44,7 +44,7 @@ MIN_SCRIPTS.path = /usr/lib/min
 INSTALLS += MIN_SCRIPTS
 
 TESTS.files = data/tests.xml
-TESTS.path = /usr/share/mwts-telepathy-tests
+TESTS.path = /usr/share/mwts-telepathy-generic-tests
 ALLTESTS.files = data/alltests.xml
 ALLTESTS.path = /usr/share/mwts-telepathy-scripts
 INSTALLS += TESTS
