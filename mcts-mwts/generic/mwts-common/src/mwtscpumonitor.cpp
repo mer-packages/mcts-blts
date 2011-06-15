@@ -36,6 +36,9 @@ MwtsCpuMonitor::MwtsCpuMonitor(MwtsMonitorLogger* logger)
 	m_pMpstatProcess=new QProcess();
 	//it might be that float precision is needed (note: no mpstat on meego)
 	m_pMpstatProcess->start("/usr/bin/vmstat", params);
+
+	g_pResult->StartSeriesMeasure("cpu_usage", "%", g_pResult->m_lfTarget, g_pResult->m_lfFailLimit);
+	g_pResult->StartSeriesMeasure("cpu_io_wait", "%", g_pResult->m_lfTarget, g_pResult->m_lfFailLimit);
 }
 
 /** Writes result to logger */
@@ -88,10 +91,10 @@ void MwtsCpuMonitor::WriteResult()
 			m_pLogger->Write("CpuUsage", cpu_total);
 			m_pLogger->Write("CpuIowait", cpu_iowait);
 
-			//added cpu usage measurement to .csv file for testrunner-lite
-			g_pResult->AddSeriesMeasure("cpu_usage", QString::number(cpu_total), "%");
-            //added cpu io wait measurement to .csv file for testrunner-lite
-			g_pResult->AddSeriesMeasure("cpu_io_wait", QString::number(cpu_iowait), "%");
+			//added cpu usage measurement series to .csv file for testrunner-lite
+			g_pResult->AddSeriesMeasure("cpu_usage", cpu_total);
+			//added cpu io wait measurement series to .csv file for testrunner-lite
+			g_pResult->AddSeriesMeasure("cpu_io_wait", cpu_iowait);
 		}
 	}
 

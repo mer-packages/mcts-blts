@@ -1,6 +1,6 @@
 TARGET = mwts-common
 #DEFINES += MWTSCOMMON
-VERSION = 1.2.4
+VERSION = 1.2.5
 TEMPLATE = lib
 CONFIG += debug
 CONFIG += warn_on
