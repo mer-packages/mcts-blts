@@ -1,3 +1,6 @@
+* Wed 22 Jun 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.7
+- [ Tuomo Pelkonen ] Fixes: BMC#19174 - No tests.xml in mwts
+
 * Fri 08 Jun 2011 Markku Valtonen <markku.valtonen@digia.com> - 0.0.6
 - Fixes: BMC#18461 - Added error handling to methodsAvailable() in signonclient.cpp
 - Fixes: BMC#18462 - Fixed a typo in FUTE-SSO_create_identity_flicker
