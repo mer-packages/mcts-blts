@@ -1,3 +1,17 @@
+mwts-filesystem (1.0.4) unstable; urgency=low
+
+  [ Tuomo Pelkonen ]
+  * Fixes: BMC#19174 - No tests.xml in mwts
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 16:35:34 +0300
+
+mwts-filesystem (1.0.3) unstable; urgency=low
+
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests
+    pakage changed to -scripts, tests.xml removed from packaging
+
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-filesystem (1.0.2) unstable; urgency=low
   * Added utils to make Mass Storage functionality into device, it it does not support it by platform.
     Checked and updated documentation abou Mass Storage Mode situation and testing.
