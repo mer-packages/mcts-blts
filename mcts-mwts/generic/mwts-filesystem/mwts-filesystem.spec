@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Generic File system test asset
 License:                LGPL
 Name:                   mwts-filesystem
-Version:                1.0.2
+Version:                1.0.4
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
