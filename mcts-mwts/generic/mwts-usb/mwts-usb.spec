@@ -7,7 +7,7 @@ BuildRoot:		%{buildroot}
 Summary: 		Test libraries for USB networking.
 License: 		LGPL
 Name: 			mwts-usb
-Version: 		1.0.2
+Version: 		1.0.4
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
