@@ -7,7 +7,7 @@ BuildRoot:	%{buildroot}
 Summary: 	Test libraries for ofono-qt
 License: 	LGPL
 Name: 		mwts-ofono
-Version: 	0.1.0
+Version: 	0.1.2
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
