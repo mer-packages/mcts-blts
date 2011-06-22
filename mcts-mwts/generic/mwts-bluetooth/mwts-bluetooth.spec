@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Summary:        A test asset for BlueZ
 License:        LGPL
 Name:           mwts-bluetooth
-Version:        0.1.3
+Version:        0.1.5
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
