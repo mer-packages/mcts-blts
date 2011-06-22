@@ -1,3 +1,17 @@
+mwts-pim (0.0.4) unstable; urgency=low
+
+  [ Tuomo Pelkonen ]
+  * Fixes: BMC#19174 - No tests.xml in mwts
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 17:24:34 +0300
+
+mwts-pim (0.0.3) unstable; urgency=low
+
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests
+    pakage changed to -scripts, tests.xml removed from packaging
+
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-pim (0.0.2) unstable; urgency=low
   * Contacts, Organizer, and Versit APIs separated to own classes. Min scripter interface modified. NFT test cases added. Input data moved to PimTest.conf.  
  -- Arto Katajasalo <arto.katajasalo@digia.com>  Thu, 02 Dec 2010 12:50:00 +0200
