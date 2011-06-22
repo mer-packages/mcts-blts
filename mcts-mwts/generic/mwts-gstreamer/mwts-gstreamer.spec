@@ -7,7 +7,7 @@ BuildRoot:	%{buildroot}
 Summary: 	Test libraries for GStreamer.
 License: 	LGPL
 Name: 		mwts-gstreamer
-Version: 	0.1.0
+Version: 	0.1.1
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools

@@ -1,3 +1,6 @@
+* Wed 22 Jun 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.1
+- [ Tuomo Pelkonen ] Fixes: BMC#19174 - No tests.xml in mwts
+
 * Fri 07 Jun 2011 Jan Grela <jan.grela@digia.com> - 0.1.0
 - Fixes: NB#16744 - Create NFT duplicate test cases for FUTE cases which use FPS measurement, those are now using SetLimits to assure that framerate is high enough
 
