@@ -1,3 +1,24 @@
+mwts-telepathy-tests (0.1.9) unstable; urgency=low
+
+  [ Tuomo Pelkonen ]
+  * Fixes: BMC#19174 - No tests.xml in mwts
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 17:50:50 +0300
+
+mwts-telepathy-tests (0.1.8) unstable; urgency=low
+
+  [ Alexey Kuznetsov ]
+  * Fixes: BMC#14970 - move to telepathy-qt4 0.5.x
+
+ -- Alexey Kuznetsov <alexey.kuznetsov@digia.com>  Tue, 31 May 2011 12:00:00 +0000
+
+mwts-telepathy-tests (0.1.7) unstable; urgency=low
+
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests
+    pakage changed to -scripts, tests.xml removed from packaging
+
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-telepathy-tests (0.1.6) unstable; urgency=low
   * Added SIP DTMF cases
   * Added missing SIP slave cases
