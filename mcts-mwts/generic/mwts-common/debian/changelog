@@ -1,3 +1,26 @@
+mwts-common (1.2.5) unstable; urgency=low
+
+  [ Balazs Sipos ]
+  * Fixes: BMC#19137 - [FEA] mwts-common .csv file syntax to support
+    the <series> tag in testrunner
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 16:15:07 +0300
+
+mwts-common (1.2.4) unstable; urgency=low
+
+  [ Balazs Sipos ]
+  * Fixes: BMC#18304 - .csv files written in wrong format
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 16:14:30 +0300
+
+mwts-common (1.2.3) unstable; urgency=low
+
+  [ Balazs Sipos ]
+  * Fixed test case verdict (passed, failed) to be in sync at the
+    min interface and..result file
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 16:13:08 +0300
+
 mwts-common (1.2.2) unstable; urgency=low
   * Fixed log writing to be thread safe
  -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Wed, 18 May 2011 10:32:56 +0300
