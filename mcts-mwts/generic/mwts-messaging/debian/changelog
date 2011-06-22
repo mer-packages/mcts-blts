@@ -1,3 +1,16 @@
+mwts-messaging (0.0.8) unstable; urgency=low
+  [ Tuomo Pelkonen ]
+  * Fixes: BMC#19174 - No tests.xml in mwts
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 17:09:38 +0300
+
+mwts-messaging (0.0.7) unstable; urgency=low
+
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests
+    pakage changed to -scripts, tests.xml removed from packaging
+
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-messaging (0.0.6) unstable; urgency=low
   * Fixes: MB#12633 - FUTE-Messaging-Query_All_Accounts is defined twice.
  -- Arttu Valo <arttu.valo@digia.com>  Fri, 20 May 2011 18:28:00 +0200
