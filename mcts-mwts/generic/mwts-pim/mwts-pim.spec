@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Test asset for testing personal information managagement in qt mobility 
 License:                LGPL
 Name:                   mwts-pim
-Version:                0.0.2
+Version:                0.0.4
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
