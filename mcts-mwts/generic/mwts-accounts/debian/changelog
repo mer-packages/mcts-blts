@@ -1,3 +1,10 @@
+mwts-accounts-tests (0.0.7) unstable; urgency=low
+
+  [ Tuomo Pelkonen ]
+  * Fixes: BMC#19174 - No tests.xml in mwts
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 15:32:57 +0300
+
 mwts-accounts-tests (0.0.6) unstable; urgency=low
   * Fixes: BMC#18461 - Added error handling to methodsAvailable() in signonclient.cpp
   * Fixes: BMC#18462 - Fixed a typo in FUTE-SSO_create_identity_flicker
