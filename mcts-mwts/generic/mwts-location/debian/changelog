@@ -1,3 +1,17 @@
+mwts-location (0.0.10) unstable; urgency=low
+
+  [ Tuomo Pelkonen ]
+  * Fixes: BMC#19174 - No tests.xml in mwts
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 22 Jun 2011 16:59:58 +0300
+
+mwts-location (0.0.9) unstable; urgency=low
+
+  * Fixes: NB#18414 - tests.xml changed to tests-all.xml, -tests
+    pakage changed to -scripts, tests.xml removed from packaging
+
+ -- Jan Grela <jan.grela@digia.com>  Fri, 03 Jun 2011 16:16:00 +0200
+
 mwts-location (0.0.8) unstable; urgency=low
   * Fixes MB#14885 - Fixed test.xml again to match the script files
  -- Rauno Vartiainen <rauno.vartiainen@digia.com>  Mon, 16 May 2011 10:08:00 +0300
