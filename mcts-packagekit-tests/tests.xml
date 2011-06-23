@@ -3,7 +3,7 @@
 <description></description>
 <suite name="Software Management" >
 <set name="TextMode" feature="Package management"  type="Functional"> 
-<case name="PackageManage_TextMode_InstallPkg_001" manual="true" timeout="90">
+<case name="PackageManage_TextMode_Install_Proxy" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -25,7 +25,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_InstallPkg_002" manual="true" timeout="90">
+<case name="PackageManage_TextMode_Install_Resume" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -60,7 +60,7 @@ Pass/Fail Criteria:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_RemovePkg_001" manual="true" timeout="90">
+<case name="PackageManage_TextMode_Remove" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -77,7 +77,7 @@ Pass/Fail Criteria:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_UpdatePkg_001" manual="true" timeout="90">
+<case name="PackageManage_TextMode_GetUpdate_Proxy" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -96,7 +96,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_UpdatePkg_002" manual="true" timeout="90">
+<case name="PackageManage_TextMode_GetUpdate_NoProxy" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -115,7 +115,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_UpdatePkg_003" manual="true" timeout="90">
+<case name="PackageManage_TextMode_Update_Proxy" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -134,7 +134,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_UpdatePkg_004" manual="true" timeout="90">
+<case name="PackageManage_TextMode_Update_NoProxy" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -153,7 +153,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_RepoList_001" manual="true" timeout="90">
+<case name="PackageManage_TextMode_RepoList_List" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -171,7 +171,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_RepoList_002" manual="true" timeout="90">
+<case name="PackageManage_TextMode_RepoList_Enable" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
@@ -191,7 +191,7 @@ Run Instructions:</p>
 
 </case>
 
-<case name="PackageManage_TextMode_RepoList_003" manual="true" timeout="90">
+<case name="PackageManage_TextMode_RepoList_Disable" manual="true" timeout="90">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Verify the package management actions can be performed by Packagekit console commands</p>
 <!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Table Normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
