@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+  <description/>
+  <suite name="Sensorfw">
+    <set name="qt_mobility_sensor_api">
+      <case name="als" manual="false" timeout="90">
+        <description/>
+        <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest als</step>
+      </case>
+      <case name="compass" manual="false" timeout="90">
+        <description/>
+        <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest compass</step>
+      </case>
+      <case name="magnetometer" manual="false" timeout="90">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest magnetometer</step>
+      </case>
+      <case name="orientation" manual="false" timeout="90">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest orientation</step>
+      </case>
+      <case name="proximity" manual="false" timeout="90">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest proximity</step>
+      </case>
+      <case name="rotation" manual="false" timeout="90">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest rotation</step>
+      </case>
+      <case name="tap" manual="false" timeout="90">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest tap</step>
+      </case>
+      <case name="gyro" manual="false" timeout="90">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-sensorfw-tests/SensorTest gyroscope</step>
+      </case>
+    </set>
+  </suite>
+</testdefinition>
