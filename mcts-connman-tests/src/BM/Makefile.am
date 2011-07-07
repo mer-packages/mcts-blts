@@ -21,7 +21,7 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-common_SCRIPTS = common.py SignalBase.py SignalConnman.py SignalManager.py SignalService.py signal_func.py offline.py property.py config.py bearer.sh
-commondir = /opt/$(PACKAGE)/common
-EXTRA_DIST = $(common_SCRIPTS)
+connman_SCRIPTS = CM_BM_3G_Connect.py CM_BM_3G_Disconnect.py CM_BM_3G_Download.py CM_BM_3G_Upload.py CM_BM_BT_Connect.py CM_BM_BT_Disconnect.py CM_BM_BT_Download.py CM_BM_BT_Upload.py CM_BM_PSK_Connect.py CM_BM_PSK_Disconnect.py CM_BM_WEP_Connect.py CM_BM_WEP_Disconnect.py CM_BM_WEP_Download.py CM_BM_WEP_Scan.py CM_BM_WEP_Upload.py
+connmandir = /opt/$(PACKAGE)
+EXTRA_DIST = $(connman_SCRIPTS)
 

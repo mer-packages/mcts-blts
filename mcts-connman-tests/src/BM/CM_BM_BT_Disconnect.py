@@ -1,6 +1,7 @@
-#
-#
-# Copyright (C) 2010, Intel Corporation.
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2010 Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -16,12 +17,25 @@
 # Place - Suite 330, Boston, MA 02111-1307 USA.
 #
 # Authors:
-#       Jeff Zheng	<jeff.zheng@intel.com>
+#       Jeff Zheng <jeff.zheng@intel.com>
 #
-# Date Created: 07-07-2010
-#	Modified from sample Makefile
+# Description: CM_WS_WEP_Download
+#
 
-common_SCRIPTS = common.py SignalBase.py SignalConnman.py SignalManager.py SignalService.py signal_func.py offline.py property.py config.py bearer.sh
-commondir = /opt/$(PACKAGE)/common
-EXTRA_DIST = $(common_SCRIPTS)
+import sys
+import os
+dir=os.path.dirname(sys.argv[0])+"/common"
+sys.path.append(dir)
+from common import *
+
+dev = BTDevice()
+dev.Connect()
+if dev.IsConnected() == False:
+    print 'The BT is not connected'
+    EXIT(False)
+props=dev.GetService().GetProperties()
+name = props["Name"]
+ret = commands.getstatusoutput("/opt/mcts-connman-tests/common/bearer.sh " + name +" Disconnect")
+print ret[1]
+EXIT(dev.IsConnected() == False)
 

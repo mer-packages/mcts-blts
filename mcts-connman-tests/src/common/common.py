@@ -633,6 +633,7 @@ class Device:
     def __init__(self, name, nth):
         self.device = None
         self.intf = None
+        self.tech = None
         for path in manager.properties['Technologies']:
             technology = manager.GetSubObject(path, 'Technology')
             properties = technology.GetProperties()
@@ -810,6 +811,12 @@ class Device:
             print ret
         return ret[0] == 0
 
+    def Connect(self):
+        self.GetService().Connect()
+
+    def Disconnect(self):
+        self.GetService().Connect()
+
 class EthDevice(Device):
 
     def __init__(self):
@@ -960,15 +967,31 @@ class BTDevice(Device):
 
 class WiFiGuestDevice(WiFiDevice):
 
-    def __init__(self):
+    def __init__(self, ssid):
         WiFiDevice.__init__(self)
+        service = Device.GetService(self, self.ssid)
         print 'Now connect...'
         self.Enable()
         WiFiDevice.Connect(self, 'Guest')
 
+class WiFiSecDevice(WiFiDevice):
+    def __init__(self, essid, key):
+        WiFiDevice.__init__(self)
+        self.Enable()
+        self.ssid = essid
+        self.service = Device.GetService(self, self.ssid)
+        self.service.SetProperty("Passphrase", key)
 
-key64 = '1111000000'
-key128 = '11112222333344445555666611'
-psk_key = 'sharedsecret'
+    def GetService(self):
+        return self.service
+
+    def Connect(self):
+        service = self.GetService()
+        service.Connect()
+
+    def Disconnect(self):
+        service = self.GetService()
+        service.Disconnect()
+
 manager = Manager()
 
