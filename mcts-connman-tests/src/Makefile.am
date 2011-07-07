@@ -21,5 +21,8 @@
 # Date Created: 07-07-2010
 #	Modified from sample Makefile
 
-SUBDIRS=3G BT Ethernet Profile WiFi common Flight Property Signal Stress
+SUBDIRS=3G BT BM Ethernet Profile WiFi common Flight Property Signal Stress Bearer 
+connman_SCRIPTS = Bearer/Bearer/Bearer
+connmandir = /opt/$(PACKAGE)
+EXTRA_DIST = $(connman_SCRIPTS)
 

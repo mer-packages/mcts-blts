@@ -42,30 +42,32 @@ cm_data_server_ip_bt='192.168.0.1'
 cm_data_server_ip_wifi='192.168.1.4'
 cm_data_server_ip_eth='192.168.2.160'
 
-#cm_bt_download = 'scp 192.168.0.1:/usr/share/mcts-connman-tests/10M /tmp'
-#cm_bt_upload = 'scp /usr/share/mcts-connman-tests/10M 192.168.0.1:/tmp'
+#cm_bt_download = 'scp 192.168.1.2:/usr/share/mcts-connman-tests/10M /tmp'
+#cm_bt_upload = 'scp /usr/share/mcts-connman-tests/10M 192.168.1.2:/tmp'
+#cm_bt_download = 'scp 127.0.0.1:/usr/share/mcts-connman-tests/10M /tmp'
+#cm_bt_upload = 'scp /usr/share/mcts-connman-tests/10M 127.0.0.1:/tmp'
 cm_bt_download = 'scp ' + cm_data_server_ip_bt + ':/usr/share/mcts-connman-tests/10M /tmp'
 cm_bt_upload = 'scp /usr/share/mcts-connman-tests/10M ' + cm_data_server_ip_bt + ':/tmp'
 
-#cm_eth_download = 'scp 192.168.2.160:/usr/share/mcts-connman-tests/10M /tmp'
-#cm_eth_upload = 'scp /usr/share/mcts-connman-tests/10M 192.168.2.160:/tmp'
 cm_eth_download = 'scp ' + cm_data_server_ip_eth + ':/usr/share/mcts-connman-tests/10M /tmp'
 cm_eth_upload = 'scp /usr/share/mcts-connman-tests/10M ' + cm_data_server_ip_eth + ':/tmp'
+#cm_eth_download = 'scp 192.168.2.160:/usr/share/mcts-connman-tests/10M /tmp'
+#cm_eth_upload = 'scp /usr/share/mcts-connman-tests/10M 192.168.2.160:/tmp'
 # For 3G, We will directly connect to Internet. So we can download
 # from Internet. But tester need find a way to upload to Internet so 
 # that upload test case works
 # Download from Internet, ChangeLog-2.6.33 is about 7.5MB
-cm_3g_download = 'wget --no-proxy http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.33'
+cm_3g_download = 'wget http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.33'
 # Upload to local, please revise accordingly so that to upload
 # to Internet automatically
-cm_3g_upload = 'curl -x "" --ftp-pasv -v -T /usr/share/mcts-connman-tests/10M ftp://anonymous:meego3gtest@ftp.intel.com/pub/incoming/'
+cm_3g_upload = 'echo put /usr/share/mcts-connman-tests/10M /tmp/10M |sftp 127.0.0.1'
 
 # For WiFi, we test data transfer for WEP and PSK. These essids are only used
 # for data transfer. Test cases in test set WiFiFeature still need a cisco AP
 cm_ap_essid_wep64 = 'shz13-otc-dlink-cm1' # AP set to shared hidden wep64
 cm_ap_wep64_key = '1111111111'
-cm_ap_essid_rsn = 'shz13-otc-dlink-cm2' # AP set to open broadcast RSN PSK
-cm_ap_rsn_key = '1111111111'
+cm_ap_essid_psk = 'shz13-otc-dlink-cm2' # AP set to open broadcast RSN PSK
+cm_ap_psk_key = '1111111111'
 #cm_wifi_download = 'scp 192.168.1.6:/usr/share/mcts-connman-tests/10M /tmp'
 #cm_wifi_upload = 'scp /usr/share/mcts-connman-tests/10M 192.168.1.6:/tmp'
 cm_wifi_download = 'scp ' + cm_data_server_ip_wifi + ':/usr/share/mcts-connman-tests/10M /tmp'

@@ -1,6 +1,7 @@
-#
-#
-# Copyright (C) 2010, Intel Corporation.
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2010 Intel Corporation.
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms and conditions of the GNU General Public License,
@@ -16,12 +17,22 @@
 # Place - Suite 330, Boston, MA 02111-1307 USA.
 #
 # Authors:
-#       Jeff Zheng	<jeff.zheng@intel.com>
+#       Jeff Zheng <jeff.zheng@intel.com>
 #
-# Date Created: 07-07-2010
-#	Modified from sample Makefile
+# Description: CM_WS_WEP_Download
+#
 
-common_SCRIPTS = common.py SignalBase.py SignalConnman.py SignalManager.py SignalService.py signal_func.py offline.py property.py config.py bearer.sh
-commondir = /opt/$(PACKAGE)/common
-EXTRA_DIST = $(common_SCRIPTS)
+import sys
+import os
+dir=os.path.dirname(sys.argv[0])+"/common"
+sys.path.append(dir)
+from common import *
+
+dev = WiFiSecDevice(cm_ap_essid_wep64, cm_ap_wep64_key)
+ret = commands.getstatusoutput("/opt/mcts-connman-tests/common/bearer.sh " + cm_ap_essid_wep64 +" Connect")
+print ret[1]
+if dev.IsConnected() == False:
+    print "Not Connectred!"
+    EXIT(False)
+EXIT(dev.Upload())
 
