@@ -6638,5 +6638,67 @@ the device is off</p>]]></description>
 <step expected_result="0" manual="true">/opt/mcts-connman-tests/Can pass the Criteria in the description?</step>
 </case>
 </set>
+    <set name="BM">
+      <case name="CM_BM_3G_Connect" manual="false" timeout="180">
+        <description/>
+        <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_3G_Connect.py</step>
+      </case>
+      <case name="CM_BM_3G_Disconnect" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_3G_Disconnect.py</step>
+      </case>
+      <case name="CM_BM_3G_Download" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_3G_Download.py</step>
+      </case>
+      <case name="CM_BM_3G_Upload" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_3G_Upload.py</step>
+      </case>
+      <case name="CM_BM_BT_Connect" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_BT_Connect.py</step>
+      </case>
+      <case name="CM_BM_BT_Disconnect" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_BT_Disconnect.py</step>
+      </case>
+      <case name="CM_BM_BT_Download" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_BT_Download.py</step>
+      </case>
+      <case name="CM_BM_BT_Upload" manual="false" timeout="180">
+        <description/>
+        <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_BT_Upload.py</step>
+      </case>
+      <case name="CM_BM_PSK_Connect" manual="false" timeout="180">
+        <description/>
+        <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_PSK_Connect.py</step>
+      </case>
+      <case name="CM_BM_PSK_Disconnect" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_PSK_Disconnect.py</step>
+      </case>
+      <case name="CM_BM_WEP_Connect" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_WEP_Connect.py</step>
+      </case>
+      <case name="CM_BM_WEP_Disconnect" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_WEP_Disconnect.py</step>
+      </case>
+      <case name="CM_BM_WEP_Download" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_WEP_Download.py</step>
+      </case>
+      <case name="CM_BM_WEP_Scan" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_WEP_Scan.py</step>
+      </case>
+      <case name="CM_BM_WEP_Upload" manual="false" timeout="180">
+      <description/>
+      <step expected_result="1" manual="false">/opt/mcts-connman-tests/CM_BM_WEP_Upload.py</step>
+      </case>
+    </set>
 </suite>
 </testdefinition>
