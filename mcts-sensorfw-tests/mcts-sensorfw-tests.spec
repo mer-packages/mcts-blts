@@ -1,15 +1,12 @@
 # spec file for mcore-location
-%define name mcts-sensorfw-tests
-%define version 1.0.0
-%define release 1
 %define buildroot       %{_topdir}/%{name}-%{version}-%{release}-root
 
 BuildRoot:              %{buildroot}
 Summary:                mcts-sensorfw-tests is to test Qt-mobility sensor interface. 
 License:                LGPL
-Name:                   %{name}
-Version:                %{version}
-Release:                %{release}
+Name:                   mcts-sensorfw-tests
+Version:                1.0.0
+Release:                1
 Prefix:                 /usr
 Group:                  Development/Tools
 BuildRequires:          qt-devel,qt-mobility-devel, gcc-c++, qt-qmake
