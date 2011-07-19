@@ -4,7 +4,7 @@
 	<suite name="LibsocialWeb">
 		<set name="LibsocialWeb_Core">
 
-			<case name="Core_GetServices_001" manual="false" timeout="900">
+		<case name="Core_GetServices_001" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the servicelist get from GetServices is the same as output from DBus-send</p>
 <p>Run Instructions:</p>
@@ -16,7 +16,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t getServices_01</step>
 			</case>
 
-			<case name="Core_GetServices_002" manual="false" timeout="900">
+			<case name="Core_GetServices_002" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>check the GetServices get the same services as configured.</p>
 <p>Run Instructions:</p>
@@ -27,7 +27,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t getServices_02</step>
 			</case>
 
-			<case name="Core_IsOnline_001" manual="false" timeout="900">
+			<case name="Core_IsOnline_001" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose: Check whether the method &quot;IsOnline&quot; work correctly when the Netbook is online or offline</p>
 <p>Run Instructions:</p>
 <p>1\ Get the current status via invoking the method &quot;IsOnline&quot; from DBus interface when the NetBook is online</p>
@@ -39,7 +39,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/core/core_test.sh -t OnlineChanged</step>
 			</case>
 
-			<case name="Core_OnlineChanged_001" manual="false" timeout="900">
+			<case name="Core_OnlineChanged_001" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if &quot;OnlineChanged&quot; signal works fine with network status change.</p>
 <p>Run Instructions:</p>
@@ -52,7 +52,7 @@
 		</set>
 		<set name="LibsocialWeb_lastfm">
 
-			<case name="Lastfm_ItemView_Start_001" manual="false" timeout="900">
+			<case name="Lastfm_ItemView_Start_001" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the Start method in offline mode</p>
 <p>Run Instructions:</p>
@@ -65,7 +65,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
 			</case>
 
-			<case name="Lastfm_ItemView_Start_002" manual="true" timeout="900">
+			<case name="Lastfm_ItemView_Start_002" manual="true" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the Start method from offline to online</p>
 <p>Run Instructions:</p>
@@ -81,7 +81,7 @@
 
 			</case>
 
-			<case name="Lastfm_ItemView_Start_003" manual="false" timeout="900">
+			<case name="Lastfm_ItemView_Start_003" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the Start method in online mode</p>
 <p>Run Instructions:</p>
@@ -95,7 +95,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
 			</case>
 
-			<case name="Lastfm_ItemView_Refresh_001" manual="true" timeout="900">
+			<case name="Lastfm_ItemView_Refresh_001" manual="true" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the Refresh method in online mode</p>
 <p>Run Instructions:</p>
@@ -110,7 +110,7 @@
 
 			</case>
 
-			<case name="Lastfm_ItemView_Stop_001" manual="true" timeout="900">
+			<case name="Lastfm_ItemView_Stop_001" manual="true" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the Stop method in online mode</p>
 <p>Run Instructions:</p>
@@ -124,7 +124,7 @@
 
 			</case>
 
-			<case name="Lastfm_ItemView_Close_001" manual="true" timeout="900">
+			<case name="Lastfm_ItemView_Close_001" manual="true" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the Stop method in online mode</p>
 <p>Run Instructions:</p>
@@ -140,7 +140,7 @@
 			</case>
 
 			<case name="Lastfm_ItemView_ItemAdded_001" manual="true"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the ItemAdd signal.</p>
 <p>Run Instructions:</p>
@@ -152,7 +152,7 @@
 			</case>
 
 			<case name="Lastfm_ItemView_ItemAdded_002" manual="true"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>check the 'ItemAdded' signal</p>
 <p>Run Instructions:</p>
@@ -164,7 +164,7 @@
 			</case>
 
 			<case name="Lastfm_ItemView_ItemRemoved_001" manual="true"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the ItemRemoved signal.</p>
 <p>Run Instructions:</p>
@@ -176,7 +176,7 @@
 			</case>
 
 			<case name="Lastfm_ItemView_ItemChanged_001" manual="true"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the ItemChanged signal.</p>
 <p>Run Instructions:</p>
@@ -187,7 +187,7 @@
 
 			</case>
 
-			<case name="Lastfm_ItemView_Misuse_001" manual="true" timeout="900">
+			<case name="Lastfm_ItemView_Misuse_001" manual="true" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check whether the process &quot;libsocialweb-core&quot; still work if the method of &quot;ItemView&quot; are invoked incorrectly</p>
 <p>&nbsp;</p>
@@ -204,7 +204,7 @@
 			</case>
 
 			<case name="Lastfm_ItemView_ViewData_001" manual="false"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the friends' latest track Data from ItemView is the same as data get from lastfm http API.</p>
 <p>Run Instructions:</p>
@@ -217,7 +217,7 @@
 			</case>
 
 			<case name="Lastfm_ItemView_ViewData_002" manual="false"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the friends' latest track Data from cache&nbsp; is the same as data from lastfm http api.</p>
 <p>Run Instructions:</p>
@@ -228,7 +228,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t CacheData</step>
 			</case>
 
-			<case name="Lastfm_Query_OpenView_001" manual="false" timeout="900">
+			<case name="Lastfm_Query_OpenView_001" manual="false" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the open one View with &quot;feed&quot; query parameter</p>
 <p>Run Instructions:</p>
@@ -238,7 +238,7 @@
 				<step expected_result="0">/opt/mcts-lsw-tests/lastfm/lastfm_test.sh -t ItemView</step>
 			</case>
 
-			<case name="Lastfm_Query_OpenView_002" manual="true" timeout="900">
+			<case name="Lastfm_Query_OpenView_002" manual="true" timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the open mulitple Views at the same time</p>
 <p>Run Instructions:</p>
@@ -249,7 +249,7 @@
 			</case>
 
 			<case name="Lastfm_Banishable_HideItem_001" manual="false"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the hideItem method</p>
 <p>Run Instructions:</p>
@@ -262,7 +262,7 @@
 			</case>
 
 			<case name="Lastfm_Banishable_ItemHidden_001" manual="false"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if ItemHidden signal emit when hide an item from itemview</p>
 <p>Run Instructions:</p>
@@ -274,7 +274,7 @@
 			</case>
 
 			<case name="Lastfm_Service_UserChanged_001" manual="false"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the UserChanged signal is emit when change the account of lastfm</p>
 <p>Run Instructions:</p>
@@ -287,7 +287,7 @@
 			</case>
 
 			<case name="Lastfm_Service_CapabilitiesChanged_001" manual="false"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if CapabilitiesChanged signal emit when user account changed of lastfm</p>
 <p>Run Instructions:</p>
@@ -299,7 +299,7 @@
 			</case>
 
 			<case name="Lastfm_Service_GetDynamicCapabilities_001" manual="true"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the GetDynamicCapabilities return the correct capabilities of lastfm service</p>
 <p>Run Instructions:</p>
@@ -312,7 +312,7 @@ ignature=dbus.Signature('s'))</p>]]></description>
 			</case>
 
 			<case name="Lastfm_Service_GetStaticCapabilities_001" manual="true"
-				timeout="900">
+				timeout="900" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the GetStaticCapabilities return the correct static capabilities of lastfm service</p>
 <p>Run Instructions:</p>
@@ -326,7 +326,7 @@ e'), dbus.String(u'has-banishable-iface')], signature=dbus.Signature('s'))</p>]]
 		</set>
 		<set name="Libsocialweb-qt">
 
-			<case name="core_get_services" manual="true" timeout="90">
+			<case name="core_get_services" manual="true" timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: Check the method 'getServices' in 'swclient.h' can return the correct available services list or not</p>
 <p>Run Instructions:</p>
 <p>1\ get services list by command &quot;dbus-send --session --type=method_call   --print-reply --dest=com.meego.libsocialweb   /com/meego/libsocialweb/Service   org.freedesktop.DBus.Introspectable.Introspect&quot;</p>
@@ -337,7 +337,7 @@ e'), dbus.String(u'has-banishable-iface')], signature=dbus.Signature('s'))</p>]]
 			</case>
 
 			<case name="swclient_static_get_service_name" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: check whether the static method 'GetSwServiceName' in 'swclient.h' work</p>
 <p>Run Instructions:</p>
 <p><br />
@@ -348,7 +348,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="swclient_get_service_instance" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: check whether the method 'getService' in 'swclient.h' can return the valid instance of 'SwClientService'</p>
 <p>Run Instructions:</p>
 <p>Execute the script to</p>
@@ -360,7 +360,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="swclient_get_unavailable_service_instance" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: check whether the method 'getService' in 'swclient.h' can return a null pointer if the service name is invalid</p>
 <p>Run Instructions:</p>
 <p>Execute the script to</p>
@@ -373,7 +373,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientservice_islastfm" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: check whether the method work correctly when the service is 'lastfm'</p>
 <p>Run Instructions:</p>
 <p>Execute the script to</p>
@@ -385,7 +385,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientservice_openview" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: check whether a new item_view can be opened for the service 'last.fm'</p>
 <p>&nbsp;</p>
 <p>Run Instructions:</p>
@@ -399,7 +399,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_monitor001" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose: check whether the item-related signals can be emitted for the cached items</p>
 <p>&nbsp;</p>
 <p>Run Instructions:</p>
@@ -411,7 +411,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_monitor002" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check whether the latest track is available from the Qt signals, if the user add a new friends</p>
 <p>Run Instructions:</p>
@@ -424,7 +424,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_monitor003" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check whether the item-changed signal will be emitted if the user listen a new song.</p>
 <p>Run Instructions:</p>
@@ -437,7 +437,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_monitor004" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check whether the item removed signals will be emitted if the user remove a friend.</p>
 <p>Run Instructions:</p>
@@ -450,7 +450,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_monitor_compare_dbus"
-				manual="false" timeout="300">
+				manual="false" timeout="300" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Compare the received items from Qt API are same with the items from DBus</p>
 <p>Run Instructions:</p>
@@ -462,7 +462,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_refresh_view" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the method 'refreshView' work or not</p>
 <p>Run Instructions:</p>
@@ -475,7 +475,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_stop_view" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the method 'stopView' work or not</p>
 <p>Run Instructions:</p>
@@ -489,7 +489,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="lastfm_swclientitemview_close_view" manual="true"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check the method 'closeView' work or not</p>
 <p>Run Instructions:</p>
@@ -503,7 +503,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="common_swclientservice_userchanged_signal001"
-				manual="false" timeout="300">
+				manual="false" timeout="300" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check whether the userchanged signals will be emitted if the user account of the service 'lastfm' is changed.</p>
 <p>Run Instructions:</p>
@@ -516,7 +516,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="common_swclientservice_userchanged_signal002"
-				manual="false" timeout="300">
+				manual="false" timeout="300" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>&nbsp;Check whether the userchanged signals will be emitted if the user account of the service 'twitter' is changed.</p>
 <p>Run Instructions:</p>
@@ -529,7 +529,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="common_swclientservice_hideitem_and_itemhidden_signal001"
-				manual="false" timeout="300">
+				manual="false" timeout="300" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>In the service 'lastfm', Check the method 'hideItem' work correctly, and the corresponding signal 'itemhidden' will be emitted or not</p>
 <p>Run Instructions:</p>
@@ -542,7 +542,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="common_swclientservice_dyn_caps_signal" manual="false"
-				timeout="300">
+				timeout="300" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check whether the dynamic caps-changed signals will be emitted if the user account of the service 'lastfm' is changed.</p>
 <p>Run Instructions:</p>
@@ -555,7 +555,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 		</set>
 		<set name="Libsocial_key_store_key_fob">
-			<case name="key_store_lastfm_get_key" manual="false" timeout="90">
+			<case name="key_store_lastfm_get_key" manual="false" timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key of the service 'last.fm'</p>
 <p>Run Instructions:</p>
@@ -567,7 +567,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_store_lastfm_get_key_secret" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key and secret of the service 'last.fm'</p>
 <p>Run Instructions:</p>
@@ -579,7 +579,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 				<step expected_result="0">/opt/mcts-lsw-tests/key_mgr/keystore_testcase -s lastfm</step>
 			</case>
 
-			<case name="key_store_twitter_get_key" manual="false" timeout="90">
+			<case name="key_store_twitter_get_key" manual="false" timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key of the service 'twitter'</p>
 <p>Run Instructions:</p>
@@ -591,7 +591,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_store_twitter_get_key_secret" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key and secret of the service 'twitter'</p>
 <p>Run Instructions:</p>
@@ -602,7 +602,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 				<step expected_result="0">/opt/mcts-lsw-tests/key_mgr/keystore_testcase -s twitter </step>
 			</case>
 
-			<case name="key_fob_twitter_auth" manual="false" timeout="90">
+			<case name="key_fob_twitter_auth" manual="false" timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>check if the key_fob api can get the token from gnome-keyring for the service 'twitter'</p>
 <p>Run Instructions:</p>
@@ -614,7 +614,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_fob_twitter_auth_synchronized" manual="false"
-				timeout="90">
+				timeout="90" type="Functional positive">
 				<description><![CDATA[<p>Purpose:</p>
 <p>check if the key_fob synchronized  api can get the token from gnome-keyring for the service 'twitter'</p>
 <p>Run Instructions:</p>
@@ -628,7 +628,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 		<set name="Libsocialweb_keystore_keyfob_negative">
 
 			<case name="key_store_lastfm_get_key_without_keyfile" manual="true"
-				timeout="90">
+				timeout="90" type="Functional negative">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key of the service 'last.fm' without keyfile</p>
 <p>Run Instructions:</p>
@@ -640,7 +640,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_store_lastfm_get_key_secret_without_keyfile"
-				manual="true" timeout="90">
+				manual="true" timeout="90" type="Functional negative">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key and secret of the service 'last.fm' without keyfile</p>
 <p>Run Instructions:</p>
@@ -653,7 +653,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_store_twitter_get_key_without_keyfile" manual="true"
-				timeout="90">
+				timeout="90" type="Functional negative">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key of the service 'twitter' without keyfile</p>
 <p>Run Instructions:</p>
@@ -665,7 +665,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_store_twitter_get_key_secret_without_keyfile"
-				manual="true" timeout="90">
+				manual="true" timeout="90" type="Functional negative">
 				<description><![CDATA[<p>Purpose:</p>
 <p>Check if the key_store api can get the api_key and secret of the service 'twitter' without keyfile</p>
 <p>Run Instructions:</p>
@@ -677,7 +677,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_fob_twitter_auth_without_login_account" manual="false"
-				timeout="90">
+				timeout="90" type="Functional negative">
 				<description><![CDATA[<p>Purpose:</p>
 <p>check if the key_fob api can get the token from gnome-keyring for the service 'twitter' without login account</p>
 <p>Run Instructions:</p>
@@ -689,7 +689,7 @@ Execute the script to invoke the static method 'GetSwServiceName', check the ret
 			</case>
 
 			<case name="key_fob_twitter_auth_synchronized_without_login_account"
-				manual="false" timeout="90">
+				manual="false" timeout="90" type="Functional negative">
 				<description><![CDATA[<p>Purpose:</p>
 <p>check if the key_fob synchronized  api can get the token from gnome-keyring for the service 'twitter' without login account</p>
 <p>Run Instructions:</p>
