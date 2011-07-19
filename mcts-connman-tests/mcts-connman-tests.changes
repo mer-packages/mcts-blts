@@ -1,3 +1,5 @@
+* Thu Jul 21 2011 Jeff Zheng <jeff.zheng@intel.com> - 1.0.4
+- Update test type in tests.xml
 * Thu Jul 7 2011 Jeff Zheng <jeff.zheng@intel.com> - 1.0.3
 - Add Bearer Management cases (QT mobility)
 * Mon May 23 2011 Jeff Zheng <jeff.zheng@intel.com> - 1.0.2
