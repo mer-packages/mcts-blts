@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
 <description></description>
-<suite name="Graphics" >
-<description></description>
-<set name="RenderCheck" >
+<suite name="mcts-rendercheck-tests">
+<set name="RenderCheck">
 
-<case name="2D_RC_bug7366" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_bug7366" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Check SetPictureTransform on a source picture causing a crash.<br />
 Check setting of AlphaMap to a source picture causing a crash.<br />
 Check SetPictureClipRectangles on a source potentially causing a crash.<br />
@@ -19,11 +19,12 @@ Run Instructions:</p>
 <br />
 Pass/Fail Criteria:</p>
 <p>All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t bug7366</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t bug7366</step>
 </case>
 
-<case name="2D_RC_triangles" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_triangles" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Triangles: Test basic functionality of the triangle operations.&nbsp; We don't care that much probably (nobody has used them yet), but we can trivially test by filling doing two triangles that will exactly cover the rectangle from 2,2 to 4,4.</p>
 <p><br />
 Run Instructions:<br />
@@ -33,11 +34,12 @@ Run Instructions:<br />
 <p><br />
 Pass/Fail Criteria:</p>
 <p>All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t triangles</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t triangles</step>
 </case>
 
-<case name="2D_RC_repeat" manual="false" timeout="2400">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_repeat" manual="false" timeout="2400" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Repeat:&nbsp; We choose some sizes larger than win_width/height because AAs like to turn off repeating when it's unnecessary and we want to make sure that those paths<br />
 are sane. Sets up a repeating picture at various sizes, with the upper-left corner filled with a different color than the rest.&nbsp; It tiles this over the whole destination, then samples the result to see if it tiled appropriately.&nbsp; If test_mask is set, the repeating picture is used as a component-alpha mask, with argb32white as the source.</p>
 <p>Run Instructions:<br />
@@ -47,11 +49,12 @@ are sane. Sets up a repeating picture at various sizes, with the upper-left corn
 <p><br />
 Pass/Fail Criteria:<br />
 All pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over -t repeat</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over -t repeat</step>
 </case>
 
-<case name="2D_RC_gradients" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_gradients" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Gradients: Tests that rendering to a linear gradient returns an error as expected.</p>
 <p><br />
 Run Instructions:<br />
@@ -61,11 +64,12 @@ Run Instructions:<br />
 <p><br />
 Pass/Fail Criteria:</p>
 <p>All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t gradients</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t gradients</step>
 </case>
 
-<case name="2D_RC_cacomposite" manual="false" timeout="1200">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_cacomposite" manual="false" timeout="1200" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Rendercheck case: cacomposite</p>
 <p>Run Instructions:<br />
 1. ./autogen.sh<br />
@@ -74,11 +78,12 @@ Rendercheck case: cacomposite</p>
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over -t cacomposite</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over -t cacomposite</step>
 </case>
 
-<case name="2D_RC_composite" manual="false" timeout="1200">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_composite" manual="false" timeout="1200" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Composite: Test a composite of a given operation, source, mask, and destination picture. Fills the window, and samples from the 0,0 pixel corner.</p>
 <p><br />
 Run Instructions:<br />
@@ -88,11 +93,12 @@ Run Instructions:<br />
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over -t composite</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over -t composite</step>
 </case>
 
-<case name="2D_RC_blend" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_blend" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Blend: Test a composite of a given operation, source, and destination picture. Fills the window, and samples from the 0,0 pixel corner.</p>
 <p><br />
 Run Instructions:<br />
@@ -102,11 +108,12 @@ Run Instructions:<br />
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over -t blend</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over -t blend</step>
 </case>
 
-<case name="2D_RC_tmcoords" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_tmcoords" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Rendercheck case: tmcoords</p>
 <p><br />
 Run Instructions:<br />
@@ -116,11 +123,12 @@ Run Instructions:<br />
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t tmcoords</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t tmcoords</step>
 </case>
 
-<case name="2D_RC_tscoords" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_tscoords" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Rendercheck case: tscoords</p>
 <p>Run Instructions:<br />
 1. ./autogen.sh<br />
@@ -129,11 +137,12 @@ Rendercheck case: tscoords</p>
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t tscoords</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t tscoords</step>
 </case>
 
-<case name="2D_RC_mcoords" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_mcoords" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Rendercheck case: mcoords</p>
 <p><br />
 Run Instructions:</p>
@@ -143,11 +152,12 @@ Run Instructions:</p>
 <br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t mcoords</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t mcoords</step>
 </case>
 
-<case name="2D_RC_scoords" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_scoords" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Rendercheck case: scoords</p>
 <p>Run Instructions:<br />
 1. ./autogen.sh<br />
@@ -156,11 +166,12 @@ Rendercheck case: scoords</p>
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t scoords</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t scoords</step>
 </case>
 
-<case name="2D_RC_dcoords" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_dcoords" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Run case rendercheck/dcoords</p>
 <p>Run Instructions:</p>
 <p>1. ./autogen.sh<br />
@@ -169,11 +180,12 @@ Run case rendercheck/dcoords</p>
 <br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t dcoords</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t dcoords</step>
 </case>
 
-<case name="2D_RC_fill" manual="false" timeout="600">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="2D_RC_fill" manual="false" timeout="600" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Fill: Test that filling of the 1x1 repeating pictures worked as expected.&nbsp; This is pretty basic to most of the tests.</p>
 <p>Run Instructions:<br />
 1. ./autogen.sh<br />
@@ -182,7 +194,7 @@ Fill: Test that filling of the 1x1 repeating pictures worked as expected.&nbsp; 
 <p><br />
 Pass/Fail Criteria:<br />
 All Pass</p>]]></description>
-<step expected_result="0">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t fill</step>
+<step expected_result="0" manual="false">/usr/local/bin/rendercheck -o src,over,overreverse,xor -t fill</step>
 </case>
 </set>
 </suite>
