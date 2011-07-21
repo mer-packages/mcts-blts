@@ -6,7 +6,7 @@
 <set name="BT" description="&lt;p&gt;Test suites for BT PAN&lt;/p&gt;
 &lt;p&gt;Current we use AnyCom AP for BT PAN testing. Before run these test script, the machine must already pair to the AnyCom AP&lt;/p&gt;">
 
-<case name="CM_BT_CheckProp_Powered" manual="true" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_CheckProp_Powered" manual="true" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:<br />
 check the tochnologies &quot;State&quot; property and interface status are right<br />
 Run Instructions:<br />
@@ -19,7 +19,7 @@ State&nbsp;==&nbsp;enabled and hci0 is &quot;UP&quot;</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_BT_Connect_PAN" manual="true" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_Connect_PAN" manual="true" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 can connect bluetooth&nbsp; PANU network<br />
@@ -34,7 +34,7 @@ Can ping the PANU AP</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_BT_List_PAN" manual="true" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_List_PAN" manual="true" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 can list bluetooth&nbsp; PAN devices<br />
@@ -50,7 +50,7 @@ The BT PANU network should be created and listed by ConnMan</p>]]></description>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_BT_Connect_Invalidnetwork" manual="true" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_Connect_Invalidnetwork" manual="true" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>BT should not crash when connect an invalid BT PANU server</p>
 <p><br />
@@ -65,7 +65,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_BT_Check_State" manual="true" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_Check_State" manual="true" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check ConnMan can synchronise the connect state with the real connection state</p>
 <p><br />
@@ -79,7 +79,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="CM_BT_DeviceIsExist" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_DeviceIsExist" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device exists</p>
 <p><br />
@@ -94,7 +94,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_DeviceIsExist.py</step>
 </case>
 
-<case name="CM_BT_HasDHCP" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_HasDHCP" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device by default is dhcp enabled</p>
 <p><br />
@@ -108,7 +108,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_HasDHCP.py</step>
 </case>
 
-<case name="CM_BT_BigPing" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_BigPing" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if we can ping local BT nework</p>
 <p><br />
@@ -121,7 +121,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_BigPing.py</step>
 </case>
 
-<case name="CM_BT_HasIP" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_HasIP" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device has IP address by default</p>
 <p><br />
@@ -136,7 +136,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_HasIP.py</step>
 </case>
 
-<case name="CM_BT_Connect" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_Connect" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if there is an BT network by default</p>
 <p><br />
@@ -149,7 +149,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Connect.py</step>
 </case>
 
-<case name="CM_BT_Disconnect" manual="false" timeout="180" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_Disconnect" manual="false" timeout="180" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if we can disconnet BT device from local network</p>
 <p><br />
@@ -164,7 +164,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Disconnect.py</step>
 </case>
 
-<case name="CM_BT_IfconfigDown" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_IfconfigDown" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if connman works with ifconfig down</p>
 <p><br />
@@ -180,7 +180,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IfconfigDown.py</step>
 </case>
 
-<case name="CM_BT_IfconfigUp" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_IfconfigUp" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if connman works with ifconfig up</p>
 <p><br />
@@ -195,7 +195,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IfconfigUp.py</step>
 </case>
 
-<case name="CM_BT_IsPoweredOn" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_IsPoweredOn" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device is on by default</p>
 <p><br />
@@ -208,7 +208,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IsPoweredOn.py</step>
 </case>
 
-<case name="CM_BT_IsReady" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_IsReady" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device is ready to connect</p>
 <p><br />
@@ -221,7 +221,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IsReady.py</step>
 </case>
 
-<case name="CM_BT_IsReEnableWorks" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_IsReEnableWorks" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if BT device still works after powered off and powered on</p>
 <p><br />
@@ -237,7 +237,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_IsReEnableWorks.py</step>
 </case>
 
-<case name="CM_BT_PoweredOff" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_PoweredOff" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if Powered off works for BTdevice</p>
 <p><br />
@@ -251,7 +251,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_PoweredOff.py</step>
 </case>
 
-<case name="CM_BT_PoweredOn" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_PoweredOn" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if Powered on works for BT</p>
 <p><br />
@@ -265,7 +265,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_PoweredOn.py</step>
 </case>
 
-<case name="CM_BT_SmallPing" manual="false" timeout="90" type="Functional" subfeature="Bluetooth" insignificant="false">
+<case name="CM_BT_SmallPing" manual="false" timeout="90" type="Functional positive" subfeature="Bluetooth" insignificant="false">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check if can ping with small packet for BT</p>
 <p><br />
@@ -277,7 +277,7 @@ Pass/Fail Criteria:</p>
 <p>Receives ping response.</p>]]></description>
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_SmallPing.py</step>
 </case>
-<case name="CM_BT_Upload" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_BT_Upload" manual="false" timeout="90" type="Functional positive" insignificant="false" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test bluetooth upload.</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>
@@ -296,7 +296,7 @@ This commands basically do:<br />
 <step expected_result="0" manual="false">/opt/mcts-connman-tests/CM_BT_Upload.py</step>
 </case>
 
-<case name="CM_BT_Download" manual="false" timeout="90" type="Functional" insignificant="false" level="Feature">
+<case name="CM_BT_Download" manual="false" timeout="90" type="Functional positive" insignificant="false" level="Feature">
 	<description><![CDATA[<p>Purpose (Mandatory): This test case is used for test Bluetooth download</p>
 <p>Method (Optional):</p>
 <p>References (Optional):</p>

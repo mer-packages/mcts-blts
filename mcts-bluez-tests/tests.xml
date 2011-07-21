@@ -5,7 +5,7 @@
 <set name="obex_profiles" description="&lt;p&gt;In this suite, we test OBEX (Object Exchange) related profiles. They are: FTP, OPP, PBAP, SYNC.&lt;/p&gt;
 &lt;p&gt;Contacter: jingke.zhang@intel.com&lt;/p&gt;">
 
-<case name="bt_ftp_get_check" manual="false" timeout="90" type="Functional" subfeature="FTP">
+<case name="bt_ftp_get_check" manual="false" timeout="90" type="Functional positive" subfeature="FTP">
 	<description><![CDATA[<br /><br /><p>Purpose:</p>
 <p>Check to use FTP profile to get file.</p>
 <p>Run Instructions:</p>
@@ -19,7 +19,7 @@
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_ftp_get_check.sh</step>
 </case>
 
-<case name="bt_ftp_put_check" manual="false" timeout="100" type="Functional" subfeature="FTP">
+<case name="bt_ftp_put_check" manual="false" timeout="100" type="Functional positive" subfeature="FTP">
 	<description><![CDATA[<br /><br /><p>Purpose:</p>
 <p>Check to use FTP profile to put file to Server.</p>
 <p>Run Instructions:</p>
@@ -33,7 +33,7 @@
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_ftp_put_check.sh</step>
 </case>
 
-<case name="bt_ftp_neg_put_same_file" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_ftp_neg_put_same_file" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test FTP profile transfer with a exsit file</p>
 <p>Run Instructions:</p>
@@ -45,7 +45,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_ftp_neg_put_same_file.sh</step>
 </case>
 
-<case name="bt_ftp_browse_check" manual="false" timeout="100" type="Functional" subfeature="FTP">
+<case name="bt_ftp_browse_check" manual="false" timeout="100" type="Functional positive" subfeature="FTP">
 	<description><![CDATA[<p>&nbsp;</p>
 <p>Purpose:</p>
 <p>Check FTP folder navigation from FTP client.</p>
@@ -58,7 +58,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_ftp_browse_check.sh</step>
 </case>
 
-<case name="bt_ftp_remove_check" manual="false" timeout="100" type="Functional" subfeature="FTP">
+<case name="bt_ftp_remove_check" manual="false" timeout="100" type="Functional positive" subfeature="FTP">
 	<description><![CDATA[<p>&nbsp;</p>
 <p>Purpose:</p>
 <p>Check FTP (File Transfer Profile) folder manipulation inculdes create and remove</p>
@@ -75,7 +75,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_ftp_remove_check.sh</step>
 </case>
 
-<case name="bt_ftp_stress_put_bigsizefile" manual="false" timeout="300" type="Functional" level="Component">
+<case name="bt_ftp_stress_put_bigsizefile" manual="false" timeout="300" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:<br />
 <br />
 Create a 10MB size file in local, and use FTP to transfer it to the Server.</p>
@@ -91,7 +91,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_ftp_stress_put_bigsizefile.sh</step>
 </case>
 
-<case name="bt_opp_send_files" manual="false" timeout="100" type="Functional">
+<case name="bt_opp_send_files" manual="false" timeout="100" type="Functional positive">
 	<description><![CDATA[<br /><br /><p>Purpose (Mandatory):</p>
 <p>Check bluetooth OPP (Object Push Profile) to put some objects (e.g. movies) to server</p>
 <p>Method (Optional):</p>
@@ -109,7 +109,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_opp_send_files.sh</step>
 </case>
 
-<case name="bt_pbap_pb_get_check" manual="false" timeout="60" type="Functional">
+<case name="bt_pbap_pb_get_check" manual="false" timeout="60" type="Functional positive">
 	<description><![CDATA[<br /><br /><p>Purpose (Mandatory):</p>
 <p>Check bluetooth PBAP (Phone-Book Access Profile) to get some addressbook from server.</p>
 <p>Method (Optional):</p>
@@ -127,7 +127,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_pbap_pb_get_check.sh</step>
 </case>
 
-<case name="bt_pbap_server" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_pbap_server" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Take MeeGo as PBAP Server part (PSE), use other machine to require Phonebook from MeeGo.</p>
 <p>Run Instructions:</p>
@@ -141,7 +141,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_sync_pb_get_check" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_sync_pb_get_check" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test SYNC prfile<br />
 Run Instructions:</p>
@@ -158,7 +158,7 @@ Pass/Fail Criteria:</p>
 <set name="audio_profiles" description="&lt;p&gt;In this suite, we test audio related bluetooth profiles. They are: A2DP, AVRCP, HSP, HFP. If meeting problem, you need to check both Pulseaudio and Buetooth.&lt;/p&gt;
 &lt;p&gt;Contactor: jingke.zhang@intel.com&lt;/p&gt;">
 
-<case name="bt_a2dp_playback" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_a2dp_playback" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test&nbsp;A2DP profile</p>
 <p>Run Instructions:</p>
@@ -179,7 +179,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_a2dp_headset_re_link" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_a2dp_headset_re_link" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>While playing music with BT headset, disconnect headset and re-connect it.</p>
 <p>Method (Optional):</p>
@@ -197,7 +197,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="bt_a2dp_headset_re_power" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_a2dp_headset_re_power" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>While playing music with BT headset, powerofft headset and re-power it.</p>
 <p>Method (Optional):</p>
@@ -216,7 +216,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="bt_a2dp_headset_re_pair" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_a2dp_headset_re_pair" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>While playing music with BT headset, re-pair with the Headset.</p>
 <p>Method (Optional):</p>
@@ -234,7 +234,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="bt_avrcp_lower_loader" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_avrcp_lower_loader" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test AVRCP profile's function: volume UP/DOWN</p>
 <p>Run Instructions:</p>
@@ -246,7 +246,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_avrcp_backwords_afterwords" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_avrcp_backwords_afterwords" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test AVRCP profile's function: song backwards/afterwords</p>
 <p>Run Instructions:</p>
@@ -258,7 +258,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="bt_avrcp_stop_play" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_avrcp_stop_play" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test AVRCP profile's function: Music Stop/Play</p>
 <p>Run Instructions:</p>
@@ -270,7 +270,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="bt_hsp_playback" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_hsp_playback" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>This case is to use HSP profile (in BT Headset) to playback music.</p>
 <p>Method (Optional):</p>
@@ -307,7 +307,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_hfp_basic" manual="true" timeout="100" type="Functional" level="Component">
+<case name="bt_hfp_basic" manual="true" timeout="100" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case it to test HFP profile.</p>
 <p>Run Instructions:</p>
@@ -371,7 +371,7 @@ All call should be setup normally</p>]]></description>
 <set name="other_profiles" description="&lt;p&gt;This suite includes all the other common used Bluetooth profiles, except data and audio transfer. They are: HID, PANU...&lt;/p&gt;
 &lt;p&gt;Contactor: jingke.zhang@intel.com&lt;/p&gt;">
 
-<case name="bt_package_stack_check" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_package_stack_check" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>&nbsp;Purpose:</p>
 <p>&nbsp;Check if the bluetooth stack (bluez) and corresponding packages are installed in system. <br />
 <br />
@@ -399,7 +399,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_package_daemon_check" manual="false" timeout="60" type="Functional">
+<case name="bt_package_daemon_check" manual="false" timeout="60" type="Functional positive">
 	<description><![CDATA[<p>&nbsp;</p>
 <p>Purpose:</p>
 <p>Check if bluetoothd has been started</p>
@@ -411,7 +411,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_package_daemon_check.sh</step>
 </case>
 
-<case name="bt_hid_stress_longtime_noaction" manual="true" timeout="2000" type="Functional" level="Component">
+<case name="bt_hid_stress_longtime_noaction" manual="true" timeout="2000" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>This case is to test HID profile without action in long time</p>
 <p>Run Instructions:</p>
@@ -424,7 +424,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_prof_dun_dt" manual="true" timeout="100" type="Functional" level="Component">
+<case name="bt_prof_dun_dt" manual="true" timeout="100" type="Functional positive" level="Component">
 	<description><![CDATA[<p>&nbsp;</p>
 <p>Purpose:</p>
 <p>This case is to test DUN profile. MeeGo machine should be able to connect to GPRS (2G network) through phone (as modem)</p>
@@ -570,7 +570,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_panu_setup_check" manual="false" timeout="100" type="Functional">
+<case name="bt_panu_setup_check" manual="false" timeout="100" type="Functional positive">
 	<description><![CDATA[<br /><br /><p>Purpose (Mandatory):</p>
 <p>Test PANU (Personal Area Network User). Ping PAN server ip address.</p>
 <p>Method (Optional):</p>
@@ -593,7 +593,7 @@ Pass/Fail Criteria:</p>
 <set name="device_control" description="&lt;p&gt;In this suite, we will test controling for the local adapter (hci0) and remote peers (paired devices). All the operation is from bluez DBus-API. To check the result, you may also use hciconfig to double confirm.&lt;/p&gt;
 &lt;p&gt;Contactor: jingke.zhang@intel.com&lt;/p&gt;">
 
-<case name="bt_device_pairing_computer" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_device_pairing_computer" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Pair the test machine with a compute by dbus call.</p>
 <p>Run Instructions:</p>
@@ -607,7 +607,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_device_pairing_computer.sh</step>
 </case>
 
-<case name="bt_device_pairing_phone" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_device_pairing_phone" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>&nbsp;</p>
 <p>Purpose:</p>
 <p>Pair mobile phone via bluetooth.</p>
@@ -621,7 +621,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="bt_device_remove_pairing_computer" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_device_remove_pairing_computer" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>User can call DBus API to remove the device pairing with a computer.</p>
 <p>Method (Optional):</p>
@@ -638,7 +638,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_device_remove_pairing_computer.sh</step>
 </case>
 
-<case name="bt_device_remove_pairing_keyboard" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_device_remove_pairing_keyboard" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>User can call DBus API to remove the device pairing with a BT keyboard.</p>
 <p>Method (Optional):</p>
@@ -655,7 +655,7 @@ Pass/Fail Criteria:</p>
 <step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
 </case>
 
-<case name="bt_adapter_get_address" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_get_address" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p><br />
 Purpose:<br />
 <br />
@@ -671,7 +671,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_get_address.sh</step>
 </case>
 
-<case name="bt_adapter_set_name" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_set_name" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Set the local adapter's name by calling Get DBus API.</p>
 <p>Method (Optional):</p>
@@ -688,7 +688,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_set_name.sh</step>
 </case>
 
-<case name="bt_adapter_set_power" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_set_power" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Call Bluez DBus API to set adapter power On/Off.</p>
 <p>Method (Optional):</p>
@@ -705,7 +705,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_set_power.sh</step>
 </case>
 
-<case name="bt_adapter_stress_set_power_50times" manual="false" timeout="500" type="Functional" level="Component">
+<case name="bt_adapter_stress_set_power_50times" manual="false" timeout="500" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Power on/off the adapter for 50 times.</p>
 <p>Method (Optional):</p>
@@ -722,7 +722,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_stress_set_power_50times.sh</step>
 </case>
 
-<case name="bt_adapter_set_pairable_on" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_set_pairable_on" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Call Bluez DBus API to set adapter pairable On/Off.</p>
 <p>Method (Optional):</p>
@@ -739,7 +739,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_set_pairable_on.sh</step>
 </case>
 
-<case name="bt_device_type_check" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_device_type_check" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>By DBus API call, user can know the bluetooth type of the paired Peer.</p>
 <p>Method (Optional):</p>
@@ -757,7 +757,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_device_type_check.sh</step>
 </case>
 
-<case name="bt_adapter_set_pairable_off" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_set_pairable_off" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Call Bluez DBus API to set adapter pairable to Off.</p>
 <p>Method (Optional):</p>
@@ -774,7 +774,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_set_pairable_off.sh</step>
 </case>
 
-<case name="bt_adapter_set_discoverable_on" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_set_discoverable_on" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Call Bluez DBus API to set adapter discoverable On</p>
 <p>Method (Optional):</p>
@@ -791,7 +791,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_set_discoverable_on.sh</step>
 </case>
 
-<case name="bt_adapter_set_discoverable_off" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_adapter_set_discoverable_off" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Call Bluez DBus API to set adapter discoverable Off</p>
 <p>Method (Optional):</p>
@@ -808,7 +808,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_adapter_set_discoverable_off.sh</step>
 </case>
 
-<case name="bt_device_l2ping_check" manual="false" timeout="60" type="Functional" level="Component">
+<case name="bt_device_l2ping_check" manual="false" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose:</p>
 <p>Check l2cap socket communication using l2ping.</p>
 <p>Run Instructions:</p>
@@ -819,7 +819,7 @@ Pass/Fail Criteria:<br />
 <step expected_result="0" manual="false">/opt/mcts-bluez-tests/bt_l2cap_ping_check.sh</step>
 </case>
 
-<case name="bt_device_passive_pairing" manual="true" timeout="60" type="Functional" level="Component">
+<case name="bt_device_passive_pairing" manual="true" timeout="60" type="Functional positive" level="Component">
 	<description><![CDATA[<p>Purpose (Mandatory):</p>
 <p>Check if the meego machine could be paired by other devices.</p>
 <p>Method (Optional):</p>

@@ -1,106 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
 <description></description>
-<suite name="Media Tracker" >
-	
-<set name="Tracker_Package" >
+<suite name="mcts-tracker-tests">
+<set name="Tracker_Control">
 
-<case name="med_tracker-package_installation" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-package_installation.sh</step>
+<case name="med_tracker-control_terminate" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-control_terminate.sh</step>
 </case>
 
-<case name="med_tracker-package_process" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-package_process.sh</step>
-</case>
-</set>
-
-<set name="Tracker_Tag" >
-
-<case name="med_tracker-tag_remove" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_remove.sh</step>
+<case name="med_tracker-control_start" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-control_start.sh</step>
 </case>
 
-<case name="med_tracker-tag_single_file" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_single_file.sh</step>
+<case name="med_tracker-control_restart" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-control_restart.sh</step>
 </case>
 
-<case name="med_tracker-tag_multiple_file" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_multiple_file.sh</step>
-</case>
-
-<case name="med_tracker-tag_add" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-tag_add.sh</step>
+<case name="med_tracker-control_reset" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-control_reset.sh</step>
 </case>
 </set>
-<set name="Tracker_Search" >
+<set name="Tracker_USB">
 
-<case name="med_tracker-search_video" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_video.sh</step>
-</case>
-
-<case name="med_tracker-search_music_album" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_music_album.sh</step>
-</case>
-
-<case name="med_tracker-search_single_file" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_single_file.sh</step>
-</case>
-
-<case name="med_tracker-search_image" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_image.sh</step>
-</case>
-
-<case name="med_tracker-search_music" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_music.sh</step>
-</case>
-
-<case name="med_tracker-search_music_artist" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_music_artist.sh</step>
-</case>
-
-<case name="med_tracker-search_folder" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-search_folder.sh</step>
-</case>
-</set>
-<set name="Tracker_Live_Update" >
-
-<case name="med_tracker-live-update_video" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_video.sh</step>
-</case>
-
-<case name="med_tracker-live-update_music" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_music.sh</step>
-</case>
-
-<case name="med_tracker-live-update_image" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_image.sh</step>
-</case>
-
-<case name="med_tracker-live-update_folder" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-live-update_folder.sh</step>
-</case>
-</set>
-<set name="Tracker_USB" >
-
-<case name="med_tracker-usb_detect" manual="true" timeout="100">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="med_tracker-usb_detect" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 Check tracker can detect the mount and umount of USB<br />
 Run Instructions:<br />
@@ -115,11 +39,12 @@ Pass/Fail Criteria:<br />
 <br />
 1) Tracker can detect and index music files from USB disk in step 3;<br />
 2) After USB disk is umounted, tracker should not show USB content again;</p>]]></description>
-
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="med_tracker-usb_live_update" manual="true" timeout="100">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="med_tracker-usb_live_update" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 Check tracker can live search media from USB disk<br />
 Run Instructions:<br />
@@ -137,11 +62,12 @@ Pass/Fail Criteria:<br />
 <br />
 1) New-added media content in USB disk can be searched out by tracker with right metadata;<br />
 2) After those contents are removed from USB, tracker can't search them again;</p>]]></description>
-
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="med_tracker-usb_search" manual="true" timeout="100">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="med_tracker-usb_search" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 Check tracker can search media from USB disk<br />
 Run Instructions:<br />
@@ -155,11 +81,12 @@ Test steps:<br />
 Pass/Fail Criteria:<br />
 <br />
 Tracker can search out media content from USB disk with right metadata</p>]]></description>
-
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="med_tracker-usb_cache" manual="true" timeout="100">
-	<description><![CDATA[<p>Purpose:<br />
+<case name="med_tracker-usb_cache" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 Check tracker can cache USB records<br />
 Run Instructions:<br />
@@ -173,29 +100,83 @@ Test steps:<br />
 Pass/Fail Criteria:<br />
 <br />
 In step 5, tracker should show USB content in short time without long time indexing</p>]]></description>
-
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 </set>
-<set name="Tracker_Control" >
+<set name="Tracker_Live_Update">
 
-<case name="med_tracker-control_terminate" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_terminate.sh</step>
+<case name="med_tracker-live-update_video" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-live-update_video.sh</step>
 </case>
 
-<case name="med_tracker-control_start" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_start.sh</step>
+<case name="med_tracker-live-update_music" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-live-update_music.sh</step>
 </case>
 
-<case name="med_tracker-control_restart" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_restart.sh</step>
+<case name="med_tracker-live-update_image" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-live-update_image.sh</step>
 </case>
 
-<case name="med_tracker-control_reset" manual="false" timeout="100">
-	<description></description>
-	<step expected_result="0" manual="false">/opt/mcts-tracker-tests/med_tracker-control_reset.sh</step>
+<case name="med_tracker-live-update_folder" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-live-update_folder.sh</step>
+</case>
+</set>
+<set name="Tracker_Search">
+
+<case name="med_tracker-search_video" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_video.sh</step>
+</case>
+
+<case name="med_tracker-search_music_album" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_music_album.sh</step>
+</case>
+
+<case name="med_tracker-search_single_file" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_single_file.sh</step>
+</case>
+
+<case name="med_tracker-search_image" manual="false" timeout="90">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_image.sh</step>
+</case>
+
+<case name="med_tracker-search_music" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_music.sh</step>
+</case>
+
+<case name="med_tracker-search_music_artist" manual="false" timeout="90">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_music_artist.sh</step>
+</case>
+
+<case name="med_tracker-search_folder" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-search_folder.sh</step>
+</case>
+</set>
+<set name="Tracker_Tag">
+
+<case name="med_tracker-tag_remove" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-tag_remove.sh</step>
+</case>
+
+<case name="med_tracker-tag_single_file" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-tag_single_file.sh</step>
+</case>
+
+<case name="med_tracker-tag_multiple_file" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-tag_multiple_file.sh</step>
+</case>
+
+<case name="med_tracker-tag_add" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-tag_add.sh</step>
+</case>
+</set>
+<set name="Tracker_Package">
+
+<case name="med_tracker-package_installation" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-package_installation.sh</step>
+</case>
+
+<case name="med_tracker-package_process" manual="false" timeout="90" type="Functional positive">
+<step expected_result="0" manual="true">/opt/mcts-tracker-tests/med_tracker-package_process.sh</step>
 </case>
 </set>
 </suite>

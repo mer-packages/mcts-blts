@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
 <description></description>
-<suite name="Geoclue" >
-<set name="geoclue_position" >
+<suite name="mcts-geoclue-tests">
+<set name="geoclue_position" description="&lt;p&gt;Test suite of GeocluePosition object&amp;nbsp;&lt;/p&gt;">
 
-<case name="geoclue_position_new" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_position_new" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeocluePosition::geoclue_position_new</p>
 <p>Run Instructions:</p>
 <p>GeocluePosition * position = geoclue_position_new (<em>service, path</em>)</p>
 <p>Pass/Fail Criteria:</p>
-<p>Pointer to a new <a title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" class="link"><span class="type">GeocluePosition</span></a> is returned.</p>
+<p>Pointer to a new <a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html"><span class="type">GeocluePosition</span></a> is returned.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_position -m new</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_position -m new</step>
 </case>
 
-<case name="get_position" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="get_position" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeocluePosition::geoclue_position_get_position</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeocluePosition object.</li>
-    <li><a title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" class="link">GeocluePositionFields</a> geoclue_position_get_position     (<a title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" class="link">GeocluePosition</a> *position,</li>
+    <li><a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields">GeocluePositionFields</a> geoclue_position_get_position (<a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">GeocluePosition</a> *position,</li>
 </ol>
-<pre class="programlisting">int *timestamp,<br />                                                         double *latitude,<br />                                                         double *longitude,<br />                                                         double *altitude,<br />                                                         <a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> **accuracy,<br />                                                         GError **error);</pre>
+<pre class="programlisting">int *timestamp,<br />                                                         double *latitude,<br />                                                         double *longitude,<br />                                                         double *altitude,<br />                                                         <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> **accuracy,<br />                                                         GError **error);</pre>
 <p>Pass/Fail Criteria:</p>
 <ol>
-    <li>A <a title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" class="link"><span class="type">GeocluePositionFields</span></a>  bitfield representing the  validity of the position values.</li>
+    <li>A <a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields"><span class="type">GeocluePositionFields</span></a> bitfield representing the validity of the position values.</li>
     <li>Pointer to G<span class="type">Error i object is NULL.</span></li>
 </ol>
 <p>&nbsp;</p>
@@ -36,112 +38,118 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_position -m get_position</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_position -m get_position</step>
 </case>
 
-<case name="get_position_async" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="get_position_async" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeocluePosition::geoclue_position_get_position_async</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeocluePosition object.</li>
     <li>Create GeocluePositionCallback method
-    <pre class="programlisting">void                (*GeocluePositionCallback)          (<a title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" class="link">GeocluePosition</a> *position,<br />                                                         <a title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" class="link">GeocluePositionFields</a> fields,<br />                                                         int timestamp,<br />                                                         double latitude,<br />                                                         double longitude,<br />                                                         double altitude,<br />                                                         <a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> *accuracy,<br />                                                         GError *error,<br />                                                         gpointer userdata);</pre>
+    <pre class="programlisting">void                (*GeocluePositionCallback)          (<a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">GeocluePosition</a> *position,<br />                                                         <a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields">GeocluePositionFields</a> fields,<br />                                                         int timestamp,<br />                                                         double latitude,<br />                                                         double longitude,<br />                                                         double altitude,<br />                                                         <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> *accuracy,<br />                                                         GError *error,<br />                                                         gpointer userdata);</pre>
     </li>
-    <li>void                geoclue_position_get_position_async (<a title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" class="link">GeocluePosition</a> *position,<a title="GeocluePositionCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html#GeocluePositionCallback" class="link"> GeocluePositionCallback</a> callback, gpointer userdata);</li>
+    <li>void geoclue_position_get_position_async (<a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">GeocluePosition</a> *position,<a class="link" title="GeocluePositionCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html#GeocluePositionCallback"> GeocluePositionCallback</a> callback, gpointer userdata);</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
     <li>GeocluePositionCallback method is invoked when position is returned from position provider.</li>
     <li>Pointer to valid GeocluePosition object is passed to GeocluePositionCallback method.</li>
     <li>Each coordinates value of returned position is correct.</li>
-    <li>Each field in returned <a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" title="enum GeocluePositionFields">GeocluePositionFields</a> is correct</li>
+    <li>Each field in returned <a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields">GeocluePositionFields</a> is correct</li>
     <li>Pointer to valid GeoclueAccuracy object is passed to GeocluePositionCallback method.</li>
     <li>Pointer to GErrro object is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_position -m get_position_async</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_position -m get_position_async</step>
 </case>
 </set>
-<set name="geoclue_address" >
+<set name="geoclue_address" description="&lt;p&gt;Test suite of GeoclueAddress object&amp;nbsp;&lt;/p&gt;">
 
-<case name="geoclue_address_new" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_address_new" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeocluePosition::geoclue_address_new</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueAddress object.
-    <pre class="synopsis"><a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link">GeoclueAddress</a>*     <a title="geoclue_address_new ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html#geoclue-address-new" class="link">geoclue_address_new</a>                 (const char *service,<br />                                                         const char *path);</pre>
+    <pre class="synopsis"><a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html">GeoclueAddress</a>*     <a class="link" title="geoclue_address_new ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html#geoclue-address-new">geoclue_address_new</a>                 (const char *service,<br />                                                         const char *path);</pre>
     </li>
 </ol>
 <p>Pass/Fail Criteria:</p>
-<p>Pointer to a new <a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link"><span class="type">GeoclueAddress</span></a><a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link"></a> is returned.</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address -m new</step>
+<p>Pointer to a new <a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html"><span class="type">GeoclueAddress</span></a> is returned.</p>]]></description>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address -m new</step>
 </case>
 
-<case name="geoclue_address_get_address" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_address_get_address" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeocluePosition::geoclue_address_get_address</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueAddress object.</li>
 </ol>
-<pre class="programlisting">gboolean            geoclue_address_get_address         (<a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link">GeoclueAddress</a> *address,<br />                                                         int *timestamp,<br />                                                         GHashTable **details,<br />                                                         <a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> **accuracy,<br />                                                         GError **error);</pre>
+<pre class="programlisting">gboolean            geoclue_address_get_address         (<a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html">GeoclueAddress</a> *address,<br />                                                         int *timestamp,<br />                                                         GHashTable **details,<br />                                                         <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> **accuracy,<br />                                                         GError **error);</pre>
 <p>Pass/Fail Criteria:</p>
 <ol>
-    <li>Pointer to valid <span class="type">GHashTable</span> with  address details is returned.</li>
-    <li>Pointer to valid <a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" title="GeoclueAccuracy"><span class="type">GeoclueAccuracy</span></a> object is returned.</li>
+    <li>Pointer to valid <span class="type">GHashTable</span> with address details is returned.</li>
+    <li>Pointer to valid <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy"><span class="type">GeoclueAccuracy</span></a> object is returned.</li>
     <li>Pointer to GError object is NULL.</li>
     <li>TRUE is returned.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address -m get_address</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address -m get_address</step>
 </case>
 
-<case name="geoclue_address_get_address_async" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_address_get_address_async" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeoclueAddress::geoclue_address_get_address_async</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueAddress object.</li>
     <li>Create GeoclueAddressCallback method
-    <pre class="programlisting">void                (*GeoclueAddressCallback)           (<a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link">GeoclueAddress</a> *address,<br />                                                         int timestamp,<br />                                                         GHashTable *details,<br />                                                         <a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> *accuracy,<br />                                                         GError *error,<br />                                                         gpointer userdata);</pre>
+    <pre class="programlisting">void                (*GeoclueAddressCallback)           (<a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html">GeoclueAddress</a> *address,<br />                                                         int timestamp,<br />                                                         GHashTable *details,<br />                                                         <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> *accuracy,<br />                                                         GError *error,<br />                                                         gpointer userdata);</pre>
     </li>
     <li>
-    <pre class="programlisting">void                geoclue_address_get_address_async   (<a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link">GeoclueAddress</a> *address,<br />                                                         <a title="GeoclueAddressCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html#GeoclueAddressCallback" class="link">GeoclueAddressCallback</a> callback,<br />                                                         gpointer userdata);</pre>
+    <pre class="programlisting">void                geoclue_address_get_address_async   (<a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html">GeoclueAddress</a> *address,<br />                                                         <a class="link" title="GeoclueAddressCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html#GeoclueAddressCallback">GeoclueAddressCallback</a> callback,<br />                                                         gpointer userdata);</pre>
     </li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
-    <li>GeoclueAddressCallback method is invoked when address is  returned from address provider.</li>
+    <li>GeoclueAddressCallback method is invoked when address is returned from address provider.</li>
     <li>Pointer to valid GeoclueAddress object is passed to GeoclueAddressCallback method.</li>
     <li>Each address details value of returned address is correct.</li>
-    <li>Pointer to valid GeoclueAccuracy object is passed to  GeocluePositionCallback method.</li>
+    <li>Pointer to valid GeoclueAccuracy object is passed to GeocluePositionCallback method.</li>
     <li>Pointer to GErrro object is NULL.</li>
 </ol>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address -m get_address_async</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address -m get_address_async</step>
 </case>
 </set>
-<set name="geoclue_address_details" >
+<set name="geoclue_address_details" description="&lt;p&gt;Test suite of GeoclueAddressDetails object&amp;nbsp;&lt;/p&gt;">
 
-<case name="geoclue_address_details_new" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_address_details_new" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>API test: GeocluePosition::geoclue_address_details_new</p>
 <p>Run Instructions:</p>
 <pre class="programlisting">GHashTable*         geoclue_address_details_new         ();</pre>
 <p>&nbsp;</p>
 <p>Pass/Fail Criteria:</p>
-<p>Pointer to a new <span class="type">GHashTable</span> is returned and suitable for Geoclue  Address details.</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address_details -m new</step>
+<p>Pointer to a new <span class="type">GHashTable</span> is returned and suitable for Geoclue Address details.</p>]]></description>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address_details -m new</step>
 </case>
 
-<case name="geoclue_address_details_copy" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_address_details_copy" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API: geoclue_address_details_copy</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a PositionAddress object: geoclue_address_new</li>
     <li>Get address details: geoclue_address_get_address.</li>
-    <li>Copy address details to a new GHashTable object: GHashTable*         geoclue_address_details_copy        (GHashTable *source);</li>
+    <li>Copy address details to a new GHashTable object: GHashTable* geoclue_address_details_copy (GHashTable *source);</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
@@ -149,48 +157,51 @@
 </ol>
 <p>&nbsp;</p>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address_details -m copy</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address_details -m copy</step>
 </case>
 
-<case name="geoclue_address_details_get_accuracy_level" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_address_details_get_accuracy_level" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API: geoclue_address_details_get_accuracy_level</p>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a PositionAddress object: geoclue_address_new</li>
     <li>Get address details: geoclue_address_get_address.</li>
-    <li>Get accuracy level from address details: <a title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel" class="link">GeoclueAccuracyLevel</a> geoclue_address_details_get_accuracy_level(GHashTable *address);</li>
+    <li>Get accuracy level from address details: <a class="link" title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel">GeoclueAccuracyLevel</a> geoclue_address_details_get_accuracy_level(GHashTable *address);</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
     <li>Correct accuracy level is returned in terms of input address details</li>
 </ol>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address_details -m get_accuracy_level</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_address_details -m get_accuracy_level</step>
 </case>
 </set>
-<set name="geoclue_accuracy" >
+<set name="geoclue_accuracy" description="&lt;p&gt;Test suite of GeoclueAccuracy object&amp;nbsp;&lt;/p&gt;">
 
-<case name="geoclue_accuracy_new" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_accuracy_new" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting"><a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a>*    geoclue_accuracy_new                (<a title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel" class="link">GeoclueAccuracyLevel</a> level,<br />                                                         double horizontal_accuracy,<br />                                                         double vertical_accuracy);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a>*    geoclue_accuracy_new                (<a class="link" title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel">GeoclueAccuracyLevel</a> level,<br />                                                         double horizontal_accuracy,<br />                                                         double vertical_accuracy);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a new GeoclueAccuracy object:geoclue_accuracy_new.</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
-    <li>Pointer to a new <a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" title="GeoclueAccuracy"><span class="type">GeoclueAccuracy</span></a>  with given values is returned.</li>
+    <li>Pointer to a new <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy"><span class="type">GeoclueAccuracy</span></a> with given values is returned.</li>
 </ol>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m new</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m new</step>
 </case>
 
-<case name="geoclue_accuracy_get_details" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_accuracy_get_details" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting">void                geoclue_accuracy_get_details        (<a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> *accuracy,<br />                                                         <a title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel" class="link">GeoclueAccuracyLevel</a> *level,<br />                                                         double *horizontal_accuracy,<br />                                                         double *vertical_accuracy);</pre>
+<pre class="programlisting">void                geoclue_accuracy_get_details        (<a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> *accuracy,<br />                                                         <a class="link" title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel">GeoclueAccuracyLevel</a> *level,<br />                                                         double *horizontal_accuracy,<br />                                                         double *vertical_accuracy);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueAccuracy with detailed values: geoclue_accuracy_new</li>
@@ -199,32 +210,34 @@
 <p>Pass/Fail Criteria:</p>
 <ol>
     <li>Correct detail values of accuracy is returned.</li>
-    <li><em class="parameter"><code>horizontal_accuracy</code></em> and <em class="parameter"><code>vertical_accuracy</code></em> will only be  defined  if <em class="parameter"><code>level</code></em> is <code class="literal">GEOCLUE_ACCURACY_LEVEL_DETAILED</code>.</li>
+    <li><em class="parameter"><code>horizontal_accuracy</code></em> and <em class="parameter"><code>vertical_accuracy</code></em> will only be defined if <em class="parameter"><code>level</code></em> is <code class="literal">GEOCLUE_ACCURACY_LEVEL_DETAILED</code>.</li>
 </ol>
 <p>&nbsp;</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m get_details</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m get_details</step>
 </case>
 
-<case name="geoclue_accuracy_set_details" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_accuracy_set_details" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="synopsis">void                <a title="geoclue_accuracy_set_details ()" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#geoclue-accuracy-set-details" class="link">geoclue_accuracy_set_details</a>        (<a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> *accuracy,<br />                                                         <a title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel" class="link">GeoclueAccuracyLevel</a> level,<br />                                                         double horizontal_accuracy,<br />                                                         double vertical_accuracy);</pre>
+<pre class="synopsis">void                <a class="link" title="geoclue_accuracy_set_details ()" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#geoclue-accuracy-set-details">geoclue_accuracy_set_details</a>        (<a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> *accuracy,<br />                                                         <a class="link" title="enum GeoclueAccuracyLevel" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueAccuracyLevel">GeoclueAccuracyLevel</a> level,<br />                                                         double horizontal_accuracy,<br />                                                         double vertical_accuracy);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueAccuracy object: geoclue_accuracy_new</li>
-    <li>Set accuracy details values: <a title="geoclue_accuracy_set_details ()" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#geoclue-accuracy-set-details" class="link">geoclue_accuracy_set_details</a></li>
+    <li>Set accuracy details values: <a class="link" title="geoclue_accuracy_set_details ()" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#geoclue-accuracy-set-details">geoclue_accuracy_set_details</a></li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
     <li>Accuracy details values are replaced with input values.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m set_details</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m set_details</step>
 </case>
 
-<case name="geoclue_accuracy_copy" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_accuracy_copy" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting"><a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a>*    geoclue_accuracy_copy               (<a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> *accuracy);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a>*    geoclue_accuracy_copy               (<a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> *accuracy);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueAccuracy object with details values: geoclue_accuracy_new</li>
@@ -235,15 +248,16 @@
     <li>Pointer to a deep copied GeoclueAccuracy object is returned.</li>
     <li>Accuracy detail values are identifcal with source object.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m copy</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_accuracy -m copy</step>
 </case>
 </set>
-<set name="geoclue_geocode" >
+<set name="geoclue_geocode" description="&lt;p&gt;Test suite of GeoclueGeocode object&amp;nbsp;&lt;/p&gt;">
 
-<case name="geoclue_geocode_new" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_geocode_new" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting"><a title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html" class="link">GeoclueGeocode</a>*     geoclue_geocode_new                 (const char *service,<br />                                                         const char *path);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html">GeoclueGeocode</a>*     geoclue_geocode_new                 (const char *service,<br />                                                         const char *path);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a new GeoclueGeocode object</li>
@@ -252,13 +266,14 @@
 <ol>
     <li>Pointer to a valid GeoclueGeocode object is returned.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_geocode -m new</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_geocode -m new</step>
 </case>
 
-<case name="geoclue_geocode_address_to_position" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_geocode_address_to_position" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting"><a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" title="enum GeocluePositionFields">GeocluePositionFields</a> geoclue_geocode_address_to_position<br />                                                        (<a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html" title="GeoclueGeocode">GeoclueGeocode</a> *geocode,<br />                                                         GHashTable *details,<br />                                                         double *latitude,<br />                                                         double *longitude,<br />                                                         double *altitude,<br />                                                         <a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" title="GeoclueAccuracy">GeoclueAccuracy</a> **accuracy,<br />                                                         GError **error);</pre>
+<pre class="programlisting"><a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields">GeocluePositionFields</a> geoclue_geocode_address_to_position<br />                                                        (<a class="link" title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html">GeoclueGeocode</a> *geocode,<br />                                                         GHashTable *details,<br />                                                         double *latitude,<br />                                                         double *longitude,<br />                                                         double *altitude,<br />                                                         <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> **accuracy,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a GeoclueGeocode object: geoclue_geocode_new.</li>
@@ -269,33 +284,35 @@
     <li>Coordinate values are returned in terms of given address details</li>
     <li>Pointer to valid GeoclueAccuracy object is returned.</li>
     <li>Pointer to GError object is NULL.</li>
-    <li>The returned <a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" title="enum GeocluePositionFields"><span class="type">GeocluePositionFields</span></a> bitfield represents the  validity of the returned coordinates</li>
+    <li>The returned <a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields"><span class="type">GeocluePositionFields</span></a> bitfield represents the validity of the returned coordinates</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_geocode -m address_to_position</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_geocode -m address_to_position</step>
 </case>
 
-<case name="geoclue_geocode_address_to_position_async" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_geocode_address_to_position_async" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting">void                geoclue_geocode_address_to_position_async<br />                                                        (<a title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html" class="link">GeoclueGeocode</a> *geocode,<br />                                                         GHashTable *details,<br />                                                         <a title="GeoclueGeocodeCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html#GeoclueGeocodeCallback" class="link">GeoclueGeocodeCallback</a> callback,<br />                                                         gpointer userdata);</pre>
+<pre class="programlisting">void                geoclue_geocode_address_to_position_async<br />                                                        (<a class="link" title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html">GeoclueGeocode</a> *geocode,<br />                                                         GHashTable *details,<br />                                                         <a class="link" title="GeoclueGeocodeCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html#GeoclueGeocodeCallback">GeoclueGeocodeCallback</a> callback,<br />                                                         gpointer userdata);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create GeoclueGeocode object: geoclue_geocode_new.</li>
     <li>Create GeoclueGeocodeCallback method<br />
-    <pre class="programlisting">void                (*GeoclueGeocodeCallback)           (<a title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html" class="link">GeoclueGeocode</a> *geocode,<br />                                                         <a title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields" class="link">GeocluePositionFields</a> fields,<br />                                                         double latitude,<br />                                                         double longitude,<br />                                                         double altitude,<br />                                                         <a title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy" class="link">GeoclueAccuracy</a> *accuracy,<br />                                                         GError *error,<br />                                                         gpointer userdata);</pre>
+    <pre class="programlisting">void                (*GeoclueGeocodeCallback)           (<a class="link" title="GeoclueGeocode" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueGeocode.html">GeoclueGeocode</a> *geocode,<br />                                                         <a class="link" title="enum GeocluePositionFields" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeocluePositionFields">GeocluePositionFields</a> fields,<br />                                                         double latitude,<br />                                                         double longitude,<br />                                                         double altitude,<br />                                                         <a class="link" title="GeoclueAccuracy" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-accuracy.html#GeoclueAccuracy">GeoclueAccuracy</a> *accuracy,<br />                                                         GError *error,<br />                                                         gpointer userdata);</pre>
     </li>
     <li>Get coordinate values in terms of given address details in async mode.</li>
 </ol>
 <p>Pass/Fail Criteria:</p>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_geocode -m address_to_position_async</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_geocode -m address_to_position_async</step>
 </case>
 </set>
-<set name="geoclue_provider" >
+<set name="geoclue_provider" description="&lt;p&gt;Test suites for geoclue_provider object&lt;/p&gt;">
 
-<case name="geoclue_provider_get_status" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_provider_get_status" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting">gboolean            geoclue_provider_get_status         (<a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueProvider.html" title="GeoclueProvider">GeoclueProvider</a> *provider,<br />                                                         <a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueStatus" title="enum GeoclueStatus">GeoclueStatus</a> *status,<br />                                                         GError **error);</pre>
+<pre class="programlisting">gboolean            geoclue_provider_get_status         (<a class="link" title="GeoclueProvider" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueProvider.html">GeoclueProvider</a> *provider,<br />                                                         <a class="link" title="enum GeoclueStatus" href="http://folks.o-hand.com/jku/geoclue-docs/geoclue-geoclue-types.html#GeoclueStatus">GeoclueStatus</a> *status,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create geoclue_provider object for each geoclue built-in provider</li>
@@ -307,13 +324,14 @@
     <li>Pointer for returned error should be NULL.</li>
     <li>Function return value is NULL</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_provider -m get_status</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_provider -m get_status</step>
 </case>
 
-<case name="geoclue_provider_get_provider_info" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_provider_get_provider_info" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>test API:</p>
-<pre class="programlisting">gboolean            geoclue_provider_get_provider_info  (<a title="GeoclueProvider" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueProvider.html" class="link">GeoclueProvider</a> *provider,<br />                                                         char **name,<br />                                                         char **description,<br />                                                         GError **error);</pre>
+<pre class="programlisting">gboolean            geoclue_provider_get_provider_info  (<a class="link" title="GeoclueProvider" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueProvider.html">GeoclueProvider</a> *provider,<br />                                                         char **name,<br />                                                         char **description,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create geoclue_provider object for each geoclue built-in provider</li>
@@ -325,30 +343,32 @@
     <li>Pointer to returned error is NULL</li>
     <li>Function return value is TRUE;</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_provider -m get_provider_info</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_provider -m get_provider_info</step>
 </case>
 </set>
-<set name="geoclue_master" >
+<set name="geoclue_master" description="&lt;p&gt;Test suite of geoclue_master and geoclue_master_client object&lt;/p&gt;">
 
-<case name="geoclue_master_get_default" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_get_default" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a title="GeoclueMaster" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMaster.html" class="link">GeoclueMaster</a>*      geoclue_master_get_default          (void);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueMaster" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMaster.html">GeoclueMaster</a>*      geoclue_master_get_default          (void);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
 <ol>
-    <li>Returns the default <a title="GeoclueMaster" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMaster.html" class="link"><span class="type">GeoclueMaster</span></a> object.</li>
+    <li>Returns the default <a class="link" title="GeoclueMaster" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMaster.html"><span class="type">GeoclueMaster</span></a> object.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master -m get_default</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master -m get_default</step>
 </case>
 
-<case name="geoclue_master_create_client" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_create_client" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" title="GeoclueMasterClient">GeoclueMasterClient</a>* geoclue_master_create_client       (<a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMaster.html" title="GeoclueMaster">GeoclueMaster</a> *master,<br />                                                         char **object_path,<br />                                                         GError **error);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a>* geoclue_master_create_client       (<a class="link" title="GeoclueMaster" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMaster.html">GeoclueMaster</a> *master,<br />                                                         char **object_path,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
@@ -360,13 +380,14 @@
     <li>Pointer to object_path string is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master -m create_client</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master -m create_client</step>
 </case>
 
-<case name="geoclue_master_client_create_address" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_client_create_address" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" class="link">GeoclueAddress</a>*     <a title="geoclue_master_client_create_address ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#geoclue-master-client-create-address" class="link">geoclue_master_client_create_address</a><br />                                                        (<a title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" class="link">GeoclueMasterClient</a> *client,<br />                                                         GError **error);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html">GeoclueAddress</a>*     <a class="link" title="geoclue_master_client_create_address ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#geoclue-master-client-create-address">geoclue_master_client_create_address</a><br />                                                        (<a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a> *client,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
@@ -378,18 +399,19 @@
     <li>Pointer to a valid GeoclueAddress object is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_address</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_address</step>
 </case>
 
-<case name="geoclue_master_client_create_address_async" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_client_create_address_async" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html" title="GeoclueAddress">void                geoclue_master_client_create_address_async<br />                                                        (</a><a title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" class="link">GeoclueMasterClient</a> *client,<br />                                                         <a title="CreateAddressCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreateAddressCallback" class="link">CreateAddressCallback</a> callback,<br />                                                         gpointer userdata);</pre>
+<pre class="programlisting"><a class="link" title="GeoclueAddress" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueAddress.html">void                geoclue_master_client_create_address_async<br />                                                        (</a><a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a> *client,<br />                                                         <a class="link" title="CreateAddressCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreateAddressCallback">CreateAddressCallback</a> callback,<br />                                                         gpointer userdata);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
     <li>Create a GeoclueMasterClient object: geoclue_master_create_client</li>
-    <li>Create callback method of <a title="CreateAddressCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreateAddressCallback" class="link">CreateAddressCallback</a></li>
+    <li>Create callback method of <a class="link" title="CreateAddressCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreateAddressCallback">CreateAddressCallback</a></li>
     <li>Create a GeoclueAddress object in async mode.</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
@@ -397,13 +419,14 @@
     <li>Pointer to a valid GeoclueAddress object is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_address_async</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_address_async</step>
 </case>
 
-<case name="geoclue_master_client_create_position" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_client_create_position" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" class="link">GeocluePosition</a>*    geoclue_master_client_create_position<br />                                                        (<a title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" class="link">GeoclueMasterClient</a> *client,<br />                                                         GError **error);</pre>
+<pre class="programlisting"><a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">GeocluePosition</a>*    geoclue_master_client_create_position<br />                                                        (<a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a> *client,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
@@ -415,18 +438,19 @@
     <li>Pointer to a valid GeocluePosition object is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_position</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_position</step>
 </case>
 
-<case name="geoclue_master_client_create_position_async" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_client_create_position_async" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" title="GeocluePosition">void                geoclue_master_client_create_position_async<br />                                                        (</a><a title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" class="link">GeoclueMasterClient</a> *client,<br />                                                         <a title="CreatePositionCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreatePositionCallback" class="link">CreatePositionCallback</a> callback,<br />                                                         gpointer userdata);</pre>
+<pre class="programlisting"><a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">void                geoclue_master_client_create_position_async<br />                                                        (</a><a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a> *client,<br />                                                         <a class="link" title="CreatePositionCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreatePositionCallback">CreatePositionCallback</a> callback,<br />                                                         gpointer userdata);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
     <li>Create a GeoclueMasterClient object: geoclue_master_create_client</li>
-    <li>Create a callback method of <a title="CreatePositionCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreatePositionCallback" class="link">CreatePositionCallback</a></li>
+    <li>Create a callback method of <a class="link" title="CreatePositionCallback ()" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html#CreatePositionCallback">CreatePositionCallback</a></li>
     <li>Create a GeocluePosition object in async mode</li>
 </ol>
 <p>Pass/Fail Criteria:</p>
@@ -434,13 +458,14 @@
     <li>Pointer to a valid GeocluePosition object is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_position_async</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m create_position_async</step>
 </case>
 
-<case name="geoclue_master_client_get_address_provider" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_client_get_address_provider" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" class="link">gboolean            geoclue_master_client_get_address_provider<br />                                                        (</a><a title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" class="link">GeoclueMasterClient</a> *client,<br />                                                         char **name,<br />                                                         char **description,<br />                                                         char **service,<br />                                                         char **path,<br />                                                         GError **error);</pre>
+<pre class="programlisting"><a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">gboolean            geoclue_master_client_get_address_provider<br />                                                        (</a><a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a> *client,<br />                                                         char **name,<br />                                                         char **description,<br />                                                         char **service,<br />                                                         char **path,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
@@ -452,13 +477,14 @@
     <li>Pointer to each type of provider information&nbsp; is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m get_address_provider</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m get_address_provider</step>
 </case>
 
-<case name="geoclue_master_client_get_position_provider" manual="false" timeout="90">
-	<description><![CDATA[<p>Purpose:</p>
+<case name="geoclue_master_client_get_position_provider" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:</p>
 <p>Test API:</p>
-<pre class="programlisting"><a class="link" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html" title="GeocluePosition">gboolean            geoclue_master_client_get_position_provider<br />                                                        (</a><a title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html" class="link">GeoclueMasterClient</a> *client,<br />                                                         char **name,<br />                                                         char **description,<br />                                                         char **service,<br />                                                         char **path,<br />                                                         GError **error);</pre>
+<pre class="programlisting"><a class="link" title="GeocluePosition" href="http://folks.o-hand.com/jku/geoclue-docs/GeocluePosition.html">gboolean            geoclue_master_client_get_position_provider<br />                                                        (</a><a class="link" title="GeoclueMasterClient" href="http://folks.o-hand.com/jku/geoclue-docs/GeoclueMasterClient.html">GeoclueMasterClient</a> *client,<br />                                                         char **name,<br />                                                         char **description,<br />                                                         char **service,<br />                                                         char **path,<br />                                                         GError **error);</pre>
 <p>Run Instructions:</p>
 <ol>
     <li>Create a instance of GeoclueMaster class: geoclue_master_get_default()</li>
@@ -470,7 +496,7 @@
     <li>Pointer to each type of position provider information&nbsp; is returned.</li>
     <li>Pointer to returned error is NULL.</li>
 </ol>]]></description>
-<step expected_result="0">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m get_position_provider</step>
+<step expected_result="0" manual="true">uexec /opt/mcts-geoclue-tests/geoclue_test.sh -c geoclue_master_client -m get_position_provider</step>
 </case>
 </set>
 </suite>
