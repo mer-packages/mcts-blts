@@ -1,58 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- tests.xml - Test case descriptions for automation tools.
-
-  Copyright (C) 2010 Intel Corporation
-  
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
- 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
- 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- 
-  Author: 
-      Zheng Kui (kui.zheng@intel.com)
- 
--->
+<?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
-  <suite name="mcts-display-tests" domain="Graphics">
-    <set name="Display function testing" feature="Display">
-      <case name="Display-Enumerate%20Screen/Crtc/Output/Modeline%20">
-	<!-- description="Enumerate Screen/Crtc/Output/Modeline test" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Enumerate_display.log" -en "Display-Enumerate Screen/Crtc/Output/Modeline test"</step>
+  <description/>
+  <suite name="mcts-display-tests">
+    <set name="Display function testing">
+      <case name="Display-Enumerate%20Screen/Crtc/Output/Modeline%20" manual="false" timeout="90" type="Functional positive">
+        <step expected_result="0" manual="false">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Enumerate_display.log" -en "Display-Enumerate Screen/Crtc/Output/Modeline test"</step>
       </case>
-      <case name="Display-Set%20Crtc%20modeline">
-	<!-- description="Display-Set Crtc Modeline test" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Crtc_Mode.log" -en "Display-Set Crtc Modeline test"</step>
+      <case name="Display-Set%20Crtc%20modeline" manual="false" timeout="180" type="Functional positive">
+        <step expected_result="0" manual="false">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Crtc_Mode.log" -en "Display-Set Crtc Modeline test"</step>
       </case>
-      <case name="Display-Set%20Backlight">
-	<!-- description="Set Backlight test" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Backlight.log" -en "Display-Set Backlight test"</step>
+      <case name="Display-Set%20Backlight" manual="false" timeout="90" type="Functional positive">
+        <step expected_result="0" manual="false">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Backlight.log" -en "Display-Set Backlight test"</step>
       </case>
-      <case name="Display-Rotation%20test">
-	<!-- description="Rotation test" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Rotation.log" -en "Display-Rotation test"</step>
+      <case name="Display-Rotation%20test" manual="false" timeout="90" type="Functional positive">
+        <step expected_result="0" manual="false">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Rotation.log" -en "Display-Rotation test"</step>
       </case>
-      <case name="Display-Set%20Position">
-	<!-- description="Set Crtc Position test" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Position.log" -en "Display-Set Crtc Position test"</step>
+      <case name="Display-Set%20Position" manual="false" timeout="90" type="Functional positive">
+        <step expected_result="0" manual="false">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Position.log" -en "Display-Set Crtc Position test"</step>
       </case>
-      <case name="Display-Scaling%20test">
-	<!-- description="Crtc Scaling test" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Scale.log" -en "Display-Crtc Scaling test"</step>
+      <case name="Display-Scaling%20test" manual="false" timeout="90" type="Functional positive">
+        <step expected_result="0" manual="false">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Set_Scale.log" -en "Display-Crtc Scaling test"</step>
       </case>
-      <case name="Display-Hotplug%20test">
-	<!-- description="Hotplug external display" -->
-        <step>/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Hotplug.log" -en "Display-Hotplug external display"</step>
+      <case name="Display-Hotplug%20test" manual="true" timeout="90" type="Functional positive">
+        <step expected_result="0" manual="true">/usr/bin/mcts-display-tests -l "/var/log/tests/mcts-display-tests/Display-Hotplug.log" -en "Display-Hotplug external display"</step>
       </case>
     </set>
   </suite>
 </testdefinition>
-

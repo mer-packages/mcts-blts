@@ -57,10 +57,10 @@ cm_eth_upload = 'scp /usr/share/mcts-connman-tests/10M ' + cm_data_server_ip_eth
 # from Internet. But tester need find a way to upload to Internet so 
 # that upload test case works
 # Download from Internet, ChangeLog-2.6.33 is about 7.5MB
-cm_3g_download = 'wget http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.33'
+cm_3g_download = 'wget --no-proxy http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.33'
 # Upload to local, please revise accordingly so that to upload
 # to Internet automatically
-cm_3g_upload = 'echo put /usr/share/mcts-connman-tests/10M /tmp/10M |sftp 127.0.0.1'
+cm_3g_upload = 'curl -x "" --ftp-pasv -v -T /usr/share/mcts-connman-tests/10M ftp://anonymous:meego3gtest@ftp.intel.com/pub/incoming/'
 
 # For WiFi, we test data transfer for WEP and PSK. These essids are only used
 # for data transfer. Test cases in test set WiFiFeature still need a cisco AP

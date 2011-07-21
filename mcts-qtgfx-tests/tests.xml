@@ -4,8 +4,9 @@
 <suite name="mcts-qtgfx-tests">
 <set name="qtgfx">
 
-<case name="qt_painting_basic" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_basic" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Basic Drawing example shows how to display basic graphics primitives in a variety of styles using the QPainter class.<br />
 QPainter performs low-level painting on widgets and other paint devices. The class can draw everything from simple lines to complex shapes like pies and chords. It can also draw aligned text and pixmaps. Normally, it draws in a &quot;natural&quot; coordinate system, but it can in addition do view and world transformation.</p>
@@ -16,11 +17,12 @@ run sample: painting-basicdrawing<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/painting-basicdrawing.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_SVGViewer" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_SVGViewer" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 The SVG Viewer example shows how to add SVG viewing support to applications.<br />
 Scalable Vector Graphics (SVG) is an XML-based language for describing two-dimensional vector graphics. Qt provides classes for rendering and displaying SVG drawings in widgets and on other paint devices. This example allows the user to load SVG files and view them in a QGraphicsView using a QGraphicsSvgItem.</p>
 <p>Run Instructions:<br />
@@ -29,11 +31,12 @@ run sample: painting-svgviewer<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/painting-svgviewer.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_SVGenerator" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_SVGenerator" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The SVG Generator example shows how to add SVG file export to applications.<br />
 Scalable Vector Graphics (SVG) is an XML-based language for describing two-dimensional vector graphics. Qt provides classes for rendering and generating SVG drawings. This example allows the user to create a simple picture and save it to an SVG file.<br />
@@ -45,11 +48,12 @@ run sample: painting-svggenerator<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/painting-svggenerator.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_FontSampler" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_FontSampler" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Font Sampler example shows how to preview and print multi-page documents.<br />
 <br />
@@ -60,11 +64,12 @@ run sample: painting-fontsampler<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/painting-fontsampler.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_ConcentricCircles" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_ConcentricCircles" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Concentric Circles example shows the improved rendering quality that can be obtained using floating point precision and anti-aliasing when drawing custom widgets. The example also shows how to do simple animations.<br />
 The application's main window displays several widgets which are drawn using the various combinations of precision and anti-aliasing.<br />
@@ -75,11 +80,12 @@ run sample: painting-concentriccircles<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/painting-concentriccircles.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_PainterPaths" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_PainterPaths" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Painter Paths example shows how painter paths can be used to build complex shapes for rendering.<br />
 The QPainterPath class provides a container for painting operations, enabling graphical shapes to be constructed and reused.</p>
@@ -89,11 +95,12 @@ run sample: painting-painterpaths<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/painting-painterpaths.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_Transformations" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_Transformations" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Transformations example shows how transformations influence the way that QPainter renders graphics primitives. In particular it shows how the order of transformations affect the result.</p>
 <p>Run Instructions:<br />
@@ -102,11 +109,12 @@ run sample: painting-transformations<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/painting-transformations.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_painting_ImageComposition" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_painting_ImageComposition" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Image Composition example lets the user combine images together using any composition mode supported by QPainter, described in detail in Composition Modes.</p>
 <p>Run Instructions:<br />
@@ -116,11 +124,12 @@ run sample: painting-imagecomposition<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/painting-imagecomposition.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_ogl_hellogl_es2" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<p><br />
+<case name="qt_ogl_hellogl_es2" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p><br />
 Purpose:<br />
 <br />
 The Hello GL example demonstrates the basic use of the OpenGL-related classes provided with Qt.<br />
@@ -132,11 +141,12 @@ run sample: opengl-hellogl_es2<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 <a href="http://doc.qt.nokia.com/4.7/opengl-hellogl.html">http://doc.qt.nokia.com/4.7/opengl-hellogl.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_ogl_textures" manual="true" timeout="90" insignificant="false">
+<case name="qt_ogl_textures" manual="true" timeout="90" type="Functional positive">
 	<description><![CDATA[<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p>Purpose:<br />
 <br />
 The Textures example demonstrates the use of Qt's image classes as textures in applications that use both OpenGL and Qt to display graphics.</p>
@@ -146,11 +156,12 @@ run sample: opengl-textures&nbsp;<br />
 Pass/Fail Criteria:<br />
 <br />
 <a href="http://doc.qt.nokia.com/4.7/opengl-textures.html">http://doc.qt.nokia.com/4.7/opengl-textures.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_DiagramScene" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_gfxview_DiagramScene" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 This example shows use of Qt's graphics framework.<br />
 The Diagram Scene example is an application in which you can create a flowchart diagram. It is possible to add flowchart shapes and text and connect the shapes by arrows as shown in the image above. The shapes, arrows, and text can be given different colors, and it is possible to change the font, style, and underline of the text.</p>
@@ -161,11 +172,12 @@ run sample: graphicsview-diagramscene<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/graphicsview-diagramscene.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_Simpleanchorlayout" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<p><br />
+<case name="qt_gfxview_Simpleanchorlayout" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p><br />
 Purpose:</p>
 <p>The Simple Anchor Layout example shows the basic use of the <a href="http://doc.qt.nokia.com/4.7/qgraphicsanchorlayout.html">QGraphicsAnchorLayout</a> class.</p>
 <p><br />
@@ -175,11 +187,12 @@ run sample: graphicsview-simpleanchorlayout<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 <a href="http://doc.qt.nokia.com/4.7/graphicsview-simpleanchorlayout.html">http://doc.qt.nokia.com/4.7/graphicsview-simpleanchorlayout.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_DragDrop" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_gfxview_DragDrop" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 This GraphicsView example shows how to implement drag and drop in a QGraphicsItem subclass, as well as how to animate items using QGraphicsItemAnimation and QTimeLine.&nbsp;</p>
 <p>Run Instructions:<br />
@@ -188,11 +201,12 @@ run sample: graphicsview-dragdroprobot<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/graphicsview-dragdroprobot.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_ElasticNodes" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_gfxview_ElasticNodes" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 This GraphicsView example shows how to implement edges between nodes in a graph&nbsp;</p>
 <p>Run Instructions:<br />
 yum install qtdemos<br />
@@ -200,11 +214,12 @@ run sample: graphicsview-elasticnodes<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/graphicsview-elasticnodes.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_PadNavigator" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_gfxview_PadNavigator" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Pad Navigator Example shows how you can use Graphics View together with embedded widgets to create a simple but useful dynamic user interface for embedded devices.</p>
 <p>Run Instructions:<br />
@@ -213,11 +228,12 @@ run sample: qtjambi-padnavigator<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.trolltech.com/qtjambi-4.5.2_01/com/trolltech/qt/qtjambi-padnavigator.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_CollidingMice" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_gfxview_CollidingMice" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Colliding Mice example shows how to use the Graphics View framework to implement animated items and detect collision between items.<br />
 Graphics View provides the QGraphicsScene class for managing and interacting with a large number of custom-made 2D graphical items derived from the QGraphicsItem class, and a QGraphicsView widget for visualizing the items, with support for zooming and rotation.</p>
@@ -228,11 +244,12 @@ run sample: graphicsview-collidingmice<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/graphicsview-collidingmice.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_Weatheranchorlayout" manual="true" timeout="90" insignificant="false">
+<case name="qt_gfxview_Weatheranchorlayout" manual="true" timeout="90" type="Functional positive">
 	<description><![CDATA[<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p>Purpose:<br />
 <br />
 The Weather Anchor Layout example shows more complex use of the <a href="http://doc.qt.nokia.com/4.7/qgraphicsanchorlayout.html">QGraphicsAnchorLayout</a> class to create a real-world window layout.</p>
@@ -243,11 +260,12 @@ run sample: graphicsview-weatheranchorlayout<br />
 Pass/Fail Criteria:<br />
 <br />
 <a href="http://doc.qt.nokia.com/4.7/graphicsview-weatheranchorlayout.html">http://doc.qt.nokia.com/4.7/graphicsview-weatheranchorlayout.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Calculator" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Calculator" manual="false" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 <br />
 The example shows how to use signals and slots to implement the functionality of a calculator widget, and how to use QGridLayout to place child widgets in a grid<br />
@@ -258,11 +276,12 @@ run sample: widgets-calculator<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-calculator.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Calendar" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Calendar" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 The Calendar Widget example shows use of QCalendarWidget.<br />
 QCalendarWidget displays one calendar month at a time and lets the user select a date. The calendar consists of four components: a navigation bar that lets the user change the month that is displayed, a grid where each cell represents one day in the month, and two headers that display weekday names and week numbers.</p>
 <p>Run Instructions:<br />
@@ -271,11 +290,12 @@ run sample: widgets-calendarwidget<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-calendarwidget.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Character" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Character" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Character Map example shows how to create a custom widget that can both display its own content and respond to user input.<br />
 <br />
@@ -285,11 +305,12 @@ run sample: widgets-charactermap<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-charactermap.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Icons" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Icons" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Icons example shows how QIcon can generate pixmaps reflecting an icon's state, mode and size. These pixmaps are generated from the set of pixmaps made available to the icon, and are used by Qt widgets to show an icon representing a particular action.<br />
 <br />
@@ -301,11 +322,12 @@ Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-icons.html<br />
 &nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Image Viewer" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Image Viewer" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The example shows how to combine QLabel and QScrollArea to display an image. QLabel is typically used for displaying text, but it can also display an image. QScrollArea provides a scrolling view around another widget. If the child widget exceeds the size of the frame, QScrollArea automatically provides scroll bars.<br />
 <br />
@@ -315,11 +337,12 @@ run widgets-imageviewer<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-imageviewer.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_LineEdits" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_LineEdits" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Line Edits example demonstrates the many ways that QLineEdit can be used, and shows the effects of various properties and validators on the input and output supplied by the user.</p>
 <p>Run Instructions:<br />
@@ -328,11 +351,12 @@ run sample: widgets-lineedits<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-lineedits.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_GroupBox" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_GroupBox" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Group Box example shows how to use the different kinds of group boxes in Qt.<br />
 Group boxes are container widgets that organize buttons into groups, both logically and on screen. They manage the interactions between the user and the application so that you do not have to enforce simple constraints.</p>
@@ -343,11 +367,12 @@ run sample: widgets-groupbox<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-groupbox.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_DigitalClock" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_DigitalClock" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 he Digital Clock example shows how to use QLCDNumber to display a number with LCD-like digits.</p>
 <p>Run Instructions:<br />
@@ -357,11 +382,12 @@ run sample: widgets-digitalclock<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-digitalclock.html<br />
 &nbsp;</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_editor" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_editor" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Code Editor example shows how to create a simple editor that has line numbers and that highlights the current line.<br />
 As can be seen from the image, the editor displays the line numbers in an area to the left of the area for editing. The editor will highlight the line containing the cursor.</p>
@@ -371,11 +397,12 @@ run sample: widgets-codeeditor<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-codeeditor.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_AnalogClock" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_AnalogClock" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 The Analog Clock example shows how to draw the contents of a custom widget.<br />
 This example also demonstrates how the transformation and scaling features of QPainter can be used to make drawing custom widgets easier.</p>
 <p>Run Instructions:<br />
@@ -384,11 +411,12 @@ run sample: widgets-analogclock<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-analogclock.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Movie" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Movie" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Movie example demonstrates how to use QMovie and QLabel to display animations. Now that Qt comes with Phonon (the multimedia framework), QMovie is mostly useful if one wants to play a simple animation without the added complexity of a multimedia framework to install and deploy.</p>
 <p>Run Instructions:<br />
@@ -398,11 +426,12 @@ run sample: widgets-movie<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-movie.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Scribble" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Scribble" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 The Scribble example shows how to reimplement some of QWidget's event handlers to receive the events generated for the application's widgets.</p>
 <p>Run Instructions:<br />
 yum install qtdemos<br />
@@ -410,11 +439,12 @@ run sample: widgets-Scribble</p>
 <p><br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-scribble.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_ShapedClock" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_ShapedClock" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 The Shaped Clock example shows how to apply a widget mask to a top-level widget to produce a shaped window.</p>
 <p>Run Instructions:</p>
 <p>yum install qtdemos<br />
@@ -423,11 +453,12 @@ run sample: widgets-ShapedClock</p>
 <br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/widgets-shapedclock.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Sliders" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Sliders" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 Qt provides three types of slider-like widgets: QSlider, QScrollBar and QDial. They all inherit most of their functionality from QAbstractSlider, and can in theory replace each other in an application since the differences only concern their look and feel. This example shows what they look like, how they work and how their behavior and appearance can be manipulated through their properties.</p>
 <p>Run Instructions:<br />
@@ -437,11 +468,12 @@ run sample: widgets-Sliders</p>
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-sliders.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_SpinBoxes" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_SpinBoxes" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Spin Boxes example shows how to use the many different types of spin boxes available in Qt, from a simple QSpinBox widget to more complex editors like the QDateTimeEdit widget.</p>
 <p>Run Instructions:<br />
@@ -450,11 +482,12 @@ run sample: widgets-SpinBoxes<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-spinboxes.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Styles" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Styles" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Styles example illustrates how to create custom widget drawing styles using Qt, and demonstrates Qt's predefined styles.<br />
 A style in Qt is a subclass of QStyle or of one of its subclasses. Styles perform drawing on behalf of widgets. Qt provides a whole range of predefined styles, either built into the QtGui library or found in plugins. Custom styles are usually created by subclassing one of Qt's existing style and reimplementing a few virtual functions.</p>
@@ -464,11 +497,12 @@ run sample: widgets-Styles<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-styles.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_StyleSheet" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_StyleSheet" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Style Sheet Example shows how to use style sheets.</p>
 <p>Run Instructions:</p>
@@ -478,11 +512,12 @@ run sample: widgets-StyleSheet<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-stylesheet.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Tablet" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Tablet" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 When you use a tablet with Qt applications, QTabletEvents are generated. You need to reimplement the tabletEvent() event handler if you want to handle tablet events. Events are generated when the device used for drawing enters and leaves the proximity of the tablet (i.e., when it is close but not pressed down on it), when a device is pushed down and released from it, and when a device is moved on the tablet.</p>
 <p>Run Instructions:<br />
@@ -491,11 +526,12 @@ run sample: widgets-Tablet<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-tablet.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Tetrix" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Tetrix" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Tetrix example is a Qt version of the classic Tetrix game.<br />
 The object of the game is to stack pieces dropped from the top of the playing area so that they fill entire rows at the bottom of the playing area.<br />
@@ -508,11 +544,12 @@ run sample: widgets-Tetrix<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-tetrix.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_ToolTips" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_ToolTips" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Tool Tips example shows how to provide static and dynamic tool tips for an application's widgets.<br />
 The simplest and most common way to set a widget's tool tip is by calling its QWidget::setToolTip() function (static tool tips). Then the tool tip is shown whenever the cursor points at the widget. We show how to do this with our application's tool buttons. But it is also possible to show different tool tips depending on the cursor's position (dynamic tooltips). This approach uses mouse tracking and event handling to determine what widgets are located under the cursor at any point in time, and displays their tool tips. The tool tips for the shape items in our application are implemented using the latter approach.</p>
@@ -522,11 +559,12 @@ run sample: widgets-ToolTips<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-tooltips.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Wiggly" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_Wiggly" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Wiggly example shows how to animate a widget using QBasicTimer and timerEvent(). In addition, the example demonstrates how to use QFontMetrics to determine the size of text on screen.<br />
 QBasicTimer is a low-level class for timers. Unlike QTimer, QBasicTimer doesn't inherit from QObject; instead of emitting a timeout() signal when a certain amount of time has passed, it sends a QTimerEvent to a QObject of our choice. This makes QBasicTimer a more lightweight alternative to QTimer. Qt's built-in widgets use it internally, and it is provided in Qt's API for highly-optimized applications (e.g., Qt for Embedded Linux applications).</p>
@@ -536,11 +574,12 @@ run sample: widgets-Wiggly<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-wiggly.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_WindowFlags" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_widget_WindowFlags" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Window Flags example shows how to use the window flags available in Qt.<br />
 A window flag is either a type or a hint. A type is used to specify various window-system properties for the widget. A widget can only have one type, and the default is Qt::Widget. However, a widget can have zero or more hints. The hints are used to customize the appearance of top-level windows.</p>
@@ -550,11 +589,12 @@ run sample: widgets-WindowFlags<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/widgets-windowflags.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_animation_AnimatedTiles" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_animation_AnimatedTiles" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Animated Tiles example animates items in a graphics scene.<br />
 <br />
@@ -565,11 +605,12 @@ run sample: widgets-AnimatedTiles<br />
 Pass/Fail Criteria:<br />
 App started and animation works like this:</p>
 <p>http://doc.qt.nokia.com/4.6/animation-animatedtiles.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_animation_appchooser" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_animation_appchooser" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Application Chooser example shows how to use the Qt state machine and the animation framework to select between applications.<br />
 Run Instructions:<br />
@@ -579,11 +620,12 @@ run sample: animation-appchooser<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/animation-appchooser.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_animation_EasingCurves" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_animation_EasingCurves" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Easing Curves example shows how to use easing curves to control the speed of an animation.</p>
 <p><br />
@@ -594,11 +636,12 @@ run sample: animation-easing<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/animation-easing.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_animation_MoveBlocks" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_animation_MoveBlocks" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 <br />
 The Move Blocks example shows how to animate items in a QGraphicsScene using a QStateMachine with a custom transition.<br />
 The example animates the blue blocks that you can see in the image above. The animation moves the blocks between four preset positions.</p>
@@ -609,11 +652,12 @@ run sample: animation-moveblocks<br />
 Pass/Fail Criteria:<br />
 <br />
 http://doc.qt.nokia.com/4.6/animation-moveblocks.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_animation_StateMachine" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_animation_StateMachine" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 Qt provides a powerful hierarchical finite state machine through the Qt State Machine classes.<br />
 These examples demonstrate the fundamental aspects of implementing Statecharts with Qt.</p>
 <p>Run Instructions:<br />
@@ -622,11 +666,12 @@ run sample: examples-statemachine<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/examples-statemachine.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_animation_Stickman" manual="true" timeout="90" insignificant="false">
-	<description><![CDATA[<br /><p>Purpose:<br />
+<case name="qt_animation_Stickman" manual="true" timeout="90" type="Functional positive">
+	<description><![CDATA[<p>&nbsp;</p>
+<p>Purpose:<br />
 The Stickman example shows how to animate transitions in a state machine to implement key frame animations.<br />
 In this example, we will write a small application which animates the joints in a skeleton and projects a stickman figure on top. The stickman can be either &quot;alive&quot; or &quot;dead&quot;, and when in the &quot;alive&quot; state, he can be performing different actions defined by key frame animations.</p>
 <p><br />
@@ -636,11 +681,12 @@ run sample: animation-stickman<br />
 &nbsp;<br />
 Pass/Fail Criteria:<br />
 http://doc.qt.nokia.com/4.6/animation-stickman.html</p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_Anchorlayout" manual="true" timeout="90" insignificant="false">
+<case name="qt_gfxview_Anchorlayout" manual="true" timeout="90" type="Functional positive">
 	<description><![CDATA[<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p>Purpose:<br />
 <br />
 The Anchor Layout example demonstrates the use of the <a href="http://doc.qt.nokia.com/4.7/qgraphicsanchorlayout.html">QGraphicsAnchorLayout</a> class.</p>
@@ -650,11 +696,12 @@ yum install qtdemos<br />
 run sample: graphicsview-anchorlayout&nbsp;<br />
 Pass/Fail Criteria:<br />
 <a href="http://doc.qt.nokia.com/4.7/graphicsview-anchorlayout.html">http://doc.qt.nokia.com/4.7/graphicsview-anchorlayout.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_gfxview_Basicgraphicslayouts" manual="true" timeout="90" insignificant="false">
+<case name="qt_gfxview_Basicgraphicslayouts" manual="true" timeout="90" type="Functional positive">
 	<description><![CDATA[<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p>Purpose:<br />
 <br />
 The Basic Graphics Layouts example shows how to use the layout classes in <a href="http://doc.qt.nokia.com/4.7/qgraphicsview.html">QGraphicsView</a>: <a href="http://doc.qt.nokia.com/4.7/qgraphicslinearlayout.html">QGraphicsLinearLayout</a> and <a href="http://doc.qt.nokia.com/4.7/qgraphicsgridlayout.html">QGraphicsGridLayout</a>. In addition to that it shows how to write your own custom layout item.</p>
@@ -665,11 +712,12 @@ run sample: graphicsview-basicgraphicslayouts<br />
 Pass/Fail Criteria:<br />
 <br />
 <a href="http://doc.qt.nokia.com/4.7/graphicsview-basicgraphicslayouts.html">http://doc.qt.nokia.com/4.7/graphicsview-basicgraphicslayouts.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 
-<case name="qt_widget_Validators" manual="true" timeout="90" insignificant="false">
+<case name="qt_widget_Validators" manual="true" timeout="90" type="Functional positive">
 	<description><![CDATA[<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p>Purpose:<br />
 <br />
 The Validators example shows the signal emission behavior of input validators.</p>
@@ -678,7 +726,7 @@ yum install qtdemos<br />
 run sample: widgets-validators<br />
 Pass/Fail Criteria:<br />
 <a href="http://doc.qt.nokia.com/4.7/widgets-validators.html">http://doc.qt.nokia.com/4.7/widgets-validators.html</a></p>]]></description>
-<step expected_result="0" manual="true"><![CDATA[Can pass the Criteria in the description?]]></step>
+<step expected_result="0" manual="true">Can pass the Criteria in the description?</step>
 </case>
 </set>
 </suite>
