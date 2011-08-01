@@ -20,15 +20,15 @@
   <suite name="blts-input-devices-tests" domain="Graphics">
     <set name="input-devices-tests" feature="Input Adaptation">
       <case name="Input - Enumerate devices"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Enumerate_devices.log -e 1</step>
       </case>
       <case name="Input - Single touch"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Single_touch.log -e 2</step>
       </case>
       <case name="Input - Multi-touch"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Multi-touch.log -e 3</step>
       </case>
 
