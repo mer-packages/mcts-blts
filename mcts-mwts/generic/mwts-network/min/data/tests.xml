@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <testdefinition version="0.1">
  <suite domain="Networking" name="mwts-network-scripts">
-  <set description="Networking functionality" type="Functional" name="FUTE-WLAN">
+  <set description="Networking functionality" type="Functional positive" name="FUTE-WLAN">
    <case description="Purpose: Test scanning wlan access points&#xa;      Method: Bring wlan interface up and do a scan via bearer management &#xa;      Pre/Post-Conditions: none&#xa;      Pass/Fail Criteria: Access points are found if any, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="FUTE-WLAN-Scan">
     <step>min -c -t 'FUTE-WLAN-Scan'</step>
    </case>
@@ -78,7 +78,7 @@
     <step>min -c -t 'FUTE-WLAN-Tethering_off'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Functional" name="FUTE-PSD">
+  <set description="Networking functionality" type="Functional positive" name="FUTE-PSD">
    <case description="Purpose: Test connecting to a psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network &#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to psd network is made, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="FUTE-PSD-Connect">
     <step>min -c -t 'FUTE-PSD-Connect'</step>
    </case>
@@ -95,7 +95,7 @@
     <step>min -c -t 'FUTE-PSD-3G_Upload_10M_file'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Functional" name="DATAFLOW-PSD">
+  <set description="Networking functionality" type="Functional positive" name="DATAFLOW-PSD">
    <case description="Purpose: Test downloading 2.5M file via 2g psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network, change RAT mode to 2g, download 2.5M file via ftp&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to psd network is made, file is downloaded test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="DATAFLOW-PSD-2g_Download_2.5M_file">
     <step>min -c -t 'DATAFLOW-PSD-2g_Download_2.5M_file'</step>
    </case>
@@ -115,7 +115,7 @@
     <step>min -c -t 'DATAFLOW-PSD-3g_Upload_10M_file'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Functional" name="DATAFLOW-WLAN">
+  <set description="Networking functionality" type="Functional positive" name="DATAFLOW-WLAN">
    <case description="Purpose: Test wlan scan&#xa;      Method: Bring up wlan interface and do a wlan ap scan &#xa;      Pre/Post-Conditions: &#xa;      Pass/Fail Criteria: scan is made, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="DATAFLOW-WLAN-Scan">
     <step>min -c -t 'DATAFLOW-WLAN-Scan'</step>
    </case>
@@ -138,17 +138,17 @@
     <step>min -c -t 'DATAFLOW-WLAN-Download_100k_http'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Iterative" name="NFT-PSD-Robustness">
-   <case description="Purpose: Test download troughput with EDGE psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to EDGE network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-EDGE_Download_throughput-THRO">
+  <set description="Networking functionality" type="Reliability" name="NFT-PSD-Robustness">
+   <case description="Purpose: Test download troughput with EDGE psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to EDGE network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-EDGE_Download_throughput-THRO" type="Performance">
     <step>min -c -t 'NFT-PSD-EDGE_Download_throughput-THRO'</step>
    </case>
-   <case description="Purpose: Test upload troughput with EDGE psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to EDGE network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-EDGE_Upload_throughput-THRO">
+   <case description="Purpose: Test upload troughput with EDGE psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to EDGE network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-EDGE_Upload_throughput-THRO" type="Performance">
     <step>min -c -t 'NFT-PSD-EDGE_Upload_throughput-THRO'</step>
    </case>
-   <case description="Purpose: Test download troughput with 3.5g psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to 3.5g network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-HSDPA_Download_throughput-THRO">
+   <case description="Purpose: Test download troughput with 3.5g psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to 3.5g network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-HSDPA_Download_throughput-THRO" type="Performance">
     <step>min -c -t 'NFT-PSD-HSDPA_Download_throughput-THRO'</step>
    </case>
-   <case description="Purpose: Test upload troughput with 3.5g psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to 3.5g network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-HSUPA_Upload_throughput-THRO">
+   <case description="Purpose: Test upload troughput with 3.5g psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Measure troughput with iperf&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to 3.5g network is made, troughput is measured and test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-HSUPA_Upload_throughput-THRO" type="Performance">
     <step>min -c -t 'NFT-PSD-HSUPA_Upload_throughput-THRO '</step>
    </case>
    <case description="Purpose: Test downloading file via 3g psd network&#xa;      Method: Bring up gprs0 interface and create connection to PSD network. Download file from ftp server &#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, file is downloaded, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="300" name="NFT-PSD-3g_Download_file_1M-ITER">
@@ -206,7 +206,7 @@
     <step>min -c -t 'NFT-PSD-Upload_file_large_2g-ITER'</step>
    </case>
   </set>
-  <set description="Networking performance" type="Throughput" name="NFT-PSD-Performance">
+  <set description="Networking performance" type="Performance" name="NFT-PSD-Performance">
    <case description="Purpose: Test upload troughput file via 3g psd network&#xa;      Method: Iperf network tool is used to measure the performance, the test case makes 7 iterations and one iteration takes 180 seconds.&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, iperf client executed, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="NFT-PSD-3g_Upload_throughput-THRO">
     <step>min -c -t 'NFT-PSD-3g_Upload_throughput-THRO'</step>
    </case>
@@ -226,7 +226,7 @@
     <step>min -c -t 'NFT-PSD-dual_Download_throughput-THRO'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Long lasting" name="NFT-PSD-LOLA">
+  <set description="Networking functionality" type="Reliability" name="NFT-PSD-LOLA">
    <case description="Purpose: Test upload 2 hour upload troughput via 3g psd network&#xa;      Method: Iperf network tool is used to measure the performance, the test measures for 2 hours.&#xa;      Pre/Post-Conditions: SIM card is inserted &#xa;      Pass/Fail Criteria: connection to psd network is made, RAT mode is changed to 3g, iperf client executed 2 hours, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="NFT-PSD-3g_Upload-LOLA">
     <step>min -c -t 'NFT-PSD-3g_Upload-LOLA'</step>
    </case>
@@ -234,7 +234,7 @@
     <step>min -c -t 'NFT-PSD-3g_Download-LOLA'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Iterative" name="NFT-WLAN-Robustness">
+  <set description="Networking functionality" type="Reliability" name="NFT-WLAN-Robustness">
    <case description="Purpose: Test iterative wlan scan&#xa;      Method: Scans wlan access points via libbearer &#xa;      Pre/Post-Conditions: &#xa;      Pass/Fail Criteria: scan is made, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="NFT-WLAN-Scan-ITER">
     <step>min -c -t 'NFT-WLAN-Scan-ITER'</step>
    </case>
@@ -344,7 +344,7 @@
     <step>min -c -t 'NFT-WLAN-Connect_idle_disconnect'</step>
    </case>
   </set>
-  <set description="Networking performance" type="Throughput" name="NFT-WLAN-Performance">
+  <set description="Networking performance" type="Performance" name="NFT-WLAN-Performance">
    <case description="Purpose: Test unsecured connection upload throughput&#xa;      Method: Iperf network tool is used to measure the performance, the test case makes 7 iterations and one iteration takes 180 seconds.&#xa;      Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to ap made, measurements are done, test does not crash &#xa;      References: &#xa;      Required test data: None." timeout="10" name="NFT-WLAN-Upload_throughput-THRO">
     <step>min -c -t 'NFT-WLAN-Upload_throughput-THRO'</step>
    </case>
@@ -370,7 +370,7 @@
     <step>min -c -t 'NFT-WLAN-Download_throughput_WPA2aes-THRO'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Latency" name="NFT-WLAN-LATE">
+  <set description="Networking functionality" type="Performance" name="NFT-WLAN-LATE">
    <case description="Purpose: tests connection creation latency with unsaved and unsecured ap&#xa;        Method: Connection is made, latency is measured&#xa;        Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="10" name="NFT-WLAN-Connect_unsaved-LATE">
     <step>min -c -t 'NFT-WLAN-Connect_unsaved-LATE'</step>
    </case>
@@ -411,7 +411,7 @@
     <step>min -c -t 'NFT-WLAN-Application_link_opening_time-LATE'</step>
    </case>
   </set>
-  <set description="Networking functionality" type="Long lasting" name="NFT-WLAN-LOLA">
+  <set description="Networking functionality" type="Reliability" name="NFT-WLAN-LOLA">
    <case description="Purpose: Test upload 2 hour upload troughput via wlan connection&#xa;        Method: Iperf network tool is used to measure the performance, the test measures for 2 hours.&#xa;        Pre/Post-Conditions: &#xa;        Pass/Fail Criteria: connection to wlan ap is made, iperf client executed 2 hours, test does not crash &#xa;        References: &#xa;        Required test data: None." timeout="10" name="NFT-WLAN-Upload_throughput-LOLA">
     <step>min -c -t 'NFT-WLAN-Upload_throughput-LOLA'</step>
    </case>
