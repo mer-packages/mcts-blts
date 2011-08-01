@@ -21,35 +21,35 @@
   <suite name="blts-fbdev-tests" domain="Display">
     <set name="framebuffer-tests" feature="Framebuffer">
       <case name="Core-Framebuffer read frame buffer information with ioctl"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_read_frame_buffer_info.log -e 1</step>
       </case>
       <case name="Core-Framebuffer set blanking levels"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_set_blanking_levels.log -e 2</step>
       </case>
       <case name="Core-Framebuffer 1-pixel uncached read"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_1-pixel_uncached_read.log -e 3</step>
       </case>
       <case name="Core-Framebuffer 1-pixel uncached write"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_1-pixel_uncached_write.log -e 4</step>
       </case>
       <case name="Core-Framebuffer 1-pixel uncached modify"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_1-pixel_uncached_modify.log -e 5</step>
       </case>
       <case name="Core-Framebuffer fullscreen buffer read"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_fullscreen_buffer_reead.log -e 6</step>
       </case>
       <case name="Core-Framebuffer fullscreen buffer write"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_fullscreen_buffer_write.log -e 7</step>
       </case>
       <case name="Core-Framebuffer fullscreen buffer modify"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_fullscreen_buffer_modify.log -e 8</step>
       </case>
       <get>
@@ -65,15 +65,15 @@
     </set>
     <set name="backlight-tests" feature="Backlight">
       <case name="Core-Backlight verify backlight levels"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Backlight_verify_backlight_levels.log -e 9</step>
       </case>
       <case name="Core-Backlight linear backlight level changes"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Backlight_linear_backlight_level_changes.log -e 10</step>
       </case>
       <case name="Core-Backlight logarithmic backlight level changes"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Backlight_logarithmic_backlight_level_changes.log -e 11</step>
       </case>
       <get>
