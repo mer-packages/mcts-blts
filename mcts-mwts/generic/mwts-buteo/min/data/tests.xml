@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
   <suite name="mwts-buteo-tests" domain="System">
-    <set name="FUTE-Buteo" feature="Sync" type="Functional">
+    <set name="FUTE-Buteo" feature="Sync" type="Functional positive">
       <case name="FUTE-Buteo_list_profiles" timeout="10" description=
         "Purpose:
 	Lists available sync profiles
@@ -207,7 +207,7 @@
       </case>
     </set>
 
-    <set name="NFT-Buteo" feature="Sync" type="Iterative">
+    <set name="NFT-Buteo" feature="Sync" type="Reliability">
       <case name="FUTE-Buteo_sync_bt-ITER" timeout="120" description=
         "Purpose:
 	Iterative sync with bluetooth profile
@@ -271,7 +271,7 @@
       </case>
     </set>
 
-    <set name="NFT-Buteo-LATE" feature="Sync" type="Latency">
+    <set name="NFT-Buteo-LATE" feature="Sync" type="Performance">
       <case name="FUTE-Buteo_sync_bt-LATE" timeout="160" description=
         "Purpose:
 	Syncs with bluetooth profile. Measures sync latency.
