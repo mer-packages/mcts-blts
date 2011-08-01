@@ -4,7 +4,7 @@
 
 
 <!--This set contains test cases from mwts-bluetooth.cfg-->
-    <set name="Functional_Tests" description="Functional and Dataflow test cases for Bluetooth" feature="BT" type="Functional">
+    <set name="Functional_Tests" description="Functional and Dataflow test cases for Bluetooth" feature="BT" type="Functional positive">
       <case name="FUTE-BT-Basic_lookup" subfeature="Scan" timeout="180" description=
             "Purpose
             Test basic scan functionality of Bluetooth device
@@ -259,7 +259,7 @@
     </set>
 
 <!--This set contains ITERATIVE test cases from mwts-bluetooth-nft.cfg-->
-    <set name="Iterative_Tests" description="Iterative test cases for Bluetooth" feature="BT" type="Iterative">
+    <set name="Iterative_Tests" description="Iterative test cases for Bluetooth" feature="BT" type="Reliability">
       <case name="NFT-BT-Device_Scan_C-ITER" subfeature="Scan" timeout="1800" description=
             "Purpose
             Test basic Bluetooth scan reliability
@@ -367,7 +367,7 @@
   </set>
   
 <!--This set contains THROUGHPUT test cases from mwts-bluetooth-nft.cfg-->
-    <set name="Throughput_Tests" description="Throughput test cases for Bluetooth" feature="BT" type="Throughput">
+    <set name="Throughput_Tests" description="Throughput test cases for Bluetooth" feature="BT" type="Performance">
       <case name="NFT-BT-L2CAP_Send_10MB-THRO-MS" subfeature="Send" timeout="1800" description=
             "Purpose
             Test basic Bluetooth L2CAP Send side performance, master-slave
@@ -556,7 +556,7 @@
       </case>
   </set>
 <!--This set contains LONG-LASTING test cases from mwts-bluetooth-nft.cfg-->
-    <set name="Long_Lasting_Tests" description="Long-Lasting test cases for Bluetooth" feature="BT" type="Long lasting">
+    <set name="Long_Lasting_Tests" description="Long-Lasting test cases for Bluetooth" feature="BT" type="Reliability">
       <case name="NFT-BT-L2CAP_Send_2h-LOLA-MS" subfeature="Send" timeout="7800" description=
             "Purpose
             Test basic Bluetooth L2CAP Send side long-lasting reliability, master-slave
@@ -585,7 +585,7 @@
       </case>
     </set>
 <!--This set contains LATENCY test cases from mwts-bluetooth-nft.cfg-->
-    <set name="Latency_Tests" description="Latency test cases for Bluetooth" feature="BT" type="Latency">
+    <set name="Latency_Tests" description="Latency test cases for Bluetooth" feature="BT" type="Performance">
        <case name="NFT-BT-Power_on-LATE" subfeature="Power" timeout="180" description=
             "Purpose
 	    Test basic power on latency of Bluetooth device. 
