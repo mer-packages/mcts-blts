@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-systeminfo-scripts" domain="System">
 
-    <set name="FUTE-SystemInfo" description="SystemInfo functional test cases" feature="System" type="Functional" >
+    <set name="FUTE-SystemInfo" description="SystemInfo functional test cases" feature="System" type="Functional positive" >
       <case name="FUTE-SystemInfo_BatteryPower" timeout="15" description=
         "Purpose
         Get Device Power type as Battery Power
@@ -34,7 +34,7 @@
       </case>
     </set>
 
-    <set name="NFT-SystemInfo" description="SystemInfo iterative test cases" feature="Settings" type="Iterative" >
+    <set name="NFT-SystemInfo" description="SystemInfo iterative test cases" feature="Settings" type="Reliability" >
       <case name="NFT-FUTE-SystemInfo_BatteryPower-ITER" subfeature="Test" timeout="120" description=
         "Purpose
         Get Device Power type as Battery Power iterative
