@@ -55,7 +55,7 @@
     <set name="usb-tests" feature="USB">
       <case name="USB - Setup host driver"
         subfeature="Initialization"
-        type="Functional"
+        type="Functional positive"
         timeout="1000"
         description="
         Purpose
@@ -82,7 +82,7 @@
 
       <case name="USB - Setup peripheral driver"
         subfeature="Initialization"
-        type="Functional"
+        type="Functional positive"
         timeout="1000"
         description="
         Purpose
@@ -109,7 +109,7 @@
 
       <case name="USB - Read test"
         subfeature="Data transfer"
-        type="Functional"
+        type="Functional positive"
         timeout="1000"
         description="
         Purpose
@@ -136,7 +136,7 @@
 
       <case name="USB - Write test"
         subfeature="Data transfer"
-        type="Functional"
+        type="Functional positive"
         timeout="1000"
         description="
         Purpose
