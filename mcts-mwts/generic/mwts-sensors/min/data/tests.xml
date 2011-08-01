@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-sensors-tests" domain="System">
 
-    <set name="FUTE-Sensors" feature="Sensors" type="Functional">
+    <set name="FUTE-Sensors" feature="Sensors" type="Functional positive">
       <case name="FUTE-Sensors_accelerometer" timeout="15" description=
         "Purpose
         Get values from Accelerometer
@@ -108,7 +108,7 @@
       </case>
     </set>
 
-    <set name="NFT-Sensors" feature="Sensors" type="Iterative">
+    <set name="NFT-Sensors" feature="Sensors" type="Reliability">
        <case name="NFT-Sensors_Accelerometer-ITER" timeout="500" description=
         "Purpose
         Get values from Accelerometer
