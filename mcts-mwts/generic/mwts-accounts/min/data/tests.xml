@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <testdefinition version="0.1">
  <suite domain="System" name="mwts-accounts-tests">
-  <set feature="Accounts" type="Functional" name="FUTE-Accounts">
+  <set feature="Accounts" type="Functional positive" name="FUTE-Accounts">
    <description>Funtional test cases for accouts</description>
    <case description="Purpose:: List accounts created to device&#xa;Method::&#xa;Query accounts-qt api for list of accounts&#xa;Pre/Post-conditions::&#xa;Pass/Fail Criteria:&#xa;test runs successfully, test does not crash&#xa;        " timeout="10" name="FUTE-Accounts_list">
     <step>min -c -t 'FUTE-Accounts_list'</step>
