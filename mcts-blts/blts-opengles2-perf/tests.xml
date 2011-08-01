@@ -21,22 +21,22 @@
     <set name="gles2-smoke" feature="OpenGL ES 2">
       <case name="OpenGL-Enumerate GL extensions"
         description="Lists all GL extensions"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Enumerate_GL_extensions.log -en "OpenGL-Enumerate GL extensions"</step>
       </case>
       <case name="OpenGL-Enumerate EGL extensions"
         description="Lists all EGL extensions"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Enumerate_EGL_extensions.log -en "OpenGL-Enumerate EGL extensions"</step>
       </case>
       <case name="OpenGL-Enumerate EGL configs"
         description="Lists all EGL configurations"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Enumerate_EGL_configs.log -en "OpenGL-Enumerate EGL configs"</step>
       </case>
       <case name="OpenGL-Simple triangle"
         description="Draws simple three vertex rotating triangle"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Simple_triangle.log -en "OpenGL-Simple triangle"</step>
       </case>
       <get>
@@ -50,7 +50,7 @@
     <set name="benchmarks" feature="OpenGL ES 2">
       <case name="OpenGL-Simple blit"
         description="Draw large textured planes"
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Simple_blit.log -en "OpenGL-Simple blit" -csv /var/log/tests/OpenGL-Simple_blit.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Simple_blit.csv</file>
@@ -58,7 +58,7 @@
       </case>
       <case name="OpenGL-Blit with blend"
         description="Draw large textured planes. Multiple layers with blend."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend.log -en "OpenGL-Blit with blend" -csv /var/log/tests/OpenGL-Blit_with_blend.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend.csv</file>
@@ -66,7 +66,7 @@
       </case>
       <case name="OpenGL-Blit with blend and widgets"
         description="Draw large textured planes. Multiple layers with blend. Draw 'widgets' on the topmost plane."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_widgets.log -en "OpenGL-Blit with blend and widgets" -csv /var/log/tests/OpenGL-Blit_with_blend_and_widgets.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_widgets.csv</file>
@@ -74,7 +74,7 @@
       </case>
       <case name="OpenGL-Blit with blend and widgets with shadows"
         description="Draw large textured planes. Multiple layers with blend. Draw 'widgets' on the topmost plane. Each widget has a shadow."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows.log -en "OpenGL-Blit with blend and widgets with shadows" -csv /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows.csv</file>
@@ -82,7 +82,7 @@
       </case>
       <case name="OpenGL-Blit with blend and widgets with shadows + particles"
         description="Draw large textured planes. Multiple layers with blend. Draw 'widgets' on the topmost plane. Each widget has a shadow. Add particles to each widget."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles.log -en "OpenGL-Blit with blend and widgets with shadows + particles" -csv /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles.csv</file>
@@ -90,7 +90,7 @@
       </case>
       <case name="OpenGL-Blit with blend and widgets with shadows + particles + rotate"
         description="Draw large textured planes. Multiple layers with blend. Draw 'widgets' on the topmost plane. Each widget has a shadow. Add particles to each widget. Rotate the entire scene."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate.log -en "OpenGL-Blit with blend and widgets with shadows + particles + rotate" -csv /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate.csv</file>
@@ -98,7 +98,7 @@
       </case>
       <case name="OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom"
         description="Draw large textured planes. Multiple layers with blend. Draw 'widgets' on the topmost plane. Each widget has a shadow. Add particles to each widget. Rotate and zoom the entire scene."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate_+_zoom.log -en "OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom" -csv /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate_+_zoom.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate_+_zoom.csv</file>
@@ -106,7 +106,7 @@
       </case>
       <case name="OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom and blur all"
         description="Draw large textured planes. Multiple layers with blend. Draw 'widgets' on the topmost plane. Each widget has a shadow. Add particles to each widget. Rotate and zoom the entire scene. Add blur."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate_+_zoom_and_blur_all.log -en "OpenGL-Blit with blend and widgets with shadows + particles + rotate + zoom and blur all" -csv /var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate_+_zoom_and_blur_all.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_widgets_with_shadows_+_particles_+_rotate_+_zoom_and_blur_all.csv</file>
@@ -114,7 +114,7 @@
       </case>
       <case name="OpenGL-Blit with blend and animated widgets with shadows"
         description="Draw large textured planes. Multiple layers with blend. Draw animated 'widgets' on the topmost plane. Each widget has a shadow."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Blit_with_blend_and_animated_widgets_with_shadows.log -en "OpenGL-Blit with blend and animated widgets with shadows" -csv /var/log/tests/OpenGL-Blit_with_blend_and_animated_widgets_with_shadows.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Blit_with_blend_and_animated_widgets_with_shadows.csv</file>
@@ -122,7 +122,7 @@
       </case>
       <case name="OpenGL-Polygons-per-second"
         description="Synthetic test. Draws a one million triangle sphere."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Polygons-per-second.log -en "OpenGL-Polygons-per-second" -csv /var/log/tests/OpenGL-Polygons-per-second.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Polygons-per-second.csv</file>
@@ -130,7 +130,7 @@
       </case>
       <case name="OpenGL-Fillrate test"
         description="Synthetic test. Fills a plane with changing color."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Fillrate_test.log -en "OpenGL-Fillrate test" -csv /var/log/tests/OpenGL-Fillrate_test.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Fillrate_test.csv</file>
@@ -138,7 +138,7 @@
       </case>
       <case name="OpenGL-Texels-per-second"
         description="Synthetic test. Fills a plane with big texture."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Texels-per-second.log -en "OpenGL-Texels-per-second" -csv /var/log/tests/OpenGL-Texels-per-second.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Texels-per-second.csv</file>
@@ -146,7 +146,7 @@
       </case>
       <case name="OpenGL-Fragment shader performance"
         description="Synthetic test. Calculates and draws a mandelbrot set with waves on fragment shader."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Fragment_shader_performance.log -en "OpenGL-Fragment shader performance" -csv /var/log/tests/OpenGL-Fragment_shader_performance.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Fragment_shader_performance.csv</file>
@@ -154,7 +154,7 @@
       </case>
       <case name="OpenGL-Vertex shader performance"
         description="Synthetic test. Uses a heavy algorithm to deform a plane to wavy ball."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Vertex_shader_performance.log -en "OpenGL-Vertex shader performance" -csv /var/log/tests/OpenGL-Vertex_shader_performance.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Vertex_shader_performance.csv</file>
@@ -162,7 +162,7 @@
       </case>
       <case name="OpenGL-Convolution filter"
         description="Configurable, generic convolution filter test."
-        type="Benchmark">
+        type="Performance">
         <step>/usr/bin/blts-opengles2-tests -l /var/log/tests/OpenGL-Convolution_filter.log -en "OpenGL-Convolution filter" -csv /var/log/tests/OpenGL-Convolution_filter.csv</step>
 	<get>
           <file measurement="true">/var/log/tests/OpenGL-Convolution_filter.csv</file>
