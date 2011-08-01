@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.2">
   <suite name="mwts-telepathy-scripts" domain="Communication" level="Feature">
-    <set name="VoIP-FuTe" description="VoIP functional test cases" feature="VoIP" type="Functional">
+    <set name="VoIP-FuTe" description="VoIP functional test cases" feature="VoIP" type="Functional positive">
       <case name="FUTE-VoIP-Create_GTalk_call-MS" subfeature="GTalk" timeout="360" description=
 	      "Purpose
 	      Test creating a VoIP call using GTalk.
@@ -231,7 +231,7 @@
         <step>min -c -t 'FUTE-VoIP-Create_SIP_call_with_DTMF-MS'</step>
       </case>
     </set>
-    <set name="VoIP-LATE" description="VoIP latency test cases" feature="VoIP" type="Latency">
+    <set name="VoIP-LATE" description="VoIP latency test cases" feature="VoIP" type="Performance">
       <case name="NFT-VoIP-Latency_for_creating_GTalk_call-MS-LATE" subfeature="GTalk" timeout="360" description=
 	      "Purpose
 	      Test creating a VoIP call using GTalk and measure latency.
@@ -305,7 +305,7 @@
       	<step>min -c -t 'NFT-IM-Send_IM_message_using_SIP-MS-LATE'</step>
       </case>
     </set>
-    <set name="VoIP-ITER" description="VoIP iterative test cases" feature="VoIP" type="Iterative">
+    <set name="VoIP-ITER" description="VoIP iterative test cases" feature="VoIP" type="Reliability">
       <case name="NFT-VoIP-Answer_GTalk_call-ITER-MS" subfeature="GTalk" timeout="360" description=
 	      "Purpose
 	      Test iterative answering to VoIP call using GTalk.
@@ -379,7 +379,7 @@
       	<step>min -c -t 'NFT-IM-Send_IM_using_SIP-ITER-MS'</step>
       </case>
     </set>
-    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Long lasting">
+    <set name="VoIP-LOLA" description="VoIP long lasting test cases" feature="VoIP" type="Reliability">
       <case name="NFT-VoIP-Create_GTalk_call-LOLA-MS" subfeature="GTalk" timeout="360" description=
 	      "Purpose
 	      Test creating long lasting VoIP call.
