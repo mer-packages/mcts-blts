@@ -21,59 +21,59 @@
   <suite name="blts-v4l2-tests" domain="Multimedia">
     <set name="camera-cases-basic" feature="Imaging and Video Adaptation">
       <case name="Core-Camera-Open device"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Open_device.log -en "Core-Camera-Open device"</step>
       </case>
       <case name="Core-Camera-Read device"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Read_device.log -en "Core-Camera-Read device"</step>
       </case>
       <case name="Core-Camera-Check device controls"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Check_device_controls.log -en "Core-Camera-Check device controls"</step>
       </case>
       <case name="Core-Camera-Check device capabilites"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Check_device_capabilites.log -en "Core-Camera-Check device capabilites"</step>
       </case>
       <case name="Core-Camera-Check device formats"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Check_device_formats.log -en "Core-Camera-Check device formats"</step>
       </case>
       <case name="Core-Camera-Measure device stepping down resolution"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Measure_device_stepping_down_resolution.log -en "Core-Camera-Measure device stepping down resolution"</step>
       </case>
       <case name="Core-Camera-Measure device FPS with defined resolution"
-        type="Functional">
+        type="Performance">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Measure_device_FPS_with_defined_resolution.log -en "Core-Camera-Measure device FPS with defined resolution"</step>
       </case>
       <case name="Core-Camera-Device enumeration"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Device_enumeration.log -en "Core-Camera-Device enumeration"</step>
       </case>
       <case name="Core-Camera-Check debug capability"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Check_debug_capability.log -en "Core-Camera-Check debug capability"</step>
       </case>
       <case name="Core-Camera-Select input and stream"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Select_input_and_stream.log -en "Core-Camera-Select input and stream"</step>
       </case>
       <case name="Core-Camera-Select output and stream"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Select_output_and_stream.log -en "Core-Camera-Select output and stream"</step>
       </case>
       <case name="Core-Camera-Test input device standards"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Test_input_device_standards.log -en "Core-Camera-Test input device standards"</step>
       </case>
       <case name="Core-Camera-Check device FD priority"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Check_device_FD_priority.log -en "Core-Camera-Check device FD priority"</step>
       </case>
       <case name="Core-Camera-Get stream quality setting"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Get_stream_quality_setting.log -en "Core-Camera-Get stream quality setting"</step>
       </case>
 
@@ -96,35 +96,35 @@
     </set>
     <set name="camera-cases-imaging" feature="Imaging and Video Adaptation">
       <case name="Core-Camera-Stream from device to screen"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Stream_from_device_to_screen.log -en "Core-Camera-Stream from device to screen"</step>
       </case>
       <case name="Core-Camera-Take picture as JPEG with device"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Take_picture_as_JPEG_with_device.log -en "Core-Camera-Take picture as JPEG with device"</step>
       </case>
       <case name="Core-Camera-Stream from device and crop corners"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Stream_from_device_and_crop_corners.log -en "Core-Camera-Stream from device and crop corners"</step>
       </case>
       <case name="Core-Camera-Read from device using poll"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Read_from_device_using_poll.log -en "Core-Camera-Read from device using poll"</step>
       </case>
       <case name="Core-Camera-Test standard control settings"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Test_standard_control_settings.log -en "Core-Camera-Test standard control settings"</step>
       </case>
       <case name="Core-Camera-Test extended control settings"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Test_extended_control_settings.log -en "Core-Camera-Test extended control settings"</step>
       </case>
       <case name="Core-Camera-Stream from device and vary frame rate"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Stream_from_device_and_vary_frame_rate.log -en "Core-Camera-Stream from device and vary frame rate"</step>
       </case>
       <case name="Core-Camera-Set stream quality setting to high"
-        type="Functional">
+        type="Functional positive">
         <step>/usr/bin/blts-v4l2-tests -l /var/log/tests/Core-Camera-Set_stream_quality_setting_to_high.log -en "Core-Camera-Set stream quality setting to high"</step>
       </case>
       <get>
