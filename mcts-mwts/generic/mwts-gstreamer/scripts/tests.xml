@@ -3,7 +3,7 @@
   <suite name="mwts-gstreamer-scripts-audio" domain="Audio">
 
 <!-- Audio local playback test cases from file mwts-multimedia-audio-local.cfg -->
-     <set name="Functional Audio playback" feature="Audio playback" type="Functional">
+     <set name="Functional Audio playback" feature="Audio playback" type="Functional positive">
         <case name="FUTE-Gstreamer-Audio_PCM_8KHz_MONO" description="" >
                 <step>min -c -t "FUTE-Gstreamer-Audio_PCM_8KHz_MONO"</step>
         </case>
@@ -340,7 +340,7 @@
     </set>
 
 <!-- Audio local playback ITERATIVE test cases from file mwts-gstreamer-audio-local-nft.cfg -->
-    <set name="Audio_local_playback_iterative" description="Audio local playback iterative tests" feature="Audio Playback" type="Iterative">
+    <set name="Audio_local_playback_iterative" description="Audio local playback iterative tests" feature="Audio Playback" type="Reliability">
       <case name="NFT-GstLocalPlayback-Audio_MP3-ITER" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -470,7 +470,7 @@
     </set>
 
 <!-- Audio local playback Long-lasting test cases from file mwts-gstreamer-audio-local-nft.cfg -->
-    <set name="Audio_local_playback_long-lasting" description="Audio local playback long-lasting tests" feature="Audio Playback" type="Long lasting" >
+    <set name="Audio_local_playback_long-lasting" description="Audio local playback long-lasting tests" feature="Audio Playback" type="Reliability" >
       <case name="NFT-GstLocalPlayback-Audio_MP3-LOLA" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -502,7 +502,7 @@
     </set>
 
 <!-- Audio streaming playback ITERATIVE test cases from file mwts-gstreamer-audio-streaming-nft.cfg -->
-    <set name="Audio_Streaming_iterative" description="Audio streaming iterative tests" feature="Audio Playback" type="Iterative">
+    <set name="Audio_Streaming_iterative" description="Audio streaming iterative tests" feature="Audio Playback" type="Reliability">
       <case name="NFT-GstStreaming-Audio_MP3_HTTP-ITER" subfeature="Streaming" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -646,7 +646,7 @@
     </set>
 
 <!-- Audio streaming playback Long-lasting test cases from file mwts-gstreamer-audio-streaming-nft.cfg -->
-    <set name="Audio_streaming_long-lasting" description="Audio streaming long-lasting tests" feature="Audio Playback" type="Long lasting" >
+    <set name="Audio_streaming_long-lasting" description="Audio streaming long-lasting tests" feature="Audio Playback" type="Reliability" >
       <case name="NFT-GstStreaming-Audio_AAC_RTSP-LOLA" subfeature="Streaming" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -692,7 +692,7 @@
     </set>
 
 <!-- Audio streaming playback FUTE test cases from file mwts-gstreamer-audio-streaming.cfg -->
-    <set name="Audio_Streaming_functional" description="Audio streaming functional tests" feature="Audio Playback" type="Functional">
+    <set name="Audio_Streaming_functional" description="Audio streaming functional tests" feature="Audio Playback" type="Functional positive">
       <case name="FUTE-GStreamer-Stream_HTTP_MP4_MP3_44.1_kHz_192kbs_stereo" subfeature="Streaming" description=
         "Purpose
         Test gstreamer media playing.
@@ -741,7 +741,7 @@
   <suite name="mwts-gstreamer-scripts-video" domain="Visual">
 
     <!-- Video local playback functional test cases from file mwts-gstreamer-video-local.cfg -->
-    <set name="Functional Video playback" feature="Video playback" type="Functional">
+    <set name="Functional Video playback" feature="Video playback" type="Functional positive">
         <case name="FUTE-Gstreamer-Video_MP4_H264_AAC" description="">
           <step>min -c -t "FUTE-Gstreamer-Video_MP4_H264_AAC"</step>
         </case>
@@ -769,7 +769,7 @@
     </set>
 
     <!-- Video local playback ITERATIVE test cases from file mwts-gstreamer-video-local-nft.cfg -->
-    <set name="Video_local_playback_iterative" description="Video local playback iterative tests" feature="Video Playback" type="Iterative" >
+    <set name="Video_local_playback_iterative" description="Video local playback iterative tests" feature="Video Playback" type="Reliability" >
       <case name="NFT-GstLocalPlayback-Video_3GP_h263_QCIF_AAC-ITER" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -899,7 +899,7 @@
     </set>
 
 <!-- Video local playback Long-lasting test cases from file mwts-gstreamer-video-local-nft.cfg -->
-    <set name="Video_local_playback_long-lasting" description="Video local playback long-lasting tests" feature="Video Playback" type="Long lasting" >
+    <set name="Video_local_playback_long-lasting" description="Video local playback long-lasting tests" feature="Video Playback" type="Reliability" >
       <case name="NFT-GstLocalPlayback-Video_h264-LOLA" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -931,7 +931,7 @@
     </set>
 
 <!-- Video streaming playback ITERATIVE test cases from file mwts-gstreamer-video-streaming-nft.cfg -->
-    <set name="Video_streaming_iterative" description="Video streaming iterative tests" feature="Video Playback" type="Iterative" >
+    <set name="Video_streaming_iterative" description="Video streaming iterative tests" feature="Video Playback" type="Reliability" >
       <case name="NFT-GstStreaming-Video_3GP_h263_CIF_NoAudio_HTTP-ITER" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -1061,7 +1061,7 @@
     </set>
 
 <!-- Video streaming playback Long-lasting test cases from file mwts-gstreamer-video-streaming-nft.cfg -->
-    <set name="Video_streaming_long-lasting" description="Video streaming long lasting tests" feature="Video Playback" type="Long lasting" >
+    <set name="Video_streaming_long-lasting" description="Video streaming long lasting tests" feature="Video Playback" type="Reliability" >
       <case name="NFT-GstStreaming-Video_h264_HTTP-LOLA" subfeature="Streaming" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -1107,7 +1107,7 @@
     </set>
 
 <!-- Video local playback Framerate test cases from file mwts-multimedia-video-local-nft.cfg -->
-    <set name="Video_local_playback_framerate" description="Video local playback framerate tests" feature="Video Playback" type="Frame rate" >
+    <set name="Video_local_playback_framerate" description="Video local playback framerate tests" feature="Video Playback" type="Performance" >
       <case name="NFT-GstLocalPlayback-Video_3GP_h263_QCIF_AAC-FPS" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -1181,7 +1181,7 @@
     </set>
 
 <!-- Video streaming playback Framerate test cases from file mwts-gstreamer-video-streaming-nft.cfg -->
-    <set name="Video_streaming_playback_framerate" description="Video local playback framerate tests" feature="Video Playback" type="Frame rate" >
+    <set name="Video_streaming_playback_framerate" description="Video local playback framerate tests" feature="Video Playback" type="Performance" >
       <case name="NFT-GstStreaming-Video_3GP_h263_CIF_NoAudio_HTTP-FPS" subfeature="Playback" description=
         "Purpose
         Test gstreamer media playing capabilities.
@@ -1255,7 +1255,7 @@
     </set>
 
 <!-- Video benchmark test cases -->
-     <set name="Video benchmark" feature="Video benchmark" type="Benchmark">
+     <set name="Video benchmark" feature="Video benchmark" type="Performance">
         <case name="NFT-GstLocalPlayback-Video_WMV_WVGA_WMA-BENC" description="" >
                 <step>min -c -t "NFT-GstLocalPlayback-Video_WMV_WVGA_WMA-BENC"</step>
         </case>
