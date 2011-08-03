@@ -6,7 +6,7 @@ BuildRoot:		%{buildroot}
 Summary: 		Mwts-messaging is a test asset for Qt Mobility Messaging
 License: 		LGPL
 Name: 			mwts-messaging
-Version: 		0.0.8
+Version: 		0.0.9
 Release: 		0
 Prefix: 		/usr
 Group: 			Development/Tools
