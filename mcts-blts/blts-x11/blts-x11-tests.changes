@@ -1,3 +1,6 @@
+* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.17
+- Fixes: BMC#17877 - Test types update in MCTS
+
 * Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.16
 - Version update due to packaging change.
 

@@ -20,7 +20,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(blts-x11-tests, 0.0.16, kimmo.myllyvirta@digia.com)
+AC_INIT(blts-x11-tests, 0.0.17, jussi.saavalainen@digia.com)
 AM_INIT_AUTOMAKE([-Wall gnu])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/blts_x11_test.c])
