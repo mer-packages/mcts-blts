@@ -1,3 +1,6 @@
+* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 1.2.6
+- [ Rauno Vartiainen ] Prevent use of unconnected socket in monitor
+
 * Tue 14 Jun 2011 Balazs Sipos <balazs.sipos@digia.com> - 1.2.5
 - Fixes: MB#19137 - [FEA] mwts-common .csv file syntax to support the <series> tag in testrunner
 
