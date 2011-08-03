@@ -1,3 +1,6 @@
+* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.5
+- Fixes: BMC#17877 - Test types update in MCTS
+
 * Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.4
 - [ Kimmo Myllyvirta ] Allow using evdev names for device selection
 - [ Kimmo Myllyvirta ] Use relative touchscreen coordinates instead of pixels

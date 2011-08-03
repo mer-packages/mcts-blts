@@ -1,3 +1,9 @@
+blts-input-devices-tests (0.0.5) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 12:08:17 +0300
+
 blts-input-devices-tests (0.0.4) unstable; urgency=low
   * [ Kimmo Myllyvirta ] Allow using evdev names for device selection
   * [ Kimmo Myllyvirta ] Use relative touchscreen coordinates instead of pixels
