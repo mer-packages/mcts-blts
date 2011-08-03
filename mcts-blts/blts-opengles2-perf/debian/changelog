@@ -1,3 +1,9 @@
+blts-opengles2-tests (0.0.18) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 12:14:14 +0300
+
 blts-opengles2-tests (0.0.17) unstable; urgency=low
 
   * Add CSV measurement result reporting.

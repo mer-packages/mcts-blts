@@ -1,3 +1,6 @@
+* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.18
+- Fixes: BMC#17877 - Test types update in MCTS
+
 * Wed 16 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.17
 - Add CSV measurement result reporting.
 
