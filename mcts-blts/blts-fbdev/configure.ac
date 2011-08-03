@@ -19,7 +19,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([blts-fbdev-tests], [0.0.10], [mika.niinisto@digia.com])
+AC_INIT([blts-fbdev-tests], [0.0.11], [jussi.saavalainen@digia.com])
 AM_INIT_AUTOMAKE([gnu])
 AC_CONFIG_HEADER([config.h])
 
