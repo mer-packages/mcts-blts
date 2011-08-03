@@ -1,3 +1,9 @@
+blts-v4l2-tests (0.3.12) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 12:20:27 +0300
+
 blts-v4l2-tests (0.3.11) unstable; urgency=low
 
   * Add N900 and VIVI configs to example config package.
