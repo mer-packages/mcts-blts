@@ -1,3 +1,9 @@
+mwts-location (0.0.11) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:24:02 +0300
+
 mwts-location (0.0.10) unstable; urgency=low
 
   [ Tuomo Pelkonen ]

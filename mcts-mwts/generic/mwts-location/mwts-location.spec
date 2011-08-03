@@ -7,7 +7,7 @@ BuildRoot:              %{buildroot}
 Summary:                Mwts-location is a test asset for GPS using Qt Mobility location API
 License:                LGPL
 Name:                   mwts-location
-Version:                0.0.10
+Version:                0.0.11
 Release:                %{release}
 Prefix:                 /usr
 Group:                  Development/Tools
