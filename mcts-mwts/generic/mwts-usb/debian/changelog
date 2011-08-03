@@ -1,3 +1,9 @@
+mwts-usb-tests (1.0.5) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:48:56 +0300
+
 mwts-usb-tests (1.0.4) unstable; urgency=low
 
   [ Tuomo Pelkonen ]
