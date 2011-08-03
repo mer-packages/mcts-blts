@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-feedback
 Summary:        Feedback test asset
 License:        LGPL
-Version:        0.0.5
+Version:        0.0.6
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
