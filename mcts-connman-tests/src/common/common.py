@@ -967,7 +967,7 @@ class BTDevice(Device):
 
 class WiFiGuestDevice(WiFiDevice):
 
-    def __init__(self, ssid):
+    def __init__(self, ssid='Guest'):
         WiFiDevice.__init__(self)
         service = Device.GetService(self, self.ssid)
         print 'Now connect...'
