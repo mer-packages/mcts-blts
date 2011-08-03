@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-accounts
 Summary:        Test asset for testing SSO and account management
 License:        LGPL
-Version:        0.0.7
+Version:        0.0.8
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
