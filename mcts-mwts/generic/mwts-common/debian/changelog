@@ -1,3 +1,10 @@
+mwts-common (1.2.6) unstable; urgency=low
+
+  [ Rauno Vartiainen ]
+  * Prevent use of unconnected socket in monitor
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:54:05 +0300
+
 mwts-common (1.2.5) unstable; urgency=low
 
   [ Balazs Sipos ]
