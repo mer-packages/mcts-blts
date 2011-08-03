@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-systeminfo
 Summary:        systeminfo test asset
 License:        LGPL
-Version:        1.0.3
+Version:        1.0.4
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
