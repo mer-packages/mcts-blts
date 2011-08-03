@@ -43,11 +43,10 @@ MwtsMonitorLogger::MwtsMonitorLogger()
 
 	qDebug() << "Connecting to host 192.168.2.14 port 12345";
 	m_pSocket->connectToHost("192.168.2.14", 12345);
-	qDebug() << "Connected";
-
 
 	m_OutputFile.setFileName("/var/log/tests/"+g_pTest->CaseName()+".monitor");
-	if(!m_OutputFile.open(QIODevice::WriteOnly))
+    qDebug() << "Opening monitor output file" << m_OutputFile.fileName();
+    if(!m_OutputFile.open(QIODevice::WriteOnly))
 	{
 		qCritical()<<"Unable to open monitor outputfile " +
 				m_OutputFile.fileName();
@@ -88,7 +87,6 @@ void MwtsMonitorLogger::OnSocketData()
 /** OnNetworkError gets called if a network error occurs*/
 void MwtsMonitorLogger::OnNetworkError(QAbstractSocket::SocketError socketError)
 {
-	MWTS_ENTER;
 	switch (socketError)
 	{
 	case QAbstractSocket::RemoteHostClosedError:
@@ -96,11 +94,11 @@ void MwtsMonitorLogger::OnNetworkError(QAbstractSocket::SocketError socketError)
 		break;
 
 	case QAbstractSocket::HostNotFoundError:
-		qDebug("MwtsMonitor: Could not conect to host");
+        qDebug("MwtsMonitor: Could not connect to host");
 		break;
 
 	case QAbstractSocket::ConnectionRefusedError:
-		qDebug("MwtsMonitor: The connection was refused by the peer.");
+        qDebug("MwtsMonitor: The connection was refused by the peer");
 		break;
 
 	default:
@@ -117,8 +115,12 @@ void MwtsMonitorLogger::Write(QString string)
 	sTime.sprintf("%.3lf", time.elapsed()/1000.0);
 	QString str= sTime+":"+string+"\n";
 
-	m_pSocket->write(str.toAscii().constData());
-	m_pSocket->flush();
+    if(m_pSocket->isValid())
+    {
+        m_pSocket->write(str.toAscii().constData());
+        m_pSocket->flush();
+    }
+
 	m_OutputFile.write(str.toAscii().constData());
 	m_OutputFile.flush();
 }
