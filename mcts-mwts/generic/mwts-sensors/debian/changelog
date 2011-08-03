@@ -1,3 +1,9 @@
+mwts-sensors (1.0.8) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:39:45 +0300
+
 mwts-sensors (1.0.7) unstable; urgency=low
 
   [ Tuomo Pelkonen ]
