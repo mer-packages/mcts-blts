@@ -1,3 +1,9 @@
+blts-watchdog-tests (0.0.10) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 12:22:21 +0300
+
 blts-watchdog-tests (0.0.9) unstable; urgency=low
 
   * Version update due to packaging change.
