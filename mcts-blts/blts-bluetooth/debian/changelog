@@ -1,3 +1,9 @@
+blts-bluetooth-tests (0.2.17) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 11:59:17 +0300
+
 blts-bluetooth-tests (0.2.16) unstable; urgency=low
 
   * Fixes: BMC#17508 - blts-bluetooth fails to bind socket
