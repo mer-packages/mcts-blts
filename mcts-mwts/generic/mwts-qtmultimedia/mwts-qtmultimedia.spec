@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-qtmultimedia
 Summary:        Test asset for Qt Mobility Multimedia API
 License:        LGPL
-Version:        0.1.8
+Version:        0.1.9
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools

@@ -1,3 +1,9 @@
+mwts-qtmultimedia (0.1.9) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:38:11 +0300
+
 mwts-qtmultimedia (0.1.8) unstable; urgency=low
 
   [ Tuomo Pelkonen ]
