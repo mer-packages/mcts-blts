@@ -6,7 +6,7 @@ BuildRoot:		%{buildroot}
 Summary: 		A wlan/psd networking test asset
 License: 		LGPL
 Name: 			mwts-network
-Version: 		1.1.2
+Version: 		1.1.3
 Release: 		0
 Prefix: 		/usr
 Group: 			Testing
