@@ -6,7 +6,7 @@ BuildRoot:      %{buildroot}
 Name:           mwts-template
 Summary:        Template test asset
 License:        LGPL
-Version:        0.0.1
+Version:        0.0.5
 Release:        0
 Prefix:         /usr
 Group:          Development/Tools
