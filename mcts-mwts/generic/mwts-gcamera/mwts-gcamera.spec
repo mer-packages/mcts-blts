@@ -7,7 +7,7 @@ BuildRoot:	%{buildroot}
 Summary: 	Test libraries for camera over gstreamer
 License: 	LGPL
 Name: 		mwts-gcamera
-Version: 	0.0.3
+Version: 	0.0.4
 Release: 	%{release}
 Prefix: 	/usr
 Group: 		Development/Tools
