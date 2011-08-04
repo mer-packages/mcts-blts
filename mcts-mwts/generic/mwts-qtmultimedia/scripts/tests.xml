@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-qtmultimedia-audiorecorder-tests" domain="System">
     <!--This set contains test cases from mwts-qtmultimedia-audiorecorder.cfg-->
-    <set name="Functional test" description="Multimedia audio recording functionality tests" feature="Settings" type="Functional" >
+    <set name="Functional test" description="Multimedia audio recording functionality tests" feature="Settings" type="Functional positive" >
       <case name="FUTE-Multimedia_Record_audio_mono_1channel_48KHZ_256kbs_vorbis" subfeature="Record" timeout="120" description=
         "Purpose
         Test basic recording functionality of the device
@@ -127,7 +127,7 @@
 
   <suite name="mwts-qtmultimedia-imageviewer-tests" domain="Visual">
     <!--This set contains test cases from mwts-qtmultimedia-imageviewer*.cfg-->   
-    <set name="Imageviewing_Reliability" description="Image viewing reliability tests" feature="Still Viewing" type="Iterative" >
+    <set name="Imageviewing_Reliability" description="Image viewing reliability tests" feature="Still Viewing" type="Reliability" >
       <case name="NFT-Imageviewing-Show_1MB_JPG_image-ITER" subfeature="Show" description=
             "Purpose
             Test reading data from memory, using image decoder by standard QT, display image.
@@ -185,7 +185,7 @@
             <step>min -c -t 'NFT-Imageviewing-Show_various_size_PNG_images-ITER'</step>
       </case>
     </set>
-    <set name="Functional test" description="Multimedia image viewining functionality tests" feature="Still Viewing" type="Functional" >
+    <set name="Functional test" description="Multimedia image viewining functionality tests" feature="Still Viewing" type="Functional positive" >
       <case name="FUTE-Imageviewing-Open_1MB_JPG_image" subfeature="Show" description=
             "Purpose
             Test opening and viewing still image(s).
@@ -205,7 +205,7 @@
 
   <suite name="mwts-qtmultimedia-fmradio-tests" domain="System">
     <!--This set contains test cases from mwts-qtmultimedia-fmradio.cfg-->
-    <set name="Functional test" description="Multimedia fm radio functionality tests" feature="Settings" type="Functional" >
+    <set name="Functional test" description="Multimedia fm radio functionality tests" feature="Settings" type="Functional positive" >
       <case name="FUTE-Multimedia_FMRadio_Tune_on_active_frequency" subfeature="" timeout="120" description=
         "Purpose
         Test turning on active frequency
@@ -235,7 +235,7 @@
     </set>
 
     <!--This set contains test cases from mwts-qtmultimedia-fmradio-nft.cfg-->
-    <set name="Non functional test" description="Multimedia fm radio non functional tests" feature="Settings" type="Latency" >
+    <set name="Non functional test" description="Multimedia fm radio non functional tests" feature="Settings" type="Performance" >
       <case name="NFT-FMRadio_Scan_frequency-LATE" subfeature="" timeout="120" description=
         "Purpose
         Test measure how long FM Radio scan takes to scan all radio stations.

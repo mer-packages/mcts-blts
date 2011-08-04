@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
     <!-- Image capturing test cases from file mwts-gcamera.cfg -->
     <suite name="mwts-gcamera-image" domain="Visual">
-    <set name="Functional test" description="Camera image capturing" feature="Settings" type="Functional" >
+    <set name="Functional test" description="Camera image capturing" feature="Settings" type="Functional positive" >
         <case name="FUTE-Take_picture" subfeature="Capture still image" timeout="10" description=
              "Purpose
               Test basic image capturing functionality of the device
@@ -67,7 +67,7 @@
 
     <!-- Video capturing test cases from file mwts-gcamera.cfg -->
     <suite name="mwts-gcamera-video" domain="Visual">
-    <set name="Functional test" description="Camera video capturing" feature="Settings" type="Functional" >
+    <set name="Functional test" description="Camera video capturing" feature="Settings" type="Functional positive" >
         <case name="FUTE-Take_video" subfeature="Capture video" timeout="120" description=
              "Purpose
               Test basic video capturing functionality of the device

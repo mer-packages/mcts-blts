@@ -2,7 +2,7 @@
 <testdefinition version="0.1">
   <suite name="mwts-usb-scripts" domain="Local Connectivity">
 
-    <set name="USB_Performance" description="USB network performance tests" type="Throughput" feature="USB">
+    <set name="USB_Performance" description="USB network performance tests" type="Performance" feature="USB">
       <case name="NFT-USB-Send_throughput-THRO" subfeature="send" timeout="1800" description=
         "Purpose 
         This test case measures USB network throughput from desktop PC to test device.
@@ -126,7 +126,7 @@
     </set>
     
     
-    <set name="USB_Relibiality" description="USB network reliability tests" feature="USB" type="Iterative">
+    <set name="USB_Relibiality" description="USB network reliability tests" feature="USB" type="Reliability">
       <case name="NFT-USB-Send_512kb_file-ITER" subfeature="send" timeout="180" description=
         "Purpose 
         This test case measures USB network reliability from desktop PC to test device.
@@ -177,7 +177,7 @@
       </case>
     </set>
 
-    <set name="USB_LongLasting" description="USB network long-lasting tests" feature="USB" type="Long lasting">
+    <set name="USB_LongLasting" description="USB network long-lasting tests" feature="USB" type="Reliability">
       <case name="NFT-USB-Send_throughput_2h-LOLA" subfeature="send" timeout="600" description=
         "Purpose 
         This test case measures USB network reliability from desktop PC to test device with a long lasting transfer.
@@ -204,7 +204,7 @@
       </case>
     </set>
     
-    <set name="USB_Functional" description="USB network functinal tests" feature="USB" type="Functional">
+    <set name="USB_Functional" description="USB network functinal tests" feature="USB" type="Functional positive">
       <case name="FUTE-USB-Send_throughput" subfeature="Send" timeout="600" description=
         "Purpose 
         This test case measures USB network functionality from device to PC

@@ -1,3 +1,9 @@
+mwts-messaging (0.0.9) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:27:34 +0300
+
 mwts-messaging (0.0.8) unstable; urgency=low
   [ Tuomo Pelkonen ]
   * Fixes: BMC#19174 - No tests.xml in mwts

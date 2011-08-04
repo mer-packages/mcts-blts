@@ -1,3 +1,9 @@
+mwts-feedback (0.0.6) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 14:40:26 +0300
+
 mwts-feedback (0.0.5) unstable; urgency=low
 
   [ Tuomo Pelkonen ]

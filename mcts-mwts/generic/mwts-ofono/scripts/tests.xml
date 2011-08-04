@@ -2,17 +2,17 @@
 <testdefinition version="0.1">
     <!-- Sim manager test cases from file mwts-ofono-sim.cfg -->
     <suite name="mwts-ofono-tests" domain="Visual">
-    <set name="Functional test" description="ofono-qt sim card operations" feature="Settings" type="Functional" >
+    <set name="Functional test" description="ofono-qt sim card operations" feature="Settings" type="Functional positive" >
         <case name="FUTE-Verify_PIN" subfeature="Verifies valid pin code" timeout="10" description="">
             <step>min -c -t 'FUTE-Verify_PIN'</step>
         </case>
-        <case name="FUTE-Verify_invalid_PIN" subfeature="Verifies invalid pin code" timeout="10" description="">
+        <case name="FUTE-Verify_invalid_PIN" subfeature="Verifies invalid pin code" timeout="10" description="" type="Functional negative">
             <step>min -c -t 'FUTE-Verify_invalid_PIN'</step>
         </case>
         <case name="FUTE-Verify_PUK" subfeature="Verifies valid pin code" timeout="10" description="">
             <step>min -c -t 'FUTE-Verify_PUK'</step>
         </case>
-        <case name="FUTE-Verify_invalid_PUK" subfeature="Verifies invalid pin code" timeout="10" description="">
+        <case name="FUTE-Verify_invalid_PUK" subfeature="Verifies invalid pin code" timeout="10" description="" type="Functional negative">
             <step>min -c -t 'FUTE-Verify_invalid_PUK'</step>
         </case>
         <case name="FUTE-Change_PIN" subfeature="Changes pin code" timeout="10" description="">

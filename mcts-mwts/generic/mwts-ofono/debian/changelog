@@ -1,3 +1,9 @@
+mwts-ofono (0.1.3) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:33:36 +0300
+
 mwts-ofono (0.1.2) unstable; urgency=low
 
   [ Tuomo Pelkonen ]

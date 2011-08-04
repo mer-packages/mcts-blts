@@ -1,3 +1,9 @@
+mwts-systeminfo-tests (1.0.4) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:43:47 +0300
+
 mwts-systeminfo-tests (1.0.3) unstable; urgency=low
 
   [ Tuomo Pelkonen ]

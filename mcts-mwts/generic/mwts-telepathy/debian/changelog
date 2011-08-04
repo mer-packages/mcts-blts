@@ -1,3 +1,9 @@
+mwts-telepathy-tests (0.1.10) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 15:45:03 +0300
+
 mwts-telepathy-tests (0.1.9) unstable; urgency=low
 
   [ Tuomo Pelkonen ]

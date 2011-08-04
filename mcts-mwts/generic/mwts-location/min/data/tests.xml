@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testdefinition version="1.0">
  <suite domain="Location" name="mwts-location-tests">
-  <set type="Functional" name="FUTE-location">
+  <set type="Functional positive" name="FUTE-location">
    <description>FUNCTIONAL tests of mwts-location, script file: mwts-location.cfg.</description>
    <case name="FUTE-GPS-TestFix" state="Design">
     <description>Purpose: Get GPS cold fix.
@@ -18,7 +18,7 @@ Pass/Fail Criteria: Test runs successfully, test does not crash.</description>
     <step>min -c -t 'FUTE-GPS-GetCoordinate'</step>
    </case>
   </set>
-  <set type="Iterative" name="ITER-location">
+  <set type="Reliability" name="ITER-location">
    <description>ITERATIVE tests of mwts-location, script file: mwts-location-nft.cfg.</description>
    <case timeout="600" name="NFT-GPS-HotFix-ITER">
     <description>Purpose: Get GPS hot fix. Tests reliability of the positioning engine.
@@ -28,7 +28,7 @@ Pass/Fail Criteria: Test runs successfully, test does not crash.</description>
     <step>min -c -t 'NFT-GPS-HotFix-ITER'</step>
    </case>
   </set>
-  <set type="Latency" name="LATE-location">
+  <set type="Performance" name="LATE-location">
    <description>LATENCY tests of mwts-location, script file: mwts-location-nft.cfg.</description>
    <case timeout="4200" name="NFT-GPS-HotFix-LATE">
     <description>Purpose: Get GPS hot fix. Tests performance of the positioning engine.

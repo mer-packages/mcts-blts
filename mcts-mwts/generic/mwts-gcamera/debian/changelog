@@ -1,3 +1,9 @@
+mwts-gcamera (0.0.4) unstable; urgency=low
+
+  * Fixes: BMC#17877 - Test types update in MCTS
+
+ -- Jussi Saavalainen <jussi.saavalainen@digia.com>  Wed, 03 Aug 2011 14:45:05 +0300
+
 mwts-gcamera (0.0.3) unstable; urgency=low
 
   [ Tuomo Pelkonen ]

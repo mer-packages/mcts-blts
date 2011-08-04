@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <testdefinition version="0.1">
   <suite name="mwts-messaging-scripts" domain="Communication" level="Feature">
-    <set name="SMS-FuTe" description="SMS functional test cases" feature="Messaging" type="Functional">
+    <set name="SMS-FuTe" description="SMS functional test cases" feature="Messaging" type="Functional positive">
        <case name="FUTE-Messaging-Query_All_Accounts" subfeature="Test" timeout="5" description=
          "Purpose
          Query all available accounts.
@@ -196,7 +196,7 @@
       </case>
     </set>
 
-    <set name="SMS-NFT-ITER" description="SMS iterative test cases" feature="Messaging" type="Iterative">
+    <set name="SMS-NFT-ITER" description="SMS iterative test cases" feature="Messaging" type="Reliability">
       <case name="NFT-Messaging-Send_and_receive_SMS_140-ITER" subfeature="SMS" timeout="30" description=
         "Purpose
         Test iteratively sending SMS to self.
@@ -258,7 +258,7 @@
         <step>min -c -t 'FT-Messaging-Send_and_receive_SMS_380_UCS2-ITER'</step>
       </case>
     </set>
-    <set name="SMS-NFT-LATE" description="SMS latency test cases" feature="Messaging" type="Latency">
+    <set name="SMS-NFT-LATE" description="SMS latency test cases" feature="Messaging" type="Performance">
       <case name="NFT-Messaging_Send_And_Receive_SMS-ITER-LATE" subfeature="SMS" timeout="30" description=
         "Purpose
         Measure latency for iteratively receiving SMS.
