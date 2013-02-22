@@ -235,7 +235,7 @@ static int check_bin(char* name, int loglevel)
 
 	/* We don't trust PATH */
 	char *valid_exe_dirs[] = {
-		"/bin",	"/sbin", "/usr/bin", "/usr/sbin", "/usr/X11/bin", 0
+		"", "/bin", "/sbin", "/usr/bin", "/usr/sbin", "/usr/X11/bin", 0
 		/* /usr/local/...: FHS says this is empty after OS install */
 	};
 
@@ -244,12 +244,22 @@ static int check_bin(char* name, int loglevel)
 	int found=0;
 	for(int i=0; valid_exe_dirs[i]; ++i)
 	{
-		dirname=valid_exe_dirs[i];
-		if(asprintf(&fullpath,"%s/%s",dirname,name)<0)
-		{
-			BLTS_LOGGED_PERROR("malloc");
-			return -1;
-		}
+		if (valid_exe_dirs[0] != '\0' && *name != '/')
+                {
+			dirname=valid_exe_dirs[i];
+			if(asprintf(&fullpath,"%s/%s",dirname,name)<0)
+			{
+				BLTS_LOGGED_PERROR("malloc");
+				return -1;
+			}
+                }
+                else {
+			if(asprintf(&fullpath, "%s", name) < 0)
+			{
+				BLTS_LOGGED_PERROR("malloc");
+				return -1;
+			}
+                }
 		if(!access(fullpath,X_OK))
 		{
 			llog(loglevel,2,"found '%s'; ",fullpath);
