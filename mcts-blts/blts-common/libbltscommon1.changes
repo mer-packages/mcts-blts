@@ -1,3 +1,6 @@
+* Thu 04 Oct 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.4.5 
+- Own /var/log/blts/ and base in there
+
 * Fri 18 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.4
 - Added multiple test client sync support
 
