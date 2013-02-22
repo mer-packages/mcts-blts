@@ -552,13 +552,14 @@ int blts_cli_main(blts_cli* cli, int argc, char **argv)
 	timout_override = 0;
 
 	/* Root required by logging alone */
+#if 0
 	if(getuid())
 	{
 		fprintf(stderr, "You need to run this program as root.\n");
 		result = -1;
 		goto cleanup;
 	}
-
+#endif
 	test_list = malloc(sizeof(int) * MAX_ARGS);
 	if(!test_list)
 	{

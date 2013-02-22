@@ -54,10 +54,10 @@ static int logging_level = LEVEL_DEBUG;
 static pid_t local_syslog_capture_pid = 0;
 
 /* default path used */
-static const char log_path[] = "/var/log/tests";
+static const char log_path[] = "/var/log/tests/blts";
 
 /* Output file for kernel log */
-static const char syslog_path[] = "/var/log/tests/kmsg.log";
+static const char syslog_path[] = "/var/log/tests/blts/kmsg.log";
 
 /* general buffer for kernel log capture */
 static char buffer[4096];
@@ -78,16 +78,19 @@ int blts_log_open(const char *filename, unsigned int flags)
 	if (!filename)
 		log_file = fopen("/dev/null","a");
 	else {
-		real_filename = basename(filename);
+		if (*filename == '/')
+			asprintf(&path_and_file, "%s", filename);
+		else {
+			real_filename = basename(filename);
 
-		if(log_file)
-			return -1;
-		/* check directory and create if necessary (all rights) */
-		if( access(log_path,X_OK) != 0 )
-			mkdir(log_path, 0777);
+			if(log_file)
+				return -1;
+			/* check directory and create if necessary (all rights) */
+			if( access(log_path,X_OK) != 0 )
+				mkdir(log_path, 0777);
 
-		n = asprintf(&path_and_file, "%s/%s", log_path, real_filename);
-
+			n = asprintf(&path_and_file, "%s/%s", log_path, real_filename);
+		}
 		log_file = fopen(path_and_file, "a");
 		free(path_and_file);
 	}
