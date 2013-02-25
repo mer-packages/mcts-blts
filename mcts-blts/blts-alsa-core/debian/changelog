@@ -1,3 +1,10 @@
+blts-alsa-core-tests (0.0.15) unstable; urgency=low
+
+  * Use defined test configuration for tests
+  * Fix rpm packaging issues
+
+ -- Matti Kosola <matti.kosola@jollamobile.com>  Mon, 25 Feb 2013 17:06:12 +0200
+
 blts-alsa-core-tests (0.0.13) unstable; urgency=low
 
   * Fixes: BMC#17877 - Test types update in MCTS

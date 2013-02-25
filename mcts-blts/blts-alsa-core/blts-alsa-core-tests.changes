@@ -1,3 +1,7 @@
+* Mon 25 Feb 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.15
+- Use defined test configuration for tests
+- Fix rpm packaging issues
+
 * Thu Nov 01 2012 Siteshwar Vashisht <siteshwar@gmail.com> - 0.0.14
 - Changed install path to /opt/tests
 - Changed log directory to /var/log/tests/blts/
