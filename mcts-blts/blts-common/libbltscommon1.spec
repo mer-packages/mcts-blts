@@ -33,6 +33,7 @@ rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT/usr/lib/*.la
 rm $RPM_BUILD_ROOT/usr/lib/*.a
+mkdir -p $RPM_BUILD_ROOT/var/log/tests/blts/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -43,6 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+%attr(1777,root,root) /var/log/tests/blts
 %doc README README.ParameterVariation COPYING
 /usr/lib/*.so.*
 
