@@ -22,47 +22,47 @@
       <case name="Core-ALSA core presence check"
         type="Functional positive"
         description="Checks needed /dev/snd* entries and kernel modules">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_presence_check.log -e 1</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_presence_check.log -e 1</step>
       </case>
       <case name="Core-ALSA core open and close PCM devices"
         type="Functional positive"
         description="Opens and queries basic information from all available PCM devices">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_open_and_close_PCM_devices.log -e 2</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_open_and_close_PCM_devices.log -e 2</step>
       </case>
       <case name="Core-ALSA core open and close timer"
         type="Functional positive"
         description="Opens and queries basic information from ALSA timers">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_open_and_close_timer.log -e 3</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_open_and_close_timer.log -e 3</step>
       </case>
       <case name="Core-ALSA core open and close controls"
         type="Functional positive"
         description="Opens and queries basic information from control devices">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_open_and_close_controls.log -e 4</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_open_and_close_controls.log -e 4</step>
       </case>
       <case name="Core-ALSA core open and close hwdeps"
         type="Functional positive"
         description="Opens and queries basic information from hw dependency -devices">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_open_and_close_hwdeps.log -e 5</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_open_and_close_hwdeps.log -e 5</step>
       </case>
       <case name="Core-ALSA core enumerate control elements"
         type="Functional positive"
         description="Queries information of all control elements and their current settings from all control devices">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_enumerate_control_elements.log -e 6</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_enumerate_control_elements.log -e 6</step>
       </case>
       <case name="Core-ALSA core power management"
         type="Functional positive"
         description="Sets and queries power state from all devices">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_power_management.log -e 7</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_power_management.log -e 7</step>
       </case>
       <case name="Core-ALSA core enumerate devices with control interface"
         type="Functional positive"
         description="Queries information about all pcm, hw dep and rawmidi devices from control device">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_enumerate_devices_with_control_interface.log -e 8</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_enumerate_devices_with_control_interface.log -e 8</step>
       </case>
       <case name="Core-ALSA core Add and remove control element"
         type="Functional positive"
         description="Creates, replaces and removes user control element. Tests also element lock/unlock.">
-        <step>/opt/tests/blts-alsa-core-tests/blts-alsa-core-tests -l /var/log/tests/blts/Core-ALSA_core_Add_and_remove_control_element.log -e 9</step>
+        <step>/opt/tests/blts-alsa-core-tests/bin/blts-alsa-core-tests -C /opt/tests/blts-alsa-core-tests/cnf/blts-alsa-core-tests.cnf -l /var/log/tests/blts/Core-ALSA_core_Add_and_remove_control_element.log -e 9</step>
       </case>
       <!-- TODO: rest of the test cases are generated dynamically from given configuration file -->
       <get>
