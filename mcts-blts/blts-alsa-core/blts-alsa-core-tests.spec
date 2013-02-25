@@ -9,6 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel kernel-headers dbus-glib-devel glib2-devel
 Requires: blts-alsa-core-tests-config
+%define _prefix /opt/tests/%{name}
 
 %package config-example
 Summary: BLTS ALSA core test config example
@@ -25,7 +26,7 @@ This package contains configuration example for functional tests for ALSA core.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -38,11 +39,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
-/usr/lib/tests/%{name}/*
+%{_prefix}/bin/*
+%{_prefix}/cfg/blts-alsa-core-req-files.cfg
 
 %files config-example
 %defattr(-,root,root,-)
-%config /etc/blts/blts-alsa-core-tests.cnf
-/usr/share/blts-alsa-core-tests/tests.xml
+%{_prefix}/cnf/blts-alsa-core-tests.cnf
+%{_prefix}/tests.xml
 
