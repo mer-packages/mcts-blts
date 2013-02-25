@@ -38,7 +38,7 @@
 #include "v4l_tuner.h"
 
 /** Rules for dep check */
-#define DEP_RULES "/usr/lib/tests/blts-alsa-core-tests/blts-alsa-core-req-files.cfg"
+#define DEP_RULES "/opt/tests/blts-alsa-core-tests/cfg/blts-alsa-core-req-files.cfg"
 
 struct pcm_thread_params
 {
