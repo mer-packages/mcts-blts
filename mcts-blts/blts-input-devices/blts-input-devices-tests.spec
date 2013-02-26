@@ -1,6 +1,6 @@
 Summary: BLTS input devices test set
 Name: blts-input-devices-tests
-Version: 0.0.5
+Version: 0.0.6
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -9,6 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libX11-devel kernel-headers
 Requires: blts-input-devices-tests-config
+%define _prefix /opt/tests/%{name}
 
 %package config-example
 Summary: BLTS input devices test config example
@@ -25,7 +26,7 @@ This package contains configuration example for input devices functional tests.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -38,9 +39,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
+%{_prefix}/bin/*
 
 %files config-example
 %defattr(-,root,root,-)
-%config /etc/blts/blts-input-devices-tests.cnf
-/usr/share/blts-input-devices-tests/tests.xml
+%{_prefix}/cnf/blts-input-devices-tests.cnf
+%{_prefix}/tests.xml
