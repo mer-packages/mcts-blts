@@ -18,7 +18,7 @@ AM_CFLAGS = \
 	-O2 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. \
 	$(PACKAGE_CFLAGS) -fno-builtin-sscanf
 
-requiredlibs = -lm -lrt $(PACKAGE_LIBS)
+requiredlibs = -lm -lrt $(PACKAGE_LIBS) -lpthread
 
 h_sources = \
 	bt_fute.h \
