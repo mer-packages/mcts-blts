@@ -21,21 +21,21 @@
     <set name="input-devices-tests" feature="Input Adaptation">
       <case name="Input - Enumerate devices"
         type="Functional positive">
-        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Enumerate_devices.log -e 1</step>
+        <step>/opt/tests/blts-input-devices-tests/bin/blts-input-devices-tests -C /opt/tests/blts-input-devices-tests/cnf/blts-input-devices-tests.cnf -l /var/log/tests/blts/Input_-_Enumerate_devices.log -e 1</step>
       </case>
       <case name="Input - Single touch"
         type="Functional positive">
-        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Single_touch.log -e 2</step>
+        <step>/opt/tests/blts-input-devices-tests/bin/blts-input-devices-tests -C /opt/tests/blts-input-devices-tests/cnf/blts-input-devices-tests.cnf -l /var/log/tests/blts/Input_-_Single_touch.log -e 2</step>
       </case>
       <case name="Input - Multi-touch"
         type="Functional positive">
-        <step>/usr/bin/blts-input-devices-tests -l /var/log/tests/Input_-_Multi-touch.log -e 3</step>
+        <step>/opt/tests/blts-input-devices-tests/bin/blts-input-devices-tests -C /opt/tests/blts-input-devices-tests/cnf/blts-input-devices-tests.cnf -l /var/log/tests/blts/Input_-_Multi-touch.log -e 3</step>
       </case>
 
       <get>
-        <file>/var/log/tests/Input_-_Enumerate_devices.log</file>
-        <file>/var/log/tests/Input_-_Single_touch.log</file>
-        <file>/var/log/tests/Input_-_Multi-touch.log</file>
+        <file>/var/log/tests/blts/Input_-_Enumerate_devices.log</file>
+        <file>/var/log/tests/blts/Input_-_Single_touch.log</file>
+        <file>/var/log/tests/blts/Input_-_Multi-touch.log</file>
       </get>
    </set>
   </suite>
