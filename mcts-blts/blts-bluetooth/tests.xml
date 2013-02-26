@@ -22,193 +22,193 @@
     <set name="bt-1dev-tests" feature="Bluetooth">
       <case name="Core-Bluetooth drivers and userspace check"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_drivers_and_userspace_check.log -en "Core-Bluetooth drivers and userspace check"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_drivers_and_userspace_check.log -en "Core-Bluetooth drivers and userspace check"</step>
       </case>
       <case name="Core-Bluetooth scan"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_scan.log -en "Core-Bluetooth scan"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_scan.log -en "Core-Bluetooth scan"</step>
       </case>
       <get>
-        <file>/var/log/tests/Core-Bluetooth_drivers_and_userspace_check.log</file>
-        <file>/var/log/tests/Core-Bluetooth_scan.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_drivers_and_userspace_check.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_scan.log</file>
       </get>
     </set>
 
     <set name="bt-2dev-tests" feature="Bluetooth">
       <case name="Core-Bluetooth receive L2CAP connection"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_receive_L2CAP_connection.log -en "Core-Bluetooth receive L2CAP connection"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_receive_L2CAP_connection.log -en "Core-Bluetooth receive L2CAP connection"</step>
       </case>
 
       <!-- Remote must be running l2cap-server for following 2: -->
       <case name="Core-Bluetooth connect with L2CAP"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_connect_with_L2CAP.log -en "Core-Bluetooth connect with L2CAP"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_connect_with_L2CAP.log -en "Core-Bluetooth connect with L2CAP"</step>
       </case>
 
       <case name="Core-Bluetooth ping-pong transfer with L2CAP"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_ping-pong_transfer_with_L2CAP.log -en "Core-Bluetooth ping-pong transfer with L2CAP"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_ping-pong_transfer_with_L2CAP.log -en "Core-Bluetooth ping-pong transfer with L2CAP"</step>
       </case>
 
       <case name="Core-Bluetooth receive RFCOMM connection"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_receive_RFCOMM_connection.log -en "Core-Bluetooth receive RFCOMM connection"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_receive_RFCOMM_connection.log -en "Core-Bluetooth receive RFCOMM connection"</step>
       </case>
 
       <!-- Remote must be running rfcomm-server for following 2: -->
       <case name="Core-Bluetooth connect with RFCOMM"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_connect_with_RFCOMM.log -en "Core-Bluetooth connect with RFCOMM"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_connect_with_RFCOMM.log -en "Core-Bluetooth connect with RFCOMM"</step>
       </case>
 
       <case name="Core-Bluetooth ping-pong transfer with RFCOMM"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_ping-pong_transfer_with_RFCOMM.log -en "Core-Bluetooth ping-pong transfer with RFCOMM"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_ping-pong_transfer_with_RFCOMM.log -en "Core-Bluetooth ping-pong transfer with RFCOMM"</step>
       </case>
 
       <case name="Core-Bluetooth connect with HCI"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_connect_with_HCI.log -en "Core-Bluetooth connect with HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_connect_with_HCI.log -en "Core-Bluetooth connect with HCI"</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth transfer ACL data with HCI"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_transfer_ACL_data_with_HCI.log -en "Core-Bluetooth transfer ACL data with HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_transfer_ACL_data_with_HCI.log -en "Core-Bluetooth transfer ACL data with HCI"</step>
       </case>
       <case name="Core-Bluetooth receive ACL data with HCI"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_receive_ACL_data_with_HCI.log -en "Core-Bluetooth receive ACL data with HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_receive_ACL_data_with_HCI.log -en "Core-Bluetooth receive ACL data with HCI"</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth change name with HCI"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_change_name_with_HCI.log -en "Core-Bluetooth change name with HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_change_name_with_HCI.log -en "Core-Bluetooth change name with HCI"</step>
       </case>
       <case name="Core-Bluetooth verify name with remote HCI"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_verify_name_with_remote_HCI.log -en "Core-Bluetooth verify name with remote HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_verify_name_with_remote_HCI.log -en "Core-Bluetooth verify name with remote HCI"</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth change class with HCI"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_change_class_with_HCI.log -en "Core-Bluetooth change class with HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_change_class_with_HCI.log -en "Core-Bluetooth change class with HCI"</step>
       </case>
       <case name="Core-Bluetooth verify class with remote HCI"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_verify_class_with_remote_HCI.log -en "Core-Bluetooth verify class with remote HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_verify_class_with_remote_HCI.log -en "Core-Bluetooth verify class with remote HCI"</step>
       </case>
 
       <case name="Core-Bluetooth reset connection with HCI"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_reset_connection_with_HCI.log -en "Core-Bluetooth reset connection with HCI"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_reset_connection_with_HCI.log -en "Core-Bluetooth reset connection with HCI"</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth Read HCI controller information local"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_Read_HCI_controller_information_local.log -en "Core-Bluetooth Read HCI controller information local"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_Read_HCI_controller_information_local.log -en "Core-Bluetooth Read HCI controller information local"</step>
       </case>
       <case name="Core-Bluetooth Read HCI controller information remote"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_Read_HCI_controller_information_remote.log -en "Core-Bluetooth Read HCI controller information remote"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_Read_HCI_controller_information_remote.log -en "Core-Bluetooth Read HCI controller information remote"</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth Read connected link information local"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_Read_connected_link_information_local.log -en "Core-Bluetooth Read connected link information local"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_Read_connected_link_information_local.log -en "Core-Bluetooth Read connected link information local"</step>
       </case>
       <case name="Core-Bluetooth Read connected link information remote"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_Read_connected_link_information_remote.log -en "Core-Bluetooth Read connected link information remote"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_Read_connected_link_information_remote.log -en "Core-Bluetooth Read connected link information remote"</step>
       </case>
 
       <case name="Core-Bluetooth audit incoming HCI connection"
         type="Functional positive">
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_audit_incoming_HCI_connection.log -en "Core-Bluetooth audit incoming HCI connection"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_audit_incoming_HCI_connection.log -en "Core-Bluetooth audit incoming HCI connection"</step>
       </case>
 
       <!-- Following 2 are run as a pair: -->
       <case name="Core-Bluetooth authentication with pairing as master"
         type="Functional positive">
-        <step>initctl stop bluetoothd</step>
+        <step>systemctl stop bluetooth.service</step>
         <!-- FIXME: start remote end here -->
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_authentication_with_pairing_as_master.log -en "Core-Bluetooth authentication with pairing as master"</step>
-        <step>initctl start bluetoothd</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_authentication_with_pairing_as_master.log -en "Core-Bluetooth authentication with pairing as master"</step>
+        <step>systemctl start bluetooth.service</step>
       </case>
       <case name="Core-Bluetooth authentication with pairing as slave"
         type="Functional positive">
-        <step>initctl stop bluetoothd</step>
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_authentication_with_pairing_as_slave.log -en "Core-Bluetooth authentication with pairing as slave"</step>
-        <step>initctl start bluetoothd</step>
+        <step>systemctl stop bluetooth.service</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_authentication_with_pairing_as_slave.log -en "Core-Bluetooth authentication with pairing as slave"</step>
+        <step>systemctl stop bluetooth.service</step>
       </case>
 
       <get>
-        <file>/var/log/tests/Core-Bluetooth_connect_with_L2CAP.log</file>
-        <file>/var/log/tests/Core-Bluetooth_ping-pong_transfer_with_L2CAP.log</file>
-        <file>/var/log/tests/Core-Bluetooth_connect_with_RFCOMM.log</file>
-        <file>/var/log/tests/Core-Bluetooth_ping-pong_transfer_with_RFCOMM.log</file>
-        <file>/var/log/tests/Core-Bluetooth_connect_with_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_transfer_ACL_data_with_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_receive_ACL_data_with_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_change_name_with_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_verify_name_with_remote_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_change_class_with_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_verify_class_with_remote_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_reset_connection_with_HCI.log</file>
-        <file>/var/log/tests/Core-Bluetooth_Read_HCI_controller_information_local.log</file>
-        <file>/var/log/tests/Core-Bluetooth_Read_HCI_controller_information_remote.log</file>
-        <file>/var/log/tests/Core-Bluetooth_Read_connected_link_information_local.log</file>
-        <file>/var/log/tests/Core-Bluetooth_Read_connected_link_information_remote.log</file>
-        <file>/var/log/tests/Core-Bluetooth_audit_incoming_HCI_connection.log</file>
-        <file>/var/log/tests/Core-Bluetooth_authentication_with_pairing_as_master.log</file>
-        <file>/var/log/tests/Core-Bluetooth_authentication_with_pairing_as_slave.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_connect_with_L2CAP.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_ping-pong_transfer_with_L2CAP.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_connect_with_RFCOMM.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_ping-pong_transfer_with_RFCOMM.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_connect_with_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_transfer_ACL_data_with_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_receive_ACL_data_with_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_change_name_with_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_verify_name_with_remote_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_change_class_with_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_verify_class_with_remote_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_reset_connection_with_HCI.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_Read_HCI_controller_information_local.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_Read_HCI_controller_information_remote.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_Read_connected_link_information_local.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_Read_connected_link_information_remote.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_audit_incoming_HCI_connection.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_authentication_with_pairing_as_master.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_authentication_with_pairing_as_slave.log</file>
       </get>
     </set>
 
     <set name="bt-le-tests" feature="Bluetooth">
       <case name="Core-Bluetooth LE scan"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_scan.log -en "Core-Bluetooth LE scan"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_LE_scan.log -en "Core-Bluetooth LE scan"</step>
       </case>
       <case name="Core-Bluetooth LE advertise"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_advertise.log -en "Core-Bluetooth LE advertise"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_LE_advertise.log -en "Core-Bluetooth LE advertise"</step>
       </case>
       <case name="Core-Bluetooth LE connect"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_connect.log -en "Core-Bluetooth LE connect"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_LE_connect.log -en "Core-Bluetooth LE connect"</step>
       </case>
       <case name="Core-Bluetooth LE transmit data"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_transmit_data.log -en "Core-Bluetooth LE transmit data"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_LE_transmit_data.log -en "Core-Bluetooth LE transmit data"</step>
       </case>
       <case name="Core-Bluetooth LE receive data"
         type="Functional positive">
-        <step>/usr/bin/blts-bluetooth-tests -l /var/log/tests/Core-Bluetooth_LE_receive_data.log -en "Core-Bluetooth LE receive data"</step>
+        <step>/opt/tests/blts-bluetooth-tests/bin/blts-bluetooth-tests -C /opt/tests/blts-bluetooth-tests/cnf/blts-bluetooth-tests.cnf -l /var/log/tests/blts/Core-Bluetooth_LE_receive_data.log -en "Core-Bluetooth LE receive data"</step>
       </case>
       <get>
-        <file>/var/log/tests/Core-Bluetooth_LE_scan.log</file>
-        <file>/var/log/tests/Core-Bluetooth_LE_advertise.log</file>
-        <file>/var/log/tests/Core-Bluetooth_LE_connect.log</file>
-        <file>/var/log/tests/Core-Bluetooth_LE_transmit_data.log</file>
-        <file>/var/log/tests/Core-Bluetooth_LE_receive_data.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_LE_scan.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_LE_advertise.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_LE_connect.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_LE_transmit_data.log</file>
+        <file>/var/log/tests/blts/Core-Bluetooth_LE_receive_data.log</file>
       </get>
     </set>
 
