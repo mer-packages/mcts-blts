@@ -1,6 +1,6 @@
 Summary: BLTS Bluetooth functional tests
 Name: blts-bluetooth-tests
-Version: 0.2.17
+Version: 0.2.18
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -9,6 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel bluez-libs-devel
 Requires: bluez
+%define _prefix /opt/tests/%{name}
 
 %description
 This package contains functional tests for the Bluez bluetooth stack.
@@ -18,7 +19,7 @@ This package contains functional tests for the Bluez bluetooth stack.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -31,7 +32,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
-/usr/lib/tests/%{name}/*
-/usr/share/%{name}/tests.xml
-%config /etc/blts/blts-bluetooth-tests.cnf
+%{_prefix}/*
