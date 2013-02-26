@@ -1,6 +1,6 @@
 Summary: BLTS FBdev test set
 Name: blts-fbdev-tests
-Version: 0.0.11
+Version: 0.0.12
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -9,6 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
 Requires: blts-fbdev-tests-config
+%define _prefix /opt/tests/%{name}
 
 %package config-example
 Summary: BLTS fbdev test config example
@@ -25,7 +26,7 @@ This package contains configuration example for fbdev functional tests.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -38,9 +39,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
+%{_prefix}/bin/*
 
 %files config-example
 %defattr(-,root,root,-)
-%config /etc/blts/blts-fbdev-tests.cnf
-/usr/share/blts-fbdev-tests/tests.xml
+%{_prefix}/cnf/blts-fbdev-tests.cnf
+%{_prefix}/tests.xml
