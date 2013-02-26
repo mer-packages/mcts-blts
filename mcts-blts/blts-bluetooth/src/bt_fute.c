@@ -48,7 +48,7 @@
 
 
 /** rules file for depcheck() */
-#define DEPCHECK_RULES "/usr/lib/tests/blts-bluetooth-tests/blts-bluetooth-req_files.cfg"
+#define DEPCHECK_RULES "/opt/tests/blts-bluetooth-tests/cfg/blts-bluetooth-req_files.cfg"
 
 BtFuteAgent *agent = NULL;
 
