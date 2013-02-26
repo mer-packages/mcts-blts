@@ -22,64 +22,64 @@
     <set name="framebuffer-tests" feature="Framebuffer">
       <case name="Core-Framebuffer read frame buffer information with ioctl"
         type="Functional positive">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_read_frame_buffer_info.log -e 1</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_read_frame_buffer_info.log -e 1</step>
       </case>
       <case name="Core-Framebuffer set blanking levels"
         type="Functional positive">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_set_blanking_levels.log -e 2</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_set_blanking_levels.log -e 2</step>
       </case>
       <case name="Core-Framebuffer 1-pixel uncached read"
         type="Performance">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_1-pixel_uncached_read.log -e 3</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_1-pixel_uncached_read.log -e 3</step>
       </case>
       <case name="Core-Framebuffer 1-pixel uncached write"
         type="Performance">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_1-pixel_uncached_write.log -e 4</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_1-pixel_uncached_write.log -e 4</step>
       </case>
       <case name="Core-Framebuffer 1-pixel uncached modify"
         type="Performance">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_1-pixel_uncached_modify.log -e 5</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_1-pixel_uncached_modify.log -e 5</step>
       </case>
       <case name="Core-Framebuffer fullscreen buffer read"
         type="Performance">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_fullscreen_buffer_reead.log -e 6</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_fullscreen_buffer_reead.log -e 6</step>
       </case>
       <case name="Core-Framebuffer fullscreen buffer write"
         type="Performance">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_fullscreen_buffer_write.log -e 7</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_fullscreen_buffer_write.log -e 7</step>
       </case>
       <case name="Core-Framebuffer fullscreen buffer modify"
         type="Performance">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Framebuffer_fullscreen_buffer_modify.log -e 8</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Framebuffer_fullscreen_buffer_modify.log -e 8</step>
       </case>
       <get>
-        <file>/var/log/tests/Core-Framebuffer_read_frame_buffer_info.log</file>
-        <file>/var/log/tests/Core-Framebuffer_set_blanking_levels.log</file>
-        <file>/var/log/tests/Core-Framebuffer_1-pixel_uncached_read.log</file>
-        <file>/var/log/tests/Core-Framebuffer_1-pixel_uncached_write.log</file>
-        <file>/var/log/tests/Core-Framebuffer_1-pixel_uncached_modify.log</file>
-        <file>/var/log/tests/Core-Framebuffer_fullscreen_buffer_reead.log</file>
-        <file>/var/log/tests/Core-Framebuffer_fullscreen_buffer_write.log</file>
-        <file>/var/log/tests/Core-Framebuffer_fullscreen_buffer_modify.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_read_frame_buffer_info.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_set_blanking_levels.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_1-pixel_uncached_read.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_1-pixel_uncached_write.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_1-pixel_uncached_modify.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_fullscreen_buffer_reead.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_fullscreen_buffer_write.log</file>
+        <file>/var/log/tests/blts/Core-Framebuffer_fullscreen_buffer_modify.log</file>
       </get>
     </set>
     <set name="backlight-tests" feature="Backlight">
       <case name="Core-Backlight verify backlight levels"
         type="Functional positive">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Backlight_verify_backlight_levels.log -e 9</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Backlight_verify_backlight_levels.log -e 9</step>
       </case>
       <case name="Core-Backlight linear backlight level changes"
         type="Functional positive">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Backlight_linear_backlight_level_changes.log -e 10</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Backlight_linear_backlight_level_changes.log -e 10</step>
       </case>
       <case name="Core-Backlight logarithmic backlight level changes"
         type="Functional positive">
-        <step>/usr/bin/blts-fbdev-tests -l /var/log/tests/Core-Backlight_logarithmic_backlight_level_changes.log -e 11</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/blts-fbdev-tests -C /opt/tests/blts-fbdev-tests/cnf/blts-fbdev-tests.cnf -l /var/log/tests/blts/Core-Backlight_logarithmic_backlight_level_changes.log -e 11</step>
       </case>
       <get>
-        <file>/var/log/tests/Core-Backlight_verify_backlight_levels.log</file>
-        <file>/var/log/tests/Core-Backlight_linear_backlight_level_changes.log</file>
-        <file>/var/log/tests/Core-Backlight_logarithmic_backlight_level_changes.log</file>
+        <file>/var/log/tests/blts/Core-Backlight_verify_backlight_levels.log</file>
+        <file>/var/log/tests/blts/Core-Backlight_linear_backlight_level_changes.log</file>
+        <file>/var/log/tests/blts/Core-Backlight_logarithmic_backlight_level_changes.log</file>
       </get>
     </set>
   </suite>
