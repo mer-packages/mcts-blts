@@ -461,7 +461,7 @@ int hci_connect_remote(struct bt_ctx *ctx)
 int hci_audit_incoming_connect(struct bt_ctx *ctx)
 {
 	int ret, audit_passed = 0;
-	char *audit_dump = "/var/log/tests/audit_incoming_connect.hcidump";
+	char *audit_dump = "/var/log/tests/blts/audit_incoming_connect.hcidump";
 	if (!ctx)
 		return -EINVAL;
 
