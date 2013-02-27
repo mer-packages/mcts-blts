@@ -22,7 +22,7 @@
       <case name="OpenGL-Enumerate GL extensions"
         description="Lists all GL extensions"
         type="Functional positive">
-        <step>/opt/tests/blts-opengles2-tests/bin/blts-opengles2-tests -C /opt/tests/blts-opengles2-tests/cnf/blts-opengles2-perf.cnf -l /var/log/tests/blts/blts/OpenGL-Enumerate_GL_extensions.log -en "OpenGL-Enumerate GL extensions"</step>
+        <step>/opt/tests/blts-opengles2-tests/bin/blts-opengles2-tests -C /opt/tests/blts-opengles2-tests/cnf/blts-opengles2-perf.cnf -l /var/log/tests/blts/OpenGL-Enumerate_GL_extensions.log -en "OpenGL-Enumerate GL extensions"</step>
       </case>
       <case name="OpenGL-Enumerate EGL extensions"
         description="Lists all EGL extensions"
