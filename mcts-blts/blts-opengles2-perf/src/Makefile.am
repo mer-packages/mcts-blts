@@ -15,6 +15,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -fPIC
+AM_CPPFLAGS = -pthread
+AM_LDFLAGS = -pthread
 
 requiredlibs = -lm -lrt -lEGL -lGLESv2 -lX11
 
