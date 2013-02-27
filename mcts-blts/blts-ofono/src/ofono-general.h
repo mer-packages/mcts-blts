@@ -81,7 +81,10 @@ enum BLTSoFonoCases {
 	BLTS_OFONO_CALL_SETTINGS_WAITING,
 };
 
+/* should be defined in glib-2.0/gobject/gvalue.h */
+#ifndef G_VALUE_INIT
 #define G_VALUE_INIT {0,{{0}}}
+#endif
 
 #define	DEFAULT_MODEM		"/isimodem0"	//obsolete, modems are found through oFono
 #define DEFAULT_TIMEOUT		200000
