@@ -24,7 +24,7 @@
 #include "test_blitter.h"
 #include "test_common.h"
 
-const char* data_path = "/usr/share/blts-opengles2-tests/";
+const char* data_path = "/opt/tests/blts-opengles2-tests/";
 
 /* May be needed with emulation sdks */
 //#define USE_ALL_TEXTURE_UNITS 1
