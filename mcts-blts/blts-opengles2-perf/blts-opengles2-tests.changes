@@ -1,3 +1,12 @@
+* Wed Feb 27 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.21
+- Changed test data path to /opt/tests/blts-opengles2-tests
+
+* Thu Nov 01 2012 Siteshwar Vashisht <siteshwar@gmail.com> - 0.0.20
+- Changed install path to /opt/tests
+
+* Sun 14 Oct 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.0.19
+- Change paths around to fit with new blts methods
+
 * Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.18
 - Fixes: BMC#17877 - Test types update in MCTS
 
