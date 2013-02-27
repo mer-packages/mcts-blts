@@ -239,7 +239,6 @@ forwarding_if_busy_variant_set_arg_processor(struct boxed_value *args,
 {
 	FUNC_ENTER();
 	char *remote_addr = 0, *forward_addr = 0;
-	int user_timeout = 0;
 	long timeout = 0;
 	my_ofono_data *data = ((my_ofono_data *) user_ptr);
 	if (!data)
@@ -252,7 +251,8 @@ forwarding_if_busy_variant_set_arg_processor(struct boxed_value *args,
 	args = args->next;
 	forward_addr = strdup(blts_config_boxed_value_get_string(args));
 	args = args->next;
-	user_timeout = strtol(blts_config_boxed_value_get_string(args), NULL, 10);
+	/* Skip user_timeout parameter */
+	blts_config_boxed_value_get_string(args);
 	args = args->next;
 	timeout = atol(blts_config_boxed_value_get_string(args));
 
@@ -349,7 +349,7 @@ ofono_call_forwarding_check_settings(char *forwarding, char *number,
 	GHashTable* properties = NULL;
 	GHashTableIter iter;
 	gpointer key, value;
-	char *get_for, *get_num;
+	char *get_num;
 
 	proxy = dbus_g_proxy_new_for_name(data->connection, OFONO_BUS, modem_path,
 	    OFONO_CALL_FORWARDING_INTERFACE);
@@ -373,7 +373,6 @@ ofono_call_forwarding_check_settings(char *forwarding, char *number,
 	g_hash_table_iter_init(&iter, properties);
 	while (g_hash_table_iter_next(&iter, &key, &value))
 	{
-		get_for = key;
 		get_num = g_value_fits_pointer(value) ? g_value_peek_pointer(value) : NULL;
 		if (!g_strcmp0(key, forwarding))
 		{
