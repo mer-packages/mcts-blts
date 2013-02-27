@@ -27,7 +27,7 @@
 #include "compositor_runner.h"
 #include "ogles2_conf_file.h"
 
-const char* config_filename = "/usr/lib/tests/blts-opengles2-tests/blts-opengles2-perf.cnf";
+const char* config_filename = "/opt/tests/blts-opengles2-tests/cnf/blts-opengles2-perf.cnf";
 
 static void blts_gles2_help(const char* help_msg_base)
 {
