@@ -1,3 +1,4 @@
+pkgdatadir = $(libdir)
 pkgdata_DATA = \
 	tests.xml
 

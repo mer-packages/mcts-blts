@@ -46,6 +46,7 @@ org-ofono-Modem.h: $(top_builddir)/xml/org-ofono-Modem.xml
 bin_PROGRAMS = blts-ofono-tests
 
 # configdir is checked from configure
+configdir = $(libdir)/cnf/
 config_DATA = blts-ofono-tests.cnf
 
 blts_ofono_tests_SOURCES = $(generated_sources) $(h_sources) $(c_sources)
