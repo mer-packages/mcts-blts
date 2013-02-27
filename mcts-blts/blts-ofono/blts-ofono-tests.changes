@@ -1,3 +1,6 @@
+* Wed 27 Feb 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.1.24
+- Chanage package install path to /opt/tests
+
 * Wed 03 Aug 2011 Mikko Ojala <mikko.ojala@digia.com> - 0.1.23
 - Fixes: BMC#17877 - Test types update in MCTS
 
