@@ -45,7 +45,7 @@
 #include "xvideo_test_cases.h"
 
 /** Rules for dep check */
-#define DEP_RULES "/usr/lib/tests/blts-xvideo-tests/blts-xvideo-req-files.cfg"
+#define DEP_RULES "/opt/tests/blts-xvideo-tests/cfg/blts-xvideo-req-files.cfg"
 
 static const char *xv_event_names[] = {
 	"XvStarted",
