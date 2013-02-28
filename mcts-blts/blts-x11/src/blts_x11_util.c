@@ -23,7 +23,7 @@
 #include "blts_x11_util.h"
 
 /** Rules for dep check */
-#define DEP_RULES "/usr/lib/tests/blts-x11-tests/blts-x11-req_files.cfg"
+#define DEP_RULES "/opt/tests/blts-x11-tests/cfg/blts-x11-req_files.cfg"
 
 #define NUM_EXTENSIONS 9
 const char* required_extensions[NUM_EXTENSIONS] =
