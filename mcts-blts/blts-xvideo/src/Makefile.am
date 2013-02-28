@@ -16,7 +16,7 @@
 
 AM_CFLAGS = -O3 -g -Wall -Wextra -std=gnu99 -I$(includedir) -I.. -fPIC
 
-requiredlibs = -lm -lrt
+requiredlibs = -lm -lrt -lX11
 
 h_sources = \
 	xvideo_test_cases.h \
