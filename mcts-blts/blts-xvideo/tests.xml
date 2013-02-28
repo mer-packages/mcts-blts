@@ -21,39 +21,39 @@
     <set name="functional-tests" feature="X11">
       <case name="X11-XVideo Presence check"
         type="Functional positive">
-        <step>/usr/bin/blts-xvideo-tests -l /var/log/tests/X11-XVideo_presence_check.log -e 1</step>
+        <step>/opt/tests/blts-xvideo-tests/bin/blts-xvideo-tests -C /opt/tests/blts-xvideo-tests/cnf/blts-xvideo-tests.cnf -l /var/log/tests/blts/X11-XVideo_presence_check.log -e 1</step>
       </case>
       <case name="X11-XVideo Enumerate adapters"
         type="Functional positive">
-        <step>/usr/bin/blts-xvideo-tests -l /var/log/tests/X11-XVideo_enumerate_adapters.log -e 2</step>
+        <step>/opt/tests/blts-xvideo-tests/bin/blts-xvideo-tests -C /opt/tests/blts-xvideo-tests/cnf/blts-xvideo-tests.cnf -l /var/log/tests/blts/X11-XVideo_enumerate_adapters.log -e 2</step>
       </case>
       <case name="X11-XVideo PutImage with QueryBestSize"
         type="Functional positive">
-        <step>/usr/bin/blts-xvideo-tests -l /var/log/tests/X11-XVideo_PutImage_with_QueryBestSize.log -e 5</step>
+        <step>/opt/tests/blts-xvideo-tests/bin/blts-xvideo-tests -C /opt/tests/blts-xvideo-tests/cnf/blts-xvideo-tests.cnf -l /var/log/tests/blts/X11-XVideo_PutImage_with_QueryBestSize.log -e 5</step>
       </case>
       <case name="X11-XVideo Notify events"
         type="Functional positive">
-        <step>/usr/bin/blts-xvideo-tests -l /var/log/tests/X11-XVideo_Notify_events.log -e 6</step>
+        <step>/opt/tests/blts-xvideo-tests/bin/blts-xvideo-tests -C /opt/tests/blts-xvideo-tests/cnf/blts-xvideo-tests.cnf -l /var/log/tests/blts/X11-XVideo_Notify_events.log -e 6</step>
       </case>
       <get>
-        <file>/var/log/tests/X11-XVideo_presence_check.log</file>
-        <file>/var/log/tests/X11-XVideo_enumerate_adapters.log</file>
-        <file>/var/log/tests/X11-XVideo_PutImage_with_QueryBestSize.log</file>
-        <file>/var/log/tests/X11-XVideo_Notify_events.log</file>
+        <file>/var/log/tests/blts/X11-XVideo_presence_check.log</file>
+        <file>/var/log/tests/blts/X11-XVideo_enumerate_adapters.log</file>
+        <file>/var/log/tests/blts/X11-XVideo_PutImage_with_QueryBestSize.log</file>
+        <file>/var/log/tests/blts/X11-XVideo_Notify_events.log</file>
       </get>
     </set>
     <set name="benchmarks" feature="X11">
       <case name="X11-XvPutImage benchmark"
         type="Performance">
-        <step>/usr/bin/blts-xvideo-tests -l /var/log/tests/X11-XVideo_XvPutImage_benchmark.log -e 3</step>
+        <step>/opt/tests/blts-xvideo-tests/bin/blts-xvideo-tests -C /opt/tests/blts-xvideo-tests/cnf/blts-xvideo-tests.cnf -l /var/log/tests/blts/X11-XVideo_XvPutImage_benchmark.log -e 3</step>
       </case>
       <case name="X11-XvShmPutImage benchmark"
         type="Performance">
-        <step>/usr/bin/blts-xvideo-tests -l /var/log/tests/X11-XVideo_XvShmPutImage_benchmark.log -e 4</step>
+        <step>/opt/tests/blts-xvideo-tests/bin/blts-xvideo-tests -C /opt/tests/blts-xvideo-tests/cnf/blts-xvideo-tests.cnf -l /var/log/tests/blts/X11-XVideo_XvShmPutImage_benchmark.log -e 4</step>
       </case>
       <get>
-        <file>/var/log/tests/X11-XVideo_XvPutImage_benchmark.log</file>
-        <file>/var/log/tests/X11-XVideo_XvShmPutImage_benchmark.log</file>
+        <file>/var/log/tests/blts/X11-XVideo_XvPutImage_benchmark.log</file>
+        <file>/var/log/tests/blts/X11-XVideo_XvShmPutImage_benchmark.log</file>
       </get>
     </set>
   </suite>
