@@ -27,7 +27,7 @@
 /* TODO: Modify this bin to use common cli frontend, or merge these tests with
  * blts-x11-tests */
 
-static const char* data_path = "/usr/share/blts-x11-tests/images/";
+static const char* data_path = "/opt/tests/blts-x11-tests/images/";
 
 unsigned int fastrand_val;
 #define fastrand() (fastrand_val=fastrand_val*1103515245+12345)
