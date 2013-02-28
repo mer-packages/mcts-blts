@@ -16,6 +16,7 @@
 
 SUBDIRS = src . data
 
+pkgdatadir = $(libdir)
 pkgdata_DATA = tests.xml
 
 EXTRA_DIST = \
