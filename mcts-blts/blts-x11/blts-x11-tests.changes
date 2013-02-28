@@ -1,3 +1,15 @@
+* Mon Dec 03 2012 Marko Saukko <marko.saukko@jollamobile.com> - 0.0.21
+- Added 0001-New-Xorg-has-these-modules-buildin-thus-we-should-no.patch
+
+* Thu Nov 01 2012 Siteshwar Vashisht <siteshwar@gmail.com> - 0.0.20
+- Changed install path to /opt/tests
+
+* Fri 05 Oct 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.0.19
+- Check for executable Xorg binary, not readable file
+
+* Fri 05 Oct 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.0.18
+- Change around blts path a bit
+
 * Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.17
 - Fixes: BMC#17877 - Test types update in MCTS
 
