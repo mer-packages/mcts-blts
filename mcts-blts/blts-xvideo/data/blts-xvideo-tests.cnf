@@ -52,7 +52,7 @@
 
 [parameter]
 	name port_attributes
-	const "XV_BRIGHTNESS 0 XV_CONTRAST 0"
+	const ""
 [end_parameter]
 
 # These are for QueryBestSize and Notify events -tests
@@ -64,7 +64,7 @@
 
 [parameter]
 	name fute_port_attributes
-	const "XV_BRIGHTNESS 0"
+	const ""
 [end_parameter]
 
 ##############
