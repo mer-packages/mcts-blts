@@ -78,6 +78,7 @@
 #include <signal.h>
 #include <dirent.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <blts_log.h>
 
@@ -89,6 +90,7 @@
 #define MAX_PARAMETER_COUNT 10
 #define MAX_PROCESS_NAME 	255
 
+static char* commands_from_config = NULL;
 static char* stopped_processes = NULL;
 static char* restarted_processes = NULL;
 
@@ -164,7 +166,7 @@ int nl_get_multicast_id(wlan_core_data* data, const char *family, const char *gr
 	msg = nlmsg_alloc();
 	if (!msg)
 		return -ENOMEM;
-	genlmsg_put(msg, 0, 0, genl_ctrl_resolve(data->nl_handle, "nlctrl"),
+	genlmsg_put(msg, 0, 0, genl_ctrl_resolve(data->nl_sock, "nlctrl"),
 		    0, 0, CTRL_CMD_GETFAMILY, 0);
 	NLA_PUT_STRING(msg, CTRL_ATTR_FAMILY_NAME, family);
 
@@ -456,22 +458,22 @@ int nl80211_init(wlan_core_data* data)
 		return -ENOMEM;
 	}
 
-	data->nl_handle = nl_handle_alloc_cb(data->nl_cb);
-	if (data->nl_handle == NULL)
+	data->nl_sock = nl_socket_alloc_cb(data->nl_cb);
+	if (data->nl_sock == NULL)
 	{
 		nl_cb_put(data->nl_cb);
 		data->nl_cb = NULL;
 		return -ENOMEM;
 	}
 
-	if (genl_connect(data->nl_handle))
+	if (genl_connect(data->nl_sock))
 	{
 		BLTS_ERROR("Failed to connect to generic netlink\n");
 		err = -ENOLINK;
 		goto out_handle_destroy;
 	}
 
-	data->nl_cache = genl_ctrl_alloc_cache(data->nl_handle);
+	genl_ctrl_alloc_cache(data->nl_sock, &data->nl_cache);
 	if (!data->nl_cache)
 	{
 		BLTS_ERROR("Failed to allocate generic netlink cache\n");
@@ -490,7 +492,7 @@ int nl80211_init(wlan_core_data* data)
 	err = nl_get_multicast_id(data, "nl80211", "scan");
 	if (err >= 0)
 	{
-		err = nl_socket_add_membership(data->nl_handle, err);
+		err = nl_socket_add_membership(data->nl_sock, err);
 	}
 	else
 		BLTS_ERROR("Could not add multicast membership for scan events: %d (%s)\n",
@@ -506,7 +508,7 @@ int nl80211_init(wlan_core_data* data)
 	err = nl_get_multicast_id(data, "nl80211", "mlme");
 	if (err >= 0)
 	{
-		err = nl_socket_add_membership(data->nl_handle, err);
+		err = nl_socket_add_membership(data->nl_sock, err);
 	}
 	else
 		BLTS_ERROR("Could not add multicast membership for mlme events: %d (%s)\n",
@@ -545,7 +547,7 @@ out_cache_free:
 	nl_cache_free(data->nl_cache);
 	data->nl_cache = NULL;
 out_handle_destroy:
-	nl_handle_destroy(data->nl_handle);
+	nl_socket_free(data->nl_sock);
 	nl_cb_put(data->nl_cb);
 
 	return -1;
@@ -561,13 +563,13 @@ void nl80211_cleanup(wlan_core_data* data)
 	}
 
 	close(data->ioctl_sock);
-	eloop_unregister_read_sock(nl_socket_get_fd(data->nl_handle));
+	eloop_unregister_read_sock(nl_socket_get_fd(data->nl_sock));
 	eloop_destroy();
 
 	genl_family_put(data->nl80211);
 
 	nl_cache_free(data->nl_cache);
-	nl_handle_destroy(data->nl_handle);
+	nl_socket_free(data->nl_sock);
 
 	nl_cb_put(data->nl_cb);
 }
@@ -640,7 +642,7 @@ int send_and_recv_msgs(wlan_core_data* data,
 	if(data->trace_netlink)
 		nl_msg_dump(msg, stderr);
 
-	err = nl_send_auto_complete(data->nl_handle, msg);
+	err = nl_send_auto_complete(data->nl_sock, msg);
 
 	if (err < 0)
 	{
@@ -658,7 +660,7 @@ int send_and_recv_msgs(wlan_core_data* data,
 		nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, valid_handler, valid_data);
 
 	while (err > 0)
-		nl_recvmsgs(data->nl_handle, cb);
+		nl_recvmsgs(data->nl_sock, cb);
 
 out:
 	nl_cb_put(cb);
@@ -1128,6 +1130,51 @@ static pid_t spawn_command(const char *cmd)
         close(nullfd);
 
     return error;
+}
+
+int run_commands_before_and_after_testing(const char* config_name)
+{
+	int index = 0;
+	char *tmp, *ptr;
+	char commands[MAX_PROCESS_COUNT][MAX_PROCESS_NAME];
+	int num_commands = 0;
+
+	memset(commands, 0, sizeof(commands));
+
+	if(blts_config_get_value_string(config_name, &commands_from_config))
+        {
+                BLTS_TRACE("No commands to be ran...\n");
+                return 0;
+        }
+
+	tmp = strdup(commands_from_config);
+
+        if(!tmp)
+                return -1;
+
+        ptr = strtok((char *)tmp, ";");
+        if(!ptr)
+        {
+                free(tmp);
+                return 0;
+        }
+
+        do
+        {
+                strcat(commands[num_commands++], ptr);
+                if (num_commands >= MAX_PROCESS_COUNT)
+                        break;
+        } while ((ptr = strtok(NULL, ";")));
+
+        BLTS_TRACE("Commands to be run:\n");
+        for(index = 0; index < num_commands; index++)
+                BLTS_TRACE("[%s]\n", commands[index]);
+
+	for(index = 0; index < num_commands; index++)
+                system(commands[index]);
+
+        free(tmp);
+        return 0;
 }
 
 int stop_processes_before_testing(void)

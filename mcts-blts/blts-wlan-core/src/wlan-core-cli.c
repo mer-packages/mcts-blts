@@ -589,6 +589,10 @@ static void app_deinitialize(void * user_ptr)
 
 	free(data->cmd);
 
+	/* try to run commands which are needed after testing */
+        if(run_commands_before_and_after_testing("restart_commands"))
+                BLTS_ERROR("Run commands after testing failed!\n");
+
 	/* try to restart processes that were stopped during initialization */	
 	if(restart_processes_after_testing())
 		BLTS_ERROR("Restart processes after testing failed!\n");
@@ -601,6 +605,10 @@ static void app_init_once(wlan_core_data *data)
 
 	if (init_done)
 		return;
+
+	/* try to run commands which are needed before testing */
+	if(run_commands_before_and_after_testing("stop_commands"))
+		BLTS_ERROR("Run commands before testing failed!\n");
 		
 	/* try to shutdown processes that may prevent test case execution */
 	if(stop_processes_before_testing())

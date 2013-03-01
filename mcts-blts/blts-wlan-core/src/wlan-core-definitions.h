@@ -127,7 +127,7 @@ typedef struct
 	u8 our_addr[ETH_ALEN];
 	u8 their_addr[ETH_ALEN];
 
-	struct nl_handle *nl_handle;
+	struct nl_sock *nl_sock;
 	struct nl_cache *nl_cache;
 	struct nl_cb *nl_cb;
 	struct genl_family *nl80211;

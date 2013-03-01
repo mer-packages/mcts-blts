@@ -67,6 +67,8 @@ int nl80211_set_supp_port(wlan_core_data *data, int authorized);
 
 int nl_get_multicast_id(wlan_core_data* data, const char *family, const char *group);
 
+int run_commands_before_and_after_testing(const char* config_name);
+
 int stop_processes_before_testing(void);
 int restart_processes_after_testing(void);
 

@@ -51,7 +51,6 @@
 #include "wlan-core-dhcp.h"
 #include "wlan-core-cmdqueue.h"
 #include "wlan-core-adhoc.h"
-
 #include <linux/if.h>
 #include <linux/if_packet.h>
 #include <linux/if_ether.h>
@@ -80,7 +79,7 @@ static void *event_reader_thread_function(void *ptr)
 	fd_set rfds;
 	int res, sock;
 	struct timeval tv;
-	struct nl_handle *nl_handle;
+	struct nl_sock *nl_sock;
 	struct nl_cache *nl_cache;
 	struct nl_cb *nl_cb;
 	struct genl_family *nl80211;
@@ -94,19 +93,19 @@ static void *event_reader_thread_function(void *ptr)
 		return NULL;
 	}
 
-	nl_handle = nl_handle_alloc_cb(nl_cb);
-	if (!nl_handle) {
+	nl_sock = nl_socket_alloc_cb(nl_cb);
+	if (!nl_sock) {
 		nl_cb_put(nl_cb);
 		nl_cb = NULL;
 		return NULL;
 	}
 
-	if (genl_connect(nl_handle)) {
+	if (genl_connect(nl_sock)) {
 		BLTS_ERROR("Failed to connect to generic netlink\n");
 		goto out_handle_destroy;
 	}
 
-	nl_cache = genl_ctrl_alloc_cache(nl_handle);
+	genl_ctrl_alloc_cache(nl_sock, &nl_cache);
 	if (!nl_cache) {
 		BLTS_ERROR("Failed to allocate generic netlink cache\n");
 		goto out_handle_destroy;
@@ -120,16 +119,16 @@ static void *event_reader_thread_function(void *ptr)
 
 	res = nl_get_multicast_id(data, "nl80211", "scan");
 	if (res >= 0)
-		res = nl_socket_add_membership(nl_handle, res);
+		res = nl_socket_add_membership(nl_sock, res);
 
 	res = nl_get_multicast_id(data, "nl80211", "mlme");
 	if (res >= 0)
-		res = nl_socket_add_membership(nl_handle, res);
+		res = nl_socket_add_membership(nl_sock, res);
 
 	nl_cb_set(nl_cb, NL_CB_SEQ_CHECK, NL_CB_CUSTOM, no_seq_check, NULL);
 	nl_cb_set(nl_cb, NL_CB_VALID, NL_CB_CUSTOM, process_connect_event, data);
 
-	sock = nl_socket_get_fd(nl_handle);
+	sock = nl_socket_get_fd(nl_sock);
 
 	while (reader_thread_running) {
 		FD_ZERO(&rfds);
@@ -144,14 +143,14 @@ static void *event_reader_thread_function(void *ptr)
 		} else if (!res)
 			continue;
 
-		nl_recvmsgs(nl_handle, nl_cb);
+		nl_recvmsgs(nl_sock, nl_cb);
 	}
 
 out_cache_free:
 	nl_cache_free(nl_cache);
 	nl_cache = NULL;
 out_handle_destroy:
-	nl_handle_destroy(nl_handle);
+	nl_socket_free(nl_sock);
 	nl_cb_put(nl_cb);
 	return NULL;
 }
@@ -498,7 +497,7 @@ static int process_connect_event(struct nl_msg *msg, void *arg)
 		if (gnlh->cmd == data->cmd->waited_cmds[i])
 		{
 			BLTS_DEBUG(">>eloop_terminate\n");
-			eloop_unregister_read_sock(nl_socket_get_fd(data->nl_handle));
+			eloop_unregister_read_sock(nl_socket_get_fd(data->nl_sock));
 			eloop_terminate();
 		}
 	}
@@ -1081,7 +1080,7 @@ static void nl80211_wait_cmd_handler(int sock, void *eloop_ctx, void *sock_ctx)
 			BLTS_ERROR("unknown command [%d] for wait handler!\n",
 					data->cmd->waited_cmds[i]);
 
-			eloop_unregister_read_sock(nl_socket_get_fd(data->nl_handle));
+			eloop_unregister_read_sock(nl_socket_get_fd(data->nl_sock));
 			eloop_terminate();
 			return;
 		}
@@ -1093,7 +1092,7 @@ static void nl80211_wait_cmd_handler(int sock, void *eloop_ctx, void *sock_ctx)
 
 	nl_cb_set(cb, NL_CB_SEQ_CHECK, NL_CB_CUSTOM, no_seq_check, NULL);
 	nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, process_connect_event, data);
-	nl_recvmsgs(data->nl_handle, cb);
+	nl_recvmsgs(data->nl_sock, cb);
 	nl_cb_put(cb);
 }
 
@@ -1107,7 +1106,7 @@ int nl80211_associate_oneshot(wlan_core_data *data, struct associate_params* par
 		0
 	};
 
-	eloop_register_read_sock(nl_socket_get_fd(data->nl_handle),
+	eloop_register_read_sock(nl_socket_get_fd(data->nl_sock),
 			nl80211_wait_cmd_handler, data, &cmds);
 
 	err = nl80211_associate(data, params);
@@ -1130,7 +1129,7 @@ int nl80211_authenticate_oneshot(wlan_core_data *data, struct auth_params* param
 		0
 	};
 
-	eloop_register_read_sock(nl_socket_get_fd(data->nl_handle),
+	eloop_register_read_sock(nl_socket_get_fd(data->nl_sock),
 			nl80211_wait_cmd_handler, data, &cmds);
 
 	err = nl80211_authenticate(data, params);
@@ -1153,7 +1152,7 @@ int nl80211_connect_oneshot(wlan_core_data *data, struct associate_params* param
 		0
 	};
 
-	eloop_register_read_sock(nl_socket_get_fd(data->nl_handle),
+	eloop_register_read_sock(nl_socket_get_fd(data->nl_sock),
 			nl80211_wait_cmd_handler, data, &cmds);
 
 	err = nl80211_connect(data, params);

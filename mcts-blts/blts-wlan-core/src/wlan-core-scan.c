@@ -180,7 +180,7 @@ static int process_scan_event(struct nl_msg *msg, void *arg)
 	{
 		if (gnlh->cmd == data->cmd->waited_cmds[i])
 		{
-			eloop_unregister_read_sock(nl_socket_get_fd(data->nl_handle));
+			eloop_unregister_read_sock(nl_socket_get_fd(data->nl_sock));
 			eloop_terminate();
 
 			if(data->scan_res)
@@ -218,7 +218,7 @@ static void nl80211_scan_oneshot_handler(int sock, void *eloop_ctx, void *sock_c
 
 	nl_cb_set(cb, NL_CB_SEQ_CHECK, NL_CB_CUSTOM, no_seq_check, NULL);
 	nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, process_scan_event, data);
-	nl_recvmsgs(data->nl_handle, cb);
+	nl_recvmsgs(data->nl_sock, cb);
 	nl_cb_put(cb);
 }
 
@@ -226,7 +226,7 @@ int nl80211_scan_oneshot(wlan_core_data* data, const u8 *ssid, size_t ssid_len)
 {
 	int err;
 
-	eloop_register_read_sock(nl_socket_get_fd(data->nl_handle),
+	eloop_register_read_sock(nl_socket_get_fd(data->nl_sock),
 			nl80211_scan_oneshot_handler, data, data->cmd);
 
 	err = nl80211_scan(data, ssid, ssid_len);
