@@ -1,6 +1,6 @@
 Summary: BLTS WLAN low-level test set
 Name: blts-wlan-core-tests
-Version: 0.1.8
+Version: 0.1.9
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -9,6 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel, libnl-devel
 Requires: blts-wlan-core-tests-config
+%define _prefix /opt/tests/%{name}
 
 %package config-example
 Summary: BLTS WLAN low-level test config example
@@ -25,7 +26,7 @@ This package contains configuration example for WLAN functional tests.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -38,9 +39,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
+%{_prefix}/bin/*
 
 %files config-example
 %defattr(-,root,root,-)
-%config /etc/blts/blts-wlan-core-tests.cnf
-/usr/share/blts-wlan-core-tests/tests.xml
+%{_prefix}/cnf/blts-wlan-core-tests.cnf
+%{_prefix}/tests.xml

@@ -1,3 +1,9 @@
+* Fri 01 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.1.9
+- Various fixes for latest Netlink Protocol library
+- Update paths to /opt/tests
+- Add new config fields 'stop_commands' and 'restart_commands'
+- Add function to run stop and restart commands
+
 * Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.1.8
 - Fixes: BMC#17877 - Test types update in MCTS
 
