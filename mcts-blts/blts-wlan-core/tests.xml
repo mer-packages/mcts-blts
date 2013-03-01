@@ -22,60 +22,60 @@
     <set name="wlan-core-tests" feature="WLAN">
       <case name="Core-WLAN-Enumerate hardware"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Enumerate_hardware.log -e 1</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Enumerate_hardware.log -e 1</step>
       </case>
       <case name="Core-WLAN-Enumerate supported features"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Enumerate_supported_features.log -e 2</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Enumerate_supported_features.log -e 2</step>
       </case>
       <case name="Core-WLAN-Scan for specific AP"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Scan_for_specific_AP.log -e 3</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Scan_for_specific_AP.log -e 3</step>
       </case>
       <case name="Core-WLAN-Associate with open AP"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Associate_with_open_AP.log -e 4</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Associate_with_open_AP.log -e 4</step>
       </case>
       <case name="Core-WLAN-Associate with WEP encryption"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Associate_with_WEP_encryption.log -e 5</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Associate_with_WEP_encryption.log -e 5</step>
       </case>
       <case name="Core-WLAN-Scan and associate on max power save"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Scan_and_associate_on_max_power_save.log -e 6</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Scan_and_associate_on_max_power_save.log -e 6</step>
       </case>
       <case name="Core-WLAN-Associate with WPA2-PSK AP"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Associate_with_WPA2-PSK_AP.log -e 7</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Associate_with_WPA2-PSK_AP.log -e 7</step>
       </case>
       <case name="Core-WLAN-Disconnect with deauthenticate"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_with_deauthenticate.log -e 8</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Disconnect_with_deauthenticate.log -e 8</step>
       </case>
       <case name="Core-WLAN-Disconnect with disassociate"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_with_disassociate.log -e 9</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Disconnect_with_disassociate.log -e 9</step>
       </case>
       <case name="Core-WLAN-Disconnect with AP loss"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_with_AP_loss.log -e 10</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Disconnect_with_AP_loss.log -e 10</step>
       </case>
       <case name="Core-WLAN-Disconnect from adhoc network"
         type="Functional positive">
-        <step>/usr/bin/blts-wlan-core-tests -l /var/log/tests/Core-WLAN-Disconnect_from_adhoc_network.log -e 11</step>
+        <step>/opt/tests/blts-wlan-core-tests/bin/blts-wlan-core-tests -C /opt/tests/blts-wlan-core-tests/cnf/blts-wlan-core-tests.cnf -l /var/log/tests/blts/Core-WLAN-Disconnect_from_adhoc_network.log -e 11</step>
       </case>
       <get>
-        <file>/var/log/tests/Core-WLAN-Enumerate_hardware.log</file>
-        <file>/var/log/tests/Core-WLAN-Enumerate_supported_features.log</file>
-        <file>/var/log/tests/Core-WLAN-Scan_for_specific_AP.log</file>
-        <file>/var/log/tests/Core-WLAN-Associate_with_open_AP.log</file>
-        <file>/var/log/tests/Core-WLAN-Associate_with_WEP_encryption.log</file>
-        <file>/var/log/tests/Core-WLAN-Scan_and_associate_on_max_power_save.log</file>
-        <file>/var/log/tests/Core-WLAN-Associate_with_WPA2-PSK_AP.log</file>
-        <file>/var/log/tests/Core-WLAN-Disconnect_with_deauthenticate.log</file>
-        <file>/var/log/tests/Core-WLAN-Disconnect_with_disassociate.log</file>
-        <file>/var/log/tests/Core-WLAN-Disconnect_with_AP_loss.log</file>
-        <file>/var/log/tests/Core-WLAN-Disconnect_from_adhoc_network.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Enumerate_hardware.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Enumerate_supported_features.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Scan_for_specific_AP.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Associate_with_open_AP.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Associate_with_WEP_encryption.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Scan_and_associate_on_max_power_save.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Associate_with_WPA2-PSK_AP.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Disconnect_with_deauthenticate.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Disconnect_with_disassociate.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Disconnect_with_AP_loss.log</file>
+        <file>/var/log/tests/blts/Core-WLAN-Disconnect_from_adhoc_network.log</file>
       </get>
     </set>
   </suite>
