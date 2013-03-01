@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-minconfigdir = $(libdir)/tests/blts-v4l2-tests
+configdir = $(libdir)/cnf/
+minconfigdir = $(libdir)/cfg/
 minconfig_DATA = \
 	blts-v4l2-req_file.cfg
 
