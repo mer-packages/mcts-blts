@@ -31,5 +31,5 @@ blts_v4l2_tests_SOURCES = \
 	v4l2-priority.h v4l2-priority.c \
 	v4l2-stream-quality.h v4l2-stream-quality.c
 
-blts_v4l2_tests_LDADD = -lm -lrt -ljpeg $(BLTSCOMMON_LIBS) $(BLTSPIXELFORMAT_LIBS) $(XVIDEO_LIBS)
+blts_v4l2_tests_LDADD = -lm -lrt -ljpeg -lX11 $(BLTSCOMMON_LIBS) $(BLTSPIXELFORMAT_LIBS) $(XVIDEO_LIBS)
 blts_v4l2_tests_LDFLAGS = $(BLTSCOMMON_LDFLAGS) $(BLTSPIXELFORMAT_LDFLAGS) $(XVIDEO_LDFLAGS)
