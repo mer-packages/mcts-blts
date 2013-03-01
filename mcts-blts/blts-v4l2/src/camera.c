@@ -727,7 +727,7 @@ void dump_buffer_info(unsigned loglevel, v4l2_dev_data *dev, struct v4l2_buffer 
 		blts_log_print_level(loglevel, "\tmemory=OVERLAY\n");
 		break;
 	}
-	blts_log_print_level(loglevel, "\tlength=%u input=%u reserved=%u\n",buf->length, buf->input, buf->reserved);
+	blts_log_print_level(loglevel, "\tlength=%u reserved=%u\n",buf->length, buf->reserved);
 	blts_log_print_level(loglevel, "  Our buffers:\n");
 	for (i = 0; i < dev->n_buffers; ++i)
 		blts_log_print_level(loglevel, "\t%p (length %u)\n",
