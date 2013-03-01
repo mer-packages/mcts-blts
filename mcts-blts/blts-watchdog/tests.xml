@@ -21,20 +21,20 @@
     <set name="watchdog-tests" feature="Linux Kernel">
       <case name="Core-Watchdog presence check"
        type="Functional positive">
-        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Watchdog_presence_check.log -e 1</step>
+        <step>/opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Watchdog_presence_check.log -e 1</step>
       </case>
       <case name="Core-Open and close watchdog"
        type="Functional positive">
-        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Open_and_close_watchdog.log -e 2</step>
+        <step>/opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Open_and_close_watchdog.log -e 2</step>
       </case>
       <case name="Core-Send keepalive messages"
        type="Functional positive">
-        <step>/usr/bin/blts-watchdog-tests -l /var/log/tests/Core-Send_keepalive_messages.log -e 3</step>
+        <step>/opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Send_keepalive_messages.log -e 3</step>
       </case>
 	  <get>
-		<file>/var/log/tests/Core-Watchdog_presence_check.log</file>
-		<file>/var/log/tests/Core-Open_and_close_watchdog.log</file>
-		<file>/var/log/tests/Core-Send_keepalive_messages.log</file>
+		<file>/var/log/tests/blts/Core-Watchdog_presence_check.log</file>
+		<file>/var/log/tests/blts/Core-Open_and_close_watchdog.log</file>
+		<file>/var/log/tests/blts/Core-Send_keepalive_messages.log</file>
       </get>
     </set>
   </suite>
