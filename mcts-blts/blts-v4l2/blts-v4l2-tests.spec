@@ -1,6 +1,6 @@
 Summary: BLTS V4L2 test set
 Name: blts-v4l2-tests
-Version: 0.3.12
+Version: 0.3.13
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -10,6 +10,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel libbltspixelformat-devel
 BuildRequires: libjpeg-devel libX11-devel libXv-devel
 Requires: blts-v4l2-tests-config
+%define _prefix /opt/tests/%{name}
 
 %package config-example
 Summary: BLTS V4L2 test config example
@@ -26,7 +27,7 @@ This package contains configuration example for V4L2 functional tests.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -39,12 +40,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
-/usr/lib/tests/%{name}/*
+%{_prefix}/bin/*
+%{_prefix}/cfg/*
 
 %files config-example
 %defattr(-,root,root,-)
-%config /etc/blts/blts-v4l2-tests.cnf
-%config /etc/blts/blts-v4l2-n900.cnf
-%config /etc/blts/blts-v4l2-vivi.cnf
-/usr/share/blts-v4l2-tests/tests.xml
+%{_prefix}/cnf/*
+%{_prefix}/tests.xml
