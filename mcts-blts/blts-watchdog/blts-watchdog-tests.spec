@@ -1,6 +1,6 @@
 Summary: BLTS Watchdog test set
 Name: blts-watchdog-tests
-Version: 0.0.10
+Version: 0.0.11
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -8,6 +8,7 @@ URL: http://wiki.meego.com/Quality/TestSuite/MCTS
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
+%define _prefix /opt/tests/%{name}
 
 %description
 This package contains functional tests for watchdog drivers.
@@ -17,7 +18,7 @@ This package contains functional tests for watchdog drivers.
 
 %build
 ./autogen.sh
-%configure
+%configure --prefix=%{_prefix} --libdir=%{_prefix}
 make
 
 %install
@@ -30,6 +31,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README COPYING
-/usr/bin/*
-/usr/lib/tests/%{name}/*
-/usr/share/%{name}/*
+%{_prefix}/*

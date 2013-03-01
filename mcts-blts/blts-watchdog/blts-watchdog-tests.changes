@@ -1,3 +1,6 @@
+* Fri 01 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.11
+- Use /opt/tests directory for tests
+
 * Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.10
 - Fixes: BMC#17877 - Test types update in MCTS
 
