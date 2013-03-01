@@ -8,14 +8,17 @@
 # prevent this 'stopped_processes' parameter can be defined. After testing is done these 
 # stopped processes can be restarted by defining 'restarted_processes' parameter.
 # These parameters can also be empty if e.g "killall connmand" and "killall wpa_supplicant" 
-# commands are executed manually before testing. The format for these semicolon separated
+# commands are executed manually before testing or you can use stop and restart commands
+# if we use upstart or systemd. The format for these semicolon separated
 # parameters is the following: "program1 p1;program2 p1 p2"
 # NOTE: Some restrictions: max process and parameter count is 10 and whole process name 
 # to stop/restart must be less than 255 characters
 
 [globals]
-	stopped_processes "/usr/sbin/connmand;/sbin/wpa_supplicant"
-    restarted_processes "/usr/sbin/connmand -W nl80211,wext;/sbin/wpa_supplicant -u"
+	stop_commands "/bin/systemctl stop connman.service;/bin/systemctl stop wpa_supplicant.service"
+	restart_commands "/bin/systemctl start connman.service;/bin/systemctl start wpa_supplicant.service"
+	stopped_processes ""
+	restarted_processes ""
 [end_globals]
 
 # expected phys for HW. (space separated) e.g. "phy0 phy1 phy2"
