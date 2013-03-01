@@ -27,7 +27,7 @@
 #include <blts_dep_check.h>
 #include "blts_watchdog_util.h"
 
-#define DEP_RULES "/usr/lib/tests/blts-watchdog-tests/blts-watchdog-req_files.cfg"
+#define DEP_RULES "/opt/tests/blts-watchdog-tests/cfg/blts-watchdog-req_files.cfg"
 
 static int wdt_open()
 {
