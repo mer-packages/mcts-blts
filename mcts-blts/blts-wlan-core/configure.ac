@@ -22,6 +22,7 @@ AC_CONFIG_SRCDIR([src/wlan-core-definitions.h])
 AC_CONFIG_HEADER([config.h])
 
 PKG_CHECK_MODULES([BLTSCOMMON],[bltscommon])
+PKG_CHECK_MODULES([NL],[libnl-3.0, libnl-genl-3.0])
 
 configdir=`pkg-config bltscommon --variable=configdir`
 

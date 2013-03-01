@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AM_CPPFLAGS = \
-	-I$(top_srcdir) -DENABLE_DEBUG $(BLTSCOMMON_CFLAGS)
+	-I$(top_srcdir) -DENABLE_DEBUG \
+	$(BLTSCOMMON_CFLAGS) $(NL_CFLAGS) -pthread 
 
 bin_PROGRAMS = blts-wlan-core-tests
 
@@ -64,5 +65,5 @@ c_sources = \
 
 blts_wlan_core_tests_SOURCES = $(h_sources) $(c_sources)
 
-blts_wlan_core_tests_LDADD = -lm -lrt -lnl $(BLTSCOMMON_LIBS)
-blts_wlan_core_tests_LDFLAGS = $(BLTSCOMMON_LDFLAGS)
+blts_wlan_core_tests_LDADD = -lm -lrt $(NL_LIBS) $(BLTSCOMMON_LIBS)
+blts_wlan_core_tests_LDFLAGS = $(BLTSCOMMON_LDFLAGS) -pthread
