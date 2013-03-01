@@ -170,7 +170,7 @@ main(int argc, char **argv)
     {
     	printf("Check V4L2 software\n");
     	printf("-------------------\n");
-    	if(!depcheck("/usr/lib/tests/blts-v4l2-tests/blts-v4l2-req_file.cfg",1))
+	if(!depcheck("/opt/tests/blts-v4l2-tests/cfg/blts-v4l2-req_file.cfg",1))
     	{
     		printf("V4L2 software check PASSED\n");
     	}
