@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 SUBDIRS = src data
+
+pkgdatadir = $(libdir)
 pkgdata_DATA = tests.xml
 EXTRA_DIST = \
 	autogen.sh \
