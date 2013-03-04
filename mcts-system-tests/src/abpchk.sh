@@ -36,7 +36,7 @@ THRESHOLD=$2
 TIMES=10
 
 # sleep time per try (ms)
-SLEEP=1000
+SLEEP=1
 
 for((i=0; i<$TIMES; i++));do
 
@@ -52,7 +52,7 @@ for((i=0; i<$TIMES; i++));do
         exit 1
     fi
 
-    usleep $((1000*$SLEEP))
+    sleep $SLEEP
 
 done
 
