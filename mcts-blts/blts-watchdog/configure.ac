@@ -55,10 +55,11 @@ AC_HEADER_STDC
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([     \
-	Makefile      \
-	src/Makefile  \
-	data/Makefile \
+AC_CONFIG_FILES([	\
+	Makefile	\
+	src/Makefile	\
+	data/Makefile	\
+	tools/Makefile	\
 	])
 AC_OUTPUT
 
