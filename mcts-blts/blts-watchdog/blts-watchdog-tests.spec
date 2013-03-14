@@ -1,6 +1,6 @@
 Summary: BLTS Watchdog test set
 Name: blts-watchdog-tests
-Version: 0.0.11
+Version: 0.0.12
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -32,3 +32,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README COPYING
 %{_prefix}/*
+%attr(4755, root, root) %{_prefix}/bin/run-binary

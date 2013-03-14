@@ -1,3 +1,6 @@
+* Thu 14 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.12
+- Add helper tool to run tests without root user
+
 * Fri 01 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.11
 - Use /opt/tests directory for tests
 
