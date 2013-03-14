@@ -52,6 +52,8 @@ PKG_CHECK_MODULES(BLTS_FBDEV, [
         bltscommon
 ])
 
+PKG_CHECK_MODULES(GLIB, glib-2.0)
+
 configdir=`pkg-config bltscommon --variable=configdir`
 
 AC_SUBST(BLTS_FBDEV_CFLAGS)
@@ -64,4 +66,5 @@ AC_OUTPUT([
 	Makefile
 	src/Makefile
 	data/Makefile
+	tools/Makefile
 ])

@@ -21,7 +21,7 @@
 # Maximum light level
 [parameter]
 	name maximum_level
-	const 255
+	const <enter_valid_max_level_here>
 [end_parameter]
 
 # Minimum light level for logarithmic tests
@@ -33,7 +33,7 @@
 # Maximum light level for logarithmic tests
 [parameter]
 	name logarithmic_max
-	const 255
+	const <enter_valid_max_level_here>
 [end_parameter]
 
 # Test case configurations
