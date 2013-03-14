@@ -66,6 +66,7 @@
     <set name="backlight-tests" feature="Backlight">
       <pre_steps>
         <step>/opt/tests/blts-fbdev-tests/bin/guess_settings.sh</step>
+        <step>/opt/tests/blts-fbdev-tests/bin/run-binary systemctl stop mce.service</step>
       </pre_steps>
       <case name="Core-Backlight verify backlight levels"
         type="Functional positive">
@@ -84,6 +85,9 @@
         <file>/var/log/tests/blts/Core-Backlight_linear_backlight_level_changes.log</file>
         <file>/var/log/tests/blts/Core-Backlight_logarithmic_backlight_level_changes.log</file>
       </get>
+      <post_steps>
+        <step>/opt/tests/blts-fbdev-tests/bin/run-binary systemctl start mce.service</step>
+      </post_steps>
     </set>
   </suite>
 </testdefinition>
