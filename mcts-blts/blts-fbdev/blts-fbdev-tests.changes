@@ -1,3 +1,9 @@
+* Thu 14 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.13
+- Add tool to guess device display subsystem path and maximum brightness
+- Add tool to update display brightness settings run time
+- Add tool to run tests with non root user
+- Add glib2-devel to build dependency
+
 * Thu Nov 01 2012 Siteshwar Vashisht <siteshwar@gmail.com> - 0.0.12
 - Changed install path to /opt/tests
 - Changed log directory to /var/log/tests/blts/
