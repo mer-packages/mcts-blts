@@ -4,7 +4,7 @@ Version: 0.2.18
 Release: 1
 License: GPLv2
 Group: Development/Testing
-URL: http://wiki.meego.com/Quality/TestSuite/MCTS
+URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel bluez-libs-devel

@@ -4,6 +4,7 @@ Version: 0.4.5
 Release: 1
 License: GPLv2
 Group: Development/Testing
+URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: flex bison libxml2-devel
