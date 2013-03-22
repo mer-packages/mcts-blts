@@ -1,6 +1,6 @@
 Summary: BLTS WLAN low-level test set
 Name: blts-wlan-core-tests
-Version: 0.1.9
+Version: 0.1.10
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -40,6 +40,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README COPYING
 %{_prefix}/bin/*
+%attr(4755, root, root) %{_prefix}/bin/run-binary
 
 %files config-example
 %defattr(-,root,root,-)
