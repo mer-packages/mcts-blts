@@ -1,3 +1,6 @@
+* Thu 27 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.14
+- Move helper tool to own package and use same helper from all tests
+
 * Thu 14 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.13
 - Add tool to guess device display subsystem path and maximum brightness
 - Add tool to update display brightness settings run time

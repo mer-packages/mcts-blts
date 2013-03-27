@@ -1,6 +1,6 @@
 Summary: BLTS FBdev test set
 Name: blts-fbdev-tests
-Version: 0.0.13
+Version: 0.0.14
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -14,6 +14,7 @@ Requires: blts-fbdev-tests-config
 %package config-example
 Summary: BLTS fbdev test config example
 Provides: blts-fbdev-tests-config
+Requires: blts-tools
 
 %description
 This package contains functional tests for fbdev.
@@ -40,7 +41,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README COPYING
 %{_prefix}/bin/*
-%attr(4755, root, root) %{_prefix}/bin/run-binary
 
 %files config-example
 %defattr(-,root,root,-)

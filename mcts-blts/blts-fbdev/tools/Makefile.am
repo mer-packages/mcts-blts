@@ -7,14 +7,10 @@
 AM_CFLAGS = $(GLIB_CFLAGS) -Wall -Werror
 
 bin_PROGRAMS = \
-	brightness-tool \
-	run-binary
+	brightness-tool
 
 brightness_tool_SOURCES = \
 	brightness_tool.c
-
-run_binary_SOURCES = \
-	run_binary.c
 
 brightness_tool_LDFLAGS = \
 	$(BLTS_FBDEV_LDFLAGS)
