@@ -20,21 +20,19 @@
   <suite name="blts-watchdog-tests" domain="Kernel">
     <set name="watchdog-tests" feature="Linux Kernel">
       <pre_steps>
-        <step>/opt/tests/blts-watchdog-tests/bin/run-binary systemctl stop dsme.service</step>
+        <step>/usr/sbin/run-blts-root systemctl stop dsme.service</step>
       </pre_steps>
-<!-- We cannot runt this with no root user
       <case name="Core-Watchdog presence check"
        type="Functional positive">
-        <step>/opt/tests/blts-watchdog-tests/bin/run-binary /opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Watchdog_presence_check.log -e 1</step>
+        <step>/usr/sbin/run-blts-root /opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Watchdog_presence_check.log -e 1</step>
       </case>
--->
       <case name="Core-Open and close watchdog"
        type="Functional positive">
-        <step>/opt/tests/blts-watchdog-tests/bin/run-binary /opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Open_and_close_watchdog.log -e 2</step>
+        <step>/usr/sbin/run-blts-root /opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Open_and_close_watchdog.log -e 2</step>
       </case>
       <case name="Core-Send keepalive messages"
        type="Functional positive">
-        <step>/opt/tests/blts-watchdog-tests/bin/run-binary /opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Send_keepalive_messages.log -e 3</step>
+        <step>/usr/sbin/run-blts-root /opt/tests/blts-watchdog-tests/bin/blts-watchdog-tests -l /var/log/tests/blts/Core-Send_keepalive_messages.log -e 3</step>
       </case>
       <get>
 	<file>/var/log/tests/blts/Core-Watchdog_presence_check.log</file>
@@ -42,8 +40,8 @@
 	<file>/var/log/tests/blts/Core-Send_keepalive_messages.log</file>
       </get>
     <post_steps>
-      <step>/opt/tests/blts-watchdog-tests/bin/run-binary systemctl start dsme.service</step>
-      <step>/opt/tests/blts-watchdog-tests/bin/run-binary systemctl start mce.service</step>
+      <step>/usr/sbin/run-blts-root systemctl start dsme.service</step>
+      <step>/usr/sbin/run-blts-root systemctl start mce.service</step>
     </post_steps>
     </set>
   </suite>

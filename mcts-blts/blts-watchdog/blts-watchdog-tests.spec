@@ -1,6 +1,6 @@
 Summary: BLTS Watchdog test set
 Name: blts-watchdog-tests
-Version: 0.0.12
+Version: 0.0.13
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -8,6 +8,7 @@ URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
+Requires: blts-tools
 %define _prefix /opt/tests/%{name}
 
 %description
@@ -32,4 +33,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README COPYING
 %{_prefix}/*
-%attr(4755, root, root) %{_prefix}/bin/run-binary

@@ -59,7 +59,6 @@ AC_CONFIG_FILES([	\
 	Makefile	\
 	src/Makefile	\
 	data/Makefile	\
-	tools/Makefile	\
 	])
 AC_OUTPUT
 
