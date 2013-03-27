@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = src data tools
+SUBDIRS = src data
 
 pkgdatadir = $(libdir)
 pkgdata_DATA = tests.xml

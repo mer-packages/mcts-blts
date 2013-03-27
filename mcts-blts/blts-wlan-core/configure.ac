@@ -50,5 +50,4 @@ AC_OUTPUT([
 	Makefile \
 	src/Makefile \
 	data/Makefile \
-	tools/Makefile \
 	])

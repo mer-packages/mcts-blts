@@ -1,3 +1,6 @@
+* Thu 27 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.1.11
+- Move helper tool to own package and use same helper from all tests
+
 * Fri 22 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.1.10
 - Add tool to run tests without root user
 

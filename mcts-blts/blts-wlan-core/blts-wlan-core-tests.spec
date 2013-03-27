@@ -1,6 +1,6 @@
 Summary: BLTS WLAN low-level test set
 Name: blts-wlan-core-tests
-Version: 0.1.10
+Version: 0.1.11
 Release: 1
 License: GPLv2
 Group: Development/Testing
@@ -14,6 +14,7 @@ Requires: blts-wlan-core-tests-config
 %package config-example
 Summary: BLTS WLAN low-level test config example
 Provides: blts-wlan-core-tests-config
+Requires: blts-tools
 
 %description
 This package contains functional tests for WLAN.
@@ -40,7 +41,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc README COPYING
 %{_prefix}/bin/*
-%attr(4755, root, root) %{_prefix}/bin/run-binary
 
 %files config-example
 %defattr(-,root,root,-)
