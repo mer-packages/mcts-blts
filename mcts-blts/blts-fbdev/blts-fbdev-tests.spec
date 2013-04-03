@@ -6,8 +6,8 @@ License: GPLv2
 Group: Development/Testing
 URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel glib2-devel
+BuildRequires: libbltscommon-devel
+BuildRequires: glib2-devel
 Requires: blts-fbdev-tests-config
 %define _prefix /opt/tests/%{name}
 
@@ -31,11 +31,7 @@ This package contains configuration example for fbdev functional tests.
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
