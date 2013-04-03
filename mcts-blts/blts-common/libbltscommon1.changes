@@ -1,19 +1,19 @@
-* Thu 04 Oct 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.4.5 
+* Thu Oct 04 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.4.5 
 - Own /var/log/blts/ and base in there
 
-* Fri 18 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.4
+* Fri Mar 18 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.4
 - Added multiple test client sync support
 
-* Tue 08 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.3
+* Tue Mar 08 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.3
 - Added CSV measurement output support: CLI switch, API for reporting
 
-* Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.2
+* Tue Feb 08 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.2
 - Version update due to packaging change.
 
-* Tue 11 Jan 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.1
+* Tue Jan 11 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.4.1
 - Remove assert from missing configuration when using global config section
 
-* Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.4.0
+* Tue Nov 16 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.4.0
 - Packaging script updated.
 - Added results.xml output from any test case; adds libXML dependency
 - API change for logging functions; old versions deprecated (compiler warns)
@@ -22,21 +22,21 @@
 - Examples for parameter variation with proper logging included
 - RPM source package name changed
 
-* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.8
+* Thu Sep 30 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.3.8
 - Add RPM packaging
 - Use default configuration file if -C argument is not given
 
-* Tue 31 Aug 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.3.7
+* Tue Aug 31 2010 Mikko Ojala <mikko.ojala@digia.com> - 0.3.7
 - Fixed possible mem allocation bug.
 
-* Tue 24 Aug 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.3.6
+* Tue Aug 24 2010 Pasi Matilainen <pasi.matilainen@digia.com> - 0.3.6
 - Test case parameters can be defined purely in configuration file without
   explicit definitions in test case source code.
 
-* Tue 08 Jun 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.5
+* Tue Jun 08 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.5
 - Pool and release memory used during parsing to fix string leaks.
 
-* Fri 21 May 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.4
+* Fri May 21 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.3.4
 - Initial upload for Meego (changelog summarized)
 - Package license is GPL 2
 - Common CLI frontend

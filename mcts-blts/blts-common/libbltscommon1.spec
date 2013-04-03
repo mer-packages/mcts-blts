@@ -6,8 +6,9 @@ License: GPLv2
 Group: Development/Testing
 URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: flex bison libxml2-devel
+BuildRequires: flex
+BuildRequires: bison
+BuildRequires: libxml2-devel
 
 %package devel
 Summary: Common BLTS functions devel package
@@ -30,14 +31,10 @@ This package contains libbltscommon1 development files
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT/usr/lib/*.la
 rm $RPM_BUILD_ROOT/usr/lib/*.a
 mkdir -p $RPM_BUILD_ROOT/var/log/tests/blts/
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 
