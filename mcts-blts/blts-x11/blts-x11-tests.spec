@@ -6,10 +6,15 @@ License: GPLv2
 Group: Development/Testing
 URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel libX11-devel libXdamage-devel
-BuildRequires: libXcomposite-devel libXrandr-devel libXrender-devel
-BuildRequires: libXtst-devel libXv-devel libXi-devel
+BuildRequires: libbltscommon-devel
+BuildRequires: libX11-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXrender-devel
+BuildRequires: libXtst-devel
+BuildRequires: libXv-devel
+BuildRequires: libXi-devel
 %define _prefix /opt/tests/%{name}
 
 %description
@@ -24,11 +29,7 @@ This package contains functional tests for X11.
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
