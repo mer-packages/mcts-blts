@@ -1,4 +1,4 @@
-* Mon 25 Feb 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.15
+* Mon Feb 25 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.15
 - Use defined test configuration for tests
 - Fix rpm packaging issues
 
@@ -6,35 +6,35 @@
 - Changed install path to /opt/tests
 - Changed log directory to /var/log/tests/blts/
 
-* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.13
+* Wed Aug 03 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.13
 - Fixes: BMC#17877 - Test types update in MCTS
 
-* Tue 08 Feb 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.12
+* Tue Feb 08 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.12
 - Version update due to packaging change.
 
-* Tue 11 Jan 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.11
+* Tue Jan 11 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.11
 - Fix trivial resource leaks in asynchronous and V4L2 failure paths.
 
-* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.10
+* Thu Dec 16 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.10
 - Remove obsolete Min support code
 
-* Wed 01 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.9
+* Wed Dec 01 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.9
 - Handle playback and capture streams properly in enumerate test
 
-* Tue 16 Nov 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.8
+* Tue Nov 16 2010 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.8
 - Fix timer_select_specific to select correct timer
 - Use correct logging macros and funcs
 - Remove -v argument, blts-common provides it
 - Add simple linear volume setting into config file
 - Packaging scripts updated.
 
-* Thu 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
+* Thu Sep 30 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
 - Add RPM packaging
 - Binary name changed to "blts-alsa-core-tests"
 - Fix misleading configuration file option (-C / -c), -c option is now removed
 - Separate platform configuration packaging
 
-* Thu 02 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.6
+* Thu Sep 02 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.6
 - Initial upload for Meego (changelog summarized)
 - Mixer setting for vibra.
 - Bluetooth Audio connection automation.
