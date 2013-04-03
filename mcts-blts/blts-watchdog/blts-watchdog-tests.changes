@@ -1,27 +1,27 @@
-* Thu 27 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.13
+* Thu Mar 27 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.13
 - Move helper tool to own package and use same helper from all tests
 
-* Thu 14 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.12
+* Thu Mar 14 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.12
 - Add helper tool to run tests without root user
 
-* Fri 01 Mar 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.11
+* Fri Mar 01 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.11
 - Use /opt/tests directory for tests
 
-* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.10
+* Wed Aug 03 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.10
 - Fixes: BMC#17877 - Test types update in MCTS
 
-* Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.9
+* Tue Feb 08 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.9
 - Version update due to packaging change.
 
-* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.8
+* Thu Dec 16 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.8
 - Remove obsolete Min support code
 
-* Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
+* Tue Nov 16 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.7
 - Packaging script updated.
 - Logging updated to new common library standard.
 - Add missing test selectors to tests.xml. Fixes: BMC#10033
 
-* Fri 24 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.6
+* Fri Sep 24 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.6
 - Initial upload for Meego
 - Test cases include; querying watchdog information and sending keepalive
   messages to watchdog
