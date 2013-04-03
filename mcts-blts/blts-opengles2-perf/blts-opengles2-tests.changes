@@ -4,37 +4,37 @@
 * Thu Nov 01 2012 Siteshwar Vashisht <siteshwar@gmail.com> - 0.0.20
 - Changed install path to /opt/tests
 
-* Sun 14 Oct 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.0.19
+* Sun Oct 14 2012 Carsten Munk <carsten.munk@jollamobile.com> - 0.0.19
 - Change paths around to fit with new blts methods
 
-* Wed 03 Aug 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.18
+* Wed Aug 03 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.18
 - Fixes: BMC#17877 - Test types update in MCTS
 
-* Wed 16 Mar 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.17
+* Wed Mar 16 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.17
 - Add CSV measurement result reporting.
 
-* Tue 08 Feb 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.16
+* Tue Feb 08 2011 Jussi Saavalainen <jussi.saavalainen@digia.com> - 0.0.16
 - Version update due to packaging change.
 
-* Tue 18 Jan 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.15
+* Tue Jan 18 2011 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.15
 - Fix build with MeeGo pvr-bin-devel. Fixes: BMC#10112
 
-* Thu 16 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.14
+* Thu Dec 16 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.14
 - Remove obsolete Min support code
 
-* Wed 01 Dec 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.13
+* Wed Dec 01 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.13
 - Fix vertex scale issue of glesh_generate_cube().
 - Fixes: BMC#10543
 
-* Tue 16 Nov 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.12
+* Tue Nov 16 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.12
 - Packaging script updated.
 - Logging updated to new common library standard.
 
-* Thu, 30 Sep 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.11
+* Thu, Sep 30 2010 Kimmo Myllyvirta <kimmo.myllyvirta@digia.com> - 0.0.11
 - Add RPM packaging
 - Binary and debian package name changed to "blts-opengles2-tests"
 
-* Thu, 09 Sep 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.10
+* Thu, Sep 09 2010 Kari Laakso <kari.laakso@digia.com> - 0.0.10
 - Initial upload for Meego (changelog summarized)
 - Generic, configurable, convolution filter test.
 - Minimal composite manager (blts_minimal_compositor)

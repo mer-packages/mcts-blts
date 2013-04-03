@@ -6,9 +6,13 @@ License: GPLv2
 Group: Development/Testing
 URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: libbltscommon-devel libX11-devel libXdamage-devel libXcomposite-devel
-BuildRequires: libXext-devel pkgconfig(egl) pkgconfig(glesv2)
+BuildRequires: libbltscommon-devel
+BuildRequires: libX11-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXext-devel
+BuildRequires: pkgconfig(egl)
+BuildRequires: pkgconfig(glesv2)
 %define _prefix /opt/tests/%{name}
 
 %description
@@ -23,11 +27,7 @@ This package contains functional and performance tests for OpenGL ES2.
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
