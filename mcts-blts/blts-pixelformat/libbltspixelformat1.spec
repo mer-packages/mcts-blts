@@ -6,7 +6,6 @@ License: GPLv2
 Group: Development/Testing
 URL: https://github.com/mer-packages/mcts-blts
 Source0: %{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: libbltscommon-devel
 
 %package devel
@@ -30,13 +29,9 @@ This package contains libbltspixelformat1 development files
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT/usr/lib/*.la
 rm $RPM_BUILD_ROOT/usr/lib/*.a
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 
