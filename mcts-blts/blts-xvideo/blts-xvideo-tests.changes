@@ -1,3 +1,6 @@
+* Mon Apr 08 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.14
+- Add timeout for test cases because default 90 sec is not enough
+
 * Thu Feb 28 2013 Matti Kosola <matti.kosola@jollamobile.com> - 0.0.13
 - Update tests internal paths to /opt/tests
 
