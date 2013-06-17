@@ -42,6 +42,7 @@
     <post_steps>
       <step>/usr/sbin/run-blts-root systemctl start dsme.service</step>
       <step>/usr/sbin/run-blts-root systemctl start mce.service</step>
+      <step>/usr/sbin/run-blts-root systemctl start bme-rm-680-bin.service | true</step>
     </post_steps>
     </set>
   </suite>
